@@ -1,22 +1,23 @@
 module Fernet.GraphQL.SelectionSet where
 
 import Prelude
-import Data.String (joinWith)
 
-import Fernet.GraphQL.GQLSerialize (class GQLSerialize, toGQL)
+import Record as Record
+import Type.Row (class Nub, class Union)
 
-newtype FieldName = FieldName String
-newtype Fields a = Fields (Array a)
+newtype SelectionSet (a :: # Type) p = SelectionSet (Record a)
+newtype ArraySelectionSet (a :: # Type) p = ArraySelectionSet (SelectionSet a p)
 
-data SelectionSet = SelectionSet FieldName (Fields SelectionSet)
+combine ::
+  forall r1 r2 r3 p.
+  (Union r1 r2 r3) =>
+  (Nub r3 r3) =>
+  SelectionSet r1 p ->
+  SelectionSet r2 p ->
+  SelectionSet r3 p
+combine (SelectionSet s1) (SelectionSet s2) = SelectionSet $ Record.disjointUnion s1 s2
 
+infixr 5 combine as <~>
 
-instance gqlSerializeFieldName :: GQLSerialize FieldName where
-  toGQL (FieldName s) = s
-
-instance gqlSerializeFields :: (GQLSerialize a) => GQLSerialize (Fields a) where
-  toGQL (Fields []) = ""
-  toGQL (Fields a) = " { " <> (joinWith ", " (toGQL <$> a)) <> " } "
-
-instance gqlSerializeSelectionSet :: GQLSerialize SelectionSet where
-  toGQL (SelectionSet fn fs) = (toGQL fn) <> (toGQL fs)
+empty :: forall p. SelectionSet () p
+empty = SelectionSet {}

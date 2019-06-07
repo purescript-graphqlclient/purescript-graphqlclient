@@ -2,38 +2,46 @@ module Main where
 
 import Prelude
 
-import Affjax (ResponseFormatError)
-import Control.Monad.Except (runExcept)
-import Data.Either (Either(..))
 import Effect (Effect)
-import Effect.Aff (Aff, launchAff_)
 import Effect.Class.Console (log)
-import Fernet.GraphQL.SelectionSet (SelectionSet(..), FieldName(..), Fields(..))
-import Fernet.GraphQL.HTTP (gqlRequest)
-import Foreign (F)
+import Fernet.GraphQL.SelectionSet (ArraySelectionSet(..), SelectionSet(..), (<~>))
+import Fernet.GraphQL.WriteGraphQL (writeGQL)
+import Type.Proxy (Proxy(..))
 
+-- Examples/
+data RootQuery = RootQuery
+data Dog = Dog
+data Cat = Cat
+data Details = Details
 
-testSet :: SelectionSet
-testSet = SelectionSet
-  (FieldName "query")
-  (Fields [SelectionSet
-            (FieldName "person")
-            (Fields [SelectionSet (FieldName "name") (Fields [])])])
+-- Simple queries
+_id :: SelectionSet ( id :: Proxy String ) Dog
+_id = SelectionSet { id: Proxy }
 
-gqlHubQuery :: SelectionSet
-gqlHubQuery = SelectionSet
-  (FieldName "query")
-  (Fields [ SelectionSet (FieldName "graphQLHub") (Fields []) ])
+_breed :: SelectionSet ( breed :: Proxy String ) Dog
+_breed = SelectionSet { breed: Proxy }
 
+-- Combining Simple queries combines types
+_idBreed :: SelectionSet ( id :: Proxy String, breed :: Proxy String) Dog
+_idBreed = _id <~> _breed
 
-type Response = { data :: { graphQLHub :: String } }
+-- Selection with a sub selection
+_dogs :: forall r. SelectionSet r Dog -> SelectionSet ( dogs :: (ArraySelectionSet r Dog ) ) RootQuery
+_dogs subSelection = SelectionSet { dogs: ArraySelectionSet subSelection }
+
+_cats :: forall r. SelectionSet r Cat -> SelectionSet ( cats :: (ArraySelectionSet r Cat ) ) RootQuery
+_cats subSelection = SelectionSet { cats: ArraySelectionSet subSelection }
+
+_isTiger :: SelectionSet ( isTiger :: Proxy Boolean ) Cat
+_isTiger = SelectionSet { isTiger: Proxy }
+
+_details :: forall r. SelectionSet r Details -> SelectionSet ( details :: (SelectionSet r Details) ) Cat
+_details subSelection = SelectionSet { details: subSelection }
+
+_name :: SelectionSet ( name :: Proxy String ) Details
+_name = SelectionSet { name: Proxy }
+-- /Examples
 
 main :: Effect Unit
-main = launchAff_ $ do
-  res <- (gqlRequest "https://www.graphqlhub.com/graphql" gqlHubQuery :: (Aff (Either ResponseFormatError (F Response))))
-  case res of
-    Left _ -> log "uh oh"
-    Right fResponse ->
-      case runExcept fResponse of
-        Left _ -> log "uh oh oh"
-        Right response -> log response.data.graphQLHub
+main = do
+  log $ writeGQL $ (_dogs (_id <~> _breed)) <~> (_cats ( (_details _name) <~> _isTiger ) )
