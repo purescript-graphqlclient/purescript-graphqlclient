@@ -36,7 +36,7 @@ query =
       <|> Continent.name
       <|> Continent.countries Country.name
     )
-    <|> continent "na" Continent.code
+    <|> continent "AF" Continent.code
 
 main :: Effect Unit
 main =

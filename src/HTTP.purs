@@ -16,19 +16,17 @@ import Effect.Aff (Aff)
 import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet)
 import Fernet.GraphQL.WriteGraphQL (writeGQL)
 import Foreign (MultipleErrors)
-import Prim.RowList (class RowToList)
 import Simple.JSON (class ReadForeign, readJSON, writeJSON)
-import Type.Prelude (class ListToRow)
 
 transformError :: ResponseFormatError -> MultipleErrors
 transformError (ResponseFormatError e _) = singleton e
 
 gqlRequest ::
-  forall row rowlist.
+  forall row.
   ReadForeign (Record row) =>
-  ListToRow rowlist row =>
-  RowToList row rowlist =>
-  URL -> (SelectionSet row RootQuery) -> Aff (Either MultipleErrors {data :: (Record row)})
+  URL ->
+  (SelectionSet row RootQuery) ->
+  Aff (Either MultipleErrors {data :: (Record row)})
 gqlRequest url selectionSet = do
   response <-
     request
