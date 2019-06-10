@@ -1,13 +1,8 @@
 module Fernet.Example.Countries.Query where
 
+import Data.Maybe (Maybe)
 import Fernet.Example.Countries.Types (Language, Continent, Country)
-import Fernet.GraphQL.SelectionSet
-  ( Argument(..)
-  , ArgumentValue(..)
-  , RawField(..)
-  , RootQuery
-  , SelectionSet(..)
-  )
+import Fernet.GraphQL.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..))
 import Type.Data.Row (RProxy(..))
 
 continents ::
@@ -21,7 +16,7 @@ continent ::
   forall r.
   String ->
   SelectionSet r Continent ->
-  SelectionSet (continent :: Record r) RootQuery
+  SelectionSet (continent :: Maybe (Record r)) RootQuery
 continent code (SelectionSet fields _) =
   SelectionSet
     [
@@ -43,7 +38,7 @@ country ::
   forall r.
   String ->
   SelectionSet r Country ->
-  SelectionSet (country :: Record r) RootQuery
+  SelectionSet (country :: Maybe (Record r)) RootQuery
 country code (SelectionSet fields _) =
   SelectionSet
     [
@@ -65,7 +60,7 @@ language ::
   forall r.
   String ->
   SelectionSet r Language ->
-  SelectionSet (language :: Record r) RootQuery
+  SelectionSet (language :: Maybe (Record r)) RootQuery
 language code (SelectionSet fields _) =
   SelectionSet
     [

@@ -13,22 +13,23 @@ import Fernet.GraphQL.SelectionSet ((<|>), SelectionSet, RootQuery)
 import Fernet.GraphQL.WriteGraphQL (writeGQL)
 import Fernet.HTTP (gqlRequest)
 
-type Result
-  = ( continent ::
-      { code :: String
-      }
-  , continents ::
-      Array
-        { code :: String
-        , countries ::
-            Array
-              { name :: Maybe String
-              }
-        , name :: String
-        }
-  )
-
-query :: SelectionSet Result RootQuery
+query ::
+  SelectionSet
+    ( continent ::
+        Maybe
+          { code :: Maybe String
+          }
+    , continents ::
+        Array
+          { code :: Maybe String
+          , countries ::
+              Array
+                { name :: Maybe String
+                }
+          , name :: Maybe String
+          }
+    )
+    RootQuery
 query =
   continents
     ( Continent.code
