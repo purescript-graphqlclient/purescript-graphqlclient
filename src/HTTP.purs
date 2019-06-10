@@ -24,12 +24,12 @@ transformError :: ResponseFormatError -> MultipleErrors
 transformError (ResponseFormatError e _) = singleton e
 
 gqlRequest ::
-  forall row rowlist.
+  forall row rowlist args.
   ReadForeign (Record row) =>
   ListToRow rowlist row =>
   RowToList row rowlist =>
   WriteGraphQLFields rowlist row =>
-  URL -> (SelectionSet row RootQuery) -> Aff (Either MultipleErrors { data :: (Record row) })
+  URL -> (SelectionSet args row RootQuery) -> Aff (Either MultipleErrors { data :: (Record row) })
 gqlRequest url selectionSet = do
   response <-
     request

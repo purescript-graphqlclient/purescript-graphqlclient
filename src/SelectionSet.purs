@@ -1,29 +1,29 @@
 module Fernet.GraphQL.SelectionSet where
 
+import Record (disjointUnion)
 import Type.Row (class Nub, class Union, RProxy(..))
 
-newtype SelectionSet (output :: #Type) p
-  = SelectionSet (RProxy output)
+data SelectionSet (args :: #Type) (return :: #Type) onQuery
+  = SelectionSet (Record args) (RProxy return)
 
-newtype ArraySelectionSet (output :: #Type) p
-  = ArraySelectionSet (RProxy output)
-
-proxy :: forall a p. SelectionSet a p
-proxy = SelectionSet RProxy
+emptyArgs :: forall r p. SelectionSet () r p
+emptyArgs = SelectionSet {} RProxy
 
 combine ::
-  forall r1 r2 r3 p.
+  forall a1 a2 a3 r1 r2 r3 p.
+  (Union a1 a2 a3) =>
+  (Nub a3 a3) =>
   (Union r1 r2 r3) =>
   (Nub r3 r3) =>
-  SelectionSet r1 p ->
-  SelectionSet r2 p ->
-  SelectionSet r3 p
-combine _ _ = SelectionSet RProxy
+  SelectionSet a1 r1 p ->
+  SelectionSet a2 r2 p ->
+  SelectionSet a3 r3 p
+combine (SelectionSet a1 _) (SelectionSet a2 _) = SelectionSet (disjointUnion a1 a2) RProxy
 
 infixr 5 combine as <~>
 
-empty :: forall p. SelectionSet () p
-empty = SelectionSet RProxy
+empty :: forall p. SelectionSet () () p
+empty = SelectionSet {} RProxy
 
 data RootQuery
   = RootQuery
