@@ -21,8 +21,8 @@ data RawField
 data SelectionSet (return :: #Type) onQuery
   = SelectionSet (Array RawField) (RProxy return)
 
-emptyArgs :: String -> forall r p. SelectionSet r p
-emptyArgs name = SelectionSet [Leaf name []] RProxy
+noArgs :: String -> forall r p. SelectionSet r p
+noArgs name = SelectionSet [Leaf name []] RProxy
 
 combine ::
   forall r1 r2 r3 p.

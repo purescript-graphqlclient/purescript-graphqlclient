@@ -8,40 +8,11 @@ import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class.Console (logShow)
 import Fernet.GraphQL.HTTP (gqlRequest)
-import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet(..), emptyArgs, (<|>), RawField(..), Argument(..), ArgumentValue(..))
+import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet, (<|>))
 import Fernet.GraphQL.WriteGraphQL (writeGQL)
-import Type.Data.Row (RProxy(..))
 
--- Examples/
--- Countries GQL API
-data Language
-  = Language
+import Fernet.Examples.Countries (language, languages, code, name, native, rtl)
 
-language ::
- forall r.
- String ->
- SelectionSet r Language ->
- SelectionSet (language :: Record r) RootQuery
-language code (SelectionSet fields _) =
- SelectionSet
-   [Composite "language" [RequiredArgument "code" (ArgString code)] fields] RProxy
-
-languages :: forall r. SelectionSet r Language -> SelectionSet (languages :: Array (Record r)) RootQuery
-languages (SelectionSet fields _) = SelectionSet [Composite "languages" [] fields] RProxy
-
-code :: SelectionSet (code :: Maybe String) Language
-code = emptyArgs "code"
-
-name :: SelectionSet  (name :: Maybe String) Language
-name = emptyArgs "name"
-
-native :: SelectionSet (native :: Maybe String) Language
-native = emptyArgs "native"
-
-rtl :: SelectionSet (rtl :: Maybe Int) Language
-rtl = emptyArgs "rtl"
-
--- /Examples
 languagesQuery :: SelectionSet
   ( languages :: Array
                    { code :: Maybe String
