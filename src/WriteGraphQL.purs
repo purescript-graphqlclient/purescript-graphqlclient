@@ -1,7 +1,6 @@
 module Fernet.GraphQL.WriteGraphQL where
 
 import Prelude
-
 import Data.Maybe (Maybe)
 import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet(..))
 import Prim.RowList (class RowToList, kind RowList, Cons, Nil)
@@ -13,9 +12,13 @@ import Type.Row (class Cons, class Lacks)
 -- if a selection tries to return anything else a type error
 -- will be thrown
 class IsGraphQLType a
+
 instance stringIsGraphQLType :: IsGraphQLType String
+
 instance maybeIsGraphQLType :: IsGraphQLType a => IsGraphQLType (Maybe a)
+
 instance intIsGraphQLType :: IsGraphQLType Int
+
 instance arrayIsGraphQLType :: IsGraphQLType a => IsGraphQLType (Array a)
 
 class WriteGraphQL a where
@@ -27,9 +30,8 @@ instance selectionSetWriteGraphQL ::
   , WriteGraphQLFields rowlist row
   ) =>
   WriteGraphQL (SelectionSet args row RootQuery) where
-  writeGQL (SelectionSet args _ ) = " query { " <> writeFields (RProxy :: RProxy row) <> " } "
-else
-instance defaultWriteGraphQL :: IsGraphQLType a => WriteGraphQL a where
+  writeGQL (SelectionSet args _) = " query { " <> writeFields (RProxy :: RProxy row) <> " } "
+else instance defaultWriteGraphQL :: IsGraphQLType a => WriteGraphQL a where
   writeGQL _ = ""
 
 class WriteGraphQLFields (rl :: RowList) (row :: #Type) where
@@ -50,16 +52,17 @@ instance consArrayRecordWriteGraphQLFields ::
   , WriteGraphQLFields valueList valueRow
   , WriteGraphQLFields tail tailrow
   ) =>
-  WriteGraphQLFields (Cons name (Array (Record valueRow))  tail) row where
+  WriteGraphQLFields (Cons name (Array (Record valueRow)) tail) row where
   writeFields _ =
     reflectSymbol namep
-      <> " { " <> writeFields (RProxy :: RProxy valueRow) <> " } "
+      <> " { "
+      <> writeFields (RProxy :: RProxy valueRow)
+      <> " } "
       <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
     where
     namep :: SProxy name
     namep = SProxy
-else
-instance consRecordWriteGraphQLFields ::
+else instance consRecordWriteGraphQLFields ::
   ( IsSymbol name
   , ListToRow tail tailrow
   , RowToList tailrow tail
@@ -70,16 +73,17 @@ instance consRecordWriteGraphQLFields ::
   , WriteGraphQLFields valueList valueRow
   , WriteGraphQLFields tail tailrow
   ) =>
-  WriteGraphQLFields (Cons name (Record valueRow)  tail) row where
+  WriteGraphQLFields (Cons name (Record valueRow) tail) row where
   writeFields _ =
     reflectSymbol namep
-      <> " { " <> writeFields (RProxy :: RProxy valueRow) <> " } "
+      <> " { "
+      <> writeFields (RProxy :: RProxy valueRow)
+      <> " } "
       <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
     where
     namep :: SProxy name
     namep = SProxy
-else
-instance consDefaultSelectionSetWriteGraphQLFields ::
+else instance consDefaultSelectionSetWriteGraphQLFields ::
   ( IsSymbol name
   , ListToRow tail tailrow
   , RowToList tailrow tail

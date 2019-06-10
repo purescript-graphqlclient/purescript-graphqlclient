@@ -29,7 +29,7 @@ gqlRequest ::
   ListToRow rowlist row =>
   RowToList row rowlist =>
   WriteGraphQLFields rowlist row =>
-  URL -> (SelectionSet args row RootQuery) -> Aff (Either MultipleErrors { data :: (Record row) })
+  URL -> (SelectionSet args row RootQuery) -> Aff (Either MultipleErrors {data :: (Record row)})
 gqlRequest url selectionSet = do
   response <-
     request
