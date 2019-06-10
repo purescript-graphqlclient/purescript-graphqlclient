@@ -1,104 +1,45 @@
 module Fernet.GraphQL.WriteGraphQL where
 
 import Prelude
-import Data.Maybe (Maybe)
-import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet(..))
-import Prim.RowList (class RowToList, kind RowList, Cons, Nil)
-import Type.Data.Row (RProxy(..))
-import Type.Prelude (class IsSymbol, class ListToRow, SProxy(..), reflectSymbol)
-import Type.Row (class Cons, class Lacks)
 
--- Defines which types can be parsed from GQL,
--- if a selection tries to return anything else a type error
--- will be thrown
-class IsGraphQLType a
-
-instance stringIsGraphQLType :: IsGraphQLType String
-
-instance maybeIsGraphQLType :: IsGraphQLType a => IsGraphQLType (Maybe a)
-
-instance intIsGraphQLType :: IsGraphQLType Int
-
-instance arrayIsGraphQLType :: IsGraphQLType a => IsGraphQLType (Array a)
+import Data.Int (decimal, toStringAs)
+import Data.Maybe (Maybe(..))
+import Data.String (joinWith)
+import Fernet.GraphQL.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..))
 
 class WriteGraphQL a where
   writeGQL :: a -> String
 
-instance selectionSetWriteGraphQL ::
-  ( RowToList row rowlist
-  , ListToRow rowlist row
-  , WriteGraphQLFields rowlist row
-  ) =>
-  WriteGraphQL (SelectionSet args row RootQuery) where
-  writeGQL (SelectionSet args _) = " query { " <> writeFields (RProxy :: RProxy row) <> " } "
-else instance defaultWriteGraphQL :: IsGraphQLType a => WriteGraphQL a where
-  writeGQL _ = ""
+instance selectionSetWriteGraphQL :: WriteGraphQL (SelectionSet a RootQuery) where
+  writeGQL (SelectionSet fields _) =
+    "query " <> writeGQL fields
 
-class WriteGraphQLFields (rl :: RowList) (row :: #Type) where
-  writeFields ::
-    RowToList row rl =>
-    ListToRow rl row =>
-    RProxy row ->
-    String
+instance rawFieldWriteGraphQL :: WriteGraphQL RawField where
+  writeGQL field =
+    case field of
+      Leaf name args -> name <> writeGQL args
+      Composite name args subFields -> name <> writeGQL args <> writeGQL subFields
 
-instance consArrayRecordWriteGraphQLFields ::
-  ( IsSymbol name
-  , ListToRow tail tailrow
-  , RowToList tailrow tail
-  , RowToList valueRow valueList
-  , ListToRow valueList valueRow
-  , Cons name (Array (Record valueRow)) tailrow row
-  , Lacks name tailrow
-  , WriteGraphQLFields valueList valueRow
-  , WriteGraphQLFields tail tailrow
-  ) =>
-  WriteGraphQLFields (Cons name (Array (Record valueRow)) tail) row where
-  writeFields _ =
-    reflectSymbol namep
-      <> " { "
-      <> writeFields (RProxy :: RProxy valueRow)
-      <> " } "
-      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
-    where
-    namep :: SProxy name
-    namep = SProxy
-else instance consRecordWriteGraphQLFields ::
-  ( IsSymbol name
-  , ListToRow tail tailrow
-  , RowToList tailrow tail
-  , RowToList valueRow valueList
-  , ListToRow valueList valueRow
-  , Cons name (Record valueRow) tailrow row
-  , Lacks name tailrow
-  , WriteGraphQLFields valueList valueRow
-  , WriteGraphQLFields tail tailrow
-  ) =>
-  WriteGraphQLFields (Cons name (Record valueRow) tail) row where
-  writeFields _ =
-    reflectSymbol namep
-      <> " { "
-      <> writeFields (RProxy :: RProxy valueRow)
-      <> " } "
-      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
-    where
-    namep :: SProxy name
-    namep = SProxy
-else instance consDefaultSelectionSetWriteGraphQLFields ::
-  ( IsSymbol name
-  , ListToRow tail tailrow
-  , RowToList tailrow tail
-  , Cons name v tailrow row
-  , Lacks name tailrow
-  , WriteGraphQL a
-  , WriteGraphQLFields tail tailrow
-  ) =>
-  WriteGraphQLFields (Cons name a tail) row where
-  writeFields _ =
-    reflectSymbol namep
-      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
-    where
-    namep :: SProxy name
-    namep = SProxy
+instance argumentWriteGraphQL :: WriteGraphQL Argument where
+  writeGQL arg =
+    case arg of
+      RequiredArgument name value -> name <> ": " <> writeGQL value
+      OptionalArgument name mValue ->
+        case mValue of
+          Just value -> name <> ": " <> writeGQL value
+          Nothing -> ""
 
-instance writeGraphQLFieldsNil :: WriteGraphQLFields Nil row where
-  writeFields _ = ""
+instance gqlArgumentWriteGraphQL :: WriteGraphQL ArgumentValue where
+  writeGQL value =
+    case value of
+      ArgString s -> "\"" <> s <> "\""
+      ArgInt i -> toStringAs decimal i
+      ArgBoolean b -> if b then "true" else "false"
+
+instance arrayRawFieldWriteGraphQL :: WriteGraphQL (Array RawField) where
+  writeGQL [] = ""
+  writeGQL fields = " { " <> joinWith ", " (writeGQL <$> fields) <> " } "
+
+instance arrayArgument :: WriteGraphQL (Array Argument) where
+  writeGQL [] = ""
+  writeGQL args = "(" <> joinWith ", " (writeGQL <$> args) <> ")"

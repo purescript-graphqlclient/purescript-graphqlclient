@@ -1,13 +1,15 @@
 module Main where
 
 import Prelude
+
 import Data.Either (Either(..))
 import Data.Maybe (Maybe)
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class.Console (logShow)
 import Fernet.GraphQL.HTTP (gqlRequest)
-import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet(..), emptyArgs, (<~>))
+import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet(..), emptyArgs, (<|>), RawField(..), Argument(..), ArgumentValue(..))
+import Fernet.GraphQL.WriteGraphQL (writeGQL)
 import Type.Data.Row (RProxy(..))
 
 -- Examples/
@@ -15,62 +17,68 @@ import Type.Data.Row (RProxy(..))
 data Language
   = Language
 
-type LanguageArgs
-  = {code :: String}
+language ::
+ forall r.
+ String ->
+ SelectionSet r Language ->
+ SelectionSet (language :: Record r) RootQuery
+language code (SelectionSet fields _) =
+ SelectionSet
+   [Composite "language" [RequiredArgument "code" (ArgString code)] fields] RProxy
 
-_language ::
-  forall a r.
-  LanguageArgs ->
-  SelectionSet a r Language ->
-  SelectionSet (language :: LanguageArgs) (language :: Record r) RootQuery
-_language args _ = SelectionSet {language: args} RProxy
+languages :: forall r. SelectionSet r Language -> SelectionSet (languages :: Array (Record r)) RootQuery
+languages (SelectionSet fields _) = SelectionSet [Composite "languages" [] fields] RProxy
 
-_languages :: forall a r. SelectionSet a r Language -> SelectionSet () (languages :: Array (Record r)) RootQuery
-_languages _ = emptyArgs
+code :: SelectionSet (code :: Maybe String) Language
+code = emptyArgs "code"
 
-_code :: SelectionSet () (code :: Maybe String) Language
-_code = emptyArgs
+name :: SelectionSet  (name :: Maybe String) Language
+name = emptyArgs "name"
 
-_name :: SelectionSet () (name :: Maybe String) Language
-_name = emptyArgs
+native :: SelectionSet (native :: Maybe String) Language
+native = emptyArgs "native"
 
-_native :: SelectionSet () (native :: Maybe String) Language
-_native = emptyArgs
-
-_rtl :: SelectionSet () (rtl :: Maybe Int) Language
-_rtl = emptyArgs
+rtl :: SelectionSet (rtl :: Maybe Int) Language
+rtl = emptyArgs "rtl"
 
 -- /Examples
-languagesQuery ::
-  SelectionSet ()
-    ( languages ::
-        Array
-          { code :: Maybe String
-          , name :: Maybe String
-          , native :: Maybe String
-          , rtl :: Maybe Int
-          }
-    )
-    RootQuery
-languagesQuery = (_languages (_code <~> _name <~> _native <~> _rtl))
+languagesQuery :: SelectionSet
+  ( languages :: Array
+                   { code :: Maybe String
+                   , name :: Maybe String
+                   , native :: Maybe String
+                   , rtl :: Maybe Int
+                   }
+  )
+  RootQuery
+languagesQuery =
+  languages (code <|> name <|> native <|> rtl)
 
-languageQuery ::
-  SelectionSet
-    ( language ::
-        { code :: String
-        }
-    )
-    ( language ::
-        { name :: Maybe String
-        }
-    )
-    RootQuery
-languageQuery = _language {code: "ar"} _name
+languageQuery :: SelectionSet
+  ( language :: { name :: Maybe String
+                }
+  )
+  RootQuery
+languageQuery = language "ar" name
+
+finalQuery :: SelectionSet
+  ( language :: { name :: Maybe String
+                }
+  , languages :: Array
+                   { code :: Maybe String
+                   , name :: Maybe String
+                   , native :: Maybe String
+                   , rtl :: Maybe Int
+                   }
+  )
+  RootQuery
+finalQuery = languagesQuery <|> languageQuery
 
 main :: Effect Unit
 main =
   launchAff_ do
-    resp <- gqlRequest "https://countries.trevorblades.com/" languagesQuery
+    logShow $ writeGQL finalQuery
+    resp <- gqlRequest "https://countries.trevorblades.com/" finalQuery
     case resp of
       Left e -> logShow e
       Right query -> logShow query

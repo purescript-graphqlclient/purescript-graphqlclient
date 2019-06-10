@@ -14,7 +14,7 @@ import Data.Maybe (Maybe(..))
 import Data.MediaType (MediaType(..))
 import Effect.Aff (Aff)
 import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet)
-import Fernet.GraphQL.WriteGraphQL (class WriteGraphQLFields, writeGQL)
+import Fernet.GraphQL.WriteGraphQL (writeGQL)
 import Foreign (MultipleErrors)
 import Prim.RowList (class RowToList)
 import Simple.JSON (class ReadForeign, readJSON, writeJSON)
@@ -24,12 +24,11 @@ transformError :: ResponseFormatError -> MultipleErrors
 transformError (ResponseFormatError e _) = singleton e
 
 gqlRequest ::
-  forall row rowlist args.
+  forall row rowlist.
   ReadForeign (Record row) =>
   ListToRow rowlist row =>
   RowToList row rowlist =>
-  WriteGraphQLFields rowlist row =>
-  URL -> (SelectionSet args row RootQuery) -> Aff (Either MultipleErrors {data :: (Record row)})
+  URL -> (SelectionSet row RootQuery) -> Aff (Either MultipleErrors {data :: (Record row)})
 gqlRequest url selectionSet = do
   response <-
     request

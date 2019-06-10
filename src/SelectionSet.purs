@@ -1,29 +1,42 @@
 module Fernet.GraphQL.SelectionSet where
 
-import Record (disjointUnion)
+import Prelude
+
+import Data.Maybe (Maybe)
 import Type.Row (class Nub, class Union, RProxy(..))
 
-data SelectionSet (args :: #Type) (return :: #Type) onQuery
-  = SelectionSet (Record args) (RProxy return)
+data ArgumentValue
+  = ArgString String
+  | ArgInt Int
+  | ArgBoolean Boolean
 
-emptyArgs :: forall r p. SelectionSet () r p
-emptyArgs = SelectionSet {} RProxy
+data Argument
+  = RequiredArgument String ArgumentValue
+  | OptionalArgument String (Maybe ArgumentValue)
+
+data RawField
+    = Composite String (Array Argument) (Array RawField)
+    | Leaf String (Array Argument)
+
+data SelectionSet (return :: #Type) onQuery
+  = SelectionSet (Array RawField) (RProxy return)
+
+emptyArgs :: String -> forall r p. SelectionSet r p
+emptyArgs name = SelectionSet [Leaf name []] RProxy
 
 combine ::
-  forall a1 a2 a3 r1 r2 r3 p.
-  (Union a1 a2 a3) =>
-  (Nub a3 a3) =>
+  forall r1 r2 r3 p.
   (Union r1 r2 r3) =>
   (Nub r3 r3) =>
-  SelectionSet a1 r1 p ->
-  SelectionSet a2 r2 p ->
-  SelectionSet a3 r3 p
-combine (SelectionSet a1 _) (SelectionSet a2 _) = SelectionSet (disjointUnion a1 a2) RProxy
+  SelectionSet r1 p ->
+  SelectionSet r2 p ->
+  SelectionSet r3 p
+combine (SelectionSet args1 _) (SelectionSet args2 _) = SelectionSet (args1 <> args2) RProxy
 
-infixr 5 combine as <~>
+infixr 5 combine as <|>
 
-empty :: forall p. SelectionSet () () p
-empty = SelectionSet {} RProxy
+empty :: forall p. SelectionSet () p
+empty = SelectionSet [] RProxy
 
 data RootQuery
   = RootQuery
