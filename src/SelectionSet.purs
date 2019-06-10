@@ -8,6 +8,9 @@ newtype SelectionSet (a :: #Type) p
 newtype ArraySelectionSet (a :: #Type) p
   = ArraySelectionSet (RProxy a)
 
+proxy :: forall a p. SelectionSet a p
+proxy = SelectionSet RProxy
+
 combine ::
   forall r1 r2 r3 p.
   (Union r1 r2 r3) =>
