@@ -2,11 +2,10 @@ module Fernet.GraphQL.WriteGraphQL where
 
 import Prelude
 
-import Fernet.GraphQL.SelectionSet (SelectionSet(..), ArraySelectionSet(..))
+import Fernet.GraphQL.SelectionSet (ArraySelectionSet, RootQuery, SelectionSet)
 import Prim.RowList (class RowToList, kind RowList, Cons, Nil)
-import Record as Record
+import Type.Data.Row (RProxy(..))
 import Type.Prelude (class IsSymbol, class ListToRow, SProxy(..), reflectSymbol)
-import Type.Proxy (Proxy)
 import Type.Row (class Cons, class Lacks)
 
 class WriteGraphQL a where
@@ -16,48 +15,105 @@ instance selectionSetWriteGraphQL ::
   ( RowToList row rowlist
   , ListToRow rowlist row
   , WriteGraphQLFields rowlist row
-  ) => WriteGraphQL (SelectionSet row p) where
-    writeGQL (SelectionSet r) = " { " <> writeFields r <> " } "
+  ) =>
+  WriteGraphQL (SelectionSet row RootQuery) where
+  writeGQL _ = " query { " <> writeFields (RProxy :: RProxy row) <> " } "
 
 instance arraySelectionWriteGraphQL ::
   ( RowToList row rowlist
   , ListToRow rowlist row
   , WriteGraphQLFields rowlist row
-  ) => WriteGraphQL (ArraySelectionSet row p) where
-  writeGQL (ArraySelectionSet s) = writeGQL s
+  ) =>
+  WriteGraphQL (ArraySelectionSet row p) where
+  writeGQL _ = " { " <> writeFields (RProxy :: RProxy row) <> " } "
 
-instance proxyWriteGraphQL :: WriteGraphQL (Proxy a) where
+instance stringWriteGraphQL :: WriteGraphQL String where
   writeGQL _ = ""
 
-class WriteGraphQLFields (rl :: RowList) row where
-  writeFields :: RowToList row rl
-    => ListToRow rl row
-    => Record row
-    -> String
+instance booleanWriteGraphQL :: WriteGraphQL Boolean where
+  writeGQL _ = ""
 
--- The case where the next record key/value pair has a value type of SelectionSet
-instance consSelectionSetWriteGraphQLFields ::
+class WriteGraphQLFields (rl :: RowList) (row :: # Type) where
+  writeFields ::
+    RowToList row rl =>
+    ListToRow rl row =>
+    RProxy row ->
+    String
+
+instance consLeafStringSelectionSetWriteGraphQLFields ::
   ( IsSymbol name
   , ListToRow tail tailrow
   , RowToList tailrow tail
   , Cons name v tailrow row
   , Lacks name tailrow
-  , WriteGraphQL v
+  , WriteGraphQL String
   , WriteGraphQLFields tail tailrow
-  ) => WriteGraphQLFields (Cons name v tail) row where
-    writeFields rec =
-      reflectSymbol namep
-      <> writeGQL value
-      <> if writeFields rest == "" then "" else ", " <> writeFields rest
-      where
-        rest :: Record tailrow
-        rest = Record.delete namep rec
+  ) =>
+  WriteGraphQLFields (Cons name String tail) row where
+  writeFields _ =
+    reflectSymbol namep
+      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
+    where
+    namep :: SProxy name
+    namep = SProxy
 
-        value :: v
-        value = Record.get namep rec
+instance consLeafBooleanSelectionSetWriteGraphQLFields ::
+  ( IsSymbol name
+  , ListToRow tail tailrow
+  , RowToList tailrow tail
+  , Cons name v tailrow row
+  , Lacks name tailrow
+  , WriteGraphQL Boolean
+  , WriteGraphQLFields tail tailrow
+  ) =>
+  WriteGraphQLFields (Cons name Boolean tail) row where
+  writeFields _ =
+    reflectSymbol namep
+      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
+    where
+    namep :: SProxy name
+    namep = SProxy
 
-        namep :: SProxy name
-        namep = SProxy
+-- The case where the next record key/value pair has a value type of SelectionSet
+instance consNodeSelectionSetWriteGraphQLFields ::
+  ( IsSymbol name
+  , ListToRow tail tailrow
+  , RowToList tailrow tail
+  , RowToList valueRow valueList
+  , ListToRow valueList valueRow
+  , Cons name (SelectionSet valueRow p) tailrow row
+  , Lacks name tailrow
+  , WriteGraphQLFields valueList valueRow
+  , WriteGraphQLFields tail tailrow
+  ) =>
+  WriteGraphQLFields (Cons name (SelectionSet valueRow p) tail) row where
+  writeFields _ =
+    reflectSymbol namep
+      <> " { " <> writeFields (RProxy :: RProxy valueRow) <> " } "
+      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
+    where
+    namep :: SProxy name
+    namep = SProxy
+
+instance consNodeArraySelectionSetWriteGraphQLFields ::
+  ( IsSymbol name
+  , ListToRow tail tailrow
+  , RowToList tailrow tail
+  , RowToList valueRow valueList
+  , ListToRow valueList valueRow
+  , Cons name (ArraySelectionSet valueRow p) tailrow row
+  , Lacks name tailrow
+  , WriteGraphQLFields valueList valueRow
+  , WriteGraphQLFields tail tailrow
+  ) =>
+  WriteGraphQLFields (Cons name (ArraySelectionSet valueRow p) tail) row where
+  writeFields _ =
+    reflectSymbol namep
+      <> " { " <> writeFields (RProxy :: RProxy valueRow) <> " } "
+      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
+    where
+    namep :: SProxy name
+    namep = SProxy
 
 instance writeGraphQLFieldsNil :: WriteGraphQLFields Nil row where
   writeFields _ = ""

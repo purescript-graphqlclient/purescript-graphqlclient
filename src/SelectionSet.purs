@@ -1,12 +1,12 @@
 module Fernet.GraphQL.SelectionSet where
 
-import Prelude
+import Type.Row (class Nub, class Union, RProxy(..))
 
-import Record as Record
-import Type.Row (class Nub, class Union)
+newtype SelectionSet (a :: #Type) p
+  = SelectionSet (RProxy a)
 
-newtype SelectionSet (a :: # Type) p = SelectionSet (Record a)
-newtype ArraySelectionSet (a :: # Type) p = ArraySelectionSet (SelectionSet a p)
+newtype ArraySelectionSet (a :: #Type) p
+  = ArraySelectionSet (RProxy a) 
 
 combine ::
   forall r1 r2 r3 p.
@@ -15,9 +15,12 @@ combine ::
   SelectionSet r1 p ->
   SelectionSet r2 p ->
   SelectionSet r3 p
-combine (SelectionSet s1) (SelectionSet s2) = SelectionSet $ Record.disjointUnion s1 s2
+combine _ _ = SelectionSet RProxy
 
 infixr 5 combine as <~>
 
 empty :: forall p. SelectionSet () p
-empty = SelectionSet {}
+empty = SelectionSet RProxy
+
+data RootQuery
+  = RootQuery
