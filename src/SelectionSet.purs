@@ -6,7 +6,7 @@ newtype SelectionSet (a :: #Type) p
   = SelectionSet (RProxy a)
 
 newtype ArraySelectionSet (a :: #Type) p
-  = ArraySelectionSet (RProxy a) 
+  = ArraySelectionSet (RProxy a)
 
 combine ::
   forall r1 r2 r3 p.

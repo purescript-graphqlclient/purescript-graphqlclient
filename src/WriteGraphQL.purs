@@ -74,19 +74,39 @@ instance consLeafBooleanSelectionSetWriteGraphQLFields ::
     namep :: SProxy name
     namep = SProxy
 
--- The case where the next record key/value pair has a value type of SelectionSet
-instance consNodeSelectionSetWriteGraphQLFields ::
+instance consArrayRecordWriteGraphQLFields ::
   ( IsSymbol name
   , ListToRow tail tailrow
   , RowToList tailrow tail
   , RowToList valueRow valueList
   , ListToRow valueList valueRow
-  , Cons name (SelectionSet valueRow p) tailrow row
+  , Cons name (Array (Record valueRow)) tailrow row
   , Lacks name tailrow
   , WriteGraphQLFields valueList valueRow
   , WriteGraphQLFields tail tailrow
   ) =>
-  WriteGraphQLFields (Cons name (SelectionSet valueRow p) tail) row where
+  WriteGraphQLFields (Cons name (Array (Record valueRow))  tail) row where
+  writeFields _ =
+    reflectSymbol namep
+      <> " { " <> writeFields (RProxy :: RProxy valueRow) <> " } "
+      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
+    where
+    namep :: SProxy name
+    namep = SProxy
+
+-- The case where the next record key/value pair has a value type of SelectionSet
+instance consLeafRecordWriteGraphQLFields ::
+  ( IsSymbol name
+  , ListToRow tail tailrow
+  , RowToList tailrow tail
+  , RowToList valueRow valueList
+  , ListToRow valueList valueRow
+  , Cons name (Record valueRow) tailrow row
+  , Lacks name tailrow
+  , WriteGraphQLFields valueList valueRow
+  , WriteGraphQLFields tail tailrow
+  ) =>
+  WriteGraphQLFields (Cons name (Record valueRow)  tail) row where
   writeFields _ =
     reflectSymbol namep
       <> " { " <> writeFields (RProxy :: RProxy valueRow) <> " } "
