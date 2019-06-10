@@ -2,11 +2,11 @@ module Fernet.GraphQL.SelectionSet where
 
 import Type.Row (class Nub, class Union, RProxy(..))
 
-newtype SelectionSet (a :: #Type) p
-  = SelectionSet (RProxy a)
+newtype SelectionSet (output :: #Type) p
+  = SelectionSet (RProxy output)
 
-newtype ArraySelectionSet (a :: #Type) p
-  = ArraySelectionSet (RProxy a)
+newtype ArraySelectionSet (output :: #Type) p
+  = ArraySelectionSet (RProxy output)
 
 proxy :: forall a p. SelectionSet a p
 proxy = SelectionSet RProxy

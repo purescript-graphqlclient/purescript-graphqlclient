@@ -2,6 +2,7 @@ module Fernet.GraphQL.WriteGraphQL where
 
 import Prelude
 
+import Data.Maybe (Maybe)
 import Fernet.GraphQL.SelectionSet (ArraySelectionSet, RootQuery, SelectionSet)
 import Prim.RowList (class RowToList, kind RowList, Cons, Nil)
 import Type.Data.Row (RProxy(..))
@@ -33,6 +34,12 @@ instance stringWriteGraphQL :: WriteGraphQL String where
 instance booleanWriteGraphQL :: WriteGraphQL Boolean where
   writeGQL _ = ""
 
+instance intWriteGraphQL :: WriteGraphQL Int where
+  writeGQL _ = ""
+
+instance maybeWriteGraphQL :: WriteGraphQL (Maybe a) where
+  writeGQL _ = ""
+
 class WriteGraphQLFields (rl :: RowList) (row :: # Type) where
   writeFields ::
     RowToList row rl =>
@@ -50,6 +57,40 @@ instance consLeafStringSelectionSetWriteGraphQLFields ::
   , WriteGraphQLFields tail tailrow
   ) =>
   WriteGraphQLFields (Cons name String tail) row where
+  writeFields _ =
+    reflectSymbol namep
+      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
+    where
+    namep :: SProxy name
+    namep = SProxy
+
+instance consLeafMaybeSelectionSetWriteGraphQLFields ::
+  ( IsSymbol name
+  , ListToRow tail tailrow
+  , RowToList tailrow tail
+  , Cons name v tailrow row
+  , Lacks name tailrow
+  , WriteGraphQL (Maybe a)
+  , WriteGraphQLFields tail tailrow
+  ) =>
+  WriteGraphQLFields (Cons name (Maybe a) tail) row where
+  writeFields _ =
+    reflectSymbol namep
+      <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
+    where
+    namep :: SProxy name
+    namep = SProxy
+
+instance consLeafIntSelectionSetWriteGraphQLFields ::
+  ( IsSymbol name
+  , ListToRow tail tailrow
+  , RowToList tailrow tail
+  , Cons name v tailrow row
+  , Lacks name tailrow
+  , WriteGraphQL Int
+  , WriteGraphQLFields tail tailrow
+  ) =>
+  WriteGraphQLFields (Cons name Int tail) row where
   writeFields _ =
     reflectSymbol namep
       <> if writeFields (RProxy :: RProxy tailrow) == "" then "" else ", " <> writeFields (RProxy :: RProxy tailrow)
