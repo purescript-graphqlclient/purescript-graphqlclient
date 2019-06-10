@@ -1,4 +1,4 @@
-module Fernet.GraphQL.HTTP where
+module Fernet.HTTP where
 
 import Prelude
 import Affjax (ResponseFormatError(..), URL, request)

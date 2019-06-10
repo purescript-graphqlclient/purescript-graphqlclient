@@ -1,55 +1,47 @@
 module Main where
 
 import Prelude
-
 import Data.Either (Either(..))
 import Data.Maybe (Maybe)
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class.Console (logShow)
-import Fernet.GraphQL.HTTP (gqlRequest)
-import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet, (<|>))
+import Fernet.Example.Countries.Continent as Continent
+import Fernet.Example.Countries.Country as Country
+import Fernet.Example.Countries.Query (continent, continents)
+import Fernet.GraphQL.SelectionSet ((<|>), SelectionSet, RootQuery)
 import Fernet.GraphQL.WriteGraphQL (writeGQL)
+import Fernet.HTTP (gqlRequest)
 
-import Fernet.Examples.Countries (language, languages, code, name, native, rtl)
-
-languagesQuery :: SelectionSet
-  ( languages :: Array
-                   { code :: Maybe String
-                   , name :: Maybe String
-                   , native :: Maybe String
-                   , rtl :: Maybe Int
-                   }
+type Result
+  = ( continent ::
+      { code :: String
+      }
+  , continents ::
+      Array
+        { code :: String
+        , countries ::
+            Array
+              { name :: Maybe String
+              }
+        , name :: String
+        }
   )
-  RootQuery
-languagesQuery =
-  languages (code <|> name <|> native <|> rtl)
 
-languageQuery :: SelectionSet
-  ( language :: { name :: Maybe String
-                }
-  )
-  RootQuery
-languageQuery = language "ar" name
-
-finalQuery :: SelectionSet
-  ( language :: { name :: Maybe String
-                }
-  , languages :: Array
-                   { code :: Maybe String
-                   , name :: Maybe String
-                   , native :: Maybe String
-                   , rtl :: Maybe Int
-                   }
-  )
-  RootQuery
-finalQuery = languagesQuery <|> languageQuery
+query :: SelectionSet Result RootQuery
+query =
+  continents
+    ( Continent.code
+      <|> Continent.name
+      <|> Continent.countries Country.name
+    )
+    <|> continent "na" Continent.code
 
 main :: Effect Unit
 main =
   launchAff_ do
-    logShow $ writeGQL finalQuery
-    resp <- gqlRequest "https://countries.trevorblades.com/" finalQuery
+    logShow $ writeGQL query
+    resp <- gqlRequest "https://countries.trevorblades.com/" query
     case resp of
       Left e -> logShow e
-      Right query -> logShow query
+      Right queryResult -> logShow queryResult
