@@ -2,11 +2,21 @@ module Fernet.GraphQL.WriteGraphQL where
 
 import Prelude
 
+import Data.Maybe (Maybe)
 import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet(..))
 import Prim.RowList (class RowToList, kind RowList, Cons, Nil)
 import Type.Data.Row (RProxy(..))
 import Type.Prelude (class IsSymbol, class ListToRow, SProxy(..), reflectSymbol)
 import Type.Row (class Cons, class Lacks)
+
+-- Defines which types can be parsed from GQL,
+-- if a selection tries to return anything else a type error
+-- will be thrown
+class IsGraphQLType a
+instance stringIsGraphQLType :: IsGraphQLType String
+instance maybeIsGraphQLType :: IsGraphQLType a => IsGraphQLType (Maybe a)
+instance intIsGraphQLType :: IsGraphQLType Int
+instance arrayIsGraphQLType :: IsGraphQLType a => IsGraphQLType (Array a)
 
 class WriteGraphQL a where
   writeGQL :: a -> String
@@ -19,7 +29,7 @@ instance selectionSetWriteGraphQL ::
   WriteGraphQL (SelectionSet args row RootQuery) where
   writeGQL (SelectionSet args _ ) = " query { " <> writeFields (RProxy :: RProxy row) <> " } "
 else
-instance defaultWriteGraphQL :: WriteGraphQL a where
+instance defaultWriteGraphQL :: IsGraphQLType a => WriteGraphQL a where
   writeGQL _ = ""
 
 class WriteGraphQLFields (rl :: RowList) (row :: #Type) where
@@ -28,7 +38,6 @@ class WriteGraphQLFields (rl :: RowList) (row :: #Type) where
     ListToRow rl row =>
     RProxy row ->
     String
-
 
 instance consArrayRecordWriteGraphQLFields ::
   ( IsSymbol name
