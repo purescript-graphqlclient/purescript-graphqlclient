@@ -12,10 +12,19 @@ import Fernet.Example.Countries.Query (continent, continents)
 import Fernet.GraphQL.SelectionSet ((<|>), SelectionSet, RootQuery)
 import Fernet.GraphQL.WriteGraphQL (writeGQL)
 import Fernet.HTTP (gqlRequest)
+import Fernet.Introspection.Schema.Query (schema)
+import Fernet.Introspection.Schema.Schema (types)
+import Fernet.Introspection.Schema.Type as Type
 
 query ::
   SelectionSet
-    ( continent ::
+    ( __schema ::
+        { types ::
+            Array
+              { name :: String
+              }
+        }
+    , continent ::
         Maybe
           { code :: Maybe String
           }
@@ -37,6 +46,7 @@ query =
       <|> Continent.countries Country.name
     )
     <|> continent "AF" Continent.code
+    <|> schema (types Type.name)
 
 main :: Effect Unit
 main =
@@ -45,4 +55,4 @@ main =
     resp <- gqlRequest "https://countries.trevorblades.com/" query
     case resp of
       Left e -> logShow e
-      Right queryResult -> logShow queryResult
+      Right queryResult -> logShow queryResult.data.__schema
