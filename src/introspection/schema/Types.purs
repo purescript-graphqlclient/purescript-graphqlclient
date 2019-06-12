@@ -25,6 +25,7 @@ data TypeKind = Scalar
   | InputObject
   | List
   | NonNull
+derive instance eqTypeKind :: Eq TypeKind
 derive instance genericTypeKind :: Generic TypeKind _
 
 instance showTypeKind :: Show TypeKind where

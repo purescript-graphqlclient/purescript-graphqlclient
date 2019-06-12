@@ -1,0 +1,22 @@
+module Fernet.Introspection.Schema.InputValue where
+
+import Data.Maybe (Maybe)
+import Fernet.GraphQL.SelectionSet (RawField(..), SelectionSet(..), noArgs)
+import Fernet.Introspection.Schema.Types (InputValue, Type, TypeKind)
+import Type.Data.Row (RProxy(..))
+
+kind :: SelectionSet (kind :: TypeKind) InputValue
+kind = noArgs "kind"
+
+description :: SelectionSet (desciption :: Maybe String) InputValue
+description = noArgs "kind"
+
+type' ::
+  forall r.
+  SelectionSet r Type ->
+  SelectionSet (type :: Record r) InputValue
+type' (SelectionSet fields _) =
+  SelectionSet [Composite "type" [] fields] RProxy
+
+defaultValue :: SelectionSet (defaultValue :: Maybe String) InputValue
+defaultValue = noArgs "defaultValue"

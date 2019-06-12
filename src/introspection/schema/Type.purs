@@ -10,7 +10,7 @@ import Type.Data.Row (RProxy(..))
 kind :: SelectionSet (kind :: TypeKind) Type
 kind = noArgs "kind"
 
-name :: SelectionSet (name :: String) Type
+name :: SelectionSet (name :: Maybe String) Type
 name = noArgs "name"
 
 description :: SelectionSet (description :: String) Type
@@ -20,7 +20,7 @@ fields ::
   forall r.
   Maybe Boolean ->
   SelectionSet r Field ->
-  SelectionSet (fields :: Array (Record r)) Type
+  SelectionSet (fields :: Maybe (Array (Record r))) Type
 fields includeDeprecated (SelectionSet fields' _) =
   SelectionSet
     [Composite

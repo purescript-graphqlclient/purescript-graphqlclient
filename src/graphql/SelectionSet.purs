@@ -21,9 +21,6 @@ data RawField
 data SelectionSet (return :: #Type) onQuery
   = SelectionSet (Array RawField) (RProxy return)
 
-noArgs :: String -> forall r p. SelectionSet r p
-noArgs name = SelectionSet [Leaf name []] RProxy
-
 combine ::
   forall r1 r2 r3 p.
   (Union r1 r2 r3) =>
@@ -34,6 +31,9 @@ combine ::
 combine (SelectionSet args1 _) (SelectionSet args2 _) = SelectionSet (args1 <> args2) RProxy
 
 infixr 5 combine as <|>
+
+noArgs :: String -> forall r p. SelectionSet r p
+noArgs name = SelectionSet [Leaf name []] RProxy
 
 data RootQuery
   = RootQuery
