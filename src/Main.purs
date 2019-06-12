@@ -1,6 +1,7 @@
 module Main where
 
 import Prelude
+
 import Data.Either (Either(..))
 import Data.Maybe (Maybe)
 import Effect (Effect)
@@ -15,6 +16,7 @@ import Fernet.HTTP (gqlRequest)
 import Fernet.Introspection.Schema.Query (schema)
 import Fernet.Introspection.Schema.Schema (types)
 import Fernet.Introspection.Schema.Type as Type
+import Fernet.Introspection.Schema.Types (TypeKind)
 
 query ::
   SelectionSet
@@ -22,6 +24,7 @@ query ::
         { types ::
             Array
               { name :: String
+              , kind :: TypeKind
               }
         }
     , continent ::
@@ -46,7 +49,7 @@ query =
       <|> Continent.countries Country.name
     )
     <|> continent "AF" Continent.code
-    <|> schema (types Type.name)
+    <|> schema (types (Type.name <|> Type.kind))
 
 main :: Effect Unit
 main =

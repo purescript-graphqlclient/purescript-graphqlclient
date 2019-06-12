@@ -3,14 +3,15 @@
   "set": "psc-0.13.0",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
-    "typelevel-prelude",
-    "record",
-    "simple-json",
-    "proxy",
     "affjax",
-    "psci-support",
     "console",
     "effect",
-    "prelude"
+    "generics-rep",
+    "prelude",
+    "proxy",
+    "psci-support",
+    "record",
+    "simple-json",
+    "typelevel-prelude"
   ]
 }
