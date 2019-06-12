@@ -35,8 +35,5 @@ combine (SelectionSet args1 _) (SelectionSet args2 _) = SelectionSet (args1 <> a
 
 infixr 5 combine as <|>
 
-empty :: forall p. SelectionSet () p
-empty = SelectionSet [] RProxy
-
 data RootQuery
   = RootQuery
