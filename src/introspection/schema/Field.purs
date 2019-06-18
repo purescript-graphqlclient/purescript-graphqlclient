@@ -10,7 +10,7 @@ import Type.Data.Row (RProxy(..))
 name :: SelectionSet (name :: String) Field
 name = noArgs "name"
 
-description :: SelectionSet (name :: String) Field
+description :: SelectionSet (description :: String) Field
 description = noArgs "description"
 
 args ::

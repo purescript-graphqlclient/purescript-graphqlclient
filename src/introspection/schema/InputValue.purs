@@ -8,6 +8,9 @@ import Type.Data.Row (RProxy(..))
 kind :: SelectionSet (kind :: TypeKind) InputValue
 kind = noArgs "kind"
 
+name :: SelectionSet (name :: Maybe String) InputValue
+name = noArgs "name"
+
 description :: SelectionSet (desciption :: Maybe String) InputValue
 description = noArgs "kind"
 

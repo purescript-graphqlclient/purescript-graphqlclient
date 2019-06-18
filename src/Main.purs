@@ -1,12 +1,12 @@
 module Main where
 
 import Prelude
-
 import Control.Parallel (parTraverse)
 import Data.Array (filter)
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe)
-import Data.String (take)
+import Data.String (joinWith, take)
+import Data.Symbol (SProxy(..))
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Class.Console (logShow)
@@ -17,30 +17,130 @@ import Fernet.Introspection.Schema.Field as Field
 import Fernet.Introspection.Schema.Query (schema)
 import Fernet.Introspection.Schema.Schema (types)
 import Fernet.Introspection.Schema.Type as Type
-import Fernet.Introspection.Schema.Types (TypeKind(..))
+import Fernet.Introspection.Schema.InputValue as InputValue
+import Fernet.Introspection.Schema.Types (InputValue(..), Type(..), TypeKind(..))
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (writeTextFile)
-import Node.Path (FilePath)
 
-type TypeResult =
-  { fields ::
-      Maybe (Array
-        { name :: String
-        , type ::
-            { name :: Maybe String
-            , kind :: TypeKind
-            }
-        })
+type FieldResult
+  = { name :: String
+  , type ::
+      { name :: Maybe String
+      , kind :: TypeKind
+      }
+  }
+
+type TypeResult
+  = { fields :: Maybe (Array FieldResult)
   , kind :: TypeKind
   , name :: Maybe String
   }
 
-type Result =
-  ( __schema ::
-        { types ::
-            Array TypeResult
+type Result
+  = ( __schema ::
+      { types ::
+          Array TypeResult
+      }
+  )
+
+typeRefSelection ::
+  SelectionSet
+    ( kind :: TypeKind
+    , name :: Maybe String
+    , ofType ::
+        { kind :: TypeKind
+        , name :: Maybe String
+        , ofType ::
+            { kind :: TypeKind
+            , name :: Maybe String
+            , ofType ::
+                { kind :: TypeKind
+                , name :: Maybe String
+                , ofType ::
+                    { kind :: TypeKind
+                    , name :: Maybe String
+                    , ofType ::
+                        { kind :: TypeKind
+                        , name :: Maybe String
+                        , ofType ::
+                            { kind :: TypeKind
+                            , name :: Maybe String
+                            }
+                        }
+                    }
+                }
+            }
         }
     )
+    Type
+typeRefSelection =
+  Type.kind
+    <|> Type.name
+    <|> Type.ofType
+        ( Type.kind
+          <|> Type.name
+          <|> Type.ofType
+              ( Type.kind
+                <|> Type.name
+                <|> Type.ofType
+                    ( Type.kind
+                      <|> Type.name
+                      <|> Type.ofType
+                          ( Type.kind
+                            <|> Type.name
+                            <|> Type.ofType
+                                ( Type.kind
+                                  <|> Type.name
+                                  <|> Type.ofType
+                                      ( Type.kind
+                                        <|> Type.name
+                                      )
+                                )
+                          )
+                    )
+              )
+        )
+
+inputValueSelection ::
+  SelectionSet
+    ( defaultValue :: Maybe String
+    , desciption :: Maybe String
+    , name :: Maybe String
+    , type ::
+        { kind :: TypeKind
+        , name :: Maybe String
+        , ofType ::
+            { kind :: TypeKind
+            , name :: Maybe String
+            , ofType ::
+                { kind :: TypeKind
+                , name :: Maybe String
+                , ofType ::
+                    { kind :: TypeKind
+                    , name :: Maybe String
+                    , ofType ::
+                        { kind :: TypeKind
+                        , name :: Maybe String
+                        , ofType ::
+                            { kind :: TypeKind
+                            , name :: Maybe String
+                            , ofType ::
+                                { kind :: TypeKind
+                                , name :: Maybe String
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    )
+    InputValue
+inputValueSelection =
+  InputValue.name
+    <|> InputValue.description
+    <|> (InputValue.type' typeRefSelection)
+    <|> InputValue.defaultValue
 
 query :: SelectionSet Result RootQuery
 query =
@@ -51,9 +151,9 @@ query =
         <|> Type.fields (Just false)
             ( Field.name
               <|> Field.type'
-                    (   Type.name
+                  ( Type.name
                     <|> Type.kind
-                    )
+                  )
             )
       )
     )
@@ -65,22 +165,43 @@ main =
     resp <- gqlRequest "https://countries.trevorblades.com/" query
     case resp of
       Left e -> logShow e
-      Right queryResult ->
-         writeFiles "output-test" (
-          (onlyObjects >>> objectNames >>> existingNonSchemaObjects)
-          queryResult.data
-        )
+      Right queryResult -> do
+        logShow queryResult
+        writePurescriptFiles "output-test"
+          ( (onlyObjects >>> (filter (not <<< isSchemaObject))) queryResult.data
+          )
   where
-  writeFiles :: String -> Array String -> Aff Unit
-  writeFiles dir files = do
-    _ <- parTraverse
-          (\f ->
-            writeTextFile
-              UTF8
-              (dir <> "/" <> f <> ".purs")
-              ""
-          ) files
+  writePurescriptFiles :: String -> Array TypeResult -> Aff Unit
+  writePurescriptFiles dir objectTypes = do
+    _ <- parTraverse (writePurescriptFile dir) objectTypes
     pure unit
+
+  writePurescriptFile :: String -> TypeResult -> Aff Unit
+  writePurescriptFile dir object = do
+    case object.name of
+      Just name -> writeTextFile UTF8 (dir <> "/" <> name <> ".purs") ""
+      Nothing -> pure unit
+
+  generateForObject :: TypeResult -> String
+  generateForObject object = case object.name of
+    Just name ->
+      "module Text."
+        <> name
+        <> generateForFields name object.fields
+    Nothing -> ""
+
+  generateForFields :: String -> Maybe (Array FieldResult) -> String
+  generateForFields onObject = case _ of
+    Just fields -> joinWith "\n" ((generateForField onObject) <$> fields)
+    Nothing -> ""
+
+  generateForField :: String -> FieldResult -> String
+  generateForField onObject field =
+    field.name
+      <> " :: SelectionSet ("
+      <> field.name
+      <> " :: ?) "
+      <> onObject
 
   onlyObjects :: (Record Result) -> Array TypeResult
   onlyObjects result = filter (\t -> t.kind == Object) result.__schema.types
@@ -88,10 +209,7 @@ main =
   objectNames :: Array TypeResult -> Array (Maybe String)
   objectNames = map _.name
 
-  existingNonSchemaObjects :: Array (Maybe String) -> Array String
-  existingNonSchemaObjects =
-    filter
-      (case _ of
-        Just name -> (take 2 name) /= "__"
-        Nothing -> false)
-    >>> (map $ fromMaybe "")
+  isSchemaObject :: forall a. {name :: Maybe String | a} -> Boolean
+  isSchemaObject object = case object.name of
+    Just name -> (take 2 name) == "__"
+    Nothing -> false
