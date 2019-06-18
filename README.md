@@ -3,7 +3,7 @@
 *Extremely WIP*
 
 A purescript GQL client library taking inspiration from
-Dillon Kearn's work on (https://github.com/dillonkearns/elm-graphql)[elm-graphql]
+Dillon Kearn's work on [elm-graphql](https://github.com/dillonkearns/elm-graphql)
 which can be considered as two parts:
 
 - a GQL library that allows for the expression of all valid GQL queries
@@ -15,4 +15,4 @@ Why "Fernet"? I dunno, we use the Elixir library Absinthe at work and it seemed
 cute to name it after another spirit.
 
 Feel free to open an issue or message me \@liam on the
-(https://fpchat-invite.herokuapp.com/)[functional programming slack]
+[functional programming slack](https://fpchat-invite.herokuapp.com/)
