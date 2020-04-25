@@ -9,10 +9,10 @@ import Data.String (joinWith, take)
 import Data.Symbol (SProxy(..))
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
-import Effect.Class.Console (logShow)
+import Effect.Class.Console (logShow, log)
 import Fernet.GraphQL.SelectionSet ((<|>), SelectionSet, RootQuery)
 import Fernet.GraphQL.WriteGraphQL (writeGQL)
-import Fernet.HTTP (gqlRequest)
+import Fernet.HTTP (gqlRequest, printGraphqlError)
 import Fernet.Introspection.Schema.Field as Field
 import Fernet.Introspection.Schema.Query (schema)
 import Fernet.Introspection.Schema.Schema (types)
@@ -164,7 +164,7 @@ main =
     logShow $ writeGQL query
     resp <- gqlRequest "https://countries.trevorblades.com/" query
     case resp of
-      Left e -> logShow e
+      Left e -> log $ printGraphqlError e
       Right queryResult -> do
         logShow queryResult
         writePurescriptFiles "output-test"

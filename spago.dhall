@@ -13,7 +13,9 @@ You can edit this file as you like.
   , "proxy"
   , "psci-support"
   , "record"
-  , "simple-json"
+  , "argonaut-core"
+  , "argonaut-codecs"
+  , "argonaut-generic"
   , "typelevel-prelude"
   ]
 , packages = ./packages.dhall

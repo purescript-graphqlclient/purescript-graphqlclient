@@ -1,10 +1,12 @@
 module Fernet.Introspection.Schema.Types where
 
 import Prelude
-import Data.Generic.Rep (class Generic)
-import Fernet.Foreign.GraphQLEnumReadForeign (graphQLEnumReadForeign)
-import Simple.JSON (class ReadForeign)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Generic.Rep             as GenericRep
+import Data.Generic.Rep.Show        as GenericRep
+import Data.Argonaut.Decode         as ArgonautCodecs
+import Data.Argonaut.Encode         as ArgonautCodecs
+import Data.Argonaut.Decode.Generic.Rep as ArgonautGeneric
+import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
 
 data Schema
   = Schema
@@ -33,10 +35,10 @@ data TypeKind
 
 derive instance eqTypeKind :: Eq TypeKind
 
-derive instance genericTypeKind :: Generic TypeKind _
+derive instance genericTypeKind :: GenericRep.Generic TypeKind _
 
 instance showTypeKind :: Show TypeKind where
-  show = genericShow
+  show = GenericRep.genericShow
 
-instance typeKindReadForeign :: ReadForeign TypeKind where
-  readImpl = graphQLEnumReadForeign
+instance decodeJsonTypeKind :: ArgonautCodecs.DecodeJson TypeKind where
+  decodeJson = ArgonautGeneric.genericDecodeJson

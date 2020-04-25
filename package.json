@@ -1,0 +1,28 @@
+{
+  "name": "purescript-fernet",
+  "version": "1.0.0",
+  "description": "Graphql client library",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "spago test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dyerw/purescript-fernet.git"
+  },
+  "keywords": [
+    "graphql",
+    "purescript",
+    "client"
+  ],
+  "author": "Liam Dyer <liamd94@gmail.com>, Serhii Khoma <srghma@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dyerw/purescript-fernet/issues"
+  },
+  "homepage": "https://github.com/dyerw/purescript-fernet#readme"
+}
