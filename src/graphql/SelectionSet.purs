@@ -35,33 +35,6 @@ combine (SelectionSet args1 _) (SelectionSet args2 _) = SelectionSet (args1 <> a
 
 infixr 5 combine as <|>
 
--- This is the beginning of some kind of idea on how
--- to make recursive queries easier
--- type Cell s a d r o =
---   IsSymbol s =>
---   Lacks s a =>
---   Cons s d a r =>
---   SProxy s -> SelectionSet r o
---
--- cons ::
---   forall s a d r o.
---   { | a } ->
---   (SProxy s -> d) ->
---   Cell s a d r o
--- cons a d s = insert s (d s) a
---
--- cons' ::
---   forall s a d r.
---   { | a } ->
---   d ->
---   Cell s a d r
--- cons' a d s = cons a (const d) s
---
--- infixr 7 cons as :
--- infixr 7 cons' as :!
-
-
-
 noArgs :: String -> forall r p. SelectionSet r p
 noArgs name = SelectionSet [Leaf name []] RProxy
 
