@@ -11,71 +11,80 @@ import Fernet.Introspection.Schema.EnumValue as EnumValue
 import Fernet.Introspection.Schema.Types (InputValue(..), Type(..), TypeKind)
 
 fullTypeSelection =
-      Type.kind
-  <|> Type.name
-  <|> Type.description
-  <|> Type.fields
+  Type.kind
+    <|> Type.name
+    <|> Type.description
+    <|> Type.fields
         (Just true)
-        (   Field.name
-        <|> Field.description
-        <|> Field.args (Just true) inputValueSelection
-        <|> Field.type' typeRefSelection
-        <|> Field.isDeprecated
-        <|> Field.deprecationReason
+        ( Field.name
+            <|> Field.description
+            <|> Field.args (Just true) inputValueSelection
+            <|> Field.type' typeRefSelection
+            <|> Field.isDeprecated
+            <|> Field.deprecationReason
         )
-  <|> Type.inputFields inputValueSelection
-  <|> Type.interfaces typeRefSelection
-  <|> Type.enumValues
+    <|> Type.inputFields inputValueSelection
+    <|> Type.interfaces typeRefSelection
+    <|> Type.enumValues
         (Just true)
-        (   EnumValue.name
-        <|> EnumValue.description
-        <|> EnumValue.isDeprecated
-        <|> EnumValue.deprecationReason
+        ( EnumValue.name
+            <|> EnumValue.description
+            <|> EnumValue.isDeprecated
+            <|> EnumValue.deprecationReason
         )
 
-type TypeSelection r = ( kind :: TypeKind, name :: Maybe String | r )
-type TypeSelectionNested a = Record (TypeSelection (ofType :: a))
-type TypeSelectionBase = Record (TypeSelection ())
+type TypeSelection r
+  = ( kind :: TypeKind, name :: Maybe String | r )
 
-type SixNestedTypeSelection =
-  TypeSelectionNested
-    (TypeSelectionNested
-      (TypeSelectionNested
-        (TypeSelectionNested
-          (TypeSelectionNested TypeSelectionBase))))
+type TypeSelectionNested a
+  = Record (TypeSelection ( ofType :: a ))
+
+type TypeSelectionBase
+  = Record (TypeSelection ())
+
+type SixNestedTypeSelection
+  = TypeSelectionNested
+      ( TypeSelectionNested
+          ( TypeSelectionNested
+              ( TypeSelectionNested
+                  (TypeSelectionNested TypeSelectionBase)
+              )
+          )
+      )
 
 typeRefSelection ::
   SelectionSet
     ( kind :: TypeKind
     , name :: Maybe String
-    , ofType :: SixNestedTypeSelection)
+    , ofType :: SixNestedTypeSelection
+    )
     Type
 typeRefSelection =
   Type.kind
     <|> Type.name
     <|> Type.ofType
         ( Type.kind
-          <|> Type.name
-          <|> Type.ofType
-              ( Type.kind
-                <|> Type.name
-                <|> Type.ofType
-                    ( Type.kind
-                      <|> Type.name
-                      <|> Type.ofType
-                          ( Type.kind
+            <|> Type.name
+            <|> Type.ofType
+                ( Type.kind
+                    <|> Type.name
+                    <|> Type.ofType
+                        ( Type.kind
                             <|> Type.name
                             <|> Type.ofType
                                 ( Type.kind
-                                  <|> Type.name
-                                  <|> Type.ofType
-                                      ( Type.kind
-                                        <|> Type.name
-                                      )
+                                    <|> Type.name
+                                    <|> Type.ofType
+                                        ( Type.kind
+                                            <|> Type.name
+                                            <|> Type.ofType
+                                                ( Type.kind
+                                                    <|> Type.name
+                                                )
+                                        )
                                 )
-                          )
-                    )
-              )
+                        )
+                )
         )
 
 inputValueSelection ::
@@ -83,10 +92,12 @@ inputValueSelection ::
     ( defaultValue :: Maybe String
     , desciption :: Maybe String
     , name :: Maybe String
-    , type :: Record ( kind :: TypeKind
-                     , name :: Maybe String
-                     , ofType :: SixNestedTypeSelection
-                     )
+    , type ::
+      Record
+        ( kind :: TypeKind
+        , name :: Maybe String
+        , ofType :: SixNestedTypeSelection
+        )
     )
     InputValue
 inputValueSelection =

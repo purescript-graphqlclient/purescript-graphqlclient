@@ -7,15 +7,17 @@ import Type.Data.Row (RProxy(..))
 types ::
   forall r.
   SelectionSet r Type ->
-  SelectionSet (types :: Array (Record r)) Schema
+  SelectionSet ( types :: Array (Record r) ) Schema
 types (SelectionSet fields _) =
   SelectionSet
-    [Composite "types" [] fields] RProxy
+    [ Composite "types" [] fields ]
+    RProxy
 
 queryType ::
   forall r.
   SelectionSet r Type ->
-  SelectionSet (queryType :: Record r) Schema
+  SelectionSet ( queryType :: Record r ) Schema
 queryType (SelectionSet fields _) =
   SelectionSet
-    [Composite "queryType" [] fields] RProxy
+    [ Composite "queryType" [] fields ]
+    RProxy

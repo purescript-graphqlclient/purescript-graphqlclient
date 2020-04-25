@@ -2,7 +2,6 @@
 module Fernet.Foreign.GraphQLEnumReadForeign where
 
 import Prelude
-
 import Control.Alt ((<|>))
 import Control.Monad.Error.Class (throwError)
 import Data.Generic.Rep (class Generic, Constructor(..), NoArguments(..), Sum(..), to)
@@ -17,8 +16,7 @@ graphQLEnumReadForeign ::
   Generic a rep =>
   GraphQLEnumReadForeign rep =>
   Foreign -> F a
-graphQLEnumReadForeign f =
-  to <$> graphQLEnumReadForeignImpl f
+graphQLEnumReadForeign f = to <$> graphQLEnumReadForeignImpl f
 
 class GraphQLEnumReadForeign rep where
   graphQLEnumReadForeignImpl :: Foreign -> F rep
@@ -26,21 +24,28 @@ class GraphQLEnumReadForeign rep where
 instance sumGraphQLEnumReadForeign ::
   ( GraphQLEnumReadForeign a
   , GraphQLEnumReadForeign b
-  ) => GraphQLEnumReadForeign (Sum a b) where
+  ) =>
+  GraphQLEnumReadForeign (Sum a b) where
   graphQLEnumReadForeignImpl f =
     Inl <$> graphQLEnumReadForeignImpl f
-    <|> Inr <$> graphQLEnumReadForeignImpl f
-
+      <|> Inr
+      <$> graphQLEnumReadForeignImpl f
 
 instance constructorGraphQLEnumReadForeign ::
   ( IsSymbol name
-  ) => GraphQLEnumReadForeign (Constructor name NoArguments) where
+    ) =>
+  GraphQLEnumReadForeign (Constructor name NoArguments) where
   graphQLEnumReadForeignImpl f = do
     s <- readImpl f
-    if deleteUnderscores s == CaseInsensitiveString name
-      then pure $ Constructor NoArguments
-      else throwError <<< pure <<< ForeignError $
-        "Enum string " <> s <> " did not match expected string " <> name
+    if deleteUnderscores s == CaseInsensitiveString name then
+      pure $ Constructor NoArguments
+    else
+      throwError <<< pure <<< ForeignError
+        $ "Enum string "
+        <> s
+        <> " did not match expected string "
+        <> name
     where
-      deleteUnderscores = replaceAll (Pattern "_") (Replacement "") >>> CaseInsensitiveString
-      name = reflectSymbol (SProxy :: SProxy name)
+    deleteUnderscores = replaceAll (Pattern "_") (Replacement "") >>> CaseInsensitiveString
+
+    name = reflectSymbol (SProxy :: SProxy name)

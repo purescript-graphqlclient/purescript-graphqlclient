@@ -7,7 +7,8 @@ import Type.Data.Row (RProxy(..))
 schema ::
   forall r.
   SelectionSet r Schema ->
-  SelectionSet (__schema :: Record r) RootQuery
+  SelectionSet ( __schema :: Record r ) RootQuery
 schema (SelectionSet fields _) =
   SelectionSet
-    [Composite "__schema" [] fields] RProxy
+    [ Composite "__schema" [] fields ]
+    RProxy

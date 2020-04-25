@@ -5,21 +5,20 @@ import Fernet.GraphQL.SelectionSet (RawField(..), SelectionSet(..), noArgs)
 import Fernet.Introspection.Schema.Types (InputValue, Type, TypeKind)
 import Type.Data.Row (RProxy(..))
 
-kind :: SelectionSet (kind :: TypeKind) InputValue
+kind :: SelectionSet ( kind :: TypeKind ) InputValue
 kind = noArgs "kind"
 
-name :: SelectionSet (name :: Maybe String) InputValue
+name :: SelectionSet ( name :: Maybe String ) InputValue
 name = noArgs "name"
 
-description :: SelectionSet (desciption :: Maybe String) InputValue
+description :: SelectionSet ( desciption :: Maybe String ) InputValue
 description = noArgs "kind"
 
 type' ::
   forall r.
   SelectionSet r Type ->
-  SelectionSet (type :: Record r) InputValue
-type' (SelectionSet fields _) =
-  SelectionSet [Composite "type" [] fields] RProxy
+  SelectionSet ( type :: Record r ) InputValue
+type' (SelectionSet fields _) = SelectionSet [ Composite "type" [] fields ] RProxy
 
-defaultValue :: SelectionSet (defaultValue :: Maybe String) InputValue
+defaultValue :: SelectionSet ( defaultValue :: Maybe String ) InputValue
 defaultValue = noArgs "defaultValue"

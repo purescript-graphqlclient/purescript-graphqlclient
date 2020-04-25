@@ -26,14 +26,14 @@ gqlRequest ::
   ReadForeign (Record row) =>
   URL ->
   (SelectionSet row RootQuery) ->
-  Aff (Either MultipleErrors {data :: (Record row)})
+  Aff (Either MultipleErrors { data :: (Record row) })
 gqlRequest url selectionSet = do
   response <-
     request
       { method: Left POST
       , url
-      , headers: [ContentType (MediaType "application/json")]
-      , content: Just $ RequestBody.string (writeJSON {query: writeGQL selectionSet})
+      , headers: [ ContentType (MediaType "application/json") ]
+      , content: Just $ RequestBody.string (writeJSON { query: writeGQL selectionSet })
       , username: Nothing
       , password: Nothing
       , withCredentials: false

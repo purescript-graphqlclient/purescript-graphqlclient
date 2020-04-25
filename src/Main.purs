@@ -24,53 +24,53 @@ import Node.FS.Aff (writeTextFile)
 
 type FieldResult
   = { name :: String
-  , type ::
+    , type ::
       { name :: Maybe String
       , kind :: TypeKind
       }
-  }
+    }
 
 type TypeResult
   = { fields :: Maybe (Array FieldResult)
-  , kind :: TypeKind
-  , name :: Maybe String
-  }
+    , kind :: TypeKind
+    , name :: Maybe String
+    }
 
 type Result
   = ( __schema ::
       { types ::
-          Array TypeResult
+        Array TypeResult
       }
-  )
+    )
 
 typeRefSelection ::
   SelectionSet
     ( kind :: TypeKind
     , name :: Maybe String
     , ofType ::
+      { kind :: TypeKind
+      , name :: Maybe String
+      , ofType ::
         { kind :: TypeKind
         , name :: Maybe String
         , ofType ::
+          { kind :: TypeKind
+          , name :: Maybe String
+          , ofType ::
             { kind :: TypeKind
             , name :: Maybe String
             , ofType ::
+              { kind :: TypeKind
+              , name :: Maybe String
+              , ofType ::
                 { kind :: TypeKind
                 , name :: Maybe String
-                , ofType ::
-                    { kind :: TypeKind
-                    , name :: Maybe String
-                    , ofType ::
-                        { kind :: TypeKind
-                        , name :: Maybe String
-                        , ofType ::
-                            { kind :: TypeKind
-                            , name :: Maybe String
-                            }
-                        }
-                    }
                 }
+              }
             }
+          }
         }
+      }
     )
     Type
 typeRefSelection =
@@ -78,27 +78,27 @@ typeRefSelection =
     <|> Type.name
     <|> Type.ofType
         ( Type.kind
-          <|> Type.name
-          <|> Type.ofType
-              ( Type.kind
-                <|> Type.name
-                <|> Type.ofType
-                    ( Type.kind
-                      <|> Type.name
-                      <|> Type.ofType
-                          ( Type.kind
+            <|> Type.name
+            <|> Type.ofType
+                ( Type.kind
+                    <|> Type.name
+                    <|> Type.ofType
+                        ( Type.kind
                             <|> Type.name
                             <|> Type.ofType
                                 ( Type.kind
-                                  <|> Type.name
-                                  <|> Type.ofType
-                                      ( Type.kind
-                                        <|> Type.name
-                                      )
+                                    <|> Type.name
+                                    <|> Type.ofType
+                                        ( Type.kind
+                                            <|> Type.name
+                                            <|> Type.ofType
+                                                ( Type.kind
+                                                    <|> Type.name
+                                                )
+                                        )
                                 )
-                          )
-                    )
-              )
+                        )
+                )
         )
 
 inputValueSelection ::
@@ -107,33 +107,33 @@ inputValueSelection ::
     , desciption :: Maybe String
     , name :: Maybe String
     , type ::
+      { kind :: TypeKind
+      , name :: Maybe String
+      , ofType ::
         { kind :: TypeKind
         , name :: Maybe String
         , ofType ::
+          { kind :: TypeKind
+          , name :: Maybe String
+          , ofType ::
             { kind :: TypeKind
             , name :: Maybe String
             , ofType ::
+              { kind :: TypeKind
+              , name :: Maybe String
+              , ofType ::
                 { kind :: TypeKind
                 , name :: Maybe String
                 , ofType ::
-                    { kind :: TypeKind
-                    , name :: Maybe String
-                    , ofType ::
-                        { kind :: TypeKind
-                        , name :: Maybe String
-                        , ofType ::
-                            { kind :: TypeKind
-                            , name :: Maybe String
-                            , ofType ::
-                                { kind :: TypeKind
-                                , name :: Maybe String
-                                }
-                            }
-                        }
-                    }
+                  { kind :: TypeKind
+                  , name :: Maybe String
+                  }
                 }
+              }
             }
+          }
         }
+      }
     )
     InputValue
 inputValueSelection =
@@ -146,16 +146,16 @@ query :: SelectionSet Result RootQuery
 query =
   schema
     ( types
-      ( Type.name
-        <|> Type.kind
-        <|> Type.fields (Just false)
-            ( Field.name
-              <|> Field.type'
-                  ( Type.name
-                    <|> Type.kind
-                  )
-            )
-      )
+        ( Type.name
+            <|> Type.kind
+            <|> Type.fields (Just false)
+                ( Field.name
+                    <|> Field.type'
+                        ( Type.name
+                            <|> Type.kind
+                        )
+                )
+        )
     )
 
 main :: Effect Unit
@@ -209,7 +209,7 @@ main =
   objectNames :: Array TypeResult -> Array (Maybe String)
   objectNames = map _.name
 
-  isSchemaObject :: forall a. {name :: Maybe String | a} -> Boolean
+  isSchemaObject :: forall a. { name :: Maybe String | a } -> Boolean
   isSchemaObject object = case object.name of
     Just name -> (take 2 name) == "__"
     Nothing -> false
