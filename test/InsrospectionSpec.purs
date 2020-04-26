@@ -20,6 +20,7 @@ import Fernet.HTTP (gqlRequestImpl, printGraphqlError)
 import Main as Main
 import Test.Spec as Test.Spec
 import Test.Spec.Assertions (fail, shouldEqual)
+import Ansi.Codes as Ansi.Codes
 
 foreign import _jsonDiffString :: Fn2 Json Json String
 
@@ -35,7 +36,8 @@ requestGraphqlUsingGraphqlClient query graphqlUrl includeDeprecated = runFn3 _re
 
 jsonShouldEqual :: Json -> Json -> Aff Unit
 jsonShouldEqual x y = when (not $ eq x y) do
-  fail $ "Json are not equal\n\n" <> jsonDiffString x y
+  let removeRed = Ansi.Codes.escapeCodeToString (Ansi.Codes.Graphics (pure Ansi.Codes.Reset))
+  fail $ "Json are not equal\n\n" <> removeRed <> jsonDiffString x y
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Introspection spec" do
