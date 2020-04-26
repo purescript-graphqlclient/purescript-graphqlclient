@@ -20,7 +20,7 @@ data RawField
   = Composite String (Array Argument) (Array RawField)
   | Leaf String (Array Argument)
 
-data SelectionSet (return :: #Type) onQuery
+data SelectionSet (return :: # Type) onQuery
   = SelectionSet (Array RawField)
 
 combine ::
