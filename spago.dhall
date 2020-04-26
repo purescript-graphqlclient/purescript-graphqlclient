@@ -19,6 +19,8 @@ You can edit this file as you like.
   , "typelevel-prelude"
   , "debug"
   , "mkdirp-aff"
+  , "spec"
+  , "variant"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

@@ -43,17 +43,14 @@ printGraphqlError = case _ of
   where
   quote x = "\"" <> x <> "\""
 
-gqlRequest ::
-  forall row.
-  ArgonautCodecs.DecodeJson (Record row) =>
-  Affjax.URL ->
-  (SelectionSet row RootQuery) ->
-  Aff (Either GraphqlError { data :: Record row })
-gqlRequest url selectionSet =
+gqlRequestImpl
+  :: forall output
+   . ArgonautCodecs.DecodeJson output
+  => Affjax.URL
+  -> String
+  -> Aff (Either GraphqlError output)
+gqlRequestImpl url query =
   Transformers.runExceptT do
-    let
-      query = writeGQL selectionSet
-    Debug.Trace.traceM $ "[gqlRequest] query = " <> query
     result <-
       Transformers.lift
         $ Affjax.post
@@ -61,19 +58,27 @@ gqlRequest url selectionSet =
             url
             (Just $ Affjax.RequestBody.json $ ArgonautCodecs.encodeJson { query })
     case result of
-      Left error -> do
-        let
-          graphqlError = AffjaxError error
-        Debug.Trace.traceM $ "[gqlRequest]" <> printGraphqlError graphqlError
-        Transformers.throwError graphqlError
+      Left error -> Transformers.throwError $ AffjaxError error
       Right response ->
         let
           (json :: ArgonautCore.Json) = response.body
         in
           case ArgonautCodecs.decodeJson json of
-            Left error -> do
-              let
-                graphqlError = JsonDecodeError error json
-              Debug.Trace.traceM $ "[gqlRequest]" <> printGraphqlError graphqlError
-              Transformers.throwError graphqlError
+            Left error -> Transformers.throwError $ JsonDecodeError error json
             Right output -> pure output
+
+gqlRequest
+  :: forall row
+   . Show (Record row)
+  => ArgonautCodecs.DecodeJson (Record row)
+  => Affjax.URL
+  -> SelectionSet row RootQuery
+  -> Aff (Either GraphqlError { data :: Record row })
+gqlRequest url selectionSet = do
+  let query = writeGQL selectionSet
+  Debug.Trace.traceM $ "[gqlRequest] query = " <> query
+  result <- gqlRequestImpl url query
+  case result of
+    Right output -> Debug.Trace.traceM $ "[gqlRequest] output" <> show output
+    Left graphqlError -> Debug.Trace.traceM $ "[gqlRequest]" <> printGraphqlError graphqlError
+  pure result

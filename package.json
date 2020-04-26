@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/dyerw/purescript-fernet#readme",
   "devDependencies": {
+    "graphql-request": "^1.8.2",
     "xhr2": "^0.2.0"
   }
 }
