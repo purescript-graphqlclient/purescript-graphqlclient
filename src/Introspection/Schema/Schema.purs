@@ -8,16 +8,16 @@ types ::
   forall r.
   SelectionSet r Type ->
   SelectionSet ( types :: Array (Record r) ) Schema
-types (SelectionSet fields _) =
+types (SelectionSet fields) =
   SelectionSet
     [ Composite "types" [] fields ]
-    RProxy
+
 
 queryType ::
   forall r.
   SelectionSet r Type ->
   SelectionSet ( queryType :: Record r ) Schema
-queryType (SelectionSet fields _) =
+queryType (SelectionSet fields) =
   SelectionSet
     [ Composite "queryType" [] fields ]
-    RProxy
+

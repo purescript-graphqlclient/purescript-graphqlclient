@@ -8,7 +8,7 @@ schema ::
   forall r.
   SelectionSet r Schema ->
   SelectionSet ( __schema :: Record r ) RootQuery
-schema (SelectionSet fields _) =
+schema (SelectionSet fields) =
   SelectionSet
     [ Composite "__schema" [] fields ]
-    RProxy
+

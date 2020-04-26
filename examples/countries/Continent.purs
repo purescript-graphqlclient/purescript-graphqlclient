@@ -15,6 +15,6 @@ countries ::
   forall r.
   SelectionSet r Country ->
   SelectionSet (countries :: Array (Record r)) Continent
-countries (SelectionSet fields _) =
+countries (SelectionSet fields) =
  SelectionSet
-   [Composite "countries" [] fields] RProxy
+   [Composite "countries" [] fields]

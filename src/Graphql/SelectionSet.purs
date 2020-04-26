@@ -4,7 +4,7 @@ import Prelude
 import Data.Maybe (Maybe)
 --import Data.Symbol (class IsSymbol, SProxy(..))
 --import Prim.Row (class Cons, class Lacks)
-import Type.Row (class Nub, class Union, RProxy(..))
+import Type.Row (class Nub, class Union)
 
 --import Record (insert)
 data ArgumentValue
@@ -21,7 +21,7 @@ data RawField
   | Leaf String (Array Argument)
 
 data SelectionSet (return :: #Type) onQuery
-  = SelectionSet (Array RawField) (RProxy return)
+  = SelectionSet (Array RawField)
 
 combine ::
   forall r1 r2 r3 p.
@@ -30,12 +30,12 @@ combine ::
   SelectionSet r1 p ->
   SelectionSet r2 p ->
   SelectionSet r3 p
-combine (SelectionSet args1 _) (SelectionSet args2 _) = SelectionSet (args1 <> args2) RProxy
+combine (SelectionSet args1) (SelectionSet args2) = SelectionSet (args1 <> args2)
 
 infixr 5 combine as <|>
 
 noArgs :: String -> forall r p. SelectionSet r p
-noArgs name = SelectionSet [ Leaf name [] ] RProxy
+noArgs name = SelectionSet [ Leaf name [] ]
 
 data RootQuery
   = RootQuery

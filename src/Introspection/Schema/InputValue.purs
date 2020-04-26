@@ -18,7 +18,7 @@ type' ::
   forall r.
   SelectionSet r Type ->
   SelectionSet ( type :: Record r ) InputValue
-type' (SelectionSet fields _) = SelectionSet [ Composite "type" [] fields ] RProxy
+type' (SelectionSet fields) = SelectionSet [ Composite "type" [] fields ]
 
 defaultValue :: SelectionSet ( defaultValue :: Maybe String ) InputValue
 defaultValue = noArgs "defaultValue"

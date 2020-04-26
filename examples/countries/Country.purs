@@ -30,14 +30,14 @@ continent ::
   forall r.
   SelectionSet r Continent ->
   SelectionSet (continent :: Record r) Country
-continent (SelectionSet fields _) =
+continent (SelectionSet fields) =
  SelectionSet
-   [Composite "continent" [] fields] RProxy
+   [Composite "continent" [] fields]
 
 languages ::
   forall r.
   SelectionSet r Language ->
   SelectionSet (languages :: Array (Record r)) Country
-languages (SelectionSet fields _) =
+languages (SelectionSet fields) =
   SelectionSet
-    [Composite "languages" [] fields] RProxy
+    [Composite "languages" [] fields]
