@@ -7,6 +7,7 @@ import Data.Argonaut.Decode as ArgonautCodecs
 import Data.Argonaut.Encode as ArgonautCodecs
 import Data.Argonaut.Decode.Generic.Rep as ArgonautGeneric
 import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
+import Fernet.Decode.GraphqlEnum as Fernet.Decode.GraphqlEnum
 
 data Schema
   = Schema
@@ -41,4 +42,4 @@ instance showTypeKind :: Show TypeKind where
   show = GenericRep.genericShow
 
 instance decodeJsonTypeKind :: ArgonautCodecs.DecodeJson TypeKind where
-  decodeJson = ArgonautGeneric.genericDecodeJson
+  decodeJson = Fernet.Decode.GraphqlEnum.genericDecodeGraphqlEnum

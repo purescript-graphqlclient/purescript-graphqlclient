@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/dyerw/purescript-fernet/issues"
   },
-  "homepage": "https://github.com/dyerw/purescript-fernet#readme"
+  "homepage": "https://github.com/dyerw/purescript-fernet#readme",
+  "devDependencies": {
+    "xhr2": "^0.2.0"
+  }
 }

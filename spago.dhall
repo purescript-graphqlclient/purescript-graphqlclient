@@ -17,6 +17,7 @@ You can edit this file as you like.
   , "argonaut-codecs"
   , "argonaut-generic"
   , "typelevel-prelude"
+  , "debug"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
