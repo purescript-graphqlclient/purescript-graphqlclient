@@ -126,6 +126,23 @@ let overrides =
       upstream.argonaut-core // { repo = "https://github.com/srghma/purescript-argonaut-core.git", version = "a607181" }
   }
 
-let additions = {=}
+let additions =
+  { mkdirp-aff =
+       { dependencies =
+           [ "prelude"
+           , "effect"
+           , "node-fs-aff"
+           , "node-fs"
+           , "node-path"
+           , "either"
+           , "exceptions"
+           , "aff"
+           ]
+       , repo =
+           "https://github.com/leighman/purescript-mkdirp-aff.git"
+       , version =
+           "master"
+       }
+  }
 
 in  upstream // overrides // additions
