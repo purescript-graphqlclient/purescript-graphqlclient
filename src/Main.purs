@@ -143,13 +143,13 @@ inputValueSelection =
     <|> (InputValue.type' typeRefSelection)
     <|> InputValue.defaultValue
 
-introspectionQuery :: SelectionSet Result RootQuery
-introspectionQuery =
+introspectionQuery :: Boolean -> SelectionSet Result RootQuery
+introspectionQuery includeDeprecated =
   schema
     ( types
         ( Type.name
           <|> Type.kind
-          <|> Type.fields (Just false)
+          <|> Type.fields (Just includeDeprecated)
               ( Field.name
                   <|> Field.type'
                       ( Type.name
@@ -162,7 +162,7 @@ introspectionQuery =
 main :: Effect Unit
 main =
   launchAff_ do
-    resp <- gqlRequest "https://countries.trevorblades.com/" introspectionQuery
+    resp <- gqlRequest "https://countries.trevorblades.com/" $ introspectionQuery false
     case resp of
       Left e -> log $ printGraphqlError e
       Right queryResult -> do

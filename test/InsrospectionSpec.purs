@@ -12,13 +12,19 @@ import Data.Either (Either)
 import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Debug.Trace (traceM)
 import Effect.Aff.Compat (EffectFnAff(..), fromEffectFnAff)
+import Effect.Class.Console (log)
 import Effect.Exception (error)
 import Effect.Uncurried (EffectFn2)
 import Fernet.GraphQL.WriteGraphQL as Fernet.GraphQL.WriteGraphQL
 import Fernet.HTTP (gqlRequestImpl, printGraphqlError)
 import Main as Main
 import Test.Spec as Test.Spec
-import Test.Spec.Assertions (shouldEqual)
+import Test.Spec.Assertions (fail, shouldEqual)
+
+foreign import _jsonDiffString :: Fn2 Json Json String
+
+jsonDiffString :: Json → Json → String
+jsonDiffString = runFn2 _jsonDiffString
 
 foreign import introspectionQueryForGraphqlClient :: String
 
@@ -27,6 +33,10 @@ foreign import _requestGraphqlUsingGraphqlClient :: Fn3 String String Boolean (E
 requestGraphqlUsingGraphqlClient :: String -> String -> Boolean -> Aff Json
 requestGraphqlUsingGraphqlClient query graphqlUrl includeDeprecated = runFn3 _requestGraphqlUsingGraphqlClient query graphqlUrl includeDeprecated # fromEffectFnAff
 
+jsonShouldEqual :: Json -> Json -> Aff Unit
+jsonShouldEqual x y = when (not $ eq x y) do
+  fail $ "Json are not equal\n\n" <> jsonDiffString x y
+
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Introspection spec" do
   let
@@ -34,9 +44,11 @@ spec = Test.Spec.it "Introspection spec" do
     url = "https://countries.trevorblades.com/"
 
     query :: String
-    query = Fernet.GraphQL.WriteGraphQL.writeGQL Main.introspectionQuery
+    query = Fernet.GraphQL.WriteGraphQL.writeGQL $ Main.introspectionQuery includeDeprecated
 
-  expectedJson <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url true
+    includeDeprecated = false
+
+  expectedJson <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
 
   (actualJson :: Json) <- gqlRequestImpl url query
     >>= (throwError <<< error <<< printGraphqlError) \/ (\(x :: { data :: Json }) -> pure x.data)
@@ -44,4 +56,4 @@ spec = Test.Spec.it "Introspection spec" do
   traceM expectedJson
   traceM actualJson
 
-  stringify actualJson `shouldEqual` stringify expectedJson
+  actualJson `jsonShouldEqual` expectedJson
