@@ -33,7 +33,7 @@ type FieldResult
 type TypeResult
   = { name :: Maybe String
     , kind :: TypeKind
-    -- , fields :: Maybe (Array FieldResult)
+    , fields :: Maybe (Array FieldResult)
     }
 
 type Result
@@ -148,13 +148,13 @@ query =
     ( types
         ( Type.name
           <|> Type.kind
-            -- <|> Type.fields (Just false)
-            --     ( Field.name
-            --         <|> Field.type'
-            --             ( Type.name
-            --                 <|> Type.kind
-            --             )
-            --     )
+          <|> Type.fields (Just false)
+              ( Field.name
+                  <|> Field.type'
+                      ( Type.name
+                          <|> Type.kind
+                      )
+              )
         )
     )
 
