@@ -43,7 +43,10 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Introspection spec" do
   let
     url :: String
-    url = "https://countries.trevorblades.com/"
+    -- url = "http://elm-graphql-normalize.herokuapp.com/"
+    -- url = "https://countries.trevorblades.com/"
+    -- url = "https://swapi.graph.cool/"
+    url = "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
 
     query :: String
     query = Fernet.GraphQL.WriteGraphQL.writeGQL $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
@@ -55,7 +58,7 @@ spec = Test.Spec.it "Introspection spec" do
   (actualJson :: Json) <- gqlRequestImpl url query
     >>= (throwError <<< error <<< printGraphqlError) \/ (\(x :: { data :: Json }) -> pure x.data)
 
-  traceM expectedJson
+  -- traceM expectedJson
   traceM actualJson
 
   actualJson `jsonShouldEqual` expectedJson

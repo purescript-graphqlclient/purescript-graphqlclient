@@ -25,72 +25,14 @@ exports.introspectionQueryForGraphqlClient = `query IntrospectionQuery($includeD
     kind
     name
     description
-    fields(includeDeprecated: $includeDeprecated) {
-      name
-      description
-      args {
-        ...InputValue
-      }
-      type {
-        ...TypeRef
-      }
-      isDeprecated
-      deprecationReason
-    }
-    inputFields {
-      ...InputValue
-    }
-    interfaces {
-      ...TypeRef
-    }
     enumValues(includeDeprecated: $includeDeprecated) {
       name
       description
       isDeprecated
       deprecationReason
     }
-    possibleTypes {
-      ...TypeRef
-    }
   }
-  fragment InputValue on __InputValue {
-    name
-    description
-    type { ...TypeRef }
-    defaultValue
-  }
-  fragment TypeRef on __Type {
-    kind
-    name
-    ofType {
-      kind
-      name
-      ofType {
-        kind
-        name
-        ofType {
-          kind
-          name
-          ofType {
-            kind
-            name
-            ofType {
-              kind
-              name
-              ofType {
-                kind
-                name
-                ofType {
-                  kind
-                  name
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }`
+`
 
 exports._requestGraphqlUsingGraphqlClient = function (queryString, graphqlUrl, includeDeprecated) {
   return function (onError, onSuccess) {

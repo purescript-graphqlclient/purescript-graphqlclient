@@ -23,6 +23,9 @@ data RawField
 data SelectionSet (return :: # Type) onQuery
   = SelectionSet (Array RawField)
 
+-- instance selectionSetString :: Semigroup String where
+--   append = concatString
+
 combine ::
   forall r1 r2 r3 p.
   (Union r1 r2 r3) =>

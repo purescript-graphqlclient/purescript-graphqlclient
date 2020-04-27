@@ -1,149 +1,73 @@
 module Fernet.Introspection.IntrospectionSchema where
 
-import Protolude
+import Protolude hiding ((<|>))
 
-import Fernet.GraphQL.SelectionSet ((<|>), SelectionSet, RootQuery)
+import Fernet.GraphQL.SelectionSet
 
-import Fernet.Introspection.Schema.Field as Field
-import Fernet.Introspection.Schema.Query (schema)
-import Fernet.Introspection.Schema.Schema (types)
-import Fernet.Introspection.Schema.Type as Type
-import Fernet.Introspection.Schema.InputValue as InputValue
-import Fernet.Introspection.Schema.Types (InputValue(..), Type(..))
-import Fernet.Introspection.Schema.TypeKind as TypeKind
-
-type FieldResult
-  = { name :: String
-    , type ::
-      { name :: Maybe String
-      , kind :: TypeKind.TypeKind
-      }
-    }
-
-type TypeResult
-  = { name :: Maybe String
-    , kind :: TypeKind.TypeKind
-    , fields :: Maybe (Array FieldResult)
-    }
-
-type Result
+type InstorpectionQueryResult
   = ( __schema ::
-      { types ::
-        Array TypeResult
+      { queryType :: { name :: String }
+      , mutationType :: Maybe { name :: String }
+      , subscriptionType :: Maybe { name :: String }
+      , types :: Array InstorpectionQueryResult__FullType
       }
     )
 
-typeRefSelection ::
-  SelectionSet
-    ( kind :: TypeKind.TypeKind
-    , name :: Maybe String
-    , ofType ::
-      { kind :: TypeKind.TypeKind
-      , name :: Maybe String
-      , ofType ::
-        { kind :: TypeKind.TypeKind
-        , name :: Maybe String
-        , ofType ::
-          { kind :: TypeKind.TypeKind
-          , name :: Maybe String
-          , ofType ::
-            { kind :: TypeKind.TypeKind
-            , name :: Maybe String
-            , ofType ::
-              { kind :: TypeKind.TypeKind
-              , name :: Maybe String
-              , ofType ::
-                { kind :: TypeKind.TypeKind
-                , name :: Maybe String
-                }
-              }
-            }
-          }
-        }
-      }
-    )
-    Type
-typeRefSelection =
-  Type.kind
-    <|> Type.name
-    <|> Type.ofType
-        ( Type.kind
-            <|> Type.name
-            <|> Type.ofType
-                ( Type.kind
-                    <|> Type.name
-                    <|> Type.ofType
-                        ( Type.kind
-                            <|> Type.name
-                            <|> Type.ofType
-                                ( Type.kind
-                                    <|> Type.name
-                                    <|> Type.ofType
-                                        ( Type.kind
-                                            <|> Type.name
-                                            <|> Type.ofType
-                                                ( Type.kind
-                                                    <|> Type.name
-                                                )
-                                        )
-                                )
-                        )
-                )
-        )
+type InstorpectionQueryResult__FullType
+  = { kind :: String
+    , name :: String
+    , description :: String
+    -- , enumValues ::
+    --   { name :: String
+    --   , description :: String
+    --   , isDeprecated :: String
+    --   , deprecationReason :: String
+    --   }
+    }
 
-inputValueSelection ::
-  SelectionSet
-    ( defaultValue :: Maybe String
-    , desciption :: Maybe String
-    , name :: Maybe String
-    , type ::
-      { kind :: TypeKind.TypeKind
-      , name :: Maybe String
-      , ofType ::
-        { kind :: TypeKind.TypeKind
-        , name :: Maybe String
-        , ofType ::
-          { kind :: TypeKind.TypeKind
-          , name :: Maybe String
-          , ofType ::
-            { kind :: TypeKind.TypeKind
-            , name :: Maybe String
-            , ofType ::
-              { kind :: TypeKind.TypeKind
-              , name :: Maybe String
-              , ofType ::
-                { kind :: TypeKind.TypeKind
-                , name :: Maybe String
-                , ofType ::
-                  { kind :: TypeKind.TypeKind
-                  , name :: Maybe String
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    )
-    InputValue
-inputValueSelection =
-  InputValue.name
-    <|> InputValue.description
-    <|> (InputValue.type' typeRefSelection)
-    <|> InputValue.defaultValue
+data InstorpectionQueryResult_Schema
+data InstorpectionQueryResult_QueryType
+data InstorpectionQueryResult_MutationType
+data InstorpectionQueryResult_SubscriptionType
+data InstorpectionQueryResult_Types
 
-introspectionQuery :: Boolean -> SelectionSet Result RootQuery
+__schema :: ∀ r.  SelectionSet r InstorpectionQueryResult_Schema -> SelectionSet ( __schema :: Record r ) RootQuery
+__schema (SelectionSet fields) = SelectionSet [ Composite "__schema" [] fields ]
+
+queryType :: ∀ r.  SelectionSet r InstorpectionQueryResult_QueryType -> SelectionSet ( queryType :: Record r ) InstorpectionQueryResult_Schema
+queryType (SelectionSet fields) = SelectionSet [ Composite "queryType" [] fields ]
+
+queryType_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_QueryType
+queryType_name = noArgs "name"
+
+mutationType :: ∀ r.  SelectionSet r InstorpectionQueryResult_MutationType -> SelectionSet ( mutationType :: Maybe (Record r) ) InstorpectionQueryResult_Schema
+mutationType (SelectionSet fields) = SelectionSet [ Composite "mutationType" [] fields ]
+
+mutationType_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_MutationType
+mutationType_name = noArgs "name"
+
+subscriptionType :: ∀ r.  SelectionSet r InstorpectionQueryResult_SubscriptionType -> SelectionSet ( subscriptionType :: Maybe (Record r) ) InstorpectionQueryResult_Schema
+subscriptionType (SelectionSet fields) = SelectionSet [ Composite "subscriptionType" [] fields ]
+
+subscriptionType_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_SubscriptionType
+subscriptionType_name = noArgs "name"
+
+types :: ∀ r.  SelectionSet r InstorpectionQueryResult_Types -> SelectionSet ( types :: Array (Record r) ) InstorpectionQueryResult_Schema
+types (SelectionSet fields) = SelectionSet [ Composite "types" [] fields ]
+
+types_kind :: SelectionSet ( kind :: String ) InstorpectionQueryResult_Types
+types_kind = noArgs "kind"
+
+types_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_Types
+types_name = noArgs "name"
+
+types_description :: SelectionSet ( description :: String ) InstorpectionQueryResult_Types
+types_description = noArgs "description"
+
+introspectionQuery :: Boolean -> SelectionSet InstorpectionQueryResult RootQuery
 introspectionQuery includeDeprecated =
-  schema
-    ( types
-        ( Type.name
-          <|> Type.kind
-          <|> Type.fields (Just includeDeprecated)
-              ( Field.name
-                  <|> Field.type'
-                      ( Type.name
-                          <|> Type.kind
-                      )
-              )
-        )
-    )
+  __schema $
+    queryType queryType_name
+    <|> mutationType mutationType_name
+    <|> subscriptionType subscriptionType_name
+    <|> (types $ types_kind <|> types_name <|> types_description)
