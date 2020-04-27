@@ -1,10 +1,10 @@
-module Fernet.GraphQL.WriteGraphQL where
+module Fernet.Graphql.WriteGraphQL where
 
 import Prelude
 import Data.Int (decimal, toStringAs)
 import Data.Maybe (Maybe(..))
 import Data.String (joinWith)
-import Fernet.GraphQL.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..))
+import Fernet.Graphql.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..))
 
 class WriteGraphQL a where
   writeGQL :: a -> String

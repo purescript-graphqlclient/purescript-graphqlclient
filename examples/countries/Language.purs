@@ -2,7 +2,7 @@ module Fernet.Example.Countries.Language where
 
 import Data.Maybe (Maybe)
 import Fernet.Example.Countries.Types (Language)
-import Fernet.GraphQL.SelectionSet (SelectionSet, noArgs)
+import Fernet.Graphql.SelectionSet (SelectionSet, noArgs)
 
 code :: SelectionSet (code :: Maybe String) Language
 code = noArgs "code"

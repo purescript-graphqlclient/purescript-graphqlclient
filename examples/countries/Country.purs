@@ -2,7 +2,7 @@ module Fernet.Example.Countries.Country where
 
 import Data.Maybe (Maybe)
 import Fernet.Example.Countries.Types (Country, Continent, Language)
-import Fernet.GraphQL.SelectionSet (SelectionSet(..), noArgs, RawField(..))
+import Fernet.Graphql.SelectionSet (SelectionSet(..), noArgs, RawField(..))
 import Type.Data.Row (RProxy(..))
 
 code :: SelectionSet (code :: Maybe String) Country

@@ -2,7 +2,7 @@ module Fernet.Introspection.IntrospectionSchema where
 
 import Protolude hiding ((<|>))
 
-import Fernet.GraphQL.SelectionSet
+import Fernet.Graphql.SelectionSet
 
 type InstorpectionQueryResult
   = ( __schema ::

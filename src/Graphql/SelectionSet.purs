@@ -1,4 +1,4 @@
-module Fernet.GraphQL.SelectionSet where
+module Fernet.Graphql.SelectionSet where
 
 import Prelude
 import Data.Maybe (Maybe)

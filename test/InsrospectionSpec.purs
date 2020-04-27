@@ -16,7 +16,7 @@ import Effect.Aff.Compat (EffectFnAff(..), fromEffectFnAff)
 import Effect.Class.Console (log)
 import Effect.Exception (error)
 import Effect.Uncurried (EffectFn2)
-import Fernet.GraphQL.WriteGraphQL as Fernet.GraphQL.WriteGraphQL
+import Fernet.Graphql.WriteGraphQL as Fernet.Graphql.WriteGraphQL
 import Fernet.HTTP (gqlRequestImpl, printGraphqlError)
 import Fernet.Introspection.IntrospectionSchema (introspectionQuery) as Fernet.Introspection.IntrospectionSchema
 import Test.Spec as Test.Spec
@@ -49,7 +49,7 @@ spec = Test.Spec.it "Introspection spec" do
     url = "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
 
     query :: String
-    query = Fernet.GraphQL.WriteGraphQL.writeGQL $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
+    query = Fernet.Graphql.WriteGraphQL.writeGQL $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
 
     includeDeprecated = false
 

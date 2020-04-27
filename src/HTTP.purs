@@ -29,8 +29,8 @@ import Data.Void as Void
 import Debug.Trace as Debug.Trace
 import Effect.Class.Console as Console
 import Effect.Exception as Exception
-import Fernet.GraphQL.SelectionSet (RootQuery, SelectionSet)
-import Fernet.GraphQL.WriteGraphQL (writeGQL)
+import Fernet.Graphql.SelectionSet (RootQuery, SelectionSet)
+import Fernet.Graphql.WriteGraphQL (writeGQL)
 
 data GraphqlError
   = AffjaxError Affjax.Error
