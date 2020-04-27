@@ -23,23 +23,3 @@ data EnumValue
 
 data InputValue
   = InputValue
-
-data TypeKind
-  = Scalar
-  | Object
-  | Interface
-  | Union
-  | Enum
-  | InputObject
-  | List
-  | NonNull
-
-derive instance eqTypeKind :: Eq TypeKind
-
-derive instance genericTypeKind :: GenericRep.Generic TypeKind _
-
-instance showTypeKind :: Show TypeKind where
-  show = GenericRep.genericShow
-
-instance decodeJsonTypeKind :: ArgonautCodecs.DecodeJson TypeKind where
-  decodeJson = Fernet.Decode.GraphqlEnum.genericDecodeGraphqlEnum

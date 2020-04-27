@@ -6,6 +6,7 @@ import Affjax (post) as Affjax
 import Affjax (printError)
 import Affjax.RequestBody (json) as Affjax.RequestBody
 import Affjax.ResponseFormat (json) as Affjax.ResponseFormat
+import Ansi.Codes as Ansi.Codes
 import Data.Argonaut.Core (Json, stringify)
 import Data.Argonaut.Encode (encodeJson) as ArgonautCodecs
 import Data.Either (Either)
@@ -17,10 +18,9 @@ import Effect.Exception (error)
 import Effect.Uncurried (EffectFn2)
 import Fernet.GraphQL.WriteGraphQL as Fernet.GraphQL.WriteGraphQL
 import Fernet.HTTP (gqlRequestImpl, printGraphqlError)
-import Main as Main
+import Fernet.Introspection.IntrospectionSchema (introspectionQuery) as Fernet.Introspection.IntrospectionSchema
 import Test.Spec as Test.Spec
 import Test.Spec.Assertions (fail, shouldEqual)
-import Ansi.Codes as Ansi.Codes
 
 foreign import _jsonDiffString :: Fn2 Json Json String
 
@@ -46,7 +46,7 @@ spec = Test.Spec.it "Introspection spec" do
     url = "https://countries.trevorblades.com/"
 
     query :: String
-    query = Fernet.GraphQL.WriteGraphQL.writeGQL $ Main.introspectionQuery includeDeprecated
+    query = Fernet.GraphQL.WriteGraphQL.writeGQL $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
 
     includeDeprecated = false
 
