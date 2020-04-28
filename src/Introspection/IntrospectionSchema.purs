@@ -1,17 +1,18 @@
 module Fernet.Introspection.IntrospectionSchema where
 
+import Fernet.Graphql.SelectionSet
 import Protolude hiding ((<|>))
 
-import Fernet.Graphql.SelectionSet
-
 type InstorpectionQueryResult
-  = ( __schema ::
-      { queryType :: { name :: String }
-      , mutationType :: Maybe { name :: String }
-      , subscriptionType :: Maybe { name :: String }
-      , types :: Array InstorpectionQueryResult__FullType
+  = { __schema ::
+      { queryType :: { name :: String, description :: String }
       }
-    )
+    }
+  --     -- , mutationType :: Maybe { name :: String }
+  --     -- , subscriptionType :: Maybe { name :: String }
+  --     -- , types :: Array InstorpectionQueryResult__FullType
+  --     }
+  --   )
 
 type InstorpectionQueryResult__FullType
   = { kind :: String
@@ -31,43 +32,46 @@ data InstorpectionQueryResult_MutationType
 data InstorpectionQueryResult_SubscriptionType
 data InstorpectionQueryResult_Types
 
-__schema :: ∀ r.  SelectionSet r InstorpectionQueryResult_Schema -> SelectionSet ( __schema :: Record r ) RootQuery
-__schema (SelectionSet fields) = SelectionSet [ Composite "__schema" [] fields ]
+__schema :: ∀ r . SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet RootQuery { __schema :: r }
+__schema s = selectionForCompositeField "__schema" [] s (map $ map $ { __schema: _ })
 
-queryType :: ∀ r.  SelectionSet r InstorpectionQueryResult_QueryType -> SelectionSet ( queryType :: Record r ) InstorpectionQueryResult_Schema
-queryType (SelectionSet fields) = SelectionSet [ Composite "queryType" [] fields ]
+queryType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema { queryType :: r }
+queryType s = selectionForCompositeField "queryType" [] s (map $ map $ { queryType: _ })
 
-queryType_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_QueryType
+queryType_name :: SelectionSet InstorpectionQueryResult_QueryType String
 queryType_name = noArgs "name"
 
-mutationType :: ∀ r.  SelectionSet r InstorpectionQueryResult_MutationType -> SelectionSet ( mutationType :: Maybe (Record r) ) InstorpectionQueryResult_Schema
-mutationType (SelectionSet fields) = SelectionSet [ Composite "mutationType" [] fields ]
+queryType_description :: SelectionSet InstorpectionQueryResult_QueryType String
+queryType_description = noArgs "description"
 
-mutationType_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_MutationType
-mutationType_name = noArgs "name"
+-- mutationType :: ∀ r.  SelectionSet r InstorpectionQueryResult_MutationType -> SelectionSet InstorpectionQueryResult_Schema ( mutationType :: Maybe (Record r) )
+-- mutationType (SelectionSet fields) = SelectionSet [ Composite "mutationType" [] fields ]
 
-subscriptionType :: ∀ r.  SelectionSet r InstorpectionQueryResult_SubscriptionType -> SelectionSet ( subscriptionType :: Maybe (Record r) ) InstorpectionQueryResult_Schema
-subscriptionType (SelectionSet fields) = SelectionSet [ Composite "subscriptionType" [] fields ]
+-- mutationType_name :: SelectionSet InstorpectionQueryResult_MutationType ( name :: String )
+-- mutationType_name = noArgs "name"
 
-subscriptionType_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_SubscriptionType
-subscriptionType_name = noArgs "name"
+-- subscriptionType :: ∀ r.  SelectionSet r InstorpectionQueryResult_SubscriptionType -> SelectionSet InstorpectionQueryResult_Schema ( subscriptionType :: Maybe (Record r) )
+-- subscriptionType (SelectionSet fields) = SelectionSet [ Composite "subscriptionType" [] fields ]
 
-types :: ∀ r.  SelectionSet r InstorpectionQueryResult_Types -> SelectionSet ( types :: Array (Record r) ) InstorpectionQueryResult_Schema
-types (SelectionSet fields) = SelectionSet [ Composite "types" [] fields ]
+-- subscriptionType_name :: SelectionSet InstorpectionQueryResult_SubscriptionType ( name :: String )
+-- subscriptionType_name = noArgs "name"
 
-types_kind :: SelectionSet ( kind :: String ) InstorpectionQueryResult_Types
-types_kind = noArgs "kind"
+-- types :: ∀ r.  SelectionSet r InstorpectionQueryResult_Types -> SelectionSet InstorpectionQueryResult_Schema ( types :: Array (Record r) )
+-- types (SelectionSet fields) = SelectionSet [ Composite "types" [] fields ]
 
-types_name :: SelectionSet ( name :: String ) InstorpectionQueryResult_Types
-types_name = noArgs "name"
+-- types_kind :: SelectionSet InstorpectionQueryResult_Types ( kind :: String )
+-- types_kind = noArgs "kind"
 
-types_description :: SelectionSet ( description :: String ) InstorpectionQueryResult_Types
-types_description = noArgs "description"
+-- types_name :: SelectionSet InstorpectionQueryResult_Types ( name :: String )
+-- types_name = noArgs "name"
 
-introspectionQuery :: Boolean -> SelectionSet InstorpectionQueryResult RootQuery
-introspectionQuery includeDeprecated =
-  __schema $
-    queryType queryType_name
-    <|> mutationType mutationType_name
-    <|> subscriptionType subscriptionType_name
-    <|> (types $ types_kind <|> types_name <|> types_description)
+-- types_description :: SelectionSet RootQuery String
+-- types_description = noArgs "description"
+
+introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
+introspectionQuery includeDeprecated = __schema $ queryType $ map2 (\x y -> { name: x, description: y }) queryType_name queryType_description
+  -- __schema $
+  --   queryType queryType_name
+  --   <|> mutationType mutationType_name
+  --   <|> subscriptionType subscriptionType_name
+  --   <|> (types $ types_kind <|> types_name <|> types_description)

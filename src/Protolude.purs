@@ -3,6 +3,7 @@
 module Protolude
   ( (\/), traceId --, (|>), (<|), (||>), (<||)
   , type ($), type (#), type (<<<), type (>>>)
+  , undefined
   , Apply, ApplyFlipped, Compose, ComposeFlipped
   , module Prelude
   , module Control.Alt
@@ -66,7 +67,7 @@ import Data.Bitraversable (class Bitraversable, bitraverse, bisequence, bifor)
 import Data.Const (Const(..))
 import Data.Either (Either(..), either, isLeft, isRight, fromRight)
 import Data.Either.Nested (type (\/))
-import Data.Foldable (class Foldable, traverse_, for_, foldMap, foldl, foldr, fold)
+import Data.Foldable (class Foldable, traverse_, for_, foldMap, foldl, foldr, fold, intercalate)
 import Data.Functor (($>), (<$))
 import Data.Functor.Coproduct (Coproduct, coproduct, left, right)
 import Data.Generic.Rep (class Generic)
@@ -89,22 +90,27 @@ import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Aff (Aff, launchAff)
 import Effect.Aff.Class (class MonadAff, liftAff)
 
-import Debug.Trace as DebugTrace
-import Data.Function as DataFunction
-import Data.Functor as DataFunctor
+import Debug.Trace as Internal.DebugTrace
+import Unsafe.Coerce as Internal.Unsafe.Coerce
+import Prim.TypeError as Internal.Prim.TypeError
 
 infixr 5 either as \/
 
-traceId :: ∀ a . DebugTrace.DebugWarning => a -> a
+traceId :: ∀ a . Internal.DebugTrace.DebugWarning => a -> a
 traceId a = trace a (const a)
 
--- infixr 0 DataFunction.apply as <|
+undefined :: ∀ a. (Internal.Prim.TypeError.Warn (Internal.Prim.TypeError.Text "undefined usage")) => a
+undefined = Internal.Unsafe.Coerce.unsafeCoerce unit
+
+-- import Data.Function as Internal.DataFunction
+-- import Data.Functor as Internal.DataFunctor
+-- infixr 0 Internal.DataFunction.apply as <|
 -- infixr 0 apply as $
--- infixl 1 DataFunction.applyFlipped as |>
+-- infixl 1 Internal.DataFunction.applyFlipped as |>
 -- infixl 1 applyFlipped as #
--- infixl 4 DataFunctor.map as <||
+-- infixl 4 Internal.DataFunctor.map as <||
 -- infixl 4 map as <$>
--- infixl 4 DataFunctor.mapFlipped as ||>
+-- infixl 4 Internal.DataFunctor.mapFlipped as ||>
 -- infixl 1 mapFlipped as <#>
 
 type Compose f g a = f (g a)

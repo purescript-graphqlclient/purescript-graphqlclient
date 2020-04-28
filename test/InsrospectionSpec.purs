@@ -16,7 +16,8 @@ import Effect.Aff.Compat (EffectFnAff(..), fromEffectFnAff)
 import Effect.Class.Console (log)
 import Effect.Exception (error)
 import Effect.Uncurried (EffectFn2)
-import Fernet.Graphql.WriteGraphQL as Fernet.Graphql.WriteGraphQL
+import Fernet.Graphql.SelectionSet (SelectionSet(..))
+import Fernet.Graphql.WriteGraphql as Fernet.Graphql.WriteGraphql
 import Fernet.HTTP (gqlRequestImpl, printGraphqlError)
 import Fernet.Introspection.IntrospectionSchema (introspectionQuery) as Fernet.Introspection.IntrospectionSchema
 import Test.Spec as Test.Spec
@@ -49,14 +50,17 @@ spec = Test.Spec.it "Introspection spec" do
     url = "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
 
     query :: String
-    query = Fernet.Graphql.WriteGraphQL.writeGQL $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
+    query = Fernet.Graphql.WriteGraphql.writeGraphql $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
+
+    -- decoder = let (SelectionSet fields decoder) = Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated in decoder
+    decoder = identity >>> pure
 
     includeDeprecated = false
 
   expectedJson <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
 
-  (actualJson :: Json) <- gqlRequestImpl url query
-    >>= (throwError <<< error <<< printGraphqlError) \/ (\(x :: { data :: Json }) -> pure x.data)
+  (actualJson :: Json) <- gqlRequestImpl url query decoder
+    >>= (throwError <<< error <<< printGraphqlError) \/ pure
 
   -- traceM expectedJson
   traceM actualJson

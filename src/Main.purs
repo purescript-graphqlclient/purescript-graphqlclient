@@ -11,7 +11,6 @@ import Data.Symbol (SProxy(..))
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Effect.Class.Console (logShow, log)
-import Fernet.Graphql.WriteGraphQL (writeGQL)
 import Fernet.HTTP (gqlRequest, printGraphqlError)
 import Fernet.Introspection.IntrospectionSchema as Fernet.Introspection.IntrospectionSchema
 -- import Fernet.Introspection.Schema.Field as Fernet.Introspection.Schema.Field
