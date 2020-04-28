@@ -3,12 +3,16 @@ module Fernet.Introspection.IntrospectionSchema where
 import Fernet.Graphql.SelectionSet
 import Protolude hiding ((<|>))
 
+import Data.Argonaut.Core (Json) as ArgonautCore
+import Data.Argonaut.Decode as ArgonautCodec
+
 type InstorpectionQueryResult
   = { __schema ::
       { queryType :: { name :: String, description :: String }
+      -- , mutationType :: Maybe { name :: String }
       }
     }
-  --     -- , mutationType :: Maybe { name :: String }
+  --     --
   --     -- , subscriptionType :: Maybe { name :: String }
   --     -- , types :: Array InstorpectionQueryResult__FullType
   --     }
@@ -41,6 +45,16 @@ queryType s = selectionForCompositeField "queryType" [] s (map $ map $ { queryTy
 queryType_name :: SelectionSet InstorpectionQueryResult_QueryType String
 queryType_name = noArgs "name"
 
+mutationType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema { mutationType :: Maybe r }
+mutationType s = selectionForCompositeField "mutationType" [] s (\childDecoder -> \json -> do
+  (x :: Maybe ArgonautCore.Json) <- ArgonautCodec.decodeJson json
+  (x' :: Maybe r) <- traverse childDecoder x
+  pure { mutationType: x' }
+  )
+
+mutationType_name :: SelectionSet InstorpectionQueryResult_QueryType String
+mutationType_name = noArgs "name"
+
 queryType_description :: SelectionSet InstorpectionQueryResult_QueryType String
 queryType_description = noArgs "description"
 
@@ -69,7 +83,7 @@ queryType_description = noArgs "description"
 -- types_description = noArgs "description"
 
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
-introspectionQuery includeDeprecated = __schema $ queryType $ map2 (\x y -> { name: x, description: y }) queryType_name queryType_description
+introspectionQuery includeDeprecated = __schema $ queryType $ { name: _, description: _ } <$> queryType_name <*> queryType_description
   -- __schema $
   --   queryType queryType_name
   --   <|> mutationType mutationType_name
