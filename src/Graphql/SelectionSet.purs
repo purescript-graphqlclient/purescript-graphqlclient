@@ -1,8 +1,11 @@
 module Fernet.Graphql.SelectionSet where
 
+import Data.Argonaut.Decode.Combinators
 import Protolude
 
+import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Core as Data.Argonaut.Core
+import Data.Argonaut.Decode (decodeJson) as ArgonautCodec
 import Data.Argonaut.Decode as Data.Argonaut.Decode
 import Data.Maybe (Maybe)
 import Data.Semigroup (class Semigroup)
@@ -52,8 +55,8 @@ map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
         (selectionFields1 <> selectionFields2)
         (\json -> combine <$> (selectionDecoder1 json) <*> (selectionDecoder2 json))
 
-noArgs :: forall parentTypeLock a . Data.Argonaut.Decode.DecodeJson a => String -> SelectionSet parentTypeLock a
-noArgs name = SelectionSet [ Leaf name [] ] Data.Argonaut.Decode.decodeJson
+selectionForField :: forall parentTypeLock a . Data.Argonaut.Decode.DecodeJson a => String -> SelectionSet parentTypeLock a
+selectionForField name = SelectionSet [ Leaf name [] ] Data.Argonaut.Decode.decodeJson
 
 selectionForCompositeField
   :: forall lockedTo objectTypeLock a b
@@ -63,7 +66,11 @@ selectionForCompositeField
   -> (Decoder a -> Decoder b)
   -> SelectionSet lockedTo b
 selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderTransform =
-    SelectionSet [ Composite fieldName args fields ] (decoderTransform decoder)
+  SelectionSet [ Composite fieldName args fields ] (\json -> do
+               jsonObject <- ArgonautCodec.decodeJson json
+               (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
+               decoderTransform decoder $ fieldJson
+  )
 
 -- noArgsWithCustomDecoder :: forall parentTypeLock a . Data.Argonaut.Decode.DecodeJson a => String -> SelectionSet parentTypeLock a
 -- noArgsWithCustomDecoder name = SelectionSet [ Leaf name [] ] Data.Argonaut.Decode.decodeJson
