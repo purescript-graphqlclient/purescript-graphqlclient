@@ -19,7 +19,7 @@ type InstorpectionQueryResult
 type InstorpectionQueryResult__FullType
   = { kind :: String
     , name :: String
-    , description :: Maybe String
+    , description :: String
     -- , enumValues ::
     --   { name :: String
     --   , description :: String
@@ -76,7 +76,7 @@ introspectionQuery includeDeprecated =
     queryType'        <- queryType $ { name: _ } <$> queryType_name
     mutationType'     <- mutationType $ { name: _ } <$> mutationType_name
     subscriptionType' <- subscriptionType $ { name: _ } <$> subscriptionType_name
-    types'            <- types $ { kind: _, name: _, description: _ } <$> types_kind <*> types_name <*> types_description
+    types'            <- types $ { kind: _, name: _, description: _ } <$> types_kind <*> types_name <*> (types_description <#> fromMaybe "")
     in { __schema:
           { queryType: queryType'
           , mutationType: mutationType'
