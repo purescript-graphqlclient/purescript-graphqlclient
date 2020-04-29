@@ -4,7 +4,7 @@ module Protolude
   ( (\/), traceId --, (|>), (<|), (||>), (<||)
   , type ($), type (#), type (<<<), type (>>>)
   , undefined
-  , traceWithoutInspect, traceWithoutInspectId, traceWithoutInspectM
+  , traceWithoutInspect, traceWithoutInspectId, traceWithoutInspectM, spyM
   , Apply, ApplyFlipped, Compose, ComposeFlipped
   , module Prelude
   , module Control.Alt
@@ -101,6 +101,7 @@ traceId :: ∀ a . Internal.DebugTrace.DebugWarning => a -> a
 traceId a = trace a (const a)
 
 foreign import traceWithoutInspect :: forall a b. Internal.DebugTrace.DebugWarning => a -> (Unit -> b) -> b
+foreign import spyWithCallback :: forall a b. Internal.DebugTrace.DebugWarning => String -> a -> (Unit -> b) -> b
 
 traceWithoutInspectId :: ∀ a . Internal.DebugTrace.DebugWarning => a -> a
 traceWithoutInspectId a = traceWithoutInspect a (const a)
@@ -109,6 +110,11 @@ traceWithoutInspectM :: forall m a. Internal.DebugTrace.DebugWarning => Monad m 
 traceWithoutInspectM s = do
   pure unit
   traceWithoutInspect s \_ -> pure unit
+
+spyM :: forall m a. Internal.DebugTrace.DebugWarning => Monad m => String -> a -> m Unit
+spyM s a = do
+  pure unit
+  spyWithCallback s a \_ -> pure unit
 
 undefined :: ∀ a. (Internal.Prim.TypeError.Warn (Internal.Prim.TypeError.Text "undefined usage")) => a
 undefined = Internal.Unsafe.Coerce.unsafeCoerce unit

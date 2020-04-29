@@ -10,7 +10,7 @@ class WriteGraphql a where
   writeGraphql :: a -> String
 
 instance writeGraphQlSelectionSet :: WriteGraphql (SelectionSet RootQuery a) where
-  writeGraphql (SelectionSet fields _decoder) = "query " <> writeGraphql fields
+  writeGraphql (SelectionSet fields _decoder) = "query" <> writeGraphql fields
 
 instance writeGraphQlRawField :: WriteGraphql RawField where
   writeGraphql field = case field of

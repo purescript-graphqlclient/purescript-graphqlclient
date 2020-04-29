@@ -9,15 +9,12 @@ import Data.Identity
 
 type InstorpectionQueryResult
   = { __schema ::
-      { queryType :: { name :: String, description :: String }
-      , mutationType :: Maybe { name :: String }
+      { queryType :: { name :: String }
+      -- , mutationType :: Maybe { name :: String }
+      -- , subscriptionType :: Maybe { name :: String }
+      -- , types :: Array InstorpectionQueryResult__FullType
       }
     }
-  --     --
-  --     -- , subscriptionType :: Maybe { name :: String }
-  --     -- , types :: Array InstorpectionQueryResult__FullType
-  --     }
-  --   )
 
 type InstorpectionQueryResult__FullType
   = { kind :: String
@@ -55,17 +52,11 @@ mutationType s = selectionForCompositeField "mutationType" [] s
 mutationType_name :: SelectionSet InstorpectionQueryResult_QueryType String
 mutationType_name = selectionForField "name"
 
--- mutationType :: ∀ r.  SelectionSet r InstorpectionQueryResult_MutationType -> SelectionSet InstorpectionQueryResult_Schema ( mutationType :: Maybe (Record r) )
--- mutationType (SelectionSet fields) = SelectionSet [ Composite "mutationType" [] fields ]
+subscriptionType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
+subscriptionType s = selectionForCompositeField "subscriptionType" [] s
 
--- mutationType_name :: SelectionSet InstorpectionQueryResult_MutationType ( name :: String )
--- mutationType_name = selectionForField "name"
-
--- subscriptionType :: ∀ r.  SelectionSet r InstorpectionQueryResult_SubscriptionType -> SelectionSet InstorpectionQueryResult_Schema ( subscriptionType :: Maybe (Record r) )
--- subscriptionType (SelectionSet fields) = SelectionSet [ Composite "subscriptionType" [] fields ]
-
--- subscriptionType_name :: SelectionSet InstorpectionQueryResult_SubscriptionType ( name :: String )
--- subscriptionType_name = selectionForField "name"
+subscriptionType_name :: SelectionSet InstorpectionQueryResult_QueryType String
+subscriptionType_name = selectionForField "name"
 
 -- types :: ∀ r.  SelectionSet r InstorpectionQueryResult_Types -> SelectionSet InstorpectionQueryResult_Schema ( types :: Array (Record r) )
 -- types (SelectionSet fields) = SelectionSet [ Composite "types" [] fields ]
@@ -82,14 +73,15 @@ mutationType_name = selectionForField "name"
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
 introspectionQuery includeDeprecated =
   __schema ado
-    mt <- mutationType ado
-      mt_name <- mutationType_name
-      in { name: mt_name }
-    qt <- queryType ado
-      qt_name <- queryType_name
-      qt_description <- queryType_description
-      in { name: qt_name, description: qt_description }
-    in { __schema: { mutationType: mt, queryType: qt } }
+    queryType'        <- queryType $ { name: _ } <$> queryType_name
+    -- mutationType'     <- mutationType $ { name: _ } <$> mutationType_name
+    -- subscriptionType' <- subscriptionType $ { name: _ } <$> subscriptionType_name
+    in { __schema:
+          { queryType: queryType'
+          -- , mutationType: mutationType'
+          -- , subscriptionType: subscriptionType'
+          }
+       }
 
   -- (queryType $ { name: _, description: _ } <$> queryType_name <*> queryType_description)
 

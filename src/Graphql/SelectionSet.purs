@@ -55,7 +55,13 @@ instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
 --         (\json -> combine <$> (selectionDecoder1 json) <*> (selectionDecoder2 json))
 
 selectionForField :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
-selectionForField name = SelectionSet [ Leaf name [] ] ArgonautCodec.decodeJson
+selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
+    -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
+    jsonObject <- ArgonautCodec.decodeJson json
+    -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
+    (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
+    ArgonautCodec.decodeJson fieldJson
+  )
 
 class DecoderTransformer b a | b -> a where
   myDecoderTransformer :: Decoder a -> Decoder b
@@ -63,11 +69,15 @@ class DecoderTransformer b a | b -> a where
 -- for lists and maybes
 instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer (f a) a where
   myDecoderTransformer childDecoder json = do
+    -- spyM "traversableDecoderTransformer json" json
     (x :: f ArgonautCore.Json) <- ArgonautCodec.decodeJson json
+    -- spyM "traversableDecoderTransformer json" x
     traverse childDecoder x
 
 else instance idDecoderTransformer :: DecoderTransformer a a where
-  myDecoderTransformer = identity
+  myDecoderTransformer = \childDecoder -> \json -> do
+     -- spyM "idDecoderTransformer json" json
+     childDecoder json
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
@@ -78,9 +88,11 @@ selectionForCompositeField
   -> SelectionSet lockedTo b
 selectionForCompositeField fieldName args (SelectionSet fields childDecoder) =
   SelectionSet [ Composite fieldName args fields ] (\json -> do
+    -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
     jsonObject <- ArgonautCodec.decodeJson json
+    -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
     (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
-    myDecoderTransformer childDecoder $ fieldJson
+    myDecoderTransformer childDecoder fieldJson
   )
 
 -- noArgsWithCustomDecoder :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
