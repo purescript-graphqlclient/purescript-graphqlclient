@@ -5,8 +5,7 @@ import Protolude
 
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Core as Data.Argonaut.Core
-import Data.Argonaut.Decode (decodeJson) as ArgonautCodec
-import Data.Argonaut.Decode as Data.Argonaut.Decode
+import Data.Argonaut.Decode as ArgonautCodec
 import Data.Maybe (Maybe)
 import Data.Semigroup (class Semigroup)
 import Type.Row (class Nub, class Union)
@@ -55,24 +54,26 @@ instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
 --         (selectionFields1 <> selectionFields2)
 --         (\json -> combine <$> (selectionDecoder1 json) <*> (selectionDecoder2 json))
 
-selectionForField :: forall parentTypeLock a . Data.Argonaut.Decode.DecodeJson a => String -> SelectionSet parentTypeLock a
-selectionForField name = SelectionSet [ Leaf name [] ] Data.Argonaut.Decode.decodeJson
+selectionForField :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
+selectionForField name = SelectionSet [ Leaf name [] ] ArgonautCodec.decodeJson
 
 selectionForCompositeField
-  :: forall lockedTo objectTypeLock a b
-   . String
+  :: forall lockedTo objectTypeLock a f x
+   . ArgonautCodec.DecodeJson (f ArgonautCore.Json)
+  => Traversable f
+  => String
   -> Array Argument
   -> SelectionSet objectTypeLock a
-  -> (Decoder a -> Decoder b)
-  -> SelectionSet lockedTo b
-selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderTransform =
+  -> SelectionSet lockedTo (f a)
+selectionForCompositeField fieldName args (SelectionSet fields childDecoder) =
   SelectionSet [ Composite fieldName args fields ] (\json -> do
                jsonObject <- ArgonautCodec.decodeJson json
                (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
-               decoderTransform decoder $ fieldJson
+               (fjson :: f ArgonautCore.Json) <- (ArgonautCodec.decodeJson :: ArgonautCore.Json -> Either String (f ArgonautCore.Json)) fieldJson
+               traverse childDecoder fjson
   )
 
--- noArgsWithCustomDecoder :: forall parentTypeLock a . Data.Argonaut.Decode.DecodeJson a => String -> SelectionSet parentTypeLock a
--- noArgsWithCustomDecoder name = SelectionSet [ Leaf name [] ] Data.Argonaut.Decode.decodeJson
+-- noArgsWithCustomDecoder :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
+-- noArgsWithCustomDecoder name = SelectionSet [ Leaf name [] ] ArgonautCodec.decodeJson
 
 data RootQuery = RootQuery
