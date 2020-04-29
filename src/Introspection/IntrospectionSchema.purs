@@ -1,25 +1,25 @@
 module Fernet.Introspection.IntrospectionSchema where
 
+import Data.Identity
 import Fernet.Graphql.SelectionSet
 import Protolude hiding ((<|>))
 
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Decode as ArgonautCodec
-import Data.Identity
 
 type InstorpectionQueryResult
   = { __schema ::
       { queryType :: { name :: String }
-      -- , mutationType :: Maybe { name :: String }
-      -- , subscriptionType :: Maybe { name :: String }
-      -- , types :: Array InstorpectionQueryResult__FullType
+      , mutationType :: Maybe { name :: String }
+      , subscriptionType :: Maybe { name :: String }
+      , types :: Array InstorpectionQueryResult__FullType
       }
     }
 
 type InstorpectionQueryResult__FullType
   = { kind :: String
     , name :: String
-    , description :: String
+    , description :: Maybe String
     -- , enumValues ::
     --   { name :: String
     --   , description :: String
@@ -46,40 +46,42 @@ queryType_name = selectionForField "name"
 queryType_description :: SelectionSet InstorpectionQueryResult_QueryType String
 queryType_description = selectionForField "description"
 
-mutationType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
+mutationType :: ∀ r . SelectionSet InstorpectionQueryResult_MutationType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
 mutationType s = selectionForCompositeField "mutationType" [] s
 
-mutationType_name :: SelectionSet InstorpectionQueryResult_QueryType String
+mutationType_name :: SelectionSet InstorpectionQueryResult_MutationType String
 mutationType_name = selectionForField "name"
 
-subscriptionType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
+subscriptionType :: ∀ r . SelectionSet InstorpectionQueryResult_SubscriptionType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
 subscriptionType s = selectionForCompositeField "subscriptionType" [] s
 
-subscriptionType_name :: SelectionSet InstorpectionQueryResult_QueryType String
+subscriptionType_name :: SelectionSet InstorpectionQueryResult_SubscriptionType String
 subscriptionType_name = selectionForField "name"
 
--- types :: ∀ r.  SelectionSet r InstorpectionQueryResult_Types -> SelectionSet InstorpectionQueryResult_Schema ( types :: Array (Record r) )
--- types (SelectionSet fields) = SelectionSet [ Composite "types" [] fields ]
+types :: ∀ r . SelectionSet InstorpectionQueryResult_Types r -> SelectionSet InstorpectionQueryResult_Schema (Array r)
+types s = selectionForCompositeField "types" [] s
 
--- types_kind :: SelectionSet InstorpectionQueryResult_Types ( kind :: String )
--- types_kind = selectionForField "kind"
+types_kind :: SelectionSet InstorpectionQueryResult_Types String
+types_kind = selectionForField "kind"
 
--- types_name :: SelectionSet InstorpectionQueryResult_Types ( name :: String )
--- types_name = selectionForField "name"
+types_name :: SelectionSet InstorpectionQueryResult_Types String
+types_name = selectionForField "name"
 
--- types_description :: SelectionSet RootQuery String
--- types_description = selectionForField "description"
+types_description :: SelectionSet InstorpectionQueryResult_Types (Maybe String)
+types_description = selectionForField "description"
 
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
 introspectionQuery includeDeprecated =
   __schema ado
     queryType'        <- queryType $ { name: _ } <$> queryType_name
-    -- mutationType'     <- mutationType $ { name: _ } <$> mutationType_name
-    -- subscriptionType' <- subscriptionType $ { name: _ } <$> subscriptionType_name
+    mutationType'     <- mutationType $ { name: _ } <$> mutationType_name
+    subscriptionType' <- subscriptionType $ { name: _ } <$> subscriptionType_name
+    types'            <- types $ { kind: _, name: _, description: _ } <$> types_kind <*> types_name <*> types_description
     in { __schema:
           { queryType: queryType'
-          -- , mutationType: mutationType'
-          -- , subscriptionType: subscriptionType'
+          , mutationType: mutationType'
+          , subscriptionType: subscriptionType'
+          , types: types'
           }
        }
 
