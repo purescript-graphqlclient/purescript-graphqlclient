@@ -37,15 +37,11 @@ data InstorpectionQueryResult_MutationType
 data InstorpectionQueryResult_SubscriptionType
 data InstorpectionQueryResult_Types
 
--- __schema
---   :: ∀ r
---    . ArgonautCodec.DecodeJson (Identity ArgonautCore.Json)
---   => SelectionSet InstorpectionQueryResult_Schema r
---   -> SelectionSet RootQuery (Identity r)
--- __schema s = selectionForCompositeField "__schema" [] s
+__schema :: ∀ r . SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet RootQuery r
+__schema s = selectionForCompositeField "__schema" [] s
 
--- queryType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema (Identity r)
--- queryType s = selectionForCompositeField "queryType" [] s
+queryType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema r
+queryType s = selectionForCompositeField "queryType" [] s
 
 queryType_name :: SelectionSet InstorpectionQueryResult_QueryType String
 queryType_name = selectionForField "name"
@@ -84,16 +80,16 @@ mutationType_name = selectionForField "name"
 -- types_description = selectionForField "description"
 
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
-introspectionQuery includeDeprecated = undefined
-  -- map unwrap $ __schema ado
-  --   mt <- mutationType ado
-  --     mt_name <- mutationType_name
-  --     in { name: mt_name }
-  --   qt <- map unwrap $ queryType ado
-  --     qt_name <- queryType_name
-  --     qt_description <- queryType_description
-  --     in { name: qt_name, description: qt_description }
-  --   in { __schema: { mutationType: mt, queryType: qt } }
+introspectionQuery includeDeprecated =
+  __schema ado
+    mt <- mutationType ado
+      mt_name <- mutationType_name
+      in { name: mt_name }
+    qt <- queryType ado
+      qt_name <- queryType_name
+      qt_description <- queryType_description
+      in { name: qt_name, description: qt_description }
+    in { __schema: { mutationType: mt, queryType: qt } }
 
   -- (queryType $ { name: _, description: _ } <$> queryType_name <*> queryType_description)
 
@@ -103,35 +99,3 @@ introspectionQuery includeDeprecated = undefined
   --   <|> subscriptionType subscriptionType_name
   --   <|> (types $ types_kind <|> types_name <|> types_description)
 
-
-
-
-class MyClass a where
-  decoder :: String -> a
-
-instance stringMyClass :: MyClass String where
-  decoder s = s
-
-instance intMyClass :: MyClass Int where
-  decoder _ = 1
-
-newtype MyWrapper x = MyWrapper x
-
-instance mywrapperMyClass :: MyClass a => MyClass (MyWrapper a) where
-  decoder s = MyWrapper (decoder s)
-
-instance identityMyClass :: MyClass a => MyClass (Identity a) where
-  decoder s = Identity (decoder s)
-
-data DecoderCarrier a = DecoderCarrier (String -> a)
-
-mkDecoderCarrier :: ∀ x . MyClass x => DecoderCarrier x
-mkDecoderCarrier = DecoderCarrier decoder
-
-mkDecoderCarrierUsingChild :: ∀ a f . MyClass (f String) => Functor f => DecoderCarrier a -> DecoderCarrier (f a)
-mkDecoderCarrierUsingChild (DecoderCarrier mydecoder) = DecoderCarrier (\s -> let (fs :: f String) = decoder s in map mydecoder fs)
-
-someotherfunc :: ∀ r . MyClass (r) => DecoderCarrier (Identity r)
-someotherfunc = mkDecoderCarrierUsingChild (mkDecoderCarrier)
-
-test = (someotherfunc :: DecoderCarrier (Identity Int))

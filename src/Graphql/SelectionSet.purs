@@ -57,20 +57,30 @@ instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
 selectionForField :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
 selectionForField name = SelectionSet [ Leaf name [] ] ArgonautCodec.decodeJson
 
+class DecoderTransformer b a | b -> a where
+  myDecoderTransformer :: Decoder a -> Decoder b
+
+-- for lists and maybes
+instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer (f a) a where
+  myDecoderTransformer childDecoder json = do
+    (x :: f ArgonautCore.Json) <- ArgonautCodec.decodeJson json
+    traverse childDecoder x
+
+else instance idDecoderTransformer :: DecoderTransformer a a where
+  myDecoderTransformer = identity
+
 selectionForCompositeField
-  :: forall lockedTo objectTypeLock a f x
-   . ArgonautCodec.DecodeJson (f ArgonautCore.Json)
-  => Traversable f
+  :: forall objectTypeLock lockedTo a b
+   . DecoderTransformer b a
   => String
   -> Array Argument
   -> SelectionSet objectTypeLock a
-  -> SelectionSet lockedTo (f a)
+  -> SelectionSet lockedTo b
 selectionForCompositeField fieldName args (SelectionSet fields childDecoder) =
   SelectionSet [ Composite fieldName args fields ] (\json -> do
-               jsonObject <- ArgonautCodec.decodeJson json
-               (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
-               (fjson :: f ArgonautCore.Json) <- (ArgonautCodec.decodeJson :: ArgonautCore.Json -> Either String (f ArgonautCore.Json)) fieldJson
-               traverse childDecoder fjson
+    jsonObject <- ArgonautCodec.decodeJson json
+    (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
+    myDecoderTransformer childDecoder $ fieldJson
   )
 
 -- noArgsWithCustomDecoder :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
