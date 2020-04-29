@@ -35,10 +35,10 @@ data InstorpectionQueryResult_SubscriptionType
 data InstorpectionQueryResult_Types
 
 __schema :: ∀ r . SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet RootQuery r
-__schema s = selectionForCompositeField "__schema" [] s
+__schema = selectionForCompositeField "__schema" []
 
 queryType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema r
-queryType s = selectionForCompositeField "queryType" [] s
+queryType = selectionForCompositeField "queryType" []
 
 queryType_name :: SelectionSet InstorpectionQueryResult_QueryType String
 queryType_name = selectionForField "name"
@@ -47,19 +47,19 @@ queryType_description :: SelectionSet InstorpectionQueryResult_QueryType String
 queryType_description = selectionForField "description"
 
 mutationType :: ∀ r . SelectionSet InstorpectionQueryResult_MutationType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
-mutationType s = selectionForCompositeField "mutationType" [] s
+mutationType = selectionForCompositeField "mutationType" []
 
 mutationType_name :: SelectionSet InstorpectionQueryResult_MutationType String
 mutationType_name = selectionForField "name"
 
 subscriptionType :: ∀ r . SelectionSet InstorpectionQueryResult_SubscriptionType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
-subscriptionType s = selectionForCompositeField "subscriptionType" [] s
+subscriptionType = selectionForCompositeField "subscriptionType" []
 
 subscriptionType_name :: SelectionSet InstorpectionQueryResult_SubscriptionType String
 subscriptionType_name = selectionForField "name"
 
 types :: ∀ r . SelectionSet InstorpectionQueryResult_Types r -> SelectionSet InstorpectionQueryResult_Schema (Array r)
-types s = selectionForCompositeField "types" [] s
+types = selectionForCompositeField "types" []
 
 types_kind :: SelectionSet InstorpectionQueryResult_Types String
 types_kind = selectionForField "kind"
