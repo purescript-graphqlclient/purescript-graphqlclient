@@ -44,16 +44,16 @@ instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
   apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
 
-map2
-  :: ∀ decodesTo1 decodesTo2 decodesToCombined typeLock
-   . (decodesTo1 -> decodesTo2 -> decodesToCombined)
-  -> SelectionSet typeLock decodesTo1
-  -> SelectionSet typeLock decodesTo2
-  -> SelectionSet typeLock decodesToCombined
-map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
-    SelectionSet
-        (selectionFields1 <> selectionFields2)
-        (\json -> combine <$> (selectionDecoder1 json) <*> (selectionDecoder2 json))
+-- map2
+--   :: ∀ decodesTo1 decodesTo2 decodesToCombined typeLock
+--    . (decodesTo1 -> decodesTo2 -> decodesToCombined)
+--   -> SelectionSet typeLock decodesTo1
+--   -> SelectionSet typeLock decodesTo2
+--   -> SelectionSet typeLock decodesToCombined
+-- map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
+--     SelectionSet
+--         (selectionFields1 <> selectionFields2)
+--         (\json -> combine <$> (selectionDecoder1 json) <*> (selectionDecoder2 json))
 
 selectionForField :: forall parentTypeLock a . Data.Argonaut.Decode.DecodeJson a => String -> SelectionSet parentTypeLock a
 selectionForField name = SelectionSet [ Leaf name [] ] Data.Argonaut.Decode.decodeJson
@@ -75,5 +75,4 @@ selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderT
 -- noArgsWithCustomDecoder :: forall parentTypeLock a . Data.Argonaut.Decode.DecodeJson a => String -> SelectionSet parentTypeLock a
 -- noArgsWithCustomDecoder name = SelectionSet [ Leaf name [] ] Data.Argonaut.Decode.decodeJson
 
-data RootQuery
-  = RootQuery
+data RootQuery = RootQuery

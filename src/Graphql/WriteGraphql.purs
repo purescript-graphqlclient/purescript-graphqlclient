@@ -32,7 +32,7 @@ instance writeGraphQlGqlArgument :: WriteGraphql ArgumentValue where
 
 instance writeGraphQlArrayRawField :: WriteGraphql (Array RawField) where
   writeGraphql [] = ""
-  writeGraphql fields = " { " <> joinWith ", " (writeGraphql <$> fields) <> " } "
+  writeGraphql fields = " { " <> joinWith " " (writeGraphql <$> fields) <> " }"
 
 instance writeGraphQlArrayArgument :: WriteGraphql (Array Argument) where
   writeGraphql [] = ""

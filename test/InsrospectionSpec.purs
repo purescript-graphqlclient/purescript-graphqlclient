@@ -18,7 +18,8 @@ import Effect.Exception (error)
 import Effect.Uncurried (EffectFn2)
 import Fernet.Graphql.SelectionSet (SelectionSet(..))
 import Fernet.Graphql.WriteGraphql as Fernet.Graphql.WriteGraphql
-import Fernet.HTTP (gqlRequestImpl, printGraphqlError)
+import Fernet.HTTP (gqlRequestImplWithTrace)
+import Fernet.HTTP as Fernet.HTTP
 import Fernet.Introspection.IntrospectionSchema (introspectionQuery) as Fernet.Introspection.IntrospectionSchema
 import Test.Spec as Test.Spec
 import Test.Spec.Assertions (fail, shouldEqual)
@@ -59,8 +60,8 @@ spec = Test.Spec.it "Introspection spec" do
 
   expectedJson <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
 
-  (actualJson :: _) <- gqlRequestImpl url query decoder
-    >>= (throwError <<< error <<< printGraphqlError) \/ pure
+  (actualJson :: _) <- Fernet.HTTP.gqlRequestImplWithTrace url query decoder
+    >>= (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
 
   -- traceM expectedJson
   traceM actualJson

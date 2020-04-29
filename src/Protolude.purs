@@ -4,6 +4,7 @@ module Protolude
   ( (\/), traceId --, (|>), (<|), (||>), (<||)
   , type ($), type (#), type (<<<), type (>>>)
   , undefined
+  , traceWithoutInspect, traceWithoutInspectId, traceWithoutInspectM
   , Apply, ApplyFlipped, Compose, ComposeFlipped
   , module Prelude
   , module Control.Alt
@@ -65,7 +66,7 @@ import Data.Bifoldable (class Bifoldable, bitraverse_, bifor_)
 import Data.Bifunctor (class Bifunctor, bimap, lmap, rmap)
 import Data.Bitraversable (class Bitraversable, bitraverse, bisequence, bifor)
 import Data.Const (Const(..))
-import Data.Either (Either(..), either, isLeft, isRight, fromRight)
+import Data.Either (Either(..), either, isLeft, isRight, fromRight, note)
 import Data.Either.Nested (type (\/))
 import Data.Foldable (class Foldable, traverse_, for_, foldMap, foldl, foldr, fold, intercalate)
 import Data.Functor (($>), (<$))
@@ -98,6 +99,16 @@ infixr 5 either as \/
 
 traceId :: ∀ a . Internal.DebugTrace.DebugWarning => a -> a
 traceId a = trace a (const a)
+
+foreign import traceWithoutInspect :: forall a b. Internal.DebugTrace.DebugWarning => a -> (Unit -> b) -> b
+
+traceWithoutInspectId :: ∀ a . Internal.DebugTrace.DebugWarning => a -> a
+traceWithoutInspectId a = traceWithoutInspect a (const a)
+
+traceWithoutInspectM :: forall m a. Internal.DebugTrace.DebugWarning => Monad m => a -> m Unit
+traceWithoutInspectM s = do
+  pure unit
+  traceWithoutInspect s \_ -> pure unit
 
 undefined :: ∀ a. (Internal.Prim.TypeError.Warn (Internal.Prim.TypeError.Text "undefined usage")) => a
 undefined = Internal.Unsafe.Coerce.unsafeCoerce unit
