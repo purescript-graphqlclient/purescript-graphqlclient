@@ -1,14 +1,11 @@
 module Fernet.Graphql.SelectionSet where
 
-import Data.Argonaut.Decode.Combinators
 import Protolude
+import Data.Argonaut.Decode.Combinators
 
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Core as Data.Argonaut.Core
 import Data.Argonaut.Decode as ArgonautCodec
-import Data.Maybe (Maybe)
-import Data.Semigroup (class Semigroup)
-import Type.Row (class Nub, class Union)
 
 --import Record (insert)
 data ArgumentValue

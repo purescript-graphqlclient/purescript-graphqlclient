@@ -20,12 +20,12 @@ type InstorpectionQueryResult__FullType
   = { kind :: String
     , name :: String
     , description :: String
-    -- , enumValues ::
-    --   { name :: String
-    --   , description :: String
-    --   , isDeprecated :: String
-    --   , deprecationReason :: String
-    --   }
+    , enumValues :: Array
+      { name :: String
+      , description :: String
+      , isDeprecated :: String
+      , deprecationReason :: String
+      }
     }
 
 data InstorpectionQueryResult_Schema
@@ -33,6 +33,7 @@ data InstorpectionQueryResult_QueryType
 data InstorpectionQueryResult_MutationType
 data InstorpectionQueryResult_SubscriptionType
 data InstorpectionQueryResult_Types
+data InstorpectionQueryResult_EnumValues
 
 __schema :: ∀ r . SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet RootQuery r
 __schema = selectionForCompositeField "__schema" []
@@ -70,13 +71,45 @@ types_name = selectionForField "name"
 types_description :: SelectionSet InstorpectionQueryResult_Types (Maybe String)
 types_description = selectionForField "description"
 
+types_enumValues :: ∀ r . SelectionSet InstorpectionQueryResult_EnumValues r -> SelectionSet InstorpectionQueryResult_Types (Array r)
+types_enumValues = selectionForCompositeField "enumValues" []
+
+types_enumValues_name :: SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_name = selectionForField "name"
+
+types_enumValues_description :: SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_description = selectionForField "description"
+
+types_enumValues_isDeprecated :: SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_isDeprecated = selectionForField "isDeprecated"
+
+types_enumValues_deprecationReason :: SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_deprecationReason = selectionForField "deprecationReason"
+
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
 introspectionQuery includeDeprecated =
   __schema ado
     queryType'        <- queryType $ { name: _ } <$> queryType_name
     mutationType'     <- mutationType $ { name: _ } <$> mutationType_name
     subscriptionType' <- subscriptionType $ { name: _ } <$> subscriptionType_name
-    types'            <- types $ { kind: _, name: _, description: _ } <$> types_kind <*> types_name <*> (types_description <#> fromMaybe "")
+    types'            <- types ado
+      types_kind'        <- types_kind
+      types_name'        <- types_name
+      types_description' <- (types_description <#> fromMaybe "")
+      types_enumValues'  <- types_enumValues $
+        { name: _
+        , description: _
+        , isDeprecated: _
+        , deprecationReason: _
+        } <$> types_enumValues_name
+          <*> types_enumValues_description
+          <*> types_enumValues_isDeprecated
+          <*> types_enumValues_deprecationReason
+      in { kind: types_kind'
+         , name: types_name'
+         , description: types_description'
+         , enumValues: types_enumValues'
+         }
     in { __schema:
           { queryType: queryType'
           , mutationType: mutationType'

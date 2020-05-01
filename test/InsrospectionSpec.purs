@@ -2,27 +2,21 @@ module Test.InsrospectionSpec where
 
 import Protolude
 
-import Affjax (post) as Affjax
-import Affjax (printError)
-import Affjax.RequestBody (json) as Affjax.RequestBody
-import Affjax.ResponseFormat (json) as Affjax.ResponseFormat
-import Ansi.Codes as Ansi.Codes
-import Data.Argonaut.Core (Json, stringify)
-import Data.Argonaut.Encode (encodeJson) as ArgonautCodecs
-import Data.Either (Either)
-import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
-import Debug.Trace (traceM)
-import Effect.Aff.Compat (EffectFnAff(..), fromEffectFnAff)
-import Effect.Class.Console (log)
-import Effect.Exception (error)
-import Effect.Uncurried (EffectFn2)
-import Fernet.Graphql.SelectionSet (SelectionSet(..))
-import Fernet.Graphql.WriteGraphql as Fernet.Graphql.WriteGraphql
-import Fernet.HTTP (gqlRequestImplWithTrace)
-import Fernet.HTTP as Fernet.HTTP
-import Fernet.Introspection.IntrospectionSchema (introspectionQuery) as Fernet.Introspection.IntrospectionSchema
-import Test.Spec as Test.Spec
-import Test.Spec.Assertions (fail, shouldEqual)
+import Affjax                                   as Affjax
+import Affjax.RequestBody                       as Affjax.RequestBody
+import Affjax.ResponseFormat                    as Affjax.ResponseFormat
+import Ansi.Codes                               as Ansi.Codes
+import Data.Argonaut.Core                       (Json)
+import Data.Argonaut.Encode                     as ArgonautCodecs
+import Data.Function.Uncurried                  (Fn2, Fn3, runFn2, runFn3)
+import Effect.Aff.Compat                        (EffectFnAff(..), fromEffectFnAff)
+import Effect.Exception                         (error)
+import Fernet.Graphql.SelectionSet              (SelectionSet(..))
+import Fernet.Graphql.WriteGraphql              as Fernet.Graphql.WriteGraphql
+import Fernet.HTTP                              as Fernet.HTTP
+import Fernet.Introspection.IntrospectionSchema as Fernet.Introspection.IntrospectionSchema
+import Test.Spec                                as Test.Spec
+import Test.Spec.Assertions                     (fail)
 
 foreign import _jsonDiffString :: Fn2 Json Json String
 
@@ -53,17 +47,17 @@ spec = Test.Spec.it "Introspection spec" do
     query :: String
     query = Fernet.Graphql.WriteGraphql.writeGraphql $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
 
-    decoder = let (SelectionSet fields decoder) = Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated in decoder
-    -- decoder = identity >>> pure
+    -- decoder = let (SelectionSet fields decoder) = Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated in decoder
+    decoder = identity >>> pure
 
     includeDeprecated = false
 
   expectedJson <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
 
-  (actualJson :: _) <- Fernet.HTTP.gqlRequestImplWithTrace url query decoder
+  (actualJson :: _) <- Fernet.HTTP.gqlRequestImpl url query decoder
     >>= (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
 
   -- traceM expectedJson
   traceM actualJson
 
-  -- actualJson `jsonShouldEqual` expectedJson
+  actualJson `jsonShouldEqual` expectedJson
