@@ -77,7 +77,7 @@ types_enumValues
   :: ∀ r
    . Record Types_EnumValues_Required
   -> SelectionSet InstorpectionQueryResult_EnumValues r
-  -> SelectionSet InstorpectionQueryResult_Types (Maybe (Array r))
+  -> SelectionSet InstorpectionQueryResult_Types (Array (Maybe (Array r)))
 types_enumValues parameters = selectionForCompositeField "enumValues" []
 
 types_enumValues_name :: SelectionSet InstorpectionQueryResult_EnumValues String

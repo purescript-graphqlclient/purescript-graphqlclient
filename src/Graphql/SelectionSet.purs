@@ -60,19 +60,20 @@ selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
     ArgonautCodec.decodeJson fieldJson
   )
 
-class DecoderTransformer b a | b -> a where
+class DecoderTransformer a b | b -> a where
   myDecoderTransformer :: Decoder a -> Decoder b
 
-instance nestedTraversableDecoderTransformer :: (Traversable f, Traversable g, ArgonautCodec.DecodeJson (f ArgonautCore.Json), ArgonautCodec.DecodeJson (g ArgonautCore.Json)) => DecoderTransformer (g (f a)) a where
+-- TODO: nested3 level? how to make variable level?
+instance nestedTraversableDecoderTransformer :: (DecoderTransformer a fa, Traversable g, ArgonautCodec.DecodeJson (g ArgonautCore.Json)) => DecoderTransformer a (g fa) where
   myDecoderTransformer childDecoder json = do
     -- spyM "traversableDecoderTransformer json" json
+    let (faDecoderTransformer :: Decoder a -> Decoder fa) = myDecoderTransformer
     (x :: g ArgonautCore.Json) <- ArgonautCodec.decodeJson json
     -- spyM "traversableDecoderTransformer json" x
-    (x' :: g (f ArgonautCore.Json)) <- traverse ArgonautCodec.decodeJson x
-    traverse (traverse childDecoder) x'
+    traverse (faDecoderTransformer childDecoder) x
 
 -- for lists and maybes
-else instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer (f a) a where
+else instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer a (f a) where
   myDecoderTransformer childDecoder json = do
     -- spyM "traversableDecoderTransformer json" json
     (x :: f ArgonautCore.Json) <- ArgonautCodec.decodeJson json
@@ -87,7 +88,7 @@ else instance idDecoderTransformer :: DecoderTransformer a a where
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
-   . DecoderTransformer b a
+   . DecoderTransformer a b
   => String
   -> Array Argument
   -> SelectionSet objectTypeLock a
