@@ -63,8 +63,16 @@ selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
 class DecoderTransformer b a | b -> a where
   myDecoderTransformer :: Decoder a -> Decoder b
 
+instance nestedTraversableDecoderTransformer :: (Traversable f, Traversable g, ArgonautCodec.DecodeJson (f ArgonautCore.Json), ArgonautCodec.DecodeJson (g ArgonautCore.Json)) => DecoderTransformer (g (f a)) a where
+  myDecoderTransformer childDecoder json = do
+    -- spyM "traversableDecoderTransformer json" json
+    (x :: g ArgonautCore.Json) <- ArgonautCodec.decodeJson json
+    -- spyM "traversableDecoderTransformer json" x
+    (x' :: g (f ArgonautCore.Json)) <- traverse ArgonautCodec.decodeJson x
+    traverse (traverse childDecoder) x'
+
 -- for lists and maybes
-instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer (f a) a where
+else instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer (f a) a where
   myDecoderTransformer childDecoder json = do
     -- spyM "traversableDecoderTransformer json" json
     (x :: f ArgonautCore.Json) <- ArgonautCodec.decodeJson json

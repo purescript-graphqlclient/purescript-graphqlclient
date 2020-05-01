@@ -20,11 +20,11 @@ type InstorpectionQueryResult__FullType
   = { kind :: String
     , name :: String
     , description :: String
-    , enumValues :: Array
+    , enumValues :: Maybe <<< Array $
       { name :: String
       , description :: String
-      , isDeprecated :: String
-      , deprecationReason :: String
+      , isDeprecated :: Boolean
+      , deprecationReason :: Maybe String
       }
     }
 
@@ -71,8 +71,14 @@ types_name = selectionForField "name"
 types_description :: SelectionSet InstorpectionQueryResult_Types (Maybe String)
 types_description = selectionForField "description"
 
-types_enumValues :: ∀ r . SelectionSet InstorpectionQueryResult_EnumValues r -> SelectionSet InstorpectionQueryResult_Types (Array r)
-types_enumValues = selectionForCompositeField "enumValues" []
+type Types_EnumValues_Required = (includeDeprecated :: Boolean)
+
+types_enumValues
+  :: ∀ r
+   . Record Types_EnumValues_Required
+  -> SelectionSet InstorpectionQueryResult_EnumValues r
+  -> SelectionSet InstorpectionQueryResult_Types (Maybe (Array r))
+types_enumValues parameters = selectionForCompositeField "enumValues" []
 
 types_enumValues_name :: SelectionSet InstorpectionQueryResult_EnumValues String
 types_enumValues_name = selectionForField "name"
@@ -80,10 +86,10 @@ types_enumValues_name = selectionForField "name"
 types_enumValues_description :: SelectionSet InstorpectionQueryResult_EnumValues String
 types_enumValues_description = selectionForField "description"
 
-types_enumValues_isDeprecated :: SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_isDeprecated :: SelectionSet InstorpectionQueryResult_EnumValues Boolean
 types_enumValues_isDeprecated = selectionForField "isDeprecated"
 
-types_enumValues_deprecationReason :: SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_deprecationReason :: SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
 types_enumValues_deprecationReason = selectionForField "deprecationReason"
 
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
@@ -96,7 +102,7 @@ introspectionQuery includeDeprecated =
       types_kind'        <- types_kind
       types_name'        <- types_name
       types_description' <- (types_description <#> fromMaybe "")
-      types_enumValues'  <- types_enumValues $
+      types_enumValues'  <- types_enumValues { includeDeprecated: true } $
         { name: _
         , description: _
         , isDeprecated: _
