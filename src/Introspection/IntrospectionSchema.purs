@@ -71,7 +71,7 @@ types_name = selectionForField "name"
 types_description :: SelectionSet InstorpectionQueryResult_Types (Maybe String)
 types_description = selectionForField "description"
 
-type Types_EnumValues_Input = { includeDeprecated :: Optional (Maybe { val :: Boolean }) }
+type Types_EnumValues_Input = { includeDeprecated :: Optional <<< Maybe <<< Array <<< Maybe $ { val :: Boolean} }
 
 types_enumValues
   :: ∀ r
@@ -113,7 +113,7 @@ introspectionQuery includeDeprecated =
       types_kind'        <- types_kind
       types_name'        <- types_name
       types_description' <- (types_description <#> fromMaybe "")
-      types_enumValues'  <- types_enumValues ({ includeDeprecated: Present (Just { val: true }) }) $
+      types_enumValues'  <- types_enumValues ({ includeDeprecated: Present $ Just [Just { val: true }, Nothing] }) $
         { name: _
         , description: _
         , isDeprecated: _

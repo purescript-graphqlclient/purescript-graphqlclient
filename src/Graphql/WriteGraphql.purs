@@ -45,8 +45,10 @@ instance writeGraphQlGqlArgument :: WriteGraphqlArgumentsImpl ArgumentValue wher
     ArgumentValueString s -> "\"" <> s <> "\""
     ArgumentValueInt i -> toStringAs decimal i
     ArgumentValueBoolean b -> if b then "true" else "false"
-    ArgumentValueNested arguments -> writeGraphqlArgumentsImpl arguments
-    ArgumentValueMaybeEmpty maybeArg -> maybe "null" writeGraphqlArgumentsImpl maybeArg
+    ArgumentValueMaybe maybeArg -> maybe "null" writeGraphqlArgumentsImpl maybeArg
+    ArgumentValueArray [] -> "[]"
+    ArgumentValueArray argsArray -> "[" <> (joinWith ", " $ map writeGraphqlArgumentsImpl argsArray) <> "]"
+    ArgumentValueObject arguments -> writeGraphqlArgumentsImpl arguments
 
 instance writeGraphQlArrayArgument :: WriteGraphqlArgumentsImpl (Array Argument) where
   writeGraphqlArgumentsImpl [] = ""

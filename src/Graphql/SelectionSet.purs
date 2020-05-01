@@ -18,8 +18,9 @@ data ArgumentValue
   = ArgumentValueString String
   | ArgumentValueInt Int
   | ArgumentValueBoolean Boolean
-  | ArgumentValueMaybeEmpty (Maybe ArgumentValue)
-  | ArgumentValueNested (Array Argument)
+  | ArgumentValueMaybe (Maybe ArgumentValue)
+  | ArgumentValueArray (Array ArgumentValue)
+  | ArgumentValueObject (Array Argument)
 
 data Argument
   = RequiredArgument String ArgumentValue
@@ -45,21 +46,21 @@ else
 instance toGraphqlArgumentValueBoolean :: ToGraphqlArgumentValue Boolean where
   toGraphqlArgumentValue = ArgumentValueBoolean
 
-else
-instance toGraphqlArgumentValueMaybeEmptyRecord :: ToGraphqlArguments (Record row) => ToGraphqlArgumentValue (Maybe (Record row)) where
-  toGraphqlArgumentValue maybeRecord = ArgumentValueMaybeEmpty (map (toGraphqlArguments >>> ArgumentValueNested) maybeRecord)
+-- else
+-- instance toGraphqlArgumentValueMaybeEmptyRecord :: ToGraphqlArguments (Record row) => ToGraphqlArgumentValue (Maybe (Record row)) where
+--   toGraphqlArgumentValue maybeRecord = ArgumentValueMaybe (map (toGraphqlArguments >>> ArgumentValueObject) maybeRecord)
 
 else
 instance toGraphqlArgumentValueRecord :: ToGraphqlArguments (Record row) => ToGraphqlArgumentValue (Record row) where
-  toGraphqlArgumentValue record = ArgumentValueNested (toGraphqlArguments record)
+  toGraphqlArgumentValue record = ArgumentValueObject (toGraphqlArguments record)
 
 else
 instance toGraphqlArgumentValueMaybeEmpty :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Maybe a) where
-  toGraphqlArgumentValue maybeA = ArgumentValueMaybeEmpty (map toGraphqlArgumentValue maybeA)
+  toGraphqlArgumentValue maybeA = ArgumentValueMaybe (map toGraphqlArgumentValue maybeA)
 
 else
-instance toGraphqlArgumentValueNested :: ToGraphqlArguments (Array a) => ToGraphqlArgumentValue (Array a) where
-  toGraphqlArgumentValue arguments = ArgumentValueNested (toGraphqlArguments arguments)
+instance toGraphqlArgumentValueNested :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Array a) where
+  toGraphqlArgumentValue arguments = ArgumentValueArray (map toGraphqlArgumentValue arguments)
 
 class ToGraphqlArguments a where
   toGraphqlArguments :: a -> Array Argument
@@ -91,7 +92,7 @@ instance toGraphqlArgumentRecordConsOptionalChildRow ::
     let
         (currentValue :: Optional (Record childRow)) = Record.get (SProxy :: SProxy field) record
         (currentValue' :: Optional (Array Argument)) = map toGraphqlArguments currentValue
-        (currentValue'' :: Optional ArgumentValue) = map ArgumentValueNested currentValue'
+        (currentValue'' :: Optional ArgumentValue) = map ArgumentValueObject currentValue'
         (current :: Argument) = OptionalArgument (reflectSymbol (SProxy :: SProxy field)) currentValue''
         (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
@@ -109,7 +110,7 @@ instance toGraphqlArgumentRecordConsChildRow ::
     let
         (currentValue :: Record childRow) = Record.get (SProxy :: SProxy field) record
         (currentValue' :: Array Argument) = toGraphqlArguments currentValue
-        (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) (ArgumentValueNested currentValue')
+        (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) (ArgumentValueObject currentValue')
         (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
 
