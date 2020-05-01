@@ -1,8 +1,9 @@
 module Fernet.Introspection.IntrospectionSchema where
 
+import Protolude
 import Fernet.Graphql.SelectionSet
 import Fernet.Introspection.Schema.Fields
-import Protolude
+import Type.Row
 
 type InstorpectionQueryResult
   = { __schema ::
@@ -23,7 +24,42 @@ type InstorpectionQueryResult__FullType
       , isDeprecated :: Boolean
       , deprecationReason :: Maybe String
       }
+    , possibleTypes :: Maybe <<< Array $ InstorpectionQueryResult__TypeRef
     }
+
+type InstorpectionQueryResult__TypeRef_shared r = ( kind :: String, name :: String | r )
+
+-- 7 ofType's
+type InstorpectionQueryResult__TypeRef
+  = Record
+    (InstorpectionQueryResult__TypeRef_shared
+    + (ofType :: Maybe $ Record
+        (InstorpectionQueryResult__TypeRef_shared
+        + (ofType :: Maybe $ Record
+            (InstorpectionQueryResult__TypeRef_shared
+            + (ofType :: Maybe $ Record
+                (InstorpectionQueryResult__TypeRef_shared
+                + (ofType :: Maybe $ Record
+                    (InstorpectionQueryResult__TypeRef_shared
+                    + (ofType :: Maybe $ Record
+                        (InstorpectionQueryResult__TypeRef_shared
+                        + (ofType :: Maybe $ Record
+                            (InstorpectionQueryResult__TypeRef_shared
+                            + (ofType :: Maybe $ Record (InstorpectionQueryResult__TypeRef_shared + ())
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
 
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
 introspectionQuery includeDeprecated =
@@ -32,10 +68,10 @@ introspectionQuery includeDeprecated =
     mutationType'     <- mutationType $ { name: _ } <$> mutationType_name
     subscriptionType' <- subscriptionType $ { name: _ } <$> subscriptionType_name
     types'            <- types ado
-      types_kind'        <- types_kind
-      types_name'        <- types_name
-      types_description' <- (types_description <#> fromMaybe "")
-      types_enumValues'  <- types_enumValues ({ includeDeprecated: false }) $
+      types_kind'          <- types_kind
+      types_name'          <- types_name
+      types_description'   <- (types_description <#> fromMaybe "")
+      types_enumValues'    <- types_enumValues ({ includeDeprecated: false }) $
         { name: _
         , description: _
         , isDeprecated: _
@@ -44,10 +80,19 @@ introspectionQuery includeDeprecated =
           <*> types_enumValues_description
           <*> types_enumValues_isDeprecated
           <*> types_enumValues_deprecationReason
+      types_possibleTypes' <-
+        let
+            ofTypeStop :: SelectionSet InstorpectionQueryResult_PossibleTypes { kind :: String, name :: String }
+            ofTypeStop = { kind: _, name: _ } <$> types_possibleTypes_kind <*> types_possibleTypes_name
+
+            ofTypeNest :: ∀ r . SelectionSet InstorpectionQueryResult_PossibleTypes r -> SelectionSet InstorpectionQueryResult_PossibleTypes { kind :: String, name :: String, ofType :: Maybe r }
+            ofTypeNest other = { kind: _, name: _, ofType: _ } <$> types_possibleTypes_kind <*> types_possibleTypes_name <*> types_possibleTypes_ofType other
+         in types_possibleTypes $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest ofTypeStop
       in { kind: types_kind'
          , name: types_name'
          , description: types_description'
          , enumValues: types_enumValues'
+         , possibleTypes: types_possibleTypes'
          }
     in { __schema:
           { queryType: queryType'
