@@ -66,31 +66,7 @@ toGraphqlArguments rec = toGraphqlArgumentImplementationRecord (RLProxy :: RLPro
 class ToGraphqlArgumentImplementationRecord (list :: RowList.RowList) (row :: # Type) | list -> row where
   toGraphqlArgumentImplementationRecord :: forall proxy. proxy list -> Record row -> Array Argument
 
-instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord RowList.Nil row where
-  toGraphqlArgumentImplementationRecord _proxy _record = []
-
-else
-
-instance toGraphqlArgumentRecordConsOptionalChildRow ::
-  ( RowList.RowToList childRow childList
-  , ToGraphqlArgumentImplementationRecord childList childRow
-  ---
-  , ToGraphqlArgumentImplementationRecord tail row
-  , IsSymbol field
-  , Row.Cons field (Optional (Record childRow)) rowTail row
-  ) =>
-  ToGraphqlArgumentImplementationRecord (RowList.Cons field (Optional (Record childRow)) tail) row where
-  toGraphqlArgumentImplementationRecord _proxy record =
-    let
-        (currentValue :: Optional (Record childRow)) = Record.get (SProxy :: SProxy field) record
-        (currentValue' :: Optional (Array Argument)) = map toGraphqlArguments currentValue
-        (currentValue'' :: Optional ArgumentValue) = map ArgumentValueObject currentValue'
-        (current :: Argument) = OptionalArgument (reflectSymbol (SProxy :: SProxy field)) currentValue''
-        (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
-    in Array.cons current rest
-
-else
-
+-- for nested records
 instance toGraphqlArgumentRecordConsChildRow ::
   ( RowList.RowToList childRow childList
   , ToGraphqlArgumentImplementationRecord childList childRow
@@ -110,6 +86,7 @@ instance toGraphqlArgumentRecordConsChildRow ::
 
 else
 
+-- for optional values (optional nested records too)
 instance toGraphqlArgumentRecordConsOptional ::
   ( ToGraphqlArgumentValue value
   , ToGraphqlArgumentImplementationRecord tail row
@@ -124,6 +101,12 @@ instance toGraphqlArgumentRecordConsOptional ::
         (current :: Argument) = OptionalArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
         (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
+
+else
+
+-- for everything else
+instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord RowList.Nil row where
+  toGraphqlArgumentImplementationRecord _proxy _record = []
 
 else
 
