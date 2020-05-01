@@ -1,23 +1,25 @@
 module Fernet.Graphql.SelectionSet where
 
-import Protolude
 import Data.Argonaut.Decode.Combinators
+import Protolude
 
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Core as Data.Argonaut.Core
 import Data.Argonaut.Decode as ArgonautCodec
-import Prim.Row as Row
-import Prim.RowList as RowList
+import Data.Array (cons) as Array
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
+import Prim.Row as Row
+import Prim.RowList (class RowToList)
+import Prim.RowList as RowList
 import Record as Record
 import Type.Data.RowList (RLProxy(..))
 
 data ArgumentValue
-  = ArgString String
-  | ArgInt Int
-  | ArgBoolean Boolean
-  | ArgMaybeEmpty (Maybe ArgumentValue)
-  | ArgNested (Array Argument)
+  = ArgumentValueString String
+  | ArgumentValueInt Int
+  | ArgumentValueBoolean Boolean
+  | ArgumentValueMaybeEmpty (Maybe ArgumentValue)
+  | ArgumentValueNested (Array Argument)
 
 data Argument
   = RequiredArgument String ArgumentValue
@@ -28,6 +30,73 @@ data Argument
 -- , OptionalArgument "regex" (Absent) -- Present (Nothing)
 -- , OptionalArgument "regex" (Absent) -- Present (Nothing)
 -- ]
+
+class ToGraphqlArgumentValue a where
+  toGraphqlArgumentValue :: a -> ArgumentValue
+
+instance toGraphqlArgumentValueString :: ToGraphqlArgumentValue String where
+  toGraphqlArgumentValue = ArgumentValueString
+
+instance toGraphqlArgumentValueInt :: ToGraphqlArgumentValue Int where
+  toGraphqlArgumentValue = ArgumentValueInt
+
+instance toGraphqlArgumentValueBoolean :: ToGraphqlArgumentValue Boolean where
+  toGraphqlArgumentValue = ArgumentValueBoolean
+
+instance toGraphqlArgumentValueMaybeEmpty :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Maybe a) where
+  toGraphqlArgumentValue maybeA = ArgumentValueMaybeEmpty (map toGraphqlArgumentValue maybeA)
+
+instance toGraphqlArgumentValueNested :: ToGraphqlArguments (Array a) => ToGraphqlArgumentValue (Array a) where
+  toGraphqlArgumentValue arguments = ArgumentValueNested (toGraphqlArguments arguments)
+
+class ToGraphqlArguments a where
+  toGraphqlArguments :: a -> Array Argument
+
+instance toGraphqlArgumentRecord ::
+  ( RowList.RowToList row list
+  , ToGraphqlArgumentImplementationRecord list row
+  ) => ToGraphqlArguments (Record row) where
+  toGraphqlArguments rec = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy list) rec
+
+class ToGraphqlArgumentImplementationRecord (list :: RowList.RowList) (row :: # Type) | list -> row where
+  toGraphqlArgumentImplementationRecord :: forall proxy. proxy list -> Record row -> Array Argument
+
+instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord RowList.Nil row where
+  toGraphqlArgumentImplementationRecord _proxy _record = []
+
+else
+
+instance toGraphqlArgumentRecordConsOptional ::
+  ( ToGraphqlArgumentValue value
+  , ToGraphqlArgumentImplementationRecord tail row
+  , IsSymbol field
+  , Row.Cons field (Optional value) rowTail row
+  ) =>
+  ToGraphqlArgumentImplementationRecord (RowList.Cons field (Optional value) tail) row where
+  toGraphqlArgumentImplementationRecord _proxy record =
+    let
+        (currentValue :: Optional value) = Record.get (SProxy :: SProxy field) record
+        (currentValue' :: Optional ArgumentValue) = map toGraphqlArgumentValue currentValue
+        (current :: Argument) = OptionalArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
+        (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
+    in Array.cons current rest
+
+else
+
+instance toGraphqlArgumentRecordCons ::
+  ( ToGraphqlArgumentValue value
+  , ToGraphqlArgumentImplementationRecord tail row
+  , IsSymbol field
+  , Row.Cons field value rowTail row
+  ) =>
+  ToGraphqlArgumentImplementationRecord (RowList.Cons field value tail) row where
+  toGraphqlArgumentImplementationRecord _proxy record =
+    let
+        (currentValue :: value) = Record.get (SProxy :: SProxy field) record
+        (currentValue' :: ArgumentValue) = toGraphqlArgumentValue currentValue
+        (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
+        (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
+    in Array.cons current rest
 
 ------------------------------------------------------
 
@@ -92,7 +161,7 @@ selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
 class DecoderTransformer a b | b -> a where
   myDecoderTransformer :: Decoder a -> Decoder b
 
--- for lists, maybes, and for nested containers (e.g. like (List (Maybe x)))
+-- for lists, maybes, but also allows nested containers (e.g. `List (Maybe x)`)
 instance traversableDecoderTransformer :: (Traversable f, DecoderTransformer a b, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer a (f b) where
   myDecoderTransformer childDecoder json = do
     -- spyM "traversableDecoderTransformer json" json
@@ -104,6 +173,7 @@ instance traversableDecoderTransformer :: (Traversable f, DecoderTransformer a b
 
 else
 
+-- it's like Identity functor, but better
 instance idDecoderTransformer :: DecoderTransformer a a where
   myDecoderTransformer = identity
 

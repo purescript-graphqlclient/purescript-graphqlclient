@@ -34,11 +34,11 @@ instance writeGraphQlArgument :: WriteGraphql Argument where
 
 instance writeGraphQlGqlArgument :: WriteGraphql ArgumentValue where
   writeGraphql value = case value of
-    ArgString s -> "\"" <> s <> "\""
-    ArgInt i -> toStringAs decimal i
-    ArgBoolean b -> if b then "true" else "false"
-    ArgNested arguments -> writeGraphql arguments
-    ArgMaybeEmpty maybeArg -> maybe "null" writeGraphql maybeArg
+    ArgumentValueString s -> "\"" <> s <> "\""
+    ArgumentValueInt i -> toStringAs decimal i
+    ArgumentValueBoolean b -> if b then "true" else "false"
+    ArgumentValueNested arguments -> writeGraphql arguments
+    ArgumentValueMaybeEmpty maybeArg -> maybe "null" writeGraphql maybeArg
 
 instance writeGraphQlArrayArgument :: WriteGraphql (Array Argument) where
   writeGraphql [] = ""

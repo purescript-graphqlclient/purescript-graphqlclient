@@ -78,7 +78,7 @@ types_enumValues
    . Types_EnumValues_Input
   -> SelectionSet InstorpectionQueryResult_EnumValues r
   -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
-types_enumValues { includeDeprecated } = selectionForCompositeField "enumValues" [ (OptionalArgument "includeDeprecated" (includeDeprecated <#> (map ArgBoolean >>> ArgMaybeEmpty))) ]
+types_enumValues inputRecord = selectionForCompositeField "enumValues" (toGraphqlArguments inputRecord)
 
 -- type StringQueryOperatorInput =
 --   { eq    :: String -- required
@@ -113,7 +113,7 @@ introspectionQuery includeDeprecated =
       types_kind'        <- types_kind
       types_name'        <- types_name
       types_description' <- (types_description <#> fromMaybe "")
-      types_enumValues'  <- types_enumValues ({ includeDeprecated: Present Nothing }) $
+      types_enumValues'  <- types_enumValues ({ includeDeprecated: Present (Just true) }) $
         { name: _
         , description: _
         , isDeprecated: _
