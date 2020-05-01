@@ -38,27 +38,18 @@ class ToGraphqlArgumentValue a where
 instance toGraphqlArgumentValueString :: ToGraphqlArgumentValue String where
   toGraphqlArgumentValue = ArgumentValueString
 
-else
 instance toGraphqlArgumentValueInt :: ToGraphqlArgumentValue Int where
   toGraphqlArgumentValue = ArgumentValueInt
 
-else
 instance toGraphqlArgumentValueBoolean :: ToGraphqlArgumentValue Boolean where
   toGraphqlArgumentValue = ArgumentValueBoolean
 
--- else
--- instance toGraphqlArgumentValueMaybeEmptyRecord :: ToGraphqlArguments (Record row) => ToGraphqlArgumentValue (Maybe (Record row)) where
---   toGraphqlArgumentValue maybeRecord = ArgumentValueMaybe (map (toGraphqlArguments >>> ArgumentValueObject) maybeRecord)
-
-else
 instance toGraphqlArgumentValueRecord :: ToGraphqlArguments (Record row) => ToGraphqlArgumentValue (Record row) where
   toGraphqlArgumentValue record = ArgumentValueObject (toGraphqlArguments record)
 
-else
-instance toGraphqlArgumentValueMaybeEmpty :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Maybe a) where
+instance toGraphqlArgumentValueMaybe :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Maybe a) where
   toGraphqlArgumentValue maybeA = ArgumentValueMaybe (map toGraphqlArgumentValue maybeA)
 
-else
 instance toGraphqlArgumentValueNested :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Array a) where
   toGraphqlArgumentValue arguments = ArgumentValueArray (map toGraphqlArgumentValue arguments)
 
