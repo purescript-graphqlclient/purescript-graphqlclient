@@ -71,6 +71,7 @@ instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJs
     -- spyM "traversableDecoderTransformer json" x
     traverse childDecoder x
 
+-- could use Identity here, but it's prettier to implement using functional dependencies
 else instance idDecoderTransformer :: DecoderTransformer a a where
   myDecoderTransformer = \childDecoder -> \json -> do
      -- spyM "idDecoderTransformer json" json
