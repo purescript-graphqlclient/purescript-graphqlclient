@@ -40,17 +40,6 @@ instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
   apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
 
--- map2
---   :: ∀ decodesTo1 decodesTo2 decodesToCombined typeLock
---    . (decodesTo1 -> decodesTo2 -> decodesToCombined)
---   -> SelectionSet typeLock decodesTo1
---   -> SelectionSet typeLock decodesTo2
---   -> SelectionSet typeLock decodesToCombined
--- map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
---     SelectionSet
---         (selectionFields1 <> selectionFields2)
---         (\json -> combine <$> (selectionDecoder1 json) <*> (selectionDecoder2 json))
-
 selectionForField :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
 selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
     -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
@@ -63,25 +52,19 @@ selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
 class DecoderTransformer a b | b -> a where
   myDecoderTransformer :: Decoder a -> Decoder b
 
--- TODO: nested3 level? how to make variable level?
-instance nestedTraversableDecoderTransformer :: (DecoderTransformer a fa, Traversable g, ArgonautCodec.DecodeJson (g ArgonautCore.Json)) => DecoderTransformer a (g fa) where
-  myDecoderTransformer childDecoder json = do
-    -- spyM "traversableDecoderTransformer json" json
-    let (faDecoderTransformer :: Decoder a -> Decoder fa) = myDecoderTransformer
-    (x :: g ArgonautCore.Json) <- ArgonautCodec.decodeJson json
-    -- spyM "traversableDecoderTransformer json" x
-    traverse (faDecoderTransformer childDecoder) x
-
--- for lists and maybes
-else instance traversableDecoderTransformer :: (Traversable f, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer a (f a) where
+-- for lists, maybes, and for nested containers (e.g. like (List (Maybe x)))
+instance traversableDecoderTransformer :: (Traversable f, DecoderTransformer a b, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer a (f b) where
   myDecoderTransformer childDecoder json = do
     -- spyM "traversableDecoderTransformer json" json
     (x :: f ArgonautCore.Json) <- ArgonautCodec.decodeJson json
+    let (a_to_b :: Decoder a -> Decoder b) = myDecoderTransformer
+    let (to_b :: Decoder b) = a_to_b childDecoder
     -- spyM "traversableDecoderTransformer json" x
-    traverse childDecoder x
+    traverse to_b x
 
--- could use Identity here, but it's prettier to implement using functional dependencies
-else instance idDecoderTransformer :: DecoderTransformer a a where
+else
+
+instance idDecoderTransformer :: DecoderTransformer a a where
   myDecoderTransformer = \childDecoder -> \json -> do
      -- spyM "idDecoderTransformer json" json
      childDecoder json
