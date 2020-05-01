@@ -6,16 +6,64 @@ import Data.Argonaut.Decode.Combinators
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Core as Data.Argonaut.Core
 import Data.Argonaut.Decode as ArgonautCodec
+import Prim.Row as Row
+import Prim.RowList as RowList
+import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
+import Record as Record
+import Type.Data.RowList (RLProxy(..))
 
---import Record (insert)
 data ArgumentValue
   = ArgString String
   | ArgInt Int
   | ArgBoolean Boolean
+  | ArgMaybeEmpty (Maybe ArgumentValue)
+  | ArgNested (Array Argument)
 
 data Argument
   = RequiredArgument String ArgumentValue
-  | OptionalArgument String (Maybe ArgumentValue)
+  | OptionalArgument String (Optional ArgumentValue)
+
+-- [ RequiredArgument "eq" s
+-- , RequiredArgument "ne" (Nothing)
+-- , OptionalArgument "regex" (Absent) -- Present (Nothing)
+-- , OptionalArgument "regex" (Absent) -- Present (Nothing)
+-- ]
+
+------------------------------------------------------
+
+class DefaultInput a where
+  defaultInput :: a
+
+data Optional x = Absent | Present x
+
+derive instance optionalFunctor :: Functor Optional
+
+instance optionalDefaultInput :: DefaultInput (Optional a) where
+  defaultInput = Absent
+
+instance recordDefaultInput :: (DefaultInputRecord row list , RowList.RowToList row list) => DefaultInput (Record row) where
+  defaultInput = defaultInputRecord (RLProxy :: RLProxy list)
+
+-- RECORD
+class DefaultInputRecord (row :: # Type) (list :: RowList.RowList) | list -> row where
+  defaultInputRecord :: RLProxy list -> Record row
+
+instance defaultInputRecordNil :: DefaultInputRecord () RowList.Nil where
+  defaultInputRecord _proxy = {}
+
+instance defaultInputRecordCons ::
+  ( DefaultInput value
+  , DefaultInputRecord rowTail tail
+  , IsSymbol field
+  , Row.Cons field value rowTail row
+  , Row.Lacks field rowTail
+  ) =>
+  DefaultInputRecord row (RowList.Cons field value tail) where
+  defaultInputRecord _proxy =
+    let rest = defaultInputRecord (RLProxy :: RLProxy tail)
+    in Record.insert (SProxy :: SProxy field) defaultInput rest
+
+------------------------------------------------------
 
 data RawField
   = Composite String (Array Argument) (Array RawField)
@@ -25,14 +73,6 @@ data RawField
 type Decoder a = Data.Argonaut.Core.Json -> Either String a
 
 data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Decoder a)
-
--- NOT possible
--- instance selectionSetSemigroup :: Semigroup (SelectionSet parentTypeLock a) where
---   append (SelectionSet rawFieldArrayA decoderA) (SelectionSet rawFieldArrayB decoderB) = ?asdf
-
--- instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock) where
---   map :: ∀ a b parentTypeLock . (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
---   map f (SelectionSet rawFieldArray decoder) = SelectionSet rawFieldArray (decoder >>> map f)
 
 derive instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock)
 
@@ -65,9 +105,7 @@ instance traversableDecoderTransformer :: (Traversable f, DecoderTransformer a b
 else
 
 instance idDecoderTransformer :: DecoderTransformer a a where
-  myDecoderTransformer = \childDecoder -> \json -> do
-     -- spyM "idDecoderTransformer json" json
-     childDecoder json
+  myDecoderTransformer = identity
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
@@ -85,7 +123,6 @@ selectionForCompositeField fieldName args (SelectionSet fields childDecoder) =
     myDecoderTransformer childDecoder fieldJson
   )
 
--- noArgsWithCustomDecoder :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
--- noArgsWithCustomDecoder name = SelectionSet [ Leaf name [] ] ArgonautCodec.decodeJson
-
-data RootQuery = RootQuery
+data RootQuery
+data RootMutation
+data RootSubscription

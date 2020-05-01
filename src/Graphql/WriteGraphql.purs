@@ -1,10 +1,12 @@
 module Fernet.Graphql.WriteGraphql where
 
-import Prelude
+import Protolude
+
 import Data.Int (decimal, toStringAs)
 import Data.Maybe (Maybe(..))
 import Data.String (joinWith)
-import Fernet.Graphql.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..))
+import Data.String (null) as Data.String
+import Fernet.Graphql.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..), Optional(..))
 
 class WriteGraphql a where
   writeGraphql :: a -> String
@@ -17,23 +19,29 @@ instance writeGraphQlRawField :: WriteGraphql RawField where
     Leaf name args -> name <> writeGraphql args
     Composite name args subFields -> name <> writeGraphql args <> writeGraphql subFields
 
+instance writeGraphQlArrayRawField :: WriteGraphql (Array RawField) where
+  writeGraphql [] = ""
+  writeGraphql fields = " { " <> joinWith " " (writeGraphql <$> fields) <> " }"
+
+-------------------------
+
 instance writeGraphQlArgument :: WriteGraphql Argument where
   writeGraphql arg = case arg of
     RequiredArgument name value -> name <> ": " <> writeGraphql value
     OptionalArgument name mValue -> case mValue of
-      Just value -> name <> ": " <> writeGraphql value
-      Nothing -> ""
+      Present value -> name <> ": " <> writeGraphql value
+      Absent -> ""
 
 instance writeGraphQlGqlArgument :: WriteGraphql ArgumentValue where
   writeGraphql value = case value of
     ArgString s -> "\"" <> s <> "\""
     ArgInt i -> toStringAs decimal i
     ArgBoolean b -> if b then "true" else "false"
-
-instance writeGraphQlArrayRawField :: WriteGraphql (Array RawField) where
-  writeGraphql [] = ""
-  writeGraphql fields = " { " <> joinWith " " (writeGraphql <$> fields) <> " }"
+    ArgNested arguments -> writeGraphql arguments
+    ArgMaybeEmpty maybeArg -> maybe "null" writeGraphql maybeArg
 
 instance writeGraphQlArrayArgument :: WriteGraphql (Array Argument) where
   writeGraphql [] = ""
-  writeGraphql args = "(" <> joinWith ", " (writeGraphql <$> args) <> ")"
+  writeGraphql args =
+    let args' = joinWith ", " $ writeGraphql <$> args
+     in if Data.String.null args' then "" else "(" <> args' <> ")"

@@ -54,7 +54,7 @@ spec = Test.Spec.it "Introspection spec" do
 
   expectedJson <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
 
-  (actualJson :: _) <- Fernet.HTTP.gqlRequestImpl url query decoder
+  (actualJson :: _) <- Fernet.HTTP.gqlRequestImplWithTrace url query decoder
     >>= (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
 
   -- traceM expectedJson

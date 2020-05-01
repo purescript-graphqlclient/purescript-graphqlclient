@@ -71,14 +71,25 @@ types_name = selectionForField "name"
 types_description :: SelectionSet InstorpectionQueryResult_Types (Maybe String)
 types_description = selectionForField "description"
 
-type Types_EnumValues_Required = (includeDeprecated :: Boolean)
+type Types_EnumValues_Input = { includeDeprecated :: Optional (Maybe Boolean) }
 
 types_enumValues
   :: ∀ r
-   . Record Types_EnumValues_Required
+   . Types_EnumValues_Input
   -> SelectionSet InstorpectionQueryResult_EnumValues r
-  -> SelectionSet InstorpectionQueryResult_Types (Array (Maybe (Array r)))
-types_enumValues parameters = selectionForCompositeField "enumValues" []
+  -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
+types_enumValues { includeDeprecated } = selectionForCompositeField "enumValues" [ (OptionalArgument "includeDeprecated" (includeDeprecated <#> (map ArgBoolean >>> ArgMaybeEmpty))) ]
+
+-- type StringQueryOperatorInput =
+--   { eq    :: String -- required
+--   , ne    :: Maybe String -- required, can be null or string
+--   , regex :: Optional (Maybe String) -- required, can be null or string or absent
+--   , glob  :: Optional String -- required, can be string or absent
+--   }
+
+-- type ContinentFilterInput = (code :: StringQueryOperatorInput)
+
+-- type PropsOptional = (filter :: ContinentFilterInput)
 
 types_enumValues_name :: SelectionSet InstorpectionQueryResult_EnumValues String
 types_enumValues_name = selectionForField "name"
@@ -102,7 +113,7 @@ introspectionQuery includeDeprecated =
       types_kind'        <- types_kind
       types_name'        <- types_name
       types_description' <- (types_description <#> fromMaybe "")
-      types_enumValues'  <- types_enumValues { includeDeprecated: true } $
+      types_enumValues'  <- types_enumValues ({ includeDeprecated: Present Nothing }) $
         { name: _
         , description: _
         , isDeprecated: _
