@@ -3,7 +3,6 @@ module Fernet.Graphql.WriteGraphql where
 import Protolude
 
 import Data.Int (decimal, toStringAs)
-import Data.Maybe (Maybe(..))
 import Data.String (joinWith)
 import Data.String (null) as Data.String
 import Fernet.Graphql.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..), Optional(..))
@@ -16,8 +15,8 @@ instance writeGraphQlSelectionSet :: WriteGraphql (SelectionSet RootQuery a) whe
 
 instance writeGraphQlRawField :: WriteGraphql RawField where
   writeGraphql field = case field of
-    Leaf name args -> name <> writeGraphql args
-    Composite name args subFields -> name <> writeGraphql args <> writeGraphql subFields
+    Leaf name args -> name <> writeGraphqlArguments args
+    Composite name args subFields -> name <> writeGraphqlArguments args <> writeGraphql subFields
 
 instance writeGraphQlArrayRawField :: WriteGraphql (Array RawField) where
   writeGraphql [] = ""
@@ -25,23 +24,32 @@ instance writeGraphQlArrayRawField :: WriteGraphql (Array RawField) where
 
 -------------------------
 
-instance writeGraphQlArgument :: WriteGraphql Argument where
-  writeGraphql arg = case arg of
-    RequiredArgument name value -> name <> ": " <> writeGraphql value
+writeGraphqlArguments :: Array Argument -> String
+writeGraphqlArguments [] = ""
+writeGraphqlArguments args =
+  let args' = joinWith ", " $ writeGraphqlArgumentsImpl <$> args
+   in if Data.String.null args' then "" else "(" <> args' <> ")"
+
+class WriteGraphqlArgumentsImpl a where
+  writeGraphqlArgumentsImpl :: a -> String
+
+instance writeGraphQlArgument :: WriteGraphqlArgumentsImpl Argument where
+  writeGraphqlArgumentsImpl arg = case arg of
+    RequiredArgument name value -> name <> ": " <> writeGraphqlArgumentsImpl value
     OptionalArgument name mValue -> case mValue of
-      Present value -> name <> ": " <> writeGraphql value
+      Present value -> name <> ": " <> writeGraphqlArgumentsImpl value
       Absent -> ""
 
-instance writeGraphQlGqlArgument :: WriteGraphql ArgumentValue where
-  writeGraphql value = case value of
+instance writeGraphQlGqlArgument :: WriteGraphqlArgumentsImpl ArgumentValue where
+  writeGraphqlArgumentsImpl value = case value of
     ArgumentValueString s -> "\"" <> s <> "\""
     ArgumentValueInt i -> toStringAs decimal i
     ArgumentValueBoolean b -> if b then "true" else "false"
-    ArgumentValueNested arguments -> writeGraphql arguments
-    ArgumentValueMaybeEmpty maybeArg -> maybe "null" writeGraphql maybeArg
+    ArgumentValueNested arguments -> writeGraphqlArgumentsImpl arguments
+    ArgumentValueMaybeEmpty maybeArg -> maybe "null" writeGraphqlArgumentsImpl maybeArg
 
-instance writeGraphQlArrayArgument :: WriteGraphql (Array Argument) where
-  writeGraphql [] = ""
-  writeGraphql args =
-    let args' = joinWith ", " $ writeGraphql <$> args
-     in if Data.String.null args' then "" else "(" <> args' <> ")"
+instance writeGraphQlArrayArgument :: WriteGraphqlArgumentsImpl (Array Argument) where
+  writeGraphqlArgumentsImpl [] = ""
+  writeGraphqlArgumentsImpl args =
+    let args' = joinWith ", " $ writeGraphqlArgumentsImpl <$> args
+     in if Data.String.null args' then "" else "{ " <> args' <> " }"

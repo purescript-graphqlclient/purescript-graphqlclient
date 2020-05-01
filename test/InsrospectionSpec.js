@@ -31,8 +31,42 @@ exports.introspectionQueryForGraphqlClient = `query IntrospectionQuery($includeD
       isDeprecated
       deprecationReason
     }
+    possibleTypes {
+      ...TypeRef
+    }
   }
-`
+  fragment TypeRef on __Type {
+    kind
+    name
+    ofType {
+      kind
+      name
+      ofType {
+        kind
+        name
+        ofType {
+          kind
+          name
+          ofType {
+            kind
+            name
+            ofType {
+              kind
+              name
+              ofType {
+                kind
+                name
+                ofType {
+                  kind
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }`
 
 exports._requestGraphqlUsingGraphqlClient = function (queryString, graphqlUrl, includeDeprecated) {
   return function (onError, onSuccess) {
