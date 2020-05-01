@@ -137,26 +137,26 @@ derive instance optionalFunctor :: Functor Optional
 instance optionalDefaultInput :: DefaultInput (Optional a) where
   defaultInput = Absent
 
-instance recordDefaultInput :: (DefaultInputRecord row list , RowList.RowToList row list) => DefaultInput (Record row) where
-  defaultInput = defaultInputRecord (RLProxy :: RLProxy list)
+instance recordDefaultInput :: (DefaultInputImplementationRecord row list , RowList.RowToList row list) => DefaultInput (Record row) where
+  defaultInput = defaultInputImplementationRecord (RLProxy :: RLProxy list)
 
 -- RECORD
-class DefaultInputRecord (row :: # Type) (list :: RowList.RowList) | list -> row where
-  defaultInputRecord :: RLProxy list -> Record row
+class DefaultInputImplementationRecord (row :: # Type) (list :: RowList.RowList) | list -> row where
+  defaultInputImplementationRecord :: RLProxy list -> Record row
 
-instance defaultInputRecordNil :: DefaultInputRecord () RowList.Nil where
-  defaultInputRecord _proxy = {}
+instance defaultInputImplementationRecordNil :: DefaultInputImplementationRecord () RowList.Nil where
+  defaultInputImplementationRecord _proxy = {}
 
-instance defaultInputRecordCons ::
+instance defaultInputImplementationRecordCons ::
   ( DefaultInput value
-  , DefaultInputRecord rowTail tail
+  , DefaultInputImplementationRecord rowTail tail
   , IsSymbol field
   , Row.Cons field value rowTail row
   , Row.Lacks field rowTail
   ) =>
-  DefaultInputRecord row (RowList.Cons field value tail) where
-  defaultInputRecord _proxy =
-    let rest = defaultInputRecord (RLProxy :: RLProxy tail)
+  DefaultInputImplementationRecord row (RowList.Cons field value tail) where
+  defaultInputImplementationRecord _proxy =
+    let rest = defaultInputImplementationRecord (RLProxy :: RLProxy tail)
     in Record.insert (SProxy :: SProxy field) defaultInput rest
 
 ------------------------------------------------------
