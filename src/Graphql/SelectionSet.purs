@@ -44,7 +44,7 @@ instance toGraphqlArgumentValueInt :: ToGraphqlArgumentValue Int where
 instance toGraphqlArgumentValueBoolean :: ToGraphqlArgumentValue Boolean where
   toGraphqlArgumentValue = ArgumentValueBoolean
 
-instance toGraphqlArgumentValueRecord :: ToGraphqlArguments (Record row) => ToGraphqlArgumentValue (Record row) where
+instance toGraphqlArgumentValueRecord :: (RowList.RowToList row list, ToGraphqlArgumentImplementationRecord list row) => ToGraphqlArgumentValue (Record row) where
   toGraphqlArgumentValue record = ArgumentValueObject (toGraphqlArguments record)
 
 instance toGraphqlArgumentValueMaybe :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Maybe a) where
@@ -53,19 +53,18 @@ instance toGraphqlArgumentValueMaybe :: ToGraphqlArgumentValue a => ToGraphqlArg
 instance toGraphqlArgumentValueNested :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Array a) where
   toGraphqlArgumentValue arguments = ArgumentValueArray (map toGraphqlArgumentValue arguments)
 
-class ToGraphqlArguments a where
-  toGraphqlArguments :: a -> Array Argument
+toGraphqlArguments
+  :: ∀ row list
+   . RowList.RowToList row list
+  => ToGraphqlArgumentImplementationRecord list row
+  => (Record row)
+  -> Array Argument
+toGraphqlArguments rec = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy list) rec
 
-instance toGraphqlArgumentRecord ::
-  ( RowList.RowToList row list
-  , ToGraphqlArgumentImplementationRecord list row
-  ) => ToGraphqlArguments (Record row) where
-  toGraphqlArguments rec = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy list) rec
+-------------------------------------------------------
 
 class ToGraphqlArgumentImplementationRecord (list :: RowList.RowList) (row :: # Type) | list -> row where
   toGraphqlArgumentImplementationRecord :: forall proxy. proxy list -> Record row -> Array Argument
-
--------------------------------------------------------
 
 instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord RowList.Nil row where
   toGraphqlArgumentImplementationRecord _proxy _record = []
@@ -73,7 +72,9 @@ instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord Row
 else
 
 instance toGraphqlArgumentRecordConsOptionalChildRow ::
-  ( ToGraphqlArguments (Record childRow)
+  ( RowList.RowToList childRow childList
+  , ToGraphqlArgumentImplementationRecord childList childRow
+  ---
   , ToGraphqlArgumentImplementationRecord tail row
   , IsSymbol field
   , Row.Cons field (Optional (Record childRow)) rowTail row
@@ -91,7 +92,9 @@ instance toGraphqlArgumentRecordConsOptionalChildRow ::
 else
 
 instance toGraphqlArgumentRecordConsChildRow ::
-  ( ToGraphqlArguments (Record childRow)
+  ( RowList.RowToList childRow childList
+  , ToGraphqlArgumentImplementationRecord childList childRow
+  ---
   , ToGraphqlArgumentImplementationRecord tail row
   , IsSymbol field
   , Row.Cons field (Record childRow) rowTail row
