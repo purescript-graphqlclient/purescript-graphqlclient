@@ -6,6 +6,7 @@ import Protolude
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Core as Data.Argonaut.Core
 import Data.Argonaut.Decode as ArgonautCodec
+import Data.Argonaut.Decode.Class (elaborateFailure)
 import Data.Array (cons) as Array
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 import Prim.Row as Row
@@ -181,8 +182,7 @@ selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
     -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
     jsonObject <- ArgonautCodec.decodeJson json
     -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
-    (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
-    ArgonautCodec.decodeJson fieldJson
+    jsonObject .: fieldName
   )
 
 class DecoderTransformer a b | b -> a where
@@ -217,7 +217,8 @@ selectionForCompositeField fieldName args (SelectionSet fields childDecoder) =
     jsonObject <- ArgonautCodec.decodeJson json
     -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
     (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
-    myDecoderTransformer childDecoder fieldJson
+    -- spyM ("selectionForCompositeField for " <> fieldName <> " found") fieldJson
+    elaborateFailure fieldName $ myDecoderTransformer childDecoder fieldJson
   )
 
 data RootQuery

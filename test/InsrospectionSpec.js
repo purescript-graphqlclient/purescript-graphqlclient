@@ -25,6 +25,24 @@ exports.introspectionQueryForGraphqlClient = `query IntrospectionQuery($includeD
     kind
     name
     description
+    fields(includeDeprecated: $includeDeprecated) {
+      name
+      description
+      args {
+        ...InputValue
+      }
+      type {
+        ...TypeRef
+      }
+      isDeprecated
+      deprecationReason
+    }
+    inputFields {
+      ...InputValue
+    }
+    interfaces {
+      ...TypeRef
+    }
     enumValues(includeDeprecated: $includeDeprecated) {
       name
       description
@@ -34,6 +52,12 @@ exports.introspectionQueryForGraphqlClient = `query IntrospectionQuery($includeD
     possibleTypes {
       ...TypeRef
     }
+  }
+  fragment InputValue on __InputValue {
+    name
+    description
+    type { ...TypeRef }
+    defaultValue
   }
   fragment TypeRef on __Type {
     kind

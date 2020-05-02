@@ -124,6 +124,8 @@ let upstream =
 let overrides =
   { argonaut-core =
       upstream.argonaut-core // { repo = "https://github.com/srghma/purescript-argonaut-core.git", version = "a607181" }
+  , argonaut-codecs =
+      upstream.argonaut-codecs // { repo = "https://github.com/srghma/purescript-argonaut-codecs.git", version = "9db83c0" }
   }
 
 let additions =
