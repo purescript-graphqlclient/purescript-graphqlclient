@@ -169,56 +169,44 @@ data RawField
 -- TODO: better error messages https://github.com/garyb/purescript-codec-argonaut/blob/f8766cb1dcc3c80d712e6c72ce91624dede84038/src/Data/Codec/Argonaut.purs#L60
 type Decoder a = Data.Argonaut.Core.Json -> Either String a
 
-data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Decoder a)
+data SelectionSetBind' parentTypeLock a b = SelectionSetBind' (SelectionSet parentTypeLock b) (b -> a)
 
-derive instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock)
+newtype SelectionSetBind parentTypeLock a = SelectionSetBind (∀ r. (∀ b. SelectionSetBind' parentTypeLock a b -> r) -> r)
+
+mkSelectionSetBind :: ∀ parentTypeLock a b . SelectionSetBind' parentTypeLock a b -> SelectionSetBind parentTypeLock a
+mkSelectionSetBind a = SelectionSetBind \k -> k a
+
+unSelectionSetBind :: ∀ r parentTypeLock a . (∀ b. SelectionSetBind' parentTypeLock a b -> r) -> SelectionSetBind parentTypeLock a -> r
+unSelectionSetBind k1 (SelectionSetBind k2) = k2 k1
+
+data SelectionSet parentTypeLock a
+  = SelectionSet (Array RawField)
+  | Bind (SelectionSetBind parentTypeLock a)
+
+-- I can map with single use of f, Control.Functor?
+
+instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock) where
+  map f ss@(SelectionSet _) = Bind (mkSelectionSetBind $ SelectionSetBind' ss f)
+  map f (Bind selectionSetBind) = Bind (unSelectionSetBind (\(SelectionSetBind' ss g) -> mkSelectionSetBind $ SelectionSetBind' ss (g >>> f)) selectionSetBind)
 
 instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
-  apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
+  apply = undefined
 
 selectionForField :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
-selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
-    jsonObject <- ArgonautCodec.decodeJson json
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
-    jsonObject .: fieldName
-  )
-
-class DecoderTransformer a b | b -> a where
-  myDecoderTransformer :: Decoder a -> Decoder b
-
--- for lists, maybes, but also allows nested containers (e.g. `List (Maybe x)`)
-instance traversableDecoderTransformer :: (Traversable f, DecoderTransformer a b, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer a (f b) where
-  myDecoderTransformer childDecoder json = do
-    -- spyM "traversableDecoderTransformer json" json
-    (x :: f ArgonautCore.Json) <- ArgonautCodec.decodeJson json
-    let (a_to_b :: Decoder a -> Decoder b) = myDecoderTransformer
-    let (to_b :: Decoder b) = a_to_b childDecoder
-    -- spyM "traversableDecoderTransformer json" x
-    traverse to_b x
-
-else
-
--- it's like Identity functor, but better
-instance idDecoderTransformer :: DecoderTransformer a a where
-  myDecoderTransformer = identity
+selectionForField fieldName = SelectionSet [ Leaf fieldName [] ]
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
-   . DecoderTransformer a b
-  => String
+   . String
   -> Array Argument
   -> SelectionSet objectTypeLock a
   -> SelectionSet lockedTo b
-selectionForCompositeField fieldName args (SelectionSet fields childDecoder) =
-  SelectionSet [ Composite fieldName args fields ] (\json -> do
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
-    jsonObject <- ArgonautCodec.decodeJson json
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
-    (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
-    -- spyM ("selectionForCompositeField for " <> fieldName <> " found") fieldJson
-    elaborateFailure fieldName $ myDecoderTransformer childDecoder fieldJson
+selectionForCompositeField fieldName args (SelectionSet fields) = SelectionSet [ Composite fieldName args fields ]
+selectionForCompositeField fieldName args (Bind selectionSetBind) = Bind
+  (unSelectionSetBind
+  (\(SelectionSetBind' ss g) -> mkSelectionSetBind $ ?asdf)
+  selectionSetBind
   )
 
 data RootQuery

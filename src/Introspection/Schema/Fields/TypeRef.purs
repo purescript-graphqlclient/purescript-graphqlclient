@@ -9,7 +9,7 @@ data InstorpectionQueryResult_TypeRef
 kind :: SelectionSet InstorpectionQueryResult_TypeRef String
 kind = selectionForField "kind"
 
-name :: SelectionSet InstorpectionQueryResult_TypeRef (Maybe String)
+name :: SelectionSet InstorpectionQueryResult_TypeRef (String)
 name = selectionForField "name"
 
 ofType :: ∀ r . SelectionSet InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_TypeRef (Maybe r)
