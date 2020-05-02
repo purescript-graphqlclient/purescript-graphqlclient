@@ -145,6 +145,30 @@ let additions =
        , version =
            "master"
        }
+  , codec =
+    { dependencies =
+        [ "transformers"
+        , "profunctor"
+        ]
+    , repo =
+        "https://github.com/srghma/purescript-codec.git"
+    , version =
+        "master"
+    }
+  , codec-argonaut =
+      { dependencies =
+          [ "argonaut-core"
+          , "codec"
+          , "generics-rep"
+          , "variant"
+          , "ordered-collections"
+          , "type-equality"
+          ]
+      , repo =
+          "https://github.com/garyb/purescript-codec-argonaut.git"
+      , version =
+          "master"
+      }
   }
 
 in  upstream // overrides // additions

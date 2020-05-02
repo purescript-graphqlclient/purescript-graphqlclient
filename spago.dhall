@@ -14,7 +14,7 @@ You can edit this file as you like.
   , "psci-support"
   , "record"
   , "argonaut-core"
-  , "argonaut-codecs"
+  , "codec-argonaut"
   , "argonaut-generic"
   , "typelevel-prelude"
   , "debug"

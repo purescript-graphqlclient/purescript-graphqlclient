@@ -5,9 +5,10 @@ import Protolude
 
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Core as Data.Argonaut.Core
-import Data.Argonaut.Decode as ArgonautCodec
-import Data.Argonaut.Decode.Class (elaborateFailure)
 import Data.Array (cons) as Array
+import Data.Codec.Argonaut as CodecArgonaut
+import Data.Codec.Argonaut.Common (list) as CodecArgonaut.Common
+import Data.Codec.Argonaut.Compat (maybe) as CodecArgonaut.Compat
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 import Prim.Row as Row
 import Prim.RowList (class RowToList)
@@ -166,60 +167,69 @@ data RawField
   = Composite String (Array Argument) (Array RawField)
   | Leaf String (Array Argument)
 
--- TODO: better error messages https://github.com/garyb/purescript-codec-argonaut/blob/f8766cb1dcc3c80d712e6c72ce91624dede84038/src/Data/Codec/Argonaut.purs#L60
-type Decoder a = Data.Argonaut.Core.Json -> Either String a
+data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (CodecArgonaut.JsonCodec a)
 
-data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Decoder a)
-
-derive instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock)
+instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock) where
+  map f (SelectionSet rawFieldArray jsonCodec) = SelectionSet rawFieldArray (?asdf $ map f jsonCodec)
 
 instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
-  apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
+  apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (?asd)
 
-selectionForField :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
-selectionForField fieldName = SelectionSet [ Leaf fieldName [] ] (\json -> do
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
-    jsonObject <- ArgonautCodec.decodeJson json
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
-    jsonObject .: fieldName
-  )
+class GraphqlDefaultResponseScalarCodec a where
+  graphqlDefaultResponseScalarCodec :: CodecArgonaut.JsonCodec a
 
-class DecoderTransformer a b | b -> a where
-  myDecoderTransformer :: Decoder a -> Decoder b
+instance stringGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec String where
+  graphqlDefaultResponseScalarCodec = CodecArgonaut.string
 
--- for lists, maybes, but also allows nested containers (e.g. `List (Maybe x)`)
-instance traversableDecoderTransformer :: (Traversable f, DecoderTransformer a b, ArgonautCodec.DecodeJson (f ArgonautCore.Json)) => DecoderTransformer a (f b) where
-  myDecoderTransformer childDecoder json = do
-    -- spyM "traversableDecoderTransformer json" json
-    (x :: f ArgonautCore.Json) <- ArgonautCodec.decodeJson json
-    let (a_to_b :: Decoder a -> Decoder b) = myDecoderTransformer
-    let (to_b :: Decoder b) = a_to_b childDecoder
-    -- spyM "traversableDecoderTransformer json" x
-    traverse to_b x
+instance intGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Int where
+  graphqlDefaultResponseScalarCodec = CodecArgonaut.int
+
+instance booleanGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Boolean where
+  graphqlDefaultResponseScalarCodec = CodecArgonaut.boolean
+
+instance numberGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Number where
+  graphqlDefaultResponseScalarCodec = CodecArgonaut.number
+
+instance charGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Char where
+  graphqlDefaultResponseScalarCodec = CodecArgonaut.char
+
+class GraphqlDefaultResponseFunctorCodec f where
+  graphqlDefaultResponseFunctorCodec :: ∀ a. CodecArgonaut.JsonCodec a → CodecArgonaut.JsonCodec (f a)
+
+instance maybeGraphqlDefaultResponseFunctorCodec :: GraphqlDefaultResponseFunctorCodec Maybe where
+  graphqlDefaultResponseFunctorCodec = CodecArgonaut.Compat.maybe
+
+instance arrayGraphqlDefaultResponseFunctorCodec :: GraphqlDefaultResponseFunctorCodec Array where
+  graphqlDefaultResponseFunctorCodec = CodecArgonaut.array
+
+instance listGraphqlDefaultResponseFunctorCodec :: GraphqlDefaultResponseFunctorCodec List where
+  graphqlDefaultResponseFunctorCodec = CodecArgonaut.Common.list
+
+class GraphqlDefaultResponseCodecTransformer a b | b -> a where
+  graphqlDefaultResponseCodecTransformer :: CodecArgonaut.JsonCodec a -> CodecArgonaut.JsonCodec b
+
+-- finds codecs for Array, Maybe, but also allows nested containers (e.g. `Array (Maybe x)`)
+instance traversableCodecTransformer :: (GraphqlDefaultResponseCodecTransformer a b, GraphqlDefaultResponseFunctorCodec f) => GraphqlDefaultResponseCodecTransformer a (f b) where
+  graphqlDefaultResponseCodecTransformer = graphqlDefaultResponseFunctorCodec
 
 else
 
--- it's like Identity functor, but better
-instance idDecoderTransformer :: DecoderTransformer a a where
-  myDecoderTransformer = identity
+instance idCodecTransformer :: GraphqlDefaultResponseCodecTransformer a a where
+  graphqlDefaultResponseCodecTransformer = identity
+
+selectionForField :: forall parentTypeLock a . CodecArgonaut.JsonCodec a -> String -> SelectionSet parentTypeLock a
+selectionForField fieldName jsonCodec = SelectionSet [ Leaf fieldName [] ] (CodecArgonaut.recordProp (SProxy :: _ fieldName) jsonCodec)
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
-   . DecoderTransformer a b
-  => String
+   . String
   -> Array Argument
+  -> (CodecArgonaut.JsonCodec a -> CodecArgonaut.JsonCodec b)
   -> SelectionSet objectTypeLock a
   -> SelectionSet lockedTo b
-selectionForCompositeField fieldName args (SelectionSet fields childDecoder) =
-  SelectionSet [ Composite fieldName args fields ] (\json -> do
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": json") json
-    jsonObject <- ArgonautCodec.decodeJson json
-    -- spyM ("selectionForCompositeField for " <> fieldName <> ": jsonObject") jsonObject
-    (fieldJson :: ArgonautCore.Json) <- jsonObject .: fieldName
-    -- spyM ("selectionForCompositeField for " <> fieldName <> " found") fieldJson
-    elaborateFailure fieldName $ myDecoderTransformer childDecoder fieldJson
-  )
+selectionForCompositeField fieldName args jsonCodecTransformer (SelectionSet fields childCodec) =
+  SelectionSet [ Composite fieldName args fields ] (CodecArgonaut.recordProp (SProxy :: _ fieldName) $ jsonCodecTransformer childCodec)
 
 data RootQuery
 data RootMutation
