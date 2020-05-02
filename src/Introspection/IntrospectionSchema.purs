@@ -81,10 +81,13 @@ type InstorpectionQueryResult__TypeRef
       )
     )
 
-ofTypeStop :: SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef { kind :: String, name :: Maybe String }
+ofTypeStop :: SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared ()))
 ofTypeStop = { kind: _, name: _ } <$> Fernet.Introspection.Schema.Fields.TypeRef.kind <*> Fernet.Introspection.Schema.Fields.TypeRef.name
 
-ofTypeNest :: ∀ r . SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef { kind :: String, name :: Maybe String, ofType :: Maybe r }
+ofTypeNest
+  :: ∀ r
+   . SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r
+  -> SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared (ofType :: Maybe r)))
 ofTypeNest other = { kind: _, name: _, ofType: _ } <$> Fernet.Introspection.Schema.Fields.TypeRef.kind <*> Fernet.Introspection.Schema.Fields.TypeRef.name <*> Fernet.Introspection.Schema.Fields.TypeRef.ofType other
 
 typeRefFragment :: SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef InstorpectionQueryResult__TypeRef
@@ -107,7 +110,7 @@ introspectionQuery includeDeprecated =
       types_kind'          <- types_kind
       types_name'          <- types_name
       types_description'   <- types_description
-      types_fields'        <- types_fields ({ includeDeprecated: false }) $
+      types_fields'        <- types_fields ({ includeDeprecated }) $
         { name: _
         , description: _
         , args: _
@@ -122,7 +125,7 @@ introspectionQuery includeDeprecated =
           <*> types_fields_deprecationReason
       types_inputFields' <- types_inputFields inputValueFragment
       types_interfaces' <- types_interfaces typeRefFragment
-      types_enumValues' <- types_enumValues ({ includeDeprecated: false }) $
+      types_enumValues' <- types_enumValues ({ includeDeprecated }) $
         { name: _
         , description: _
         , isDeprecated: _
@@ -148,12 +151,3 @@ introspectionQuery includeDeprecated =
           , types: types'
           }
        }
-
-  -- (queryType $ { name: _, description: _ } <$> queryType_name <*> queryType_description)
-
-  -- __schema $
-  --   queryType queryType_name
-  --   <|> mutationType mutationType_name
-  --   <|> subscriptionType subscriptionType_name
-  --   <|> (types $ types_kind <|> types_name <|> types_description)
-
