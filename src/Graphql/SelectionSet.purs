@@ -169,32 +169,25 @@ data RawField
 -- TODO: better error messages https://github.com/garyb/purescript-codec-argonaut/blob/f8766cb1dcc3c80d712e6c72ce91624dede84038/src/Data/Codec/Argonaut.purs#L60
 type Decoder a = Data.Argonaut.Core.Json -> Either String a
 
-data SelectionSetBind' parentTypeLock a b = SelectionSetBind' (SelectionSet parentTypeLock b) (b -> a)
+data SelectionSet' from to = SelectionSet' (Array RawField) (from -> to)
 
-newtype SelectionSetBind parentTypeLock a = SelectionSetBind (∀ r. (∀ b. SelectionSetBind' parentTypeLock a b -> r) -> r)
+newtype SelectionSet parentTypeLock to = SelectionSet (∀ r. (∀ from. SelectionSet' from to -> r) -> r)
 
-mkSelectionSetBind :: ∀ parentTypeLock a b . SelectionSetBind' parentTypeLock a b -> SelectionSetBind parentTypeLock a
-mkSelectionSetBind a = SelectionSetBind \k -> k a
+mkSelectionSet :: ∀ parentTypeLock from to . SelectionSet' from to -> SelectionSet parentTypeLock to
+mkSelectionSet a = SelectionSet \k -> k a
 
-unSelectionSetBind :: ∀ r parentTypeLock a . (∀ b. SelectionSetBind' parentTypeLock a b -> r) -> SelectionSetBind parentTypeLock a -> r
-unSelectionSetBind k1 (SelectionSetBind k2) = k2 k1
-
-data SelectionSet parentTypeLock a
-  = SelectionSet (Array RawField)
-  | Bind (SelectionSetBind parentTypeLock a)
-
--- I can map with single use of f, Control.Functor?
+unSelectionSet :: ∀ r parentTypeLock to . (∀ from. SelectionSet' from to -> r) -> SelectionSet parentTypeLock to -> r
+unSelectionSet k1 (SelectionSet k2) = k2 k1
 
 instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock) where
-  map f ss@(SelectionSet _) = Bind (mkSelectionSetBind $ SelectionSetBind' ss f)
-  map f (Bind selectionSetBind) = Bind (unSelectionSetBind (\(SelectionSetBind' ss g) -> mkSelectionSetBind $ SelectionSetBind' ss (g >>> f)) selectionSetBind)
+  map f selectionSet = unSelectionSet (\(SelectionSet' arrayRawField g) -> mkSelectionSet $ SelectionSet' arrayRawField (g >>> f)) selectionSet
 
 instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
   apply = undefined
 
 selectionForField :: forall parentTypeLock a . ArgonautCodec.DecodeJson a => String -> SelectionSet parentTypeLock a
-selectionForField fieldName = SelectionSet [ Leaf fieldName [] ]
+selectionForField fieldName = mkSelectionSet $ SelectionSet' [ Leaf fieldName [] ] identity
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
@@ -202,12 +195,7 @@ selectionForCompositeField
   -> Array Argument
   -> SelectionSet objectTypeLock a
   -> SelectionSet lockedTo b
-selectionForCompositeField fieldName args (SelectionSet fields) = SelectionSet [ Composite fieldName args fields ]
-selectionForCompositeField fieldName args (Bind selectionSetBind) = Bind
-  (unSelectionSetBind
-  (\(SelectionSetBind' ss g) -> mkSelectionSetBind $ ?asdf)
-  selectionSetBind
-  )
+selectionForCompositeField fieldName args selectionSet = unSelectionSet (\(SelectionSet' arrayRawField g) -> mkSelectionSet $ SelectionSet' [ Composite fieldName args arrayRawField ] ?adsf) selectionSet
 
 data RootQuery
 data RootMutation
