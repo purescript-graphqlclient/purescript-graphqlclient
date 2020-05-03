@@ -125,7 +125,9 @@ let overrides =
   { argonaut-core =
       upstream.argonaut-core // { repo = "https://github.com/srghma/purescript-argonaut-core.git", version = "a607181" }
   , argonaut-codecs =
-      upstream.argonaut-codecs // { repo = "https://github.com/srghma/purescript-argonaut-codecs.git", version = "9db83c0" }
+      upstream.argonaut-codecs // { repo = "https://github.com/srghma/purescript-argonaut-codecs.git", version = "7e57801" }
+  , argonaut-generic =
+      upstream.argonaut-generic // { repo = "https://github.com/srghma/purescript-argonaut-generic.git", version = "master" }
   }
 
 let additions =
@@ -145,30 +147,30 @@ let additions =
        , version =
            "master"
        }
-  , codec =
-    { dependencies =
-        [ "transformers"
-        , "profunctor"
-        ]
-    , repo =
-        "https://github.com/srghma/purescript-codec.git"
-    , version =
-        "master"
-    }
-  , codec-argonaut =
-      { dependencies =
-          [ "argonaut-core"
-          , "codec"
-          , "generics-rep"
-          , "variant"
-          , "ordered-collections"
-          , "type-equality"
-          ]
-      , repo =
-          "https://github.com/garyb/purescript-codec-argonaut.git"
-      , version =
-          "master"
-      }
+  -- , codec =
+  --   { dependencies =
+  --       [ "transformers"
+  --       , "profunctor"
+  --       ]
+  --   , repo =
+  --       "https://github.com/srghma/purescript-codec.git"
+  --   , version =
+  --       "master"
+  --   }
+  -- , codec-argonaut =
+  --     { dependencies =
+  --         [ "argonaut-core"
+  --         , "codec"
+  --         , "generics-rep"
+  --         , "variant"
+  --         , "ordered-collections"
+  --         , "type-equality"
+  --         ]
+  --     , repo =
+  --         "https://github.com/garyb/purescript-codec-argonaut.git"
+  --     , version =
+  --         "master"
+  --     }
   }
 
 in  upstream // overrides // additions

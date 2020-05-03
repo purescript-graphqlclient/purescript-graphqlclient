@@ -13,7 +13,7 @@ import Control.Monad.Except as Transformers
 import Control.Monad.Except.Trans as Transformers
 import Control.Monad.Trans.Class as Transformers
 import Data.Argonaut.Core as ArgonautCore
-import Data.Argonaut.Decode (class DecodeJson, decodeJson)
+import Data.Argonaut.Decode (class DecodeJson, Decoder, JsonDecodeError(..), decodeJson, printJsonDecodeError)
 import Data.Argonaut.Decode as ArgonautCodecs.Decode
 import Data.Argonaut.Decode.Generic.Rep as ArgonautGeneric
 import Data.Argonaut.Encode (class EncodeJson)
@@ -65,11 +65,13 @@ derive instance newtypeGraphqlErrorRecord :: Newtype GraphqlErrorDetails _
 derive instance genericGraphqlErrorRecord :: Generic GraphqlErrorDetails _
 
 instance decodeJsonGraphqlErrorRecord :: DecodeJson GraphqlErrorDetails where
-  decodeJson json = do
+  decodeJson json = enhanceError do
      jsonObject <- decodeJson json
-     (messageJson /\ otherDetails) <- Foreign.Object.pop "message" jsonObject # note "Expected field \"message\""
+     (messageJson /\ otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
      (message :: String) <- decodeJson messageJson
      pure $ GraphqlErrorDetails { message, otherDetails }
+    where
+      enhanceError = lmap (Named "GraphqlErrorDetails")
 
 instance encodeJsonGraphqlErrorRecord :: EncodeJson GraphqlErrorDetails where
   encodeJson = ArgonautGeneric.genericEncodeJson
@@ -77,12 +79,12 @@ instance encodeJsonGraphqlErrorRecord :: EncodeJson GraphqlErrorDetails where
 data PossiblyParsedData parsed
   = ParsedData parsed
   | NoDataKey
-  | UnparsedData String ArgonautCore.Json
+  | UnparsedData JsonDecodeError ArgonautCore.Json
 
 data GraphqlRawError parsed
   = AffjaxError       Affjax.Error
   -- | BadStatus         Affjax.StatusCode String -- status is not in >=200 && <=299 range
-  | UnexpectedPayload String ArgonautCore.Json -- json is not decoded at all
+  | UnexpectedPayload JsonDecodeError ArgonautCore.Json -- json is not decoded at all
   | GraphqlError      (Array GraphqlErrorDetails) (PossiblyParsedData parsed)
 
 type GraphqlResponse parsed = Either (GraphqlRawError parsed) parsed
@@ -93,7 +95,7 @@ printGraphqlError = case _ of
   -- BadStatus statusCode statusText -> "Expected status in 200-299 range, but got " <> show statusCode <> " " <> statusText
   UnexpectedPayload error jsonBody -> intercalate "\n"
     [ "Unexpected payload:"
-    , "  error = " <> quote error
+    , "  error = " <> printJsonDecodeError error
     , "  body = " <> ArgonautCore.stringifyWithIdentation 2 jsonBody
     ]
   GraphqlError errorsArray possiblyParsedData ->
@@ -101,7 +103,7 @@ printGraphqlError = case _ of
      in case possiblyParsedData of
          ParsedData _parsed -> intercalate "\n" $ ["Data is parsed, but there are graphql errors:"] <> errorsArray'
          NoDataKey -> intercalate "\n" $ ["Data is not present because of the graphql errors:"] <> errorsArray'
-         UnparsedData dataDecoderError _json -> intercalate "\n" $ ["Data cannot be parsed (" <> quote dataDecoderError <> ") because of the graphql errors:"] <> errorsArray'
+         UnparsedData dataDecoderError _json -> (intercalate "\n" $ ["Data cannot be parsed because of the graphql errors:"] <> errorsArray') <> printJsonDecodeError dataDecoderError
   where
   quote x = "\"" <> x <> "\""
 
@@ -109,7 +111,7 @@ printGraphqlError = case _ of
 tryDecodeGraphqlResponse :: ∀ parsed . Decoder parsed -> ArgonautCore.Json -> GraphqlResponse parsed
 tryDecodeGraphqlResponse decoderForData jsonBody = (\error -> Left $ UnexpectedPayload error jsonBody) \/ identity $ go
   where
-    go :: String \/ GraphqlResponse parsed
+    go :: JsonDecodeError \/ GraphqlResponse parsed
     go = do
       (jsonObject :: Object ArgonautCore.Json) <- ArgonautCodecs.Decode.decodeJson jsonBody
 

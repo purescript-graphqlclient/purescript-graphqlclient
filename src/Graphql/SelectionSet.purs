@@ -3,18 +3,17 @@ module Fernet.Graphql.SelectionSet where
 import Data.Argonaut.Decode.Combinators
 import Protolude
 
-import Data.Argonaut.Core (Json) as ArgonautCore
-import Data.Argonaut.Core as Data.Argonaut.Core
-import Data.Array (cons) as Array
-import Data.Codec.Argonaut as CodecArgonaut
-import Data.Codec.Argonaut.Common (list) as CodecArgonaut.Common
-import Data.Codec.Argonaut.Compat (maybe) as CodecArgonaut.Compat
-import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
-import Prim.Row as Row
-import Prim.RowList (class RowToList)
-import Prim.RowList as RowList
-import Record as Record
-import Type.Data.RowList (RLProxy(..))
+import Data.Argonaut.Core                  as ArgonautCore
+import Data.Argonaut.Core                  as Data.Argonaut.Core
+import Data.Array                          as Array
+import Data.Argonaut.Decode                as ArgonautDecoders
+import Data.Argonaut.Decode.Implementation as ArgonautDecoders.Implementation
+import Prim.Row                            as Row
+import Prim.RowList                        as RowList
+import Record                              as Record
+import Data.Symbol                         (class IsSymbol, SProxy(..), reflectSymbol)
+import Prim.RowList                        (class RowToList)
+import Type.Data.RowList                   (RLProxy(..))
 
 data ArgumentValue
   = ArgumentValueString String
@@ -167,69 +166,77 @@ data RawField
   = Composite String (Array Argument) (Array RawField)
   | Leaf String (Array Argument)
 
-data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (CodecArgonaut.JsonCodec a)
+data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (ArgonautDecoders.Decoder a)
 
-instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock) where
-  map f (SelectionSet rawFieldArray jsonCodec) = SelectionSet rawFieldArray (?asdf $ map f jsonCodec)
+derive instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock)
 
 instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
-  apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (?asd)
+  apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
 
-class GraphqlDefaultResponseScalarCodec a where
-  graphqlDefaultResponseScalarCodec :: CodecArgonaut.JsonCodec a
+class GraphqlDefaultResponseScalarDecoder a where
+  graphqlDefaultResponseScalarDecoder :: ArgonautDecoders.Decoder a
 
-instance stringGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec String where
-  graphqlDefaultResponseScalarCodec = CodecArgonaut.string
+instance stringGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder String where
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeString
 
-instance intGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Int where
-  graphqlDefaultResponseScalarCodec = CodecArgonaut.int
+instance intGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Int where
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeInt
 
-instance booleanGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Boolean where
-  graphqlDefaultResponseScalarCodec = CodecArgonaut.boolean
+instance booleanGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Boolean where
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeBoolean
 
-instance numberGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Number where
-  graphqlDefaultResponseScalarCodec = CodecArgonaut.number
+instance numberGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Number where
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeNumber
 
-instance charGraphqlDefaultResponseScalarCodec :: GraphqlDefaultResponseScalarCodec Char where
-  graphqlDefaultResponseScalarCodec = CodecArgonaut.char
+instance functorGraphqlDefaultResponseScalarDecoder :: (GraphqlDefaultResponseFunctorDecoder f, GraphqlDefaultResponseScalarDecoder a) => GraphqlDefaultResponseScalarDecoder (f a) where
+  graphqlDefaultResponseScalarDecoder = graphqlDefaultResponseFunctorDecoder graphqlDefaultResponseScalarDecoder
 
-class GraphqlDefaultResponseFunctorCodec f where
-  graphqlDefaultResponseFunctorCodec :: ∀ a. CodecArgonaut.JsonCodec a → CodecArgonaut.JsonCodec (f a)
+class GraphqlDefaultResponseFunctorDecoder f where
+  graphqlDefaultResponseFunctorDecoder :: ∀ a. ArgonautDecoders.Decoder a → ArgonautDecoders.Decoder (f a)
 
-instance maybeGraphqlDefaultResponseFunctorCodec :: GraphqlDefaultResponseFunctorCodec Maybe where
-  graphqlDefaultResponseFunctorCodec = CodecArgonaut.Compat.maybe
+instance maybeGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunctorDecoder Maybe where
+  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Implementation.decodeMaybe
 
-instance arrayGraphqlDefaultResponseFunctorCodec :: GraphqlDefaultResponseFunctorCodec Array where
-  graphqlDefaultResponseFunctorCodec = CodecArgonaut.array
+instance arrayGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunctorDecoder Array where
+  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Implementation.decodeArray
 
-instance listGraphqlDefaultResponseFunctorCodec :: GraphqlDefaultResponseFunctorCodec List where
-  graphqlDefaultResponseFunctorCodec = CodecArgonaut.Common.list
+instance listGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunctorDecoder List where
+  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Implementation.decodeList
 
-class GraphqlDefaultResponseCodecTransformer a b | b -> a where
-  graphqlDefaultResponseCodecTransformer :: CodecArgonaut.JsonCodec a -> CodecArgonaut.JsonCodec b
+class GraphqlDefaultResponseDecoderTransformer a b | b -> a where
+  graphqlDefaultResponseDecoderTransformer :: ArgonautDecoders.Decoder a -> ArgonautDecoders.Decoder b
 
--- finds codecs for Array, Maybe, but also allows nested containers (e.g. `Array (Maybe x)`)
-instance traversableCodecTransformer :: (GraphqlDefaultResponseCodecTransformer a b, GraphqlDefaultResponseFunctorCodec f) => GraphqlDefaultResponseCodecTransformer a (f b) where
-  graphqlDefaultResponseCodecTransformer = graphqlDefaultResponseFunctorCodec
+-- finds decoders for Array, Maybe, but also allows nested containers (e.g. `Array (Maybe x)`)
+instance traversableDecoderTransformer :: (GraphqlDefaultResponseDecoderTransformer a b, GraphqlDefaultResponseFunctorDecoder f) => GraphqlDefaultResponseDecoderTransformer a (f b) where
+  graphqlDefaultResponseDecoderTransformer childDecoder = do
+     let (json_to_b :: ArgonautDecoders.Decoder b) = graphqlDefaultResponseDecoderTransformer childDecoder
+     let (json_to_fb :: ArgonautDecoders.Decoder (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
+     json_to_fb
 
 else
 
-instance idCodecTransformer :: GraphqlDefaultResponseCodecTransformer a a where
-  graphqlDefaultResponseCodecTransformer = identity
+instance idDecoderTransformer :: GraphqlDefaultResponseDecoderTransformer a a where
+  graphqlDefaultResponseDecoderTransformer = identity
 
-selectionForField :: forall parentTypeLock a . CodecArgonaut.JsonCodec a -> String -> SelectionSet parentTypeLock a
-selectionForField fieldName jsonCodec = SelectionSet [ Leaf fieldName [] ] (CodecArgonaut.recordProp (SProxy :: _ fieldName) jsonCodec)
+selectionForField :: forall parentTypeLock a . String -> Array Argument -> ArgonautDecoders.Decoder a -> SelectionSet parentTypeLock a
+selectionForField fieldName args decoder = SelectionSet [Leaf fieldName args] (\json -> do
+    object <- ArgonautDecoders.Implementation.decodeJObject json
+    ArgonautDecoders.Implementation.getField decoder object fieldName
+  )
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
    . String
   -> Array Argument
-  -> (CodecArgonaut.JsonCodec a -> CodecArgonaut.JsonCodec b)
+  -> (ArgonautDecoders.Decoder a -> ArgonautDecoders.Decoder b)
   -> SelectionSet objectTypeLock a
   -> SelectionSet lockedTo b
-selectionForCompositeField fieldName args jsonCodecTransformer (SelectionSet fields childCodec) =
-  SelectionSet [ Composite fieldName args fields ] (CodecArgonaut.recordProp (SProxy :: _ fieldName) $ jsonCodecTransformer childCodec)
+selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet fields childDecoder) =
+  SelectionSet [ Composite fieldName args fields ] (\json -> do
+    object <- ArgonautDecoders.Implementation.decodeJObject json
+    ArgonautDecoders.Implementation.getField (jsonDecoderTransformer childDecoder) object fieldName
+  )
 
 data RootQuery
 data RootMutation
