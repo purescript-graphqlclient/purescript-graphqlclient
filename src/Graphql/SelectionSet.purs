@@ -4,7 +4,6 @@ import Data.Argonaut.Decode.Combinators
 import Protolude
 
 import Data.Argonaut.Core                  as ArgonautCore
-import Data.Argonaut.Core                  as Data.Argonaut.Core
 import Data.Array                          as Array
 import Data.Argonaut.Decode                as ArgonautDecoders
 import Data.Argonaut.Decode.Implementation as ArgonautDecoders.Implementation
@@ -242,3 +241,6 @@ selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet f
 data RootQuery
 data RootMutation
 data RootSubscription
+
+getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> ArgonautDecoders.Decoder a
+getSelectionSetDecoder (SelectionSet fields decoder) = decoder
