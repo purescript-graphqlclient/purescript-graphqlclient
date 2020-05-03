@@ -33,7 +33,7 @@ type InstorpectionQueryResult__FullType
     , interfaces :: Maybe $ Array InstorpectionQueryResult__TypeRef
     , enumValues :: Maybe <<< Array $
       { name :: String
-      , description :: String
+      , description :: Maybe String
       , isDeprecated :: Boolean
       , deprecationReason :: Maybe String
       }

@@ -87,7 +87,7 @@ types_enumValues inputRecord = selectionForCompositeField "enumValues" (toGraphq
 types_enumValues_name :: SelectionSet InstorpectionQueryResult_EnumValues String
 types_enumValues_name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-types_enumValues_description :: SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_description :: SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
 types_enumValues_description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
 
 types_enumValues_isDeprecated :: SelectionSet InstorpectionQueryResult_EnumValues Boolean

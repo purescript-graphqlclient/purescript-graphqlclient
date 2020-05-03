@@ -13,7 +13,7 @@ import Control.Monad.Except as Transformers
 import Control.Monad.Except.Trans as Transformers
 import Control.Monad.Trans.Class as Transformers
 import Data.Argonaut.Core as ArgonautCore
-import Data.Argonaut.Decode (class DecodeJson, Decoder, JsonDecodeError(..), decodeJson, printJsonDecodeError)
+import Data.Argonaut.Decode (class DecodeJson, Decoder, JsonDecodeError(..), printJsonDecodeError)
 import Data.Argonaut.Decode as ArgonautCodecs.Decode
 import Data.Argonaut.Decode.Generic.Rep as ArgonautGeneric
 import Data.Argonaut.Encode (class EncodeJson)
@@ -66,9 +66,9 @@ derive instance genericGraphqlErrorRecord :: Generic GraphqlErrorDetails _
 
 instance decodeJsonGraphqlErrorRecord :: DecodeJson GraphqlErrorDetails where
   decodeJson json = enhanceError do
-     jsonObject <- decodeJson json
+     jsonObject <- ArgonautCodecs.Decode.decodeJson json
      (messageJson /\ otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
-     (message :: String) <- decodeJson messageJson
+     (message :: String) <- ArgonautCodecs.Decode.decodeJson messageJson
      pure $ GraphqlErrorDetails { message, otherDetails }
     where
       enhanceError = lmap (Named "GraphqlErrorDetails")
@@ -117,7 +117,7 @@ tryDecodeGraphqlResponse decoderForData jsonBody = (\error -> Left $ UnexpectedP
 
       case Foreign.Object.lookup "errors" jsonObject of
         Just errorsJson -> do
-          (errors :: Array GraphqlErrorDetails) <- decodeJson errorsJson
+          (errors :: Array GraphqlErrorDetails) <- ArgonautCodecs.Decode.decodeJson errorsJson
           (possiblyParsedData :: PossiblyParsedData parsed) <-
             case Foreign.Object.lookup "data" jsonObject of
               Nothing -> Right $ NoDataKey
