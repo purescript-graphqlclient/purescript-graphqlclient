@@ -73,9 +73,7 @@ main = do
       (Generator.Options.AppOptionsInputSchemaPath filepath) -> do
         text <- readTextFile UTF8 filepath
 
-        let json = GraphqlJs.generateIntrospectionJsonFromSchema text
-
-        traceM json
+        json <- GraphqlJs.generateIntrospectionJsonFromSchema text # throwError \/ pure
 
         introspectionQueryDecoder json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
       (Generator.Options.AppOptionsInputJsonPath filepath) -> do

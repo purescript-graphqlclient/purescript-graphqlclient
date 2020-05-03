@@ -1,16 +1,25 @@
 const graphql = require("graphql")
 
-exports.buildSchema = function (string) {
+exports._buildSchema = function (ffiUtil, string) {
   // console.log('string', string)
-  return graphql.buildSchema(string)
+  try {
+    return ffiUtil.right(graphql.buildSchema(string))
+  } catch(e) {
+    return ffiUtil.left(e)
+  }
 }
 
-exports.introspectionFromSchema = function(graphQLSchema) {
+exports._introspectionFromSchema = function(ffiUtil, graphQLSchema) {
   // console.log('graphQLSchema', graphQLSchema)
 
-  const introspection = graphql.introspectionFromSchema(graphQLSchema)
+  try {
+    const introspection = graphql.introspectionFromSchema(graphQLSchema)
+    const json = JSON.parse(JSON.stringify(introspection))
 
-  return JSON.parse(JSON.stringify(introspection))
+    return ffiUtil.right(json)
+  } catch (e) {
+    return ffiUtil.left(e)
+  }
 }
 
 // includeDeprecated by default is true
