@@ -16,6 +16,7 @@ import Data.Argonaut.Core as ArgonautCore
 import Data.Argonaut.Decode (class DecodeJson, Decoder, JsonDecodeError(..), printJsonDecodeError)
 import Data.Argonaut.Decode as ArgonautCodecs.Decode
 import Data.Argonaut.Decode.Generic.Rep as ArgonautGeneric
+import Data.Argonaut.Decode.Implementation (decodeJObject) as ArgonautCodecs.Decode.Implementation
 import Data.Argonaut.Encode (class EncodeJson)
 import Data.Argonaut.Encode as ArgonautCodecs.Encode
 import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
@@ -113,7 +114,7 @@ tryDecodeGraphqlResponse decoderForData jsonBody = (\error -> Left $ UnexpectedP
   where
     go :: JsonDecodeError \/ GraphqlResponse parsed
     go = do
-      (jsonObject :: Object ArgonautCore.Json) <- ArgonautCodecs.Decode.decodeJson jsonBody
+      (jsonObject :: Object ArgonautCore.Json) <- ArgonautCodecs.Decode.Implementation.decodeJObject jsonBody
 
       case Foreign.Object.lookup "errors" jsonObject of
         Just errorsJson -> do

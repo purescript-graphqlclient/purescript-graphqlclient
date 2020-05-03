@@ -2,21 +2,26 @@ module Test.InsrospectionSpec where
 
 import Protolude
 
-import Affjax                                   as Affjax
-import Affjax.RequestBody                       as Affjax.RequestBody
-import Affjax.ResponseFormat                    as Affjax.ResponseFormat
-import Ansi.Codes                               as Ansi.Codes
-import Data.Argonaut.Core                       (Json)
-import Data.Argonaut.Encode                     as ArgonautCodecs
-import Data.Function.Uncurried                  (Fn2, Fn3, runFn2, runFn3)
-import Effect.Aff.Compat                        (EffectFnAff(..), fromEffectFnAff)
-import Effect.Exception                         (error)
-import Fernet.Graphql.SelectionSet              (SelectionSet(..))
-import Fernet.Graphql.WriteGraphql              as Fernet.Graphql.WriteGraphql
-import Fernet.HTTP                              as Fernet.HTTP
+import Affjax as Affjax
+import Affjax.RequestBody as Affjax.RequestBody
+import Affjax.ResponseFormat as Affjax.ResponseFormat
+import Ansi.Codes as Ansi.Codes
+import Data.Argonaut.Core (Json)
+import Data.Argonaut.Decode (Decoder, printJsonDecodeError)
+import Data.Argonaut.Encode (encodeJson) as ArgonautCodecs.Encode
+import Data.Argonaut.Encode as ArgonautCodecs
+import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
+import Effect.Aff.Compat (EffectFnAff(..), fromEffectFnAff)
+import Effect.Exception (error)
+import Fernet.Graphql.SelectionSet (RootQuery, SelectionSet(..))
+import Fernet.Graphql.WriteGraphql as Fernet.Graphql.WriteGraphql
+import Fernet.HTTP (tryDecodeGraphqlResponse)
+import Fernet.HTTP as Fernet.HTTP
+import Fernet.Introspection.IntrospectionSchema (InstorpectionQueryResult)
 import Fernet.Introspection.IntrospectionSchema as Fernet.Introspection.IntrospectionSchema
-import Test.Spec                                as Test.Spec
-import Test.Spec.Assertions                     (fail)
+import Foreign.Object (lookup) as Foreign.Object
+import Test.Spec as Test.Spec
+import Test.Spec.Assertions (fail, shouldEqual)
 
 foreign import _jsonDiffString :: Fn2 Json Json String
 
@@ -35,29 +40,39 @@ jsonShouldEqual x y = when (not $ eq x y) do
   let removeRed = Ansi.Codes.escapeCodeToString (Ansi.Codes.Graphics (pure Ansi.Codes.Reset))
   fail $ "Json are not equal\n\n" <> removeRed <> jsonDiffString x y
 
+
+getSelectionSetDecoder (SelectionSet fields decoder) = decoder
+
+urls =
+  [ "http://elm-graphql-normalize.herokuapp.com/"
+  , "https://countries.trevorblades.com/"
+  , "https://swapi.graph.cool/"
+  , "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
+  ]
+
+includeDeprecated = false
+
+introspectionQuery :: SelectionSet RootQuery InstorpectionQueryResult
+introspectionQuery = Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
+
+introspectionQueryString :: String
+introspectionQueryString = Fernet.Graphql.WriteGraphql.writeGraphql introspectionQuery
+
+introspectionQueryDecoder :: Decoder InstorpectionQueryResult
+introspectionQueryDecoder = getSelectionSetDecoder introspectionQuery
+
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Introspection spec" do
-  let
-    url :: String
-    -- url = "http://elm-graphql-normalize.herokuapp.com/"
-    -- url = "https://countries.trevorblades.com/"
-    -- url = "https://swapi.graph.cool/"
-    url = "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
+spec = Test.Spec.describe "Introspection spec" $ Test.Spec.parallel $ for_ urls (\url -> Test.Spec.it url do
+  (expectedJson :: Json) <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
+  (expectedParsed :: InstorpectionQueryResult) <- introspectionQueryDecoder expectedJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
 
-    query :: String
-    query = Fernet.Graphql.WriteGraphql.writeGraphql $ Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
-
-    decoder = let (SelectionSet fields decoder) = Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated in decoder
-    -- decoder = identity >>> pure
-
-    includeDeprecated = false
-
-  expectedJson <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
-
-  (actualJson :: _) <- Fernet.HTTP.gqlRequestImplWithTrace url query decoder
+  (actualJson :: Json) <- Fernet.HTTP.post url (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
+    >>= (throwError <<< error <<< Affjax.printError) \/ (\response -> pure response.body)
+    >>= (tryDecodeGraphqlResponse Right >>> pure)
     >>= (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
 
-  -- traceM expectedJson
-  traceM actualJson
+  (actualParsed :: InstorpectionQueryResult) <- introspectionQueryDecoder actualJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
 
-  -- actualJson `jsonShouldEqual` expectedJson
+  actualJson `jsonShouldEqual` expectedJson
+  actualParsed `shouldEqual` expectedParsed
+)

@@ -105,12 +105,13 @@ instance toGraphqlArgumentRecordConsOptional ::
 
 else
 
--- for everything else
+-- for everything else (Nil)
 instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord RowList.Nil row where
   toGraphqlArgumentImplementationRecord _proxy _record = []
 
 else
 
+-- for everything else (Cons)
 instance toGraphqlArgumentRecordCons ::
   ( ToGraphqlArgumentValue value
   , ToGraphqlArgumentImplementationRecord tail row
