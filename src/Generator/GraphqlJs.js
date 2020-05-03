@@ -13,4 +13,5 @@ exports.introspectionFromSchema = function(graphQLSchema) {
   return JSON.parse(JSON.stringify(introspection))
 }
 
-exports.introspectionQuery = graphql.getIntrospectionQuery()
+// includeDeprecated by default is true
+// exports.introspectionQuery = graphql.getIntrospectionQuery()

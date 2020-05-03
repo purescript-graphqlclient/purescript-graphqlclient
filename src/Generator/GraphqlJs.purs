@@ -9,7 +9,7 @@ foreign import buildSchema :: String -> GraphQLSchema
 
 foreign import introspectionFromSchema :: GraphQLSchema -> ArgonautCore.Json
 
-foreign import introspectionQuery :: String
+-- foreign import introspectionQuery :: String
 
 generateIntrospectionJsonFromSchema :: String -> ArgonautCore.Json
 generateIntrospectionJsonFromSchema = buildSchema >>> introspectionFromSchema
