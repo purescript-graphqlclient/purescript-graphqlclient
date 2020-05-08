@@ -4,8 +4,8 @@ import Protolude
 
 import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
-import Generator.Url (Url)
-import Generator.Url as Url
+import Protolude.Url (Url)
+import Protolude.Url as Url
 import Node.Path (FilePath)
 import Options.Applicative (Parser, ParserInfo, ReadM, execParser, fullDesc, header, help, helper, info, long, metavar, option, progDesc, showDefault, strOption, value, (<**>))
 import Options.Applicative.Builder (eitherReader)

@@ -1,23 +1,26 @@
 module Generator.Main where
 
 import Protolude
+import Protolude.Node
 
 import Control.Monad.Reader.Trans (ReaderT(..), runReaderT)
 import Control.Parallel (parTraverse)
 import Data.Argonaut.Core as ArgonautCore
-import Data.Argonaut.Parser as ArgonautCore
 import Data.Argonaut.Decode (Decoder)
 import Data.Argonaut.Decode as ArgonautDecoders
 import Data.Argonaut.Decode.Implementation (decodeJObject) as ArgonautCodecs.Decode.Implementation
+import Data.Argonaut.Parser as ArgonautCore
 import Data.Array (filter)
 import Data.Array (replicate)
 import Data.Either (Either(..))
-import Data.Foldable (sequence_)
+import Data.Foldable (null, sequence_)
+import Data.FunctorWithIndex (mapWithIndex)
 import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (joinWith, take)
 import Data.Symbol (SProxy(..))
+import Data.TraversableWithIndex (forWithIndex)
 import Effect.Aff (launchAff_)
 import Effect.Class.Console (logShow, log)
 import Effect.Exception (error)
@@ -27,15 +30,17 @@ import Fernet.HTTP as Fernet.HTTP
 import Fernet.Introspection.IntrospectionSchema as Fernet.Introspection.IntrospectionSchema
 import Fernet.Introspection.Schema.TypeKind (TypeKind(..))
 import Foreign.Object (Object)
-import Generator.Options as Generator.Options
-import Generator.Url (Url)
-import Generator.Url as Url
 import Generator.GraphqlJs as GraphqlJs
+import Generator.Options as Generator.Options
+import Generator.PsAst (filesMap) as Generator.PsAst
 import Node.Encoding (Encoding(..))
-import Node.FS.Aff (readTextFile, writeTextFile)
+import Node.FS.Aff as Node.FS.Aff
 import Node.FS.Aff.Mkdirp as Node.FS.Aff.Mkdirp
 import Node.Path (FilePath)
+import Node.Path (resolve) as Node.FS
 import Options.Applicative (execParser)
+import Protolude.Url (Url)
+import Protolude.Url as Url
 
 greet :: Generator.Options.AppOptions -> Effect Unit
 greet (Generator.Options.AppOptions { input, output, api }) = log $ "Hello, " <> show input <> show output <> show api
@@ -43,7 +48,7 @@ greet (Generator.Options.AppOptions { input, output, api }) = log $ "Hello, " <>
 type App a = ReaderT Generator.Options.AppOptions Aff a
 
 includeDeprecated :: Boolean
-includeDeprecated = false
+includeDeprecated = true
 
 introspectionQuery :: Fernet.Graphql.SelectionSet.SelectionSet Fernet.Graphql.SelectionSet.RootQuery Fernet.Introspection.IntrospectionSchema.InstorpectionQueryResult
 introspectionQuery = Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
@@ -53,6 +58,9 @@ introspectionQueryString = Fernet.Graphql.WriteGraphql.writeGraphql introspectio
 
 introspectionQueryDecoder :: Decoder Fernet.Introspection.IntrospectionSchema.InstorpectionQueryResult
 introspectionQueryDecoder = Fernet.Graphql.SelectionSet.getSelectionSetDecoder introspectionQuery
+
+dirIsEmpty :: FilePath -> Aff Boolean
+dirIsEmpty filepath = Node.FS.Aff.readdir filepath <#> null
 
 main :: Effect Unit
 main = do
@@ -64,25 +72,38 @@ main = do
       (Generator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
         let
           urlString = unwrap url
-          query = Fernet.Introspection.IntrospectionSchema.introspectionQuery false
 
-        resp <- Fernet.HTTP.gqlRequest urlString query
+        resp <- Fernet.HTTP.gqlRequest urlString introspectionQuery
           >>= (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
 
         pure resp
       (Generator.Options.AppOptionsInputSchemaPath filepath) -> do
-        text <- readTextFile UTF8 filepath
+        text <- Node.FS.Aff.readTextFile UTF8 filepath
 
         json <- GraphqlJs.generateIntrospectionJsonFromSchema text # throwError \/ pure
 
         introspectionQueryDecoder json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
       (Generator.Options.AppOptionsInputJsonPath filepath) -> do
-        text <- readTextFile UTF8 filepath
+        text <- Node.FS.Aff.readTextFile UTF8 filepath
         json <- ArgonautCore.jsonParser text # (throwError <<< error) \/ pure
 
         Fernet.HTTP.tryDecodeGraphqlResponse introspectionQueryDecoder json # (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
 
+    outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesnt throw errors
+
+    void $ Node.FS.Aff.Mkdirp.mkdirp outputDirAbs
+
+    dirIsEmpty outputDirAbs >>=
+      \isEmpty -> unless isEmpty (exitWith 1 $ "Output dir " <> show outputDirAbs <> " is non empty. Cannot write files to it.")
+
     log $ show instorpectionQueryResult
+
+    void $ Generator.PsAst.filesMap.dirs."Enum" `forWithIndex`
+      (\k v -> do
+        log k
+        log v
+        pure unit
+      )
 
         -- let dir = "examples/countries"
         -- void $ Node.FS.Aff.Mkdirp.mkdirp dir

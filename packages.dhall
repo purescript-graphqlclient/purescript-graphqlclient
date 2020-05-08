@@ -147,6 +147,53 @@ let additions =
        , version =
            "master"
        }
+  , protolude =
+       { dependencies =
+           [ "prelude"
+           , "effect"
+           , "node-fs-aff"
+           , "node-fs"
+           , "node-path"
+           , "either"
+           , "exceptions"
+           , "aff"
+           ]
+       , repo =
+           "https://github.com/srghma/purescript-protolude.git"
+       , version =
+           "master"
+       }
+  , ps-ast =
+       { dependencies =
+           [ "console"
+           , "effect"
+           , "generics-rep"
+           , "heterogeneous"
+           , "matryoshka"
+           , "ordered-collections"
+           , "psci-support"
+           , "record"
+           , "record-extra"
+           , "strings"
+           , "strings-extra"
+           , "unicode"
+           ]
+       , repo =
+           "https://github.com/purescript-codegen/purescript-ps-ast.git"
+       , version =
+           "master"
+       }
+  , matryoshka =
+    { dependencies =
+        [ "fixed-points"
+        , "free"
+        , "prelude"
+        , "profunctor"
+        , "transformers"
+        ]
+    , repo = "https://github.com/slamdata/purescript-matryoshka.git"
+    , version = "master"
+    }
   -- , codec =
   --   { dependencies =
   --       [ "transformers"

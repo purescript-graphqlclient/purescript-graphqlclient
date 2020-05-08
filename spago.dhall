@@ -23,6 +23,8 @@ You can edit this file as you like.
   , "variant"
   , "ansi"
   , "optparse"
+  , "protolude"
+  , "ps-ast"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
