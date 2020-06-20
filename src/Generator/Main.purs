@@ -11,13 +11,17 @@ import Data.Argonaut.Decode as ArgonautDecoders
 import Data.Argonaut.Decode.Implementation (decodeJObject) as ArgonautCodecs.Decode.Implementation
 import Data.Argonaut.Parser as ArgonautCore
 import Data.Array (filter)
+import Data.Array (fromFoldable) as Array
 import Data.Array (replicate)
+import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty as NonEmptyArray
 import Data.Either (Either(..))
 import Data.Foldable (null, sequence_)
 import Data.FunctorWithIndex (mapWithIndex)
 import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
 import Data.Maybe (Maybe(..), fromMaybe)
+import Data.NonEmpty (NonEmpty(..), (:|))
 import Data.String (joinWith, take)
 import Data.Symbol (SProxy(..))
 import Data.TraversableWithIndex (forWithIndex)
@@ -32,12 +36,12 @@ import Fernet.Introspection.Schema.TypeKind (TypeKind(..))
 import Foreign.Object (Object)
 import Generator.GraphqlJs as GraphqlJs
 import Generator.Options as Generator.Options
-import Generator.PsAst (filesMap) as Generator.PsAst
+import Generator.PsAst as Generator.PsAst
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff as Node.FS.Aff
 import Node.FS.Aff.Mkdirp as Node.FS.Aff.Mkdirp
 import Node.Path (FilePath)
-import Node.Path (resolve) as Node.FS
+import Node.Path (concat, resolve) as Node.FS
 import Options.Applicative (execParser)
 import Protolude.Url (Url)
 import Protolude.Url as Url
@@ -91,17 +95,32 @@ main = do
 
     outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesnt throw errors
 
-    void $ Node.FS.Aff.Mkdirp.mkdirp outputDirAbs
+    whenM (Node.FS.Aff.exists outputDirAbs)
+      dirIsEmpty outputDirAbs >>=
+        \isEmpty -> unless isEmpty (exitWith 1 $ "Output dir " <> show outputDirAbs <> " is non empty. Cannot write files to it.")
 
-    dirIsEmpty outputDirAbs >>=
-      \isEmpty -> unless isEmpty (exitWith 1 $ "Output dir " <> show outputDirAbs <> " is non empty. Cannot write files to it.")
+    let
+      filesMap = Generator.PsAst.mkFilesMap appOptions.api instorpectionQueryResult
 
-    log $ show instorpectionQueryResult
+    void $ filesMap.dirs."Enum" `forWithIndex`
+      (\moduleName content -> do
+        let
+          moduleNameWords :: NonEmptyArray String
+          moduleNameWords = moduleName # unwrap <#> unwrap # NonEmptyArray.fromNonEmpty
 
-    void $ Generator.PsAst.filesMap.dirs."Enum" `forWithIndex`
-      (\k v -> do
-        log k
-        log v
+          moduleNameWords' :: { init :: Array String, last :: String }
+          moduleNameWords' = NonEmptyArray.unsnoc moduleNameWords
+
+          outputDir :: FilePath
+          outputDir = (Node.FS.concat $ [outputDirAbs] <> moduleNameWords'.init)
+
+          outputFile :: FilePath
+          outputFile = moduleNameWords'.last <> ".purs"
+
+          outputPath :: FilePath
+          outputPath = Node.FS.concat [outputDir, outputFile]
+        void $ Node.FS.Aff.Mkdirp.mkdirp outputDir
+        Node.FS.Aff.writeTextFile UTF8 outputPath content
         pure unit
       )
 

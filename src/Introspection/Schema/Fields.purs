@@ -6,6 +6,7 @@ import Protolude
 
 import Fernet.Introspection.Schema.Fields.InputValue as Fernet.Introspection.Schema.Fields.InputValue
 import Fernet.Introspection.Schema.Fields.TypeRef as Fernet.Introspection.Schema.Fields.TypeRef
+import Fernet.Introspection.Schema.TypeKind
 
 data InstorpectionQueryResult_Schema
 data InstorpectionQueryResult_QueryType
@@ -45,7 +46,7 @@ subscriptionType_name = selectionForField "name" [] graphqlDefaultResponseScalar
 types :: ∀ r . SelectionSet InstorpectionQueryResult_Types r -> SelectionSet InstorpectionQueryResult_Schema (Array r)
 types = selectionForCompositeField "types" [] graphqlDefaultResponseDecoderTransformer
 
-types_kind :: SelectionSet InstorpectionQueryResult_Types String
+types_kind :: SelectionSet InstorpectionQueryResult_Types TypeKind
 types_kind = selectionForField "kind" [] graphqlDefaultResponseScalarDecoder
 
 types_name :: SelectionSet InstorpectionQueryResult_Types String

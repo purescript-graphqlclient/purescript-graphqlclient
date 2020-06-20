@@ -3,16 +3,18 @@ module Fernet.Graphql.SelectionSet where
 import Data.Argonaut.Decode.Combinators
 import Protolude
 
-import Data.Argonaut.Core                  as ArgonautCore
-import Data.Array                          as Array
-import Data.Argonaut.Decode                as ArgonautDecoders
+import Data.Argonaut.Core as ArgonautCore
+import Data.Argonaut.Decode (JsonDecodeError(..))
+import Data.Argonaut.Decode as ArgonautDecoders
 import Data.Argonaut.Decode.Implementation as ArgonautDecoders.Implementation
-import Prim.Row                            as Row
-import Prim.RowList                        as RowList
-import Record                              as Record
-import Data.Symbol                         (class IsSymbol, SProxy(..), reflectSymbol)
-import Prim.RowList                        (class RowToList)
-import Type.Data.RowList                   (RLProxy(..))
+import Data.Array as Array
+import Data.List ((:))
+import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
+import Prim.Row as Row
+import Prim.RowList (class RowToList)
+import Prim.RowList as RowList
+import Record as Record
+import Type.Data.RowList (RLProxy(..))
 
 data ArgumentValue
   = ArgumentValueString String
@@ -244,3 +246,11 @@ data RootSubscription
 
 getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> ArgonautDecoders.Decoder a
 getSelectionSetDecoder (SelectionSet fields decoder) = decoder
+
+enumDecoder :: ∀ a . String -> List (String /\ a) -> ArgonautDecoders.Decoder a
+enumDecoder name map json = lmap (Named name) do
+  string <- ArgonautDecoders.Implementation.decodeString json
+  go map string # note (UnexpectedValue json)
+  where
+    go Nil parsed = Nothing
+    go ((str /\ val) : t) parsed = if str == parsed then Just val else go t parsed

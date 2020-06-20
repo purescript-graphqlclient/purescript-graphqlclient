@@ -25,6 +25,7 @@ You can edit this file as you like.
   , "optparse"
   , "protolude"
   , "ps-ast"
+  -- , "inflection"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

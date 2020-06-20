@@ -2,6 +2,7 @@ module Fernet.Introspection.IntrospectionSchema where
 
 import Fernet.Graphql.SelectionSet
 import Fernet.Introspection.Schema.Fields
+import Fernet.Introspection.Schema.TypeKind
 import Protolude
 import Type.Row
 
@@ -18,7 +19,7 @@ type InstorpectionQueryResult
     }
 
 type InstorpectionQueryResult__FullType
-  = { kind :: String
+  = { kind :: TypeKind
     , name :: String
     , description :: Maybe String
     , fields :: Maybe $ Array

@@ -177,11 +177,12 @@ let additions =
            , "strings"
            , "strings-extra"
            , "unicode"
+           , "boxes"
            ]
        , repo =
-           "https://github.com/purescript-codegen/purescript-ps-ast.git"
+           "https://github.com/srghma/purescript-ps-ast.git"
        , version =
-           "master"
+           "13f6965"
        }
   , matryoshka =
     { dependencies =
@@ -194,6 +195,24 @@ let additions =
     , repo = "https://github.com/slamdata/purescript-matryoshka.git"
     , version = "master"
     }
+  , boxes =
+      { dependencies =
+        [ "generics-rep"
+        , "prelude"
+        , "profunctor"
+        , "strings"
+        , "stringutils"
+        ]
+      , repo = "https://github.com/srghma/purescript-boxes.git"
+      , version = "master"
+      }
+  -- , inflection =
+  --     { dependencies =
+  --       [ "functions"
+  --       ]
+  --     , repo = "https://github.com/athanclark/purescript-inflection.git"
+  --     , version = "master"
+  --     }
   -- , codec =
   --   { dependencies =
   --       [ "transformers"
