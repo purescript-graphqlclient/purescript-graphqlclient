@@ -1,13 +1,14 @@
 module Generator.PsAst where
 
 import Fernet.Introspection.IntrospectionSchema
-import Fernet.Introspection.Schema.TypeKind
+import Fernet.Introspection.Schema.TypeKind as TypeKind
 import Language.PS.AST
 import Language.PS.AST.Printers
 import Language.PS.AST.Sugar
 import Protolude
 import Utils
-import Generator.PsAst.MkEnumModule
+import Generator.PsAst.MkEnumModule as MkEnumModule
+import Generator.PsAst.MkInterfaceModule as MkInterfaceModule
 
 import Data.Array (filter)
 import Data.Functor.Mu (roll)
@@ -24,31 +25,32 @@ import Data.String.Extra as StringsExtra
 type FilesMap =
   { dirs ::
     { "Enum" :: Map ModuleName String
-    , "Interface" :: Map String String
-    -- , "Object" :: Map String String
-    -- , "Union" :: Map String String
+    -- | , "Interface" :: Map ModuleName String
+    -- | , "Object" :: Map ModuleName String
+    -- | , "Union" :: Map ModuleName String
     }
-  -- , files ::
-  --   { "InputObject" :: String
-  --   , "Interface" :: String
-  --   , "Mutation" :: String
-  --   , "Object" :: String
-  --   , "Query" :: String
-  --   , "Scalar" :: String
-  --   , "ScalarCodecs" :: String
-  --   , "Subscription" :: String
-  --   , "Union" :: String
-  --   , "VerifyScalarCodecs" :: String
-  --   }
+  -- | , files ::
+  -- |   { "Query" :: String
+  -- |   }
   }
+  -- | , "InputObject" :: String
+  -- | , "Interface" :: String
+  -- | , "Mutation" :: String
+  -- | , "Object" :: String
+  -- | , "Scalar" :: String
+  -- | , "ScalarCodecs" :: String
+  -- | , "Subscription" :: String
+  -- | , "Union" :: String
+  -- | , "VerifyScalarCodecs" :: String
 
 isBuiltIn :: String -> Boolean
 isBuiltIn = startsWith "__"
 
-fullTypeToModule apiModuleName submodule fullType =
+fullTypeToModule :: (ModuleName -> InstorpectionQueryResult__FullType -> Module) -> String -> String -> InstorpectionQueryResult__FullType -> Tuple ModuleName String
+fullTypeToModule mkModule apiModuleName submodule fullType =
   let
     moduleName = mkModuleName $ apiModuleName :| [submodule, StringsExtra.pascalCase fullType.name]
-   in moduleName /\ (printModuleToString $ mkEnumModule moduleName fullType)
+   in moduleName /\ (printModuleToString $ mkModule moduleName fullType)
 
 -- typeLockDefinitions - Union, Object, Interface
 mkFilesMap :: String -> InstorpectionQueryResult -> FilesMap
@@ -60,13 +62,34 @@ mkFilesMap apiModuleName introspectionQueryResult =
     excludeBuiltIn           = isBuiltIn
 
     notExcluded = not $ anyPredicate [excludeQuery, excludeMutation, excludeSubscription, excludeBuiltIn]
+
+    -- | query :: Array { name :: String, description :: String, args :: Array InstorpectionQueryResult__InputValue }
+    -- | query = ?a
   in
     { dirs:
       { "Enum":
         introspectionQueryResult.__schema.types
-        # filter (\fullType -> fullType."kind" == Enum)
+        # filter (\fullType -> fullType."kind" == TypeKind.Enum)
         # filter (\fullType -> notExcluded fullType.name)
-        <#> (fullTypeToModule apiModuleName "Enum")
+        <#> (fullTypeToModule MkEnumModule.mkEnumModule apiModuleName "Enum")
         # Map.fromFoldable
+      -- | , "Interface":
+      -- |   introspectionQueryResult.__schema.types
+      -- |   # filter (\fullType -> fullType."kind" == TypeKind.Interface)
+      -- |   # filter (\fullType -> notExcluded fullType.name)
+      -- |   <#> (fullTypeToModule MkInterfaceModule.mkInterfaceModule apiModuleName "Interface")
+      -- |   # Map.fromFoldable
+      -- | , "Object":
+      -- |   introspectionQueryResult.__schema.types
+      -- |   # filter (\fullType -> fullType."kind" == TypeKind.Object)
+      -- |   # filter (\fullType -> notExcluded fullType.name)
+      -- |   <#> (fullTypeToModule MkInterfaceModule.mkInterfaceModule apiModuleName "Object")
+      -- |   # Map.fromFoldable
+      -- | , "Union":
+      -- |   introspectionQueryResult.__schema.types
+      -- |   # filter (\fullType -> fullType."kind" == TypeKind.Union)
+      -- |   # filter (\fullType -> notExcluded fullType.name)
+      -- |   <#> (fullTypeToModule MkInterfaceModule.mkInterfaceModule apiModuleName "Union")
+      -- |   # Map.fromFoldable
       }
     }

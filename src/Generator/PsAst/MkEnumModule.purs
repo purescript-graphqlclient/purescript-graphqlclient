@@ -8,7 +8,6 @@ import Language.PS.AST.Sugar
 import Protolude
 
 import Data.Array (filter)
-import Data.Functor.Mu (roll)
 import Data.List ((:))
 import Data.List (fromFoldable) as List
 import Data.Map (Map)

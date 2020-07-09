@@ -20,6 +20,7 @@ import Data.Foldable (null, sequence_)
 import Data.FunctorWithIndex (mapWithIndex)
 import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
+import Data.Map (Map)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.NonEmpty (NonEmpty(..), (:|))
 import Data.String (joinWith, take)
@@ -37,6 +38,8 @@ import Foreign.Object (Object)
 import Generator.GraphqlJs as GraphqlJs
 import Generator.Options as Generator.Options
 import Generator.PsAst as Generator.PsAst
+import Heterogeneous.Folding (class HFoldl, hfoldl)
+import Language.PS.AST (ModuleName(..))
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff as Node.FS.Aff
 import Node.FS.Aff.Mkdirp as Node.FS.Aff.Mkdirp
@@ -95,15 +98,15 @@ main = do
 
     outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesnt throw errors
 
-    whenM (Node.FS.Aff.exists outputDirAbs)
-      dirIsEmpty outputDirAbs >>=
-        \isEmpty -> unless isEmpty (exitWith 1 $ "Output dir " <> show outputDirAbs <> " is non empty. Cannot write files to it.")
+    whenM (Node.FS.Aff.exists outputDirAbs) do
+      isEmpty <- dirIsEmpty outputDirAbs
+      unless isEmpty (exitWith 1 $ "Output dir " <> (show outputDirAbs) <> " is non empty. Cannot write files to it.")
 
     let
       filesMap = Generator.PsAst.mkFilesMap appOptions.api instorpectionQueryResult
 
-    void $ filesMap.dirs."Enum" `forWithIndex`
-      (\moduleName content -> do
+      printModule :: ModuleName -> String -> Aff Unit
+      printModule moduleName content = do
         let
           moduleNameWords :: NonEmptyArray String
           moduleNameWords = moduleName # unwrap <#> unwrap # NonEmptyArray.fromNonEmpty
@@ -122,7 +125,23 @@ main = do
         void $ Node.FS.Aff.Mkdirp.mkdirp outputDir
         Node.FS.Aff.writeTextFile UTF8 outputPath content
         pure unit
-      )
+
+      executeForEachRecordElement
+        :: forall r
+         . HFoldl (Aff Unit -> Map ModuleName String -> Aff Unit) (Aff Unit) { | r } (Aff Unit)
+        => { | r }
+        -> Aff Unit
+      executeForEachRecordElement = hfoldl doFold (pure unit :: Aff Unit)
+        where
+        doFold :: Aff Unit -> Map ModuleName String -> Aff Unit
+        doFold prevEffect mymap = prevEffect <> void (forWithIndex mymap printModule)
+
+    executeForEachRecordElement filesMap.dirs
+
+    -- | void $ filesMap.dirs."Enum" `forWithIndex` printModule
+    -- | void $ filesMap.dirs."Interface" `forWithIndex` printModule
+    -- | void $ filesMap.dirs."Object" `forWithIndex` printModule
+    -- | void $ filesMap.dirs."Union" `forWithIndex` printModule
 
         -- let dir = "examples/countries"
         -- void $ Node.FS.Aff.Mkdirp.mkdirp dir

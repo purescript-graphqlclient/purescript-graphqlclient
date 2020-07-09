@@ -25,6 +25,7 @@ You can edit this file as you like.
   , "optparse"
   , "protolude"
   , "ps-ast"
+  , "heterogeneous"
   -- , "inflection"
   ]
 , packages = ./packages.dhall

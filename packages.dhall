@@ -119,124 +119,88 @@ let additions =
 
 
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.13.6-20200423/packages.dhall sha256:c180a06bb5444fd950f8cbdd6605c644fd246deb397e62572b8f4a6b9dbcaf22
+      https://github.com/purescript/package-sets/releases/download/psc-0.13.8/packages.dhall sha256:0e95ec11604dc8afc1b129c4d405dcc17290ce56d7d0665a0ff15617e32bbf03
 
 let overrides =
-  { argonaut-core =
-      upstream.argonaut-core // { repo = "https://github.com/srghma/purescript-argonaut-core.git", version = "a607181" }
-  , argonaut-codecs =
-      upstream.argonaut-codecs // { repo = "https://github.com/srghma/purescript-argonaut-codecs.git", version = "7e57801" }
-  , argonaut-generic =
-      upstream.argonaut-generic // { repo = "https://github.com/srghma/purescript-argonaut-generic.git", version = "master" }
-  }
+      { argonaut-core =
+              upstream.argonaut-core
+          //  { repo = "https://github.com/srghma/purescript-argonaut-core.git"
+              , version = "a607181"
+              }
+      , argonaut-codecs =
+              upstream.argonaut-codecs
+          //  { repo =
+                  "https://github.com/srghma/purescript-argonaut-codecs.git"
+              , version = "7e57801"
+              }
+      , argonaut-generic =
+              upstream.argonaut-generic
+          //  { repo =
+                  "https://github.com/srghma/purescript-argonaut-generic.git"
+              , version = "master"
+              }
+      }
 
 let additions =
-  { mkdirp-aff =
-       { dependencies =
-           [ "prelude"
-           , "effect"
-           , "node-fs-aff"
-           , "node-fs"
-           , "node-path"
-           , "either"
-           , "exceptions"
-           , "aff"
-           ]
-       , repo =
-           "https://github.com/leighman/purescript-mkdirp-aff.git"
-       , version =
-           "master"
-       }
-  , protolude =
-       { dependencies =
-           [ "prelude"
-           , "effect"
-           , "node-fs-aff"
-           , "node-fs"
-           , "node-path"
-           , "either"
-           , "exceptions"
-           , "aff"
-           ]
-       , repo =
-           "https://github.com/srghma/purescript-protolude.git"
-       , version =
-           "master"
-       }
-  , ps-ast =
-       { dependencies =
-           [ "console"
-           , "effect"
-           , "generics-rep"
-           , "heterogeneous"
-           , "matryoshka"
-           , "ordered-collections"
-           , "psci-support"
-           , "record"
-           , "record-extra"
-           , "strings"
-           , "strings-extra"
-           , "unicode"
-           , "boxes"
-           ]
-       , repo =
-           "https://github.com/srghma/purescript-ps-ast.git"
-       , version =
-           "13f6965"
-       }
-  , matryoshka =
-    { dependencies =
-        [ "fixed-points"
-        , "free"
-        , "prelude"
-        , "profunctor"
-        , "transformers"
-        ]
-    , repo = "https://github.com/slamdata/purescript-matryoshka.git"
-    , version = "master"
-    }
-  , boxes =
-      { dependencies =
-        [ "generics-rep"
-        , "prelude"
-        , "profunctor"
-        , "strings"
-        , "stringutils"
-        ]
-      , repo = "https://github.com/srghma/purescript-boxes.git"
-      , version = "master"
+      { mkdirp-aff =
+        { dependencies =
+          [ "prelude"
+          , "effect"
+          , "node-fs-aff"
+          , "node-fs"
+          , "node-path"
+          , "either"
+          , "exceptions"
+          , "aff"
+          ]
+        , repo = "https://github.com/leighman/purescript-mkdirp-aff.git"
+        , version = "master"
+        }
+      , protolude =
+        { dependencies =
+          [ "prelude"
+          , "effect"
+          , "node-fs-aff"
+          , "node-fs"
+          , "node-path"
+          , "either"
+          , "exceptions"
+          , "aff"
+          ]
+        , repo = "https://github.com/srghma/purescript-protolude.git"
+        , version = "master"
+        }
+      , ps-ast =
+        { dependencies =
+          [ "console"
+          , "effect"
+          , "generics-rep"
+          , "heterogeneous"
+          , "matryoshka"
+          , "ordered-collections"
+          , "psci-support"
+          , "record"
+          , "record-extra"
+          , "strings"
+          , "strings-extra"
+          , "unicode"
+          , "boxes"
+          ]
+        , repo = "https://github.com/srghma/purescript-ps-ast.git"
+        , version = "13f6965"
+        }
+      , matryoshka =
+        { dependencies =
+          [ "fixed-points", "free", "prelude", "profunctor", "transformers" ]
+        , repo = "https://github.com/slamdata/purescript-matryoshka.git"
+        , version = "master"
+        }
+      , boxes =
+        { dependencies =
+          [ "generics-rep", "prelude", "profunctor", "strings", "stringutils" ]
+        , repo = "https://github.com/srghma/purescript-boxes.git"
+        , version = "master"
+        }
       }
-  -- , inflection =
-  --     { dependencies =
-  --       [ "functions"
-  --       ]
-  --     , repo = "https://github.com/athanclark/purescript-inflection.git"
-  --     , version = "master"
-  --     }
-  -- , codec =
-  --   { dependencies =
-  --       [ "transformers"
-  --       , "profunctor"
-  --       ]
-  --   , repo =
-  --       "https://github.com/srghma/purescript-codec.git"
-  --   , version =
-  --       "master"
-  --   }
-  -- , codec-argonaut =
-  --     { dependencies =
-  --         [ "argonaut-core"
-  --         , "codec"
-  --         , "generics-rep"
-  --         , "variant"
-  --         , "ordered-collections"
-  --         , "type-equality"
-  --         ]
-  --     , repo =
-  --         "https://github.com/garyb/purescript-codec-argonaut.git"
-  --     , version =
-  --         "master"
-  --     }
-  }
 
 in  upstream // overrides // additions
