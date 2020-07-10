@@ -10,6 +10,7 @@ import Data.Argonaut.Decode as ArgonautDecoders
 import Data.Argonaut.Decode.Decoders as ArgonautDecoders.Decoder
 import Data.Array as Array
 import Data.List ((:))
+import Data.List as List
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 import Prim.Row as Row
 import Prim.RowList (class RowToList)
@@ -258,10 +259,15 @@ selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet f
 getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> Json -> Either JsonDecodeError a
 getSelectionSetDecoder (SelectionSet fields decoder) = decoder
 
-enumDecoder :: ∀ a . String -> List (String /\ a) -> Json -> Either JsonDecodeError a
-enumDecoder name fromToMap json = lmap (Named name) do
-  string <- ArgonautDecoders.Decoder.decodeString json
-  go fromToMap string # note (UnexpectedValue json)
+enumDecoder :: ∀ a . String -> Array (String /\ a) -> Json -> Either JsonDecodeError a
+enumDecoder = enumDecoder'
   where
+    enumDecoder' name fromToMap = implementation name (List.fromFoldable fromToMap)
+
     go Nil parsed = Nothing
     go ((str /\ val) : t) parsed = if str == parsed then Just val else go t parsed
+
+    implementation :: String -> List (String /\ a) -> Json -> Either JsonDecodeError a
+    implementation name fromToMap json = lmap (Named name) do
+      string <- ArgonautDecoders.Decoder.decodeString json
+      go fromToMap string # note (UnexpectedValue json)

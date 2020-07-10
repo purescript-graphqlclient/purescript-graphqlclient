@@ -1,11 +1,4 @@
-const graphqlRequest = require("graphql-request")
-const jsonDiff = require('json-diff')
-
-exports._jsonDiffString = function(json1, json2) {
-  return jsonDiff.diffString(json1, json2)
-}
-
-exports.introspectionQueryForGraphqlClient = `query IntrospectionQuery($includeDeprecated: Boolean!) {
+exports.introspectionQuery = `query IntrospectionQuery($includeDeprecated: Boolean!) {
     __schema {
       queryType {
         name
@@ -91,22 +84,3 @@ exports.introspectionQueryForGraphqlClient = `query IntrospectionQuery($includeD
       }
     }
   }`
-
-exports._requestGraphqlUsingGraphqlClient = function (queryString, graphqlUrl, includeDeprecated) {
-  return function (onError, onSuccess) {
-    new graphqlRequest.GraphQLClient(
-      graphqlUrl,
-      {
-        mode: "cors",
-      }
-    ).request(queryString, { includeDeprecated: includeDeprecated })
-      .then(data => {
-        onSuccess(data);
-      })
-      .catch(err => {
-        onError(err)
-      });
-
-    return function (_cancelError, _onCancelerError, _onCancelerSuccess) {};
-  };
-}

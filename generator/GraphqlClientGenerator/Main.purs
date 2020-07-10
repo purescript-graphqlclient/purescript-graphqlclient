@@ -71,27 +71,27 @@ main = do
   (GraphqlClientGenerator.Options.AppOptions appOptions) <- execParser GraphqlClientGenerator.Options.opts
 
   launchAff_ do
-    -- spago run --main GraphqlClientGenerator.Main --node-args "--input-url https://countries.trevorblades.com/ --output examples/countries"
-    (instorpectionQueryResult :: GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- case appOptions.input of
-      (GraphqlClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
-        let
-          urlString = unwrap url
+    (instorpectionQueryResult :: GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <-
+      case appOptions.input of
+        (GraphqlClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
+          let
+            urlString = unwrap url
 
-        resp <- GraphqlClient.gqlRequest urlString introspectionQuery
-          >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
+          resp <- GraphqlClient.gqlRequest urlString introspectionQuery
+            >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
-        pure resp
-      (GraphqlClientGenerator.Options.AppOptionsInputSchemaPath filepath) -> do
-        text <- Node.FS.Aff.readTextFile UTF8 filepath
+          pure resp
+        (GraphqlClientGenerator.Options.AppOptionsInputSchemaPath filepath) -> do
+          text <- Node.FS.Aff.readTextFile UTF8 filepath
 
-        json <- GraphqlJs.generateIntrospectionJsonFromSchema text # throwError \/ pure
+          json <- GraphqlJs.generateIntrospectionJsonFromSchema text # throwError \/ pure
 
-        introspectionQueryDecoder json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
-      (GraphqlClientGenerator.Options.AppOptionsInputJsonPath filepath) -> do
-        text <- Node.FS.Aff.readTextFile UTF8 filepath
-        json <- ArgonautCore.jsonParser text # (throwError <<< error) \/ pure
+          introspectionQueryDecoder json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
+        (GraphqlClientGenerator.Options.AppOptionsInputJsonPath filepath) -> do
+          text <- Node.FS.Aff.readTextFile UTF8 filepath
+          json <- ArgonautCore.jsonParser text # (throwError <<< error) \/ pure
 
-        GraphqlClient.tryDecodeGraphqlResponse introspectionQueryDecoder json # (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
+          GraphqlClient.tryDecodeGraphqlResponse introspectionQueryDecoder json # (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
     outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesnt throw errors
 

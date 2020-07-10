@@ -18,10 +18,42 @@ import Data.String.Utils (startsWith)
 import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
+tupleDecl :: Type -> Type -> Type
+tupleDecl x y =
+  (TypeConstructor $ nonQualifiedName (ProperName "Tuple"))
+  `TypeApp`
+  x
+  `TypeApp`
+  y
+
+tupleExpr :: Expr -> Expr -> Expr
+tupleExpr x y =
+  (ExprConstructor $ nonQualifiedName (ProperName "Tuple"))
+  `ExprApp`
+  x
+  `ExprApp`
+  y
+
 mkEnumModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
 mkEnumModule moduleName fullType = Module
   { moduleName
-  , imports: []
+  , imports:
+    [ ImportDecl
+      { moduleName: mkModuleName $ "Prelude" :| []
+      , names: []
+      , qualification: Nothing
+      }
+    , ImportDecl
+      { moduleName: mkModuleName $ "GraphqlClient" :| []
+      , names: []
+      , qualification: Nothing
+      }
+    , ImportDecl
+      { moduleName: mkModuleName $ "Data" :| ["Tuple"]
+      , names: []
+      , qualification: Nothing
+      }
+    ]
   , exports: []
   , declarations:
     [ DeclData
@@ -38,7 +70,7 @@ mkEnumModule moduleName fullType = Module
     , DeclSignature
       { comments: Nothing
       , ident: Ident "fromToMap"
-      , type_: arrayType (TypeOp (nonQualifiedNameTypeConstructor "String") (nonQualifiedName (OpName "/\\")) (nonQualifiedNameTypeConstructor $ StringsExtra.pascalCase fullType.name))
+      , type_: arrayType (tupleDecl (nonQualifiedNameTypeConstructor "String") (nonQualifiedNameTypeConstructor $ StringsExtra.pascalCase fullType.name))
       }
     , DeclValue
       { comments: Nothing
@@ -49,7 +81,7 @@ mkEnumModule moduleName fullType = Module
           { expr: ExprArray
               ( fullType.enumValues
               # fromMaybe []
-              <#> (\field -> ExprOp (ExprString field.name) (nonQualifiedName (OpName "/\\")) (ExprConstructor $ nonQualifiedName (ProperName $ StringsExtra.pascalCase field.name)))
+              <#> (\field -> tupleExpr (ExprString field.name) (ExprConstructor $ nonQualifiedName (ProperName $ StringsExtra.pascalCase field.name)))
               )
           , whereBindings: []
           }

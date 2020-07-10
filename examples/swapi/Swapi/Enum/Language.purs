@@ -1,4 +1,8 @@
-module Api.Enum.Language where
+module Swapi.Enum.Language where
+
+import Prelude
+import GraphqlClient
+import Data.Tuple
 
 -- | original type - Language
 data Language
@@ -6,8 +10,8 @@ data Language
   | Es
   | No
 
-fromToMap :: Array (String /\ Language)
-fromToMap = ["EN" /\ En, "ES" /\ Es, "NO" /\ No]
+fromToMap :: Array (Tuple String Language)
+fromToMap = [Tuple "EN" En, Tuple "ES" Es, Tuple "NO" No]
 
 instance languageGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Language where
   graphqlDefaultResponseScalarDecoder = enumDecoder "Language" fromToMap
