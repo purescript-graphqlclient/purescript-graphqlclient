@@ -1,7 +1,7 @@
 module GraphqlClientGenerator.PsAst where
 
-import GraphqlClientGenerator.Introspection.IntrospectionSchema
-import GraphqlClientGenerator.Introspection.Schema.TypeKind as TypeKind
+import GraphqlClientGenerator.IntrospectionSchema
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.PsAst.MkEnumModule as MkEnumModule
 import GraphqlClientGenerator.PsAst.MkInterfaceModule as MkInterfaceModule
 import Language.PS.AST
@@ -19,7 +19,7 @@ import Data.Map (empty, fromFoldable) as Map
 import Data.NonEmpty ((:|))
 import Data.Predicate (Predicate(..))
 import Data.String.Utils (startsWith)
-import GraphqlClientGenerator.Introspection.Schema.Fields (__schema)
+import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
 type FilesMap =

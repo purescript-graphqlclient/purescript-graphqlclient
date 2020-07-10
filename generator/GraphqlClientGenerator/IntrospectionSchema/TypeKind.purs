@@ -1,4 +1,4 @@
-module GraphqlClientGenerator.Introspection.Schema.TypeKind where
+module GraphqlClientGenerator.IntrospectionSchema.TypeKind where
 
 import Prelude
 

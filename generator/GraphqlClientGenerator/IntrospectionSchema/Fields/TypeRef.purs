@@ -1,4 +1,4 @@
-module GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef where
+module GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef where
 
 import Protolude
 import Data.Identity

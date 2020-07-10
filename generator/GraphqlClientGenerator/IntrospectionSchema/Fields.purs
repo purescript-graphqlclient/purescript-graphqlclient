@@ -1,12 +1,12 @@
-module GraphqlClientGenerator.Introspection.Schema.Fields where
+module GraphqlClientGenerator.IntrospectionSchema.Fields where
 
 import Data.Identity
 import GraphqlClient.Implementation
 import Protolude
 
-import GraphqlClientGenerator.Introspection.Schema.Fields.InputValue as GraphqlClientGenerator.Introspection.Schema.Fields.InputValue
-import GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef as GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef
-import GraphqlClientGenerator.Introspection.Schema.TypeKind
+import GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue as GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue
+import GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef as GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind
 
 data InstorpectionQueryResult_Schema
 data InstorpectionQueryResult_QueryType
@@ -64,10 +64,10 @@ types_fields_name = selectionForField "name" [] graphqlDefaultResponseScalarDeco
 types_fields_description :: SelectionSet InstorpectionQueryResult_Fields (Maybe String)
 types_fields_description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
 
-types_fields_args :: ∀ r . SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Fields (Array r)
+types_fields_args :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Fields (Array r)
 types_fields_args = selectionForCompositeField "args" [] graphqlDefaultResponseDecoderTransformer
 
-types_fields_type :: ∀ r . SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Fields r
+types_fields_type :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Fields r
 types_fields_type = selectionForCompositeField "type" [] graphqlDefaultResponseDecoderTransformer
 
 types_fields_isDeprecated :: SelectionSet InstorpectionQueryResult_Fields Boolean
@@ -76,10 +76,10 @@ types_fields_isDeprecated = selectionForField "isDeprecated" [] graphqlDefaultRe
 types_fields_deprecationReason :: SelectionSet InstorpectionQueryResult_Fields (Maybe String)
 types_fields_deprecationReason = selectionForField "deprecationReason" [] graphqlDefaultResponseScalarDecoder
 
-types_inputFields :: ∀ r . SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_inputFields :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
 types_inputFields = selectionForCompositeField "inputFields" [] graphqlDefaultResponseDecoderTransformer
 
-types_interfaces :: ∀ r . SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_interfaces :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
 types_interfaces = selectionForCompositeField "interfaces" [] graphqlDefaultResponseDecoderTransformer
 
 types_enumValues :: ∀ r . IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_EnumValues r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
@@ -97,5 +97,5 @@ types_enumValues_isDeprecated = selectionForField "isDeprecated" [] graphqlDefau
 types_enumValues_deprecationReason :: SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
 types_enumValues_deprecationReason = selectionForField "deprecationReason" [] graphqlDefaultResponseScalarDecoder
 
-types_possibleTypes :: ∀ r . SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
+types_possibleTypes :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
 types_possibleTypes = selectionForCompositeField "possibleTypes" [] graphqlDefaultResponseDecoderTransformer

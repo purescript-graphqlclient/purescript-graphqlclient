@@ -1,7 +1,7 @@
 module GraphqlClientGenerator.PsAst.MkQueryModule where
 
-import GraphqlClientGenerator.Introspection.IntrospectionSchema
-import GraphqlClientGenerator.Introspection.Schema.TypeKind
+import GraphqlClientGenerator.IntrospectionSchema
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind
 import Language.PS.AST
 import Language.PS.AST.Printers
 import Language.PS.AST.Sugar
@@ -15,7 +15,7 @@ import Data.Map (empty, fromFoldable) as Map
 import Data.NonEmpty ((:|))
 import Data.Predicate (Predicate(..))
 import Data.String.Utils (startsWith)
-import GraphqlClientGenerator.Introspection.Schema.Fields (__schema)
+import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
 mkQueryModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module

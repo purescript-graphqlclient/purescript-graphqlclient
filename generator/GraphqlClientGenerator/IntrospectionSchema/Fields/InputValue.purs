@@ -1,9 +1,9 @@
-module GraphqlClientGenerator.Introspection.Schema.Fields.InputValue where
+module GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue where
 
 import Protolude
 import Data.Identity
 import GraphqlClient.Implementation
-import GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef as GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef
+import GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef as GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef
 
 data InstorpectionQueryResult_InputValue
 
@@ -13,7 +13,7 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 description :: SelectionSet InstorpectionQueryResult_InputValue (Maybe String)
 description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
 
-type_ :: ∀ r . SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_InputValue r
+type_ :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_InputValue r
 type_ = selectionForCompositeField "type" [] graphqlDefaultResponseDecoderTransformer
 
 defaultValue :: SelectionSet InstorpectionQueryResult_InputValue (Maybe String)

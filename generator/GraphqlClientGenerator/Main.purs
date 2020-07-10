@@ -29,8 +29,8 @@ import Effect.Aff (launchAff_)
 import Effect.Class.Console (logShow, log)
 import Effect.Exception (error)
 import GraphqlClient as GraphqlClient
-import GraphqlClientGenerator.Introspection.IntrospectionSchema as GraphqlClientGenerator.Introspection.IntrospectionSchema
-import GraphqlClientGenerator.Introspection.Schema.TypeKind (TypeKind(..))
+import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind as GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.GraphqlJs as GraphqlJs
 import GraphqlClientGenerator.Options as GraphqlClientGenerator.Options
 import GraphqlClientGenerator.PsAst as GraphqlClientGenerator.PsAst
@@ -54,13 +54,13 @@ type App a = ReaderT GraphqlClientGenerator.Options.AppOptions Aff a
 includeDeprecated :: Boolean
 includeDeprecated = true
 
-introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.RootQuery GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
-introspectionQuery = GraphqlClientGenerator.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
+introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.RootQuery GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
+introspectionQuery = GraphqlClientGenerator.IntrospectionSchema.introspectionQuery includeDeprecated
 
 introspectionQueryString :: String
 introspectionQueryString = GraphqlClient.writeGraphql introspectionQuery
 
-introspectionQueryDecoder :: ArgonautCore.Json -> Either JsonDecodeError GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
+introspectionQueryDecoder :: ArgonautCore.Json -> Either JsonDecodeError GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
 introspectionQueryDecoder = GraphqlClient.getSelectionSetDecoder introspectionQuery
 
 dirIsEmpty :: FilePath -> Aff Boolean
@@ -72,7 +72,7 @@ main = do
 
   launchAff_ do
     -- spago run --main GraphqlClientGenerator.Main --node-args "--input-url https://countries.trevorblades.com/ --output examples/countries"
-    (instorpectionQueryResult :: GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult) <- case appOptions.input of
+    (instorpectionQueryResult :: GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- case appOptions.input of
       (GraphqlClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
         let
           urlString = unwrap url
@@ -132,18 +132,18 @@ main = do
         -- void $ Node.FS.Aff.Mkdirp.mkdirp dir
         -- writePurescriptFiles dir $ onlyObjects >>> (filter (not <<< isSchemaObject)) $ queryResult.data
   -- where
-  --   writePurescriptFiles :: String -> Array GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> Aff Unit
+  --   writePurescriptFiles :: String -> Array GraphqlClientGenerator.IntrospectionSchema.TypeResult -> Aff Unit
   --   writePurescriptFiles dir objectTypes = do
   --     _ <- parTraverse (writePurescriptFile dir) objectTypes
   --     pure unit
 
-  --   writePurescriptFile :: String -> GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> Aff Unit
+  --   writePurescriptFile :: String -> GraphqlClientGenerator.IntrospectionSchema.TypeResult -> Aff Unit
   --   writePurescriptFile dir object = do
   --     case object.name of
   --       Just name -> writeTextFile UTF8 (dir <> "/" <> name <> ".purs") $ generateForObject object
   --       Nothing -> pure unit
 
-  --   generateForObject :: GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> String
+  --   generateForObject :: GraphqlClientGenerator.IntrospectionSchema.TypeResult -> String
   --   generateForObject object = case object.name of
   --     Just name ->
   --       "module Text."
@@ -151,12 +151,12 @@ main = do
   --         <> generateForFields name object.fields
   --     Nothing -> ""
 
-  --   generateForFields :: String -> Maybe (Array GraphqlClientGenerator.Introspection.IntrospectionSchema.FieldResult) -> String
+  --   generateForFields :: String -> Maybe (Array GraphqlClientGenerator.IntrospectionSchema.FieldResult) -> String
   --   generateForFields onObject = case _ of
   --     Just fields -> joinWith "\n" ((generateForField onObject) <$> fields)
   --     Nothing -> ""
 
-  --   generateForField :: String -> GraphqlClientGenerator.Introspection.IntrospectionSchema.FieldResult -> String
+  --   generateForField :: String -> GraphqlClientGenerator.IntrospectionSchema.FieldResult -> String
   --   generateForField onObject field =
   --     field.name
   --       <> " :: SelectionSet ("
@@ -164,10 +164,10 @@ main = do
   --       <> " :: ?) "
   --       <> onObject
 
-  --   onlyObjects :: (Record GraphqlClientGenerator.Introspection.IntrospectionSchema.Result) -> Array GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult
-  --   onlyObjects result = filter (\t -> t.kind == GraphqlClientGenerator.Introspection.Schema.TypeKind.Object) result.__schema.types
+  --   onlyObjects :: (Record GraphqlClientGenerator.IntrospectionSchema.Result) -> Array GraphqlClientGenerator.IntrospectionSchema.TypeResult
+  --   onlyObjects result = filter (\t -> t.kind == GraphqlClientGenerator.IntrospectionSchema.TypeKind.Object) result.__schema.types
 
-  --   objectNames :: Array GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> Array (Maybe String)
+  --   objectNames :: Array GraphqlClientGenerator.IntrospectionSchema.TypeResult -> Array (Maybe String)
   --   objectNames = map _.name
 
   --   isSchemaObject :: forall a. { name :: Maybe String | a } -> Boolean

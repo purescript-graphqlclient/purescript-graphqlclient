@@ -14,7 +14,7 @@ import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Effect.Aff.Compat (EffectFnAff(..), fromEffectFnAff)
 import Effect.Exception (error)
 import GraphqlClient as GraphqlClient
-import GraphqlClientGenerator.Introspection.IntrospectionSchema as GraphqlClientGenerator.Introspection.IntrospectionSchema
+import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
 import Foreign.Object (lookup) as Foreign.Object
 import Test.Spec as Test.Spec
 import Test.Spec.Assertions (fail, shouldEqual)
@@ -47,26 +47,26 @@ urls =
 includeDeprecated :: Boolean
 includeDeprecated = false
 
-introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.RootQuery GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
-introspectionQuery = GraphqlClientGenerator.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
+introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.RootQuery GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
+introspectionQuery = GraphqlClientGenerator.IntrospectionSchema.introspectionQuery includeDeprecated
 
 introspectionQueryString :: String
 introspectionQueryString = GraphqlClient.writeGraphql introspectionQuery
 
-introspectionQueryDecoder :: Json -> Either JsonDecodeError GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
+introspectionQueryDecoder :: Json -> Either JsonDecodeError GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
 introspectionQueryDecoder = GraphqlClient.getSelectionSetDecoder introspectionQuery
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.describe "Introspection spec" $ Test.Spec.parallel $ for_ urls (\url -> Test.Spec.it url do
   (expectedJson :: Json) <- requestGraphqlUsingGraphqlClient introspectionQueryForGraphqlClient url includeDeprecated
-  (expectedParsed :: GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoder expectedJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
+  (expectedParsed :: GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoder expectedJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
 
   (actualJson :: Json) <- GraphqlClient.post url (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
     >>= (throwError <<< error <<< Affjax.printError) \/ (\response -> pure response.body)
     >>= (GraphqlClient.tryDecodeGraphqlResponse Right >>> pure)
     >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
-  (actualParsed :: GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoder actualJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
+  (actualParsed :: GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoder actualJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
 
   actualJson `jsonShouldEqual` expectedJson
   actualParsed `shouldEqual` expectedParsed
