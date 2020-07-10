@@ -44,7 +44,7 @@ import Node.Path (concat, resolve) as Node.FS
 import Options.Applicative (execParser)
 import Protolude.Url (Url)
 import Protolude.Url as Url
-import Record.Homogeneous (foldMapValuesL)
+import Record.Homogeneous (foldMapValuesWithIndexL)
 
 greet :: GraphqlClientGenerator.Options.AppOptions -> Effect Unit
 greet (GraphqlClientGenerator.Options.AppOptions { input, output, api }) = log $ "Hello, " <> show input <> show output <> show api
@@ -102,20 +102,11 @@ main = do
     let
       filesMap = GraphqlClientGenerator.PsAst.mkFilesMap appOptions.api instorpectionQueryResult
 
-      printModule :: ModuleName -> String -> Aff Unit
-      printModule moduleName content = do
+      printModule :: FilePath -> String -> String -> Aff Unit
+      printModule outputDir fileName content = do
         let
-          moduleNameWords :: NonEmptyArray String
-          moduleNameWords = moduleName # unwrap <#> unwrap # NonEmptyArray.fromNonEmpty
-
-          moduleNameWords' :: { init :: Array String, last :: String }
-          moduleNameWords' = NonEmptyArray.unsnoc moduleNameWords
-
-          outputDir :: FilePath
-          outputDir = (Node.FS.concat $ [outputDirAbs] <> moduleNameWords'.init)
-
           outputFile :: FilePath
-          outputFile = moduleNameWords'.last <> ".purs"
+          outputFile = fileName <> ".purs"
 
           outputPath :: FilePath
           outputPath = Node.FS.concat [outputDir, outputFile]
@@ -123,10 +114,24 @@ main = do
         Node.FS.Aff.writeTextFile UTF8 outputPath content
         pure unit
 
-      printModuleForMap :: Map ModuleName String -> Aff Unit
-      printModuleForMap mymap = void (forWithIndex mymap printModule)
+      printModuleForDirs :: String -> Map String String -> Aff Unit
+      printModuleForDirs dirName mapOfFilenameAndContent =
+        let
+          outputDir :: FilePath
+          outputDir = (Node.FS.concat $ [outputDirAbs, dirName])
+        in
+          void (forWithIndex mapOfFilenameAndContent (printModule outputDir))
 
-    foldMapValuesL printModuleForMap filesMap.dirs
+      printModuleForFiles :: String -> String -> Aff Unit
+      printModuleForFiles fileName content =
+        let
+          outputDir :: FilePath
+          outputDir = outputDirAbs
+        in
+          void (printModule outputDir fileName content)
+
+    foldMapValuesWithIndexL printModuleForDirs filesMap.dirs
+    foldMapValuesWithIndexL printModuleForFiles filesMap.files
 
         -- let dir = "examples/countries"
         -- void $ Node.FS.Aff.Mkdirp.mkdirp dir

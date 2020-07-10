@@ -1,43 +1,40 @@
 module GraphqlClientGenerator.PsAst where
 
+import GraphqlClient.Utils
 import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
-import GraphqlClientGenerator.PsAst.MkEnumModule as MkEnumModule
-import GraphqlClientGenerator.PsAst.MkInterfaceModule as MkInterfaceModule
 import Language.PS.AST
 import Language.PS.AST.Printers
 import Language.PS.AST.Sugar
 import Protolude
-import GraphqlClient.Utils
 
 import Data.Array (filter)
-import Data.Functor.Mu (roll)
-import Data.List ((:))
-import Data.List (fromFoldable) as List
+import Data.Foldable (elem)
 import Data.Map (Map)
-import Data.Map (empty, fromFoldable) as Map
+import Data.Map (fromFoldable) as Map
 import Data.NonEmpty ((:|))
-import Data.Predicate (Predicate(..))
-import Data.String.Utils (startsWith)
-import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
+import Data.String.Utils (startsWith)
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
+import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
+import GraphqlClientGenerator.MakeModule.Interface as MakeModule.Interface
+import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
 
 type FilesMap =
   { dirs ::
-    { "Enum" :: Map ModuleName String
-    -- | , "Interface" :: Map ModuleName String
-    -- | , "Object" :: Map ModuleName String
-    -- | , "Union" :: Map ModuleName String
+    { "Enum" :: Map String String
+    -- | , "Interface" :: Map String String
+    -- | , "Object" :: Map String String
+    -- | , "Union" :: Map String String
     }
-  -- | , files ::
-  -- |   { "Query" :: String
-  -- |   }
+  , files ::
+    { "Scalar" :: String
+    }
   }
   -- | , "InputObject" :: String
   -- | , "Interface" :: String
   -- | , "Mutation" :: String
   -- | , "Object" :: String
-  -- | , "Scalar" :: String
+  -- | , "Query" :: String
   -- | , "ScalarCodecs" :: String
   -- | , "Subscription" :: String
   -- | , "Union" :: String
@@ -46,11 +43,24 @@ type FilesMap =
 isBuiltIn :: String -> Boolean
 isBuiltIn = startsWith "__"
 
-fullTypeToModule :: (ModuleName -> InstorpectionQueryResult__FullType -> Module) -> String -> String -> InstorpectionQueryResult__FullType -> Tuple ModuleName String
-fullTypeToModule mkModule apiModuleName submodule fullType =
+fullTypeToModuleMapItem :: (ModuleName -> InstorpectionQueryResult__FullType -> Module) -> String -> String -> InstorpectionQueryResult__FullType -> Tuple String String
+fullTypeToModuleMapItem mkModule apiModuleName submodule fullType =
   let
     moduleName = mkModuleName $ apiModuleName :| [submodule, StringsExtra.pascalCase fullType.name]
-   in moduleName /\ (printModuleToString $ mkModule moduleName fullType)
+   in submodule /\ (printModuleToString $ mkModule moduleName fullType)
+
+builtInScalarNames :: Array String
+builtInScalarNames =
+    [ "Boolean"
+    , "String"
+    , "Int"
+    , "Float"
+
+    -- XXX:
+    -- It's in spec starting from the first issue https://spec.graphql.org/July2015/#sec-ID and should always be a string
+    -- Should we uncomment it?
+    -- , "ID"
+    ]
 
 -- typeLockDefinitions - Union, Object, Interface
 mkFilesMap :: String -> InstorpectionQueryResult -> FilesMap
@@ -71,25 +81,37 @@ mkFilesMap apiModuleName introspectionQueryResult =
         introspectionQueryResult.__schema.types
         # filter (\fullType -> fullType."kind" == TypeKind.Enum)
         # filter (\fullType -> notExcluded fullType.name)
-        <#> (fullTypeToModule MkEnumModule.mkEnumModule apiModuleName "Enum")
+        <#> (fullTypeToModuleMapItem MakeModule.Enum.makeModule apiModuleName "Enum")
         # Map.fromFoldable
       -- | , "Interface":
       -- |   introspectionQueryResult.__schema.types
       -- |   # filter (\fullType -> fullType."kind" == TypeKind.Interface)
       -- |   # filter (\fullType -> notExcluded fullType.name)
-      -- |   <#> (fullTypeToModule MkInterfaceModule.mkInterfaceModule apiModuleName "Interface")
+      -- |   <#> (fullTypeToModuleMapItem MakeModule.Interface.makeModule apiModuleName "Interface")
       -- |   # Map.fromFoldable
       -- | , "Object":
       -- |   introspectionQueryResult.__schema.types
       -- |   # filter (\fullType -> fullType."kind" == TypeKind.Object)
       -- |   # filter (\fullType -> notExcluded fullType.name)
-      -- |   <#> (fullTypeToModule MkInterfaceModule.mkInterfaceModule apiModuleName "Object")
+      -- |   <#> (fullTypeToModuleMapItem MakeModule.Interface.makeModule apiModuleName "Object")
       -- |   # Map.fromFoldable
       -- | , "Union":
       -- |   introspectionQueryResult.__schema.types
       -- |   # filter (\fullType -> fullType."kind" == TypeKind.Union)
       -- |   # filter (\fullType -> notExcluded fullType.name)
-      -- |   <#> (fullTypeToModule MkInterfaceModule.mkInterfaceModule apiModuleName "Union")
+      -- |   <#> (fullTypeToModuleMapItem MakeModule.Interface.makeModule apiModuleName "Union")
       -- |   # Map.fromFoldable
+      }
+    , files:
+      { "Scalar":
+        let
+          moduleName = mkModuleName $ apiModuleName :| ["Scalar"]
+
+          scalarTypes :: Array InstorpectionQueryResult__FullType
+          scalarTypes =
+            introspectionQueryResult.__schema.types
+            # filter (\fullType -> fullType."kind" == TypeKind.Scalar)
+            # filter (\fullType -> not $ elem fullType.name builtInScalarNames)
+        in printModuleToString $ MakeModule.Scalar.makeModule moduleName scalarTypes
       }
     }

@@ -4,7 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Tuple
 
--- | original type - Phrase
+-- | original name - Phrase
 data Phrase
   = BadFeeling
   | Droids

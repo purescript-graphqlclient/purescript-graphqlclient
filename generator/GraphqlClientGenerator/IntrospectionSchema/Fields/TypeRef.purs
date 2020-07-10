@@ -13,4 +13,4 @@ name :: SelectionSet InstorpectionQueryResult_TypeRef (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
 ofType :: ∀ r . SelectionSet InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_TypeRef (Maybe r)
-ofType = selectionForCompositeField "ofType" [] graphqlDefaultResponseDecoderTransformer
+ofType = selectionForCompositeField "ofType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

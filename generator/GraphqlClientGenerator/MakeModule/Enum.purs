@@ -1,4 +1,4 @@
-module GraphqlClientGenerator.PsAst.MkEnumModule where
+module GraphqlClientGenerator.MakeModule.Enum where
 
 import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind
@@ -18,24 +18,10 @@ import Data.String.Utils (startsWith)
 import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
-tupleDecl :: Type -> Type -> Type
-tupleDecl x y =
-  (TypeConstructor $ nonQualifiedName (ProperName "Tuple"))
-  `TypeApp`
-  x
-  `TypeApp`
-  y
+import GraphqlClientGenerator.MakeModule.Utils
 
-tupleExpr :: Expr -> Expr -> Expr
-tupleExpr x y =
-  (ExprConstructor $ nonQualifiedName (ProperName "Tuple"))
-  `ExprApp`
-  x
-  `ExprApp`
-  y
-
-mkEnumModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
-mkEnumModule moduleName fullType = Module
+makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
+makeModule moduleName fullType = Module
   { moduleName
   , imports:
     [ ImportDecl
@@ -57,7 +43,7 @@ mkEnumModule moduleName fullType = Module
   , exports: []
   , declarations:
     [ DeclData
-      { comments: Just $ OneLineComments ["original type - " <> fullType.name]
+      { comments: Just $ OneLineComments ["original name - " <> fullType.name]
       , head: DataHead
           { dataHdName: ProperName $ StringsExtra.pascalCase fullType.name
           , dataHdVars: []

@@ -220,20 +220,21 @@ instance listGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunct
 
 ------------------------------------------------------
 
-class GraphqlDefaultResponseDecoderTransformer a b | b -> a where
-  graphqlDefaultResponseDecoderTransformer :: (Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b
+-- To find decoder for nested functors (e.g. `f (g a)`) or non-functor types (e.g. `a`)
+class GraphqlDefaultResponseFunctorOrScalarDecoderTransformer a b | b -> a where
+  graphqlDefaultResponseFunctorOrScalarDecoderTransformer :: (Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b
 
 -- finds decoders for Array, Maybe, but also allows nested containers (e.g. `Array (Maybe x)`)
-instance traversableDecoderTransformer :: (GraphqlDefaultResponseDecoderTransformer a b, GraphqlDefaultResponseFunctorDecoder f) => GraphqlDefaultResponseDecoderTransformer a (f b) where
-  graphqlDefaultResponseDecoderTransformer childDecoder = do
-     let (json_to_b :: Json -> Either JsonDecodeError b) = graphqlDefaultResponseDecoderTransformer childDecoder
+instance traversableDecoderTransformer :: (GraphqlDefaultResponseFunctorOrScalarDecoderTransformer a b, GraphqlDefaultResponseFunctorDecoder f) => GraphqlDefaultResponseFunctorOrScalarDecoderTransformer a (f b) where
+  graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder = do
+     let (json_to_b :: Json -> Either JsonDecodeError b) = graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder
      let (json_to_fb :: Json -> Either JsonDecodeError (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
      json_to_fb
 
 else
 
-instance idDecoderTransformer :: GraphqlDefaultResponseDecoderTransformer a a where
-  graphqlDefaultResponseDecoderTransformer = identity
+instance idDecoderTransformer :: GraphqlDefaultResponseFunctorOrScalarDecoderTransformer a a where
+  graphqlDefaultResponseFunctorOrScalarDecoderTransformer = identity
 
 ------------------------------------------------------
 

@@ -1,4 +1,4 @@
-module GraphqlClientGenerator.PsAst.MkInterfaceModule where
+module GraphqlClientGenerator.MakeModule.Interface where
 
 import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind
@@ -18,14 +18,14 @@ import Data.String.Utils (startsWith)
 import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
-mkInterfaceModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
-mkInterfaceModule moduleName fullType = Module
+makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
+makeModule moduleName fullType = Module
   { moduleName
   , imports: []
   , exports: []
   , declarations:
     [ DeclData
-      { comments: Just $ OneLineComments ["original type - " <> fullType.name]
+      { comments: Just $ OneLineComments ["original name - " <> fullType.name]
       , head: DataHead
           { dataHdName: ProperName $ StringsExtra.pascalCase fullType.name
           , dataHdVars: []

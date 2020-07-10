@@ -5,4 +5,4 @@ import Test.Spec as Test.Spec
 import Examples.MyTests.SingleFieldQuerySpec as Examples.MyTests.SingleFieldQuerySpec
 
 allTests :: Test.Spec.Spec Unit
-allTests = Examples.MyTests.SingleFieldQuerySpec.spec
+allTests = Test.Spec.describe "SingleFieldQuerySpec" Examples.MyTests.SingleFieldQuerySpec.spec
