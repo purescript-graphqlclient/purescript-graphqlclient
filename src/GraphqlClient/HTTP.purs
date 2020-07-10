@@ -1,7 +1,7 @@
-module Fernet.HTTP where
+module GraphqlClient.HTTP where
 
 import Data.Argonaut.Decode.Combinators
-import Fernet.Graphql.SelectionSet
+import GraphqlClient.Implementation
 import Protolude
 
 import Affjax as Affjax
@@ -34,7 +34,7 @@ import Data.Void as Void
 import Debug.Trace as Debug.Trace
 import Effect.Class.Console as Console
 import Effect.Exception as Exception
-import Fernet.Graphql.WriteGraphql as Fernet.Graphql.WriteGraphql
+import GraphqlClient.WriteGraphql as GraphqlClient.WriteGraphql
 import Foreign.Object (Object)
 import Foreign.Object as Foreign.Object
 
@@ -196,7 +196,7 @@ gqlRequest
   -> SelectionSet RootQuery a
   -> Aff (GraphqlResponse a)
 gqlRequest url selectionSet@(SelectionSet _fields decoder) = do
-  let query = Fernet.Graphql.WriteGraphql.writeGraphql selectionSet
+  let query = GraphqlClient.WriteGraphql.writeGraphql selectionSet
   result <- gqlRequestImpl url query decoder
   pure $ result
 

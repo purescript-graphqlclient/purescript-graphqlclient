@@ -1,4 +1,4 @@
-module Utils where
+module GraphqlClient.Utils where
 
 import Protolude
 import Data.List (fromFoldable) as List

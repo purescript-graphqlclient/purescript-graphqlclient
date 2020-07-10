@@ -1,4 +1,4 @@
-# purescript-fernet
+# purescript-GraphqlClient
 
 *Extremely WIP*
 
@@ -11,7 +11,7 @@ and guarantees any given query is valid at compile time
 - a code generation CLI tool that generates a library for a given endpoint
 that guarantees all queries are valid for a given endpoint
 
-Why "Fernet"? I dunno, we use the Elixir library Absinthe at work and it seemed
+Why "GraphqlClient"? I dunno, we use the Elixir library Absinthe at work and it seemed
 cute to name it after another spirit.
 
 Feel free to open an issue or message me \@liam on the

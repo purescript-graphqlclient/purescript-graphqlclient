@@ -1,4 +1,4 @@
-module Fernet.Decode.GraphqlEnum where
+module GraphqlClient.GraphqlEnum where
 
 import Prelude
 

@@ -1,8 +1,8 @@
-module Fernet.Introspection.Schema.Fields.TypeRef where
+module GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef where
 
 import Protolude
 import Data.Identity
-import Fernet.Graphql.SelectionSet
+import GraphqlClient.Implementation
 
 data InstorpectionQueryResult_TypeRef
 

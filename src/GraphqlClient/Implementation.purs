@@ -1,4 +1,4 @@
-module Fernet.Graphql.SelectionSet where
+module GraphqlClient.Implementation where
 
 import Data.Argonaut.Decode.Combinators
 import Protolude
@@ -15,6 +15,12 @@ import Prim.RowList (class RowToList)
 import Prim.RowList as RowList
 import Record as Record
 import Type.Data.RowList (RLProxy(..))
+
+data RootQuery
+data RootMutation
+data RootSubscription
+
+--------------------
 
 data ArgumentValue
   = ArgumentValueString String
@@ -133,7 +139,7 @@ instance toGraphqlArgumentRecordCons ::
 class DefaultInput a where
   defaultInput :: a
 
-data Optional x = Absent | Present x
+data Optional x = Absent | Present x -- it's like Maybe, but with DefaultInput class, and only for input of graphql
 
 derive instance optionalFunctor :: Functor Optional
 
@@ -143,7 +149,7 @@ instance optionalDefaultInput :: DefaultInput (Optional a) where
 instance recordDefaultInput :: (DefaultInputImplementationRecord row list , RowList.RowToList row list) => DefaultInput (Record row) where
   defaultInput = defaultInputImplementationRecord (RLProxy :: RLProxy list)
 
--- RECORD
+-- Implementation for Record
 class DefaultInputImplementationRecord (row :: # Type) (list :: RowList.RowList) | list -> row where
   defaultInputImplementationRecord :: RLProxy list -> Record row
 
@@ -176,6 +182,8 @@ instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
   apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
 
+------------------------------------------------------
+
 class GraphqlDefaultResponseScalarDecoder a where
   graphqlDefaultResponseScalarDecoder :: ArgonautDecoders.Decoder a
 
@@ -194,6 +202,8 @@ instance numberGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScal
 instance functorGraphqlDefaultResponseScalarDecoder :: (GraphqlDefaultResponseFunctorDecoder f, GraphqlDefaultResponseScalarDecoder a) => GraphqlDefaultResponseScalarDecoder (f a) where
   graphqlDefaultResponseScalarDecoder = graphqlDefaultResponseFunctorDecoder graphqlDefaultResponseScalarDecoder
 
+------------------------------------------------------
+
 class GraphqlDefaultResponseFunctorDecoder f where
   graphqlDefaultResponseFunctorDecoder :: ∀ a. ArgonautDecoders.Decoder a → ArgonautDecoders.Decoder (f a)
 
@@ -205,6 +215,8 @@ instance arrayGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunc
 
 instance listGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunctorDecoder List where
   graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Implementation.decodeList
+
+------------------------------------------------------
 
 class GraphqlDefaultResponseDecoderTransformer a b | b -> a where
   graphqlDefaultResponseDecoderTransformer :: ArgonautDecoders.Decoder a -> ArgonautDecoders.Decoder b
@@ -220,6 +232,8 @@ else
 
 instance idDecoderTransformer :: GraphqlDefaultResponseDecoderTransformer a a where
   graphqlDefaultResponseDecoderTransformer = identity
+
+------------------------------------------------------
 
 selectionForField :: forall parentTypeLock a . String -> Array Argument -> ArgonautDecoders.Decoder a -> SelectionSet parentTypeLock a
 selectionForField fieldName args decoder = SelectionSet [Leaf fieldName args] (\json -> do
@@ -240,17 +254,13 @@ selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet f
     ArgonautDecoders.Implementation.getField (jsonDecoderTransformer childDecoder) object fieldName
   )
 
-data RootQuery
-data RootMutation
-data RootSubscription
-
 getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> ArgonautDecoders.Decoder a
 getSelectionSetDecoder (SelectionSet fields decoder) = decoder
 
 enumDecoder :: ∀ a . String -> List (String /\ a) -> ArgonautDecoders.Decoder a
-enumDecoder name map json = lmap (Named name) do
+enumDecoder name fromToMap json = lmap (Named name) do
   string <- ArgonautDecoders.Implementation.decodeString json
-  go map string # note (UnexpectedValue json)
+  go fromToMap string # note (UnexpectedValue json)
   where
     go Nil parsed = Nothing
     go ((str /\ val) : t) parsed = if str == parsed then Just val else go t parsed

@@ -1,4 +1,4 @@
-module Generator.GraphqlJs where
+module GraphqlClientGenerator.GraphqlJs where
 
 import Protolude
 

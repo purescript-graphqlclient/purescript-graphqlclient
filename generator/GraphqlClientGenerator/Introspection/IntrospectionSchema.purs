@@ -1,13 +1,13 @@
-module Fernet.Introspection.IntrospectionSchema where
+module GraphqlClientGenerator.Introspection.IntrospectionSchema where
 
-import Fernet.Graphql.SelectionSet
-import Fernet.Introspection.Schema.Fields
-import Fernet.Introspection.Schema.TypeKind
+import GraphqlClient
+import GraphqlClientGenerator.Introspection.Schema.Fields
+import GraphqlClientGenerator.Introspection.Schema.TypeKind
 import Protolude
 import Type.Row
 
-import Fernet.Introspection.Schema.Fields.InputValue as Fernet.Introspection.Schema.Fields.InputValue
-import Fernet.Introspection.Schema.Fields.TypeRef as Fernet.Introspection.Schema.Fields.TypeRef
+import GraphqlClientGenerator.Introspection.Schema.Fields.InputValue as GraphqlClientGenerator.Introspection.Schema.Fields.InputValue
+import GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef as GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef
 
 type InstorpectionQueryResult
   = { __schema ::
@@ -82,24 +82,24 @@ type InstorpectionQueryResult__TypeRef
       )
     )
 
-ofTypeStop :: SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared ()))
-ofTypeStop = { kind: _, name: _ } <$> Fernet.Introspection.Schema.Fields.TypeRef.kind <*> Fernet.Introspection.Schema.Fields.TypeRef.name
+ofTypeStop :: SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared ()))
+ofTypeStop = { kind: _, name: _ } <$> GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.kind <*> GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.name
 
 ofTypeNest
   :: ∀ r
-   . SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r
-  -> SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared (ofType :: Maybe r)))
-ofTypeNest other = { kind: _, name: _, ofType: _ } <$> Fernet.Introspection.Schema.Fields.TypeRef.kind <*> Fernet.Introspection.Schema.Fields.TypeRef.name <*> Fernet.Introspection.Schema.Fields.TypeRef.ofType other
+   . SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r
+  -> SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared (ofType :: Maybe r)))
+ofTypeNest other = { kind: _, name: _, ofType: _ } <$> GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.kind <*> GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.name <*> GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.ofType other
 
-typeRefFragment :: SelectionSet Fernet.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef InstorpectionQueryResult__TypeRef
+typeRefFragment :: SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.TypeRef.InstorpectionQueryResult_TypeRef InstorpectionQueryResult__TypeRef
 typeRefFragment = ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest ofTypeStop
 
-inputValueFragment :: SelectionSet Fernet.Introspection.Schema.Fields.InputValue.InstorpectionQueryResult_InputValue InstorpectionQueryResult__InputValue
+inputValueFragment :: SelectionSet GraphqlClientGenerator.Introspection.Schema.Fields.InputValue.InstorpectionQueryResult_InputValue InstorpectionQueryResult__InputValue
 inputValueFragment = { name: _ , description: _ , type: _ , defaultValue: _ }
-  <$> Fernet.Introspection.Schema.Fields.InputValue.name
-  <*> Fernet.Introspection.Schema.Fields.InputValue.description
-  <*> Fernet.Introspection.Schema.Fields.InputValue.type_ typeRefFragment
-  <*> Fernet.Introspection.Schema.Fields.InputValue.defaultValue
+  <$> GraphqlClientGenerator.Introspection.Schema.Fields.InputValue.name
+  <*> GraphqlClientGenerator.Introspection.Schema.Fields.InputValue.description
+  <*> GraphqlClientGenerator.Introspection.Schema.Fields.InputValue.type_ typeRefFragment
+  <*> GraphqlClientGenerator.Introspection.Schema.Fields.InputValue.defaultValue
 
 introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
 introspectionQuery includeDeprecated =

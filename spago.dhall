@@ -2,7 +2,7 @@
 Welcome to a Spago project!
 You can edit this file as you like.
 -}
-{ name = "purescript-fernet"
+{ name = "purescript-GraphqlClient"
 , dependencies =
   [ "affjax"
   , "console"
@@ -25,9 +25,9 @@ You can edit this file as you like.
   , "optparse"
   , "protolude"
   , "ps-ast"
-  , "heterogeneous"
+  , "homogeneous-records"
   -- , "inflection"
   ]
 , packages = ./packages.dhall
-, sources = [ "src/**/*.purs", "test/**/*.purs" ]
+, sources = [ "generator/**/*.purs", "src/**/*.purs", "test/**/*.purs" ]
 }

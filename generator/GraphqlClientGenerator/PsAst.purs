@@ -1,14 +1,14 @@
-module Generator.PsAst where
+module GraphqlClientGenerator.PsAst where
 
-import Fernet.Introspection.IntrospectionSchema
-import Fernet.Introspection.Schema.TypeKind as TypeKind
+import GraphqlClientGenerator.Introspection.IntrospectionSchema
+import GraphqlClientGenerator.Introspection.Schema.TypeKind as TypeKind
+import GraphqlClientGenerator.PsAst.MkEnumModule as MkEnumModule
+import GraphqlClientGenerator.PsAst.MkInterfaceModule as MkInterfaceModule
 import Language.PS.AST
 import Language.PS.AST.Printers
 import Language.PS.AST.Sugar
 import Protolude
-import Utils
-import Generator.PsAst.MkEnumModule as MkEnumModule
-import Generator.PsAst.MkInterfaceModule as MkInterfaceModule
+import GraphqlClient.Utils
 
 import Data.Array (filter)
 import Data.Functor.Mu (roll)
@@ -19,7 +19,7 @@ import Data.Map (empty, fromFoldable) as Map
 import Data.NonEmpty ((:|))
 import Data.Predicate (Predicate(..))
 import Data.String.Utils (startsWith)
-import Fernet.Introspection.Schema.Fields (__schema)
+import GraphqlClientGenerator.Introspection.Schema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
 type FilesMap =

@@ -1,11 +1,11 @@
-module Fernet.Graphql.WriteGraphql where
+module GraphqlClient.WriteGraphql where
 
 import Protolude
 
 import Data.Int (decimal, toStringAs)
 import Data.String (joinWith)
 import Data.String (null) as Data.String
-import Fernet.Graphql.SelectionSet (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..), Optional(..))
+import GraphqlClient.Implementation (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..), Optional(..))
 
 class WriteGraphql a where
   writeGraphql :: a -> String

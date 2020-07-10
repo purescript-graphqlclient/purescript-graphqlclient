@@ -1,7 +1,7 @@
-module Generator.PsAst.MkEnumModule where
+module GraphqlClientGenerator.PsAst.MkEnumModule where
 
-import Fernet.Introspection.IntrospectionSchema
-import Fernet.Introspection.Schema.TypeKind
+import GraphqlClientGenerator.Introspection.IntrospectionSchema
+import GraphqlClientGenerator.Introspection.Schema.TypeKind
 import Language.PS.AST
 import Language.PS.AST.Printers
 import Language.PS.AST.Sugar
@@ -15,7 +15,7 @@ import Data.Map (empty, fromFoldable) as Map
 import Data.NonEmpty ((:|))
 import Data.Predicate (Predicate(..))
 import Data.String.Utils (startsWith)
-import Fernet.Introspection.Schema.Fields (__schema)
+import GraphqlClientGenerator.Introspection.Schema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
 mkEnumModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module

@@ -1,4 +1,4 @@
-module Generator.Options where
+module GraphqlClientGenerator.Options where
 
 import Protolude
 
@@ -81,5 +81,5 @@ appOptions = map AppOptions $ ({ input: _, output: _, api: _ })
 opts :: ParserInfo AppOptions
 opts = info (appOptions <**> helper)
   ( fullDesc
-  <> progDesc "Graphql api generator"
-  <> header "purescript-graphql-client-generator - generates Api modules from schema" )
+  <> progDesc "Graphql api GraphqlClientGenerator"
+  <> header "purescript-graphql-client-GraphqlClientGenerator - generates Api modules from schema" )

@@ -1,4 +1,4 @@
-module Generator.Main where
+module GraphqlClientGenerator.Main where
 
 import Protolude
 import Protolude.Node
@@ -29,16 +29,13 @@ import Data.TraversableWithIndex (forWithIndex)
 import Effect.Aff (launchAff_)
 import Effect.Class.Console (logShow, log)
 import Effect.Exception (error)
-import Fernet.Graphql.SelectionSet as Fernet.Graphql.SelectionSet
-import Fernet.Graphql.WriteGraphql as Fernet.Graphql.WriteGraphql
-import Fernet.HTTP as Fernet.HTTP
-import Fernet.Introspection.IntrospectionSchema as Fernet.Introspection.IntrospectionSchema
-import Fernet.Introspection.Schema.TypeKind (TypeKind(..))
+import GraphqlClient as GraphqlClient
+import GraphqlClientGenerator.Introspection.IntrospectionSchema as GraphqlClientGenerator.Introspection.IntrospectionSchema
+import GraphqlClientGenerator.Introspection.Schema.TypeKind (TypeKind(..))
 import Foreign.Object (Object)
-import Generator.GraphqlJs as GraphqlJs
-import Generator.Options as Generator.Options
-import Generator.PsAst as Generator.PsAst
-import Heterogeneous.Folding (class HFoldl, hfoldl)
+import GraphqlClientGenerator.GraphqlJs as GraphqlJs
+import GraphqlClientGenerator.Options as GraphqlClientGenerator.Options
+import GraphqlClientGenerator.PsAst as GraphqlClientGenerator.PsAst
 import Language.PS.AST (ModuleName(..))
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff as Node.FS.Aff
@@ -49,52 +46,52 @@ import Options.Applicative (execParser)
 import Protolude.Url (Url)
 import Protolude.Url as Url
 
-greet :: Generator.Options.AppOptions -> Effect Unit
-greet (Generator.Options.AppOptions { input, output, api }) = log $ "Hello, " <> show input <> show output <> show api
+greet :: GraphqlClientGenerator.Options.AppOptions -> Effect Unit
+greet (GraphqlClientGenerator.Options.AppOptions { input, output, api }) = log $ "Hello, " <> show input <> show output <> show api
 
-type App a = ReaderT Generator.Options.AppOptions Aff a
+type App a = ReaderT GraphqlClientGenerator.Options.AppOptions Aff a
 
 includeDeprecated :: Boolean
 includeDeprecated = true
 
-introspectionQuery :: Fernet.Graphql.SelectionSet.SelectionSet Fernet.Graphql.SelectionSet.RootQuery Fernet.Introspection.IntrospectionSchema.InstorpectionQueryResult
-introspectionQuery = Fernet.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
+introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.RootQuery GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
+introspectionQuery = GraphqlClientGenerator.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
 
 introspectionQueryString :: String
-introspectionQueryString = Fernet.Graphql.WriteGraphql.writeGraphql introspectionQuery
+introspectionQueryString = GraphqlClient.WriteGraphql.writeGraphql introspectionQuery
 
-introspectionQueryDecoder :: Decoder Fernet.Introspection.IntrospectionSchema.InstorpectionQueryResult
-introspectionQueryDecoder = Fernet.Graphql.SelectionSet.getSelectionSetDecoder introspectionQuery
+introspectionQueryDecoder :: Decoder GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
+introspectionQueryDecoder = GraphqlClient.getSelectionSetDecoder introspectionQuery
 
 dirIsEmpty :: FilePath -> Aff Boolean
 dirIsEmpty filepath = Node.FS.Aff.readdir filepath <#> null
 
 main :: Effect Unit
 main = do
-  (Generator.Options.AppOptions appOptions) <- execParser Generator.Options.opts
+  (GraphqlClientGenerator.Options.AppOptions appOptions) <- execParser GraphqlClientGenerator.Options.opts
 
   launchAff_ do
-    -- spago run --main Generator.Main --node-args "--input-url https://countries.trevorblades.com/ --output examples/countries"
-    (instorpectionQueryResult :: Fernet.Introspection.IntrospectionSchema.InstorpectionQueryResult) <- case appOptions.input of
-      (Generator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
+    -- spago run --main GraphqlClientGenerator.Main --node-args "--input-url https://countries.trevorblades.com/ --output examples/countries"
+    (instorpectionQueryResult :: GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult) <- case appOptions.input of
+      (GraphqlClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
         let
           urlString = unwrap url
 
-        resp <- Fernet.HTTP.gqlRequest urlString introspectionQuery
-          >>= (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
+        resp <- GraphqlClient.gqlRequest urlString introspectionQuery
+          >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
         pure resp
-      (Generator.Options.AppOptionsInputSchemaPath filepath) -> do
+      (GraphqlClientGenerator.Options.AppOptionsInputSchemaPath filepath) -> do
         text <- Node.FS.Aff.readTextFile UTF8 filepath
 
         json <- GraphqlJs.generateIntrospectionJsonFromSchema text # throwError \/ pure
 
         introspectionQueryDecoder json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
-      (Generator.Options.AppOptionsInputJsonPath filepath) -> do
+      (GraphqlClientGenerator.Options.AppOptionsInputJsonPath filepath) -> do
         text <- Node.FS.Aff.readTextFile UTF8 filepath
         json <- ArgonautCore.jsonParser text # (throwError <<< error) \/ pure
 
-        Fernet.HTTP.tryDecodeGraphqlResponse introspectionQueryDecoder json # (throwError <<< error <<< Fernet.HTTP.printGraphqlError) \/ pure
+        GraphqlClient.tryDecodeGraphqlResponse introspectionQueryDecoder json # (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
     outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesnt throw errors
 
@@ -103,7 +100,7 @@ main = do
       unless isEmpty (exitWith 1 $ "Output dir " <> (show outputDirAbs) <> " is non empty. Cannot write files to it.")
 
     let
-      filesMap = Generator.PsAst.mkFilesMap appOptions.api instorpectionQueryResult
+      filesMap = GraphqlClientGenerator.PsAst.mkFilesMap appOptions.api instorpectionQueryResult
 
       printModule :: ModuleName -> String -> Aff Unit
       printModule moduleName content = do
@@ -147,18 +144,18 @@ main = do
         -- void $ Node.FS.Aff.Mkdirp.mkdirp dir
         -- writePurescriptFiles dir $ onlyObjects >>> (filter (not <<< isSchemaObject)) $ queryResult.data
   -- where
-  --   writePurescriptFiles :: String -> Array Fernet.Introspection.IntrospectionSchema.TypeResult -> Aff Unit
+  --   writePurescriptFiles :: String -> Array GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> Aff Unit
   --   writePurescriptFiles dir objectTypes = do
   --     _ <- parTraverse (writePurescriptFile dir) objectTypes
   --     pure unit
 
-  --   writePurescriptFile :: String -> Fernet.Introspection.IntrospectionSchema.TypeResult -> Aff Unit
+  --   writePurescriptFile :: String -> GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> Aff Unit
   --   writePurescriptFile dir object = do
   --     case object.name of
   --       Just name -> writeTextFile UTF8 (dir <> "/" <> name <> ".purs") $ generateForObject object
   --       Nothing -> pure unit
 
-  --   generateForObject :: Fernet.Introspection.IntrospectionSchema.TypeResult -> String
+  --   generateForObject :: GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> String
   --   generateForObject object = case object.name of
   --     Just name ->
   --       "module Text."
@@ -166,12 +163,12 @@ main = do
   --         <> generateForFields name object.fields
   --     Nothing -> ""
 
-  --   generateForFields :: String -> Maybe (Array Fernet.Introspection.IntrospectionSchema.FieldResult) -> String
+  --   generateForFields :: String -> Maybe (Array GraphqlClientGenerator.Introspection.IntrospectionSchema.FieldResult) -> String
   --   generateForFields onObject = case _ of
   --     Just fields -> joinWith "\n" ((generateForField onObject) <$> fields)
   --     Nothing -> ""
 
-  --   generateForField :: String -> Fernet.Introspection.IntrospectionSchema.FieldResult -> String
+  --   generateForField :: String -> GraphqlClientGenerator.Introspection.IntrospectionSchema.FieldResult -> String
   --   generateForField onObject field =
   --     field.name
   --       <> " :: SelectionSet ("
@@ -179,10 +176,10 @@ main = do
   --       <> " :: ?) "
   --       <> onObject
 
-  --   onlyObjects :: (Record Fernet.Introspection.IntrospectionSchema.Result) -> Array Fernet.Introspection.IntrospectionSchema.TypeResult
-  --   onlyObjects result = filter (\t -> t.kind == Fernet.Introspection.Schema.TypeKind.Object) result.__schema.types
+  --   onlyObjects :: (Record GraphqlClientGenerator.Introspection.IntrospectionSchema.Result) -> Array GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult
+  --   onlyObjects result = filter (\t -> t.kind == GraphqlClientGenerator.Introspection.Schema.TypeKind.Object) result.__schema.types
 
-  --   objectNames :: Array Fernet.Introspection.IntrospectionSchema.TypeResult -> Array (Maybe String)
+  --   objectNames :: Array GraphqlClientGenerator.Introspection.IntrospectionSchema.TypeResult -> Array (Maybe String)
   --   objectNames = map _.name
 
   --   isSchemaObject :: forall a. { name :: Maybe String | a } -> Boolean
