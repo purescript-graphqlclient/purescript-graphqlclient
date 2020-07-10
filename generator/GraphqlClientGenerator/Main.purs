@@ -6,9 +6,8 @@ import Protolude.Node
 import Control.Monad.Reader.Trans (ReaderT(..), runReaderT)
 import Control.Parallel (parTraverse)
 import Data.Argonaut.Core as ArgonautCore
-import Data.Argonaut.Decode (Decoder)
+import Data.Argonaut.Decode (JsonDecodeError)
 import Data.Argonaut.Decode as ArgonautDecoders
-import Data.Argonaut.Decode.Implementation (decodeJObject) as ArgonautCodecs.Decode.Implementation
 import Data.Argonaut.Parser as ArgonautCore
 import Data.Array (filter)
 import Data.Array (fromFoldable) as Array
@@ -32,10 +31,10 @@ import Effect.Exception (error)
 import GraphqlClient as GraphqlClient
 import GraphqlClientGenerator.Introspection.IntrospectionSchema as GraphqlClientGenerator.Introspection.IntrospectionSchema
 import GraphqlClientGenerator.Introspection.Schema.TypeKind (TypeKind(..))
-import Foreign.Object (Object)
 import GraphqlClientGenerator.GraphqlJs as GraphqlJs
 import GraphqlClientGenerator.Options as GraphqlClientGenerator.Options
 import GraphqlClientGenerator.PsAst as GraphqlClientGenerator.PsAst
+import Foreign.Object (Object)
 import Language.PS.AST (ModuleName(..))
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff as Node.FS.Aff
@@ -45,6 +44,7 @@ import Node.Path (concat, resolve) as Node.FS
 import Options.Applicative (execParser)
 import Protolude.Url (Url)
 import Protolude.Url as Url
+import Record.Homogeneous (foldMapValuesL)
 
 greet :: GraphqlClientGenerator.Options.AppOptions -> Effect Unit
 greet (GraphqlClientGenerator.Options.AppOptions { input, output, api }) = log $ "Hello, " <> show input <> show output <> show api
@@ -58,9 +58,9 @@ introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.RootQuery Graphql
 introspectionQuery = GraphqlClientGenerator.Introspection.IntrospectionSchema.introspectionQuery includeDeprecated
 
 introspectionQueryString :: String
-introspectionQueryString = GraphqlClient.WriteGraphql.writeGraphql introspectionQuery
+introspectionQueryString = GraphqlClient.writeGraphql introspectionQuery
 
-introspectionQueryDecoder :: Decoder GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
+introspectionQueryDecoder :: ArgonautCore.Json -> Either JsonDecodeError GraphqlClientGenerator.Introspection.IntrospectionSchema.InstorpectionQueryResult
 introspectionQueryDecoder = GraphqlClient.getSelectionSetDecoder introspectionQuery
 
 dirIsEmpty :: FilePath -> Aff Boolean
@@ -123,22 +123,10 @@ main = do
         Node.FS.Aff.writeTextFile UTF8 outputPath content
         pure unit
 
-      executeForEachRecordElement
-        :: forall r
-         . HFoldl (Aff Unit -> Map ModuleName String -> Aff Unit) (Aff Unit) { | r } (Aff Unit)
-        => { | r }
-        -> Aff Unit
-      executeForEachRecordElement = hfoldl doFold (pure unit :: Aff Unit)
-        where
-        doFold :: Aff Unit -> Map ModuleName String -> Aff Unit
-        doFold prevEffect mymap = prevEffect <> void (forWithIndex mymap printModule)
+      printModuleForMap :: Map ModuleName String -> Aff Unit
+      printModuleForMap mymap = void (forWithIndex mymap printModule)
 
-    executeForEachRecordElement filesMap.dirs
-
-    -- | void $ filesMap.dirs."Enum" `forWithIndex` printModule
-    -- | void $ filesMap.dirs."Interface" `forWithIndex` printModule
-    -- | void $ filesMap.dirs."Object" `forWithIndex` printModule
-    -- | void $ filesMap.dirs."Union" `forWithIndex` printModule
+    foldMapValuesL printModuleForMap filesMap.dirs
 
         -- let dir = "examples/countries"
         -- void $ Node.FS.Aff.Mkdirp.mkdirp dir

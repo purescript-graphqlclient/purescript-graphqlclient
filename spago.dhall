@@ -2,7 +2,7 @@
 Welcome to a Spago project!
 You can edit this file as you like.
 -}
-{ name = "purescript-GraphqlClient"
+{ name = "purescript-graphql-client"
 , dependencies =
   [ "affjax"
   , "console"

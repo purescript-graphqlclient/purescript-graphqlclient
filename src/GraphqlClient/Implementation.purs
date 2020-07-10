@@ -3,10 +3,11 @@ module GraphqlClient.Implementation where
 import Data.Argonaut.Decode.Combinators
 import Protolude
 
+import Data.Argonaut.Core (Json)
 import Data.Argonaut.Core as ArgonautCore
 import Data.Argonaut.Decode (JsonDecodeError(..))
 import Data.Argonaut.Decode as ArgonautDecoders
-import Data.Argonaut.Decode.Implementation as ArgonautDecoders.Implementation
+import Data.Argonaut.Decode.Decoders as ArgonautDecoders.Decoder
 import Data.Array as Array
 import Data.List ((:))
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
@@ -174,7 +175,7 @@ data RawField
   = Composite String (Array Argument) (Array RawField)
   | Leaf String (Array Argument)
 
-data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (ArgonautDecoders.Decoder a)
+data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Json -> Either JsonDecodeError a)
 
 derive instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock)
 
@@ -185,19 +186,19 @@ instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
 ------------------------------------------------------
 
 class GraphqlDefaultResponseScalarDecoder a where
-  graphqlDefaultResponseScalarDecoder :: ArgonautDecoders.Decoder a
+  graphqlDefaultResponseScalarDecoder :: Json -> Either JsonDecodeError a
 
 instance stringGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder String where
-  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeString
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Decoder.decodeString
 
 instance intGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Int where
-  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeInt
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Decoder.decodeInt
 
 instance booleanGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Boolean where
-  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeBoolean
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Decoder.decodeBoolean
 
 instance numberGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Number where
-  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Implementation.decodeNumber
+  graphqlDefaultResponseScalarDecoder = ArgonautDecoders.Decoder.decodeNumber
 
 instance functorGraphqlDefaultResponseScalarDecoder :: (GraphqlDefaultResponseFunctorDecoder f, GraphqlDefaultResponseScalarDecoder a) => GraphqlDefaultResponseScalarDecoder (f a) where
   graphqlDefaultResponseScalarDecoder = graphqlDefaultResponseFunctorDecoder graphqlDefaultResponseScalarDecoder
@@ -205,27 +206,27 @@ instance functorGraphqlDefaultResponseScalarDecoder :: (GraphqlDefaultResponseFu
 ------------------------------------------------------
 
 class GraphqlDefaultResponseFunctorDecoder f where
-  graphqlDefaultResponseFunctorDecoder :: ∀ a. ArgonautDecoders.Decoder a → ArgonautDecoders.Decoder (f a)
+  graphqlDefaultResponseFunctorDecoder :: ∀ a. (Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError (f a)
 
 instance maybeGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunctorDecoder Maybe where
-  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Implementation.decodeMaybe
+  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Decoder.decodeMaybe
 
 instance arrayGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunctorDecoder Array where
-  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Implementation.decodeArray
+  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Decoder.decodeArray
 
 instance listGraphqlDefaultResponseFunctorDecoder :: GraphqlDefaultResponseFunctorDecoder List where
-  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Implementation.decodeList
+  graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Decoder.decodeList
 
 ------------------------------------------------------
 
 class GraphqlDefaultResponseDecoderTransformer a b | b -> a where
-  graphqlDefaultResponseDecoderTransformer :: ArgonautDecoders.Decoder a -> ArgonautDecoders.Decoder b
+  graphqlDefaultResponseDecoderTransformer :: (Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b
 
 -- finds decoders for Array, Maybe, but also allows nested containers (e.g. `Array (Maybe x)`)
 instance traversableDecoderTransformer :: (GraphqlDefaultResponseDecoderTransformer a b, GraphqlDefaultResponseFunctorDecoder f) => GraphqlDefaultResponseDecoderTransformer a (f b) where
   graphqlDefaultResponseDecoderTransformer childDecoder = do
-     let (json_to_b :: ArgonautDecoders.Decoder b) = graphqlDefaultResponseDecoderTransformer childDecoder
-     let (json_to_fb :: ArgonautDecoders.Decoder (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
+     let (json_to_b :: Json -> Either JsonDecodeError b) = graphqlDefaultResponseDecoderTransformer childDecoder
+     let (json_to_fb :: Json -> Either JsonDecodeError (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
      json_to_fb
 
 else
@@ -235,31 +236,31 @@ instance idDecoderTransformer :: GraphqlDefaultResponseDecoderTransformer a a wh
 
 ------------------------------------------------------
 
-selectionForField :: forall parentTypeLock a . String -> Array Argument -> ArgonautDecoders.Decoder a -> SelectionSet parentTypeLock a
+selectionForField :: forall parentTypeLock a . String -> Array Argument -> (Json -> Either JsonDecodeError a) -> SelectionSet parentTypeLock a
 selectionForField fieldName args decoder = SelectionSet [Leaf fieldName args] (\json -> do
-    object <- ArgonautDecoders.Implementation.decodeJObject json
-    ArgonautDecoders.Implementation.getField decoder object fieldName
+    object <- ArgonautDecoders.Decoder.decodeJObject json
+    ArgonautDecoders.Decoder.getField decoder object fieldName
   )
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
    . String
   -> Array Argument
-  -> (ArgonautDecoders.Decoder a -> ArgonautDecoders.Decoder b)
+  -> ((Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b)
   -> SelectionSet objectTypeLock a
   -> SelectionSet lockedTo b
 selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet fields childDecoder) =
   SelectionSet [ Composite fieldName args fields ] (\json -> do
-    object <- ArgonautDecoders.Implementation.decodeJObject json
-    ArgonautDecoders.Implementation.getField (jsonDecoderTransformer childDecoder) object fieldName
+    object <- ArgonautDecoders.Decoder.decodeJObject json
+    ArgonautDecoders.Decoder.getField (jsonDecoderTransformer childDecoder) object fieldName
   )
 
-getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> ArgonautDecoders.Decoder a
+getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> Json -> Either JsonDecodeError a
 getSelectionSetDecoder (SelectionSet fields decoder) = decoder
 
-enumDecoder :: ∀ a . String -> List (String /\ a) -> ArgonautDecoders.Decoder a
+enumDecoder :: ∀ a . String -> List (String /\ a) -> Json -> Either JsonDecodeError a
 enumDecoder name fromToMap json = lmap (Named name) do
-  string <- ArgonautDecoders.Implementation.decodeString json
+  string <- ArgonautDecoders.Decoder.decodeString json
   go fromToMap string # note (UnexpectedValue json)
   where
     go Nil parsed = Nothing

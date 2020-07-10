@@ -2,6 +2,7 @@ module GraphqlClient.HTTP where
 
 import Data.Argonaut.Decode.Combinators
 import GraphqlClient.Implementation
+import GraphqlClient.WriteGraphql
 import Protolude
 
 import Affjax as Affjax
@@ -14,10 +15,10 @@ import Control.Monad.Except.Trans as Transformers
 import Control.Monad.Trans.Class as Transformers
 import Data.Argonaut.Core (jsonNull)
 import Data.Argonaut.Core as ArgonautCore
-import Data.Argonaut.Decode (class DecodeJson, Decoder, JsonDecodeError(..), printJsonDecodeError)
+import Data.Argonaut.Decode (class DecodeJson, JsonDecodeError(..), printJsonDecodeError)
 import Data.Argonaut.Decode as ArgonautCodecs.Decode
 import Data.Argonaut.Decode.Generic.Rep as ArgonautGeneric
-import Data.Argonaut.Decode.Implementation (decodeJObject, decodeNonEmptyArray, decodeString) as ArgonautCodecs.Decode.Implementation
+import Data.Argonaut.Decode.Decoders (decodeJObject, decodeNonEmptyArray, decodeString) as Data.Argonaut.Decode.Decoders
 import Data.Argonaut.Encode (class EncodeJson)
 import Data.Argonaut.Encode as ArgonautCodecs.Encode
 import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
@@ -34,7 +35,6 @@ import Data.Void as Void
 import Debug.Trace as Debug.Trace
 import Effect.Class.Console as Console
 import Effect.Exception as Exception
-import GraphqlClient.WriteGraphql as GraphqlClient.WriteGraphql
 import Foreign.Object (Object)
 import Foreign.Object as Foreign.Object
 
@@ -68,11 +68,11 @@ newtype GraphqlErrorDetail =
 derive instance newtypeGraphqlErrorRecord :: Newtype GraphqlErrorDetail _
 derive instance genericGraphqlErrorRecord :: Generic GraphqlErrorDetail _
 
-decodeGraphqlErrorDetail :: Decoder GraphqlErrorDetail
+decodeGraphqlErrorDetail :: ArgonautCore.Json -> Either JsonDecodeError GraphqlErrorDetail
 decodeGraphqlErrorDetail json = enhanceError do
-   jsonObject <- ArgonautCodecs.Decode.Implementation.decodeJObject json
+   jsonObject <- Data.Argonaut.Decode.Decoders.decodeJObject json
    (messageJson /\ otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
-   (message :: String) <- ArgonautCodecs.Decode.Implementation.decodeString messageJson
+   (message :: String) <- Data.Argonaut.Decode.Decoders.decodeString messageJson
    pure $ GraphqlErrorDetail { message, otherDetails }
   where
     enhanceError = lmap (Named "GraphqlErrorDetail")
@@ -103,7 +103,7 @@ printGraphqlError = case _ of
   UnexpectedPayload error jsonBody -> intercalate "\n"
     [ "Unexpected payload:"
     , "  error = " <> printJsonDecodeError error
-    , "  body = " <> ArgonautCore.stringifyWithIdentation 2 jsonBody
+    , "  body = " <> ArgonautCore.stringifyWithSpace 2 jsonBody
     ]
   GraphqlError errorsArray possiblyParsedData ->
     let errorsArray' = errorsArray <#> unwrap <#> _.message <#> ("  " <> _)
@@ -115,9 +115,9 @@ printGraphqlError = case _ of
   quote x = "\"" <> x <> "\""
 
 
-errorsOrBodyDecoder :: Decoder $ { errors :: NonEmptyArray GraphqlErrorDetail, dataJson :: ArgonautCore.Json } \/ ArgonautCore.Json
+errorsOrBodyDecoder :: ArgonautCore.Json -> JsonDecodeError \/ { errors :: NonEmptyArray GraphqlErrorDetail, dataJson :: ArgonautCore.Json } \/ ArgonautCore.Json
 errorsOrBodyDecoder json = do
-  (jsonObject :: Object ArgonautCore.Json) <- ArgonautCodecs.Decode.Implementation.decodeJObject json
+  (jsonObject :: Object ArgonautCore.Json) <- Data.Argonaut.Decode.Decoders.decodeJObject json
 
   let
     maybeErrorJson = Foreign.Object.lookup "errors" jsonObject
@@ -129,17 +129,17 @@ errorsOrBodyDecoder json = do
       case maybeErrorJson of
         Nothing -> Left $ AtKey "errors" MissingValue
         Just errorsJson -> do
-           (nonEmptyArrayErrors :: NonEmptyArray GraphqlErrorDetail) <- ArgonautCodecs.Decode.Implementation.decodeNonEmptyArray decodeGraphqlErrorDetail errorsJson
+           (nonEmptyArrayErrors :: NonEmptyArray GraphqlErrorDetail) <- Data.Argonaut.Decode.Decoders.decodeNonEmptyArray decodeGraphqlErrorDetail errorsJson
            pure $ Left { errors: nonEmptyArrayErrors, dataJson: jsonNull }
     -- present (including null) -> errors can be present and NonEmptyArray OR no errors
     Just dataJson -> do
        case maybeErrorJson of
          Nothing -> pure $ Right dataJson
          Just errorsJson -> do
-            (nonEmptyArrayErrors :: NonEmptyArray GraphqlErrorDetail) <- ArgonautCodecs.Decode.Implementation.decodeNonEmptyArray decodeGraphqlErrorDetail errorsJson
+            (nonEmptyArrayErrors :: NonEmptyArray GraphqlErrorDetail) <- Data.Argonaut.Decode.Decoders.decodeNonEmptyArray decodeGraphqlErrorDetail errorsJson
             pure $ Left { errors: nonEmptyArrayErrors, dataJson }
 
-tryDecodeGraphqlResponse :: ∀ parsed . Decoder parsed -> ArgonautCore.Json -> GraphqlResponse parsed
+tryDecodeGraphqlResponse :: ∀ parsed . (ArgonautCore.Json -> Either JsonDecodeError parsed) -> ArgonautCore.Json -> GraphqlResponse parsed
 tryDecodeGraphqlResponse decoderForData jsonBody = graphqlResponseOrError # (\error -> Left $ UnexpectedPayload error jsonBody) \/ identity
   where
     graphqlResponseOrError :: JsonDecodeError \/ GraphqlResponse parsed
@@ -164,7 +164,7 @@ gqlRequestImpl
   :: forall a
    . Affjax.URL
   -> String
-  -> Decoder a
+  -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (GraphqlResponse a)
 gqlRequestImpl url query decoder =
   Transformers.runExceptT do
@@ -180,7 +180,7 @@ gqlRequestImplWithTrace
    . Show a
   => Affjax.URL
   -> String
-  -> Decoder a
+  -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (GraphqlResponse a)
 gqlRequestImplWithTrace url query decoder = do
   traceWithoutInspectM $ "[gqlRequest] query = " <> query
@@ -196,7 +196,7 @@ gqlRequest
   -> SelectionSet RootQuery a
   -> Aff (GraphqlResponse a)
 gqlRequest url selectionSet@(SelectionSet _fields decoder) = do
-  let query = GraphqlClient.WriteGraphql.writeGraphql selectionSet
+  let query = writeGraphql selectionSet
   result <- gqlRequestImpl url query decoder
   pure $ result
 
