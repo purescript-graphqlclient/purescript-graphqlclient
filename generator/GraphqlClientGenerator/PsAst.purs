@@ -95,6 +95,18 @@ mkFilesMap apiModuleName introspectionQueryResult =
 
     instorpectionQueryResult__FullType__interface_names :: Array String
     instorpectionQueryResult__FullType__interface_names = instorpectionQueryResult__FullType__interface <#> _.name <#> StringsExtra.pascalCase
+
+    instorpectionQueryResult__FullType__object :: Array InstorpectionQueryResult__FullType
+    instorpectionQueryResult__FullType__object = onlyTypesWithoutExcluded TypeKind.Object
+
+    instorpectionQueryResult__FullType__object_names :: Array String
+    instorpectionQueryResult__FullType__object_names = instorpectionQueryResult__FullType__object <#> _.name <#> StringsExtra.pascalCase
+
+    instorpectionQueryResult__FullType__union :: Array InstorpectionQueryResult__FullType
+    instorpectionQueryResult__FullType__union = onlyTypesWithoutExcluded TypeKind.Union
+
+    instorpectionQueryResult__FullType__union_names :: Array String
+    instorpectionQueryResult__FullType__union_names = instorpectionQueryResult__FullType__union <#> _.name <#> StringsExtra.pascalCase
   in
     { dirs:
       { "Enum":
@@ -102,7 +114,7 @@ mkFilesMap apiModuleName introspectionQueryResult =
         <#> (fullTypeToModuleMapItem MakeModule.Enum.makeModule apiModuleName "Enum")
         # Map.fromFoldable
       , "Object":
-        onlyTypesWithoutExcluded TypeKind.Object
+        instorpectionQueryResult__FullType__object
         <#> (fullTypeToModuleMapItem (MakeModule.Object.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names) apiModuleName "Object")
         # Map.fromFoldable
       , "Interface":
@@ -135,6 +147,14 @@ mkFilesMap apiModuleName introspectionQueryResult =
           queryFields :: Array InstorpectionQueryResult__Field
           queryFields = maybe [] (\x -> fromMaybe [] x.fields) queryType
          in
-          printModuleToString $ MakeModule.Query.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names moduleName queryFields
+          printModuleToString $
+            MakeModule.Query.makeModule
+            apiModuleName
+            instorpectionQueryResult__FullType__enum_names
+            instorpectionQueryResult__FullType__interface_names
+            instorpectionQueryResult__FullType__object_names
+            instorpectionQueryResult__FullType__union_names
+            moduleName
+            queryFields
       }
     }

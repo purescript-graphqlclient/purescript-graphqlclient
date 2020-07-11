@@ -17,10 +17,19 @@ makeModule
   :: String
   -> Array String
   -> Array String
+  -> Array String
+  -> Array String
   -> ModuleName
   -> Array InstorpectionQueryResult__Field
   -> Module
-makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names moduleName fields = Module
+makeModule
+  apiModuleName
+  instorpectionQueryResult__FullType__enum_names
+  instorpectionQueryResult__FullType__interface_names
+  instorpectionQueryResult__FullType__object_names
+  instorpectionQueryResult__FullType__union_names
+  moduleName
+  fields = Module
   { moduleName
   , imports:
       Imports.imports apiModuleName <>
@@ -35,6 +44,22 @@ makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpe
         (instorpectionQueryResult__FullType__interface_names <#>
         (\name -> ImportDecl
           { moduleName: mkModuleName $ apiModuleName :| ["Interface", name]
+          , names: []
+          , qualification: Nothing
+          }
+        )
+      ) <>
+        (instorpectionQueryResult__FullType__object_names <#>
+        (\name -> ImportDecl
+          { moduleName: mkModuleName $ apiModuleName :| ["Object", name]
+          , names: []
+          , qualification: Nothing
+          }
+        )
+      ) <>
+        (instorpectionQueryResult__FullType__union_names <#>
+        (\name -> ImportDecl
+          { moduleName: mkModuleName $ apiModuleName :| ["Union", name]
           , names: []
           , qualification: Nothing
           }
