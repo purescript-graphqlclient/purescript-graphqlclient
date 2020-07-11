@@ -1,4 +1,4 @@
-module GraphqlClientGenerator.MakeModule.Object where
+module GraphqlClientGenerator.MakeModule.Union where
 
 import Language.PS.AST
 import Language.PS.AST.Sugar
@@ -11,22 +11,14 @@ import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind
 import GraphqlClientGenerator.MakeModule.Lib.WithScopeAndFields as WithScopeAndFields
 
-makeModule :: String -> Array String -> Array String -> ModuleName -> InstorpectionQueryResult__FullType -> Module
-makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names moduleName fullType = Module
+makeModule :: String -> Array String -> ModuleName -> InstorpectionQueryResult__FullType -> Module
+makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleName fullType = Module
   { moduleName
   , imports:
       WithScopeAndFields.imports apiModuleName <>
       (instorpectionQueryResult__FullType__enum_names <#>
         (\name -> ImportDecl
           { moduleName: mkModuleName $ apiModuleName :| ["Enum", name]
-          , names: []
-          , qualification: Nothing
-          }
-        )
-      ) <>
-        (instorpectionQueryResult__FullType__interface_names <#>
-        (\name -> ImportDecl
-          { moduleName: mkModuleName $ apiModuleName :| ["Interface", name]
           , names: []
           , qualification: Nothing
           }

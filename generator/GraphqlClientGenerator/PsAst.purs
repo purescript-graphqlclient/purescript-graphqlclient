@@ -12,20 +12,22 @@ import Data.Foldable (elem)
 import Data.Map (Map)
 import Data.Map (fromFoldable) as Map
 import Data.NonEmpty ((:|))
+import Data.String.Extra (pascalCase)
 import Data.String.Extra as StringsExtra
 import Data.String.Utils (startsWith)
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
 import GraphqlClientGenerator.MakeModule.Interface as MakeModule.Interface
-import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
+import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
 import GraphqlClientGenerator.MakeModule.Object as MakeModule.Object
+import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
 
 type FilesMap =
   { dirs ::
     { "Enum" :: Map String String
     , "Object" :: Map String String
-    -- | , "Interface" :: Map String String
-    -- | , "Union" :: Map String String
+    , "Interface" :: Map String String
+    , "Union" :: Map String String
     }
   , files ::
     { "Scalar" :: String
@@ -47,8 +49,9 @@ isBuiltIn = startsWith "__"
 fullTypeToModuleMapItem :: (ModuleName -> InstorpectionQueryResult__FullType -> Module) -> String -> String -> InstorpectionQueryResult__FullType -> Tuple String String
 fullTypeToModuleMapItem mkModule apiModuleName submodule fullType =
   let
-    moduleName = mkModuleName $ apiModuleName :| [submodule, StringsExtra.pascalCase fullType.name]
-   in submodule /\ (printModuleToString $ mkModule moduleName fullType)
+    name = StringsExtra.pascalCase fullType.name
+    moduleName = mkModuleName $ apiModuleName :| [submodule, name]
+   in name /\ (printModuleToString $ mkModule moduleName fullType)
 
 builtInScalarNames :: Array String
 builtInScalarNames =
@@ -74,34 +77,41 @@ mkFilesMap apiModuleName introspectionQueryResult =
 
     notExcluded = not $ anyPredicate [excludeQuery, excludeMutation, excludeSubscription, excludeBuiltIn]
 
-    -- | query :: Array { name :: String, description :: String, args :: Array InstorpectionQueryResult__InputValue }
-    -- | query = ?a
+    onlyTypesWithoutExcluded :: TypeKind.TypeKind -> Array InstorpectionQueryResult__FullType
+    onlyTypesWithoutExcluded typeKind =
+      introspectionQueryResult.__schema.types
+      # filter (\fullType -> fullType."kind" == typeKind)
+      # filter (\fullType -> notExcluded fullType.name)
+
+    instorpectionQueryResult__FullType__enum :: Array InstorpectionQueryResult__FullType
+    instorpectionQueryResult__FullType__enum = onlyTypesWithoutExcluded TypeKind.Enum
+
+    instorpectionQueryResult__FullType__enum_names :: Array String
+    instorpectionQueryResult__FullType__enum_names = instorpectionQueryResult__FullType__enum <#> _.name <#> StringsExtra.pascalCase
+
+    instorpectionQueryResult__FullType__interface :: Array InstorpectionQueryResult__FullType
+    instorpectionQueryResult__FullType__interface = onlyTypesWithoutExcluded TypeKind.Interface
+
+    instorpectionQueryResult__FullType__interface_names :: Array String
+    instorpectionQueryResult__FullType__interface_names = instorpectionQueryResult__FullType__interface <#> _.name <#> StringsExtra.pascalCase
   in
     { dirs:
       { "Enum":
-        introspectionQueryResult.__schema.types
-        # filter (\fullType -> fullType."kind" == TypeKind.Enum)
-        # filter (\fullType -> notExcluded fullType.name)
+        instorpectionQueryResult__FullType__enum
         <#> (fullTypeToModuleMapItem MakeModule.Enum.makeModule apiModuleName "Enum")
         # Map.fromFoldable
       , "Object":
-        introspectionQueryResult.__schema.types
-        # filter (\fullType -> fullType."kind" == TypeKind.Object)
-        # filter (\fullType -> notExcluded fullType.name)
-        <#> (fullTypeToModuleMapItem MakeModule.Object.makeModule apiModuleName "Object")
+        onlyTypesWithoutExcluded TypeKind.Object
+        <#> (fullTypeToModuleMapItem (MakeModule.Object.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names) apiModuleName "Object")
         # Map.fromFoldable
-      -- | , "Interface":
-      -- |   introspectionQueryResult.__schema.types
-      -- |   # filter (\fullType -> fullType."kind" == TypeKind.Interface)
-      -- |   # filter (\fullType -> notExcluded fullType.name)
-      -- |   <#> (fullTypeToModuleMapItem MakeModule.Interface.makeModule apiModuleName "Interface")
-      -- |   # Map.fromFoldable
-      -- | , "Union":
-      -- |   introspectionQueryResult.__schema.types
-      -- |   # filter (\fullType -> fullType."kind" == TypeKind.Union)
-      -- |   # filter (\fullType -> notExcluded fullType.name)
-      -- |   <#> (fullTypeToModuleMapItem MakeModule.Interface.makeModule apiModuleName "Union")
-      -- |   # Map.fromFoldable
+      , "Interface":
+        instorpectionQueryResult__FullType__interface
+        <#> (fullTypeToModuleMapItem (MakeModule.Interface.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Interface")
+        # Map.fromFoldable
+      , "Union":
+        onlyTypesWithoutExcluded TypeKind.Union
+        <#> (fullTypeToModuleMapItem (MakeModule.Union.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Union")
+        # Map.fromFoldable
       }
     , files:
       { "Scalar":

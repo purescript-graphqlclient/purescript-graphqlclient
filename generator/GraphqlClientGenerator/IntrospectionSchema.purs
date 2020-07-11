@@ -48,7 +48,7 @@ type InstorpectionQueryResult__InputValue
     , defaultValue :: Maybe String
     }
 
-type InstorpectionQueryResult__TypeRef_shared r = ( kind :: String, name :: Maybe String | r )
+type InstorpectionQueryResult__TypeRef_shared r = ( kind :: TypeKind, name :: Maybe String | r )
 
 -- 7 ofType's
 type InstorpectionQueryResult__TypeRef

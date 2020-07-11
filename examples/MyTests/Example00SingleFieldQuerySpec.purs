@@ -6,7 +6,7 @@ import Test.Spec as Test.Spec
 import Test.Spec.Assertions as Test.Spec
 import GraphqlClient
 import Swapi.Scalar
-import Swapi.Scope
+import Swapi.Object.Human
 
 type Response = Maybe Id
 
@@ -16,9 +16,6 @@ type HumanInput =
 
 human :: ∀ r . HumanInput -> SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)
 human input = selectionForCompositeField "human" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-
-id :: SelectionSet Scope__Human Id
-id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
 query :: SelectionSet Scope__RootQuery Response
 query = human { id: Id "1001" } id
