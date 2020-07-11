@@ -18,18 +18,17 @@ import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
 import GraphqlClientGenerator.MakeModule.Interface as MakeModule.Interface
 import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
-import GraphqlClientGenerator.MakeModule.Scope as MakeModule.Scope
+import GraphqlClientGenerator.MakeModule.Object as MakeModule.Object
 
 type FilesMap =
   { dirs ::
     { "Enum" :: Map String String
+    , "Object" :: Map String String
     -- | , "Interface" :: Map String String
-    -- | , "Object" :: Map String String
     -- | , "Union" :: Map String String
     }
   , files ::
     { "Scalar" :: String
-    , "Scope" :: String
     }
   }
   -- | , "InputObject" :: String
@@ -85,17 +84,17 @@ mkFilesMap apiModuleName introspectionQueryResult =
         # filter (\fullType -> notExcluded fullType.name)
         <#> (fullTypeToModuleMapItem MakeModule.Enum.makeModule apiModuleName "Enum")
         # Map.fromFoldable
+      , "Object":
+        introspectionQueryResult.__schema.types
+        # filter (\fullType -> fullType."kind" == TypeKind.Object)
+        # filter (\fullType -> notExcluded fullType.name)
+        <#> (fullTypeToModuleMapItem MakeModule.Object.makeModule apiModuleName "Object")
+        # Map.fromFoldable
       -- | , "Interface":
       -- |   introspectionQueryResult.__schema.types
       -- |   # filter (\fullType -> fullType."kind" == TypeKind.Interface)
       -- |   # filter (\fullType -> notExcluded fullType.name)
       -- |   <#> (fullTypeToModuleMapItem MakeModule.Interface.makeModule apiModuleName "Interface")
-      -- |   # Map.fromFoldable
-      -- | , "Object":
-      -- |   introspectionQueryResult.__schema.types
-      -- |   # filter (\fullType -> fullType."kind" == TypeKind.Object)
-      -- |   # filter (\fullType -> notExcluded fullType.name)
-      -- |   <#> (fullTypeToModuleMapItem MakeModule.Interface.makeModule apiModuleName "Object")
       -- |   # Map.fromFoldable
       -- | , "Union":
       -- |   introspectionQueryResult.__schema.types
@@ -115,16 +114,5 @@ mkFilesMap apiModuleName introspectionQueryResult =
             # filter (\fullType -> fullType."kind" == TypeKind.Scalar)
             # filter (\fullType -> not $ elem fullType.name builtInScalarNames)
         in printModuleToString $ MakeModule.Scalar.makeModule moduleName scalarTypes
-      , "Scope":
-        let
-          moduleName = mkModuleName $ apiModuleName :| ["Scope"]
-
-          entityNames :: Array String
-          entityNames =
-            introspectionQueryResult.__schema.types
-            # filter (\fullType -> fullType."kind" == TypeKind.Object)
-            # filter (\fullType -> notExcluded fullType.name)
-            # map _.name
-        in printModuleToString $ MakeModule.Scope.makeModule moduleName entityNames
       }
     }
