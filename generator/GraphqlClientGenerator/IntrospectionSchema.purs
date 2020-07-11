@@ -101,7 +101,7 @@ inputValueFragment = { name: _ , description: _ , type: _ , defaultValue: _ }
   <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.type_ typeRefFragment
   <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.defaultValue
 
-introspectionQuery :: Boolean -> SelectionSet RootQuery InstorpectionQueryResult
+introspectionQuery :: Boolean -> SelectionSet Scope__RootQuery InstorpectionQueryResult
 introspectionQuery includeDeprecated =
   __schema ado
     queryType'        <- queryType $ { name: _ } <$> queryType_name

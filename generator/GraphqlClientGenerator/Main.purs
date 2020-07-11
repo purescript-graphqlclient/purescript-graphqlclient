@@ -54,7 +54,7 @@ type App a = ReaderT GraphqlClientGenerator.Options.AppOptions Aff a
 includeDeprecated :: Boolean
 includeDeprecated = true
 
-introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.RootQuery GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
+introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.Scope__RootQuery GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
 introspectionQuery = GraphqlClientGenerator.IntrospectionSchema.introspectionQuery includeDeprecated
 
 introspectionQueryString :: String

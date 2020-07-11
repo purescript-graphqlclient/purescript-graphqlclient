@@ -18,9 +18,9 @@ import Prim.RowList as RowList
 import Record as Record
 import Type.Data.RowList (RLProxy(..))
 
-data RootQuery
-data RootMutation
-data RootSubscription
+data Scope__RootQuery
+data Scope__RootMutation
+data Scope__RootSubscription
 
 --------------------
 

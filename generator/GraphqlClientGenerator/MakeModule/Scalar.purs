@@ -60,6 +60,7 @@ makeModule moduleName scalarTypes = Module
             }
           , mkDeriveAsNewtype "Eq"
           , mkDeriveAsNewtype "Ord"
+          , mkDeriveAsNewtype "Show"
           , DeclDerive
             { comments: Nothing
             , deriveType: DeclDeriveType_Odrinary
@@ -70,6 +71,16 @@ makeModule moduleName scalarTypes = Module
               , instTypes: (TypeConstructor $ nonQualifiedName $ ProperName pascalName) :| [TypeWildcard]
               }
             }
+          -- | , DeclDerive
+          -- |   { comments: Nothing
+          -- |   , deriveType: DeclDeriveType_Odrinary
+          -- |   , head:
+          -- |     { instName: Ident $ "generic" <> pascalName
+          -- |     , instConstraints: []
+          -- |     , instClass: nonQualifiedName $ ProperName "Generic"
+          -- |     , instTypes: (TypeConstructor $ nonQualifiedName $ ProperName pascalName) :| [TypeWildcard]
+          -- |     }
+          -- |   }
           , mkDeriveAsNewtype "GraphqlDefaultResponseScalarDecoder"
           , mkDeriveAsNewtype "ToGraphqlArgumentValue"
           ]

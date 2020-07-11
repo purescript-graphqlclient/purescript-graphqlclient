@@ -11,6 +11,8 @@ derive newtype instance eqId :: Eq Id
 
 derive newtype instance ordId :: Ord Id
 
+derive newtype instance showId :: Show Id
+
 derive instance newtypeId :: Newtype Id _
 
 derive newtype instance graphqlDefaultResponseScalarDecoderId :: GraphqlDefaultResponseScalarDecoder Id
@@ -23,6 +25,8 @@ newtype PosixTime = PosixTime String
 derive newtype instance eqPosixTime :: Eq PosixTime
 
 derive newtype instance ordPosixTime :: Ord PosixTime
+
+derive newtype instance showPosixTime :: Show PosixTime
 
 derive instance newtypePosixTime :: Newtype PosixTime _
 

@@ -5,12 +5,12 @@ import Protolude
 import Data.Int (decimal, toStringAs)
 import Data.String (joinWith)
 import Data.String (null) as Data.String
-import GraphqlClient.Implementation (Argument(..), ArgumentValue(..), RawField(..), RootQuery, SelectionSet(..), Optional(..))
+import GraphqlClient.Implementation (Argument(..), ArgumentValue(..), RawField(..), Scope__RootQuery, SelectionSet(..), Optional(..))
 
 class WriteGraphql a where
   writeGraphql :: a -> String
 
-instance writeGraphQlSelectionSet :: WriteGraphql (SelectionSet RootQuery a) where
+instance writeGraphQlSelectionSet :: WriteGraphql (SelectionSet Scope__RootQuery a) where
   writeGraphql (SelectionSet fields _decoder) = "query" <> writeGraphql fields
 
 instance writeGraphQlRawField :: WriteGraphql RawField where

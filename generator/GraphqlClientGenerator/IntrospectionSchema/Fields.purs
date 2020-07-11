@@ -19,7 +19,7 @@ data InstorpectionQueryResult_Fields
 
 type IsDeprecatedInput = { includeDeprecated :: Boolean }
 
-__schema :: ∀ r . SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet RootQuery r
+__schema :: ∀ r . SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet Scope__RootQuery r
 __schema = selectionForCompositeField "__schema" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 queryType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema r
