@@ -11,8 +11,8 @@ import Swapi.Interface.Character
 
 data Scope__ChatMessage
 
-character :: SelectionSet Scope__ChatMessage Scope__Character
-character = selectionForField "character" [] graphqlDefaultResponseScalarDecoder
+character :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__ChatMessage (Maybe r)
+character = selectionForCompositeField "character" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-phrase :: SelectionSet Scope__ChatMessage (Maybe Phrase)
+phrase :: SelectionSet Scope__ChatMessage Phrase
 phrase = selectionForField "phrase" [] graphqlDefaultResponseScalarDecoder

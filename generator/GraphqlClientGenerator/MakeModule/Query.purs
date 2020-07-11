@@ -1,39 +1,45 @@
 module GraphqlClientGenerator.MakeModule.Query where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind
 import Language.PS.AST
-import Language.PS.AST.Printers
 import Language.PS.AST.Sugar
 import Protolude
 
-import Data.Array (filter)
-import Data.List ((:))
-import Data.List (fromFoldable) as List
-import Data.Map (Map)
-import Data.Map (empty, fromFoldable) as Map
+import Data.Array as Array
 import Data.NonEmpty ((:|))
-import Data.Predicate (Predicate(..))
-import Data.String.Utils (startsWith)
-import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
+import GraphqlClientGenerator.IntrospectionSchema
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind
+import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
+import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
+import GraphqlClientGenerator.MakeModule.Lib.Utils
 
-makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
-makeModule moduleName fullType = Module
+makeModule
+  :: String
+  -> Array String
+  -> Array String
+  -> ModuleName
+  -> Array InstorpectionQueryResult__Field
+  -> Module
+makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names moduleName fields = Module
   { moduleName
-  , imports: []
-  , exports: []
-  , declarations:
-    [ DeclData
-      { comments: Just $ OneLineComments ["original name - " <> fullType.name]
-      , head: DataHead
-          { dataHdName: ProperName $ StringsExtra.pascalCase fullType.name
-          , dataHdVars: []
+  , imports:
+      Imports.imports apiModuleName <>
+      (instorpectionQueryResult__FullType__enum_names <#>
+        (\name -> ImportDecl
+          { moduleName: mkModuleName $ apiModuleName :| ["Enum", name]
+          , names: []
+          , qualification: Nothing
           }
-      , constructors:
-          fullType.enumValues
-          # fromMaybe []
-          <#> (\field -> DataCtor { dataCtorName: ProperName $ StringsExtra.pascalCase field.name, dataCtorFields: [] })
-      }
-    ]
+        )
+      ) <>
+        (instorpectionQueryResult__FullType__interface_names <#>
+        (\name -> ImportDecl
+          { moduleName: mkModuleName $ apiModuleName :| ["Interface", name]
+          , names: []
+          , qualification: Nothing
+          }
+        )
+      )
+  , exports: []
+  , declarations: DeclarationsForFields.declarationsForFields "RootQuery" fields
   }

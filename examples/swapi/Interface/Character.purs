@@ -10,17 +10,17 @@ import Swapi.Enum.Phrase
 
 data Scope__Character
 
-appearsIn :: SelectionSet Scope__Character (Maybe (Array (Maybe Episode)))
+appearsIn :: SelectionSet Scope__Character (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
 
-avatarUrl :: SelectionSet Scope__Character (Maybe String)
+avatarUrl :: SelectionSet Scope__Character String
 avatarUrl = selectionForField "avatarUrl" [] graphqlDefaultResponseScalarDecoder
 
-friends :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__Character (Maybe (Array (Maybe r)))
+friends :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__Character (Array r)
 friends = selectionForCompositeField "friends" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-id :: SelectionSet Scope__Character (Maybe Id)
+id :: SelectionSet Scope__Character Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-name :: SelectionSet Scope__Character (Maybe String)
+name :: SelectionSet Scope__Character String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder

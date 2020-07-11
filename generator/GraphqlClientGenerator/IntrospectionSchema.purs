@@ -18,20 +18,22 @@ type InstorpectionQueryResult
       }
     }
 
+type InstorpectionQueryResult__Field =
+  { name :: String
+  , description :: Maybe String
+  , args :: Array InstorpectionQueryResult__InputValue
+  , type :: InstorpectionQueryResult__TypeRef
+  , isDeprecated :: Boolean
+  , deprecationReason :: Maybe String
+  }
+
 type InstorpectionQueryResult__FullType
   = { kind :: TypeKind
     , name :: String
     , description :: Maybe String
-    , fields :: Maybe $ Array
-      { name :: String
-      , description :: Maybe String
-      , args :: Array InstorpectionQueryResult__InputValue
-      , type :: InstorpectionQueryResult__TypeRef
-      , isDeprecated :: Boolean
-      , deprecationReason :: Maybe String
-      }
-    , inputFields :: Maybe $ Array InstorpectionQueryResult__InputValue
-    , interfaces :: Maybe $ Array InstorpectionQueryResult__TypeRef
+    , fields :: Maybe (Array InstorpectionQueryResult__Field)
+    , inputFields :: Maybe (Array InstorpectionQueryResult__InputValue)
+    , interfaces :: Maybe (Array InstorpectionQueryResult__TypeRef)
     , enumValues :: Maybe <<< Array $
       { name :: String
       , description :: Maybe String

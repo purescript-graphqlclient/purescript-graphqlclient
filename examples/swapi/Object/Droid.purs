@@ -11,20 +11,20 @@ import Swapi.Interface.Character
 
 data Scope__Droid
 
-appearsIn :: SelectionSet Scope__Droid (Maybe (Array (Maybe Episode)))
+appearsIn :: SelectionSet Scope__Droid (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
 
-avatarUrl :: SelectionSet Scope__Droid (Maybe String)
+avatarUrl :: SelectionSet Scope__Droid String
 avatarUrl = selectionForField "avatarUrl" [] graphqlDefaultResponseScalarDecoder
 
-friends :: SelectionSet Scope__Droid (Maybe (Array (Maybe Scope__Character)))
-friends = selectionForField "friends" [] graphqlDefaultResponseScalarDecoder
+friends :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__Droid (Array r)
+friends = selectionForCompositeField "friends" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-id :: SelectionSet Scope__Droid (Maybe Id)
+id :: SelectionSet Scope__Droid Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-name :: SelectionSet Scope__Droid (Maybe String)
+name :: SelectionSet Scope__Droid String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-primaryFunction :: SelectionSet Scope__Droid String
+primaryFunction :: SelectionSet Scope__Droid (Maybe String)
 primaryFunction = selectionForField "primaryFunction" [] graphqlDefaultResponseScalarDecoder

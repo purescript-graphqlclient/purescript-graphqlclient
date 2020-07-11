@@ -1,5 +1,8 @@
 module GraphqlClientGenerator.MakeModule.Interface where
 
+import GraphqlClientGenerator.IntrospectionSchema
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind
+import GraphqlClientGenerator.MakeModule.Lib.Utils
 import Language.PS.AST
 import Language.PS.AST.Sugar
 import Protolude
@@ -7,23 +10,23 @@ import Protolude
 import Data.Array as Array
 import Data.NonEmpty ((:|))
 import Data.String.Extra as StringsExtra
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind
-import GraphqlClientGenerator.MakeModule.Lib.WithScopeAndFields as WithScopeAndFields
+import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
+import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
 
 makeModule :: String -> Array String -> ModuleName -> InstorpectionQueryResult__FullType -> Module
-makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleName fullType = Module
-  { moduleName
-  , imports:
-      WithScopeAndFields.imports apiModuleName <>
-      (instorpectionQueryResult__FullType__enum_names <#>
-        (\name -> ImportDecl
-          { moduleName: mkModuleName $ apiModuleName :| ["Enum", name]
-          , names: []
-          , qualification: Nothing
-          }
+makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleName fullType =
+    Module
+    { moduleName
+    , imports:
+        Imports.imports apiModuleName <>
+        (instorpectionQueryResult__FullType__enum_names <#>
+          (\name -> ImportDecl
+            { moduleName: mkModuleName $ apiModuleName :| ["Enum", name]
+            , names: []
+            , qualification: Nothing
+            }
+          )
         )
-      )
-  , exports: []
-  , declarations: WithScopeAndFields.declarations fullType
-  }
+    , exports: []
+    , declarations: [declDataWithoutConstructors (scopeName fullType.name)] <> DeclarationsForFields.declarationsForFields fullType.name (fromMaybe [] fullType.fields)
+    }

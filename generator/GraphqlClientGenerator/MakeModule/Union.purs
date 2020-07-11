@@ -9,13 +9,15 @@ import Data.NonEmpty ((:|))
 import Data.String.Extra as StringsExtra
 import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind
-import GraphqlClientGenerator.MakeModule.Lib.WithScopeAndFields as WithScopeAndFields
+import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
+import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
+import GraphqlClientGenerator.MakeModule.Lib.Utils
 
 makeModule :: String -> Array String -> ModuleName -> InstorpectionQueryResult__FullType -> Module
 makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleName fullType = Module
   { moduleName
   , imports:
-      WithScopeAndFields.imports apiModuleName <>
+      Imports.imports apiModuleName <>
       (instorpectionQueryResult__FullType__enum_names <#>
         (\name -> ImportDecl
           { moduleName: mkModuleName $ apiModuleName :| ["Enum", name]
@@ -25,5 +27,5 @@ makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleNa
         )
       )
   , exports: []
-  , declarations: WithScopeAndFields.declarations fullType
+  , declarations: [declDataWithoutConstructors (scopeName fullType.name)] <> DeclarationsForFields.declarationsForFields fullType.name (fromMaybe [] fullType.fields)
   }

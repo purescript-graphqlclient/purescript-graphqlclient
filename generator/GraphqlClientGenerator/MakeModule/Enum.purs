@@ -18,7 +18,7 @@ import Data.String.Utils (startsWith)
 import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import Data.String.Extra as StringsExtra
 
-import GraphqlClientGenerator.MakeModule.Utils
+import GraphqlClientGenerator.MakeModule.Lib.Utils
 
 makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
 makeModule moduleName fullType = Module

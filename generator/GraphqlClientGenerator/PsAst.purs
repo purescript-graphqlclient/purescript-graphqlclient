@@ -7,20 +7,20 @@ import Language.PS.AST.Printers
 import Language.PS.AST.Sugar
 import Protolude
 
-import Data.Array (filter)
+import Data.Array as Array
 import Data.Foldable (elem)
 import Data.Map (Map)
-import Data.Map (fromFoldable) as Map
+import Data.Map as Map
 import Data.NonEmpty ((:|))
-import Data.String.Extra (pascalCase)
 import Data.String.Extra as StringsExtra
-import Data.String.Utils (startsWith)
+import Data.String.Utils as String
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
 import GraphqlClientGenerator.MakeModule.Interface as MakeModule.Interface
-import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
 import GraphqlClientGenerator.MakeModule.Object as MakeModule.Object
+import GraphqlClientGenerator.MakeModule.Query as MakeModule.Query
 import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
+import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
 
 type FilesMap =
   { dirs ::
@@ -31,6 +31,7 @@ type FilesMap =
     }
   , files ::
     { "Scalar" :: String
+    , "Query" :: String
     }
   }
   -- | , "InputObject" :: String
@@ -44,7 +45,7 @@ type FilesMap =
   -- | , "VerifyScalarCodecs" :: String
 
 isBuiltIn :: String -> Boolean
-isBuiltIn = startsWith "__"
+isBuiltIn = String.startsWith "__"
 
 fullTypeToModuleMapItem :: (ModuleName -> InstorpectionQueryResult__FullType -> Module) -> String -> String -> InstorpectionQueryResult__FullType -> Tuple String String
 fullTypeToModuleMapItem mkModule apiModuleName submodule fullType =
@@ -80,8 +81,8 @@ mkFilesMap apiModuleName introspectionQueryResult =
     onlyTypesWithoutExcluded :: TypeKind.TypeKind -> Array InstorpectionQueryResult__FullType
     onlyTypesWithoutExcluded typeKind =
       introspectionQueryResult.__schema.types
-      # filter (\fullType -> fullType."kind" == typeKind)
-      # filter (\fullType -> notExcluded fullType.name)
+      # Array.filter (\fullType -> fullType."kind" == typeKind)
+      # Array.filter (\fullType -> notExcluded fullType.name)
 
     instorpectionQueryResult__FullType__enum :: Array InstorpectionQueryResult__FullType
     instorpectionQueryResult__FullType__enum = onlyTypesWithoutExcluded TypeKind.Enum
@@ -121,8 +122,19 @@ mkFilesMap apiModuleName introspectionQueryResult =
           scalarTypes :: Array InstorpectionQueryResult__FullType
           scalarTypes =
             introspectionQueryResult.__schema.types
-            # filter (\fullType -> fullType."kind" == TypeKind.Scalar)
-            # filter (\fullType -> not $ elem fullType.name builtInScalarNames)
+            # Array.filter (\fullType -> fullType."kind" == TypeKind.Scalar)
+            # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
         in printModuleToString $ MakeModule.Scalar.makeModule moduleName scalarTypes
+      , "Query":
+        let
+          moduleName = mkModuleName $ apiModuleName :| ["Query"]
+
+          queryType :: Maybe InstorpectionQueryResult__FullType
+          queryType = Array.find (\x -> x.name == introspectionQueryResult.__schema.queryType.name) introspectionQueryResult.__schema.types
+
+          queryFields :: Array InstorpectionQueryResult__Field
+          queryFields = maybe [] (\x -> fromMaybe [] x.fields) queryType
+         in
+          printModuleToString $ MakeModule.Query.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names moduleName queryFields
       }
     }

@@ -11,20 +11,20 @@ import Swapi.Interface.Character
 
 data Scope__Human
 
-appearsIn :: SelectionSet Scope__Human (Maybe (Array (Maybe Episode)))
+appearsIn :: SelectionSet Scope__Human (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
 
-avatarUrl :: SelectionSet Scope__Human (Maybe String)
+avatarUrl :: SelectionSet Scope__Human String
 avatarUrl = selectionForField "avatarUrl" [] graphqlDefaultResponseScalarDecoder
 
-friends :: SelectionSet Scope__Human (Maybe (Array (Maybe Scope__Character)))
-friends = selectionForField "friends" [] graphqlDefaultResponseScalarDecoder
+friends :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__Human (Array r)
+friends = selectionForCompositeField "friends" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-homePlanet :: SelectionSet Scope__Human String
+homePlanet :: SelectionSet Scope__Human (Maybe String)
 homePlanet = selectionForField "homePlanet" [] graphqlDefaultResponseScalarDecoder
 
-id :: SelectionSet Scope__Human (Maybe Id)
+id :: SelectionSet Scope__Human Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-name :: SelectionSet Scope__Human (Maybe String)
+name :: SelectionSet Scope__Human String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
