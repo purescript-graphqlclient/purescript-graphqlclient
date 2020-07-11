@@ -18,6 +18,7 @@ import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
 import GraphqlClientGenerator.MakeModule.Interface as MakeModule.Interface
 import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
+import GraphqlClientGenerator.MakeModule.Scope as MakeModule.Scope
 
 type FilesMap =
   { dirs ::
@@ -28,6 +29,7 @@ type FilesMap =
     }
   , files ::
     { "Scalar" :: String
+    , "Scope" :: String
     }
   }
   -- | , "InputObject" :: String
@@ -113,5 +115,16 @@ mkFilesMap apiModuleName introspectionQueryResult =
             # filter (\fullType -> fullType."kind" == TypeKind.Scalar)
             # filter (\fullType -> not $ elem fullType.name builtInScalarNames)
         in printModuleToString $ MakeModule.Scalar.makeModule moduleName scalarTypes
+      , "Scope":
+        let
+          moduleName = mkModuleName $ apiModuleName :| ["Scope"]
+
+          entityNames :: Array String
+          entityNames =
+            introspectionQueryResult.__schema.types
+            # filter (\fullType -> fullType."kind" == TypeKind.Object)
+            # filter (\fullType -> notExcluded fullType.name)
+            # map _.name
+        in printModuleToString $ MakeModule.Scope.makeModule moduleName entityNames
       }
     }
