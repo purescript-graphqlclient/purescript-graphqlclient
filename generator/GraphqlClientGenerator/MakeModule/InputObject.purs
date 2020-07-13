@@ -53,7 +53,7 @@ makeModule apiModuleName moduleName inputObjectTypes instorpectionQueryResult__F
               , dataHdVars: []
               }
             , type_: TypeRecord $ Row
-              { rowLabels: (fromMaybe [] inputObjectType.inputFields) <#> \(field :: InstorpectionQueryResult__InputValue) -> { label: Label field.name, type_: DeclarationsForFields.mkFieldType $ DeclarationsForFields.collectTypeRefInfo field."type" }
+              { rowLabels: (fromMaybe [] inputObjectType.inputFields) <#> \(field :: InstorpectionQueryResult__InputValue) -> { label: Label field.name, type_: DeclarationsForFields.mkFieldType "Optional" $ DeclarationsForFields.collectTypeRefInfo field."type" }
               , rowTail: Nothing
               }
             }

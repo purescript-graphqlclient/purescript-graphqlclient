@@ -11,13 +11,6 @@ import Swapi.Query
 
 type Response = Maybe Id
 
--- | type HumanInput =
--- |   { id :: Id
--- |   }
-
--- | human :: ∀ r . HumanInput -> SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)
--- | human input = selectionForCompositeField "human" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-
 query :: SelectionSet Scope__RootQuery Response
 query = human { id: Id "1001" } id
 

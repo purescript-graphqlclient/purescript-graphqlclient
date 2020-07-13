@@ -32,13 +32,13 @@ greet input = selectionForField "greet" (toGraphqlArguments input) graphqlDefaul
 hello :: SelectionSet Scope__RootQuery String
 hello = selectionForField "hello" [] graphqlDefaultResponseScalarDecoder
 
-type HeroInput = { episode :: Maybe Episode
+type HeroInput = { episode :: Optional Episode
                  }
 
 hero :: forall r . HeroInput -> SelectionSet Scope__Character r -> SelectionSet Scope__RootQuery r
 hero input = selectionForCompositeField "hero" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type HeroUnionInput = { episode :: Maybe Episode
+type HeroUnionInput = { episode :: Optional Episode
                       }
 
 heroUnion :: forall r . HeroUnionInput -> SelectionSet Scope__CharacterUnion r -> SelectionSet Scope__RootQuery r

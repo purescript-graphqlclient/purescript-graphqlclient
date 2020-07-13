@@ -8,11 +8,11 @@ import Swapi.Enum.Language
 import Swapi.Enum.Phrase
 
 -- | original name - Greeting
-type Greeting = { language :: Maybe Language
+type Greeting = { language :: Optional Language
                 , name :: String
-                , options :: Maybe GreetingOptions
+                , options :: Optional GreetingOptions
                 }
 
 -- | original name - GreetingOptions
-type GreetingOptions = { prefix :: Maybe String
+type GreetingOptions = { prefix :: Optional String
                        }

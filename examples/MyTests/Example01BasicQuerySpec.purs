@@ -13,10 +13,6 @@ type Character =
   {
   }
 
-type HumanInput =
-  { id :: Id
-  }
-
 data Scope__Human
 
 -- | human :: ∀ r . HumanInput -> SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)

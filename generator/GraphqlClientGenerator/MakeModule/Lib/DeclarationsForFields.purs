@@ -13,9 +13,6 @@ import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra (camelCase, pascalCase)
 import Data.String.Extra as StringsExtra
 
-maybeType :: Type -> Type
-maybeType typeInside = nonQualifiedNameTypeConstructor "Maybe" `TypeApp` typeInside
-
 arrayType :: Type -> Type
 arrayType typeInside = nonQualifiedNameTypeConstructor "Array" `TypeApp` typeInside
 
@@ -25,14 +22,14 @@ typeRefType name = nonQualifiedNameTypeConstructor (maybe "ERROR_TYPE_REF_NAME_S
 typeRefTypeScope :: Maybe String -> Type
 typeRefTypeScope name = nonQualifiedNameTypeConstructor (maybe "ERROR_TYPE_REF_NAME_SHOULD_NOT_BE_NOTHING" (const "r") name)
 
-mkFieldType :: List { kind :: TypeKind, name :: Maybe String } -> Type
-mkFieldType = go true
+mkFieldType :: String -> List { kind :: TypeKind, name :: Maybe String } -> Type
+mkFieldType maybeConstructor = go true
   where
     go :: Boolean -> List { kind :: TypeKind, name :: Maybe String } -> Type
     go _ Nil = nonQualifiedNameTypeConstructor "ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE"
     go wrapInMaybe (typeRef : xs) =
       let
-          maybeWrap t = if wrapInMaybe then maybeType t else t
+          maybeWrap t = if wrapInMaybe then nonQualifiedNameTypeConstructor maybeConstructor `TypeApp` t else t
       in case typeRef.kind of
           NonNull     -> go false xs -- next pass is with false
           List        -> arrayType $ go true xs -- reset to true again
@@ -81,7 +78,7 @@ declInput parentName args = DeclType
     , dataHdVars: []
     }
   , type_: TypeRecord $ Row
-    { rowLabels: args <#> \(arg :: InstorpectionQueryResult__InputValue) -> { label: Label arg.name, type_: mkFieldType $ collectTypeRefInfo arg."type" }
+    { rowLabels: args <#> \(arg :: InstorpectionQueryResult__InputValue) -> { label: Label arg.name, type_: mkFieldType "Optional" $ collectTypeRefInfo arg."type" }
     , rowTail: Nothing
     }
   }
@@ -119,7 +116,7 @@ declarationsForField parentName field =
           `TypeApp`
           nonQualifiedNameTypeConstructor ("Scope__" <> StringsExtra.pascalCase parentName)
           `TypeApp`
-          mkFieldType typeRefInfo
+          mkFieldType "Maybe" typeRefInfo
         in case infoThatRequiresPassingDecoder of
                 Nothing -> maybeWrapInInput inside
                 Just infoThatRequiresPassingDecoder' ->
