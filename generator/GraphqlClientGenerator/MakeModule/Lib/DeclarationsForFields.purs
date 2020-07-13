@@ -2,14 +2,15 @@ module GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields where
 
 import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind
-import Language.PS.AST
-import Language.PS.AST.Sugar
+import Language.PS.CST
+import Language.PS.CST.Sugar
 import Protolude
 
 import Data.Array as Array
 import Data.List ((:))
 import Data.List as List
-import Data.NonEmpty ((:|))
+import Data.Array.NonEmpty as NonEmpty
+import Data.String.Extra (camelCase, pascalCase)
 import Data.String.Extra as StringsExtra
 
 maybeType :: Type -> Type
@@ -72,72 +73,113 @@ findObjectThatRequiresPassingDecoder = List.find
          _ -> false
   )
 
-declarationsForFields :: String -> Array InstorpectionQueryResult__Field -> Array Declaration
-declarationsForFields parentName fields =
-  fields
-  <#> (\field ->
-    let
-      typeRefInfo :: List { kind :: TypeKind, name :: Maybe String }
-      typeRefInfo = collectTypeRefInfo field."type"
+declInput :: String -> Array InstorpectionQueryResult__InputValue -> Declaration
+declInput parentName args = DeclType
+  { comments: Nothing
+  , head: DataHead
+    { dataHdName: ProperName $ parentName <> "Input"
+    , dataHdVars: []
+    }
+  , type_: TypeRecord $ Row
+    { rowLabels: args <#> \(arg :: InstorpectionQueryResult__InputValue) -> { label: Label arg.name, type_: mkFieldType $ collectTypeRefInfo arg."type" }
+    , rowTail: Nothing
+    }
+  }
 
-      infoThatRequiresPassingDecoder :: Maybe { kind :: TypeKind, name :: Maybe String }
-      infoThatRequiresPassingDecoder = findObjectThatRequiresPassingDecoder typeRefInfo
-    in
-    [ DeclSignature
-      { comments: Nothing
-      , ident: Ident field.name
-      , type_:
-        let
-          inside :: Type
-          inside =
-            nonQualifiedNameTypeConstructor "SelectionSet"
-            `TypeApp`
-            nonQualifiedNameTypeConstructor ("Scope__" <> StringsExtra.pascalCase parentName)
-            `TypeApp`
-            mkFieldType typeRefInfo
-          in case infoThatRequiresPassingDecoder of
-                  Nothing -> inside
-                  Just infoThatRequiresPassingDecoder' ->
-                    TypeForall
-                    (typeVarName "r" :| [])
-                    ( ( nonQualifiedNameTypeConstructor "SelectionSet"
+declarationsForField :: String -> InstorpectionQueryResult__Field -> Array Declaration
+declarationsForField parentName field =
+  let
+    typeRefInfo :: List { kind :: TypeKind, name :: Maybe String }
+    typeRefInfo = collectTypeRefInfo field."type"
+
+    infoThatRequiresPassingDecoder :: Maybe { kind :: TypeKind, name :: Maybe String } -- there can be many, but we handle only one
+    infoThatRequiresPassingDecoder = findObjectThatRequiresPassingDecoder typeRefInfo
+  in
+  (if Array.null field.args then [] else [declInput (StringsExtra.pascalCase field.name) field.args]) <>
+  [ DeclSignature
+    { comments: Nothing
+    , ident: Ident field.name
+    , type_:
+      let
+        input :: Maybe Type
+        input =
+          if Array.null field.args
+            then Nothing
+            else Just $ nonQualifiedNameTypeConstructor $ StringsExtra.pascalCase field.name <> "Input"
+
+        maybeWrapInInput :: Type -> Type
+        maybeWrapInInput inside =
+          case input of
+              Nothing -> inside
+              (Just inputType) -> inputType ====>> inside
+
+        inside :: Type
+        inside =
+          nonQualifiedNameTypeConstructor "SelectionSet"
+          `TypeApp`
+          nonQualifiedNameTypeConstructor ("Scope__" <> StringsExtra.pascalCase parentName)
+          `TypeApp`
+          mkFieldType typeRefInfo
+        in case infoThatRequiresPassingDecoder of
+                Nothing -> maybeWrapInInput inside
+                Just infoThatRequiresPassingDecoder' ->
+                  let
+                      insideDecoderAndResult :: Type
+                      insideDecoderAndResult =
+                        ( nonQualifiedNameTypeConstructor "SelectionSet"
                         `TypeApp`
                         (nonQualifiedNameTypeConstructor $ "Scope__" <> maybe "ERROR" StringsExtra.pascalCase infoThatRequiresPassingDecoder'.name)
                         `TypeApp`
                         typeVar "r"
-                      )
-                      ====>>
-                      inside
-                    )
+                        )
+                        ====>>
+                        inside
+                  in
+                    TypeForall
+                    (NonEmpty.singleton (typeVarName "r"))
+                    (maybeWrapInInput insideDecoderAndResult)
+    }
+  , DeclValue
+    { comments: Nothing
+    , valueBindingFields:
+         { name: Ident field.name
+         , binders:
+            if Array.null field.args
+              then []
+              else [BinderVar (Ident "input")]
+         , guarded:
+            let
+              inputArg :: Expr
+              inputArg =
+                if Array.null field.args
+                  then ExprArray []
+                  else nonQualifiedExprIdent "toGraphqlArguments" `ExprApp` nonQualifiedExprIdent "input"
+             in Unconditional
+              { expr: case infoThatRequiresPassingDecoder of
+                  Nothing ->
+                    nonQualifiedExprIdent "selectionForField"
+                    `ExprApp`
+                    ExprString field.name
+                    `ExprApp`
+                    inputArg
+                    `ExprApp`
+                    nonQualifiedExprIdent "graphqlDefaultResponseScalarDecoder"
+                  Just infoThatRequiresPassingDecoder' ->
+                    nonQualifiedExprIdent "selectionForCompositeField"
+                    `ExprApp`
+                    ExprString field.name
+                    `ExprApp`
+                    inputArg
+                    `ExprApp`
+                    nonQualifiedExprIdent "graphqlDefaultResponseFunctorOrScalarDecoderTransformer"
+              , whereBindings: []
+              }
+         }
       }
-    , DeclValue
-      { comments: Nothing
-      , valueBindingFields:
-        { name: Ident field.name
-        , binders: []
-        , guarded: Unconditional
-          { expr:
-            case infoThatRequiresPassingDecoder of
-              Nothing ->
-                nonQualifiedExprIdent "selectionForField"
-                `ExprApp`
-                ExprString field.name
-                `ExprApp`
-                ExprArray []
-                `ExprApp`
-                nonQualifiedExprIdent "graphqlDefaultResponseScalarDecoder"
-              Just infoThatRequiresPassingDecoder' ->
-                nonQualifiedExprIdent "selectionForCompositeField"
-                `ExprApp`
-                ExprString field.name
-                `ExprApp`
-                ExprArray []
-                `ExprApp`
-                nonQualifiedExprIdent "graphqlDefaultResponseFunctorOrScalarDecoderTransformer"
-          , whereBindings: []
-          }
-        }
-      }
-    ]
-    )
+  ]
+
+declarationsForFields :: String -> Array InstorpectionQueryResult__Field -> Array Declaration
+declarationsForFields parentName fields =
+  fields
+  <#> declarationsForField parentName
   # Array.concat

@@ -24,7 +24,7 @@ You can edit this file as you like.
   , "ansi"
   , "optparse"
   , "protolude"
-  , "ps-ast"
+  , "ps-cst"
   , "homogeneous-records"
   -- , "inflection"
   ]

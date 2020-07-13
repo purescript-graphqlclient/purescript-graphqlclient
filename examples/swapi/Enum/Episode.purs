@@ -15,3 +15,10 @@ fromToMap = [Tuple "EMPIRE" Empire, Tuple "JEDI" Jedi, Tuple "NEWHOPE" Newhope]
 
 instance episodeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Episode where
   graphqlDefaultResponseScalarDecoder = enumDecoder "Episode" fromToMap
+
+instance episodeToGraphqlArgumentValue :: ToGraphqlArgumentValue Episode where
+  toGraphqlArgumentValue =
+    case _ of
+      Empire -> "EMPIRE"
+      Jedi -> "JEDI"
+      Newhope -> "NEWHOPE"

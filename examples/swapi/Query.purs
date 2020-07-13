@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Swapi.Scalar
+import Swapi.InputObject
 import Swapi.Enum.Episode
 import Swapi.Enum.Language
 import Swapi.Enum.Phrase
@@ -13,26 +14,41 @@ import Swapi.Object.Droid
 import Swapi.Object.Human
 import Swapi.Union.CharacterUnion
 
-droid :: forall r . SelectionSet Scope__Droid r -> SelectionSet Scope__RootQuery (Maybe r)
-droid = selectionForCompositeField "droid" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+type DroidInput = { id :: Id
+                  }
+
+droid :: forall r . DroidInput -> SelectionSet Scope__Droid r -> SelectionSet Scope__RootQuery (Maybe r)
+droid input = selectionForCompositeField "droid" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 forcedError :: SelectionSet Scope__RootQuery (Maybe String)
 forcedError = selectionForField "forcedError" [] graphqlDefaultResponseScalarDecoder
 
-greet :: SelectionSet Scope__RootQuery String
-greet = selectionForField "greet" [] graphqlDefaultResponseScalarDecoder
+type GreetInput = { input :: Greeting
+                  }
+
+greet :: GreetInput -> SelectionSet Scope__RootQuery String
+greet input = selectionForField "greet" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
 
 hello :: SelectionSet Scope__RootQuery String
 hello = selectionForField "hello" [] graphqlDefaultResponseScalarDecoder
 
-hero :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__RootQuery r
-hero = selectionForCompositeField "hero" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+type HeroInput = { episode :: Maybe Episode
+                 }
 
-heroUnion :: forall r . SelectionSet Scope__CharacterUnion r -> SelectionSet Scope__RootQuery r
-heroUnion = selectionForCompositeField "heroUnion" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+hero :: forall r . HeroInput -> SelectionSet Scope__Character r -> SelectionSet Scope__RootQuery r
+hero input = selectionForCompositeField "hero" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-human :: forall r . SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)
-human = selectionForCompositeField "human" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+type HeroUnionInput = { episode :: Maybe Episode
+                      }
+
+heroUnion :: forall r . HeroUnionInput -> SelectionSet Scope__CharacterUnion r -> SelectionSet Scope__RootQuery r
+heroUnion input = selectionForCompositeField "heroUnion" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type HumanInput = { id :: Id
+                  }
+
+human :: forall r . HumanInput -> SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)
+human input = selectionForCompositeField "human" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 now :: SelectionSet Scope__RootQuery PosixTime
 now = selectionForField "now" [] graphqlDefaultResponseScalarDecoder

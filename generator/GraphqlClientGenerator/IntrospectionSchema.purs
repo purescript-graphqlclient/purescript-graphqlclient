@@ -27,6 +27,13 @@ type InstorpectionQueryResult__Field =
   , deprecationReason :: Maybe String
   }
 
+type InstorpectionQueryResult__EnumValue =
+  { name :: String
+  , description :: Maybe String
+  , isDeprecated :: Boolean
+  , deprecationReason :: Maybe String
+  }
+
 type InstorpectionQueryResult__FullType
   = { kind :: TypeKind
     , name :: String
@@ -34,12 +41,7 @@ type InstorpectionQueryResult__FullType
     , fields :: Maybe (Array InstorpectionQueryResult__Field)
     , inputFields :: Maybe (Array InstorpectionQueryResult__InputValue)
     , interfaces :: Maybe (Array InstorpectionQueryResult__TypeRef)
-    , enumValues :: Maybe <<< Array $
-      { name :: String
-      , description :: Maybe String
-      , isDeprecated :: Boolean
-      , deprecationReason :: Maybe String
-      }
+    , enumValues :: Maybe <<< Array $ InstorpectionQueryResult__EnumValue
     , possibleTypes :: Maybe <<< Array $ InstorpectionQueryResult__TypeRef
     }
 

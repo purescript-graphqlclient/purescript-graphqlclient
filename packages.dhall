@@ -56,7 +56,7 @@ let additions =
         , repo = "https://github.com/srghma/purescript-protolude.git"
         , version = "master"
         }
-      , ps-ast =
+      , ps-cst =
         { dependencies =
           [ "console"
           , "effect"
@@ -72,8 +72,8 @@ let additions =
           , "unicode"
           , "boxes"
           ]
-        , repo = "https://github.com/srghma/purescript-ps-ast.git"
-        , version = "13f6965"
+        , repo = "https://github.com/srghma/purescript-ps-cst.git"
+        , version = "master"
         }
       , matryoshka =
         { dependencies =

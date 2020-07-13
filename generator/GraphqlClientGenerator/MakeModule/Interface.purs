@@ -3,12 +3,12 @@ module GraphqlClientGenerator.MakeModule.Interface where
 import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind
 import GraphqlClientGenerator.MakeModule.Lib.Utils
-import Language.PS.AST
-import Language.PS.AST.Sugar
+import Language.PS.CST
+import Language.PS.CST.Sugar
 import Protolude
 
 import Data.Array as Array
-import Data.NonEmpty ((:|))
+import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
@@ -21,7 +21,7 @@ makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleNa
         Imports.imports apiModuleName <>
         (instorpectionQueryResult__FullType__enum_names <#>
           (\name -> ImportDecl
-            { moduleName: mkModuleName $ apiModuleName :| ["Enum", name]
+            { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Enum", name]
             , names: []
             , qualification: Nothing
             }

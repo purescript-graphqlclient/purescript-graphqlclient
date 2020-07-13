@@ -2,9 +2,9 @@ module GraphqlClientGenerator.MakeModule.Lib.Utils where
 
 import Protolude
 
-import Language.PS.AST
-import Language.PS.AST.Printers
-import Language.PS.AST.Sugar
+import Language.PS.CST
+import Language.PS.CST.Printers
+import Language.PS.CST.Sugar
 import Data.String.Extra as StringsExtra
 
 tupleDecl :: Type -> Type -> Type

@@ -1,11 +1,11 @@
 module GraphqlClientGenerator.MakeModule.Query where
 
-import Language.PS.AST
-import Language.PS.AST.Sugar
+import Language.PS.CST
+import Language.PS.CST.Sugar
 import Protolude
 
 import Data.Array as Array
-import Data.NonEmpty ((:|))
+import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
 import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind
@@ -35,7 +35,7 @@ makeModule
       Imports.imports apiModuleName <>
       (instorpectionQueryResult__FullType__enum_names <#>
         (\name -> ImportDecl
-          { moduleName: mkModuleName $ apiModuleName :| ["Enum", name]
+          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Enum", name]
           , names: []
           , qualification: Nothing
           }
@@ -43,7 +43,7 @@ makeModule
       ) <>
         (instorpectionQueryResult__FullType__interface_names <#>
         (\name -> ImportDecl
-          { moduleName: mkModuleName $ apiModuleName :| ["Interface", name]
+          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Interface", name]
           , names: []
           , qualification: Nothing
           }
@@ -51,7 +51,7 @@ makeModule
       ) <>
         (instorpectionQueryResult__FullType__object_names <#>
         (\name -> ImportDecl
-          { moduleName: mkModuleName $ apiModuleName :| ["Object", name]
+          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Object", name]
           , names: []
           , qualification: Nothing
           }
@@ -59,7 +59,7 @@ makeModule
       ) <>
         (instorpectionQueryResult__FullType__union_names <#>
         (\name -> ImportDecl
-          { moduleName: mkModuleName $ apiModuleName :| ["Union", name]
+          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Union", name]
           , names: []
           , qualification: Nothing
           }

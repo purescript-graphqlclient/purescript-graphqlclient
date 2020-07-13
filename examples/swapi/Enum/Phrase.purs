@@ -21,3 +21,16 @@ fromToMap = [Tuple "BAD_FEELING" BadFeeling, Tuple "DROIDS" Droids, Tuple "FAITH
 
 instance phraseGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Phrase where
   graphqlDefaultResponseScalarDecoder = enumDecoder "Phrase" fromToMap
+
+instance phraseToGraphqlArgumentValue :: ToGraphqlArgumentValue Phrase where
+  toGraphqlArgumentValue =
+    case _ of
+      BadFeeling -> "BAD_FEELING"
+      Droids -> "DROIDS"
+      Faith -> "FAITH"
+      Father -> "FATHER"
+      Help -> "HELP"
+      TheForce -> "THE_FORCE"
+      Traitor -> "TRAITOR"
+      Trap -> "TRAP"
+      Try -> "TRY"

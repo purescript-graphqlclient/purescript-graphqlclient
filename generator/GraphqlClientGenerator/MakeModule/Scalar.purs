@@ -1,12 +1,12 @@
 module GraphqlClientGenerator.MakeModule.Scalar where
 
 import GraphqlClientGenerator.IntrospectionSchema
-import Language.PS.AST
-import Language.PS.AST.Sugar
+import Language.PS.CST
+import Language.PS.CST.Sugar
 import Protolude
 
 import Data.Array as Array
-import Data.NonEmpty ((:|))
+import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
 
 makeModule :: ModuleName -> Array InstorpectionQueryResult__FullType -> Module
@@ -14,17 +14,17 @@ makeModule moduleName scalarTypes = Module
   { moduleName
   , imports:
     [ ImportDecl
-      { moduleName: mkModuleName $ "Prelude" :| []
+      { moduleName: mkModuleName $ NonEmpty.singleton "Prelude"
       , names: []
       , qualification: Nothing
       }
     , ImportDecl
-      { moduleName: mkModuleName $ "GraphqlClient" :| []
+      { moduleName: mkModuleName $ NonEmpty.singleton "GraphqlClient"
       , names: []
       , qualification: Nothing
       }
     , ImportDecl
-      { moduleName: mkModuleName $ "Data" :| ["Newtype"]
+      { moduleName: mkModuleName $ NonEmpty.cons' "Data" ["Newtype"]
       , names: []
       , qualification: Nothing
       }
@@ -45,7 +45,7 @@ makeModule moduleName scalarTypes = Module
               { instName: Ident $ StringsExtra.camelCase typeName <> pascalName
               , instConstraints: []
               , instClass: nonQualifiedName $ ProperName typeName
-              , instTypes: (TypeConstructor $ nonQualifiedName $ ProperName pascalName) :| []
+              , instTypes: NonEmpty.singleton $ TypeConstructor $ nonQualifiedName $ ProperName pascalName
               }
             }
         in
@@ -68,7 +68,7 @@ makeModule moduleName scalarTypes = Module
               { instName: Ident $ "newtype" <> pascalName
               , instConstraints: []
               , instClass: nonQualifiedName $ ProperName "Newtype"
-              , instTypes: (TypeConstructor $ nonQualifiedName $ ProperName pascalName) :| [TypeWildcard]
+              , instTypes: NonEmpty.cons' (TypeConstructor $ nonQualifiedName $ ProperName pascalName) [TypeWildcard]
               }
             }
           -- | , DeclDerive

@@ -15,3 +15,10 @@ fromToMap = [Tuple "EN" En, Tuple "ES" Es, Tuple "NO" No]
 
 instance languageGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Language where
   graphqlDefaultResponseScalarDecoder = enumDecoder "Language" fromToMap
+
+instance languageToGraphqlArgumentValue :: ToGraphqlArgumentValue Language where
+  toGraphqlArgumentValue =
+    case _ of
+      En -> "EN"
+      Es -> "ES"
+      No -> "NO"

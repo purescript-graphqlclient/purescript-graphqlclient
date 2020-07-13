@@ -3,51 +3,26 @@ module GraphqlClientGenerator.Main where
 import Protolude
 import Protolude.Node
 
-import Control.Monad.Reader.Trans (ReaderT(..), runReaderT)
-import Control.Parallel (parTraverse)
+import Control.Monad.Reader.Trans (ReaderT)
 import Data.Argonaut.Core as ArgonautCore
 import Data.Argonaut.Decode (JsonDecodeError)
 import Data.Argonaut.Decode as ArgonautDecoders
 import Data.Argonaut.Parser as ArgonautCore
-import Data.Array (filter)
-import Data.Array (fromFoldable) as Array
-import Data.Array (replicate)
-import Data.Array.NonEmpty (NonEmptyArray)
-import Data.Array.NonEmpty as NonEmptyArray
-import Data.Either (Either(..))
-import Data.Foldable (null, sequence_)
-import Data.FunctorWithIndex (mapWithIndex)
-import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Foldable (null)
 import Data.Map (Map)
-import Data.Maybe (Maybe(..), fromMaybe)
-import Data.NonEmpty (NonEmpty(..), (:|))
-import Data.String (joinWith, take)
-import Data.Symbol (SProxy(..))
 import Data.TraversableWithIndex (forWithIndex)
-import Effect.Aff (launchAff_)
-import Effect.Class.Console (logShow, log)
-import Effect.Exception (error)
 import GraphqlClient as GraphqlClient
 import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind as GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.GraphqlJs as GraphqlJs
 import GraphqlClientGenerator.Options as GraphqlClientGenerator.Options
-import GraphqlClientGenerator.PsAst as GraphqlClientGenerator.PsAst
-import Foreign.Object (Object)
-import Language.PS.AST (ModuleName(..))
+import GraphqlClientGenerator.PsCst as GraphqlClientGenerator.PsCst
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff as Node.FS.Aff
 import Node.FS.Aff.Mkdirp as Node.FS.Aff.Mkdirp
 import Node.Path (FilePath)
 import Node.Path (concat, resolve) as Node.FS
 import Options.Applicative (execParser)
-import Protolude.Url (Url)
-import Protolude.Url as Url
 import Record.Homogeneous (foldMapValuesWithIndexL)
-
-greet :: GraphqlClientGenerator.Options.AppOptions -> Effect Unit
-greet (GraphqlClientGenerator.Options.AppOptions { input, output, api }) = log $ "Hello, " <> show input <> show output <> show api
 
 type App a = ReaderT GraphqlClientGenerator.Options.AppOptions Aff a
 
@@ -100,7 +75,7 @@ main = do
       unless isEmpty (exitWith 1 $ "Output dir " <> (show outputDirAbs) <> " is non empty. Cannot write files to it.")
 
     let
-      filesMap = GraphqlClientGenerator.PsAst.mkFilesMap appOptions.api instorpectionQueryResult
+      filesMap = GraphqlClientGenerator.PsCst.mkFilesMap appOptions.api instorpectionQueryResult
 
       printModule :: FilePath -> String -> String -> Aff Unit
       printModule outputDir fileName content = do
@@ -132,50 +107,3 @@ main = do
 
     foldMapValuesWithIndexL printModuleForDirs filesMap.dirs
     foldMapValuesWithIndexL printModuleForFiles filesMap.files
-
-        -- let dir = "examples/countries"
-        -- void $ Node.FS.Aff.Mkdirp.mkdirp dir
-        -- writePurescriptFiles dir $ onlyObjects >>> (filter (not <<< isSchemaObject)) $ queryResult.data
-  -- where
-  --   writePurescriptFiles :: String -> Array GraphqlClientGenerator.IntrospectionSchema.TypeResult -> Aff Unit
-  --   writePurescriptFiles dir objectTypes = do
-  --     _ <- parTraverse (writePurescriptFile dir) objectTypes
-  --     pure unit
-
-  --   writePurescriptFile :: String -> GraphqlClientGenerator.IntrospectionSchema.TypeResult -> Aff Unit
-  --   writePurescriptFile dir object = do
-  --     case object.name of
-  --       Just name -> writeTextFile UTF8 (dir <> "/" <> name <> ".purs") $ generateForObject object
-  --       Nothing -> pure unit
-
-  --   generateForObject :: GraphqlClientGenerator.IntrospectionSchema.TypeResult -> String
-  --   generateForObject object = case object.name of
-  --     Just name ->
-  --       "module Text."
-  --         <> name
-  --         <> generateForFields name object.fields
-  --     Nothing -> ""
-
-  --   generateForFields :: String -> Maybe (Array GraphqlClientGenerator.IntrospectionSchema.FieldResult) -> String
-  --   generateForFields onObject = case _ of
-  --     Just fields -> joinWith "\n" ((generateForField onObject) <$> fields)
-  --     Nothing -> ""
-
-  --   generateForField :: String -> GraphqlClientGenerator.IntrospectionSchema.FieldResult -> String
-  --   generateForField onObject field =
-  --     field.name
-  --       <> " :: SelectionSet ("
-  --       <> field.name
-  --       <> " :: ?) "
-  --       <> onObject
-
-  --   onlyObjects :: (Record GraphqlClientGenerator.IntrospectionSchema.Result) -> Array GraphqlClientGenerator.IntrospectionSchema.TypeResult
-  --   onlyObjects result = filter (\t -> t.kind == GraphqlClientGenerator.IntrospectionSchema.TypeKind.Object) result.__schema.types
-
-  --   objectNames :: Array GraphqlClientGenerator.IntrospectionSchema.TypeResult -> Array (Maybe String)
-  --   objectNames = map _.name
-
-  --   isSchemaObject :: forall a. { name :: Maybe String | a } -> Boolean
-  --   isSchemaObject object = case object.name of
-  --     Just name -> (take 2 name) == "__"
-  --     Nothing -> false
