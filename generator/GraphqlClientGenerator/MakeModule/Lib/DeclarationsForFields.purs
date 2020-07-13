@@ -1,16 +1,15 @@
 module GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind
-import Language.PS.CST
-import Language.PS.CST.Sugar
-import Protolude
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field, InstorpectionQueryResult__InputValue, InstorpectionQueryResult__TypeRef)
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind (TypeKind(..))
+import Language.PS.CST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), Row(..), Type(..), (====>>))
+import Language.PS.CST.Sugar (nonQualifiedExprIdent, nonQualifiedNameTypeConstructor, typeVar, typeVarName)
+import Protolude (List(..), Maybe(..), const, maybe, (#), ($), (<#>), (<<<), (<>))
 
 import Data.Array as Array
 import Data.List ((:))
 import Data.List as List
 import Data.Array.NonEmpty as NonEmpty
-import Data.String.Extra (camelCase, pascalCase)
 import Data.String.Extra as StringsExtra
 
 arrayType :: Type -> Type

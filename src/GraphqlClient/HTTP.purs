@@ -1,14 +1,14 @@
 module GraphqlClient.HTTP where
 
-import GraphqlClient.Implementation
-import GraphqlClient.WriteGraphql
+import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet(..))
+import GraphqlClient.WriteGraphql (writeGraphql)
 import Protolude
 
 import Affjax as Affjax
 import Affjax.RequestBody as Affjax.RequestBody
 import Affjax.ResponseFormat as Affjax.ResponseFormat
-import Control.Monad.Except.Trans as Transformers
-import Control.Monad.Trans.Class as Transformers
+import Control.Monad.Except.Trans (runExceptT, throwError) as Transformers
+import Control.Monad.Trans.Class (lift) as Transformers
 import Data.Argonaut.Core (jsonNull)
 import Data.Argonaut.Core as ArgonautCore
 import Data.Argonaut.Decode (class DecodeJson, JsonDecodeError(..), printJsonDecodeError)

@@ -1,16 +1,12 @@
 module Examples.MyTests.Example04ErrorDestructuring where
 
-import GraphqlClient
-import Protolude
+import GraphqlClient (GraphqlError(..), GraphqlUserErrorDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, gqlRequest, writeGraphql)
+import Protolude (Either(..), Maybe(..), Unit, bind, discard)
 import Data.Array.NonEmpty as NonEmptyArray
-import Unsafe.Coerce as UnsafeCoerce
 
-import Swapi.Scalar
-import Swapi.Object.Human as Human
-import Swapi.Query (forcedError)
 import Swapi.Query as Query
-import Test.Spec as Test.Spec
-import Test.Spec.Assertions as Test.Spec
+import Test.Spec (Spec, it) as Test.Spec
+import Test.Spec.Assertions (fail, shouldEqual) as Test.Spec
 
 type Response = Maybe String
 

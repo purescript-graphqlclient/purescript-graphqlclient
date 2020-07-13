@@ -1,25 +1,14 @@
 module GraphqlClientGenerator.MakeModule.Enum where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind
-import GraphqlClientGenerator.MakeModule.Lib.Utils
-import Language.PS.CST
-import Language.PS.CST.Printers
-import Language.PS.CST.Sugar
-import Protolude
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__EnumValue, InstorpectionQueryResult__FullType)
+import GraphqlClientGenerator.MakeModule.Lib.Utils (tupleDecl, tupleExpr)
+import Language.PS.CST (Binder(..), Comments(..), DataCtor(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), ImportDecl(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..))
+import Language.PS.CST.Sugar (arrayType, mkModuleName, nonQualifiedExprIdent, nonQualifiedName, nonQualifiedNameExprConstructor, nonQualifiedNameTypeConstructor)
+import Protolude (type ($), Maybe(..), flip, fromMaybe, join, maybe, (#), ($), (<#>), (<>))
 
-import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
-import Data.List ((:))
-import Data.List as List
-import Data.Map (Map)
-import Data.Map as Map
-import Data.Predicate (Predicate(..))
-import Data.String.Extra (pascalCase)
 import Data.String.Extra as StringsExtra
-import Data.String.Utils (startsWith)
-import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 
 makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
 makeModule moduleName fullType =

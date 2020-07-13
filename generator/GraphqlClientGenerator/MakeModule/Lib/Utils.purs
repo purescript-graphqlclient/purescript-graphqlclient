@@ -1,10 +1,9 @@
 module GraphqlClientGenerator.MakeModule.Lib.Utils where
 
-import Protolude
+import Protolude (Maybe(..), ($), (<>))
 
-import Language.PS.CST
-import Language.PS.CST.Printers
-import Language.PS.CST.Sugar
+import Language.PS.CST (DataHead(..), Declaration(..), Expr(..), ProperName(..), Type(..))
+import Language.PS.CST.Sugar (nonQualifiedName)
 import Data.String.Extra as StringsExtra
 
 tupleDecl :: Type -> Type -> Type

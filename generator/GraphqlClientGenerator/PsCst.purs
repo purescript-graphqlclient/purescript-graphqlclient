@@ -1,10 +1,10 @@
 module GraphqlClientGenerator.PsCst where
 
-import GraphqlClient.Utils
-import GraphqlClientGenerator.IntrospectionSchema
-import Language.PS.CST
-import Language.PS.CST.Printers
-import Language.PS.CST.Sugar
+import GraphqlClient.Utils (anyPredicate)
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult, InstorpectionQueryResult__Field, InstorpectionQueryResult__FullType)
+import Language.PS.CST (Module, ModuleName)
+import Language.PS.CST.Printers (printModuleToString)
+import Language.PS.CST.Sugar (mkModuleName)
 import Protolude
 
 import Data.Array as Array

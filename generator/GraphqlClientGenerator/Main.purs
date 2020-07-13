@@ -1,13 +1,13 @@
 module GraphqlClientGenerator.Main where
 
 import Protolude
-import Protolude.Node
+import Protolude.Node (exitWith)
 
 import Control.Monad.Reader.Trans (ReaderT)
-import Data.Argonaut.Core as ArgonautCore
+import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Decode (JsonDecodeError)
 import Data.Argonaut.Decode as ArgonautDecoders
-import Data.Argonaut.Parser as ArgonautCore
+import Data.Argonaut.Parser (jsonParser) as ArgonautCore
 import Data.Foldable (null)
 import Data.Map (Map)
 import Data.TraversableWithIndex (forWithIndex)

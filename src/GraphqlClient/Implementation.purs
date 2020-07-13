@@ -1,19 +1,15 @@
 module GraphqlClient.Implementation where
 
-import Data.Argonaut.Decode.Combinators
 import Protolude
 
 import Data.Argonaut.Core (Json)
-import Data.Argonaut.Core as ArgonautCore
 import Data.Argonaut.Decode (JsonDecodeError(..))
-import Data.Argonaut.Decode as ArgonautDecoders
 import Data.Argonaut.Decode.Decoders as ArgonautDecoders.Decoder
 import Data.Array as Array
 import Data.List ((:))
 import Data.List as List
-import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
+import Data.Symbol (class IsSymbol, reflectSymbol)
 import Prim.Row as Row
-import Prim.RowList (class RowToList)
 import Prim.RowList as RowList
 import Record as Record
 import Type.Data.RowList (RLProxy(..))
@@ -88,10 +84,10 @@ instance toGraphqlArgumentRecordConsChildRow ::
   ToGraphqlArgumentImplementationRecord (RowList.Cons field (Record childRow) tail) row where
   toGraphqlArgumentImplementationRecord _proxy record =
     let
-        (currentValue :: Record childRow) = Record.get (SProxy :: SProxy field) record
-        (currentValue' :: Array Argument) = toGraphqlArguments currentValue
-        (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) (ArgumentValueObject currentValue')
-        (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
+      (currentValue :: Record childRow) = Record.get (SProxy :: SProxy field) record
+      (currentValue' :: Array Argument) = toGraphqlArguments currentValue
+      (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) (ArgumentValueObject currentValue')
+      (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
 
 else
@@ -106,10 +102,10 @@ instance toGraphqlArgumentRecordConsOptional ::
   ToGraphqlArgumentImplementationRecord (RowList.Cons field (Optional value) tail) row where
   toGraphqlArgumentImplementationRecord _proxy record =
     let
-        (currentValue :: Optional value) = Record.get (SProxy :: SProxy field) record
-        (currentValue' :: Optional ArgumentValue) = map toGraphqlArgumentValue currentValue
-        (current :: Argument) = OptionalArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
-        (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
+      (currentValue :: Optional value) = Record.get (SProxy :: SProxy field) record
+      (currentValue' :: Optional ArgumentValue) = map toGraphqlArgumentValue currentValue
+      (current :: Argument) = OptionalArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
+      (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
 
 else
@@ -130,10 +126,10 @@ instance toGraphqlArgumentRecordCons ::
   ToGraphqlArgumentImplementationRecord (RowList.Cons field value tail) row where
   toGraphqlArgumentImplementationRecord _proxy record =
     let
-        (currentValue :: value) = Record.get (SProxy :: SProxy field) record
-        (currentValue' :: ArgumentValue) = toGraphqlArgumentValue currentValue
-        (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
-        (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
+      (currentValue :: value) = Record.get (SProxy :: SProxy field) record
+      (currentValue' :: ArgumentValue) = toGraphqlArgumentValue currentValue
+      (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
+      (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
 
 ------------------------------------------------------
@@ -226,10 +222,11 @@ class GraphqlDefaultResponseFunctorOrScalarDecoderTransformer a b | b -> a where
 
 -- finds decoders for Array, Maybe, but also allows nested containers (e.g. `Array (Maybe x)`)
 instance traversableDecoderTransformer :: (GraphqlDefaultResponseFunctorOrScalarDecoderTransformer a b, GraphqlDefaultResponseFunctorDecoder f) => GraphqlDefaultResponseFunctorOrScalarDecoderTransformer a (f b) where
-  graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder = do
-     let (json_to_b :: Json -> Either JsonDecodeError b) = graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder
-     let (json_to_fb :: Json -> Either JsonDecodeError (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
-     json_to_fb
+  graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder =
+     let
+       (json_to_b :: Json -> Either JsonDecodeError b) = graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder
+       (json_to_fb :: Json -> Either JsonDecodeError (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
+      in json_to_fb
 
 else
 

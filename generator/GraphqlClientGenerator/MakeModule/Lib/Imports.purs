@@ -1,16 +1,10 @@
 module GraphqlClientGenerator.MakeModule.Lib.Imports where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind
-import Language.PS.CST
-import Language.PS.CST.Sugar
-import Protolude
+import Language.PS.CST (ImportDecl(..))
+import Language.PS.CST.Sugar (mkModuleName)
+import Protolude (Maybe(..), ($))
 
-import Data.Array as Array
-import Data.List ((:))
-import Data.List as List
 import Data.Array.NonEmpty as NonEmpty
-import Data.String.Extra as StringsExtra
 
 imports :: String -> Array ImportDecl
 imports apiModuleName =

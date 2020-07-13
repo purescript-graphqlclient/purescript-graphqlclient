@@ -1,9 +1,9 @@
 module GraphqlClientGenerator.MakeModule.InputObject where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import Language.PS.CST
-import Language.PS.CST.Sugar
-import Protolude
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType, InstorpectionQueryResult__InputValue)
+import Language.PS.CST (Comments(..), DataHead(..), Declaration(..), ImportDecl(..), Label(..), Module(..), ModuleName, ProperName(..), Row(..), Type(..))
+import Language.PS.CST.Sugar (mkModuleName)
+import Protolude (Maybe(..), fromMaybe, (#), ($), (<#>), (<>))
 
 import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty

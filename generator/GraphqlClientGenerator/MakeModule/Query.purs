@@ -1,17 +1,13 @@
 module GraphqlClientGenerator.MakeModule.Query where
 
-import Language.PS.CST
-import Language.PS.CST.Sugar
-import Protolude
+import Language.PS.CST (ImportDecl(..), Module(..), ModuleName)
+import Language.PS.CST.Sugar (mkModuleName)
+import Protolude (Maybe(..), ($), (<#>), (<>))
 
-import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty
-import Data.String.Extra as StringsExtra
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
-import GraphqlClientGenerator.MakeModule.Lib.Utils
 
 makeModule
   :: String

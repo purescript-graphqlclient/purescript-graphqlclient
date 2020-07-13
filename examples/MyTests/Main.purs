@@ -1,12 +1,9 @@
 module Examples.MyTests.Main where
 
-import Effect
-import Effect.Aff
-import Protolude
+import Effect.Aff (Milliseconds(..))
+import Protolude (Effect, Maybe(..), Unit, launchAff_, ($))
 
-import Data.Time.Duration (Milliseconds(..))
 import Examples.MyTests.AllTests as Examples.MyTests.AllTests
-import Test.Spec as Examples.Spec
 import Test.Spec.Reporter as Test.Spec.Reporter
 import Test.Spec.Runner as Test.Spec.Runner
 

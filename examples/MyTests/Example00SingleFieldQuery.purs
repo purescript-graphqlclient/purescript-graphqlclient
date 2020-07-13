@@ -1,13 +1,13 @@
 module Examples.MyTests.Example00SingleFieldQuery where
 
-import Protolude
+import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<<<), (\/))
 
-import Test.Spec as Test.Spec
-import Test.Spec.Assertions as Test.Spec
-import GraphqlClient
-import Swapi.Scalar
-import Swapi.Object.Human
-import Swapi.Query
+import Test.Spec (Spec, it) as Test.Spec
+import Test.Spec.Assertions (shouldEqual) as Test.Spec
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, gqlRequest, printGraphqlError, writeGraphql)
+import Swapi.Scalar (Id(..))
+import Swapi.Object.Human (id)
+import Swapi.Query (human)
 
 type Response = Maybe Id
 

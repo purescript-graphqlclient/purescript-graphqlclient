@@ -2,12 +2,8 @@ module GraphqlClientGenerator.IntrospectionSchema.TypeKind where
 
 import Prelude
 
-import Data.Argonaut.Decode as ArgonautCodecs
-import Data.Argonaut.Decode.Generic.Rep as ArgonautGeneric
-import Data.Argonaut.Encode as ArgonautCodecs
-import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
-import Data.Generic.Rep as GenericRep
-import Data.Generic.Rep.Show as GenericRep
+import Data.Generic.Rep (class Generic) as GenericRep
+import Data.Generic.Rep.Show (genericShow) as GenericRep
 import GraphqlClient.GraphqlEnum as GraphqlClient.GraphqlEnum
 import GraphqlClient.Implementation as GraphqlClient.Implementation
 

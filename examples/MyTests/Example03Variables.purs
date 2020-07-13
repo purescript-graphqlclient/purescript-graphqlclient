@@ -1,14 +1,13 @@
 module Examples.MyTests.Example03Variables where
 
-import GraphqlClient
-import Protolude
-import Swapi.Scalar
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, gqlRequest, printGraphqlError, writeGraphql)
+import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<$>), (<*>), (<<<), (\/))
+import Swapi.Scalar (Id(..))
 
-import Swapi.Object.Human (homePlanet)
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
-import Test.Spec as Test.Spec
-import Test.Spec.Assertions as Test.Spec
+import Test.Spec (Spec, it) as Test.Spec
+import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
 type Response = Maybe HumanResponse
 

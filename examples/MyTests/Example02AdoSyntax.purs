@@ -1,11 +1,11 @@
 module Examples.MyTests.Example02AdoSyntax where
 
-import Protolude
+import Protolude (Either, Unit, apply, bind, discard, error, map, pure, throwError, ($), (<<<), (\/))
 
-import Test.Spec as Test.Spec
-import Test.Spec.Assertions as Test.Spec
-import GraphqlClient
-import Swapi.Scalar
+import Test.Spec (Spec, it) as Test.Spec
+import Test.Spec.Assertions (shouldEqual) as Test.Spec
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, gqlRequest, printGraphqlError, writeGraphql)
+import Swapi.Scalar (Id(..))
 import Swapi.Query as Query
 import Swapi.Interface.Character as Character
 

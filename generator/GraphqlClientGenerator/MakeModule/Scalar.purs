@@ -1,9 +1,9 @@
 module GraphqlClientGenerator.MakeModule.Scalar where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import Language.PS.CST
-import Language.PS.CST.Sugar
-import Protolude
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
+import Language.PS.CST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), ImportDecl(..), Module(..), ModuleName, ProperName(..), Type(..))
+import Language.PS.CST.Sugar (mkModuleName, nonQualifiedName, stringType)
+import Protolude (Maybe(..), (#), ($), (<#>), (<>))
 
 import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty
