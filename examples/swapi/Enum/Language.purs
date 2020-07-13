@@ -19,6 +19,6 @@ instance languageGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseSc
 instance languageToGraphqlArgumentValue :: ToGraphqlArgumentValue Language where
   toGraphqlArgumentValue =
     case _ of
-      En -> "EN"
-      Es -> "ES"
-      No -> "NO"
+      En -> ArgumentValueString "EN"
+      Es -> ArgumentValueString "ES"
+      No -> ArgumentValueString "NO"

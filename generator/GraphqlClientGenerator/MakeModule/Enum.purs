@@ -129,7 +129,7 @@ makeModule moduleName fullType =
                         { binders: NonEmpty.singleton (BinderConstructor { name: nonQualifiedName $ ProperName $ StringsExtra.pascalCase enumValue.name, args: [] })
                         , body: Unconditional
                             { whereBindings: []
-                            , expr: ExprString enumValue.name
+                            , expr: (nonQualifiedNameExprConstructor "ArgumentValueString") `ExprApp` (ExprString enumValue.name)
                             }
                         }
                     }
