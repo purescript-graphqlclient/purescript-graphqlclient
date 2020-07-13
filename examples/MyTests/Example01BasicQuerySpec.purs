@@ -6,33 +6,32 @@ import Test.Spec as Test.Spec
 import Test.Spec.Assertions as Test.Spec
 import GraphqlClient
 import Swapi.Scalar
+import Swapi.Query as Query
+import Swapi.Interface.Character as Character
 
-type Response = Character
+type Response = CharacterResponse
 
-type Character =
-  {
+type CharacterResponse =
+  { name :: String
+  , id :: Id
+  , friends :: Array String
   }
 
-data Scope__Human
+query :: SelectionSet Scope__RootQuery Response
+query = Query.hero defaultInput characterInfoSelection
 
--- | human :: ∀ r . HumanInput -> SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)
--- | human input = selectionForCompositeField "human" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+characterInfoSelection :: SelectionSet Character.Scope__Character CharacterResponse
+characterInfoSelection = { name: _, id: _, friends: _ } <$> Character.name <*> Character.id <*> Character.friends Character.name
 
--- | id :: SelectionSet Scope__Human Id
--- | id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+expectedQuery :: String
+expectedQuery = """query { hero { name id friends { name } } }"""
 
--- | query :: SelectionSet Scope__RootQuery Response
--- | query = human { id: Id "1001" } id
+spec :: Test.Spec.Spec Unit
+spec = Test.Spec.it "Example01BasicQuerySpec" do
+  writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
--- | expectedQuery :: String
--- | expectedQuery = """query { human(id: "1001") { id } }"""
+  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" query
 
--- | spec :: Test.Spec.Spec Unit
--- | spec = Test.Spec.it "Example01BasicQuerySpec" do
--- |   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
+  (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
--- |   (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" query
-
--- |   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
-
--- |   response' `Test.Spec.shouldEqual` Just (Id "1001")
+  response' `Test.Spec.shouldEqual` { friends: ["Han Solo","Leia Organa","C-3PO","R2-D2"], id: Id "1000", name: "Luke Skywalker" }
