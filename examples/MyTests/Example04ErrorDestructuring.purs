@@ -2,8 +2,10 @@ module Examples.MyTests.Example04ErrorDestructuring where
 
 import GraphqlClient
 import Protolude
-import Swapi.Scalar
+import Data.Array.NonEmpty as NonEmptyArray
+import Unsafe.Coerce as UnsafeCoerce
 
+import Swapi.Scalar
 import Swapi.Object.Human as Human
 import Swapi.Query (forcedError)
 import Swapi.Query as Query
@@ -25,5 +27,9 @@ spec = Test.Spec.it "Example04ErrorDestructuring" do
   (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" query
 
   case response of
-       Left error -> pure unit
+       Left (GraphqlUserError detail (ParsedData Nothing)) ->
+         case NonEmptyArray.uncons detail of
+              { head: GraphqlUserErrorDetail { message }, tail: [] } -> message `Test.Spec.shouldEqual` "Artificial error..."
+              _ -> Test.Spec.fail "should be only 1"
+       Left _ -> Test.Spec.fail "should be GraphqlUserError"
        Right _ -> Test.Spec.fail "should fail"

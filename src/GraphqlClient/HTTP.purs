@@ -50,15 +50,14 @@ newtype GraphqlUserErrorDetail =
 
 derive instance newtypeGraphqlErrorRecord :: Newtype GraphqlUserErrorDetail _
 derive instance genericGraphqlErrorRecord :: Generic GraphqlUserErrorDetail _
+derive newtype instance eqGraphqlUserErrorDetail :: Eq GraphqlUserErrorDetail
 
 decodeGraphqlErrorDetail :: ArgonautCore.Json -> Either JsonDecodeError GraphqlUserErrorDetail
-decodeGraphqlErrorDetail json = enhanceError do
-   jsonObject <- Data.Argonaut.Decode.Decoders.decodeJObject json
-   (messageJson /\ otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
-   (message :: String) <- Data.Argonaut.Decode.Decoders.decodeString messageJson
-   pure $ GraphqlUserErrorDetail { message, otherDetails }
-  where
-    enhanceError = lmap (Named "GraphqlUserErrorDetail")
+decodeGraphqlErrorDetail json = lmap (Named "GraphqlUserErrorDetail") do
+  jsonObject <- Data.Argonaut.Decode.Decoders.decodeJObject json
+  (messageJson /\ otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
+  (message :: String) <- Data.Argonaut.Decode.Decoders.decodeString messageJson
+  pure $ GraphqlUserErrorDetail { message, otherDetails }
 
 instance decodeJsonGraphqlErrorDetail :: DecodeJson GraphqlUserErrorDetail where
   decodeJson = decodeGraphqlErrorDetail
