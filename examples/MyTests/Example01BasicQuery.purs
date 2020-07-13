@@ -1,4 +1,4 @@
-module Examples.MyTests.Example01BasicQuerySpec where
+module Examples.MyTests.Example01BasicQuery where
 
 import Protolude
 
@@ -27,7 +27,7 @@ expectedQuery :: String
 expectedQuery = """query { hero { name id friends { name } } }"""
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Example01BasicQuerySpec" do
+spec = Test.Spec.it "Example01BasicQuery" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
   (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" query

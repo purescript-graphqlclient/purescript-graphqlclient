@@ -1,4 +1,4 @@
-module Examples.MyTests.Example00SingleFieldQuerySpec where
+module Examples.MyTests.Example00SingleFieldQuery where
 
 import Protolude
 
@@ -18,7 +18,7 @@ expectedQuery :: String
 expectedQuery = """query { human(id: "1001") { id } }"""
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Example00SingleFieldQuerySpec" do
+spec = Test.Spec.it "Example00SingleFieldQuery" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
   (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" query
