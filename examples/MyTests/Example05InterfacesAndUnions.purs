@@ -41,7 +41,7 @@ heroUnionSelection =
     , onDroid: Swapi.Object.Droid.primaryFunction <#> DroidDetails
     }
 
-heroSelection :: SelectionSet Scope__CharacterInterface HumanOrDroidWithName
+heroSelection :: SelectionSet Scope__Character HumanOrDroidWithName
 heroSelection =
   { name: _, details: _ }
     <$> Swapi.Interface.Character.name

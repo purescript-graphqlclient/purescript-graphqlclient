@@ -23,6 +23,6 @@ makeModule
   , exports: []
   , declarations:
     (instorpectionQueryResult__FullType__object_names <#> \name -> declDataWithoutConstructors (scopeName name)) <>
-    (instorpectionQueryResult__FullType__interface_names <#> \name -> declDataWithoutConstructors (scopeName name <> "Interface")) <>
+    (instorpectionQueryResult__FullType__interface_names <#> \name -> declDataWithoutConstructors (scopeName name)) <>
     (instorpectionQueryResult__FullType__union_names <#> \name -> declDataWithoutConstructors (scopeName name))
   }

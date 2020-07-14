@@ -120,17 +120,11 @@ declarationsForField parentName field =
                 Nothing -> maybeWrapInInput inside
                 Just infoThatRequiresPassingDecoder' ->
                   let
-                    name :: Maybe String
-                    name = infoThatRequiresPassingDecoder'.name <#> \name' ->
-                        case infoThatRequiresPassingDecoder'.kind of
-                            Interface -> name' <> "Interface"
-                            _ -> name'
-
                     insideDecoderAndResult :: Type
                     insideDecoderAndResult =
                       ( nonQualifiedNameTypeConstructor "SelectionSet"
                       `TypeApp`
-                      (nonQualifiedNameTypeConstructor $ "Scope__" <> maybe "ERROR" StringsExtra.pascalCase name)
+                      (nonQualifiedNameTypeConstructor $ "Scope__" <> maybe "ERROR" StringsExtra.pascalCase infoThatRequiresPassingDecoder'.name)
                       `TypeApp`
                       typeVar "r"
                       )

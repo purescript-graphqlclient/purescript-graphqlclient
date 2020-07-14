@@ -16,7 +16,7 @@ appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
 avatarUrl :: SelectionSet Scope__Droid String
 avatarUrl = selectionForField "avatarUrl" [] graphqlDefaultResponseScalarDecoder
 
-friends :: forall r . SelectionSet Scope__CharacterInterface r -> SelectionSet Scope__Droid (Array r)
+friends :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__Droid (Array r)
 friends = selectionForCompositeField "friends" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 id :: SelectionSet Scope__Droid Id

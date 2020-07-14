@@ -6,6 +6,6 @@ data Scope__Droid
 
 data Scope__Human
 
-data Scope__CharacterInterface
+data Scope__Character
 
 data Scope__CharacterUnion
