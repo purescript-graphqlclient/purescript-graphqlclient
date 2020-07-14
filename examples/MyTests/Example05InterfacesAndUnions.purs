@@ -10,8 +10,7 @@ import Swapi.Object.Human as Swapi.Object.Human
 import Swapi.Query as Swapi.Query
 import Swapi.Union.CharacterUnion as Swapi.Union.CharacterUnion
 import Swapi.Interface.Character as Swapi.Interface.Character
-import Swapi.Interface
-import Swapi.Union
+import Swapi.Scopes
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -42,7 +41,7 @@ heroUnionSelection =
     , onDroid: Swapi.Object.Droid.primaryFunction <#> DroidDetails
     }
 
-heroSelection :: SelectionSet Scope__Character HumanOrDroidWithName
+heroSelection :: SelectionSet Scope__CharacterInterface HumanOrDroidWithName
 heroSelection =
   { name: _, details: _ }
     <$> Swapi.Interface.Character.name

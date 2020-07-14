@@ -29,6 +29,11 @@ makeModule apiModuleName moduleName inputObjectTypes instorpectionQueryResult__F
       , names: []
       , qualification: Nothing
       }
+    , ImportDecl
+      { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"]
+      , names: []
+      , qualification: Nothing
+      }
     ] <>
       (instorpectionQueryResult__FullType__enum_names <#>
         (\name -> ImportDecl

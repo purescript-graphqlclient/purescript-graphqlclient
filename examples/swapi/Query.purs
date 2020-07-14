@@ -8,9 +8,7 @@ import Swapi.InputObject
 import Swapi.Enum.Episode
 import Swapi.Enum.Language
 import Swapi.Enum.Phrase
-import Swapi.Interface
-import Swapi.Object
-import Swapi.Union
+import Swapi.Scopes
 
 type DroidInput = { id :: Id
                   }
@@ -33,7 +31,7 @@ hello = selectionForField "hello" [] graphqlDefaultResponseScalarDecoder
 type HeroInput = { episode :: Optional Episode
                  }
 
-hero :: forall r . HeroInput -> SelectionSet Scope__Character r -> SelectionSet Scope__RootQuery r
+hero :: forall r . HeroInput -> SelectionSet Scope__CharacterInterface r -> SelectionSet Scope__RootQuery r
 hero input = selectionForCompositeField "hero" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type HeroUnionInput = { episode :: Optional Episode

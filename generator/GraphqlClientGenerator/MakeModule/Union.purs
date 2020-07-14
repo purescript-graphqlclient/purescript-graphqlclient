@@ -15,6 +15,12 @@ makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleNa
   { moduleName
   , imports:
       Imports.imports apiModuleName <>
+      [ ImportDecl
+        { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"]
+        , names: []
+        , qualification: Nothing
+        }
+      ] <>
       (instorpectionQueryResult__FullType__enum_names <#>
         (\name -> ImportDecl
           { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Enum", name]
@@ -24,5 +30,5 @@ makeModule apiModuleName instorpectionQueryResult__FullType__enum_names moduleNa
         )
       )
   , exports: []
-  , declarations: [declDataWithoutConstructors (scopeName fullType.name)] <> DeclarationsForFields.declarationsForFields fullType.name (fromMaybe [] fullType.fields)
+  , declarations: DeclarationsForFields.declarationsForFields fullType.name (fromMaybe [] fullType.fields)
   }

@@ -23,14 +23,12 @@ makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpe
           }
         )
       ) <>
-        (instorpectionQueryResult__FullType__interface_names <#>
-        (\name -> ImportDecl
-          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Interface", name]
-          , names: []
-          , qualification: Nothing
-          }
-        )
-      )
+      [ ImportDecl
+        { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"]
+        , names: []
+        , qualification: Nothing
+        }
+      ]
   , exports: []
-  , declarations: [declDataWithoutConstructors (scopeName fullType.name)] <> DeclarationsForFields.declarationsForFields fullType.name (fromMaybe [] fullType.fields)
+  , declarations: DeclarationsForFields.declarationsForFields fullType.name (fromMaybe [] fullType.fields)
   }

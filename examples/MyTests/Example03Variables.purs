@@ -5,7 +5,7 @@ import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwErro
 import Swapi.Scalar (Id(..))
 
 import Swapi.Object.Human as Human
-import Swapi.Object
+import Swapi.Scopes
 import Swapi.Query as Query
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec

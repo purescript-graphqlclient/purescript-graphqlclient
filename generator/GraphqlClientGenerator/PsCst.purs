@@ -22,6 +22,7 @@ import GraphqlClientGenerator.MakeModule.Query as MakeModule.Query
 import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
 import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
 import GraphqlClientGenerator.MakeModule.InputObject as MakeModule.InputObject
+import GraphqlClientGenerator.MakeModule.Scopes as MakeModule.Scopes
 
 type FilesMap =
   { dirs ::
@@ -34,6 +35,7 @@ type FilesMap =
     { "Scalar" :: String
     , "Query" :: String
     , "InputObject" :: String
+    , "Scopes" :: String
     }
   }
   -- | , "InputObject" :: String
@@ -168,5 +170,12 @@ mkFilesMap apiModuleName introspectionQueryResult =
             instorpectionQueryResult__FullType__union_names
             moduleName
             queryFields
+      , "Scopes": printModuleToString $
+          MakeModule.Scopes.makeModule
+          apiModuleName
+          instorpectionQueryResult__FullType__interface_names
+          instorpectionQueryResult__FullType__object_names
+          instorpectionQueryResult__FullType__union_names
+          (mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"])
       }
     }

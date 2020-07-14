@@ -37,30 +37,12 @@ makeModule
           }
         )
       ) <>
-        (instorpectionQueryResult__FullType__interface_names <#>
-        (\name -> ImportDecl
-          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Interface", name]
-          , names: []
-          , qualification: Nothing
-          }
-        )
-      ) <>
-        (instorpectionQueryResult__FullType__object_names <#>
-        (\name -> ImportDecl
-          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Object", name]
-          , names: []
-          , qualification: Nothing
-          }
-        )
-      ) <>
-        (instorpectionQueryResult__FullType__union_names <#>
-        (\name -> ImportDecl
-          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Union", name]
-          , names: []
-          , qualification: Nothing
-          }
-        )
-      )
+      [ ImportDecl
+        { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"]
+        , names: []
+        , qualification: Nothing
+        }
+      ]
   , exports: []
   , declarations: DeclarationsForFields.declarationsForFields "RootQuery" fields
   }

@@ -8,8 +8,7 @@ import Swapi.InputObject
 import Swapi.Enum.Episode
 import Swapi.Enum.Language
 import Swapi.Enum.Phrase
-import Swapi.Interface
-import Swapi.Object
+import Swapi.Scopes
 
 appearsIn :: SelectionSet Scope__Human (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
@@ -17,7 +16,7 @@ appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
 avatarUrl :: SelectionSet Scope__Human String
 avatarUrl = selectionForField "avatarUrl" [] graphqlDefaultResponseScalarDecoder
 
-friends :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__Human (Array r)
+friends :: forall r . SelectionSet Scope__CharacterInterface r -> SelectionSet Scope__Human (Array r)
 friends = selectionForCompositeField "friends" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 homePlanet :: SelectionSet Scope__Human (Maybe String)
