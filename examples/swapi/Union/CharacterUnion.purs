@@ -14,9 +14,9 @@ import Swapi.Object.Human as Human
 data Scope__CharacterUnion
 
 type Fragments decodesTo =
-    { onHuman :: SelectionSet Human.Scope__Human decodesTo
-    , onDroid :: SelectionSet Droid.Scope__Droid decodesTo
-    }
+  { onHuman :: SelectionSet Human.Scope__Human decodesTo
+  , onDroid :: SelectionSet Droid.Scope__Droid decodesTo
+  }
 
 fragments
   :: forall decodesTo
@@ -28,9 +28,8 @@ fragments selections =
     , buildFragment "Droid" selections.onDroid
     ]
 
-
--- | maybeFragments : Fragments (Maybe decodesTo)
--- | maybeFragments =
--- |     { onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
--- |     , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
--- |     }
+maybeFragments :: forall decodesTo . Fragments (Maybe decodesTo)
+maybeFragments =
+  { onHuman: pure Nothing
+  , onDroid: pure Nothing
+  }

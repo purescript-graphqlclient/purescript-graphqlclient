@@ -236,7 +236,11 @@ data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Json -> Eith
 
 derive instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock)
 
-instance selectionSetApply :: Apply (SelectionSet parentTypeLock) where
+instance applicativeSelectionSet :: Applicative (SelectionSet parentTypeLock) where
+  pure :: ∀ a parentTypeLock . a -> SelectionSet parentTypeLock a
+  pure a = SelectionSet [] (const $ Right a)
+
+instance applySelectionSet :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
   apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
 

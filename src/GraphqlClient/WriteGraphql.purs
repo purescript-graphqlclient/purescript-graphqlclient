@@ -17,21 +17,31 @@ instance writeGraphQlRawField :: WriteGraphql RawField where
   writeGraphql field = case field of
     Leaf name args -> name <> writeGraphqlArguments args
     Composite name args subFields -> name <> writeGraphqlArguments args <> writeGraphql subFields
+    OnSpread onType [] -> ""
     OnSpread onType subFields -> "...on " <> onType <> writeGraphql subFields
 
 instance writeGraphQlArrayRawField :: WriteGraphql (Array RawField) where
   writeGraphql [] = ""
-  writeGraphql fields = " { " <> __typename <> fields' <> " }"
+  writeGraphql fields = " { " <> fields'' <> " }"
     where
-      fields' :: String
-      fields' = String.joinWith " " (writeGraphql <$> fields)
+      fields' :: Array RawField
+      fields' = Array.filter isNonEmpty fields
 
-      __typename :: String
+      fields'' :: String
+      fields'' = String.joinWith " " $ __typename <> (writeGraphql <$> fields')
+
+      __typename :: Array String
       __typename =
         if isOnSpreadPresent fields
-          then "__typename "
-          else ""
+          then ["__typename"]
+          else []
 
+
+isNonEmpty :: RawField -> Boolean
+isNonEmpty = case _ of
+  Composite _ _ [] -> false
+  OnSpread _ [] -> false
+  _ -> true
 
 isOnSpreadPresent :: Array RawField -> Boolean
 isOnSpreadPresent = Array.any isOnSpread

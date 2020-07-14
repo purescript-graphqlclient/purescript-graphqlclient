@@ -15,7 +15,7 @@ import Test.Spec.Assertions (shouldEqual) as Test.Spec
 type Response =
   { heroUnion :: HumanOrDroidDetails
   -- | , heroInterface :: HumanOrDroidWithName
-  -- | , nonExhaustiveFragment :: Maybe String
+  , nonExhaustiveFragment :: Maybe String
   }
 
 data HumanOrDroidDetails
@@ -34,8 +34,18 @@ heroUnionSelection =
     , onDroid: Droid.primaryFunction <#> DroidDetails
     }
 
+nonExhaustiveFragment :: SelectionSet CharacterUnion.Scope__CharacterUnion (Maybe String)
+nonExhaustiveFragment = CharacterUnion.fragments $ CharacterUnion.maybeFragments
+  { onHuman = Human.name <#> Just
+  }
+
 query :: SelectionSet Scope__RootQuery Response
-query = { heroUnion: _ } <$> Query.heroUnion defaultInput heroUnionSelection
+query =
+  { heroUnion: _
+  , nonExhaustiveFragment: _
+  }
+  <$> Query.heroUnion defaultInput heroUnionSelection
+  <*> Query.heroUnion defaultInput nonExhaustiveFragment
 
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
@@ -47,6 +57,12 @@ query {
     }
     ...on Droid {
       primaryFunction
+    }
+  }
+  heroUnion {
+    __typename
+    ...on Human {
+      name
     }
   }
 }
@@ -91,4 +107,4 @@ spec = Test.Spec.it "Example05InterfacesAndUnions" do
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
-  response' `Test.Spec.shouldEqual` { heroUnion: HumanDetails (Just "Tatooine") }
+  response' `Test.Spec.shouldEqual` { heroUnion: HumanDetails (Just "Tatooine"), nonExhaustiveFragment: Just "Luke Skywalker" }
