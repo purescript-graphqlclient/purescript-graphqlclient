@@ -8,9 +8,8 @@ import Swapi.InputObject
 import Swapi.Enum.Episode
 import Swapi.Enum.Language
 import Swapi.Enum.Phrase
-import Swapi.Interface.Character
-
-data Scope__ChatMessage
+import Swapi.Interface
+import Swapi.Object
 
 character :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__ChatMessage (Maybe r)
 character = selectionForCompositeField "character" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

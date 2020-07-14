@@ -8,9 +8,8 @@ import Swapi.InputObject
 import Swapi.Enum.Episode
 import Swapi.Enum.Language
 import Swapi.Enum.Phrase
-import Swapi.Interface.Character
-
-data Scope__Human
+import Swapi.Interface
+import Swapi.Object
 
 appearsIn :: SelectionSet Scope__Human (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder

@@ -8,6 +8,7 @@ import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput
 import Swapi.Scalar (Id(..))
 import Swapi.Query as Query
 import Swapi.Interface.Character as Character
+import Swapi.Interface
 import Examples.MyTests.Util
 
 type Response = CharacterResponse
@@ -21,7 +22,7 @@ type CharacterResponse =
 query :: SelectionSet Scope__RootQuery Response
 query = Query.hero defaultInput characterInfoSelection
 
-characterInfoSelection :: SelectionSet Character.Scope__Character CharacterResponse
+characterInfoSelection :: SelectionSet Scope__Character CharacterResponse
 characterInfoSelection = ado
   name' <- Character.name
   id' <- Character.id

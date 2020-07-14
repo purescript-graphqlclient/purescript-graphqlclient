@@ -5,6 +5,7 @@ import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwErro
 import Swapi.Scalar (Id(..))
 
 import Swapi.Object.Human as Human
+import Swapi.Object
 import Swapi.Query as Query
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
@@ -20,7 +21,7 @@ type HumanResponse =
 query :: Id -> SelectionSet Scope__RootQuery Response
 query id = Query.human { id } humanInfoSelection
 
-humanInfoSelection :: SelectionSet Human.Scope__Human HumanResponse
+humanInfoSelection :: SelectionSet Scope__Human HumanResponse
 humanInfoSelection = { name: _, homePlanet: _ } <$> Human.name <*> Human.homePlanet
 
 expectedQuery :: String

@@ -8,11 +8,9 @@ import Swapi.InputObject
 import Swapi.Enum.Episode
 import Swapi.Enum.Language
 import Swapi.Enum.Phrase
-import Swapi.Interface.Character
-import Swapi.Object.ChatMessage
-import Swapi.Object.Droid
-import Swapi.Object.Human
-import Swapi.Union.CharacterUnion
+import Swapi.Interface
+import Swapi.Object
+import Swapi.Union
 
 type DroidInput = { id :: Id
                   }

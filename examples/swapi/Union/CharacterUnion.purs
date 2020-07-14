@@ -8,14 +8,12 @@ import Swapi.InputObject
 import Swapi.Enum.Episode
 import Swapi.Enum.Language
 import Swapi.Enum.Phrase
-import Swapi.Object.Droid as Droid
-import Swapi.Object.Human as Human
-
-data Scope__CharacterUnion
+import Swapi.Object
+import Swapi.Union
 
 type Fragments decodesTo =
-  { onHuman :: SelectionSet Human.Scope__Human decodesTo
-  , onDroid :: SelectionSet Droid.Scope__Droid decodesTo
+  { onHuman :: SelectionSet Scope__Human decodesTo
+  , onDroid :: SelectionSet Scope__Droid decodesTo
   }
 
 fragments
