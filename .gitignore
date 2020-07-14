@@ -1,11 +1,11 @@
-/bower_components/
-/node_modules/
-/.pulp-cache/
+bower_components/
+node_modules/
+.pulp-cache/
 /output/
 output-test/
 /generated-docs/
 /.psc-package/
 .psc*
-/.purs*
-/.psa*
+.purs*
+.psa*
 .spago/
