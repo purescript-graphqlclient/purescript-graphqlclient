@@ -8,6 +8,7 @@ import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput
 import Swapi.Scalar (Id(..))
 import Swapi.Query as Query
 import Swapi.Interface.Character as Character
+import Examples.MyTests.Util
 
 type Response = CharacterResponse
 
@@ -28,7 +29,17 @@ characterInfoSelection = ado
   in { name: name', id: id', friends: friends' }
 
 expectedQuery :: String
-expectedQuery = """query { hero { name id friends { name } } }"""
+expectedQuery = inlineAndTrim """
+query {
+  hero {
+    name
+    id
+    friends {
+      name
+    }
+  }
+}
+"""
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example02AdoSyntax" do

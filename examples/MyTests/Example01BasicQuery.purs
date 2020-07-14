@@ -8,6 +8,7 @@ import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput
 import Swapi.Scalar (Id(..))
 import Swapi.Query as Query
 import Swapi.Interface.Character as Character
+import Examples.MyTests.Util
 
 type Response = CharacterResponse
 
@@ -24,7 +25,17 @@ characterInfoSelection :: SelectionSet Character.Scope__Character CharacterRespo
 characterInfoSelection = { name: _, id: _, friends: _ } <$> Character.name <*> Character.id <*> Character.friends Character.name
 
 expectedQuery :: String
-expectedQuery = """query { hero { name id friends { name } } }"""
+expectedQuery = inlineAndTrim """
+query {
+  hero {
+    name
+    id
+    friends {
+      name
+    }
+  }
+}
+"""
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example01BasicQuery" do

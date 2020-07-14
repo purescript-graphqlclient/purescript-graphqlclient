@@ -1,4 +1,4 @@
-module Examples.MyTests.Example04ErrorDestructuring where
+module Examples.MyTests.Example05InterfacesAndUnions where
 
 import GraphqlClient (GraphqlError(..), GraphqlUserErrorDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, gqlRequest, writeGraphql)
 import Protolude (Either(..), Maybe(..), Unit, bind, discard)
@@ -16,13 +16,40 @@ query = Query.forcedError
 
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
-query {
-  forcedError
-}
+  query {
+    heroUnion {
+      __typename
+      ...on Human {
+        homePlanet12867311: homePlanet
+      }
+      ...on Droid {
+        primaryFunction12867311: primaryFunction
+      }
+    }
+    hero {
+      name3832528868: name
+      __typename
+      ...on Human {
+        homePlanet12867311: homePlanet
+      }
+      ...on Droid {
+        primaryFunction12867311: primaryFunction
+      }
+    }
+    heroUnion {
+      __typename
+      ...on Human {
+        homePlanet12867311: homePlanet
+      }
+      ...on Droid {
+        __typename
+      }
+    }
+  }
 """
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Example04ErrorDestructuring" do
+spec = Test.Spec.it "Example05InterfacesAndUnions" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
   (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" query

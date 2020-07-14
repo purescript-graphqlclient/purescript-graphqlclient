@@ -8,6 +8,7 @@ import Swapi.Object.Human as Human
 import Swapi.Query as Query
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
+import Examples.MyTests.Util
 
 type Response = Maybe HumanResponse
 
@@ -23,7 +24,14 @@ humanInfoSelection :: SelectionSet Human.Scope__Human HumanResponse
 humanInfoSelection = { name: _, homePlanet: _ } <$> Human.name <*> Human.homePlanet
 
 expectedQuery :: String
-expectedQuery = """query { human(id: "1001") { name homePlanet } }"""
+expectedQuery = inlineAndTrim """
+query {
+  human(id: "1001") {
+    name
+    homePlanet
+  }
+}
+"""
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example03Variables" do

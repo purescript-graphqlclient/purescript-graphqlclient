@@ -8,6 +8,7 @@ import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, gqlRequest, 
 import Swapi.Scalar (Id(..))
 import Swapi.Object.Human (id)
 import Swapi.Query (human)
+import Examples.MyTests.Util
 
 type Response = Maybe Id
 
@@ -15,7 +16,13 @@ query :: SelectionSet Scope__RootQuery Response
 query = human { id: Id "1001" } id
 
 expectedQuery :: String
-expectedQuery = """query { human(id: "1001") { id } }"""
+expectedQuery = inlineAndTrim """
+query {
+  human(id: "1001") {
+    id
+  }
+}
+"""
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example00SingleFieldQuery" do
