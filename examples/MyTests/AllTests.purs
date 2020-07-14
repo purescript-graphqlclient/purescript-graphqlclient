@@ -7,6 +7,7 @@ import Examples.MyTests.Example01BasicQuery as Examples.MyTests.Example01BasicQu
 import Examples.MyTests.Example02AdoSyntax as Examples.MyTests.Example02AdoSyntax
 import Examples.MyTests.Example03Variables as Examples.MyTests.Example03Variables
 import Examples.MyTests.Example04ErrorDestructuring as Examples.MyTests.Example04ErrorDestructuring
+import Examples.MyTests.Example05InterfacesAndUnions as Examples.MyTests.Example05InterfacesAndUnions
 
 allTests :: Test.Spec.Spec Unit
 allTests = Test.Spec.parallel do
@@ -15,3 +16,4 @@ allTests = Test.Spec.parallel do
   Examples.MyTests.Example02AdoSyntax.spec
   Examples.MyTests.Example03Variables.spec
   Examples.MyTests.Example04ErrorDestructuring.spec
+  Examples.MyTests.Example05InterfacesAndUnions.spec

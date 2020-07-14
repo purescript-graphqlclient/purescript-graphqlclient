@@ -5,7 +5,7 @@
 output-test/
 /generated-docs/
 /.psc-package/
-/.psc*
+.psc*
 /.purs*
 /.psa*
 .spago/

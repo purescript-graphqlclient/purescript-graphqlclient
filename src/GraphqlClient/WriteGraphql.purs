@@ -2,9 +2,9 @@ module GraphqlClient.WriteGraphql where
 
 import Protolude
 
-import Data.Int (decimal, toStringAs)
-import Data.String (joinWith)
-import Data.String (null) as Data.String
+import Data.Array as Array
+import Data.Int as Int
+import Data.String as String
 import GraphqlClient.Implementation (Argument(..), ArgumentValue(..), RawField(..), Scope__RootQuery, SelectionSet(..), Optional(..))
 
 class WriteGraphql a where
@@ -17,18 +17,36 @@ instance writeGraphQlRawField :: WriteGraphql RawField where
   writeGraphql field = case field of
     Leaf name args -> name <> writeGraphqlArguments args
     Composite name args subFields -> name <> writeGraphqlArguments args <> writeGraphql subFields
+    OnSpread onType subFields -> "...on " <> onType <> writeGraphql subFields
 
 instance writeGraphQlArrayRawField :: WriteGraphql (Array RawField) where
   writeGraphql [] = ""
-  writeGraphql fields = " { " <> joinWith " " (writeGraphql <$> fields) <> " }"
+  writeGraphql fields = " { " <> __typename <> fields' <> " }"
+    where
+      fields' :: String
+      fields' = String.joinWith " " (writeGraphql <$> fields)
+
+      __typename :: String
+      __typename =
+        if isOnSpreadPresent fields
+          then "__typename "
+          else ""
+
+
+isOnSpreadPresent :: Array RawField -> Boolean
+isOnSpreadPresent = Array.any isOnSpread
+
+isOnSpread :: RawField -> Boolean
+isOnSpread (OnSpread _ _) = true
+isOnSpread _ = false
 
 -------------------------
 
 writeGraphqlArguments :: Array Argument -> String
 writeGraphqlArguments [] = ""
 writeGraphqlArguments args =
-  let args' = joinWith ", " $ writeGraphqlArgumentsImpl <$> args
-   in if Data.String.null args' then "" else "(" <> args' <> ")"
+  let args' = String.joinWith ", " $ writeGraphqlArgumentsImpl <$> args
+   in if String.null args' then "" else "(" <> args' <> ")"
 
 class WriteGraphqlArgumentsImpl a where
   writeGraphqlArgumentsImpl :: a -> String
@@ -43,15 +61,15 @@ instance writeGraphQlArgument :: WriteGraphqlArgumentsImpl Argument where
 instance writeGraphQlGqlArgument :: WriteGraphqlArgumentsImpl ArgumentValue where
   writeGraphqlArgumentsImpl value = case value of
     ArgumentValueString s -> "\"" <> s <> "\""
-    ArgumentValueInt i -> toStringAs decimal i
+    ArgumentValueInt i -> Int.toStringAs Int.decimal i
     ArgumentValueBoolean b -> if b then "true" else "false"
     ArgumentValueMaybe maybeArg -> maybe "null" writeGraphqlArgumentsImpl maybeArg
     ArgumentValueArray [] -> "[]"
-    ArgumentValueArray argsArray -> "[" <> (joinWith ", " $ map writeGraphqlArgumentsImpl argsArray) <> "]"
+    ArgumentValueArray argsArray -> "[" <> (String.joinWith ", " $ map writeGraphqlArgumentsImpl argsArray) <> "]"
     ArgumentValueObject arguments -> writeGraphqlArgumentsImpl arguments
 
 instance writeGraphQlArrayArgument :: WriteGraphqlArgumentsImpl (Array Argument) where
   writeGraphqlArgumentsImpl [] = ""
   writeGraphqlArgumentsImpl args =
-    let args' = joinWith ", " $ writeGraphqlArgumentsImpl <$> args
-     in if Data.String.null args' then "" else "{ " <> args' <> " }"
+    let args' = String.joinWith ", " $ writeGraphqlArgumentsImpl <$> args
+     in if String.null args' then "" else "{ " <> args' <> " }"
