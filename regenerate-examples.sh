@@ -13,3 +13,8 @@ spago run \
 spago run \
   --main GraphqlClientGenerator.Main \
   --node-args "--input-url https://api.github.com/graphql --header \"Authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59\" --output examples/github --api Examples.Github"
+
+# TODO: circular deps
+# spago run \
+#   --main GraphqlClientGenerator.Main \
+#   --node-args "--input-url https://elm-graphql-normalize.herokuapp.com --output examples/normalize --api Examples.Normalize"
