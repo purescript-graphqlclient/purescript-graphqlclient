@@ -12,8 +12,8 @@ import Data.NonEmpty (NonEmpty(..))
 import Data.String.Extra (pascalCase)
 import Data.String.Extra as StringsExtra
 
-declarationForPossibleTypes :: String -> Array InstorpectionQueryResult__TypeRef -> Array Declaration
-declarationForPossibleTypes parentName typeRefs =
+declarationForPossibleTypes :: (String -> String) -> String -> Array InstorpectionQueryResult__TypeRef -> Array Declaration
+declarationForPossibleTypes nameToScope parentName typeRefs =
   let
       names :: Array String
       names =
@@ -33,7 +33,7 @@ declarationForPossibleTypes parentName typeRefs =
           , type_:
             nonQualifiedNameTypeConstructor "SelectionSet"
             `TypeApp`
-            nonQualifiedNameTypeConstructor ("Scope__" <> StringsExtra.pascalCase name)
+            nonQualifiedNameTypeConstructor (nameToScope name)
             `TypeApp`
             TypeVar (Ident "decodesTo")
           }
@@ -51,7 +51,7 @@ declarationForPossibleTypes parentName typeRefs =
           `TypeArr`
           ( nonQualifiedNameTypeConstructor "SelectionSet"
             `TypeApp`
-            nonQualifiedNameTypeConstructor ("Scope__" <> StringsExtra.pascalCase parentName)
+            nonQualifiedNameTypeConstructor (nameToScope parentName)
             `TypeApp`
             TypeVar (Ident "decodesTo")
           )

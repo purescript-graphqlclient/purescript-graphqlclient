@@ -45,7 +45,7 @@ spec = Test.Spec.describe "Introspection spec" $ Test.Spec.parallel $ for_ urls 
   (expectedJson :: Json) <- request Test.IntrospectionQuery.introspectionQuery url { includeDeprecated }
   (expectedParsed :: GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoder expectedJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
 
-  (actualJson :: Json) <- GraphqlClient.post url (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
+  (actualJson :: Json) <- GraphqlClient.post url [] (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
     >>= (throwError <<< error <<< Affjax.printError) \/ (\response -> pure response.body)
     >>= (GraphqlClient.tryDecodeGraphqlResponse Right >>> pure)
     >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure

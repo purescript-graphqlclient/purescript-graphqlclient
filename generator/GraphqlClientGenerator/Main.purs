@@ -1,7 +1,6 @@
 module GraphqlClientGenerator.Main where
 
 import Protolude
-import Protolude.Node (exitWith)
 
 import Control.Monad.Reader.Trans (ReaderT)
 import Data.Argonaut.Core (Json) as ArgonautCore
@@ -12,8 +11,8 @@ import Data.Foldable (null)
 import Data.Map (Map)
 import Data.TraversableWithIndex (forWithIndex)
 import GraphqlClient as GraphqlClient
-import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.GraphqlJs as GraphqlJs
+import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.Options as GraphqlClientGenerator.Options
 import GraphqlClientGenerator.PsCst as GraphqlClientGenerator.PsCst
 import Node.Encoding (Encoding(..))
@@ -22,6 +21,7 @@ import Node.FS.Aff.Mkdirp as Node.FS.Aff.Mkdirp
 import Node.Path (FilePath)
 import Node.Path (concat, resolve) as Node.FS
 import Options.Applicative (execParser)
+import Protolude.Node (exitWith)
 import Record.Homogeneous (foldMapValuesWithIndexL)
 
 type App a = ReaderT GraphqlClientGenerator.Options.AppOptions Aff a
@@ -52,7 +52,7 @@ main = do
           let
             urlString = unwrap url
 
-          resp <- GraphqlClient.gqlRequest urlString introspectionQuery
+          resp <- GraphqlClient.gqlRequest urlString appOptions.headers introspectionQuery
             >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
           pure resp
@@ -107,3 +107,4 @@ main = do
 
     foldMapValuesWithIndexL printModuleForDirs filesMap.dirs
     foldMapValuesWithIndexL printModuleForFiles filesMap.files
+    filesMap."Scalars" # maybe (pure unit) (\content -> void $ printModule outputDirAbs "Scalars" content)

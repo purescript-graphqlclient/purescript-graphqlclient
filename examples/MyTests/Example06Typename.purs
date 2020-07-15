@@ -50,11 +50,6 @@ heroSelection =
       }
     )
 
-nonExhaustiveFragment :: SelectionSet Scope__CharacterUnion (Maybe String)
-nonExhaustiveFragment = Examples.Swapi.Union.CharacterUnion.fragments $ Examples.Swapi.Union.CharacterUnion.maybeFragments
-  { onHuman = Examples.Swapi.Object.Human.name <#> Just
-  }
-
 query :: SelectionSet Scope__RootQuery Response
 query =
   { heroUnion: _
@@ -80,7 +75,7 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example06Typename" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" query
+  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" [] query
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 

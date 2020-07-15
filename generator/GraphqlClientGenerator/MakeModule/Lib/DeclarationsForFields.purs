@@ -4,7 +4,7 @@ import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Fie
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind (TypeKind(..))
 import Language.PS.CST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), Row(..), Type(..), (====>>))
 import Language.PS.CST.Sugar (nonQualifiedExprIdent, nonQualifiedNameTypeConstructor, typeVar, typeVarName)
-import Protolude (List(..), Maybe(..), const, maybe, (#), ($), (<#>), (<<<), (<>))
+import Protolude
 
 import Data.Array as Array
 import Data.List ((:))
@@ -16,7 +16,16 @@ arrayType :: Type -> Type
 arrayType typeInside = nonQualifiedNameTypeConstructor "Array" `TypeApp` typeInside
 
 typeRefType :: Maybe String -> Type
-typeRefType name = nonQualifiedNameTypeConstructor (maybe "ERROR_TYPE_REF_NAME_SHOULD_NOT_BE_NOTHING" StringsExtra.pascalCase name)
+typeRefType name = nonQualifiedNameTypeConstructor (maybe "ERROR_TYPE_REF_NAME_SHOULD_NOT_BE_NOTHING" make name)
+  where
+    make :: String -> String
+    make = StringsExtra.pascalCase >>> graphqlTypeToPurescriptType
+
+graphqlTypeToPurescriptType :: String -> String
+graphqlTypeToPurescriptType =
+  case _ of
+    "Float" -> "Number"
+    x -> x
 
 typeRefTypeScope :: Maybe String -> Type
 typeRefTypeScope name = nonQualifiedNameTypeConstructor (maybe "ERROR_TYPE_REF_NAME_SHOULD_NOT_BE_NOTHING" (const "r") name)
@@ -82,8 +91,8 @@ declInput parentName args = DeclType
     }
   }
 
-declarationsForField :: String -> InstorpectionQueryResult__Field -> Array Declaration
-declarationsForField parentName field =
+declarationsForField :: (String -> String) -> String -> InstorpectionQueryResult__Field -> Array Declaration
+declarationsForField nameToScope parentName field =
   let
     typeRefInfo :: List { kind :: TypeKind, name :: Maybe String }
     typeRefInfo = collectTypeRefInfo field."type"
@@ -113,7 +122,7 @@ declarationsForField parentName field =
         inside =
           nonQualifiedNameTypeConstructor "SelectionSet"
           `TypeApp`
-          nonQualifiedNameTypeConstructor ("Scope__" <> StringsExtra.pascalCase parentName)
+          nonQualifiedNameTypeConstructor (nameToScope parentName)
           `TypeApp`
           mkFieldType "Maybe" typeRefInfo
         in case infoThatRequiresPassingDecoder of
@@ -124,7 +133,7 @@ declarationsForField parentName field =
                     insideDecoderAndResult =
                       ( nonQualifiedNameTypeConstructor "SelectionSet"
                       `TypeApp`
-                      (nonQualifiedNameTypeConstructor $ "Scope__" <> maybe "ERROR" StringsExtra.pascalCase infoThatRequiresPassingDecoder'.name)
+                      (nonQualifiedNameTypeConstructor $ maybe "ERROR" nameToScope infoThatRequiresPassingDecoder'.name)
                       `TypeApp`
                       typeVar "r"
                       )
@@ -174,8 +183,8 @@ declarationsForField parentName field =
       }
   ]
 
-declarationsForFields :: String -> Array InstorpectionQueryResult__Field -> Array Declaration
-declarationsForFields parentName fields =
+declarationsForFields :: (String -> String) -> String -> Array InstorpectionQueryResult__Field -> Array Declaration
+declarationsForFields nameToScope parentName fields =
   fields
-  <#> declarationsForField parentName
+  <#> declarationsForField nameToScope parentName
   # Array.concat

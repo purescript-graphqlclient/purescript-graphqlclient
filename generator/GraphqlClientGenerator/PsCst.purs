@@ -86,9 +86,36 @@ mkFilesMap :: Maybe ModuleName -> NonEmptyArray String -> InstorpectionQueryResu
 mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
   let
     excludeQuery name        = introspectionQueryResult.__schema.queryType.name == name
-    excludeMutation name     = introspectionQueryResult.__schema.mutationType # maybe true (\type_ -> type_.name == name)
-    excludeSubscription name = introspectionQueryResult.__schema.subscriptionType # maybe true (\type_ -> type_.name == name)
+    excludeMutation name     = introspectionQueryResult.__schema.mutationType # maybe false (\type_ -> type_.name == name)
+    excludeSubscription name = introspectionQueryResult.__schema.subscriptionType # maybe false (\type_ -> type_.name == name)
     excludeBuiltIn           = isBuiltIn
+
+    nameToScope :: String -> String
+    nameToScope = doQuery >>> doMutation >>> doSubscription >>> StringsExtra.pascalCase >>> (\x -> "Scope__" <> x)
+      where
+        doQuery :: String -> String
+        doQuery str =
+          if str == introspectionQueryResult.__schema.queryType.name
+            then "RootQuery"
+            else str
+
+        doMutation :: String -> String
+        doMutation str =
+          case introspectionQueryResult.__schema.mutationType of
+               Nothing -> str
+               Just { name } ->
+                  if str == name
+                    then "RootMutation"
+                    else str
+
+        doSubscription :: String -> String
+        doSubscription str =
+          case introspectionQueryResult.__schema.subscriptionType of
+               Nothing -> str
+               Just { name } ->
+                  if str == name
+                    then "RootSubscription"
+                    else str
 
     notExcluded = not $ anyPredicate [excludeQuery, excludeMutation, excludeSubscription, excludeBuiltIn]
 
@@ -136,15 +163,15 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
         # Map.fromFoldable
       , "Object":
         instorpectionQueryResult__FullType__object
-        <#> (fullTypeToModuleMapItem (MakeModule.Object.makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names) apiModuleName "Object")
+        <#> (fullTypeToModuleMapItem (MakeModule.Object.makeModule nameToScope importScalar apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names) apiModuleName "Object")
         # Map.fromFoldable
       , "Interface":
         instorpectionQueryResult__FullType__interface
-        <#> (fullTypeToModuleMapItem (MakeModule.Interface.makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Interface")
+        <#> (fullTypeToModuleMapItem (MakeModule.Interface.makeModule nameToScope importScalar apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Interface")
         # Map.fromFoldable
       , "Union":
         onlyTypesWithoutExcluded TypeKind.Union
-        <#> (fullTypeToModuleMapItem (MakeModule.Union.makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Union")
+        <#> (fullTypeToModuleMapItem (MakeModule.Union.makeModule nameToScope importScalar apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Union")
         # Map.fromFoldable
       }
     , files:
@@ -170,6 +197,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
          in
           printModuleToString $
             MakeModule.Query.makeModule
+            nameToScope
             importScalar
             apiModuleName
             instorpectionQueryResult__FullType__enum_names
@@ -180,6 +208,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
             queryFields
       , "Scopes": printModuleToString $
           MakeModule.Scopes.makeModule
+          nameToScope
           apiModuleName
           instorpectionQueryResult__FullType__interface_names
           instorpectionQueryResult__FullType__object_names

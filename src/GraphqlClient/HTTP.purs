@@ -1,11 +1,10 @@
 module GraphqlClient.HTTP where
 
-import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet(..))
-import GraphqlClient.WriteGraphql (writeGraphql)
 import Protolude
 
 import Affjax as Affjax
 import Affjax.RequestBody as Affjax.RequestBody
+import Affjax.RequestHeader as Affjax
 import Affjax.ResponseFormat as Affjax.ResponseFormat
 import Control.Monad.Except.Trans (runExceptT, throwError) as Transformers
 import Control.Monad.Trans.Class (lift) as Transformers
@@ -18,8 +17,11 @@ import Data.Argonaut.Encode as ArgonautCodecs.Encode
 import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty (toArray) as NonEmptyArray
+import Data.HTTP.Method (Method(..))
 import Foreign.Object (Object)
 import Foreign.Object as Foreign.Object
+import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet(..))
+import GraphqlClient.WriteGraphql (writeGraphql)
 
 {-
   TODO
@@ -131,17 +133,25 @@ tryDecodeGraphqlResponse decoderForData jsonBody = graphqlResponseOrError # (\er
           (possiblyParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # (\error -> Right $ UnparsedData error dataJson) \/ (Right <<< ParsedData)
           Right $ Left $ GraphqlUserError errors possiblyParsedData
 
-post :: Affjax.URL -> ArgonautCore.Json -> Aff (Either Affjax.Error (Affjax.Response ArgonautCore.Json))
-post url body = Affjax.post Affjax.ResponseFormat.json url (Just $ Affjax.RequestBody.json $ ArgonautCodecs.Encode.encodeJson body)
+post :: Affjax.URL -> Array Affjax.RequestHeader -> ArgonautCore.Json -> Aff (Either Affjax.Error (Affjax.Response ArgonautCore.Json))
+post url headers body =
+  Affjax.request (Affjax.defaultRequest
+                 { method = Left POST
+                 , url = url
+                 , content = Just $ Affjax.RequestBody.json $ ArgonautCodecs.Encode.encodeJson body
+                 , responseFormat = Affjax.ResponseFormat.json
+                 , headers = headers
+                 })
 
 gqlRequestImpl
   :: forall a
    . Affjax.URL
+  -> Array Affjax.RequestHeader
   -> String
   -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (Either (GraphqlError a) a)
-gqlRequestImpl url query decoder = Transformers.runExceptT do
-  (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url $ ArgonautCodecs.Encode.encodeJson { query }
+gqlRequestImpl url headers query decoder = Transformers.runExceptT do
+  (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url headers $ ArgonautCodecs.Encode.encodeJson { query }
   jsonBody <- case result of
     Left error -> Transformers.throwError $ GraphqlAffjaxError error
     Right response -> pure response.body
@@ -152,12 +162,13 @@ gqlRequestImplWithTrace
   :: forall a
    . Show a
   => Affjax.URL
+  -> Array Affjax.RequestHeader
   -> String
   -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (Either (GraphqlError a) a)
-gqlRequestImplWithTrace url query decoder = do
+gqlRequestImplWithTrace url headers query decoder = do
   traceWithoutInspectM $ "[gqlRequest] query = " <> query
-  result <- gqlRequestImpl url query decoder
+  result <- gqlRequestImpl url headers query decoder
   case result of
     Right output -> traceWithoutInspectM $ "[gqlRequest] output" <> show output
     Left graphqlError -> traceWithoutInspectM $ "[gqlRequest] " <> printGraphqlError graphqlError
@@ -166,9 +177,10 @@ gqlRequestImplWithTrace url query decoder = do
 gqlRequest
   :: forall a
    . Affjax.URL
+  -> Array Affjax.RequestHeader
   -> SelectionSet Scope__RootQuery a
   -> Aff (Either (GraphqlError a) a)
-gqlRequest url selectionSet@(SelectionSet _fields decoder) = do
+gqlRequest url headers selectionSet@(SelectionSet _fields decoder) = do
   let query = writeGraphql selectionSet
-  result <- gqlRequestImpl url query decoder
+  result <- gqlRequestImpl url headers query decoder
   pure $ result

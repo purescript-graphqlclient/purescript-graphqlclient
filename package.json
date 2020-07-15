@@ -8,8 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "spago test --main MyTest.Main",
-    "examples:test": "spago --config examples/spago.dhall test --main Examples.MyTests.Main"
+    "test": "spago test --main MyTest.Main --purs-args \"--censor-warnings\"",
+    "examples:test": "spago --config examples/spago.dhall test --main Examples.MyTests.Main --purs-args \"--censor-warnings\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "graphql-request": "^1.8.2",
     "json-diff": "^0.5.4",
+    "purescript-psa": "^0.7.3",
     "xhr2": "^0.2.0"
   },
   "dependencies": {

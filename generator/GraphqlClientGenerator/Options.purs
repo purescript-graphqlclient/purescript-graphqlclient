@@ -2,6 +2,8 @@ module GraphqlClientGenerator.Options where
 
 import Protolude
 
+import Affjax.RequestHeader as Affjax
+import Data.Array (fromFoldable) as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
 import Data.Generic.Rep.Show (genericShow)
@@ -10,7 +12,7 @@ import Data.String as String
 import Language.PS.CST (ModuleName)
 import Language.PS.CST.Sugar (mkModuleName)
 import Node.Path (FilePath)
-import Options.Applicative (Parser, ParserInfo, ReadM, fullDesc, header, help, helper, info, long, metavar, option, progDesc, showDefault, strOption, value, (<**>))
+import Options.Applicative (Parser, ParserInfo, ReadM, fullDesc, header, help, helper, info, long, many, metavar, option, progDesc, showDefault, strOption, value, (<**>))
 import Options.Applicative.Builder (eitherReader)
 import Protolude.Url (Url)
 import Protolude.Url as Url
@@ -27,11 +29,17 @@ newtype AppOptions = AppOptions
   { input               :: AppOptionsInput
   , output              :: FilePath
   , api                 :: NonEmptyArray String
+  , headers             :: Array Affjax.RequestHeader
   , customScalarsModule :: Maybe ModuleName
   }
 
 derive instance genericAppOptions :: Generic AppOptions _
 instance showAppOptions :: Show AppOptions where show = genericShow
+
+requestHeader :: ReadM Affjax.RequestHeader
+requestHeader = eitherReader $ \s -> case String.split (String.Pattern ": ") s of
+  [key, val] -> Right $ Affjax.RequestHeader key val
+  _ -> Left $ """Can't parse as request header (there should be only one ": "): """ <> show s
 
 url :: ReadM Url
 url = eitherReader $ \s -> case Url.mkUrl s of
@@ -73,7 +81,7 @@ appOptionsInput :: Parser AppOptionsInput
 appOptionsInput = appOptionsInputSchemaOrJsonUrl <|> appOptionsInputSchemaPath <|> appOptionsInputJsonPath
 
 appOptions :: Parser AppOptions
-appOptions = map AppOptions $ { input: _, output: _, api: _, customScalarsModule: _ }
+appOptions = map AppOptions $ { input: _, output: _, api: _, headers: _, customScalarsModule: _ }
   <$> appOptionsInput
   <*> strOption
     (  long "output"
@@ -85,6 +93,13 @@ appOptions = map AppOptions $ { input: _, output: _, api: _, customScalarsModule
     <> help "Module name to prepend"
     <> showDefault
     <> value (NonEmpty.singleton "Api")
+    )
+    <*> (
+      many ( option requestHeader
+             (  long "header"
+             <> help """Header val in form of "key: val" """
+             )
+           ) <#> Array.fromFoldable
     )
   <*> Maybe.optional
     ( option moduleName

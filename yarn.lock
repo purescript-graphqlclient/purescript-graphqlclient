@@ -67,6 +67,11 @@ node-fetch@2.1.2:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
   integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
 
+purescript-psa@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/purescript-psa/-/purescript-psa-0.7.3.tgz#0e1ff29cbd6a0fe2429717e7147d0c1cbd4760a9"
+  integrity sha512-qcnhruybTHVunhJqAuurOEWnz1BOOc/7mpcnyH5yxm5caYCejxq8GOE4ZNWbiPMeTlcG79qUPIOz7gx5OVmk2Q==
+
 whatwg-fetch@2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"

@@ -10,7 +10,8 @@ import Language.PS.CST.Sugar (mkModuleName)
 import Protolude (Maybe(..), ($), (<#>), (<>))
 
 makeModule
-  :: ImportDecl
+  :: (String -> String)
+  -> ImportDecl
   -> NonEmptyArray String
   -> Array String
   -> Array String
@@ -20,6 +21,7 @@ makeModule
   -> Array InstorpectionQueryResult__Field
   -> Module
 makeModule
+  nameToScope
   importScalar
   apiModuleName
   instorpectionQueryResult__FullType__enum_names
@@ -47,5 +49,5 @@ makeModule
       , importScalar
       ]
   , exports: []
-  , declarations: DeclarationsForFields.declarationsForFields "RootQuery" fields
+  , declarations: DeclarationsForFields.declarationsForFields nameToScope "RootQuery" fields
   }

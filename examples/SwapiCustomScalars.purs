@@ -9,6 +9,11 @@ import Data.Argonaut.Decode.Decoders (decodeString) as ArgonautDecoders.Decoder
 import Data.Either (note)
 import Data.Int as Int
 
+-- | Why this module?
+-- | Because Id is a string by graphql spec
+-- | But we want it to be Int without changing anything
+-- | So, here is the example
+
 -- | original name - ID
 newtype Id = Id Int
 

@@ -8,12 +8,12 @@ import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Ful
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import GraphqlClientGenerator.MakeModule.Lib.Fragments as Fragments
 import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
-import GraphqlClientGenerator.MakeModule.Lib.Utils (declDataWithoutConstructors, scopeName)
+import GraphqlClientGenerator.MakeModule.Lib.Utils (declDataWithoutConstructors)
 import Language.PS.CST (ImportDecl(..), Module(..), ModuleName)
 import Language.PS.CST.Sugar (mkModuleName)
 
-makeModule :: ImportDecl -> NonEmptyArray String -> Array String -> ModuleName -> InstorpectionQueryResult__FullType -> Module
-makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_names moduleName fullType = Module
+makeModule :: (String -> String) -> ImportDecl -> NonEmptyArray String -> Array String -> ModuleName -> InstorpectionQueryResult__FullType -> Module
+makeModule nameToScope importScalar apiModuleName instorpectionQueryResult__FullType__enum_names moduleName fullType = Module
   { moduleName
   , imports:
       Imports.imports apiModuleName <>
@@ -34,6 +34,6 @@ makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_n
       )
   , exports: []
   , declarations:
-    DeclarationsForFields.declarationsForFields fullType.name (fromMaybe [] fullType.fields) <>
-    Fragments.declarationForPossibleTypes fullType.name (fromMaybe [] fullType.possibleTypes)
+    DeclarationsForFields.declarationsForFields nameToScope fullType.name (fromMaybe [] fullType.fields) <>
+    Fragments.declarationForPossibleTypes nameToScope fullType.name (fromMaybe [] fullType.possibleTypes)
   }

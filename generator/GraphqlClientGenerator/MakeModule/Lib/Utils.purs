@@ -31,6 +31,3 @@ declDataWithoutConstructors name = DeclData
       }
   , constructors: []
   }
-
-scopeName :: String -> String
-scopeName name = "Scope__" <> StringsExtra.pascalCase name
