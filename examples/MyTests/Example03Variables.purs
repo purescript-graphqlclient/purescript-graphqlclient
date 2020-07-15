@@ -27,7 +27,7 @@ humanInfoSelection = { name: _, homePlanet: _ } <$> Human.name <*> Human.homePla
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
-  human(id: "1001") {
+  human1563269760: human(id: "1001") {
     name
     homePlanet
   }

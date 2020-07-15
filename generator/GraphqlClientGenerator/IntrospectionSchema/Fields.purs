@@ -1,6 +1,6 @@
 module GraphqlClientGenerator.IntrospectionSchema.Fields where
 
-import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet, graphqlDefaultResponseFunctorOrScalarDecoderTransformer, graphqlDefaultResponseScalarDecoder, selectionForCompositeField, selectionForField, toGraphqlArguments)
+import GraphqlClient
 import Protolude (type ($), type (<<<), Maybe)
 
 import GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue as GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue

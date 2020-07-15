@@ -1,4 +1,4 @@
-exports.introspectionQuery = `query IntrospectionQuery($includeDeprecated: Boolean!) {
+exports.introspectionQuery = `query IntrospectionQuery {
     __schema {
       queryType {
         name
@@ -18,7 +18,7 @@ exports.introspectionQuery = `query IntrospectionQuery($includeDeprecated: Boole
     kind
     name
     description
-    fields(includeDeprecated: $includeDeprecated) {
+    fields987878495: fields(includeDeprecated: false) {
       name
       description
       args {
@@ -36,7 +36,7 @@ exports.introspectionQuery = `query IntrospectionQuery($includeDeprecated: Boole
     interfaces {
       ...TypeRef
     }
-    enumValues(includeDeprecated: $includeDeprecated) {
+    enumValues987878495: enumValues(includeDeprecated: false) {
       name
       description
       isDeprecated

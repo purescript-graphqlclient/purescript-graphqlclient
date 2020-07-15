@@ -32,17 +32,17 @@ stargazerCount = Examples.Github.Object.Repository.stargazers defaultInput Examp
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
-  repository(name: "mobster", owner: "dillonkearns") {
+  repository788135211: repository(name: "mobster", owner: "dillonkearns") {
     stargazers {
       totalCount
     }
   }
-  repository(name: "elm-graphql", owner: "dillonkearns") {
+  repository1200065311: repository(name: "elm-graphql", owner: "dillonkearns") {
     stargazers {
       totalCount
     }
   }
-  repository(name: "elm-typescript-interop", owner: "dillonkearns") {
+  repository595118603: repository(name: "elm-typescript-interop", owner: "dillonkearns") {
     stargazers {
       totalCount
     }
@@ -58,4 +58,4 @@ spec = Test.Spec.it "Example08Foldr" do
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
-  response' `Test.Spec.shouldEqual` 0
+  response' `Test.Spec.shouldEqual` 984

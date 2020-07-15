@@ -18,7 +18,7 @@ query = human { id: Id 1001 } id
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
-  human(id: "1001") {
+  human1563269760: human(id: "1001") {
     id
   }
 }

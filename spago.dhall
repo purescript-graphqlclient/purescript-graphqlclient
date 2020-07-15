@@ -26,6 +26,7 @@ You can edit this file as you like.
   , "protolude"
   , "ps-cst"
   , "homogeneous-records"
+  , "unordered-collection"
   -- , "inflection"
   ]
 , packages = ./packages.dhall

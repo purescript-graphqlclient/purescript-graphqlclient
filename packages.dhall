@@ -93,6 +93,20 @@ let additions =
         , repo = "https://github.com/srghma/purescript-homogeneous-records.git"
         , version = "master"
         }
+      , unordered-collection =
+        { dependencies =
+          [ "enums"
+          , "functions"
+          , "integers"
+          , "lists"
+          , "prelude"
+          , "record"
+          , "tuples"
+          , "typelevel-prelude"
+          ]
+        , repo = "https://github.com/fehrenbach/purescript-unordered-collections.git"
+        , version = "master"
+        }
       }
 
 in  upstream // overrides // additions
