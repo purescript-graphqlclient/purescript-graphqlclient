@@ -1,14 +1,14 @@
-module Swapi.Union.CharacterUnion where
+module Examples.Swapi.Union.CharacterUnion where
 
 import Prelude
 import GraphqlClient
 import Data.Maybe
-import Swapi.Scalar
-import Swapi.InputObject
-import Swapi.Scopes
-import Swapi.Enum.Episode
-import Swapi.Enum.Language
-import Swapi.Enum.Phrase
+import Examples.Swapi.InputObject
+import Examples.Swapi.Scopes
+import Examples.SwapiCustomScalars
+import Examples.Swapi.Enum.Episode
+import Examples.Swapi.Enum.Language
+import Examples.Swapi.Enum.Phrase
 
 type Fragments decodesTo = { onHuman :: SelectionSet Scope__Human decodesTo
                            , onDroid :: SelectionSet Scope__Droid decodesTo

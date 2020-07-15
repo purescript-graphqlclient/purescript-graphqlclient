@@ -1,16 +1,16 @@
 module GraphqlClientGenerator.MakeModule.Scopes where
 
-import Language.PS.CST (ImportDecl(..), Module(..), ModuleName)
-import Language.PS.CST.Sugar (mkModuleName)
-import Protolude (Maybe(..), fromMaybe, ($), (<#>), (<>))
-
+import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
 import GraphqlClientGenerator.MakeModule.Lib.Utils (declDataWithoutConstructors, scopeName)
+import Language.PS.CST (ImportDecl(..), Module(..), ModuleName)
+import Language.PS.CST.Sugar (mkModuleName)
+import Protolude (Maybe(..), fromMaybe, ($), (<#>), (<>))
 
-makeModule :: String -> Array String -> Array String -> Array String -> ModuleName -> Module
+makeModule :: NonEmptyArray String -> Array String -> Array String -> Array String -> ModuleName -> Module
 makeModule
   apiModuleName
   instorpectionQueryResult__FullType__interface_names

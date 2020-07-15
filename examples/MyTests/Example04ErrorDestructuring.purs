@@ -4,7 +4,7 @@ import GraphqlClient (GraphqlError(..), GraphqlUserErrorDetail(..), PossiblyPars
 import Protolude (Either(..), Maybe(..), Unit, bind, discard)
 import Data.Array.NonEmpty as NonEmptyArray
 
-import Swapi.Query as Query
+import Examples.Swapi.Query as Query
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (fail, shouldEqual) as Test.Spec
 import Examples.MyTests.Util

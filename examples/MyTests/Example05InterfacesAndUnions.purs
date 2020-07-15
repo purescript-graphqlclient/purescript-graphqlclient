@@ -5,12 +5,12 @@ import GraphqlClient
 import Protolude
 
 import Data.Generic.Rep.Show (genericShow)
-import Swapi.Object.Droid as Swapi.Object.Droid
-import Swapi.Object.Human as Swapi.Object.Human
-import Swapi.Query as Swapi.Query
-import Swapi.Union.CharacterUnion as Swapi.Union.CharacterUnion
-import Swapi.Interface.Character as Swapi.Interface.Character
-import Swapi.Scopes
+import Examples.Swapi.Object.Droid as Examples.Swapi.Object.Droid
+import Examples.Swapi.Object.Human as Examples.Swapi.Object.Human
+import Examples.Swapi.Query as Examples.Swapi.Query
+import Examples.Swapi.Union.CharacterUnion as Examples.Swapi.Union.CharacterUnion
+import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
+import Examples.Swapi.Scopes
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -36,24 +36,24 @@ instance showHumanOrDroidDetails :: Show HumanOrDroidDetails where show = generi
 
 heroUnionSelection :: SelectionSet Scope__CharacterUnion HumanOrDroidDetails
 heroUnionSelection =
-  Swapi.Union.CharacterUnion.fragments
-    { onHuman: Swapi.Object.Human.homePlanet <#> HumanDetails
-    , onDroid: Swapi.Object.Droid.primaryFunction <#> DroidDetails
+  Examples.Swapi.Union.CharacterUnion.fragments
+    { onHuman: Examples.Swapi.Object.Human.homePlanet <#> HumanDetails
+    , onDroid: Examples.Swapi.Object.Droid.primaryFunction <#> DroidDetails
     }
 
 heroSelection :: SelectionSet Scope__Character HumanOrDroidWithName
 heroSelection =
   { name: _, details: _ }
-    <$> Swapi.Interface.Character.name
-    <*> (Swapi.Interface.Character.fragments
-      { onHuman: Swapi.Object.Human.homePlanet <#> HumanDetails
-      , onDroid: Swapi.Object.Droid.primaryFunction <#> DroidDetails
+    <$> Examples.Swapi.Interface.Character.name
+    <*> (Examples.Swapi.Interface.Character.fragments
+      { onHuman: Examples.Swapi.Object.Human.homePlanet <#> HumanDetails
+      , onDroid: Examples.Swapi.Object.Droid.primaryFunction <#> DroidDetails
       }
     )
 
 nonExhaustiveFragment :: SelectionSet Scope__CharacterUnion (Maybe String)
-nonExhaustiveFragment = Swapi.Union.CharacterUnion.fragments $ Swapi.Union.CharacterUnion.maybeFragments
-  { onHuman = Swapi.Object.Human.name <#> Just
+nonExhaustiveFragment = Examples.Swapi.Union.CharacterUnion.fragments $ Examples.Swapi.Union.CharacterUnion.maybeFragments
+  { onHuman = Examples.Swapi.Object.Human.name <#> Just
   }
 
 query :: SelectionSet Scope__RootQuery Response
@@ -62,9 +62,9 @@ query =
   , heroInterface: _
   , nonExhaustiveFragment: _
   }
-  <$> Swapi.Query.heroUnion defaultInput heroUnionSelection
-  <*> Swapi.Query.hero defaultInput heroSelection
-  <*> Swapi.Query.heroUnion defaultInput nonExhaustiveFragment
+  <$> Examples.Swapi.Query.heroUnion defaultInput heroUnionSelection
+  <*> Examples.Swapi.Query.hero defaultInput heroSelection
+  <*> Examples.Swapi.Query.heroUnion defaultInput nonExhaustiveFragment
 
 expectedQuery :: String
 expectedQuery = inlineAndTrim """

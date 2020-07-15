@@ -1,28 +1,29 @@
 module GraphqlClientGenerator.PsCst where
 
-import GraphqlClient.Utils (anyPredicate)
-import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult, InstorpectionQueryResult__Field, InstorpectionQueryResult__FullType)
-import Language.PS.CST (Module, ModuleName)
-import Language.PS.CST.Printers (printModuleToString)
-import Language.PS.CST.Sugar (mkModuleName)
 import Protolude
 
 import Data.Array as Array
+import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty as NonEmpty
 import Data.Foldable (elem)
 import Data.Map (Map)
 import Data.Map as Map
-import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
 import Data.String.Utils as String
+import GraphqlClient.Utils (anyPredicate)
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult, InstorpectionQueryResult__Field, InstorpectionQueryResult__FullType)
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
+import GraphqlClientGenerator.MakeModule.InputObject as MakeModule.InputObject
 import GraphqlClientGenerator.MakeModule.Interface as MakeModule.Interface
 import GraphqlClientGenerator.MakeModule.Object as MakeModule.Object
 import GraphqlClientGenerator.MakeModule.Query as MakeModule.Query
-import GraphqlClientGenerator.MakeModule.Scalar as MakeModule.Scalar
-import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
-import GraphqlClientGenerator.MakeModule.InputObject as MakeModule.InputObject
+import GraphqlClientGenerator.MakeModule.Scalars as MakeModule.Scalars
 import GraphqlClientGenerator.MakeModule.Scopes as MakeModule.Scopes
+import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
+import Language.PS.CST (ImportDecl(..), Module, ModuleName)
+import Language.PS.CST.Printers (printModuleToString)
+import Language.PS.CST.Sugar (mkModuleName)
 
 type FilesMap =
   { dirs ::
@@ -32,11 +33,11 @@ type FilesMap =
     , "Union" :: Map String String
     }
   , files ::
-    { "Scalar" :: String
-    , "Query" :: String
+    { "Query" :: String
     , "InputObject" :: String
     , "Scopes" :: String
     }
+  , "Scalars" :: Maybe String
   }
   -- | , "InputObject" :: String
   -- | , "Interface" :: String
@@ -51,11 +52,20 @@ type FilesMap =
 isBuiltIn :: String -> Boolean
 isBuiltIn = String.startsWith "__"
 
-fullTypeToModuleMapItem :: (ModuleName -> InstorpectionQueryResult__FullType -> Module) -> String -> String -> InstorpectionQueryResult__FullType -> Tuple String String
-fullTypeToModuleMapItem mkModule apiModuleName submodule fullType =
+fullTypeToModuleMapItem
+  :: (ModuleName -> InstorpectionQueryResult__FullType -> Module)
+  -> NonEmptyArray String
+  -> String
+  -> InstorpectionQueryResult__FullType
+  -> Tuple String String
+fullTypeToModuleMapItem
+  mkModule
+  apiModuleName
+  submodule
+  fullType =
   let
     name = StringsExtra.pascalCase fullType.name
-    moduleName = mkModuleName $ NonEmpty.cons' apiModuleName [submodule, name]
+    moduleName = mkModuleName $ apiModuleName <> (NonEmpty.cons' submodule [name])
    in name /\ (printModuleToString $ mkModule moduleName fullType)
 
 builtInScalarNames :: Array String
@@ -72,8 +82,8 @@ builtInScalarNames =
     ]
 
 -- typeLockDefinitions - Union, Object, Interface
-mkFilesMap :: String -> InstorpectionQueryResult -> FilesMap
-mkFilesMap apiModuleName introspectionQueryResult =
+mkFilesMap :: Maybe ModuleName -> NonEmptyArray String -> InstorpectionQueryResult -> FilesMap
+mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
   let
     excludeQuery name        = introspectionQueryResult.__schema.queryType.name == name
     excludeMutation name     = introspectionQueryResult.__schema.mutationType # maybe true (\type_ -> type_.name == name)
@@ -111,6 +121,13 @@ mkFilesMap apiModuleName introspectionQueryResult =
 
     instorpectionQueryResult__FullType__union_names :: Array String
     instorpectionQueryResult__FullType__union_names = instorpectionQueryResult__FullType__union <#> _.name <#> StringsExtra.pascalCase
+
+    importScalar :: ImportDecl
+    importScalar = ImportDecl
+      { moduleName: fromMaybe (mkModuleName $ apiModuleName <> NonEmpty.singleton "Scalars") customScalarsModule
+      , names: []
+      , qualification: Nothing
+      }
   in
     { dirs:
       { "Enum":
@@ -119,41 +136,31 @@ mkFilesMap apiModuleName introspectionQueryResult =
         # Map.fromFoldable
       , "Object":
         instorpectionQueryResult__FullType__object
-        <#> (fullTypeToModuleMapItem (MakeModule.Object.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names) apiModuleName "Object")
+        <#> (fullTypeToModuleMapItem (MakeModule.Object.makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_names instorpectionQueryResult__FullType__interface_names) apiModuleName "Object")
         # Map.fromFoldable
       , "Interface":
         instorpectionQueryResult__FullType__interface
-        <#> (fullTypeToModuleMapItem (MakeModule.Interface.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Interface")
+        <#> (fullTypeToModuleMapItem (MakeModule.Interface.makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Interface")
         # Map.fromFoldable
       , "Union":
         onlyTypesWithoutExcluded TypeKind.Union
-        <#> (fullTypeToModuleMapItem (MakeModule.Union.makeModule apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Union")
+        <#> (fullTypeToModuleMapItem (MakeModule.Union.makeModule importScalar apiModuleName instorpectionQueryResult__FullType__enum_names) apiModuleName "Union")
         # Map.fromFoldable
       }
     , files:
-      { "Scalar":
+      { "InputObject":
         let
-          moduleName = mkModuleName $ NonEmpty.cons' apiModuleName ["Scalar"]
-
-          scalarTypes :: Array InstorpectionQueryResult__FullType
-          scalarTypes =
-            introspectionQueryResult.__schema.types
-            # Array.filter (\fullType -> fullType."kind" == TypeKind.Scalar)
-            # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
-        in printModuleToString $ MakeModule.Scalar.makeModule moduleName scalarTypes
-      , "InputObject":
-        let
-          moduleName = mkModuleName $ NonEmpty.cons' apiModuleName ["InputObject"]
+          moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "InputObject"
 
           inputObjectTypes :: Array InstorpectionQueryResult__FullType
           inputObjectTypes =
             introspectionQueryResult.__schema.types
             # Array.filter (\fullType -> fullType."kind" == TypeKind.InputObject)
             # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
-         in printModuleToString $ MakeModule.InputObject.makeModule apiModuleName moduleName inputObjectTypes instorpectionQueryResult__FullType__enum_names
+         in printModuleToString $ MakeModule.InputObject.makeModule importScalar apiModuleName moduleName inputObjectTypes instorpectionQueryResult__FullType__enum_names
       , "Query":
         let
-          moduleName = mkModuleName $ NonEmpty.cons' apiModuleName ["Query"]
+          moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Query"
 
           queryType :: Maybe InstorpectionQueryResult__FullType
           queryType = Array.find (\x -> x.name == introspectionQueryResult.__schema.queryType.name) introspectionQueryResult.__schema.types
@@ -163,6 +170,7 @@ mkFilesMap apiModuleName introspectionQueryResult =
          in
           printModuleToString $
             MakeModule.Query.makeModule
+            importScalar
             apiModuleName
             instorpectionQueryResult__FullType__enum_names
             instorpectionQueryResult__FullType__interface_names
@@ -176,6 +184,19 @@ mkFilesMap apiModuleName introspectionQueryResult =
           instorpectionQueryResult__FullType__interface_names
           instorpectionQueryResult__FullType__object_names
           instorpectionQueryResult__FullType__union_names
-          (mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"])
+          (mkModuleName $ apiModuleName <> NonEmpty.singleton "Scopes")
       }
+    , "Scalars":
+      case customScalarsModule of
+           Just _ -> Nothing
+           Nothing ->
+            let
+              moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Scalars"
+
+              scalarTypes :: Array InstorpectionQueryResult__FullType
+              scalarTypes =
+                introspectionQueryResult.__schema.types
+                # Array.filter (\fullType -> fullType."kind" == TypeKind.Scalar)
+                # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
+            in Just $ printModuleToString $ MakeModule.Scalars.makeModule moduleName scalarTypes
     }

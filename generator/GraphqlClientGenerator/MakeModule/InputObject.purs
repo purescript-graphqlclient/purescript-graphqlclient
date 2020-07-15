@@ -1,17 +1,23 @@
 module GraphqlClientGenerator.MakeModule.InputObject where
 
+import Data.Array as Array
+import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty as NonEmpty
+import Data.String.Extra as StringsExtra
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType, InstorpectionQueryResult__InputValue)
+import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import Language.PS.CST (Comments(..), DataHead(..), Declaration(..), ImportDecl(..), Label(..), Module(..), ModuleName, ProperName(..), Row(..), Type(..))
 import Language.PS.CST.Sugar (mkModuleName)
 import Protolude (Maybe(..), fromMaybe, (#), ($), (<#>), (<>))
 
-import Data.Array as Array
-import Data.Array.NonEmpty as NonEmpty
-import Data.String.Extra as StringsExtra
-import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
-
-makeModule :: String -> ModuleName -> Array InstorpectionQueryResult__FullType -> Array String -> Module
-makeModule apiModuleName moduleName inputObjectTypes instorpectionQueryResult__FullType__enum_names = Module
+makeModule
+  :: ImportDecl
+  -> NonEmptyArray String
+  -> ModuleName
+  -> Array InstorpectionQueryResult__FullType
+  -> Array String
+  -> Module
+makeModule importScalar apiModuleName moduleName inputObjectTypes instorpectionQueryResult__FullType__enum_names = Module
   { moduleName
   , imports:
     [ ImportDecl
@@ -30,14 +36,15 @@ makeModule apiModuleName moduleName inputObjectTypes instorpectionQueryResult__F
       , qualification: Nothing
       }
     , ImportDecl
-      { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"]
+      { moduleName: mkModuleName $ apiModuleName <> NonEmpty.singleton "Scopes"
       , names: []
       , qualification: Nothing
       }
+    , importScalar
     ] <>
       (instorpectionQueryResult__FullType__enum_names <#>
         (\name -> ImportDecl
-          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Enum", name]
+          { moduleName: mkModuleName $ apiModuleName <> NonEmpty.cons' "Enum" [name]
           , names: []
           , qualification: Nothing
           }

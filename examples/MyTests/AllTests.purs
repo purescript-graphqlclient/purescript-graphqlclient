@@ -8,6 +8,7 @@ import Examples.MyTests.Example02AdoSyntax as Examples.MyTests.Example02AdoSynta
 import Examples.MyTests.Example03Variables as Examples.MyTests.Example03Variables
 import Examples.MyTests.Example04ErrorDestructuring as Examples.MyTests.Example04ErrorDestructuring
 import Examples.MyTests.Example05InterfacesAndUnions as Examples.MyTests.Example05InterfacesAndUnions
+import Examples.MyTests.Example06Typename as Examples.MyTests.Example06Typename
 
 allTests :: Test.Spec.Spec Unit
 allTests = Test.Spec.parallel do
@@ -17,3 +18,4 @@ allTests = Test.Spec.parallel do
   Examples.MyTests.Example03Variables.spec
   Examples.MyTests.Example04ErrorDestructuring.spec
   Examples.MyTests.Example05InterfacesAndUnions.spec
+  Examples.MyTests.Example06Typename.spec

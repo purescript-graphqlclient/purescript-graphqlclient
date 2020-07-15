@@ -1,16 +1,17 @@
 module GraphqlClientGenerator.MakeModule.Query where
 
-import Language.PS.CST (ImportDecl(..), Module(..), ModuleName)
-import Language.PS.CST.Sugar (mkModuleName)
-import Protolude (Maybe(..), ($), (<#>), (<>))
-
+import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
+import Language.PS.CST (ImportDecl(..), Module(..), ModuleName)
+import Language.PS.CST.Sugar (mkModuleName)
+import Protolude (Maybe(..), ($), (<#>), (<>))
 
 makeModule
-  :: String
+  :: ImportDecl
+  -> NonEmptyArray String
   -> Array String
   -> Array String
   -> Array String
@@ -19,6 +20,7 @@ makeModule
   -> Array InstorpectionQueryResult__Field
   -> Module
 makeModule
+  importScalar
   apiModuleName
   instorpectionQueryResult__FullType__enum_names
   instorpectionQueryResult__FullType__interface_names
@@ -31,17 +33,18 @@ makeModule
       Imports.imports apiModuleName <>
       (instorpectionQueryResult__FullType__enum_names <#>
         (\name -> ImportDecl
-          { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Enum", name]
+          { moduleName: mkModuleName $ apiModuleName <> NonEmpty.cons' "Enum" [name]
           , names: []
           , qualification: Nothing
           }
         )
       ) <>
       [ ImportDecl
-        { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Scopes"]
+        { moduleName: mkModuleName $ apiModuleName <> NonEmpty.singleton "Scopes"
         , names: []
         , qualification: Nothing
         }
+      , importScalar
       ]
   , exports: []
   , declarations: DeclarationsForFields.declarationsForFields "RootQuery" fields

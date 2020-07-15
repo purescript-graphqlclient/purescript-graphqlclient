@@ -1,4 +1,4 @@
-module GraphqlClientGenerator.MakeModule.Scalar where
+module GraphqlClientGenerator.MakeModule.Scalars where
 
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import Language.PS.CST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), ImportDecl(..), Module(..), ModuleName, ProperName(..), Type(..))

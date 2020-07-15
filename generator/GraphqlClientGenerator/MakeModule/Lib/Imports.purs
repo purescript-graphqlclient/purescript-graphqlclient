@@ -1,12 +1,12 @@
 module GraphqlClientGenerator.MakeModule.Lib.Imports where
 
+import Protolude
+import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty as NonEmpty
 import Language.PS.CST (ImportDecl(..))
 import Language.PS.CST.Sugar (mkModuleName)
-import Protolude (Maybe(..), ($))
 
-import Data.Array.NonEmpty as NonEmpty
-
-imports :: String -> Array ImportDecl
+imports :: NonEmptyArray String -> Array ImportDecl
 imports apiModuleName =
   [ ImportDecl
     { moduleName: mkModuleName $ NonEmpty.singleton "Prelude"
@@ -24,12 +24,7 @@ imports apiModuleName =
     , qualification: Nothing
     }
   , ImportDecl
-    { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["Scalar"]
-    , names: []
-    , qualification: Nothing
-    }
-  , ImportDecl
-    { moduleName: mkModuleName $ NonEmpty.cons' apiModuleName ["InputObject"]
+    { moduleName: mkModuleName $ apiModuleName <> NonEmpty.singleton "InputObject"
     , names: []
     , qualification: Nothing
     }

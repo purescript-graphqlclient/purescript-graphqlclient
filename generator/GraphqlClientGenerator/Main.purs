@@ -75,7 +75,7 @@ main = do
       unless isEmpty (exitWith 1 $ "Output dir " <> (show outputDirAbs) <> " is non empty. Cannot write files to it.")
 
     let
-      filesMap = GraphqlClientGenerator.PsCst.mkFilesMap appOptions.api instorpectionQueryResult
+      filesMap = GraphqlClientGenerator.PsCst.mkFilesMap appOptions.customScalarsModule appOptions.api instorpectionQueryResult
 
       printModule :: FilePath -> String -> String -> Aff Unit
       printModule outputDir fileName content = do

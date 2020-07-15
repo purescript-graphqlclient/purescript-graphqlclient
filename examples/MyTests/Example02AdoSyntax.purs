@@ -5,10 +5,10 @@ import Protolude (Either, Unit, apply, bind, discard, error, map, pure, throwErr
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, gqlRequest, printGraphqlError, writeGraphql)
-import Swapi.Scalar (Id(..))
-import Swapi.Query as Query
-import Swapi.Interface.Character as Character
-import Swapi.Scopes
+import Examples.SwapiCustomScalars (Id(..))
+import Examples.Swapi.Query as Query
+import Examples.Swapi.Interface.Character as Character
+import Examples.Swapi.Scopes
 import Examples.MyTests.Util
 
 type Response = CharacterResponse
@@ -50,4 +50,4 @@ spec = Test.Spec.it "Example02AdoSyntax" do
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
-  response' `Test.Spec.shouldEqual` { friends: ["Han Solo","Leia Organa","C-3PO","R2-D2"], id: Id "1000", name: "Luke Skywalker" }
+  response' `Test.Spec.shouldEqual` { friends: ["Han Solo","Leia Organa","C-3PO","R2-D2"], id: Id 1000, name: "Luke Skywalker" }

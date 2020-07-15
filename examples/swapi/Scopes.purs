@@ -1,4 +1,4 @@
-module Swapi.Scopes where
+module Examples.Swapi.Scopes where
 
 data Scope__ChatMessage
 

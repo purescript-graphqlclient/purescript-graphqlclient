@@ -1,11 +1,16 @@
-module Swapi.Scalar where
+module Examples.SwapiCustomScalars where
 
-import Prelude
-import GraphqlClient
 import Data.Newtype
+import GraphqlClient
+import Prelude
+
+import Data.Argonaut.Decode (JsonDecodeError(..))
+import Data.Argonaut.Decode.Decoders (decodeString) as ArgonautDecoders.Decoder
+import Data.Either (note)
+import Data.Int as Int
 
 -- | original name - ID
-newtype Id = Id String
+newtype Id = Id Int
 
 derive newtype instance eqId :: Eq Id
 
@@ -15,9 +20,11 @@ derive newtype instance showId :: Show Id
 
 derive instance newtypeId :: Newtype Id _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderId :: GraphqlDefaultResponseScalarDecoder Id
+instance graphqlDefaultResponseScalarDecoderId :: GraphqlDefaultResponseScalarDecoder Id where
+  graphqlDefaultResponseScalarDecoder = (map $ map Id) (note (TypeMismatch "Integer") <<< Int.fromString <=< ArgonautDecoders.Decoder.decodeString)
 
-derive newtype instance toGraphqlArgumentValueId :: ToGraphqlArgumentValue Id
+instance toGraphqlArgumentValueId :: ToGraphqlArgumentValue Id where
+  toGraphqlArgumentValue (Id i) = i # Int.toStringAs Int.decimal >>> ArgumentValueString
 
 -- | original name - PosixTime
 newtype PosixTime = PosixTime String

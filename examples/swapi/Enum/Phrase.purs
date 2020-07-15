@@ -1,4 +1,4 @@
-module Swapi.Enum.Phrase where
+module Examples.Swapi.Enum.Phrase where
 
 import Prelude
 import GraphqlClient
