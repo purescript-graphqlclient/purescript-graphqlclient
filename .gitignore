@@ -9,3 +9,4 @@ output-test/
 .purs*
 .psa*
 .spago/
+report.*.json

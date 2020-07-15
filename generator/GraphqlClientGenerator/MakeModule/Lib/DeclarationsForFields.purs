@@ -30,23 +30,35 @@ graphqlTypeToPurescriptType =
 typeRefTypeScope :: Maybe String -> Type
 typeRefTypeScope name = nonQualifiedNameTypeConstructor (maybe "ERROR_TYPE_REF_NAME_SHOULD_NOT_BE_NOTHING" (const "r") name)
 
+mkFieldTypeGo :: Boolean -> List { kind :: TypeKind, name :: Maybe String } -> Type
+mkFieldTypeGo _ Nil = nonQualifiedNameTypeConstructor "ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE"
+mkFieldTypeGo wrapInMaybe (typeRef : xs) =
+  let
+    maybeWrap t = if wrapInMaybe then nonQualifiedNameTypeConstructor "Maybe" `TypeApp` t else t
+  in case typeRef.kind of
+    NonNull     -> mkFieldTypeGo false xs -- next pass is with false
+    List        -> arrayType $ mkFieldTypeGo true xs -- reset to true again
+    Scalar      -> maybeWrap $ typeRefType typeRef.name
+    Enum        -> maybeWrap $ typeRefType typeRef.name
+    InputObject -> maybeWrap $ typeRefType typeRef.name
+    Object      -> maybeWrap $ typeRefTypeScope typeRef.name
+    Interface   -> maybeWrap $ typeRefTypeScope typeRef.name
+    Union       -> maybeWrap $ typeRefTypeScope typeRef.name
+
 mkFieldType :: String -> List { kind :: TypeKind, name :: Maybe String } -> Type
-mkFieldType maybeConstructor = go true
-  where
-    go :: Boolean -> List { kind :: TypeKind, name :: Maybe String } -> Type
-    go _ Nil = nonQualifiedNameTypeConstructor "ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE"
-    go wrapInMaybe (typeRef : xs) =
-      let
-          maybeWrap t = if wrapInMaybe then nonQualifiedNameTypeConstructor maybeConstructor `TypeApp` t else t
-      in case typeRef.kind of
-          NonNull     -> go false xs -- next pass is with false
-          List        -> arrayType $ go true xs -- reset to true again
-          Scalar      -> maybeWrap $ typeRefType typeRef.name
-          Enum        -> maybeWrap $ typeRefType typeRef.name
-          InputObject -> maybeWrap $ typeRefType typeRef.name
-          Object      -> maybeWrap $ typeRefTypeScope typeRef.name
-          Interface   -> maybeWrap $ typeRefTypeScope typeRef.name
-          Union       -> maybeWrap $ typeRefTypeScope typeRef.name
+mkFieldType topLevelMaybeConstructor Nil = nonQualifiedNameTypeConstructor "ERROR_TOP_LEVEL_WITHOUT_TYPE_INSIDE"
+mkFieldType topLevelMaybeConstructor (topLevelTypeRef : xs) =
+  let
+    wrap t = nonQualifiedNameTypeConstructor topLevelMaybeConstructor `TypeApp` t
+  in case topLevelTypeRef.kind of
+    NonNull     -> mkFieldTypeGo false xs -- next pass is with false
+    List        -> arrayType $ mkFieldTypeGo true xs -- reset to true again
+    Scalar      -> wrap $ typeRefType topLevelTypeRef.name
+    Enum        -> wrap $ typeRefType topLevelTypeRef.name
+    InputObject -> wrap $ typeRefType topLevelTypeRef.name
+    Object      -> wrap $ typeRefTypeScope topLevelTypeRef.name
+    Interface   -> wrap $ typeRefTypeScope topLevelTypeRef.name
+    Union       -> wrap $ typeRefTypeScope topLevelTypeRef.name
 
 collectTypeRefInfo :: InstorpectionQueryResult__TypeRef -> List { kind :: TypeKind, name :: Maybe String }
 collectTypeRefInfo =

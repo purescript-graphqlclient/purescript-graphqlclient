@@ -33,12 +33,6 @@ data Argument
   = RequiredArgument String ArgumentValue
   | OptionalArgument String (Optional ArgumentValue)
 
--- [ RequiredArgument "eq" s
--- , RequiredArgument "ne" (Nothing)
--- , OptionalArgument "regex" (Absent) -- Present (Nothing)
--- , OptionalArgument "regex" (Absent) -- Present (Nothing)
--- ]
-
 class ToGraphqlArgumentValue a where
   toGraphqlArgumentValue :: a -> ArgumentValue
 
@@ -230,7 +224,10 @@ data RawField
   | OnSpread
     String -- e.g. `... on Human`
     (Array RawField)
-  | Leaf String (Array Argument)
+  | Leaf
+    -- TODO: add typeString https://github.com/dillonkearns/elm-graphql/blob/9aab5ae867a9d0036526deafa0375de90b377b28/src/Graphql/Document/Field.elm#L29 ?
+    String -- field name
+    (Array Argument)
 
 data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Json -> Either JsonDecodeError a)
 
@@ -243,6 +240,16 @@ instance applicativeSelectionSet :: Applicative (SelectionSet parentTypeLock) wh
 instance applySelectionSet :: Apply (SelectionSet parentTypeLock) where
   apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
   apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
+
+map2 :: forall parentTypeLock a b c. (a -> b -> c) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b -> SelectionSet parentTypeLock c
+map2 f (SelectionSet fieldsA decoderA) (SelectionSet fieldsB decoderB) = SelectionSet (fieldsA <> fieldsB) \json -> do
+  a <- decoderA json
+  b <- decoderB json
+  pure $ f a b
+
+foldl :: forall a b parentTypeLock . (b -> a -> b) -> b -> Array (SelectionSet parentTypeLock a) -> SelectionSet parentTypeLock b
+foldl f accum = Array.foldl (map2 f) (pure accum)
+-- | foldlSelectionSet f accum selectionSets = SelectionSet (selectionSets <#> \(SelectionSet fields _) -> Array.concat fields) (\json -> ?a)
 
 data FragmentSelectionSet parentTypeLock a = FragmentSelectionSet String (Array RawField) (Json -> Either JsonDecodeError a)
 
@@ -293,19 +300,11 @@ exhaustiveFragmentSelection fragments =
            Just e -> e
     )
 
--- | fragment
--- |   :: forall objectTypeLock lockedTo a b
--- |    . String
--- |   -> SelectionSet objectTypeLock a
--- |   -> SelectionSet lockedTo b
--- | fragment onType (SelectionSet fields childDecoder) =
--- |   SelectionSet
--- |     [ Fragment onType fields ]
--- |     (\json -> do
--- |       object <- ArgonautDecoders.Decoder.decodeJObject json
--- |       traceM { onType, object }
--- |       unsafeCoerce unit
--- |     )
+nonNullOrFail
+  :: forall lockedTo a
+   . SelectionSet lockedTo (Maybe a)
+  -> SelectionSet lockedTo a
+nonNullOrFail (SelectionSet fields decoder) = SelectionSet fields (\json -> decoder json >>= note MissingValue)
 
 getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> Json -> Either JsonDecodeError a
 getSelectionSetDecoder (SelectionSet fields decoder) = decoder

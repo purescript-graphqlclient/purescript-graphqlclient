@@ -141,7 +141,7 @@ type PackagesInput = { after :: Optional String
                      , before :: Optional String
                      , first :: Optional Int
                      , last :: Optional Int
-                     , names :: Array (Optional String)
+                     , names :: Array (Maybe String)
                      , repositoryId :: Optional Id
                      , packageType :: Optional PackageType
                      , orderBy :: Optional PackageOrder

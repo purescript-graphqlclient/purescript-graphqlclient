@@ -148,8 +148,8 @@ login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 
 type RepositoriesInput = { privacy :: Optional RepositoryPrivacy
                          , orderBy :: Optional RepositoryOrder
-                         , affiliations :: Array (Optional RepositoryAffiliation)
-                         , ownerAffiliations :: Array (Optional RepositoryAffiliation)
+                         , affiliations :: Array (Maybe RepositoryAffiliation)
+                         , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
                          , isLocked :: Optional Boolean
                          , after :: Optional String
                          , before :: Optional String

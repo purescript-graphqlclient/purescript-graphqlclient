@@ -191,8 +191,8 @@ type AddPullRequestReviewInput = { pullRequestId :: Id
                                  , commitOID :: Optional GitObjectId
                                  , body :: Optional String
                                  , event :: Optional PullRequestReviewEvent
-                                 , comments :: Array (Optional DraftPullRequestReviewComment)
-                                 , threads :: Array (Optional DraftPullRequestReviewThread)
+                                 , comments :: Array (Maybe DraftPullRequestReviewComment)
+                                 , threads :: Array (Maybe DraftPullRequestReviewThread)
                                  , clientMutationId :: Optional String
                                  }
 

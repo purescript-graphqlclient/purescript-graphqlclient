@@ -180,7 +180,7 @@ type PendingCardsInput = { after :: Optional String
                          , before :: Optional String
                          , first :: Optional Int
                          , last :: Optional Int
-                         , archivedStates :: Array (Optional ProjectCardArchivedState)
+                         , archivedStates :: Array (Maybe ProjectCardArchivedState)
                          }
 
 pendingCards :: forall r . PendingCardsInput -> SelectionSet Scope__ProjectCardConnection r -> SelectionSet Scope__Project r

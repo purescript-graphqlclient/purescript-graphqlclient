@@ -325,7 +325,7 @@ type ProjectCardsInput = { after :: Optional String
                          , before :: Optional String
                          , first :: Optional Int
                          , last :: Optional Int
-                         , archivedStates :: Array (Optional ProjectCardArchivedState)
+                         , archivedStates :: Array (Maybe ProjectCardArchivedState)
                          }
 
 projectCards :: forall r . ProjectCardsInput -> SelectionSet Scope__ProjectCardConnection r -> SelectionSet Scope__PullRequest r

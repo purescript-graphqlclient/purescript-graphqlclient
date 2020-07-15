@@ -204,7 +204,7 @@ type MarketplaceListingsInput = { after :: Optional String
                                 , adminId :: Optional Id
                                 , organizationId :: Optional Id
                                 , allStates :: Optional Boolean
-                                , slugs :: Array (Optional String)
+                                , slugs :: Array (Maybe String)
                                 , primaryCategoryOnly :: Optional Boolean
                                 , withFreeTrialsOnly :: Optional Boolean
                                 }

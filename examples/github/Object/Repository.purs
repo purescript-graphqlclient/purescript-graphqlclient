@@ -222,8 +222,8 @@ forkCount = selectionForField "forkCount" [] graphqlDefaultResponseScalarDecoder
 
 type ForksInput = { privacy :: Optional RepositoryPrivacy
                   , orderBy :: Optional RepositoryOrder
-                  , affiliations :: Array (Optional RepositoryAffiliation)
-                  , ownerAffiliations :: Array (Optional RepositoryAffiliation)
+                  , affiliations :: Array (Maybe RepositoryAffiliation)
+                  , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
                   , isLocked :: Optional Boolean
                   , after :: Optional String
                   , before :: Optional String
@@ -387,7 +387,7 @@ type PackagesInput = { after :: Optional String
                      , before :: Optional String
                      , first :: Optional Int
                      , last :: Optional Int
-                     , names :: Array (Optional String)
+                     , names :: Array (Maybe String)
                      , repositoryId :: Optional Id
                      , packageType :: Optional PackageType
                      , orderBy :: Optional PackageOrder

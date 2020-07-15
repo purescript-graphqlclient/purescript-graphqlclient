@@ -138,7 +138,7 @@ type CardsInput = { after :: Optional String
                   , before :: Optional String
                   , first :: Optional Int
                   , last :: Optional Int
-                  , archivedStates :: Array (Optional ProjectCardArchivedState)
+                  , archivedStates :: Array (Maybe ProjectCardArchivedState)
                   }
 
 cards :: forall r . CardsInput -> SelectionSet Scope__ProjectCardConnection r -> SelectionSet Scope__ProjectColumn r
