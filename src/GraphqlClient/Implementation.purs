@@ -147,10 +147,10 @@ selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet f
   in SelectionSet
     [ Composite fieldName fields cache ]
     (\json -> do
-      case cache of
-           Nothing -> pure unit
-           Just _ -> do
-              traceM { json, fieldName, args, cache }
+      -- | case cache of
+      -- |      Nothing -> pure unit
+      -- |      Just _ -> do
+      -- |         traceM { json, fieldName, args, cache }
       object <- ArgonautDecoders.Decoder.decodeJObject json
       ArgonautDecoders.Decoder.getField (jsonDecoderTransformer childDecoder) object fieldName'
     )

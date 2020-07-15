@@ -23,16 +23,16 @@ import Test.IntrospectionQuery as Test.IntrospectionQuery
 urls :: Array String
 urls =
   [ "http://elm-graphql-normalize.herokuapp.com/"
-  -- | , "https://countries.trevorblades.com/"
-  -- | , "https://swapi.graph.cool/"
-  -- | , "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
+  , "https://countries.trevorblades.com/"
+  , "https://swapi.graph.cool/"
+  , "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
   ]
 
 introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.Scope__RootQuery GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
 introspectionQuery = GraphqlClientGenerator.IntrospectionSchema.introspectionQuery false
 
 introspectionQueryString :: String
-introspectionQueryString = traceId $ GraphqlClient.writeGraphql introspectionQuery
+introspectionQueryString = GraphqlClient.writeGraphql introspectionQuery
 
 introspectionQueryDecoder :: Json -> Either JsonDecodeError GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
 introspectionQueryDecoder = GraphqlClient.getSelectionSetDecoder introspectionQuery
