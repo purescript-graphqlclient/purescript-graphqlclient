@@ -9,4 +9,5 @@
 
 ### Inspiration
 
-was based originally on https://github.com/dyerw/purescript-fernet
+- port of https://github.com/dillonkearns/elm-graphql/
+- was based originally on https://github.com/dyerw/purescript-fernet
