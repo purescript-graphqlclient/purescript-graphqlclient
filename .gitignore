@@ -10,3 +10,4 @@ output-test/
 .psa*
 .spago/
 report.*.json
+yarn-error.log
