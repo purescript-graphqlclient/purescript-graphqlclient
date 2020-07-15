@@ -3,19 +3,13 @@ module MyTest.IntrospectionSpec where
 import Protolude
 
 import Affjax as Affjax
-import Affjax.RequestBody as Affjax.RequestBody
-import Affjax.ResponseFormat as Affjax.ResponseFormat
-import Ansi.Codes as Ansi.Codes
 import Data.Argonaut.Core (Json)
 import Data.Argonaut.Decode (JsonDecodeError, printJsonDecodeError)
 import Data.Argonaut.Encode (encodeJson) as ArgonautCodecs.Encode
-import Data.Argonaut.Encode as ArgonautCodecs
-import Effect.Exception (error)
 import GraphqlClient as GraphqlClient
 import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
-import Foreign.Object (lookup) as Foreign.Object
 import Test.Spec as Test.Spec
-import Test.Spec.Assertions (fail, shouldEqual)
+import Test.Spec.Assertions (shouldEqual)
 import Test.GraphqlRequest
 import Test.Json
 import Test.IntrospectionQuery as Test.IntrospectionQuery
