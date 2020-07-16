@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -144,7 +145,7 @@ type ItemsInputRowOptional r = ( after :: Optional String
                                | r
                                )
 
-type ItemsInput = { | RefsInputRowOptional + () }
+type ItemsInput = { | ItemsInputRowOptional + () }
 
 items :: forall r . ItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileItemShowcase r
 items input = selectionForCompositeField "items" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

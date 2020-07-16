@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Swapi.InputObject
+import Type.Row
 import Examples.Swapi.Enum.Episode
 import Examples.Swapi.Enum.Language
 import Examples.Swapi.Enum.Phrase
@@ -14,7 +15,7 @@ type DroidInputRowRequired r = ( id :: Id
                                | r
                                )
 
-type DroidInput = { | RefsInputRowRequired + () }
+type DroidInput = { | DroidInputRowRequired + () }
 
 droid :: forall r . DroidInput -> SelectionSet Scope__Droid r -> SelectionSet Scope__RootQuery (Maybe r)
 droid input = selectionForCompositeField "droid" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -26,7 +27,7 @@ type GreetInputRowRequired r = ( input :: Greeting
                                | r
                                )
 
-type GreetInput = { | RefsInputRowRequired + () }
+type GreetInput = { | GreetInputRowRequired + () }
 
 greet :: GreetInput -> SelectionSet Scope__RootQuery String
 greet input = selectionForField "greet" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -38,7 +39,7 @@ type HeroInputRowOptional r = ( episode :: Optional Episode
                               | r
                               )
 
-type HeroInput = { | RefsInputRowOptional + () }
+type HeroInput = { | HeroInputRowOptional + () }
 
 hero :: forall r . HeroInput -> SelectionSet Scope__Character r -> SelectionSet Scope__RootQuery r
 hero input = selectionForCompositeField "hero" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -47,16 +48,16 @@ type HeroUnionInputRowOptional r = ( episode :: Optional Episode
                                    | r
                                    )
 
-type HeroUnionInput = { | RefsInputRowOptional + () }
+type HeroUnionInput = { | HeroUnionInputRowOptional + () }
 
-heroUnion :: HeroUnionInput -> SelectionSet Scope__RootQuery r
-heroUnion input = selectionForField "heroUnion" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
+heroUnion :: forall r . HeroUnionInput -> SelectionSet Scope__CharacterUnion r -> SelectionSet Scope__RootQuery r
+heroUnion input = selectionForCompositeField "heroUnion" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type HumanInputRowRequired r = ( id :: Id
                                | r
                                )
 
-type HumanInput = { | RefsInputRowRequired + () }
+type HumanInput = { | HumanInputRowRequired + () }
 
 human :: forall r . HumanInput -> SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)
 human input = selectionForCompositeField "human" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

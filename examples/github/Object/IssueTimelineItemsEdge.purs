@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -137,5 +138,5 @@ import Examples.Github.Scalars
 cursor :: SelectionSet Scope__IssueTimelineItemsEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 
-node :: SelectionSet Scope__IssueTimelineItemsEdge (Maybe r)
-node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder
+node :: forall r . SelectionSet Scope__IssueTimelineItems r -> SelectionSet Scope__IssueTimelineItemsEdge (Maybe r)
+node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

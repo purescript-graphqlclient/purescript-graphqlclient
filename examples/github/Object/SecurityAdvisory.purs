@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -181,7 +182,7 @@ type VulnerabilitiesInputRowOptional r = ( orderBy :: Optional SecurityVulnerabi
                                          | r
                                          )
 
-type VulnerabilitiesInput = { | RefsInputRowOptional + () }
+type VulnerabilitiesInput = { | VulnerabilitiesInputRowOptional + () }
 
 vulnerabilities :: forall r . VulnerabilitiesInput -> SelectionSet Scope__SecurityVulnerabilityConnection r -> SelectionSet Scope__SecurityAdvisory r
 vulnerabilities input = selectionForCompositeField "vulnerabilities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

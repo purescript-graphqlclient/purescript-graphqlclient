@@ -70,10 +70,10 @@ nameOfTheObjectLikeTypeKind = case _ of
   TypeKindWithNull__List        _type -> nameOfTheObjectLikeTypeKind _type
   TypeKindWithNull__Scalar      _     -> Nothing
   TypeKindWithNull__Enum        _     -> Nothing
-  TypeKindWithNull__InputObject s     -> Just s
-  TypeKindWithNull__Object      s     -> Just s
+  TypeKindWithNull__InputObject _     -> Nothing
+  TypeKindWithNull__Object      s     -> Just s -- just like in mkFieldTypeWithHoleAndMaybe
   TypeKindWithNull__Interface   s     -> Just s
-  TypeKindWithNull__Union       _     -> Nothing
+  TypeKindWithNull__Union       s     -> Just s
 
 isOptionalInputValue :: InstorpectionQueryResult__InputValue -> Boolean
 isOptionalInputValue inputValue =
@@ -144,10 +144,10 @@ declInput parentName args =
         , rowTail:
           let
             rowOptional' :: Maybe Type
-            rowOptional' = map (const (TypeConstructor $ nonQualifiedName $ ProperName "RefsInputRowOptional")) rowOptional
+            rowOptional' = map (const (TypeConstructor $ nonQualifiedName $ ProperName $ parentName <> "InputRowOptional")) rowOptional
 
             rowRequired' :: Maybe Type
-            rowRequired' = map (const (TypeConstructor $ nonQualifiedName $ ProperName "RefsInputRowRequired")) rowRequired
+            rowRequired' = map (const (TypeConstructor $ nonQualifiedName $ ProperName $ parentName <> "InputRowRequired")) rowRequired
 
             rowOptional'' :: Maybe (Type -> Type)
             rowOptional'' = rowOptional' <#> rowPlus

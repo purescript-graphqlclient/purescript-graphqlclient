@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -142,7 +143,7 @@ type LabelsInputRowOptional r = ( orderBy :: Optional LabelOrder
                                 | r
                                 )
 
-type LabelsInput = { | RefsInputRowOptional + () }
+type LabelsInput = { | LabelsInputRowOptional + () }
 
 labels :: forall r . LabelsInput -> SelectionSet Scope__LabelConnection r -> SelectionSet Scope__Labelable (Maybe r)
 labels input = selectionForCompositeField "labels" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

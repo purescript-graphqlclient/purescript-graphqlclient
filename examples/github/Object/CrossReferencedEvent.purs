@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -152,11 +153,11 @@ referencedAt = selectionForField "referencedAt" [] graphqlDefaultResponseScalarD
 resourcePath :: SelectionSet Scope__CrossReferencedEvent Uri
 resourcePath = selectionForField "resourcePath" [] graphqlDefaultResponseScalarDecoder
 
-source :: SelectionSet Scope__CrossReferencedEvent r
-source = selectionForField "source" [] graphqlDefaultResponseScalarDecoder
+source :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__CrossReferencedEvent r
+source = selectionForCompositeField "source" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-target :: SelectionSet Scope__CrossReferencedEvent r
-target = selectionForField "target" [] graphqlDefaultResponseScalarDecoder
+target :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__CrossReferencedEvent r
+target = selectionForCompositeField "target" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 url :: SelectionSet Scope__CrossReferencedEvent Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder

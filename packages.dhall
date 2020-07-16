@@ -1,5 +1,5 @@
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.13.8/packages.dhall sha256:0e95ec11604dc8afc1b129c4d405dcc17290ce56d7d0665a0ff15617e32bbf03
+      https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20200716/packages.dhall sha256:c4683b4c4da0fd33e0df86fc24af035c059270dd245f68b79a7937098f6c6542
 
 let overrides =
       { argonaut-core =
@@ -7,22 +7,9 @@ let overrides =
           //  { repo = "https://github.com/srghma/purescript-argonaut-core.git"
               , version = "master"
               }
-      , argonaut-codecs =
-              upstream.argonaut-codecs
-          //  { repo =
-                  "https://github.com/purescript-contrib/purescript-argonaut-codecs.git"
-              , version = "master"
-              }
-      , argonaut-generic =
-              upstream.argonaut-generic
-          //  { repo =
-                  "https://github.com/purescript-contrib/purescript-argonaut-generic.git"
-              , version = "master"
-              }
       , either =
               upstream.either
-          //  { repo =
-                  "https://github.com/srghma/purescript-either.git"
+          //  { repo = "https://github.com/srghma/purescript-either.git"
               , version = "patch-1"
               }
       }
@@ -104,7 +91,8 @@ let additions =
           , "tuples"
           , "typelevel-prelude"
           ]
-        , repo = "https://github.com/fehrenbach/purescript-unordered-collections.git"
+        , repo =
+            "https://github.com/fehrenbach/purescript-unordered-collections.git"
         , version = "master"
         }
       }

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -141,7 +142,7 @@ type ContextInputRowRequired r = ( name :: String
                                  | r
                                  )
 
-type ContextInput = { | RefsInputRowRequired + () }
+type ContextInput = { | ContextInputRowRequired + () }
 
 context :: forall r . ContextInput -> SelectionSet Scope__StatusContext r -> SelectionSet Scope__Status (Maybe r)
 context input = selectionForCompositeField "context" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

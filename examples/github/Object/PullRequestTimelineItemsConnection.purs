@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -140,8 +141,8 @@ edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrSca
 filteredCount :: SelectionSet Scope__PullRequestTimelineItemsConnection Int
 filteredCount = selectionForField "filteredCount" [] graphqlDefaultResponseScalarDecoder
 
-nodes :: SelectionSet Scope__PullRequestTimelineItemsConnection (Maybe (Array (Maybe r)))
-nodes = selectionForField "nodes" [] graphqlDefaultResponseScalarDecoder
+nodes :: forall r . SelectionSet Scope__PullRequestTimelineItems r -> SelectionSet Scope__PullRequestTimelineItemsConnection (Maybe (Array (Maybe r)))
+nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 pageCount :: SelectionSet Scope__PullRequestTimelineItemsConnection Int
 pageCount = selectionForField "pageCount" [] graphqlDefaultResponseScalarDecoder

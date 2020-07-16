@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -141,7 +142,7 @@ type BranchProtectionRuleConflictsInputRowOptional r = ( after :: Optional Strin
                                                        | r
                                                        )
 
-type BranchProtectionRuleConflictsInput = { | RefsInputRowOptional + () }
+type BranchProtectionRuleConflictsInput = { | BranchProtectionRuleConflictsInputRowOptional + () }
 
 branchProtectionRuleConflicts :: forall r . BranchProtectionRuleConflictsInput -> SelectionSet Scope__BranchProtectionRuleConflictConnection r -> SelectionSet Scope__BranchProtectionRule r
 branchProtectionRuleConflicts input = selectionForCompositeField "branchProtectionRuleConflicts" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -169,7 +170,7 @@ type MatchingRefsInputRowOptional r = ( query :: Optional String
                                       | r
                                       )
 
-type MatchingRefsInput = { | RefsInputRowOptional + () }
+type MatchingRefsInput = { | MatchingRefsInputRowOptional + () }
 
 matchingRefs :: forall r . MatchingRefsInput -> SelectionSet Scope__RefConnection r -> SelectionSet Scope__BranchProtectionRule r
 matchingRefs input = selectionForCompositeField "matchingRefs" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -184,7 +185,7 @@ type PushAllowancesInputRowOptional r = ( after :: Optional String
                                         | r
                                         )
 
-type PushAllowancesInput = { | RefsInputRowOptional + () }
+type PushAllowancesInput = { | PushAllowancesInputRowOptional + () }
 
 pushAllowances :: forall r . PushAllowancesInput -> SelectionSet Scope__PushAllowanceConnection r -> SelectionSet Scope__BranchProtectionRule r
 pushAllowances input = selectionForCompositeField "pushAllowances" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -226,7 +227,7 @@ type ReviewDismissalAllowancesInputRowOptional r = ( after :: Optional String
                                                    | r
                                                    )
 
-type ReviewDismissalAllowancesInput = { | RefsInputRowOptional + () }
+type ReviewDismissalAllowancesInput = { | ReviewDismissalAllowancesInputRowOptional + () }
 
 reviewDismissalAllowances :: forall r . ReviewDismissalAllowancesInput -> SelectionSet Scope__ReviewDismissalAllowanceConnection r -> SelectionSet Scope__BranchProtectionRule r
 reviewDismissalAllowances input = selectionForCompositeField "reviewDismissalAllowances" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

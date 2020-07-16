@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -149,8 +150,8 @@ isActive = selectionForField "isActive" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__IpAllowListEntry (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-owner :: SelectionSet Scope__IpAllowListEntry r
-owner = selectionForField "owner" [] graphqlDefaultResponseScalarDecoder
+owner :: forall r . SelectionSet Scope__IpAllowListOwner r -> SelectionSet Scope__IpAllowListEntry r
+owner = selectionForCompositeField "owner" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 updatedAt :: SelectionSet Scope__IpAllowListEntry DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder

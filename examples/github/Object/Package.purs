@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -156,7 +157,7 @@ type VersionInputRowRequired r = ( version :: String
                                  | r
                                  )
 
-type VersionInput = { | RefsInputRowRequired + () }
+type VersionInput = { | VersionInputRowRequired + () }
 
 version :: forall r . VersionInput -> SelectionSet Scope__PackageVersion r -> SelectionSet Scope__Package (Maybe r)
 version input = selectionForCompositeField "version" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -169,7 +170,7 @@ type VersionsInputRowOptional r = ( orderBy :: Optional PackageVersionOrder
                                   | r
                                   )
 
-type VersionsInput = { | RefsInputRowOptional + () }
+type VersionsInput = { | VersionsInputRowOptional + () }
 
 versions :: forall r . VersionsInput -> SelectionSet Scope__PackageVersionConnection r -> SelectionSet Scope__Package r
 versions input = selectionForCompositeField "versions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

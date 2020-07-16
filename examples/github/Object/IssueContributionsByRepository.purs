@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -142,7 +143,7 @@ type ContributionsInputRowOptional r = ( after :: Optional String
                                        | r
                                        )
 
-type ContributionsInput = { | RefsInputRowOptional + () }
+type ContributionsInput = { | ContributionsInputRowOptional + () }
 
 contributions :: forall r . ContributionsInput -> SelectionSet Scope__CreatedIssueContributionConnection r -> SelectionSet Scope__IssueContributionsByRepository r
 contributions input = selectionForCompositeField "contributions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

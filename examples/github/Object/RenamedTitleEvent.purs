@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -149,5 +150,5 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 previousTitle :: SelectionSet Scope__RenamedTitleEvent String
 previousTitle = selectionForField "previousTitle" [] graphqlDefaultResponseScalarDecoder
 
-subject :: SelectionSet Scope__RenamedTitleEvent r
-subject = selectionForField "subject" [] graphqlDefaultResponseScalarDecoder
+subject :: forall r . SelectionSet Scope__RenamedTitleSubject r -> SelectionSet Scope__RenamedTitleEvent r
+subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

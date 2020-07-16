@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -143,7 +144,7 @@ type SponsorshipsInputRowOptional r = ( after :: Optional String
                                       | r
                                       )
 
-type SponsorshipsInput = { | RefsInputRowOptional + () }
+type SponsorshipsInput = { | SponsorshipsInputRowOptional + () }
 
 sponsorships :: forall r . SponsorshipsInput -> SelectionSet Scope__SponsorshipConnection r -> SelectionSet Scope__SponsorsTierAdminInfo r
 sponsorships input = selectionForCompositeField "sponsorships" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

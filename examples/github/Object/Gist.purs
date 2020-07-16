@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -141,7 +142,7 @@ type CommentsInputRowOptional r = ( after :: Optional String
                                   | r
                                   )
 
-type CommentsInput = { | RefsInputRowOptional + () }
+type CommentsInput = { | CommentsInputRowOptional + () }
 
 comments :: forall r . CommentsInput -> SelectionSet Scope__GistCommentConnection r -> SelectionSet Scope__Gist r
 comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -157,7 +158,7 @@ type FilesInputRowOptional r = ( limit :: Optional Int
                                | r
                                )
 
-type FilesInput = { | RefsInputRowOptional + () }
+type FilesInput = { | FilesInputRowOptional + () }
 
 files :: forall r . FilesInput -> SelectionSet Scope__GistFile r -> SelectionSet Scope__Gist (Maybe (Array (Maybe r)))
 files input = selectionForCompositeField "files" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -170,7 +171,7 @@ type ForksInputRowOptional r = ( after :: Optional String
                                | r
                                )
 
-type ForksInput = { | RefsInputRowOptional + () }
+type ForksInput = { | ForksInputRowOptional + () }
 
 forks :: forall r . ForksInput -> SelectionSet Scope__GistConnection r -> SelectionSet Scope__Gist r
 forks input = selectionForCompositeField "forks" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -204,7 +205,7 @@ type StargazersInputRowOptional r = ( after :: Optional String
                                     | r
                                     )
 
-type StargazersInput = { | RefsInputRowOptional + () }
+type StargazersInput = { | StargazersInputRowOptional + () }
 
 stargazers :: forall r . StargazersInput -> SelectionSet Scope__StargazerConnection r -> SelectionSet Scope__Gist r
 stargazers input = selectionForCompositeField "stargazers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -148,7 +149,7 @@ type AssociatedPullRequestsInputRowOptional r = ( after :: Optional String
                                                 | r
                                                 )
 
-type AssociatedPullRequestsInput = { | RefsInputRowOptional + () }
+type AssociatedPullRequestsInput = { | AssociatedPullRequestsInputRowOptional + () }
 
 associatedPullRequests :: forall r . AssociatedPullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Commit (Maybe r)
 associatedPullRequests input = selectionForCompositeField "associatedPullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -166,7 +167,7 @@ type BlameInputRowRequired r = ( path :: String
                                | r
                                )
 
-type BlameInput = { | RefsInputRowRequired + () }
+type BlameInput = { | BlameInputRowRequired + () }
 
 blame :: forall r . BlameInput -> SelectionSet Scope__Blame r -> SelectionSet Scope__Commit r
 blame input = selectionForCompositeField "blame" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -181,7 +182,7 @@ type CommentsInputRowOptional r = ( after :: Optional String
                                   | r
                                   )
 
-type CommentsInput = { | RefsInputRowOptional + () }
+type CommentsInput = { | CommentsInputRowOptional + () }
 
 comments :: forall r . CommentsInput -> SelectionSet Scope__CommitCommentConnection r -> SelectionSet Scope__Commit r
 comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -213,7 +214,7 @@ type DeploymentsInputRowOptional r = ( environments :: Optional (Array String)
                                      | r
                                      )
 
-type DeploymentsInput = { | RefsInputRowOptional + () }
+type DeploymentsInput = { | DeploymentsInputRowOptional + () }
 
 deployments :: forall r . DeploymentsInput -> SelectionSet Scope__DeploymentConnection r -> SelectionSet Scope__Commit (Maybe r)
 deployments input = selectionForCompositeField "deployments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -229,7 +230,7 @@ type HistoryInputRowOptional r = ( after :: Optional String
                                  | r
                                  )
 
-type HistoryInput = { | RefsInputRowOptional + () }
+type HistoryInput = { | HistoryInputRowOptional + () }
 
 history :: forall r . HistoryInput -> SelectionSet Scope__CommitHistoryConnection r -> SelectionSet Scope__Commit r
 history input = selectionForCompositeField "history" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -265,7 +266,7 @@ type ParentsInputRowOptional r = ( after :: Optional String
                                  | r
                                  )
 
-type ParentsInput = { | RefsInputRowOptional + () }
+type ParentsInput = { | ParentsInputRowOptional + () }
 
 parents :: forall r . ParentsInput -> SelectionSet Scope__CommitConnection r -> SelectionSet Scope__Commit r
 parents input = selectionForCompositeField "parents" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -295,7 +296,7 @@ type SubmodulesInputRowOptional r = ( after :: Optional String
                                     | r
                                     )
 
-type SubmodulesInput = { | RefsInputRowOptional + () }
+type SubmodulesInput = { | SubmodulesInputRowOptional + () }
 
 submodules :: forall r . SubmodulesInput -> SelectionSet Scope__SubmoduleConnection r -> SelectionSet Scope__Commit r
 submodules input = selectionForCompositeField "submodules" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -142,7 +143,7 @@ type MemberStatusesInputRowOptional r = ( after :: Optional String
                                         | r
                                         )
 
-type MemberStatusesInput = { | RefsInputRowOptional + () }
+type MemberStatusesInput = { | MemberStatusesInputRowOptional + () }
 
 memberStatuses :: forall r . MemberStatusesInput -> SelectionSet Scope__UserStatusConnection r -> SelectionSet Scope__MemberStatusable r
 memberStatuses input = selectionForCompositeField "memberStatuses" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

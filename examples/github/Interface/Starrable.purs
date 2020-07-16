@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -145,7 +146,7 @@ type StargazersInputRowOptional r = ( after :: Optional String
                                     | r
                                     )
 
-type StargazersInput = { | RefsInputRowOptional + () }
+type StargazersInput = { | StargazersInputRowOptional + () }
 
 stargazers :: forall r . StargazersInput -> SelectionSet Scope__StargazerConnection r -> SelectionSet Scope__Starrable r
 stargazers input = selectionForCompositeField "stargazers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -141,7 +142,7 @@ type CommentsInputRowOptional r = ( after :: Optional String
                                   | r
                                   )
 
-type CommentsInput = { | RefsInputRowOptional + () }
+type CommentsInput = { | CommentsInputRowOptional + () }
 
 comments :: forall r . CommentsInput -> SelectionSet Scope__CommitCommentConnection r -> SelectionSet Scope__CommitCommentThread r
 comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

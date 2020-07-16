@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -146,5 +147,5 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 milestoneTitle :: SelectionSet Scope__DemilestonedEvent String
 milestoneTitle = selectionForField "milestoneTitle" [] graphqlDefaultResponseScalarDecoder
 
-subject :: SelectionSet Scope__DemilestonedEvent r
-subject = selectionForField "subject" [] graphqlDefaultResponseScalarDecoder
+subject :: forall r . SelectionSet Scope__MilestoneItem r -> SelectionSet Scope__DemilestonedEvent r
+subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

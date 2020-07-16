@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -140,5 +141,5 @@ organization = selectionForCompositeField "organization" [] graphqlDefaultRespon
 permission :: SelectionSet Scope__PermissionSource DefaultRepositoryPermissionField
 permission = selectionForField "permission" [] graphqlDefaultResponseScalarDecoder
 
-source :: SelectionSet Scope__PermissionSource r
-source = selectionForField "source" [] graphqlDefaultResponseScalarDecoder
+source :: forall r . SelectionSet Scope__PermissionGranter r -> SelectionSet Scope__PermissionSource r
+source = selectionForCompositeField "source" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

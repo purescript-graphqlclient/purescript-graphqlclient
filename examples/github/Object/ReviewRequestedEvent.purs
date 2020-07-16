@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -146,5 +147,5 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 pullRequest :: forall r . SelectionSet Scope__PullRequest r -> SelectionSet Scope__ReviewRequestedEvent r
 pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-requestedReviewer :: SelectionSet Scope__ReviewRequestedEvent (Maybe r)
-requestedReviewer = selectionForField "requestedReviewer" [] graphqlDefaultResponseScalarDecoder
+requestedReviewer :: forall r . SelectionSet Scope__RequestedReviewer r -> SelectionSet Scope__ReviewRequestedEvent (Maybe r)
+requestedReviewer = selectionForCompositeField "requestedReviewer" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

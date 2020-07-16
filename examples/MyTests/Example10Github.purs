@@ -58,7 +58,7 @@ repo = { createdAt: _, earlyReleases: _, lateReleases: _, stargazersCount: _ }
 releases :: SelectionSet Scope__ReleaseConnection ReleaseInfo
 releases = { totalCount: _ , releases: _ }
   <$> Examples.Github.Object.ReleaseConnection.totalCount
-  <*> (Examples.Github.Object.ReleaseConnection.nodes release # nonNullElementsOrFail)
+  <*> (Examples.Github.Object.ReleaseConnection.nodes release # nonNullOrFail # nonNullElementsOrFail)
 
 
 release :: SelectionSet Scope__Release Release
@@ -69,12 +69,28 @@ release = { name: _ , url: _ }
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
-  repoInfo {
-    __typename
+  repository788135211: repository(name: "mobster", owner: "dillonkearns") {
+    createdAt
+    releases861569893: releases(first: 2) {
+      totalCount
+      nodes {
+        name
+        url
+      }
+    }
+    releases1588992762: releases(last: 10) {
+      totalCount
+      nodes {
+        name
+        url
+      }
+    }
+    stargazers {
+      totalCount
+    }
   }
-  hero {
-    __typename
-    name
+  topic1926526000: topic(name: "") {
+    id
   }
 }
 """

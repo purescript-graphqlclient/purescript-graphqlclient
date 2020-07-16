@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -148,7 +149,7 @@ type PackagesInputRowOptional r = ( after :: Optional String
                                   | r
                                   )
 
-type PackagesInput = { | RefsInputRowOptional + () }
+type PackagesInput = { | PackagesInputRowOptional + () }
 
 packages :: forall r . PackagesInput -> SelectionSet Scope__PackageConnection r -> SelectionSet Scope__PackageOwner r
 packages input = selectionForCompositeField "packages" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

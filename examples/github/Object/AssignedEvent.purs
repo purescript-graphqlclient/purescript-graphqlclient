@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -140,8 +141,8 @@ actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrSca
 assignable :: forall r . SelectionSet Scope__Assignable r -> SelectionSet Scope__AssignedEvent r
 assignable = selectionForCompositeField "assignable" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-assignee :: SelectionSet Scope__AssignedEvent (Maybe r)
-assignee = selectionForField "assignee" [] graphqlDefaultResponseScalarDecoder
+assignee :: forall r . SelectionSet Scope__Assignee r -> SelectionSet Scope__AssignedEvent (Maybe r)
+assignee = selectionForCompositeField "assignee" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 createdAt :: SelectionSet Scope__AssignedEvent DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

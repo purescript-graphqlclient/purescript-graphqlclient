@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -137,8 +138,8 @@ import Examples.Github.Scalars
 edges :: forall r . SelectionSet Scope__OrganizationAuditEntryEdge r -> SelectionSet Scope__OrganizationAuditEntryConnection (Maybe (Array (Maybe r)))
 edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-nodes :: SelectionSet Scope__OrganizationAuditEntryConnection (Maybe (Array (Maybe r)))
-nodes = selectionForField "nodes" [] graphqlDefaultResponseScalarDecoder
+nodes :: forall r . SelectionSet Scope__OrganizationAuditEntry r -> SelectionSet Scope__OrganizationAuditEntryConnection (Maybe (Array (Maybe r)))
+nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 pageInfo :: forall r . SelectionSet Scope__PageInfo r -> SelectionSet Scope__OrganizationAuditEntryConnection r
 pageInfo = selectionForCompositeField "pageInfo" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -138,7 +139,7 @@ type AvatarUrlInputRowOptional r = ( size :: Optional Int
                                    | r
                                    )
 
-type AvatarUrlInput = { | RefsInputRowOptional + () }
+type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__RepositoryOwner Uri
 avatarUrl input = selectionForField "avatarUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -162,7 +163,7 @@ type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                       | r
                                       )
 
-type RepositoriesInput = { | RefsInputRowOptional + () }
+type RepositoriesInput = { | RepositoriesInputRowOptional + () }
 
 repositories :: forall r . RepositoriesInput -> SelectionSet Scope__RepositoryConnection r -> SelectionSet Scope__RepositoryOwner r
 repositories input = selectionForCompositeField "repositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -171,7 +172,7 @@ type RepositoryInputRowRequired r = ( name :: String
                                     | r
                                     )
 
-type RepositoryInput = { | RefsInputRowRequired + () }
+type RepositoryInput = { | RepositoryInputRowRequired + () }
 
 repository :: forall r . RepositoryInput -> SelectionSet Scope__Repository r -> SelectionSet Scope__RepositoryOwner (Maybe r)
 repository input = selectionForCompositeField "repository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

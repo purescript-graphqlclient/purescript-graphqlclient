@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -145,7 +146,7 @@ type EmailsInputRowOptional r = ( orderBy :: Optional EnterpriseServerUserAccoun
                                 | r
                                 )
 
-type EmailsInput = { | RefsInputRowOptional + () }
+type EmailsInput = { | EmailsInputRowOptional + () }
 
 emails :: forall r . EmailsInput -> SelectionSet Scope__EnterpriseServerUserAccountEmailConnection r -> SelectionSet Scope__EnterpriseServerUserAccount r
 emails input = selectionForCompositeField "emails" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

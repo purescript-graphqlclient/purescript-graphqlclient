@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -207,7 +208,7 @@ type ShortDescriptionHtmlInputRowOptional r = ( limit :: Optional Int
                                               | r
                                               )
 
-type ShortDescriptionHtmlInput = { | RefsInputRowOptional + () }
+type ShortDescriptionHtmlInput = { | ShortDescriptionHtmlInputRowOptional + () }
 
 shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet Scope__RepositoryInfo Html
 shortDescriptionHTML input = selectionForField "shortDescriptionHTML" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

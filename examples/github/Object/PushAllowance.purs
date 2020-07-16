@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -134,8 +135,8 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-actor :: SelectionSet Scope__PushAllowance (Maybe r)
-actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
+actor :: forall r . SelectionSet Scope__PushAllowanceActor r -> SelectionSet Scope__PushAllowance (Maybe r)
+actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 branchProtectionRule :: forall r . SelectionSet Scope__BranchProtectionRule r -> SelectionSet Scope__PushAllowance (Maybe r)
 branchProtectionRule = selectionForCompositeField "branchProtectionRule" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

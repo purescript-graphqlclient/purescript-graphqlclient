@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -137,8 +138,8 @@ import Examples.Github.Scalars
 action :: SelectionSet Scope__RepoDestroyAuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: SelectionSet Scope__RepoDestroyAuditEntry (Maybe r)
-actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
+actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__RepoDestroyAuditEntry (Maybe r)
+actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 actorIp :: SelectionSet Scope__RepoDestroyAuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder

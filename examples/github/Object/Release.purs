@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -169,7 +170,7 @@ type ReleaseAssetsInputRowOptional r = ( after :: Optional String
                                        | r
                                        )
 
-type ReleaseAssetsInput = { | RefsInputRowOptional + () }
+type ReleaseAssetsInput = { | ReleaseAssetsInputRowOptional + () }
 
 releaseAssets :: forall r . ReleaseAssetsInput -> SelectionSet Scope__ReleaseAssetConnection r -> SelectionSet Scope__Release r
 releaseAssets input = selectionForCompositeField "releaseAssets" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -181,7 +182,7 @@ type ShortDescriptionHtmlInputRowOptional r = ( limit :: Optional Int
                                               | r
                                               )
 
-type ShortDescriptionHtmlInput = { | RefsInputRowOptional + () }
+type ShortDescriptionHtmlInput = { | ShortDescriptionHtmlInputRowOptional + () }
 
 shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet Scope__Release (Maybe Html)
 shortDescriptionHTML input = selectionForField "shortDescriptionHTML" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -147,7 +148,7 @@ type ExternalIdentitiesInputRowOptional r = ( after :: Optional String
                                             | r
                                             )
 
-type ExternalIdentitiesInput = { | RefsInputRowOptional + () }
+type ExternalIdentitiesInput = { | ExternalIdentitiesInputRowOptional + () }
 
 externalIdentities :: forall r . ExternalIdentitiesInput -> SelectionSet Scope__ExternalIdentityConnection r -> SelectionSet Scope__EnterpriseIdentityProvider r
 externalIdentities input = selectionForCompositeField "externalIdentities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

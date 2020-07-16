@@ -28,4 +28,9 @@ imports apiModuleName =
     , names: []
     , qualification: Nothing
     }
+  , ImportDecl
+    { moduleName: mkModuleName $ NonEmpty.cons' "Type" ["Row"]
+    , names: []
+    , qualification: Nothing
+    }
   ]

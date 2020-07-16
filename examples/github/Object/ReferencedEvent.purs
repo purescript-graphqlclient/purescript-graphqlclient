@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -155,5 +156,5 @@ isCrossRepository = selectionForField "isCrossRepository" [] graphqlDefaultRespo
 isDirectReference :: SelectionSet Scope__ReferencedEvent Boolean
 isDirectReference = selectionForField "isDirectReference" [] graphqlDefaultResponseScalarDecoder
 
-subject :: SelectionSet Scope__ReferencedEvent r
-subject = selectionForField "subject" [] graphqlDefaultResponseScalarDecoder
+subject :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__ReferencedEvent r
+subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

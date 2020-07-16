@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -138,7 +139,7 @@ type AvatarUrlInputRowOptional r = ( size :: Optional Int
                                    | r
                                    )
 
-type AvatarUrlInput = { | RefsInputRowOptional + () }
+type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__EnterpriseUserAccount Uri
 avatarUrl input = selectionForField "avatarUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -168,7 +169,7 @@ type OrganizationsInputRowOptional r = ( query :: Optional String
                                        | r
                                        )
 
-type OrganizationsInput = { | RefsInputRowOptional + () }
+type OrganizationsInput = { | OrganizationsInputRowOptional + () }
 
 organizations :: forall r . OrganizationsInput -> SelectionSet Scope__EnterpriseOrganizationMembershipConnection r -> SelectionSet Scope__EnterpriseUserAccount r
 organizations input = selectionForCompositeField "organizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -160,7 +161,7 @@ type UserAccountsInputRowOptional r = ( orderBy :: Optional EnterpriseServerUser
                                       | r
                                       )
 
-type UserAccountsInput = { | RefsInputRowOptional + () }
+type UserAccountsInput = { | UserAccountsInputRowOptional + () }
 
 userAccounts :: forall r . UserAccountsInput -> SelectionSet Scope__EnterpriseServerUserAccountConnection r -> SelectionSet Scope__EnterpriseServerInstallation r
 userAccounts input = selectionForCompositeField "userAccounts" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -173,7 +174,7 @@ type UserAccountsUploadsInputRowOptional r = ( orderBy :: Optional EnterpriseSer
                                              | r
                                              )
 
-type UserAccountsUploadsInput = { | RefsInputRowOptional + () }
+type UserAccountsUploadsInput = { | UserAccountsUploadsInputRowOptional + () }
 
 userAccountsUploads :: forall r . UserAccountsUploadsInput -> SelectionSet Scope__EnterpriseServerUserAccountsUploadConnection r -> SelectionSet Scope__EnterpriseServerInstallation r
 userAccountsUploads input = selectionForCompositeField "userAccountsUploads" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

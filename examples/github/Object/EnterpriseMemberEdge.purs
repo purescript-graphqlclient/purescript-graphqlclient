@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -140,5 +141,5 @@ cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 isUnlicensed :: SelectionSet Scope__EnterpriseMemberEdge Boolean
 isUnlicensed = selectionForField "isUnlicensed" [] graphqlDefaultResponseScalarDecoder
 
-node :: SelectionSet Scope__EnterpriseMemberEdge (Maybe r)
-node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder
+node :: forall r . SelectionSet Scope__EnterpriseMember r -> SelectionSet Scope__EnterpriseMemberEdge (Maybe r)
+node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

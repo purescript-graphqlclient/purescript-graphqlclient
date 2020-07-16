@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -149,8 +150,8 @@ privacyLevel = selectionForField "privacyLevel" [] graphqlDefaultResponseScalarD
 sponsor :: forall r . SelectionSet Scope__User r -> SelectionSet Scope__Sponsorship (Maybe r)
 sponsor = selectionForCompositeField "sponsor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-sponsorEntity :: SelectionSet Scope__Sponsorship (Maybe r)
-sponsorEntity = selectionForField "sponsorEntity" [] graphqlDefaultResponseScalarDecoder
+sponsorEntity :: forall r . SelectionSet Scope__Sponsor r -> SelectionSet Scope__Sponsorship (Maybe r)
+sponsorEntity = selectionForCompositeField "sponsorEntity" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 sponsorable :: forall r . SelectionSet Scope__Sponsorable r -> SelectionSet Scope__Sponsorship r
 sponsorable = selectionForCompositeField "sponsorable" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

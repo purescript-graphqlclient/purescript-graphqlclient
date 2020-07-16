@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -146,7 +147,7 @@ type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional String
                                                   | r
                                                   )
 
-type SponsorshipsAsMaintainerInput = { | RefsInputRowOptional + () }
+type SponsorshipsAsMaintainerInput = { | SponsorshipsAsMaintainerInputRowOptional + () }
 
 sponsorshipsAsMaintainer :: forall r . SponsorshipsAsMaintainerInput -> SelectionSet Scope__SponsorshipConnection r -> SelectionSet Scope__Sponsorable r
 sponsorshipsAsMaintainer input = selectionForCompositeField "sponsorshipsAsMaintainer" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -159,7 +160,7 @@ type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional String
                                                | r
                                                )
 
-type SponsorshipsAsSponsorInput = { | RefsInputRowOptional + () }
+type SponsorshipsAsSponsorInput = { | SponsorshipsAsSponsorInputRowOptional + () }
 
 sponsorshipsAsSponsor :: forall r . SponsorshipsAsSponsorInput -> SelectionSet Scope__SponsorshipConnection r -> SelectionSet Scope__Sponsorable r
 sponsorshipsAsSponsor input = selectionForCompositeField "sponsorshipsAsSponsor" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

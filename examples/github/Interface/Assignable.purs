@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -141,7 +142,7 @@ type AssigneesInputRowOptional r = ( after :: Optional String
                                    | r
                                    )
 
-type AssigneesInput = { | RefsInputRowOptional + () }
+type AssigneesInput = { | AssigneesInputRowOptional + () }
 
 assignees :: forall r . AssigneesInput -> SelectionSet Scope__UserConnection r -> SelectionSet Scope__Assignable r
 assignees input = selectionForCompositeField "assignees" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

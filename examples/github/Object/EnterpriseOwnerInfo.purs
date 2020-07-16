@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -142,7 +143,7 @@ type ActionExecutionCapabilitySettingOrganizationsInputRowOptional r = ( after :
                                                                        | r
                                                                        )
 
-type ActionExecutionCapabilitySettingOrganizationsInput = { | RefsInputRowOptional + () }
+type ActionExecutionCapabilitySettingOrganizationsInput = { | ActionExecutionCapabilitySettingOrganizationsInputRowOptional + () }
 
 actionExecutionCapabilitySettingOrganizations :: forall r . ActionExecutionCapabilitySettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 actionExecutionCapabilitySettingOrganizations input = selectionForCompositeField "actionExecutionCapabilitySettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -157,7 +158,7 @@ type AdminsInputRowOptional r = ( query :: Optional String
                                 | r
                                 )
 
-type AdminsInput = { | RefsInputRowOptional + () }
+type AdminsInput = { | AdminsInputRowOptional + () }
 
 admins :: forall r . AdminsInput -> SelectionSet Scope__EnterpriseAdministratorConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 admins input = selectionForCompositeField "admins" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -169,7 +170,7 @@ type AffiliatedUsersWithTwoFactorDisabledInputRowOptional r = ( after :: Optiona
                                                               | r
                                                               )
 
-type AffiliatedUsersWithTwoFactorDisabledInput = { | RefsInputRowOptional + () }
+type AffiliatedUsersWithTwoFactorDisabledInput = { | AffiliatedUsersWithTwoFactorDisabledInputRowOptional + () }
 
 affiliatedUsersWithTwoFactorDisabled :: forall r . AffiliatedUsersWithTwoFactorDisabledInput -> SelectionSet Scope__UserConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 affiliatedUsersWithTwoFactorDisabled input = selectionForCompositeField "affiliatedUsersWithTwoFactorDisabled" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -192,7 +193,7 @@ type AllowPrivateRepositoryForkingSettingOrganizationsInputRowRequired r = ( val
                                                                            | r
                                                                            )
 
-type AllowPrivateRepositoryForkingSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type AllowPrivateRepositoryForkingSettingOrganizationsInput = { | AllowPrivateRepositoryForkingSettingOrganizationsInputRowRequired + AllowPrivateRepositoryForkingSettingOrganizationsInputRowRequired + () }
 
 allowPrivateRepositoryForkingSettingOrganizations :: forall r . AllowPrivateRepositoryForkingSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 allowPrivateRepositoryForkingSettingOrganizations input = selectionForCompositeField "allowPrivateRepositoryForkingSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -212,7 +213,7 @@ type DefaultRepositoryPermissionSettingOrganizationsInputRowRequired r = ( value
                                                                          | r
                                                                          )
 
-type DefaultRepositoryPermissionSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type DefaultRepositoryPermissionSettingOrganizationsInput = { | DefaultRepositoryPermissionSettingOrganizationsInputRowRequired + DefaultRepositoryPermissionSettingOrganizationsInputRowRequired + () }
 
 defaultRepositoryPermissionSettingOrganizations :: forall r . DefaultRepositoryPermissionSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 defaultRepositoryPermissionSettingOrganizations input = selectionForCompositeField "defaultRepositoryPermissionSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -226,7 +227,7 @@ type EnterpriseServerInstallationsInputRowOptional r = ( after :: Optional Strin
                                                        | r
                                                        )
 
-type EnterpriseServerInstallationsInput = { | RefsInputRowOptional + () }
+type EnterpriseServerInstallationsInput = { | EnterpriseServerInstallationsInputRowOptional + () }
 
 enterpriseServerInstallations :: forall r . EnterpriseServerInstallationsInput -> SelectionSet Scope__EnterpriseServerInstallationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 enterpriseServerInstallations input = selectionForCompositeField "enterpriseServerInstallations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -242,7 +243,7 @@ type IpAllowListEntriesInputRowOptional r = ( after :: Optional String
                                             | r
                                             )
 
-type IpAllowListEntriesInput = { | RefsInputRowOptional + () }
+type IpAllowListEntriesInput = { | IpAllowListEntriesInputRowOptional + () }
 
 ipAllowListEntries :: forall r . IpAllowListEntriesInput -> SelectionSet Scope__IpAllowListEntryConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 ipAllowListEntries input = selectionForCompositeField "ipAllowListEntries" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -268,7 +269,7 @@ type MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowRequired r 
                                                                                   | r
                                                                                   )
 
-type MembersCanChangeRepositoryVisibilitySettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersCanChangeRepositoryVisibilitySettingOrganizationsInput = { | MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowRequired + MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowRequired + () }
 
 membersCanChangeRepositoryVisibilitySettingOrganizations :: forall r . MembersCanChangeRepositoryVisibilitySettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 membersCanChangeRepositoryVisibilitySettingOrganizations input = selectionForCompositeField "membersCanChangeRepositoryVisibilitySettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -297,7 +298,7 @@ type MembersCanCreateRepositoriesSettingOrganizationsInputRowRequired r = ( valu
                                                                           | r
                                                                           )
 
-type MembersCanCreateRepositoriesSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersCanCreateRepositoriesSettingOrganizationsInput = { | MembersCanCreateRepositoriesSettingOrganizationsInputRowRequired + MembersCanCreateRepositoriesSettingOrganizationsInputRowRequired + () }
 
 membersCanCreateRepositoriesSettingOrganizations :: forall r . MembersCanCreateRepositoriesSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 membersCanCreateRepositoriesSettingOrganizations input = selectionForCompositeField "membersCanCreateRepositoriesSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -317,7 +318,7 @@ type MembersCanDeleteIssuesSettingOrganizationsInputRowRequired r = ( value :: B
                                                                     | r
                                                                     )
 
-type MembersCanDeleteIssuesSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersCanDeleteIssuesSettingOrganizationsInput = { | MembersCanDeleteIssuesSettingOrganizationsInputRowRequired + MembersCanDeleteIssuesSettingOrganizationsInputRowRequired + () }
 
 membersCanDeleteIssuesSettingOrganizations :: forall r . MembersCanDeleteIssuesSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 membersCanDeleteIssuesSettingOrganizations input = selectionForCompositeField "membersCanDeleteIssuesSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -337,7 +338,7 @@ type MembersCanDeleteRepositoriesSettingOrganizationsInputRowRequired r = ( valu
                                                                           | r
                                                                           )
 
-type MembersCanDeleteRepositoriesSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersCanDeleteRepositoriesSettingOrganizationsInput = { | MembersCanDeleteRepositoriesSettingOrganizationsInputRowRequired + MembersCanDeleteRepositoriesSettingOrganizationsInputRowRequired + () }
 
 membersCanDeleteRepositoriesSettingOrganizations :: forall r . MembersCanDeleteRepositoriesSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 membersCanDeleteRepositoriesSettingOrganizations input = selectionForCompositeField "membersCanDeleteRepositoriesSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -357,7 +358,7 @@ type MembersCanInviteCollaboratorsSettingOrganizationsInputRowRequired r = ( val
                                                                            | r
                                                                            )
 
-type MembersCanInviteCollaboratorsSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersCanInviteCollaboratorsSettingOrganizationsInput = { | MembersCanInviteCollaboratorsSettingOrganizationsInputRowRequired + MembersCanInviteCollaboratorsSettingOrganizationsInputRowRequired + () }
 
 membersCanInviteCollaboratorsSettingOrganizations :: forall r . MembersCanInviteCollaboratorsSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 membersCanInviteCollaboratorsSettingOrganizations input = selectionForCompositeField "membersCanInviteCollaboratorsSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -380,7 +381,7 @@ type MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowRequired r = (
                                                                                | r
                                                                                )
 
-type MembersCanUpdateProtectedBranchesSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersCanUpdateProtectedBranchesSettingOrganizationsInput = { | MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowRequired + MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowRequired + () }
 
 membersCanUpdateProtectedBranchesSettingOrganizations :: forall r . MembersCanUpdateProtectedBranchesSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 membersCanUpdateProtectedBranchesSettingOrganizations input = selectionForCompositeField "membersCanUpdateProtectedBranchesSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -400,7 +401,7 @@ type MembersCanViewDependencyInsightsSettingOrganizationsInputRowRequired r = ( 
                                                                               | r
                                                                               )
 
-type MembersCanViewDependencyInsightsSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersCanViewDependencyInsightsSettingOrganizationsInput = { | MembersCanViewDependencyInsightsSettingOrganizationsInputRowRequired + MembersCanViewDependencyInsightsSettingOrganizationsInputRowRequired + () }
 
 membersCanViewDependencyInsightsSettingOrganizations :: forall r . MembersCanViewDependencyInsightsSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 membersCanViewDependencyInsightsSettingOrganizations input = selectionForCompositeField "membersCanViewDependencyInsightsSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -420,7 +421,7 @@ type OrganizationProjectsSettingOrganizationsInputRowRequired r = ( value :: Boo
                                                                   | r
                                                                   )
 
-type OrganizationProjectsSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type OrganizationProjectsSettingOrganizationsInput = { | OrganizationProjectsSettingOrganizationsInputRowRequired + OrganizationProjectsSettingOrganizationsInputRowRequired + () }
 
 organizationProjectsSettingOrganizations :: forall r . OrganizationProjectsSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 organizationProjectsSettingOrganizations input = selectionForCompositeField "organizationProjectsSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -436,7 +437,7 @@ type OutsideCollaboratorsInputRowOptional r = ( login :: Optional String
                                               | r
                                               )
 
-type OutsideCollaboratorsInput = { | RefsInputRowOptional + () }
+type OutsideCollaboratorsInput = { | OutsideCollaboratorsInputRowOptional + () }
 
 outsideCollaborators :: forall r . OutsideCollaboratorsInput -> SelectionSet Scope__EnterpriseOutsideCollaboratorConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 outsideCollaborators input = selectionForCompositeField "outsideCollaborators" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -451,7 +452,7 @@ type PendingAdminInvitationsInputRowOptional r = ( query :: Optional String
                                                  | r
                                                  )
 
-type PendingAdminInvitationsInput = { | RefsInputRowOptional + () }
+type PendingAdminInvitationsInput = { | PendingAdminInvitationsInputRowOptional + () }
 
 pendingAdminInvitations :: forall r . PendingAdminInvitationsInput -> SelectionSet Scope__EnterpriseAdministratorInvitationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 pendingAdminInvitations input = selectionForCompositeField "pendingAdminInvitations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -465,7 +466,7 @@ type PendingCollaboratorInvitationsInputRowOptional r = ( query :: Optional Stri
                                                         | r
                                                         )
 
-type PendingCollaboratorInvitationsInput = { | RefsInputRowOptional + () }
+type PendingCollaboratorInvitationsInput = { | PendingCollaboratorInvitationsInputRowOptional + () }
 
 pendingCollaboratorInvitations :: forall r . PendingCollaboratorInvitationsInput -> SelectionSet Scope__RepositoryInvitationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 pendingCollaboratorInvitations input = selectionForCompositeField "pendingCollaboratorInvitations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -479,7 +480,7 @@ type PendingCollaboratorsInputRowOptional r = ( query :: Optional String
                                               | r
                                               )
 
-type PendingCollaboratorsInput = { | RefsInputRowOptional + () }
+type PendingCollaboratorsInput = { | PendingCollaboratorsInputRowOptional + () }
 
 pendingCollaborators :: forall r . PendingCollaboratorsInput -> SelectionSet Scope__EnterprisePendingCollaboratorConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 pendingCollaborators input = selectionForCompositeField "pendingCollaborators" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -492,7 +493,7 @@ type PendingMemberInvitationsInputRowOptional r = ( query :: Optional String
                                                   | r
                                                   )
 
-type PendingMemberInvitationsInput = { | RefsInputRowOptional + () }
+type PendingMemberInvitationsInput = { | PendingMemberInvitationsInputRowOptional + () }
 
 pendingMemberInvitations :: forall r . PendingMemberInvitationsInput -> SelectionSet Scope__EnterprisePendingMemberInvitationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 pendingMemberInvitations input = selectionForCompositeField "pendingMemberInvitations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -512,7 +513,7 @@ type RepositoryProjectsSettingOrganizationsInputRowRequired r = ( value :: Boole
                                                                 | r
                                                                 )
 
-type RepositoryProjectsSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type RepositoryProjectsSettingOrganizationsInput = { | RepositoryProjectsSettingOrganizationsInputRowRequired + RepositoryProjectsSettingOrganizationsInputRowRequired + () }
 
 repositoryProjectsSettingOrganizations :: forall r . RepositoryProjectsSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 repositoryProjectsSettingOrganizations input = selectionForCompositeField "repositoryProjectsSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -532,7 +533,7 @@ type SamlIdentityProviderSettingOrganizationsInputRowRequired r = ( value :: Ide
                                                                   | r
                                                                   )
 
-type SamlIdentityProviderSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type SamlIdentityProviderSettingOrganizationsInput = { | SamlIdentityProviderSettingOrganizationsInputRowRequired + SamlIdentityProviderSettingOrganizationsInputRowRequired + () }
 
 samlIdentityProviderSettingOrganizations :: forall r . SamlIdentityProviderSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 samlIdentityProviderSettingOrganizations input = selectionForCompositeField "samlIdentityProviderSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -552,7 +553,7 @@ type TeamDiscussionsSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                              | r
                                                              )
 
-type TeamDiscussionsSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type TeamDiscussionsSettingOrganizationsInput = { | TeamDiscussionsSettingOrganizationsInputRowRequired + TeamDiscussionsSettingOrganizationsInputRowRequired + () }
 
 teamDiscussionsSettingOrganizations :: forall r . TeamDiscussionsSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 teamDiscussionsSettingOrganizations input = selectionForCompositeField "teamDiscussionsSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -572,7 +573,7 @@ type TwoFactorRequiredSettingOrganizationsInputRowRequired r = ( value :: Boolea
                                                                | r
                                                                )
 
-type TwoFactorRequiredSettingOrganizationsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type TwoFactorRequiredSettingOrganizationsInput = { | TwoFactorRequiredSettingOrganizationsInputRowRequired + TwoFactorRequiredSettingOrganizationsInputRowRequired + () }
 
 twoFactorRequiredSettingOrganizations :: forall r . TwoFactorRequiredSettingOrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__EnterpriseOwnerInfo r
 twoFactorRequiredSettingOrganizations input = selectionForCompositeField "twoFactorRequiredSettingOrganizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -151,7 +152,7 @@ type RepositoriesInputRowOptional r = ( after :: Optional String
                                       | r
                                       )
 
-type RepositoriesInput = { | RefsInputRowOptional + () }
+type RepositoriesInput = { | RepositoriesInputRowOptional + () }
 
 repositories :: forall r . RepositoriesInput -> SelectionSet Scope__EnterpriseRepositoryInfoConnection r -> SelectionSet Scope__EnterprisePendingCollaboratorEdge r
 repositories input = selectionForCompositeField "repositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

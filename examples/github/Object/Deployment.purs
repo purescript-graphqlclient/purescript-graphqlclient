@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -186,7 +187,7 @@ type StatusesInputRowOptional r = ( after :: Optional String
                                   | r
                                   )
 
-type StatusesInput = { | RefsInputRowOptional + () }
+type StatusesInput = { | StatusesInputRowOptional + () }
 
 statuses :: forall r . StatusesInput -> SelectionSet Scope__DeploymentStatusConnection r -> SelectionSet Scope__Deployment (Maybe r)
 statuses input = selectionForCompositeField "statuses" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

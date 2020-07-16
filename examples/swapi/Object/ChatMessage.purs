@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Swapi.InputObject
+import Type.Row
 import Examples.Swapi.Enum.Episode
 import Examples.Swapi.Enum.Language
 import Examples.Swapi.Enum.Phrase

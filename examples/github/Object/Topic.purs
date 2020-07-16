@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -144,7 +145,7 @@ type RelatedTopicsInputRowOptional r = ( first :: Optional Int
                                        | r
                                        )
 
-type RelatedTopicsInput = { | RefsInputRowOptional + () }
+type RelatedTopicsInput = { | RelatedTopicsInputRowOptional + () }
 
 relatedTopics :: forall r . RelatedTopicsInput -> SelectionSet Scope__Topic r -> SelectionSet Scope__Topic (Array r)
 relatedTopics input = selectionForCompositeField "relatedTopics" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -157,7 +158,7 @@ type StargazersInputRowOptional r = ( after :: Optional String
                                     | r
                                     )
 
-type StargazersInput = { | RefsInputRowOptional + () }
+type StargazersInput = { | StargazersInputRowOptional + () }
 
 stargazers :: forall r . StargazersInput -> SelectionSet Scope__StargazerConnection r -> SelectionSet Scope__Topic r
 stargazers input = selectionForCompositeField "stargazers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

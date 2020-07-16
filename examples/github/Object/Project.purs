@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -153,7 +154,7 @@ type ColumnsInputRowOptional r = ( after :: Optional String
                                  | r
                                  )
 
-type ColumnsInput = { | RefsInputRowOptional + () }
+type ColumnsInput = { | ColumnsInputRowOptional + () }
 
 columns :: forall r . ColumnsInput -> SelectionSet Scope__ProjectColumnConnection r -> SelectionSet Scope__Project r
 columns input = selectionForCompositeField "columns" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -187,7 +188,7 @@ type PendingCardsInputRowOptional r = ( after :: Optional String
                                       | r
                                       )
 
-type PendingCardsInput = { | RefsInputRowOptional + () }
+type PendingCardsInput = { | PendingCardsInputRowOptional + () }
 
 pendingCards :: forall r . PendingCardsInput -> SelectionSet Scope__ProjectCardConnection r -> SelectionSet Scope__Project r
 pendingCards input = selectionForCompositeField "pendingCards" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -138,7 +139,7 @@ type AnyPinnableItemsInputRowOptional r = ( type_ :: Optional PinnableItemType
                                           | r
                                           )
 
-type AnyPinnableItemsInput = { | RefsInputRowOptional + () }
+type AnyPinnableItemsInput = { | AnyPinnableItemsInputRowOptional + () }
 
 anyPinnableItems :: AnyPinnableItemsInput -> SelectionSet Scope__ProfileOwner Boolean
 anyPinnableItems input = selectionForField "anyPinnableItems" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -169,7 +170,7 @@ type PinnableItemsInputRowOptional r = ( types :: Optional (Array PinnableItemTy
                                        | r
                                        )
 
-type PinnableItemsInput = { | RefsInputRowOptional + () }
+type PinnableItemsInput = { | PinnableItemsInputRowOptional + () }
 
 pinnableItems :: forall r . PinnableItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileOwner r
 pinnableItems input = selectionForCompositeField "pinnableItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -182,7 +183,7 @@ type PinnedItemsInputRowOptional r = ( types :: Optional (Array PinnableItemType
                                      | r
                                      )
 
-type PinnedItemsInput = { | RefsInputRowOptional + () }
+type PinnedItemsInput = { | PinnedItemsInputRowOptional + () }
 
 pinnedItems :: forall r . PinnedItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileOwner r
 pinnedItems input = selectionForCompositeField "pinnedItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
@@ -137,8 +138,8 @@ import Examples.Github.Enum.UserStatusOrderField
 action :: SelectionSet Scope__AuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: SelectionSet Scope__AuditEntry (Maybe r)
-actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
+actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__AuditEntry (Maybe r)
+actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 actorIp :: SelectionSet Scope__AuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder

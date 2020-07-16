@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -137,5 +138,5 @@ import Examples.Github.Scalars
 clientMutationId :: SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe String)
 clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
 
-duplicate :: SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe r)
-duplicate = selectionForField "duplicate" [] graphqlDefaultResponseScalarDecoder
+duplicate :: forall r . SelectionSet Scope__IssueOrPullRequest r -> SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe r)
+duplicate = selectionForCompositeField "duplicate" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

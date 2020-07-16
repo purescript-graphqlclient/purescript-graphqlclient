@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -137,5 +138,5 @@ import Examples.Github.Scalars
 clientMutationId :: SelectionSet Scope__UpdateIpAllowListEnabledSettingPayload (Maybe String)
 clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
 
-owner :: SelectionSet Scope__UpdateIpAllowListEnabledSettingPayload (Maybe r)
-owner = selectionForField "owner" [] graphqlDefaultResponseScalarDecoder
+owner :: forall r . SelectionSet Scope__IpAllowListOwner r -> SelectionSet Scope__UpdateIpAllowListEnabledSettingPayload (Maybe r)
+owner = selectionForCompositeField "owner" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -146,7 +147,7 @@ type AssociatedPullRequestsInputRowOptional r = ( states :: Optional (Array Pull
                                                 | r
                                                 )
 
-type AssociatedPullRequestsInput = { | RefsInputRowOptional + () }
+type AssociatedPullRequestsInput = { | AssociatedPullRequestsInputRowOptional + () }
 
 associatedPullRequests :: forall r . AssociatedPullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Ref r
 associatedPullRequests input = selectionForCompositeField "associatedPullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

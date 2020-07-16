@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -200,7 +201,7 @@ type ReactionsInputRowOptional r = ( after :: Optional String
                                    | r
                                    )
 
-type ReactionsInput = { | RefsInputRowOptional + () }
+type ReactionsInput = { | ReactionsInputRowOptional + () }
 
 reactions :: forall r . ReactionsInput -> SelectionSet Scope__ReactionConnection r -> SelectionSet Scope__CommitComment r
 reactions input = selectionForCompositeField "reactions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -224,7 +225,7 @@ type UserContentEditsInputRowOptional r = ( after :: Optional String
                                           | r
                                           )
 
-type UserContentEditsInput = { | RefsInputRowOptional + () }
+type UserContentEditsInput = { | UserContentEditsInputRowOptional + () }
 
 userContentEdits :: forall r . UserContentEditsInput -> SelectionSet Scope__UserContentEditConnection r -> SelectionSet Scope__CommitComment (Maybe r)
 userContentEdits input = selectionForCompositeField "userContentEdits" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

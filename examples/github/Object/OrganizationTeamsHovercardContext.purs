@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -147,7 +148,7 @@ type RelevantTeamsInputRowOptional r = ( after :: Optional String
                                        | r
                                        )
 
-type RelevantTeamsInput = { | RefsInputRowOptional + () }
+type RelevantTeamsInput = { | RelevantTeamsInputRowOptional + () }
 
 relevantTeams :: forall r . RelevantTeamsInput -> SelectionSet Scope__TeamConnection r -> SelectionSet Scope__OrganizationTeamsHovercardContext r
 relevantTeams input = selectionForCompositeField "relevantTeams" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

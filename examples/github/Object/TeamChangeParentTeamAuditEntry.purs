@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -137,8 +138,8 @@ import Examples.Github.Scalars
 action :: SelectionSet Scope__TeamChangeParentTeamAuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: SelectionSet Scope__TeamChangeParentTeamAuditEntry (Maybe r)
-actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
+actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__TeamChangeParentTeamAuditEntry (Maybe r)
+actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 actorIp :: SelectionSet Scope__TeamChangeParentTeamAuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder

@@ -4,6 +4,7 @@ import Prelude
 import GraphqlClient
 import Data.Maybe
 import Examples.Github.InputObject
+import Type.Row
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
 import Examples.Github.Enum.AuditLogOrderField
 import Examples.Github.Enum.CollaboratorAffiliation
@@ -150,7 +151,7 @@ type UsersInputRowOptional r = ( after :: Optional String
                                | r
                                )
 
-type UsersInput = { | RefsInputRowOptional + () }
+type UsersInput = { | UsersInputRowOptional + () }
 
 users :: forall r . UsersInput -> SelectionSet Scope__ReactingUserConnection r -> SelectionSet Scope__ReactionGroup r
 users input = selectionForCompositeField "users" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
