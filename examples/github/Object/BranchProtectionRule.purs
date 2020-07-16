@@ -134,11 +134,14 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type BranchProtectionRuleConflictsInput = { after :: Optional String
-                                          , before :: Optional String
-                                          , first :: Optional Int
-                                          , last :: Optional Int
-                                          }
+type BranchProtectionRuleConflictsInputRowOptional r = ( after :: Optional String
+                                                       , before :: Optional String
+                                                       , first :: Optional Int
+                                                       , last :: Optional Int
+                                                       | r
+                                                       )
+
+type BranchProtectionRuleConflictsInput = { | RefsInputRowOptional + () }
 
 branchProtectionRuleConflicts :: forall r . BranchProtectionRuleConflictsInput -> SelectionSet Scope__BranchProtectionRuleConflictConnection r -> SelectionSet Scope__BranchProtectionRule r
 branchProtectionRuleConflicts input = selectionForCompositeField "branchProtectionRuleConflicts" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -158,12 +161,15 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 isAdminEnforced :: SelectionSet Scope__BranchProtectionRule Boolean
 isAdminEnforced = selectionForField "isAdminEnforced" [] graphqlDefaultResponseScalarDecoder
 
-type MatchingRefsInput = { query :: Optional String
-                         , after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         }
+type MatchingRefsInputRowOptional r = ( query :: Optional String
+                                      , after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      | r
+                                      )
+
+type MatchingRefsInput = { | RefsInputRowOptional + () }
 
 matchingRefs :: forall r . MatchingRefsInput -> SelectionSet Scope__RefConnection r -> SelectionSet Scope__BranchProtectionRule r
 matchingRefs input = selectionForCompositeField "matchingRefs" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -171,11 +177,14 @@ matchingRefs input = selectionForCompositeField "matchingRefs" (toGraphqlArgumen
 pattern :: SelectionSet Scope__BranchProtectionRule String
 pattern = selectionForField "pattern" [] graphqlDefaultResponseScalarDecoder
 
-type PushAllowancesInput = { after :: Optional String
-                           , before :: Optional String
-                           , first :: Optional Int
-                           , last :: Optional Int
-                           }
+type PushAllowancesInputRowOptional r = ( after :: Optional String
+                                        , before :: Optional String
+                                        , first :: Optional Int
+                                        , last :: Optional Int
+                                        | r
+                                        )
+
+type PushAllowancesInput = { | RefsInputRowOptional + () }
 
 pushAllowances :: forall r . PushAllowancesInput -> SelectionSet Scope__PushAllowanceConnection r -> SelectionSet Scope__BranchProtectionRule r
 pushAllowances input = selectionForCompositeField "pushAllowances" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -210,11 +219,14 @@ restrictsPushes = selectionForField "restrictsPushes" [] graphqlDefaultResponseS
 restrictsReviewDismissals :: SelectionSet Scope__BranchProtectionRule Boolean
 restrictsReviewDismissals = selectionForField "restrictsReviewDismissals" [] graphqlDefaultResponseScalarDecoder
 
-type ReviewDismissalAllowancesInput = { after :: Optional String
-                                      , before :: Optional String
-                                      , first :: Optional Int
-                                      , last :: Optional Int
-                                      }
+type ReviewDismissalAllowancesInputRowOptional r = ( after :: Optional String
+                                                   , before :: Optional String
+                                                   , first :: Optional Int
+                                                   , last :: Optional Int
+                                                   | r
+                                                   )
+
+type ReviewDismissalAllowancesInput = { | RefsInputRowOptional + () }
 
 reviewDismissalAllowances :: forall r . ReviewDismissalAllowancesInput -> SelectionSet Scope__ReviewDismissalAllowanceConnection r -> SelectionSet Scope__BranchProtectionRule r
 reviewDismissalAllowances input = selectionForCompositeField "reviewDismissalAllowances" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

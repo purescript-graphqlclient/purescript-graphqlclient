@@ -143,13 +143,16 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__Reactable (Array r)
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReactionsInput = { after :: Optional String
-                      , before :: Optional String
-                      , first :: Optional Int
-                      , last :: Optional Int
-                      , content :: Optional ReactionContent
-                      , orderBy :: Optional ReactionOrder
-                      }
+type ReactionsInputRowOptional r = ( after :: Optional String
+                                   , before :: Optional String
+                                   , first :: Optional Int
+                                   , last :: Optional Int
+                                   , content :: Optional ReactionContent
+                                   , orderBy :: Optional ReactionOrder
+                                   | r
+                                   )
+
+type ReactionsInput = { | RefsInputRowOptional + () }
 
 reactions :: forall r . ReactionsInput -> SelectionSet Scope__ReactionConnection r -> SelectionSet Scope__Reactable r
 reactions input = selectionForCompositeField "reactions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

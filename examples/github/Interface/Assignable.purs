@@ -134,11 +134,14 @@ import Examples.Github.Enum.TopicSuggestionDeclineReason
 import Examples.Github.Enum.UserBlockDuration
 import Examples.Github.Enum.UserStatusOrderField
 
-type AssigneesInput = { after :: Optional String
-                      , before :: Optional String
-                      , first :: Optional Int
-                      , last :: Optional Int
-                      }
+type AssigneesInputRowOptional r = ( after :: Optional String
+                                   , before :: Optional String
+                                   , first :: Optional Int
+                                   , last :: Optional Int
+                                   | r
+                                   )
+
+type AssigneesInput = { | RefsInputRowOptional + () }
 
 assignees :: forall r . AssigneesInput -> SelectionSet Scope__UserConnection r -> SelectionSet Scope__Assignable r
 assignees input = selectionForCompositeField "assignees" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -140,11 +140,14 @@ digestMethod = selectionForField "digestMethod" [] graphqlDefaultResponseScalarD
 enterprise :: forall r . SelectionSet Scope__Enterprise r -> SelectionSet Scope__EnterpriseIdentityProvider (Maybe r)
 enterprise = selectionForCompositeField "enterprise" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ExternalIdentitiesInput = { after :: Optional String
-                               , before :: Optional String
-                               , first :: Optional Int
-                               , last :: Optional Int
-                               }
+type ExternalIdentitiesInputRowOptional r = ( after :: Optional String
+                                            , before :: Optional String
+                                            , first :: Optional Int
+                                            , last :: Optional Int
+                                            | r
+                                            )
+
+type ExternalIdentitiesInput = { | RefsInputRowOptional + () }
 
 externalIdentities :: forall r . ExternalIdentitiesInput -> SelectionSet Scope__ExternalIdentityConnection r -> SelectionSet Scope__EnterpriseIdentityProvider r
 externalIdentities input = selectionForCompositeField "externalIdentities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -134,12 +134,15 @@ import Examples.Github.Enum.TopicSuggestionDeclineReason
 import Examples.Github.Enum.UserBlockDuration
 import Examples.Github.Enum.UserStatusOrderField
 
-type LabelsInput = { orderBy :: Optional LabelOrder
-                   , after :: Optional String
-                   , before :: Optional String
-                   , first :: Optional Int
-                   , last :: Optional Int
-                   }
+type LabelsInputRowOptional r = ( orderBy :: Optional LabelOrder
+                                , after :: Optional String
+                                , before :: Optional String
+                                , first :: Optional Int
+                                , last :: Optional Int
+                                | r
+                                )
+
+type LabelsInput = { | RefsInputRowOptional + () }
 
 labels :: forall r . LabelsInput -> SelectionSet Scope__LabelConnection r -> SelectionSet Scope__Labelable (Maybe r)
 labels input = selectionForCompositeField "labels" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

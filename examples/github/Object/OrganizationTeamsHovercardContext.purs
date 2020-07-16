@@ -140,11 +140,14 @@ message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder
 octicon :: SelectionSet Scope__OrganizationTeamsHovercardContext String
 octicon = selectionForField "octicon" [] graphqlDefaultResponseScalarDecoder
 
-type RelevantTeamsInput = { after :: Optional String
-                          , before :: Optional String
-                          , first :: Optional Int
-                          , last :: Optional Int
-                          }
+type RelevantTeamsInputRowOptional r = ( after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       | r
+                                       )
+
+type RelevantTeamsInput = { | RefsInputRowOptional + () }
 
 relevantTeams :: forall r . RelevantTeamsInput -> SelectionSet Scope__TeamConnection r -> SelectionSet Scope__OrganizationTeamsHovercardContext r
 relevantTeams input = selectionForCompositeField "relevantTeams" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

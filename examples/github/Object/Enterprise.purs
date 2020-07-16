@@ -134,8 +134,11 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type AvatarUrlInput = { size :: Optional Int
-                      }
+type AvatarUrlInputRowOptional r = ( size :: Optional Int
+                                   | r
+                                   )
+
+type AvatarUrlInput = { | RefsInputRowOptional + () }
 
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__Enterprise Uri
 avatarUrl input = selectionForField "avatarUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -161,16 +164,23 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 location :: SelectionSet Scope__Enterprise (Maybe String)
 location = selectionForField "location" [] graphqlDefaultResponseScalarDecoder
 
-type MembersInput = { organizationLogins :: Array String
-                    , query :: Optional String
-                    , orderBy :: Optional EnterpriseMemberOrder
-                    , role :: Optional EnterpriseUserAccountMembershipRole
-                    , deployment :: Optional EnterpriseUserDeployment
-                    , after :: Optional String
-                    , before :: Optional String
-                    , first :: Optional Int
-                    , last :: Optional Int
-                    }
+type MembersInputRowOptional r = ( organizationLogins :: Array (Maybe String)
+                                 , query :: Optional String
+                                 , orderBy :: Optional EnterpriseMemberOrder
+                                 , role :: Optional EnterpriseUserAccountMembershipRole
+                                 , deployment :: Optional EnterpriseUserDeployment
+                                 , after :: Optional String
+                                 , before :: Optional String
+                                 , first :: Optional Int
+                                 , last :: Optional Int
+                                 | r
+                                 )
+
+type MembersInputRowRequired r = ( organizationLogins :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                 | r
+                                 )
+
+type MembersInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 members :: forall r . MembersInput -> SelectionSet Scope__EnterpriseMemberConnection r -> SelectionSet Scope__Enterprise r
 members input = selectionForCompositeField "members" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -178,13 +188,16 @@ members input = selectionForCompositeField "members" (toGraphqlArguments input) 
 name :: SelectionSet Scope__Enterprise String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type OrganizationsInput = { query :: Optional String
-                          , orderBy :: Optional OrganizationOrder
-                          , after :: Optional String
-                          , before :: Optional String
-                          , first :: Optional Int
-                          , last :: Optional Int
-                          }
+type OrganizationsInputRowOptional r = ( query :: Optional String
+                                       , orderBy :: Optional OrganizationOrder
+                                       , after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       | r
+                                       )
+
+type OrganizationsInput = { | RefsInputRowOptional + () }
 
 organizations :: forall r . OrganizationsInput -> SelectionSet Scope__OrganizationConnection r -> SelectionSet Scope__Enterprise r
 organizations input = selectionForCompositeField "organizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -201,11 +214,14 @@ slug = selectionForField "slug" [] graphqlDefaultResponseScalarDecoder
 url :: SelectionSet Scope__Enterprise Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type UserAccountsInput = { after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         }
+type UserAccountsInputRowOptional r = ( after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      | r
+                                      )
+
+type UserAccountsInput = { | RefsInputRowOptional + () }
 
 userAccounts :: forall r . UserAccountsInput -> SelectionSet Scope__EnterpriseUserAccountConnection r -> SelectionSet Scope__Enterprise r
 userAccounts input = selectionForCompositeField "userAccounts" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

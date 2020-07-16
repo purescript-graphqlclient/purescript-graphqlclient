@@ -137,11 +137,14 @@ import Examples.Github.Scalars
 commit :: forall r . SelectionSet Scope__Commit r -> SelectionSet Scope__StatusCheckRollup (Maybe r)
 commit = selectionForCompositeField "commit" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ContextsInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type ContextsInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type ContextsInput = { | RefsInputRowOptional + () }
 
 contexts :: forall r . ContextsInput -> SelectionSet Scope__StatusCheckRollupContextConnection r -> SelectionSet Scope__StatusCheckRollup r
 contexts input = selectionForCompositeField "contexts" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -191,13 +191,16 @@ publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDec
 reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__CommitComment (Array r)
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReactionsInput = { after :: Optional String
-                      , before :: Optional String
-                      , first :: Optional Int
-                      , last :: Optional Int
-                      , content :: Optional ReactionContent
-                      , orderBy :: Optional ReactionOrder
-                      }
+type ReactionsInputRowOptional r = ( after :: Optional String
+                                   , before :: Optional String
+                                   , first :: Optional Int
+                                   , last :: Optional Int
+                                   , content :: Optional ReactionContent
+                                   , orderBy :: Optional ReactionOrder
+                                   | r
+                                   )
+
+type ReactionsInput = { | RefsInputRowOptional + () }
 
 reactions :: forall r . ReactionsInput -> SelectionSet Scope__ReactionConnection r -> SelectionSet Scope__CommitComment r
 reactions input = selectionForCompositeField "reactions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -214,11 +217,14 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 url :: SelectionSet Scope__CommitComment Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type UserContentEditsInput = { after :: Optional String
-                             , before :: Optional String
-                             , first :: Optional Int
-                             , last :: Optional Int
-                             }
+type UserContentEditsInputRowOptional r = ( after :: Optional String
+                                          , before :: Optional String
+                                          , first :: Optional Int
+                                          , last :: Optional Int
+                                          | r
+                                          )
+
+type UserContentEditsInput = { | RefsInputRowOptional + () }
 
 userContentEdits :: forall r . UserContentEditsInput -> SelectionSet Scope__UserContentEditConnection r -> SelectionSet Scope__CommitComment (Maybe r)
 userContentEdits input = selectionForCompositeField "userContentEdits" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

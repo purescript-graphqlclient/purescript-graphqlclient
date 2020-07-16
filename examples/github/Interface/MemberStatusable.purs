@@ -134,12 +134,15 @@ import Examples.Github.Enum.TopicSuggestionDeclineReason
 import Examples.Github.Enum.UserBlockDuration
 import Examples.Github.Enum.UserStatusOrderField
 
-type MemberStatusesInput = { after :: Optional String
-                           , before :: Optional String
-                           , first :: Optional Int
-                           , last :: Optional Int
-                           , orderBy :: Optional UserStatusOrder
-                           }
+type MemberStatusesInputRowOptional r = ( after :: Optional String
+                                        , before :: Optional String
+                                        , first :: Optional Int
+                                        , last :: Optional Int
+                                        , orderBy :: Optional UserStatusOrder
+                                        | r
+                                        )
+
+type MemberStatusesInput = { | RefsInputRowOptional + () }
 
 memberStatuses :: forall r . MemberStatusesInput -> SelectionSet Scope__UserStatusConnection r -> SelectionSet Scope__MemberStatusable r
 memberStatuses input = selectionForCompositeField "memberStatuses" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -134,8 +134,11 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type AvatarUrlInput = { size :: Optional Int
-                      }
+type AvatarUrlInputRowOptional r = ( size :: Optional Int
+                                   | r
+                                   )
+
+type AvatarUrlInput = { | RefsInputRowOptional + () }
 
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__Bot Uri
 avatarUrl input = selectionForField "avatarUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

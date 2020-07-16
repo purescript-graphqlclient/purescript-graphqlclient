@@ -134,12 +134,15 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type FilesInput = { orderBy :: Optional PackageFileOrder
-                  , after :: Optional String
-                  , before :: Optional String
-                  , first :: Optional Int
-                  , last :: Optional Int
-                  }
+type FilesInputRowOptional r = ( orderBy :: Optional PackageFileOrder
+                               , after :: Optional String
+                               , before :: Optional String
+                               , first :: Optional Int
+                               , last :: Optional Int
+                               | r
+                               )
+
+type FilesInput = { | RefsInputRowOptional + () }
 
 files :: forall r . FilesInput -> SelectionSet Scope__PackageFileConnection r -> SelectionSet Scope__PackageVersion r
 files input = selectionForCompositeField "files" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

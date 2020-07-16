@@ -134,21 +134,27 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type AssignableUsersInput = { query :: Optional String
-                            , after :: Optional String
-                            , before :: Optional String
-                            , first :: Optional Int
-                            , last :: Optional Int
-                            }
+type AssignableUsersInputRowOptional r = ( query :: Optional String
+                                         , after :: Optional String
+                                         , before :: Optional String
+                                         , first :: Optional Int
+                                         , last :: Optional Int
+                                         | r
+                                         )
+
+type AssignableUsersInput = { | RefsInputRowOptional + () }
 
 assignableUsers :: forall r . AssignableUsersInput -> SelectionSet Scope__UserConnection r -> SelectionSet Scope__Repository r
 assignableUsers input = selectionForCompositeField "assignableUsers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type BranchProtectionRulesInput = { after :: Optional String
-                                  , before :: Optional String
-                                  , first :: Optional Int
-                                  , last :: Optional Int
-                                  }
+type BranchProtectionRulesInputRowOptional r = ( after :: Optional String
+                                               , before :: Optional String
+                                               , first :: Optional Int
+                                               , last :: Optional Int
+                                               | r
+                                               )
+
+type BranchProtectionRulesInput = { | RefsInputRowOptional + () }
 
 branchProtectionRules :: forall r . BranchProtectionRulesInput -> SelectionSet Scope__BranchProtectionRuleConnection r -> SelectionSet Scope__Repository r
 branchProtectionRules input = selectionForCompositeField "branchProtectionRules" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -156,22 +162,28 @@ branchProtectionRules input = selectionForCompositeField "branchProtectionRules"
 codeOfConduct :: forall r . SelectionSet Scope__CodeOfConduct r -> SelectionSet Scope__Repository (Maybe r)
 codeOfConduct = selectionForCompositeField "codeOfConduct" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type CollaboratorsInput = { affiliation :: Optional CollaboratorAffiliation
-                          , query :: Optional String
-                          , after :: Optional String
-                          , before :: Optional String
-                          , first :: Optional Int
-                          , last :: Optional Int
-                          }
+type CollaboratorsInputRowOptional r = ( affiliation :: Optional CollaboratorAffiliation
+                                       , query :: Optional String
+                                       , after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       | r
+                                       )
+
+type CollaboratorsInput = { | RefsInputRowOptional + () }
 
 collaborators :: forall r . CollaboratorsInput -> SelectionSet Scope__RepositoryCollaboratorConnection r -> SelectionSet Scope__Repository (Maybe r)
 collaborators input = selectionForCompositeField "collaborators" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type CommitCommentsInput = { after :: Optional String
-                           , before :: Optional String
-                           , first :: Optional Int
-                           , last :: Optional Int
-                           }
+type CommitCommentsInputRowOptional r = ( after :: Optional String
+                                        , before :: Optional String
+                                        , first :: Optional Int
+                                        , last :: Optional Int
+                                        | r
+                                        )
+
+type CommitCommentsInput = { | RefsInputRowOptional + () }
 
 commitComments :: forall r . CommitCommentsInput -> SelectionSet Scope__CommitCommentConnection r -> SelectionSet Scope__Repository r
 commitComments input = selectionForCompositeField "commitComments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -188,22 +200,32 @@ defaultBranchRef = selectionForCompositeField "defaultBranchRef" [] graphqlDefau
 deleteBranchOnMerge :: SelectionSet Scope__Repository Boolean
 deleteBranchOnMerge = selectionForField "deleteBranchOnMerge" [] graphqlDefaultResponseScalarDecoder
 
-type DeployKeysInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       }
+type DeployKeysInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    | r
+                                    )
+
+type DeployKeysInput = { | RefsInputRowOptional + () }
 
 deployKeys :: forall r . DeployKeysInput -> SelectionSet Scope__DeployKeyConnection r -> SelectionSet Scope__Repository r
 deployKeys input = selectionForCompositeField "deployKeys" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type DeploymentsInput = { environments :: Array String
-                        , orderBy :: Optional DeploymentOrder
-                        , after :: Optional String
-                        , before :: Optional String
-                        , first :: Optional Int
-                        , last :: Optional Int
-                        }
+type DeploymentsInputRowOptional r = ( environments :: Array (Maybe String)
+                                     , orderBy :: Optional DeploymentOrder
+                                     , after :: Optional String
+                                     , before :: Optional String
+                                     , first :: Optional Int
+                                     , last :: Optional Int
+                                     | r
+                                     )
+
+type DeploymentsInputRowRequired r = ( environments :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                     | r
+                                     )
+
+type DeploymentsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 deployments :: forall r . DeploymentsInput -> SelectionSet Scope__DeploymentConnection r -> SelectionSet Scope__Repository r
 deployments input = selectionForCompositeField "deployments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -220,16 +242,19 @@ diskUsage = selectionForField "diskUsage" [] graphqlDefaultResponseScalarDecoder
 forkCount :: SelectionSet Scope__Repository Int
 forkCount = selectionForField "forkCount" [] graphqlDefaultResponseScalarDecoder
 
-type ForksInput = { privacy :: Optional RepositoryPrivacy
-                  , orderBy :: Optional RepositoryOrder
-                  , affiliations :: Array (Maybe RepositoryAffiliation)
-                  , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
-                  , isLocked :: Optional Boolean
-                  , after :: Optional String
-                  , before :: Optional String
-                  , first :: Optional Int
-                  , last :: Optional Int
-                  }
+type ForksInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
+                               , orderBy :: Optional RepositoryOrder
+                               , affiliations :: Array (Maybe RepositoryAffiliation)
+                               , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
+                               , isLocked :: Optional Boolean
+                               , after :: Optional String
+                               , before :: Optional String
+                               , first :: Optional Int
+                               , last :: Optional Int
+                               | r
+                               )
+
+type ForksInput = { | RefsInputRowOptional + () }
 
 forks :: forall r . ForksInput -> SelectionSet Scope__RepositoryConnection r -> SelectionSet Scope__Repository r
 forks input = selectionForCompositeField "forks" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -273,54 +298,89 @@ isPrivate = selectionForField "isPrivate" [] graphqlDefaultResponseScalarDecoder
 isTemplate :: SelectionSet Scope__Repository Boolean
 isTemplate = selectionForField "isTemplate" [] graphqlDefaultResponseScalarDecoder
 
-type IssueInput = { number :: Int
-                  }
+type IssueInputRowOptional r = ( number :: Optional Int
+                               | r
+                               )
+
+type IssueInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                               | r
+                               )
+
+type IssueInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 issue :: forall r . IssueInput -> SelectionSet Scope__Issue r -> SelectionSet Scope__Repository (Maybe r)
 issue input = selectionForCompositeField "issue" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type IssueOrPullRequestInput = { number :: Int
-                               }
+type IssueOrPullRequestInputRowOptional r = ( number :: Optional Int
+                                            | r
+                                            )
+
+type IssueOrPullRequestInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                            | r
+                                            )
+
+type IssueOrPullRequestInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 issueOrPullRequest :: forall r . IssueOrPullRequestInput -> SelectionSet Scope__IssueOrPullRequest r -> SelectionSet Scope__Repository (Maybe r)
 issueOrPullRequest input = selectionForCompositeField "issueOrPullRequest" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type IssuesInput = { orderBy :: Optional IssueOrder
-                   , labels :: Array String
-                   , states :: Array IssueState
-                   , filterBy :: Optional IssueFilters
-                   , after :: Optional String
-                   , before :: Optional String
-                   , first :: Optional Int
-                   , last :: Optional Int
-                   }
+type IssuesInputRowOptional r = ( orderBy :: Optional IssueOrder
+                                , labels :: Array (Maybe String)
+                                , states :: Array (Maybe IssueState)
+                                , filterBy :: Optional IssueFilters
+                                , after :: Optional String
+                                , before :: Optional String
+                                , first :: Optional Int
+                                , last :: Optional Int
+                                | r
+                                )
+
+type IssuesInputRowRequired r = ( labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                , states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                | r
+                                )
+
+type IssuesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 issues :: forall r . IssuesInput -> SelectionSet Scope__IssueConnection r -> SelectionSet Scope__Repository r
 issues input = selectionForCompositeField "issues" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type LabelInput = { name :: String
-                  }
+type LabelInputRowOptional r = ( name :: Optional String
+                               | r
+                               )
+
+type LabelInputRowRequired r = ( name :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                               | r
+                               )
+
+type LabelInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 label :: forall r . LabelInput -> SelectionSet Scope__Label r -> SelectionSet Scope__Repository (Maybe r)
 label input = selectionForCompositeField "label" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type LabelsInput = { orderBy :: Optional LabelOrder
-                   , after :: Optional String
-                   , before :: Optional String
-                   , first :: Optional Int
-                   , last :: Optional Int
-                   , query :: Optional String
-                   }
+type LabelsInputRowOptional r = ( orderBy :: Optional LabelOrder
+                                , after :: Optional String
+                                , before :: Optional String
+                                , first :: Optional Int
+                                , last :: Optional Int
+                                , query :: Optional String
+                                | r
+                                )
+
+type LabelsInput = { | RefsInputRowOptional + () }
 
 labels :: forall r . LabelsInput -> SelectionSet Scope__LabelConnection r -> SelectionSet Scope__Repository (Maybe r)
 labels input = selectionForCompositeField "labels" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type LanguagesInput = { after :: Optional String
-                      , before :: Optional String
-                      , first :: Optional Int
-                      , last :: Optional Int
-                      , orderBy :: Optional LanguageOrder
-                      }
+type LanguagesInputRowOptional r = ( after :: Optional String
+                                   , before :: Optional String
+                                   , first :: Optional Int
+                                   , last :: Optional Int
+                                   , orderBy :: Optional LanguageOrder
+                                   | r
+                                   )
+
+type LanguagesInput = { | RefsInputRowOptional + () }
 
 languages :: forall r . LanguagesInput -> SelectionSet Scope__LanguageConnection r -> SelectionSet Scope__Repository (Maybe r)
 languages input = selectionForCompositeField "languages" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -331,12 +391,15 @@ licenseInfo = selectionForCompositeField "licenseInfo" [] graphqlDefaultResponse
 lockReason :: SelectionSet Scope__Repository (Maybe RepositoryLockReason)
 lockReason = selectionForField "lockReason" [] graphqlDefaultResponseScalarDecoder
 
-type MentionableUsersInput = { query :: Optional String
-                             , after :: Optional String
-                             , before :: Optional String
-                             , first :: Optional Int
-                             , last :: Optional Int
-                             }
+type MentionableUsersInputRowOptional r = ( query :: Optional String
+                                          , after :: Optional String
+                                          , before :: Optional String
+                                          , first :: Optional Int
+                                          , last :: Optional Int
+                                          | r
+                                          )
+
+type MentionableUsersInput = { | RefsInputRowOptional + () }
 
 mentionableUsers :: forall r . MentionableUsersInput -> SelectionSet Scope__UserConnection r -> SelectionSet Scope__Repository r
 mentionableUsers input = selectionForCompositeField "mentionableUsers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -344,19 +407,33 @@ mentionableUsers input = selectionForCompositeField "mentionableUsers" (toGraphq
 mergeCommitAllowed :: SelectionSet Scope__Repository Boolean
 mergeCommitAllowed = selectionForField "mergeCommitAllowed" [] graphqlDefaultResponseScalarDecoder
 
-type MilestoneInput = { number :: Int
-                      }
+type MilestoneInputRowOptional r = ( number :: Optional Int
+                                   | r
+                                   )
+
+type MilestoneInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                   | r
+                                   )
+
+type MilestoneInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 milestone :: forall r . MilestoneInput -> SelectionSet Scope__Milestone r -> SelectionSet Scope__Repository (Maybe r)
 milestone input = selectionForCompositeField "milestone" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MilestonesInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       , states :: Array MilestoneState
-                       , orderBy :: Optional MilestoneOrder
-                       }
+type MilestonesInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    , states :: Array (Maybe MilestoneState)
+                                    , orderBy :: Optional MilestoneOrder
+                                    | r
+                                    )
+
+type MilestonesInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                    | r
+                                    )
+
+type MilestonesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 milestones :: forall r . MilestonesInput -> SelectionSet Scope__MilestoneConnection r -> SelectionSet Scope__Repository (Maybe r)
 milestones input = selectionForCompositeField "milestones" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -370,9 +447,12 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 nameWithOwner :: SelectionSet Scope__Repository String
 nameWithOwner = selectionForField "nameWithOwner" [] graphqlDefaultResponseScalarDecoder
 
-type ObjectInput = { oid :: Optional GitObjectId
-                   , expression :: Optional String
-                   }
+type ObjectInputRowOptional r = ( oid :: Optional GitObjectId
+                                , expression :: Optional String
+                                | r
+                                )
+
+type ObjectInput = { | RefsInputRowOptional + () }
 
 object :: forall r . ObjectInput -> SelectionSet Scope__GitObject r -> SelectionSet Scope__Repository (Maybe r)
 object input = selectionForCompositeField "object" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -383,15 +463,18 @@ openGraphImageUrl = selectionForField "openGraphImageUrl" [] graphqlDefaultRespo
 owner :: forall r . SelectionSet Scope__RepositoryOwner r -> SelectionSet Scope__Repository r
 owner = selectionForCompositeField "owner" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PackagesInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     , names :: Array (Maybe String)
-                     , repositoryId :: Optional Id
-                     , packageType :: Optional PackageType
-                     , orderBy :: Optional PackageOrder
-                     }
+type PackagesInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  , names :: Array (Maybe String)
+                                  , repositoryId :: Optional Id
+                                  , packageType :: Optional PackageType
+                                  , orderBy :: Optional PackageOrder
+                                  | r
+                                  )
+
+type PackagesInput = { | RefsInputRowOptional + () }
 
 packages :: forall r . PackagesInput -> SelectionSet Scope__PackageConnection r -> SelectionSet Scope__Repository r
 packages input = selectionForCompositeField "packages" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -402,20 +485,34 @@ parent = selectionForCompositeField "parent" [] graphqlDefaultResponseFunctorOrS
 primaryLanguage :: forall r . SelectionSet Scope__Language r -> SelectionSet Scope__Repository (Maybe r)
 primaryLanguage = selectionForCompositeField "primaryLanguage" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ProjectInput = { number :: Int
-                    }
+type ProjectInputRowOptional r = ( number :: Optional Int
+                                 | r
+                                 )
+
+type ProjectInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                 | r
+                                 )
+
+type ProjectInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 project :: forall r . ProjectInput -> SelectionSet Scope__Project r -> SelectionSet Scope__Repository (Maybe r)
 project input = selectionForCompositeField "project" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ProjectsInput = { orderBy :: Optional ProjectOrder
-                     , search :: Optional String
-                     , states :: Array ProjectState
-                     , after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type ProjectsInputRowOptional r = ( orderBy :: Optional ProjectOrder
+                                  , search :: Optional String
+                                  , states :: Array (Maybe ProjectState)
+                                  , after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type ProjectsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                  | r
+                                  )
+
+type ProjectsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 projects :: forall r . ProjectsInput -> SelectionSet Scope__ProjectConnection r -> SelectionSet Scope__Repository r
 projects input = selectionForCompositeField "projects" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -426,22 +523,37 @@ projectsResourcePath = selectionForField "projectsResourcePath" [] graphqlDefaul
 projectsUrl :: SelectionSet Scope__Repository Uri
 projectsUrl = selectionForField "projectsUrl" [] graphqlDefaultResponseScalarDecoder
 
-type PullRequestInput = { number :: Int
-                        }
+type PullRequestInputRowOptional r = ( number :: Optional Int
+                                     | r
+                                     )
+
+type PullRequestInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                     | r
+                                     )
+
+type PullRequestInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 pullRequest :: forall r . PullRequestInput -> SelectionSet Scope__PullRequest r -> SelectionSet Scope__Repository (Maybe r)
 pullRequest input = selectionForCompositeField "pullRequest" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PullRequestsInput = { states :: Array PullRequestState
-                         , labels :: Array String
-                         , headRefName :: Optional String
-                         , baseRefName :: Optional String
-                         , orderBy :: Optional IssueOrder
-                         , after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         }
+type PullRequestsInputRowOptional r = ( states :: Array (Maybe PullRequestState)
+                                      , labels :: Array (Maybe String)
+                                      , headRefName :: Optional String
+                                      , baseRefName :: Optional String
+                                      , orderBy :: Optional IssueOrder
+                                      , after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      | r
+                                      )
+
+type PullRequestsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                      , labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                      | r
+                                      )
+
+type PullRequestsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 pullRequests :: forall r . PullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Repository r
 pullRequests input = selectionForCompositeField "pullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -452,46 +564,73 @@ pushedAt = selectionForField "pushedAt" [] graphqlDefaultResponseScalarDecoder
 rebaseMergeAllowed :: SelectionSet Scope__Repository Boolean
 rebaseMergeAllowed = selectionForField "rebaseMergeAllowed" [] graphqlDefaultResponseScalarDecoder
 
-type RefInput = { qualifiedName :: String
-                }
+type RefInputRowOptional r = ( qualifiedName :: Optional String
+                             | r
+                             )
+
+type RefInputRowRequired r = ( qualifiedName :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                             | r
+                             )
+
+type RefInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 ref :: forall r . RefInput -> SelectionSet Scope__Ref r -> SelectionSet Scope__Repository (Maybe r)
 ref input = selectionForCompositeField "ref" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RefsInput = { query :: Optional String
-                 , after :: Optional String
-                 , before :: Optional String
-                 , first :: Optional Int
-                 , last :: Optional Int
-                 , refPrefix :: String
-                 , direction :: Optional OrderDirection
-                 , orderBy :: Optional RefOrder
-                 }
+type RefsInputRowOptional r = ( query :: Optional String
+                              , after :: Optional String
+                              , before :: Optional String
+                              , first :: Optional Int
+                              , last :: Optional Int
+                              , refPrefix :: Optional String
+                              , direction :: Optional OrderDirection
+                              , orderBy :: Optional RefOrder
+                              | r
+                              )
+
+type RefsInputRowRequired r = ( refPrefix :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                              | r
+                              )
+
+type RefsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 refs :: forall r . RefsInput -> SelectionSet Scope__RefConnection r -> SelectionSet Scope__Repository (Maybe r)
 refs input = selectionForCompositeField "refs" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReleaseInput = { tagName :: String
-                    }
+type ReleaseInputRowOptional r = ( tagName :: Optional String
+                                 | r
+                                 )
+
+type ReleaseInputRowRequired r = ( tagName :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                 | r
+                                 )
+
+type ReleaseInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 release :: forall r . ReleaseInput -> SelectionSet Scope__Release r -> SelectionSet Scope__Repository (Maybe r)
 release input = selectionForCompositeField "release" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReleasesInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     , orderBy :: Optional ReleaseOrder
-                     }
+type ReleasesInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  , orderBy :: Optional ReleaseOrder
+                                  | r
+                                  )
+
+type ReleasesInput = { | RefsInputRowOptional + () }
 
 releases :: forall r . ReleasesInput -> SelectionSet Scope__ReleaseConnection r -> SelectionSet Scope__Repository r
 releases input = selectionForCompositeField "releases" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryTopicsInput = { after :: Optional String
-                             , before :: Optional String
-                             , first :: Optional Int
-                             , last :: Optional Int
-                             }
+type RepositoryTopicsInputRowOptional r = ( after :: Optional String
+                                          , before :: Optional String
+                                          , first :: Optional Int
+                                          , last :: Optional Int
+                                          | r
+                                          )
+
+type RepositoryTopicsInput = { | RefsInputRowOptional + () }
 
 repositoryTopics :: forall r . RepositoryTopicsInput -> SelectionSet Scope__RepositoryTopicConnection r -> SelectionSet Scope__Repository r
 repositoryTopics input = selectionForCompositeField "repositoryTopics" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -499,8 +638,11 @@ repositoryTopics input = selectionForCompositeField "repositoryTopics" (toGraphq
 resourcePath :: SelectionSet Scope__Repository Uri
 resourcePath = selectionForField "resourcePath" [] graphqlDefaultResponseScalarDecoder
 
-type ShortDescriptionHtmlInput = { limit :: Optional Int
-                                 }
+type ShortDescriptionHtmlInputRowOptional r = ( limit :: Optional Int
+                                              | r
+                                              )
+
+type ShortDescriptionHtmlInput = { | RefsInputRowOptional + () }
 
 shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet Scope__Repository Html
 shortDescriptionHTML input = selectionForField "shortDescriptionHTML" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -511,21 +653,27 @@ squashMergeAllowed = selectionForField "squashMergeAllowed" [] graphqlDefaultRes
 sshUrl :: SelectionSet Scope__Repository GitSshRemote
 sshUrl = selectionForField "sshUrl" [] graphqlDefaultResponseScalarDecoder
 
-type StargazersInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       , orderBy :: Optional StarOrder
-                       }
+type StargazersInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    , orderBy :: Optional StarOrder
+                                    | r
+                                    )
+
+type StargazersInput = { | RefsInputRowOptional + () }
 
 stargazers :: forall r . StargazersInput -> SelectionSet Scope__StargazerConnection r -> SelectionSet Scope__Repository r
 stargazers input = selectionForCompositeField "stargazers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SubmodulesInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       }
+type SubmodulesInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    | r
+                                    )
+
+type SubmodulesInput = { | RefsInputRowOptional + () }
 
 submodules :: forall r . SubmodulesInput -> SelectionSet Scope__SubmoduleConnection r -> SelectionSet Scope__Repository r
 submodules input = selectionForCompositeField "submodules" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -566,20 +714,26 @@ viewerPermission = selectionForField "viewerPermission" [] graphqlDefaultRespons
 viewerSubscription :: SelectionSet Scope__Repository (Maybe SubscriptionState)
 viewerSubscription = selectionForField "viewerSubscription" [] graphqlDefaultResponseScalarDecoder
 
-type VulnerabilityAlertsInput = { after :: Optional String
-                                , before :: Optional String
-                                , first :: Optional Int
-                                , last :: Optional Int
-                                }
+type VulnerabilityAlertsInputRowOptional r = ( after :: Optional String
+                                             , before :: Optional String
+                                             , first :: Optional Int
+                                             , last :: Optional Int
+                                             | r
+                                             )
+
+type VulnerabilityAlertsInput = { | RefsInputRowOptional + () }
 
 vulnerabilityAlerts :: forall r . VulnerabilityAlertsInput -> SelectionSet Scope__RepositoryVulnerabilityAlertConnection r -> SelectionSet Scope__Repository (Maybe r)
 vulnerabilityAlerts input = selectionForCompositeField "vulnerabilityAlerts" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type WatchersInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type WatchersInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type WatchersInput = { | RefsInputRowOptional + () }
 
 watchers :: forall r . WatchersInput -> SelectionSet Scope__UserConnection r -> SelectionSet Scope__Repository r
 watchers input = selectionForCompositeField "watchers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

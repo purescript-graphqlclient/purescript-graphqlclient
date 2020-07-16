@@ -134,8 +134,15 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type CodeOfConductInput = { key :: String
-                          }
+type CodeOfConductInputRowOptional r = ( key :: Optional String
+                                       | r
+                                       )
+
+type CodeOfConductInputRowRequired r = ( key :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                       | r
+                                       )
+
+type CodeOfConductInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 codeOfConduct :: forall r . CodeOfConductInput -> SelectionSet Scope__CodeOfConduct r -> SelectionSet Scope__RootQuery (Maybe r)
 codeOfConduct input = selectionForCompositeField "codeOfConduct" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -143,29 +150,59 @@ codeOfConduct input = selectionForCompositeField "codeOfConduct" (toGraphqlArgum
 codesOfConduct :: forall r . SelectionSet Scope__CodeOfConduct r -> SelectionSet Scope__RootQuery (Array (Maybe r))
 codesOfConduct = selectionForCompositeField "codesOfConduct" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type EnterpriseInput = { slug :: String
-                       , invitationToken :: Optional String
-                       }
+type EnterpriseInputRowOptional r = ( slug :: Optional String
+                                    , invitationToken :: Optional String
+                                    | r
+                                    )
+
+type EnterpriseInputRowRequired r = ( slug :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                    | r
+                                    )
+
+type EnterpriseInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 enterprise :: forall r . EnterpriseInput -> SelectionSet Scope__Enterprise r -> SelectionSet Scope__RootQuery (Maybe r)
 enterprise input = selectionForCompositeField "enterprise" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type EnterpriseAdministratorInvitationInput = { userLogin :: String
-                                              , enterpriseSlug :: String
-                                              , role :: EnterpriseAdministratorRole
-                                              }
+type EnterpriseAdministratorInvitationInputRowOptional r = ( userLogin :: Optional String
+                                                           , enterpriseSlug :: Optional String
+                                                           , role :: Optional EnterpriseAdministratorRole
+                                                           | r
+                                                           )
+
+type EnterpriseAdministratorInvitationInputRowRequired r = ( userLogin :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                                           , enterpriseSlug :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                                           , role :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                                           | r
+                                                           )
+
+type EnterpriseAdministratorInvitationInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 enterpriseAdministratorInvitation :: forall r . EnterpriseAdministratorInvitationInput -> SelectionSet Scope__EnterpriseAdministratorInvitation r -> SelectionSet Scope__RootQuery (Maybe r)
 enterpriseAdministratorInvitation input = selectionForCompositeField "enterpriseAdministratorInvitation" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type EnterpriseAdministratorInvitationByTokenInput = { invitationToken :: String
-                                                     }
+type EnterpriseAdministratorInvitationByTokenInputRowOptional r = ( invitationToken :: Optional String
+                                                                  | r
+                                                                  )
+
+type EnterpriseAdministratorInvitationByTokenInputRowRequired r = ( invitationToken :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                                                  | r
+                                                                  )
+
+type EnterpriseAdministratorInvitationByTokenInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 enterpriseAdministratorInvitationByToken :: forall r . EnterpriseAdministratorInvitationByTokenInput -> SelectionSet Scope__EnterpriseAdministratorInvitation r -> SelectionSet Scope__RootQuery (Maybe r)
 enterpriseAdministratorInvitationByToken input = selectionForCompositeField "enterpriseAdministratorInvitationByToken" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type LicenseInput = { key :: String
-                    }
+type LicenseInputRowOptional r = ( key :: Optional String
+                                 | r
+                                 )
+
+type LicenseInputRowRequired r = ( key :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                 | r
+                                 )
+
+type LicenseInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 license :: forall r . LicenseInput -> SelectionSet Scope__License r -> SelectionSet Scope__RootQuery (Maybe r)
 license input = selectionForCompositeField "license" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -173,41 +210,65 @@ license input = selectionForCompositeField "license" (toGraphqlArguments input) 
 licenses :: forall r . SelectionSet Scope__License r -> SelectionSet Scope__RootQuery (Array (Maybe r))
 licenses = selectionForCompositeField "licenses" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MarketplaceCategoriesInput = { includeCategories :: Array String
-                                  , excludeEmpty :: Optional Boolean
-                                  , excludeSubcategories :: Optional Boolean
-                                  }
+type MarketplaceCategoriesInputRowOptional r = ( includeCategories :: Array (Maybe String)
+                                               , excludeEmpty :: Optional Boolean
+                                               , excludeSubcategories :: Optional Boolean
+                                               | r
+                                               )
+
+type MarketplaceCategoriesInputRowRequired r = ( includeCategories :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                               | r
+                                               )
+
+type MarketplaceCategoriesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 marketplaceCategories :: forall r . MarketplaceCategoriesInput -> SelectionSet Scope__MarketplaceCategory r -> SelectionSet Scope__RootQuery (Array r)
 marketplaceCategories input = selectionForCompositeField "marketplaceCategories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MarketplaceCategoryInput = { slug :: String
-                                , useTopicAliases :: Optional Boolean
-                                }
+type MarketplaceCategoryInputRowOptional r = ( slug :: Optional String
+                                             , useTopicAliases :: Optional Boolean
+                                             | r
+                                             )
+
+type MarketplaceCategoryInputRowRequired r = ( slug :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                             | r
+                                             )
+
+type MarketplaceCategoryInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 marketplaceCategory :: forall r . MarketplaceCategoryInput -> SelectionSet Scope__MarketplaceCategory r -> SelectionSet Scope__RootQuery (Maybe r)
 marketplaceCategory input = selectionForCompositeField "marketplaceCategory" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MarketplaceListingInput = { slug :: String
-                               }
+type MarketplaceListingInputRowOptional r = ( slug :: Optional String
+                                            | r
+                                            )
+
+type MarketplaceListingInputRowRequired r = ( slug :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                            | r
+                                            )
+
+type MarketplaceListingInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 marketplaceListing :: forall r . MarketplaceListingInput -> SelectionSet Scope__MarketplaceListing r -> SelectionSet Scope__RootQuery (Maybe r)
 marketplaceListing input = selectionForCompositeField "marketplaceListing" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MarketplaceListingsInput = { after :: Optional String
-                                , before :: Optional String
-                                , first :: Optional Int
-                                , last :: Optional Int
-                                , categorySlug :: Optional String
-                                , useTopicAliases :: Optional Boolean
-                                , viewerCanAdmin :: Optional Boolean
-                                , adminId :: Optional Id
-                                , organizationId :: Optional Id
-                                , allStates :: Optional Boolean
-                                , slugs :: Array (Maybe String)
-                                , primaryCategoryOnly :: Optional Boolean
-                                , withFreeTrialsOnly :: Optional Boolean
-                                }
+type MarketplaceListingsInputRowOptional r = ( after :: Optional String
+                                             , before :: Optional String
+                                             , first :: Optional Int
+                                             , last :: Optional Int
+                                             , categorySlug :: Optional String
+                                             , useTopicAliases :: Optional Boolean
+                                             , viewerCanAdmin :: Optional Boolean
+                                             , adminId :: Optional Id
+                                             , organizationId :: Optional Id
+                                             , allStates :: Optional Boolean
+                                             , slugs :: Array (Maybe String)
+                                             , primaryCategoryOnly :: Optional Boolean
+                                             , withFreeTrialsOnly :: Optional Boolean
+                                             | r
+                                             )
+
+type MarketplaceListingsInput = { | RefsInputRowOptional + () }
 
 marketplaceListings :: forall r . MarketplaceListingsInput -> SelectionSet Scope__MarketplaceListingConnection r -> SelectionSet Scope__RootQuery r
 marketplaceListings input = selectionForCompositeField "marketplaceListings" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -215,26 +276,50 @@ marketplaceListings input = selectionForCompositeField "marketplaceListings" (to
 meta :: forall r . SelectionSet Scope__GitHubMetadata r -> SelectionSet Scope__RootQuery r
 meta = selectionForCompositeField "meta" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type NodeInput = { id :: Id
-                 }
+type NodeInputRowOptional r = ( id :: Optional Id
+                              | r
+                              )
+
+type NodeInputRowRequired r = ( id :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                              | r
+                              )
+
+type NodeInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 node :: forall r . NodeInput -> SelectionSet Scope__Node r -> SelectionSet Scope__RootQuery (Maybe r)
 node input = selectionForCompositeField "node" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type NodesInput = { ids :: Array Id
-                  }
+type NodesInputRowOptional r = ( ids :: Array (Maybe Id)
+                               | r
+                               )
+
+type NodesInputRowRequired r = ( ids :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                               | r
+                               )
+
+type NodesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 nodes :: forall r . NodesInput -> SelectionSet Scope__Node r -> SelectionSet Scope__RootQuery (Array (Maybe r))
 nodes input = selectionForCompositeField "nodes" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type OrganizationInput = { login :: String
-                         }
+type OrganizationInputRowOptional r = ( login :: Optional String
+                                      | r
+                                      )
+
+type OrganizationInputRowRequired r = ( login :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                      | r
+                                      )
+
+type OrganizationInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 organization :: forall r . OrganizationInput -> SelectionSet Scope__Organization r -> SelectionSet Scope__RootQuery (Maybe r)
 organization input = selectionForCompositeField "organization" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RateLimitInput = { dryRun :: Optional Boolean
-                      }
+type RateLimitInputRowOptional r = ( dryRun :: Optional Boolean
+                                   | r
+                                   )
+
+type RateLimitInput = { | RefsInputRowOptional + () }
 
 rateLimit :: forall r . RateLimitInput -> SelectionSet Scope__RateLimit r -> SelectionSet Scope__RootQuery (Maybe r)
 rateLimit input = selectionForCompositeField "rateLimit" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -242,82 +327,150 @@ rateLimit input = selectionForCompositeField "rateLimit" (toGraphqlArguments inp
 relay :: forall r . SelectionSet Scope__RootQuery r -> SelectionSet Scope__RootQuery r
 relay = selectionForCompositeField "relay" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryInput = { owner :: String
-                       , name :: String
-                       }
+type RepositoryInputRowOptional r = ( owner :: Optional String
+                                    , name :: Optional String
+                                    | r
+                                    )
+
+type RepositoryInputRowRequired r = ( owner :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                    , name :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                    | r
+                                    )
+
+type RepositoryInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 repository :: forall r . RepositoryInput -> SelectionSet Scope__Repository r -> SelectionSet Scope__RootQuery (Maybe r)
 repository input = selectionForCompositeField "repository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryOwnerInput = { login :: String
-                            }
+type RepositoryOwnerInputRowOptional r = ( login :: Optional String
+                                         | r
+                                         )
+
+type RepositoryOwnerInputRowRequired r = ( login :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                         | r
+                                         )
+
+type RepositoryOwnerInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 repositoryOwner :: forall r . RepositoryOwnerInput -> SelectionSet Scope__RepositoryOwner r -> SelectionSet Scope__RootQuery (Maybe r)
 repositoryOwner input = selectionForCompositeField "repositoryOwner" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ResourceInput = { url :: Uri
-                     }
+type ResourceInputRowOptional r = ( url :: Optional Uri
+                                  | r
+                                  )
+
+type ResourceInputRowRequired r = ( url :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                  | r
+                                  )
+
+type ResourceInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 resource :: forall r . ResourceInput -> SelectionSet Scope__UniformResourceLocatable r -> SelectionSet Scope__RootQuery (Maybe r)
 resource input = selectionForCompositeField "resource" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SearchInput = { after :: Optional String
-                   , before :: Optional String
-                   , first :: Optional Int
-                   , last :: Optional Int
-                   , query :: String
-                   , type_ :: SearchType
-                   }
+type SearchInputRowOptional r = ( after :: Optional String
+                                , before :: Optional String
+                                , first :: Optional Int
+                                , last :: Optional Int
+                                , query :: Optional String
+                                , type_ :: Optional SearchType
+                                | r
+                                )
+
+type SearchInputRowRequired r = ( query :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                , type_ :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                | r
+                                )
+
+type SearchInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 search :: forall r . SearchInput -> SelectionSet Scope__SearchResultItemConnection r -> SelectionSet Scope__RootQuery r
 search input = selectionForCompositeField "search" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SecurityAdvisoriesInput = { orderBy :: Optional SecurityAdvisoryOrder
-                               , identifier :: Optional SecurityAdvisoryIdentifierFilter
-                               , publishedSince :: Optional DateTime
-                               , updatedSince :: Optional DateTime
-                               , after :: Optional String
-                               , before :: Optional String
-                               , first :: Optional Int
-                               , last :: Optional Int
-                               }
+type SecurityAdvisoriesInputRowOptional r = ( orderBy :: Optional SecurityAdvisoryOrder
+                                            , identifier :: Optional SecurityAdvisoryIdentifierFilter
+                                            , publishedSince :: Optional DateTime
+                                            , updatedSince :: Optional DateTime
+                                            , after :: Optional String
+                                            , before :: Optional String
+                                            , first :: Optional Int
+                                            , last :: Optional Int
+                                            | r
+                                            )
+
+type SecurityAdvisoriesInput = { | RefsInputRowOptional + () }
 
 securityAdvisories :: forall r . SecurityAdvisoriesInput -> SelectionSet Scope__SecurityAdvisoryConnection r -> SelectionSet Scope__RootQuery r
 securityAdvisories input = selectionForCompositeField "securityAdvisories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SecurityAdvisoryInput = { ghsaId :: String
-                             }
+type SecurityAdvisoryInputRowOptional r = ( ghsaId :: Optional String
+                                          | r
+                                          )
+
+type SecurityAdvisoryInputRowRequired r = ( ghsaId :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                          | r
+                                          )
+
+type SecurityAdvisoryInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 securityAdvisory :: forall r . SecurityAdvisoryInput -> SelectionSet Scope__SecurityAdvisory r -> SelectionSet Scope__RootQuery (Maybe r)
 securityAdvisory input = selectionForCompositeField "securityAdvisory" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SecurityVulnerabilitiesInput = { orderBy :: Optional SecurityVulnerabilityOrder
-                                    , ecosystem :: Optional SecurityAdvisoryEcosystem
-                                    , package :: Optional String
-                                    , severities :: Array SecurityAdvisorySeverity
-                                    , after :: Optional String
-                                    , before :: Optional String
-                                    , first :: Optional Int
-                                    , last :: Optional Int
-                                    }
+type SecurityVulnerabilitiesInputRowOptional r = ( orderBy :: Optional SecurityVulnerabilityOrder
+                                                 , ecosystem :: Optional SecurityAdvisoryEcosystem
+                                                 , package :: Optional String
+                                                 , severities :: Array (Maybe SecurityAdvisorySeverity)
+                                                 , after :: Optional String
+                                                 , before :: Optional String
+                                                 , first :: Optional Int
+                                                 , last :: Optional Int
+                                                 | r
+                                                 )
+
+type SecurityVulnerabilitiesInputRowRequired r = ( severities :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                                 | r
+                                                 )
+
+type SecurityVulnerabilitiesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 securityVulnerabilities :: forall r . SecurityVulnerabilitiesInput -> SelectionSet Scope__SecurityVulnerabilityConnection r -> SelectionSet Scope__RootQuery r
 securityVulnerabilities input = selectionForCompositeField "securityVulnerabilities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorsListingInput = { slug :: String
-                            }
+type SponsorsListingInputRowOptional r = ( slug :: Optional String
+                                         | r
+                                         )
+
+type SponsorsListingInputRowRequired r = ( slug :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                         | r
+                                         )
+
+type SponsorsListingInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 sponsorsListing :: forall r . SponsorsListingInput -> SelectionSet Scope__SponsorsListing r -> SelectionSet Scope__RootQuery (Maybe r)
 sponsorsListing input = selectionForCompositeField "sponsorsListing" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type TopicInput = { name :: String
-                  }
+type TopicInputRowOptional r = ( name :: Optional String
+                               | r
+                               )
+
+type TopicInputRowRequired r = ( name :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                               | r
+                               )
+
+type TopicInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 topic :: forall r . TopicInput -> SelectionSet Scope__Topic r -> SelectionSet Scope__RootQuery (Maybe r)
 topic input = selectionForCompositeField "topic" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type UserInput = { login :: String
-                 }
+type UserInputRowOptional r = ( login :: Optional String
+                              | r
+                              )
+
+type UserInputRowRequired r = ( login :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                              | r
+                              )
+
+type UserInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 user :: forall r . UserInput -> SelectionSet Scope__User r -> SelectionSet Scope__RootQuery (Maybe r)
 user input = selectionForCompositeField "user" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

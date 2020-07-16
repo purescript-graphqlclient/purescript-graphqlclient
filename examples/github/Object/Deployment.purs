@@ -179,11 +179,14 @@ repository = selectionForCompositeField "repository" [] graphqlDefaultResponseFu
 state :: SelectionSet Scope__Deployment (Maybe DeploymentState)
 state = selectionForField "state" [] graphqlDefaultResponseScalarDecoder
 
-type StatusesInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type StatusesInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type StatusesInput = { | RefsInputRowOptional + () }
 
 statuses :: forall r . StatusesInput -> SelectionSet Scope__DeploymentStatusConnection r -> SelectionSet Scope__Deployment (Maybe r)
 statuses input = selectionForCompositeField "statuses" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

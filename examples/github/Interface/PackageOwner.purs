@@ -137,15 +137,18 @@ import Examples.Github.Enum.UserStatusOrderField
 id :: SelectionSet Scope__PackageOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-type PackagesInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     , names :: Array (Maybe String)
-                     , repositoryId :: Optional Id
-                     , packageType :: Optional PackageType
-                     , orderBy :: Optional PackageOrder
-                     }
+type PackagesInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  , names :: Array (Maybe String)
+                                  , repositoryId :: Optional Id
+                                  , packageType :: Optional PackageType
+                                  , orderBy :: Optional PackageOrder
+                                  | r
+                                  )
+
+type PackagesInput = { | RefsInputRowOptional + () }
 
 packages :: forall r . PackagesInput -> SelectionSet Scope__PackageConnection r -> SelectionSet Scope__PackageOwner r
 packages input = selectionForCompositeField "packages" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

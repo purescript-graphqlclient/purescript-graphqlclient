@@ -143,11 +143,14 @@ createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 subject :: forall r . SelectionSet Scope__Reactable r -> SelectionSet Scope__ReactionGroup r
 subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type UsersInput = { after :: Optional String
-                  , before :: Optional String
-                  , first :: Optional Int
-                  , last :: Optional Int
-                  }
+type UsersInputRowOptional r = ( after :: Optional String
+                               , before :: Optional String
+                               , first :: Optional Int
+                               , last :: Optional Int
+                               | r
+                               )
+
+type UsersInput = { | RefsInputRowOptional + () }
 
 users :: forall r . UsersInput -> SelectionSet Scope__ReactingUserConnection r -> SelectionSet Scope__ReactionGroup r
 users input = selectionForCompositeField "users" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

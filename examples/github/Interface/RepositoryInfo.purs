@@ -203,8 +203,11 @@ pushedAt = selectionForField "pushedAt" [] graphqlDefaultResponseScalarDecoder
 resourcePath :: SelectionSet Scope__RepositoryInfo Uri
 resourcePath = selectionForField "resourcePath" [] graphqlDefaultResponseScalarDecoder
 
-type ShortDescriptionHtmlInput = { limit :: Optional Int
-                                 }
+type ShortDescriptionHtmlInputRowOptional r = ( limit :: Optional Int
+                                              | r
+                                              )
+
+type ShortDescriptionHtmlInput = { | RefsInputRowOptional + () }
 
 shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet Scope__RepositoryInfo Html
 shortDescriptionHTML input = selectionForField "shortDescriptionHTML" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

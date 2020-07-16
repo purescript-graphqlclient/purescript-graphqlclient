@@ -134,11 +134,14 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type CommentsInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type CommentsInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type CommentsInput = { | RefsInputRowOptional + () }
 
 comments :: forall r . CommentsInput -> SelectionSet Scope__CommitCommentConnection r -> SelectionSet Scope__PullRequestCommitCommentThread r
 comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

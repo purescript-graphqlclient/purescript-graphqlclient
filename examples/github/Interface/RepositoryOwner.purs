@@ -134,8 +134,11 @@ import Examples.Github.Enum.TopicSuggestionDeclineReason
 import Examples.Github.Enum.UserBlockDuration
 import Examples.Github.Enum.UserStatusOrderField
 
-type AvatarUrlInput = { size :: Optional Int
-                      }
+type AvatarUrlInputRowOptional r = ( size :: Optional Int
+                                   | r
+                                   )
+
+type AvatarUrlInput = { | RefsInputRowOptional + () }
 
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__RepositoryOwner Uri
 avatarUrl input = selectionForField "avatarUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -146,23 +149,33 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 login :: SelectionSet Scope__RepositoryOwner String
 login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 
-type RepositoriesInput = { privacy :: Optional RepositoryPrivacy
-                         , orderBy :: Optional RepositoryOrder
-                         , affiliations :: Array (Maybe RepositoryAffiliation)
-                         , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
-                         , isLocked :: Optional Boolean
-                         , after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         , isFork :: Optional Boolean
-                         }
+type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
+                                      , orderBy :: Optional RepositoryOrder
+                                      , affiliations :: Array (Maybe RepositoryAffiliation)
+                                      , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
+                                      , isLocked :: Optional Boolean
+                                      , after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      , isFork :: Optional Boolean
+                                      | r
+                                      )
+
+type RepositoriesInput = { | RefsInputRowOptional + () }
 
 repositories :: forall r . RepositoriesInput -> SelectionSet Scope__RepositoryConnection r -> SelectionSet Scope__RepositoryOwner r
 repositories input = selectionForCompositeField "repositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryInput = { name :: String
-                       }
+type RepositoryInputRowOptional r = ( name :: Optional String
+                                    | r
+                                    )
+
+type RepositoryInputRowRequired r = ( name :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                    | r
+                                    )
+
+type RepositoryInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 repository :: forall r . RepositoryInput -> SelectionSet Scope__Repository r -> SelectionSet Scope__RepositoryOwner (Maybe r)
 repository input = selectionForCompositeField "repository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

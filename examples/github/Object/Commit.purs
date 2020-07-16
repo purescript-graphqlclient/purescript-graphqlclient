@@ -140,12 +140,15 @@ abbreviatedOid = selectionForField "abbreviatedOid" [] graphqlDefaultResponseSca
 additions :: SelectionSet Scope__Commit Int
 additions = selectionForField "additions" [] graphqlDefaultResponseScalarDecoder
 
-type AssociatedPullRequestsInput = { after :: Optional String
-                                   , before :: Optional String
-                                   , first :: Optional Int
-                                   , last :: Optional Int
-                                   , orderBy :: Optional PullRequestOrder
-                                   }
+type AssociatedPullRequestsInputRowOptional r = ( after :: Optional String
+                                                , before :: Optional String
+                                                , first :: Optional Int
+                                                , last :: Optional Int
+                                                , orderBy :: Optional PullRequestOrder
+                                                | r
+                                                )
+
+type AssociatedPullRequestsInput = { | RefsInputRowOptional + () }
 
 associatedPullRequests :: forall r . AssociatedPullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Commit (Maybe r)
 associatedPullRequests input = selectionForCompositeField "associatedPullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -159,8 +162,15 @@ authoredByCommitter = selectionForField "authoredByCommitter" [] graphqlDefaultR
 authoredDate :: SelectionSet Scope__Commit DateTime
 authoredDate = selectionForField "authoredDate" [] graphqlDefaultResponseScalarDecoder
 
-type BlameInput = { path :: String
-                  }
+type BlameInputRowOptional r = ( path :: Optional String
+                               | r
+                               )
+
+type BlameInputRowRequired r = ( path :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                               | r
+                               )
+
+type BlameInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 blame :: forall r . BlameInput -> SelectionSet Scope__Blame r -> SelectionSet Scope__Commit r
 blame input = selectionForCompositeField "blame" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -168,11 +178,14 @@ blame input = selectionForCompositeField "blame" (toGraphqlArguments input) grap
 changedFiles :: SelectionSet Scope__Commit Int
 changedFiles = selectionForField "changedFiles" [] graphqlDefaultResponseScalarDecoder
 
-type CommentsInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type CommentsInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type CommentsInput = { | RefsInputRowOptional + () }
 
 comments :: forall r . CommentsInput -> SelectionSet Scope__CommitCommentConnection r -> SelectionSet Scope__Commit r
 comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -195,26 +208,36 @@ committer = selectionForCompositeField "committer" [] graphqlDefaultResponseFunc
 deletions :: SelectionSet Scope__Commit Int
 deletions = selectionForField "deletions" [] graphqlDefaultResponseScalarDecoder
 
-type DeploymentsInput = { environments :: Array String
-                        , orderBy :: Optional DeploymentOrder
-                        , after :: Optional String
-                        , before :: Optional String
-                        , first :: Optional Int
-                        , last :: Optional Int
-                        }
+type DeploymentsInputRowOptional r = ( environments :: Array (Maybe String)
+                                     , orderBy :: Optional DeploymentOrder
+                                     , after :: Optional String
+                                     , before :: Optional String
+                                     , first :: Optional Int
+                                     , last :: Optional Int
+                                     | r
+                                     )
+
+type DeploymentsInputRowRequired r = ( environments :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                     | r
+                                     )
+
+type DeploymentsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 deployments :: forall r . DeploymentsInput -> SelectionSet Scope__DeploymentConnection r -> SelectionSet Scope__Commit (Maybe r)
 deployments input = selectionForCompositeField "deployments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type HistoryInput = { after :: Optional String
-                    , before :: Optional String
-                    , first :: Optional Int
-                    , last :: Optional Int
-                    , path :: Optional String
-                    , author :: Optional CommitAuthor
-                    , since :: Optional GitTimestamp
-                    , until :: Optional GitTimestamp
-                    }
+type HistoryInputRowOptional r = ( after :: Optional String
+                                 , before :: Optional String
+                                 , first :: Optional Int
+                                 , last :: Optional Int
+                                 , path :: Optional String
+                                 , author :: Optional CommitAuthor
+                                 , since :: Optional GitTimestamp
+                                 , until :: Optional GitTimestamp
+                                 | r
+                                 )
+
+type HistoryInput = { | RefsInputRowOptional + () }
 
 history :: forall r . HistoryInput -> SelectionSet Scope__CommitHistoryConnection r -> SelectionSet Scope__Commit r
 history input = selectionForCompositeField "history" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -243,11 +266,14 @@ oid = selectionForField "oid" [] graphqlDefaultResponseScalarDecoder
 onBehalfOf :: forall r . SelectionSet Scope__Organization r -> SelectionSet Scope__Commit (Maybe r)
 onBehalfOf = selectionForCompositeField "onBehalfOf" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ParentsInput = { after :: Optional String
-                    , before :: Optional String
-                    , first :: Optional Int
-                    , last :: Optional Int
-                    }
+type ParentsInputRowOptional r = ( after :: Optional String
+                                 , before :: Optional String
+                                 , first :: Optional Int
+                                 , last :: Optional Int
+                                 | r
+                                 )
+
+type ParentsInput = { | RefsInputRowOptional + () }
 
 parents :: forall r . ParentsInput -> SelectionSet Scope__CommitConnection r -> SelectionSet Scope__Commit r
 parents input = selectionForCompositeField "parents" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -270,11 +296,14 @@ status = selectionForCompositeField "status" [] graphqlDefaultResponseFunctorOrS
 statusCheckRollup :: forall r . SelectionSet Scope__StatusCheckRollup r -> SelectionSet Scope__Commit (Maybe r)
 statusCheckRollup = selectionForCompositeField "statusCheckRollup" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SubmodulesInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       }
+type SubmodulesInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    | r
+                                    )
+
+type SubmodulesInput = { | RefsInputRowOptional + () }
 
 submodules :: forall r . SubmodulesInput -> SelectionSet Scope__SubmoduleConnection r -> SelectionSet Scope__Commit r
 submodules input = selectionForCompositeField "submodules" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

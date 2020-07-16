@@ -134,12 +134,15 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type ContributionsInput = { after :: Optional String
-                          , before :: Optional String
-                          , first :: Optional Int
-                          , last :: Optional Int
-                          , orderBy :: Optional CommitContributionOrder
-                          }
+type ContributionsInputRowOptional r = ( after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       , orderBy :: Optional CommitContributionOrder
+                                       | r
+                                       )
+
+type ContributionsInput = { | RefsInputRowOptional + () }
 
 contributions :: forall r . ContributionsInput -> SelectionSet Scope__CreatedCommitContributionConnection r -> SelectionSet Scope__CommitContributionsByRepository r
 contributions input = selectionForCompositeField "contributions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

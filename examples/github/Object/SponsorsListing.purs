@@ -155,12 +155,15 @@ shortDescription = selectionForField "shortDescription" [] graphqlDefaultRespons
 slug :: SelectionSet Scope__SponsorsListing String
 slug = selectionForField "slug" [] graphqlDefaultResponseScalarDecoder
 
-type TiersInput = { after :: Optional String
-                  , before :: Optional String
-                  , first :: Optional Int
-                  , last :: Optional Int
-                  , orderBy :: Optional SponsorsTierOrder
-                  }
+type TiersInputRowOptional r = ( after :: Optional String
+                               , before :: Optional String
+                               , first :: Optional Int
+                               , last :: Optional Int
+                               , orderBy :: Optional SponsorsTierOrder
+                               | r
+                               )
+
+type TiersInput = { | RefsInputRowOptional + () }
 
 tiers :: forall r . TiersInput -> SelectionSet Scope__SponsorsTierConnection r -> SelectionSet Scope__SponsorsListing (Maybe r)
 tiers input = selectionForCompositeField "tiers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

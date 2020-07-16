@@ -134,13 +134,16 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type SponsorshipsInput = { after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         , includePrivate :: Optional Boolean
-                         , orderBy :: Optional SponsorshipOrder
-                         }
+type SponsorshipsInputRowOptional r = ( after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      , includePrivate :: Optional Boolean
+                                      , orderBy :: Optional SponsorshipOrder
+                                      | r
+                                      )
+
+type SponsorshipsInput = { | RefsInputRowOptional + () }
 
 sponsorships :: forall r . SponsorshipsInput -> SelectionSet Scope__SponsorshipConnection r -> SelectionSet Scope__SponsorsTierAdminInfo r
 sponsorships input = selectionForCompositeField "sponsorships" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -158,8 +158,11 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 size :: SelectionSet Scope__GistFile (Maybe Int)
 size = selectionForField "size" [] graphqlDefaultResponseScalarDecoder
 
-type TextInput = { truncate :: Optional Int
-                 }
+type TextInputRowOptional r = ( truncate :: Optional Int
+                              | r
+                              )
+
+type TextInput = { | RefsInputRowOptional + () }
 
 text :: TextInput -> SelectionSet Scope__GistFile (Maybe String)
 text input = selectionForField "text" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

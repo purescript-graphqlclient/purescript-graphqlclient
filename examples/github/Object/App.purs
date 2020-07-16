@@ -149,8 +149,11 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 logoBackgroundColor :: SelectionSet Scope__App String
 logoBackgroundColor = selectionForField "logoBackgroundColor" [] graphqlDefaultResponseScalarDecoder
 
-type LogoUrlInput = { size :: Optional Int
-                    }
+type LogoUrlInputRowOptional r = ( size :: Optional Int
+                                 | r
+                                 )
+
+type LogoUrlInput = { | RefsInputRowOptional + () }
 
 logoUrl :: LogoUrlInput -> SelectionSet Scope__App Uri
 logoUrl input = selectionForField "logoUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

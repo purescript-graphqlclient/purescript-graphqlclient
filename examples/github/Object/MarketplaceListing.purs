@@ -215,8 +215,11 @@ isVerified = selectionForField "isVerified" [] graphqlDefaultResponseScalarDecod
 logoBackgroundColor :: SelectionSet Scope__MarketplaceListing String
 logoBackgroundColor = selectionForField "logoBackgroundColor" [] graphqlDefaultResponseScalarDecoder
 
-type LogoUrlInput = { size :: Optional Int
-                    }
+type LogoUrlInputRowOptional r = ( size :: Optional Int
+                                 | r
+                                 )
+
+type LogoUrlInput = { | RefsInputRowOptional + () }
 
 logoUrl :: LogoUrlInput -> SelectionSet Scope__MarketplaceListing (Maybe Uri)
 logoUrl input = selectionForField "logoUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

@@ -134,8 +134,11 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type AvatarUrlInput = { size :: Optional Int
-                      }
+type AvatarUrlInputRowOptional r = ( size :: Optional Int
+                                   | r
+                                   )
+
+type AvatarUrlInput = { | RefsInputRowOptional + () }
 
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__EnterpriseUserAccount Uri
 avatarUrl input = selectionForField "avatarUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -155,14 +158,17 @@ login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__EnterpriseUserAccount (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type OrganizationsInput = { query :: Optional String
-                          , orderBy :: Optional OrganizationOrder
-                          , role :: Optional EnterpriseUserAccountMembershipRole
-                          , after :: Optional String
-                          , before :: Optional String
-                          , first :: Optional Int
-                          , last :: Optional Int
-                          }
+type OrganizationsInputRowOptional r = ( query :: Optional String
+                                       , orderBy :: Optional OrganizationOrder
+                                       , role :: Optional EnterpriseUserAccountMembershipRole
+                                       , after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       | r
+                                       )
+
+type OrganizationsInput = { | RefsInputRowOptional + () }
 
 organizations :: forall r . OrganizationsInput -> SelectionSet Scope__EnterpriseOrganizationMembershipConnection r -> SelectionSet Scope__EnterpriseUserAccount r
 organizations input = selectionForCompositeField "organizations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

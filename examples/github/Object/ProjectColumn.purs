@@ -134,12 +134,15 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type CardsInput = { after :: Optional String
-                  , before :: Optional String
-                  , first :: Optional Int
-                  , last :: Optional Int
-                  , archivedStates :: Array (Maybe ProjectCardArchivedState)
-                  }
+type CardsInputRowOptional r = ( after :: Optional String
+                               , before :: Optional String
+                               , first :: Optional Int
+                               , last :: Optional Int
+                               , archivedStates :: Array (Maybe ProjectCardArchivedState)
+                               | r
+                               )
+
+type CardsInput = { | RefsInputRowOptional + () }
 
 cards :: forall r . CardsInput -> SelectionSet Scope__ProjectCardConnection r -> SelectionSet Scope__ProjectColumn r
 cards input = selectionForCompositeField "cards" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

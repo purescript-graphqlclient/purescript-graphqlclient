@@ -143,12 +143,15 @@ isUnlicensed = selectionForField "isUnlicensed" [] graphqlDefaultResponseScalarD
 node :: forall r . SelectionSet Scope__User r -> SelectionSet Scope__EnterprisePendingCollaboratorEdge (Maybe r)
 node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoriesInput = { after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         , orderBy :: Optional RepositoryOrder
-                         }
+type RepositoriesInputRowOptional r = ( after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      , orderBy :: Optional RepositoryOrder
+                                      | r
+                                      )
+
+type RepositoriesInput = { | RefsInputRowOptional + () }
 
 repositories :: forall r . RepositoriesInput -> SelectionSet Scope__EnterpriseRepositoryInfoConnection r -> SelectionSet Scope__EnterprisePendingCollaboratorEdge r
 repositories input = selectionForCompositeField "repositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

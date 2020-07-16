@@ -170,15 +170,22 @@ summary = selectionForField "summary" [] graphqlDefaultResponseScalarDecoder
 updatedAt :: SelectionSet Scope__SecurityAdvisory DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
-type VulnerabilitiesInput = { orderBy :: Optional SecurityVulnerabilityOrder
-                            , ecosystem :: Optional SecurityAdvisoryEcosystem
-                            , package :: Optional String
-                            , severities :: Array SecurityAdvisorySeverity
-                            , after :: Optional String
-                            , before :: Optional String
-                            , first :: Optional Int
-                            , last :: Optional Int
-                            }
+type VulnerabilitiesInputRowOptional r = ( orderBy :: Optional SecurityVulnerabilityOrder
+                                         , ecosystem :: Optional SecurityAdvisoryEcosystem
+                                         , package :: Optional String
+                                         , severities :: Array (Maybe SecurityAdvisorySeverity)
+                                         , after :: Optional String
+                                         , before :: Optional String
+                                         , first :: Optional Int
+                                         , last :: Optional Int
+                                         | r
+                                         )
+
+type VulnerabilitiesInputRowRequired r = ( severities :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                         | r
+                                         )
+
+type VulnerabilitiesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 vulnerabilities :: forall r . VulnerabilitiesInput -> SelectionSet Scope__SecurityVulnerabilityConnection r -> SelectionSet Scope__SecurityAdvisory r
 vulnerabilities input = selectionForCompositeField "vulnerabilities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

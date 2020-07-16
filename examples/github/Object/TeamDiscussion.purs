@@ -152,13 +152,16 @@ bodyText = selectionForField "bodyText" [] graphqlDefaultResponseScalarDecoder
 bodyVersion :: SelectionSet Scope__TeamDiscussion String
 bodyVersion = selectionForField "bodyVersion" [] graphqlDefaultResponseScalarDecoder
 
-type CommentsInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     , orderBy :: Optional TeamDiscussionCommentOrder
-                     , fromComment :: Optional Int
-                     }
+type CommentsInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  , orderBy :: Optional TeamDiscussionCommentOrder
+                                  , fromComment :: Optional Int
+                                  | r
+                                  )
+
+type CommentsInput = { | RefsInputRowOptional + () }
 
 comments :: forall r . CommentsInput -> SelectionSet Scope__TeamDiscussionCommentConnection r -> SelectionSet Scope__TeamDiscussion r
 comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -205,13 +208,16 @@ publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDec
 reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__TeamDiscussion (Array r)
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReactionsInput = { after :: Optional String
-                      , before :: Optional String
-                      , first :: Optional Int
-                      , last :: Optional Int
-                      , content :: Optional ReactionContent
-                      , orderBy :: Optional ReactionOrder
-                      }
+type ReactionsInputRowOptional r = ( after :: Optional String
+                                   , before :: Optional String
+                                   , first :: Optional Int
+                                   , last :: Optional Int
+                                   , content :: Optional ReactionContent
+                                   , orderBy :: Optional ReactionOrder
+                                   | r
+                                   )
+
+type ReactionsInput = { | RefsInputRowOptional + () }
 
 reactions :: forall r . ReactionsInput -> SelectionSet Scope__ReactionConnection r -> SelectionSet Scope__TeamDiscussion r
 reactions input = selectionForCompositeField "reactions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -231,11 +237,14 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 url :: SelectionSet Scope__TeamDiscussion Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type UserContentEditsInput = { after :: Optional String
-                             , before :: Optional String
-                             , first :: Optional Int
-                             , last :: Optional Int
-                             }
+type UserContentEditsInputRowOptional r = ( after :: Optional String
+                                          , before :: Optional String
+                                          , first :: Optional Int
+                                          , last :: Optional Int
+                                          | r
+                                          )
+
+type UserContentEditsInput = { | RefsInputRowOptional + () }
 
 userContentEdits :: forall r . UserContentEditsInput -> SelectionSet Scope__UserContentEditConnection r -> SelectionSet Scope__TeamDiscussion (Maybe r)
 userContentEdits input = selectionForCompositeField "userContentEdits" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

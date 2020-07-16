@@ -152,22 +152,28 @@ isConnected = selectionForField "isConnected" [] graphqlDefaultResponseScalarDec
 updatedAt :: SelectionSet Scope__EnterpriseServerInstallation DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
-type UserAccountsInput = { orderBy :: Optional EnterpriseServerUserAccountOrder
-                         , after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         }
+type UserAccountsInputRowOptional r = ( orderBy :: Optional EnterpriseServerUserAccountOrder
+                                      , after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      | r
+                                      )
+
+type UserAccountsInput = { | RefsInputRowOptional + () }
 
 userAccounts :: forall r . UserAccountsInput -> SelectionSet Scope__EnterpriseServerUserAccountConnection r -> SelectionSet Scope__EnterpriseServerInstallation r
 userAccounts input = selectionForCompositeField "userAccounts" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type UserAccountsUploadsInput = { orderBy :: Optional EnterpriseServerUserAccountsUploadOrder
-                                , after :: Optional String
-                                , before :: Optional String
-                                , first :: Optional Int
-                                , last :: Optional Int
-                                }
+type UserAccountsUploadsInputRowOptional r = ( orderBy :: Optional EnterpriseServerUserAccountsUploadOrder
+                                             , after :: Optional String
+                                             , before :: Optional String
+                                             , first :: Optional Int
+                                             , last :: Optional Int
+                                             | r
+                                             )
+
+type UserAccountsUploadsInput = { | RefsInputRowOptional + () }
 
 userAccountsUploads :: forall r . UserAccountsUploadsInput -> SelectionSet Scope__EnterpriseServerUserAccountsUploadConnection r -> SelectionSet Scope__EnterpriseServerInstallation r
 userAccountsUploads input = selectionForCompositeField "userAccountsUploads" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

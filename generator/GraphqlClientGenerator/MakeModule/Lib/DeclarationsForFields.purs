@@ -1,16 +1,17 @@
 module GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields where
 
-import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field, InstorpectionQueryResult__InputValue, InstorpectionQueryResult__TypeRef)
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind (TypeKind(..))
-import Language.PS.CST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), Row(..), Type(..), (====>>))
-import Language.PS.CST.Sugar (nonQualifiedExprIdent, nonQualifiedNameTypeConstructor, typeVar, typeVarName)
+import Language.PS.CST
+import Language.PS.CST.Sugar
 import Protolude
 
 import Data.Array as Array
+import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty as NonEmpty
 import Data.List ((:))
 import Data.List as List
-import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field, InstorpectionQueryResult__InputValue, InstorpectionQueryResult__TypeRef)
+import GraphqlClientGenerator.IntrospectionSchema.TypeKind (TypeKind(..))
 
 arrayType :: Type -> Type
 arrayType typeInside = nonQualifiedNameTypeConstructor "Array" `TypeApp` typeInside
@@ -90,18 +91,115 @@ findObjectThatRequiresPassingDecoder = List.find
          _ -> false
   )
 
-declInput :: String -> Array InstorpectionQueryResult__InputValue -> Declaration
-declInput parentName args = DeclType
-  { comments: Nothing
-  , head: DataHead
-    { dataHdName: ProperName $ parentName <> "Input"
-    , dataHdVars: []
-    }
-  , type_: TypeRecord $ Row
-    { rowLabels: args <#> \(arg :: InstorpectionQueryResult__InputValue) -> { label: Label arg.name, type_: mkFieldType "Optional" $ collectTypeRefInfo arg."type" }
-    , rowTail: Nothing
-    }
+optionalArgsFilter :: { kind :: TypeKind, name :: Maybe String } -> Boolean
+optionalArgsFilter x =
+  case x.kind of
+       NonNull -> false
+       _       -> true
+
+nonOptionalArgsFilter :: { kind :: TypeKind, name :: Maybe String } -> Boolean
+nonOptionalArgsFilter = not <<< optionalArgsFilter
+
+filterAndNonEmpty
+  :: ({ kind :: TypeKind, name :: Maybe String } -> Boolean)
+  -> Array { name :: String, "type" :: List { kind :: TypeKind, name :: Maybe String } }
+  -> Maybe $ NonEmptyArray { name :: String, "type" :: NonEmptyArray { kind :: TypeKind, name :: Maybe String } }
+filterAndNonEmpty pred = NonEmpty.fromFoldable <<< Array.catMaybes <<< map go
+  where
+  go :: { name :: String, "type" :: List { kind :: TypeKind, name :: Maybe String } } -> Maybe { name :: String, "type" :: NonEmptyArray { kind :: TypeKind, name :: Maybe String } }
+  go el =
+    let
+      type_ :: Maybe $ NonEmptyArray { kind :: TypeKind, name :: Maybe String }
+      type_ = NonEmpty.fromFoldable $ List.filter pred el."type"
+     in type_ <#> \type__ -> { name: el.name, "type": type__ }
+
+toRow
+  :: (List { kind :: TypeKind, name :: Maybe String } -> Type)
+  -> NonEmptyArray { name :: String, "type" :: NonEmptyArray { kind :: TypeKind, name :: Maybe String } }
+  -> Row
+toRow mkType els = Row
+  { rowLabels: NonEmpty.toArray els <#> \el -> { label: Label el.name, type_: mkType $ List.fromFoldable el."type" }
+  , rowTail: Just (TypeVar $ Ident "r")
   }
+
+declInput :: String -> Array InstorpectionQueryResult__InputValue -> Array Declaration
+declInput parentName args =
+  let
+    args' :: Array { name :: String, "type" :: List { kind :: TypeKind, name :: Maybe String } }
+    args' = args <#> \arg -> { name: arg.name, "type": collectTypeRefInfo arg."type" }
+
+    optionalArgs :: Maybe $ NonEmptyArray { name :: String, "type" :: NonEmptyArray { kind :: TypeKind, name :: Maybe String } }
+    optionalArgs = filterAndNonEmpty optionalArgsFilter args'
+
+    nonOptionalArgs :: Maybe $ NonEmptyArray { name :: String, "type" :: NonEmptyArray { kind :: TypeKind, name :: Maybe String } }
+    nonOptionalArgs = filterAndNonEmpty nonOptionalArgsFilter args'
+
+    rowOptional :: Maybe Row
+    rowOptional = optionalArgs <#> toRow (mkFieldType "Optional")
+
+    rowRequired :: Maybe Row
+    rowRequired = nonOptionalArgs <#> toRow (mkFieldTypeGo true)
+
+    rowPlus :: Type -> Type -> Type
+    rowPlus x y = TypeOp x (nonQualifiedName $ OpName "+") y
+
+    emptyRow :: Type
+    emptyRow = TypeRow $ Row
+      { rowLabels: []
+      , rowTail: Nothing
+      }
+
+    toRowType :: String -> Maybe Row -> Array Declaration
+    toRowType name =
+      maybe
+      []
+      (\row ->
+        [ DeclType
+          { comments: Nothing
+          , head: DataHead
+            { dataHdName: ProperName $ name
+            , dataHdVars: [TypeVarName (Ident "r")]
+            }
+          , type_: TypeRow row
+          }
+        ]
+      )
+  in
+    (toRowType (parentName <> "InputRowOptional") rowOptional) <>
+    (toRowType (parentName <> "InputRowRequired") rowRequired) <>
+    [ DeclType
+      { comments: Nothing
+      , head: DataHead
+        { dataHdName: ProperName $ parentName <> "Input"
+        , dataHdVars: []
+        }
+      , type_: TypeRecord $ Row
+        { rowLabels: []
+        , rowTail:
+          let
+            rowOptional' :: Maybe Type
+            rowOptional' = map (const (TypeConstructor $ nonQualifiedName $ ProperName "RefsInputRowOptional")) rowOptional
+
+            rowRequired' :: Maybe Type
+            rowRequired' = map (const (TypeConstructor $ nonQualifiedName $ ProperName "RefsInputRowRequired")) rowRequired
+
+            rowOptional'' :: Maybe (Type -> Type)
+            rowOptional'' = rowOptional' <#> rowPlus
+
+            rowRequired'' :: Maybe (Type -> Type)
+            rowRequired'' = rowRequired' <#> rowPlus
+           in case rowOptional'' of
+                   Nothing ->
+                     case rowRequired'' of
+                          Nothing -> Just $ TypeVar $ Ident "ERROR"
+                          Just rowRequired''' -> Just $ rowRequired''' emptyRow
+                   Just rowOptional''' ->
+                     case rowRequired'' of
+                          Nothing -> Just $ rowOptional''' emptyRow
+                          Just rowRequired''' -> Just $ rowRequired''' $ rowRequired''' emptyRow
+        }
+      }
+    ]
 
 declarationsForField :: (String -> String) -> String -> InstorpectionQueryResult__Field -> Array Declaration
 declarationsForField nameToScope parentName field =
@@ -112,7 +210,7 @@ declarationsForField nameToScope parentName field =
     infoThatRequiresPassingDecoder :: Maybe { kind :: TypeKind, name :: Maybe String } -- there can be many, but we handle only one
     infoThatRequiresPassingDecoder = findObjectThatRequiresPassingDecoder typeRefInfo
   in
-  (if Array.null field.args then [] else [declInput (StringsExtra.pascalCase field.name) field.args]) <>
+  (if Array.null field.args then [] else declInput (StringsExtra.pascalCase field.name) field.args) <>
   [ DeclSignature
     { comments: Nothing
     , ident: Ident field.name

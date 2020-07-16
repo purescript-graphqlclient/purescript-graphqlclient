@@ -152,18 +152,28 @@ repository = selectionForCompositeField "repository" [] graphqlDefaultResponseFu
 statistics :: forall r . SelectionSet Scope__PackageStatistics r -> SelectionSet Scope__Package (Maybe r)
 statistics = selectionForCompositeField "statistics" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type VersionInput = { version :: String
-                    }
+type VersionInputRowOptional r = ( version :: Optional String
+                                 | r
+                                 )
+
+type VersionInputRowRequired r = ( version :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                 | r
+                                 )
+
+type VersionInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 version :: forall r . VersionInput -> SelectionSet Scope__PackageVersion r -> SelectionSet Scope__Package (Maybe r)
 version input = selectionForCompositeField "version" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type VersionsInput = { orderBy :: Optional PackageVersionOrder
-                     , after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type VersionsInputRowOptional r = ( orderBy :: Optional PackageVersionOrder
+                                  , after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type VersionsInput = { | RefsInputRowOptional + () }
 
 versions :: forall r . VersionsInput -> SelectionSet Scope__PackageVersionConnection r -> SelectionSet Scope__Package r
 versions input = selectionForCompositeField "versions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

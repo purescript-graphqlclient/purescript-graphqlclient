@@ -137,8 +137,15 @@ import Examples.Github.Scalars
 commit :: forall r . SelectionSet Scope__Commit r -> SelectionSet Scope__Status (Maybe r)
 commit = selectionForCompositeField "commit" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ContextInput = { name :: String
-                    }
+type ContextInputRowOptional r = ( name :: Optional String
+                                 | r
+                                 )
+
+type ContextInputRowRequired r = ( name :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                 | r
+                                 )
+
+type ContextInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 context :: forall r . ContextInput -> SelectionSet Scope__StatusContext r -> SelectionSet Scope__Status (Maybe r)
 context input = selectionForCompositeField "context" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

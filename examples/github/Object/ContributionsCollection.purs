@@ -134,8 +134,11 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type CommitContributionsByRepositoryInput = { maxRepositories :: Optional Int
-                                            }
+type CommitContributionsByRepositoryInputRowOptional r = ( maxRepositories :: Optional Int
+                                                         | r
+                                                         )
+
+type CommitContributionsByRepositoryInput = { | RefsInputRowOptional + () }
 
 commitContributionsByRepository :: forall r . CommitContributionsByRepositoryInput -> SelectionSet Scope__CommitContributionsByRepository r -> SelectionSet Scope__ContributionsCollection (Array r)
 commitContributionsByRepository input = selectionForCompositeField "commitContributionsByRepository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -176,22 +179,28 @@ hasAnyRestrictedContributions = selectionForField "hasAnyRestrictedContributions
 isSingleDay :: SelectionSet Scope__ContributionsCollection Boolean
 isSingleDay = selectionForField "isSingleDay" [] graphqlDefaultResponseScalarDecoder
 
-type IssueContributionsInput = { after :: Optional String
-                               , before :: Optional String
-                               , first :: Optional Int
-                               , last :: Optional Int
-                               , excludeFirst :: Optional Boolean
-                               , excludePopular :: Optional Boolean
-                               , orderBy :: Optional ContributionOrder
-                               }
+type IssueContributionsInputRowOptional r = ( after :: Optional String
+                                            , before :: Optional String
+                                            , first :: Optional Int
+                                            , last :: Optional Int
+                                            , excludeFirst :: Optional Boolean
+                                            , excludePopular :: Optional Boolean
+                                            , orderBy :: Optional ContributionOrder
+                                            | r
+                                            )
+
+type IssueContributionsInput = { | RefsInputRowOptional + () }
 
 issueContributions :: forall r . IssueContributionsInput -> SelectionSet Scope__CreatedIssueContributionConnection r -> SelectionSet Scope__ContributionsCollection r
 issueContributions input = selectionForCompositeField "issueContributions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type IssueContributionsByRepositoryInput = { maxRepositories :: Optional Int
-                                           , excludeFirst :: Optional Boolean
-                                           , excludePopular :: Optional Boolean
-                                           }
+type IssueContributionsByRepositoryInputRowOptional r = ( maxRepositories :: Optional Int
+                                                        , excludeFirst :: Optional Boolean
+                                                        , excludePopular :: Optional Boolean
+                                                        | r
+                                                        )
+
+type IssueContributionsByRepositoryInput = { | RefsInputRowOptional + () }
 
 issueContributionsByRepository :: forall r . IssueContributionsByRepositoryInput -> SelectionSet Scope__IssueContributionsByRepository r -> SelectionSet Scope__ContributionsCollection (Array r)
 issueContributionsByRepository input = selectionForCompositeField "issueContributionsByRepository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -214,49 +223,64 @@ popularIssueContribution = selectionForCompositeField "popularIssueContribution"
 popularPullRequestContribution :: forall r . SelectionSet Scope__CreatedPullRequestContribution r -> SelectionSet Scope__ContributionsCollection (Maybe r)
 popularPullRequestContribution = selectionForCompositeField "popularPullRequestContribution" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PullRequestContributionsInput = { after :: Optional String
-                                     , before :: Optional String
-                                     , first :: Optional Int
-                                     , last :: Optional Int
-                                     , excludeFirst :: Optional Boolean
-                                     , excludePopular :: Optional Boolean
-                                     , orderBy :: Optional ContributionOrder
-                                     }
+type PullRequestContributionsInputRowOptional r = ( after :: Optional String
+                                                  , before :: Optional String
+                                                  , first :: Optional Int
+                                                  , last :: Optional Int
+                                                  , excludeFirst :: Optional Boolean
+                                                  , excludePopular :: Optional Boolean
+                                                  , orderBy :: Optional ContributionOrder
+                                                  | r
+                                                  )
+
+type PullRequestContributionsInput = { | RefsInputRowOptional + () }
 
 pullRequestContributions :: forall r . PullRequestContributionsInput -> SelectionSet Scope__CreatedPullRequestContributionConnection r -> SelectionSet Scope__ContributionsCollection r
 pullRequestContributions input = selectionForCompositeField "pullRequestContributions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PullRequestContributionsByRepositoryInput = { maxRepositories :: Optional Int
-                                                 , excludeFirst :: Optional Boolean
-                                                 , excludePopular :: Optional Boolean
-                                                 }
+type PullRequestContributionsByRepositoryInputRowOptional r = ( maxRepositories :: Optional Int
+                                                              , excludeFirst :: Optional Boolean
+                                                              , excludePopular :: Optional Boolean
+                                                              | r
+                                                              )
+
+type PullRequestContributionsByRepositoryInput = { | RefsInputRowOptional + () }
 
 pullRequestContributionsByRepository :: forall r . PullRequestContributionsByRepositoryInput -> SelectionSet Scope__PullRequestContributionsByRepository r -> SelectionSet Scope__ContributionsCollection (Array r)
 pullRequestContributionsByRepository input = selectionForCompositeField "pullRequestContributionsByRepository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PullRequestReviewContributionsInput = { after :: Optional String
-                                           , before :: Optional String
-                                           , first :: Optional Int
-                                           , last :: Optional Int
-                                           , orderBy :: Optional ContributionOrder
-                                           }
+type PullRequestReviewContributionsInputRowOptional r = ( after :: Optional String
+                                                        , before :: Optional String
+                                                        , first :: Optional Int
+                                                        , last :: Optional Int
+                                                        , orderBy :: Optional ContributionOrder
+                                                        | r
+                                                        )
+
+type PullRequestReviewContributionsInput = { | RefsInputRowOptional + () }
 
 pullRequestReviewContributions :: forall r . PullRequestReviewContributionsInput -> SelectionSet Scope__CreatedPullRequestReviewContributionConnection r -> SelectionSet Scope__ContributionsCollection r
 pullRequestReviewContributions input = selectionForCompositeField "pullRequestReviewContributions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PullRequestReviewContributionsByRepositoryInput = { maxRepositories :: Optional Int
-                                                       }
+type PullRequestReviewContributionsByRepositoryInputRowOptional r = ( maxRepositories :: Optional Int
+                                                                    | r
+                                                                    )
+
+type PullRequestReviewContributionsByRepositoryInput = { | RefsInputRowOptional + () }
 
 pullRequestReviewContributionsByRepository :: forall r . PullRequestReviewContributionsByRepositoryInput -> SelectionSet Scope__PullRequestReviewContributionsByRepository r -> SelectionSet Scope__ContributionsCollection (Array r)
 pullRequestReviewContributionsByRepository input = selectionForCompositeField "pullRequestReviewContributionsByRepository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryContributionsInput = { after :: Optional String
-                                    , before :: Optional String
-                                    , first :: Optional Int
-                                    , last :: Optional Int
-                                    , excludeFirst :: Optional Boolean
-                                    , orderBy :: Optional ContributionOrder
-                                    }
+type RepositoryContributionsInputRowOptional r = ( after :: Optional String
+                                                 , before :: Optional String
+                                                 , first :: Optional Int
+                                                 , last :: Optional Int
+                                                 , excludeFirst :: Optional Boolean
+                                                 , orderBy :: Optional ContributionOrder
+                                                 | r
+                                                 )
+
+type RepositoryContributionsInput = { | RefsInputRowOptional + () }
 
 repositoryContributions :: forall r . RepositoryContributionsInput -> SelectionSet Scope__CreatedRepositoryContributionConnection r -> SelectionSet Scope__ContributionsCollection r
 repositoryContributions input = selectionForCompositeField "repositoryContributions" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -270,16 +294,22 @@ startedAt = selectionForField "startedAt" [] graphqlDefaultResponseScalarDecoder
 totalCommitContributions :: SelectionSet Scope__ContributionsCollection Int
 totalCommitContributions = selectionForField "totalCommitContributions" [] graphqlDefaultResponseScalarDecoder
 
-type TotalIssueContributionsInput = { excludeFirst :: Optional Boolean
-                                    , excludePopular :: Optional Boolean
-                                    }
+type TotalIssueContributionsInputRowOptional r = ( excludeFirst :: Optional Boolean
+                                                 , excludePopular :: Optional Boolean
+                                                 | r
+                                                 )
+
+type TotalIssueContributionsInput = { | RefsInputRowOptional + () }
 
 totalIssueContributions :: TotalIssueContributionsInput -> SelectionSet Scope__ContributionsCollection Int
 totalIssueContributions input = selectionForField "totalIssueContributions" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
 
-type TotalPullRequestContributionsInput = { excludeFirst :: Optional Boolean
-                                          , excludePopular :: Optional Boolean
-                                          }
+type TotalPullRequestContributionsInputRowOptional r = ( excludeFirst :: Optional Boolean
+                                                       , excludePopular :: Optional Boolean
+                                                       | r
+                                                       )
+
+type TotalPullRequestContributionsInput = { | RefsInputRowOptional + () }
 
 totalPullRequestContributions :: TotalPullRequestContributionsInput -> SelectionSet Scope__ContributionsCollection Int
 totalPullRequestContributions input = selectionForField "totalPullRequestContributions" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -290,9 +320,12 @@ totalPullRequestReviewContributions = selectionForField "totalPullRequestReviewC
 totalRepositoriesWithContributedCommits :: SelectionSet Scope__ContributionsCollection Int
 totalRepositoriesWithContributedCommits = selectionForField "totalRepositoriesWithContributedCommits" [] graphqlDefaultResponseScalarDecoder
 
-type TotalRepositoriesWithContributedIssuesInput = { excludeFirst :: Optional Boolean
-                                                   , excludePopular :: Optional Boolean
-                                                   }
+type TotalRepositoriesWithContributedIssuesInputRowOptional r = ( excludeFirst :: Optional Boolean
+                                                                , excludePopular :: Optional Boolean
+                                                                | r
+                                                                )
+
+type TotalRepositoriesWithContributedIssuesInput = { | RefsInputRowOptional + () }
 
 totalRepositoriesWithContributedIssues :: TotalRepositoriesWithContributedIssuesInput -> SelectionSet Scope__ContributionsCollection Int
 totalRepositoriesWithContributedIssues input = selectionForField "totalRepositoriesWithContributedIssues" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -300,15 +333,21 @@ totalRepositoriesWithContributedIssues input = selectionForField "totalRepositor
 totalRepositoriesWithContributedPullRequestReviews :: SelectionSet Scope__ContributionsCollection Int
 totalRepositoriesWithContributedPullRequestReviews = selectionForField "totalRepositoriesWithContributedPullRequestReviews" [] graphqlDefaultResponseScalarDecoder
 
-type TotalRepositoriesWithContributedPullRequestsInput = { excludeFirst :: Optional Boolean
-                                                         , excludePopular :: Optional Boolean
-                                                         }
+type TotalRepositoriesWithContributedPullRequestsInputRowOptional r = ( excludeFirst :: Optional Boolean
+                                                                      , excludePopular :: Optional Boolean
+                                                                      | r
+                                                                      )
+
+type TotalRepositoriesWithContributedPullRequestsInput = { | RefsInputRowOptional + () }
 
 totalRepositoriesWithContributedPullRequests :: TotalRepositoriesWithContributedPullRequestsInput -> SelectionSet Scope__ContributionsCollection Int
 totalRepositoriesWithContributedPullRequests input = selectionForField "totalRepositoriesWithContributedPullRequests" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
 
-type TotalRepositoryContributionsInput = { excludeFirst :: Optional Boolean
-                                         }
+type TotalRepositoryContributionsInputRowOptional r = ( excludeFirst :: Optional Boolean
+                                                      | r
+                                                      )
+
+type TotalRepositoryContributionsInput = { | RefsInputRowOptional + () }
 
 totalRepositoryContributions :: TotalRepositoryContributionsInput -> SelectionSet Scope__ContributionsCollection Int
 totalRepositoryContributions input = selectionForField "totalRepositoryContributions" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

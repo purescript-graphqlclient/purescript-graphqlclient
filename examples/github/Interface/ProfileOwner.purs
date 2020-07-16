@@ -134,8 +134,11 @@ import Examples.Github.Enum.TopicSuggestionDeclineReason
 import Examples.Github.Enum.UserBlockDuration
 import Examples.Github.Enum.UserStatusOrderField
 
-type AnyPinnableItemsInput = { type_ :: Optional PinnableItemType
-                             }
+type AnyPinnableItemsInputRowOptional r = ( type_ :: Optional PinnableItemType
+                                          | r
+                                          )
+
+type AnyPinnableItemsInput = { | RefsInputRowOptional + () }
 
 anyPinnableItems :: AnyPinnableItemsInput -> SelectionSet Scope__ProfileOwner Boolean
 anyPinnableItems input = selectionForField "anyPinnableItems" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -158,22 +161,36 @@ login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__ProfileOwner (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type PinnableItemsInput = { types :: Array PinnableItemType
-                          , after :: Optional String
-                          , before :: Optional String
-                          , first :: Optional Int
-                          , last :: Optional Int
-                          }
+type PinnableItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
+                                       , after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       | r
+                                       )
+
+type PinnableItemsInputRowRequired r = ( types :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                       | r
+                                       )
+
+type PinnableItemsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 pinnableItems :: forall r . PinnableItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileOwner r
 pinnableItems input = selectionForCompositeField "pinnableItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PinnedItemsInput = { types :: Array PinnableItemType
-                        , after :: Optional String
-                        , before :: Optional String
-                        , first :: Optional Int
-                        , last :: Optional Int
-                        }
+type PinnedItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
+                                     , after :: Optional String
+                                     , before :: Optional String
+                                     , first :: Optional Int
+                                     , last :: Optional Int
+                                     | r
+                                     )
+
+type PinnedItemsInputRowRequired r = ( types :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                     | r
+                                     )
+
+type PinnedItemsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 pinnedItems :: forall r . PinnedItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileOwner r
 pinnedItems input = selectionForCompositeField "pinnedItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

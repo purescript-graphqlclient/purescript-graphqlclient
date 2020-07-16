@@ -158,15 +158,23 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 issuePrioritiesDebug :: SelectionSet Scope__Milestone String
 issuePrioritiesDebug = selectionForField "issuePrioritiesDebug" [] graphqlDefaultResponseScalarDecoder
 
-type IssuesInput = { orderBy :: Optional IssueOrder
-                   , labels :: Array String
-                   , states :: Array IssueState
-                   , filterBy :: Optional IssueFilters
-                   , after :: Optional String
-                   , before :: Optional String
-                   , first :: Optional Int
-                   , last :: Optional Int
-                   }
+type IssuesInputRowOptional r = ( orderBy :: Optional IssueOrder
+                                , labels :: Array (Maybe String)
+                                , states :: Array (Maybe IssueState)
+                                , filterBy :: Optional IssueFilters
+                                , after :: Optional String
+                                , before :: Optional String
+                                , first :: Optional Int
+                                , last :: Optional Int
+                                | r
+                                )
+
+type IssuesInputRowRequired r = ( labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                , states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                | r
+                                )
+
+type IssuesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 issues :: forall r . IssuesInput -> SelectionSet Scope__IssueConnection r -> SelectionSet Scope__Milestone r
 issues input = selectionForCompositeField "issues" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -174,16 +182,24 @@ issues input = selectionForCompositeField "issues" (toGraphqlArguments input) gr
 number :: SelectionSet Scope__Milestone Int
 number = selectionForField "number" [] graphqlDefaultResponseScalarDecoder
 
-type PullRequestsInput = { states :: Array PullRequestState
-                         , labels :: Array String
-                         , headRefName :: Optional String
-                         , baseRefName :: Optional String
-                         , orderBy :: Optional IssueOrder
-                         , after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         }
+type PullRequestsInputRowOptional r = ( states :: Array (Maybe PullRequestState)
+                                      , labels :: Array (Maybe String)
+                                      , headRefName :: Optional String
+                                      , baseRefName :: Optional String
+                                      , orderBy :: Optional IssueOrder
+                                      , after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      | r
+                                      )
+
+type PullRequestsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                      , labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                      | r
+                                      )
+
+type PullRequestsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 pullRequests :: forall r . PullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Milestone r
 pullRequests input = selectionForCompositeField "pullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -137,12 +137,15 @@ import Examples.Github.Scalars
 createdAt :: SelectionSet Scope__EnterpriseServerUserAccount DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 
-type EmailsInput = { orderBy :: Optional EnterpriseServerUserAccountEmailOrder
-                   , after :: Optional String
-                   , before :: Optional String
-                   , first :: Optional Int
-                   , last :: Optional Int
-                   }
+type EmailsInputRowOptional r = ( orderBy :: Optional EnterpriseServerUserAccountEmailOrder
+                                , after :: Optional String
+                                , before :: Optional String
+                                , first :: Optional Int
+                                , last :: Optional Int
+                                | r
+                                )
+
+type EmailsInput = { | RefsInputRowOptional + () }
 
 emails :: forall r . EmailsInput -> SelectionSet Scope__EnterpriseServerUserAccountEmailConnection r -> SelectionSet Scope__EnterpriseServerUserAccount r
 emails input = selectionForCompositeField "emails" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

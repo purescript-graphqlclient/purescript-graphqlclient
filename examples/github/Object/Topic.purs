@@ -140,18 +140,24 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__Topic String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type RelatedTopicsInput = { first :: Optional Int
-                          }
+type RelatedTopicsInputRowOptional r = ( first :: Optional Int
+                                       | r
+                                       )
+
+type RelatedTopicsInput = { | RefsInputRowOptional + () }
 
 relatedTopics :: forall r . RelatedTopicsInput -> SelectionSet Scope__Topic r -> SelectionSet Scope__Topic (Array r)
 relatedTopics input = selectionForCompositeField "relatedTopics" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type StargazersInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       , orderBy :: Optional StarOrder
-                       }
+type StargazersInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    , orderBy :: Optional StarOrder
+                                    | r
+                                    )
+
+type StargazersInput = { | RefsInputRowOptional + () }
 
 stargazers :: forall r . StargazersInput -> SelectionSet Scope__StargazerConnection r -> SelectionSet Scope__Topic r
 stargazers input = selectionForCompositeField "stargazers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

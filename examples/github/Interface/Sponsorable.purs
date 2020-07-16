@@ -137,23 +137,29 @@ import Examples.Github.Enum.UserStatusOrderField
 sponsorsListing :: forall r . SelectionSet Scope__SponsorsListing r -> SelectionSet Scope__Sponsorable (Maybe r)
 sponsorsListing = selectionForCompositeField "sponsorsListing" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsMaintainerInput = { after :: Optional String
-                                     , before :: Optional String
-                                     , first :: Optional Int
-                                     , last :: Optional Int
-                                     , includePrivate :: Optional Boolean
-                                     , orderBy :: Optional SponsorshipOrder
-                                     }
+type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional String
+                                                  , before :: Optional String
+                                                  , first :: Optional Int
+                                                  , last :: Optional Int
+                                                  , includePrivate :: Optional Boolean
+                                                  , orderBy :: Optional SponsorshipOrder
+                                                  | r
+                                                  )
+
+type SponsorshipsAsMaintainerInput = { | RefsInputRowOptional + () }
 
 sponsorshipsAsMaintainer :: forall r . SponsorshipsAsMaintainerInput -> SelectionSet Scope__SponsorshipConnection r -> SelectionSet Scope__Sponsorable r
 sponsorshipsAsMaintainer input = selectionForCompositeField "sponsorshipsAsMaintainer" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsSponsorInput = { after :: Optional String
-                                  , before :: Optional String
-                                  , first :: Optional Int
-                                  , last :: Optional Int
-                                  , orderBy :: Optional SponsorshipOrder
-                                  }
+type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional String
+                                               , before :: Optional String
+                                               , first :: Optional Int
+                                               , last :: Optional Int
+                                               , orderBy :: Optional SponsorshipOrder
+                                               | r
+                                               )
+
+type SponsorshipsAsSponsorInput = { | RefsInputRowOptional + () }
 
 sponsorshipsAsSponsor :: forall r . SponsorshipsAsSponsorInput -> SelectionSet Scope__SponsorshipConnection r -> SelectionSet Scope__Sponsorable r
 sponsorshipsAsSponsor input = selectionForCompositeField "sponsorshipsAsSponsor" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

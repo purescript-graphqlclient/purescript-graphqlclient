@@ -8,9 +8,15 @@ import Data.Tuple
 data OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
   = All
   | Public
+  | None
+  | Private
+  | Internal
+  | PublicInternal
+  | PrivateInternal
+  | PublicPrivate
 
 fromToMap :: Array (Tuple String OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility)
-fromToMap = [Tuple "ALL" All, Tuple "PUBLIC" Public]
+fromToMap = [Tuple "ALL" All, Tuple "PUBLIC" Public, Tuple "NONE" None, Tuple "PRIVATE" Private, Tuple "INTERNAL" Internal, Tuple "PUBLIC_INTERNAL" PublicInternal, Tuple "PRIVATE_INTERNAL" PrivateInternal, Tuple "PUBLIC_PRIVATE" PublicPrivate]
 
 instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
   graphqlDefaultResponseScalarDecoder = enumDecoder "OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility" fromToMap
@@ -20,3 +26,9 @@ instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityToGraphq
     case _ of
       All -> ArgumentValueString "ALL"
       Public -> ArgumentValueString "PUBLIC"
+      None -> ArgumentValueString "NONE"
+      Private -> ArgumentValueString "PRIVATE"
+      Internal -> ArgumentValueString "INTERNAL"
+      PublicInternal -> ArgumentValueString "PUBLIC_INTERNAL"
+      PrivateInternal -> ArgumentValueString "PRIVATE_INTERNAL"
+      PublicPrivate -> ArgumentValueString "PUBLIC_PRIVATE"

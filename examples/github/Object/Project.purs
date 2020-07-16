@@ -146,11 +146,14 @@ closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
 closedAt :: SelectionSet Scope__Project (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
-type ColumnsInput = { after :: Optional String
-                    , before :: Optional String
-                    , first :: Optional Int
-                    , last :: Optional Int
-                    }
+type ColumnsInputRowOptional r = ( after :: Optional String
+                                 , before :: Optional String
+                                 , first :: Optional Int
+                                 , last :: Optional Int
+                                 | r
+                                 )
+
+type ColumnsInput = { | RefsInputRowOptional + () }
 
 columns :: forall r . ColumnsInput -> SelectionSet Scope__ProjectColumnConnection r -> SelectionSet Scope__Project r
 columns input = selectionForCompositeField "columns" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -176,12 +179,15 @@ number = selectionForField "number" [] graphqlDefaultResponseScalarDecoder
 owner :: forall r . SelectionSet Scope__ProjectOwner r -> SelectionSet Scope__Project r
 owner = selectionForCompositeField "owner" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PendingCardsInput = { after :: Optional String
-                         , before :: Optional String
-                         , first :: Optional Int
-                         , last :: Optional Int
-                         , archivedStates :: Array (Maybe ProjectCardArchivedState)
-                         }
+type PendingCardsInputRowOptional r = ( after :: Optional String
+                                      , before :: Optional String
+                                      , first :: Optional Int
+                                      , last :: Optional Int
+                                      , archivedStates :: Array (Maybe ProjectCardArchivedState)
+                                      | r
+                                      )
+
+type PendingCardsInput = { | RefsInputRowOptional + () }
 
 pendingCards :: forall r . PendingCardsInput -> SelectionSet Scope__ProjectCardConnection r -> SelectionSet Scope__Project r
 pendingCards input = selectionForCompositeField "pendingCards" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

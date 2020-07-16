@@ -161,12 +161,15 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 publishedAt :: SelectionSet Scope__Release (Maybe DateTime)
 publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDecoder
 
-type ReleaseAssetsInput = { after :: Optional String
-                          , before :: Optional String
-                          , first :: Optional Int
-                          , last :: Optional Int
-                          , name :: Optional String
-                          }
+type ReleaseAssetsInputRowOptional r = ( after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       , name :: Optional String
+                                       | r
+                                       )
+
+type ReleaseAssetsInput = { | RefsInputRowOptional + () }
 
 releaseAssets :: forall r . ReleaseAssetsInput -> SelectionSet Scope__ReleaseAssetConnection r -> SelectionSet Scope__Release r
 releaseAssets input = selectionForCompositeField "releaseAssets" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -174,8 +177,11 @@ releaseAssets input = selectionForCompositeField "releaseAssets" (toGraphqlArgum
 resourcePath :: SelectionSet Scope__Release Uri
 resourcePath = selectionForField "resourcePath" [] graphqlDefaultResponseScalarDecoder
 
-type ShortDescriptionHtmlInput = { limit :: Optional Int
-                                 }
+type ShortDescriptionHtmlInputRowOptional r = ( limit :: Optional Int
+                                              | r
+                                              )
+
+type ShortDescriptionHtmlInput = { | RefsInputRowOptional + () }
 
 shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet Scope__Release (Maybe Html)
 shortDescriptionHTML input = selectionForField "shortDescriptionHTML" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder

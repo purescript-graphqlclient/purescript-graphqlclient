@@ -137,11 +137,14 @@ import Examples.Github.Scalars
 digestMethod :: SelectionSet Scope__OrganizationIdentityProvider (Maybe Uri)
 digestMethod = selectionForField "digestMethod" [] graphqlDefaultResponseScalarDecoder
 
-type ExternalIdentitiesInput = { after :: Optional String
-                               , before :: Optional String
-                               , first :: Optional Int
-                               , last :: Optional Int
-                               }
+type ExternalIdentitiesInputRowOptional r = ( after :: Optional String
+                                            , before :: Optional String
+                                            , first :: Optional Int
+                                            , last :: Optional Int
+                                            | r
+                                            )
+
+type ExternalIdentitiesInput = { | RefsInputRowOptional + () }
 
 externalIdentities :: forall r . ExternalIdentitiesInput -> SelectionSet Scope__ExternalIdentityConnection r -> SelectionSet Scope__OrganizationIdentityProvider r
 externalIdentities input = selectionForCompositeField "externalIdentities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

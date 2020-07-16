@@ -137,12 +137,15 @@ import Examples.Github.Enum.UserStatusOrderField
 id :: SelectionSet Scope__Starrable Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-type StargazersInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       , orderBy :: Optional StarOrder
-                       }
+type StargazersInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    , orderBy :: Optional StarOrder
+                                    | r
+                                    )
+
+type StargazersInput = { | RefsInputRowOptional + () }
 
 stargazers :: forall r . StargazersInput -> SelectionSet Scope__StargazerConnection r -> SelectionSet Scope__Starrable r
 stargazers input = selectionForCompositeField "stargazers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

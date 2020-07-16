@@ -185,11 +185,14 @@ publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDec
 updatedAt :: SelectionSet Scope__GistComment DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
-type UserContentEditsInput = { after :: Optional String
-                             , before :: Optional String
-                             , first :: Optional Int
-                             , last :: Optional Int
-                             }
+type UserContentEditsInputRowOptional r = ( after :: Optional String
+                                          , before :: Optional String
+                                          , first :: Optional Int
+                                          , last :: Optional Int
+                                          | r
+                                          )
+
+type UserContentEditsInput = { | RefsInputRowOptional + () }
 
 userContentEdits :: forall r . UserContentEditsInput -> SelectionSet Scope__UserContentEditConnection r -> SelectionSet Scope__GistComment (Maybe r)
 userContentEdits input = selectionForCompositeField "userContentEdits" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

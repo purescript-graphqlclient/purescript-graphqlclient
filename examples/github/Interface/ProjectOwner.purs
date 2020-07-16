@@ -137,20 +137,34 @@ import Examples.Github.Enum.UserStatusOrderField
 id :: SelectionSet Scope__ProjectOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-type ProjectInput = { number :: Int
-                    }
+type ProjectInputRowOptional r = ( number :: Optional Int
+                                 | r
+                                 )
+
+type ProjectInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                 | r
+                                 )
+
+type ProjectInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 project :: forall r . ProjectInput -> SelectionSet Scope__Project r -> SelectionSet Scope__ProjectOwner (Maybe r)
 project input = selectionForCompositeField "project" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ProjectsInput = { orderBy :: Optional ProjectOrder
-                     , search :: Optional String
-                     , states :: Array ProjectState
-                     , after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type ProjectsInputRowOptional r = ( orderBy :: Optional ProjectOrder
+                                  , search :: Optional String
+                                  , states :: Array (Maybe ProjectState)
+                                  , after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type ProjectsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                  | r
+                                  )
+
+type ProjectsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 projects :: forall r . ProjectsInput -> SelectionSet Scope__ProjectConnection r -> SelectionSet Scope__ProjectOwner r
 projects input = selectionForCompositeField "projects" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -134,11 +134,14 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type CommentsInput = { after :: Optional String
-                     , before :: Optional String
-                     , first :: Optional Int
-                     , last :: Optional Int
-                     }
+type CommentsInputRowOptional r = ( after :: Optional String
+                                  , before :: Optional String
+                                  , first :: Optional Int
+                                  , last :: Optional Int
+                                  | r
+                                  )
+
+type CommentsInput = { | RefsInputRowOptional + () }
 
 comments :: forall r . CommentsInput -> SelectionSet Scope__GistCommentConnection r -> SelectionSet Scope__Gist r
 comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -149,19 +152,25 @@ createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 description :: SelectionSet Scope__Gist (Maybe String)
 description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
 
-type FilesInput = { limit :: Optional Int
-                  , oid :: Optional GitObjectId
-                  }
+type FilesInputRowOptional r = ( limit :: Optional Int
+                               , oid :: Optional GitObjectId
+                               | r
+                               )
+
+type FilesInput = { | RefsInputRowOptional + () }
 
 files :: forall r . FilesInput -> SelectionSet Scope__GistFile r -> SelectionSet Scope__Gist (Array (Maybe r))
 files input = selectionForCompositeField "files" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ForksInput = { after :: Optional String
-                  , before :: Optional String
-                  , first :: Optional Int
-                  , last :: Optional Int
-                  , orderBy :: Optional GistOrder
-                  }
+type ForksInputRowOptional r = ( after :: Optional String
+                               , before :: Optional String
+                               , first :: Optional Int
+                               , last :: Optional Int
+                               , orderBy :: Optional GistOrder
+                               | r
+                               )
+
+type ForksInput = { | RefsInputRowOptional + () }
 
 forks :: forall r . ForksInput -> SelectionSet Scope__GistConnection r -> SelectionSet Scope__Gist r
 forks input = selectionForCompositeField "forks" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -187,12 +196,15 @@ pushedAt = selectionForField "pushedAt" [] graphqlDefaultResponseScalarDecoder
 resourcePath :: SelectionSet Scope__Gist Uri
 resourcePath = selectionForField "resourcePath" [] graphqlDefaultResponseScalarDecoder
 
-type StargazersInput = { after :: Optional String
-                       , before :: Optional String
-                       , first :: Optional Int
-                       , last :: Optional Int
-                       , orderBy :: Optional StarOrder
-                       }
+type StargazersInputRowOptional r = ( after :: Optional String
+                                    , before :: Optional String
+                                    , first :: Optional Int
+                                    , last :: Optional Int
+                                    , orderBy :: Optional StarOrder
+                                    | r
+                                    )
+
+type StargazersInput = { | RefsInputRowOptional + () }
 
 stargazers :: forall r . StargazersInput -> SelectionSet Scope__StargazerConnection r -> SelectionSet Scope__Gist r
 stargazers input = selectionForCompositeField "stargazers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

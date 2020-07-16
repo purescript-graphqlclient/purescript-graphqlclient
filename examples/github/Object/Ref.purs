@@ -134,16 +134,24 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type AssociatedPullRequestsInput = { states :: Array PullRequestState
-                                   , labels :: Array String
-                                   , headRefName :: Optional String
-                                   , baseRefName :: Optional String
-                                   , orderBy :: Optional IssueOrder
-                                   , after :: Optional String
-                                   , before :: Optional String
-                                   , first :: Optional Int
-                                   , last :: Optional Int
-                                   }
+type AssociatedPullRequestsInputRowOptional r = ( states :: Array (Maybe PullRequestState)
+                                                , labels :: Array (Maybe String)
+                                                , headRefName :: Optional String
+                                                , baseRefName :: Optional String
+                                                , orderBy :: Optional IssueOrder
+                                                , after :: Optional String
+                                                , before :: Optional String
+                                                , first :: Optional Int
+                                                , last :: Optional Int
+                                                | r
+                                                )
+
+type AssociatedPullRequestsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                                , labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+                                                | r
+                                                )
+
+type AssociatedPullRequestsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
 
 associatedPullRequests :: forall r . AssociatedPullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Ref r
 associatedPullRequests input = selectionForCompositeField "associatedPullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
