@@ -10,6 +10,7 @@ import Examples.MyTests.Example04ErrorDestructuring as Examples.MyTests.Example0
 import Examples.MyTests.Example05InterfacesAndUnions as Examples.MyTests.Example05InterfacesAndUnions
 import Examples.MyTests.Example06Typename as Examples.MyTests.Example06Typename
 import Examples.MyTests.Example08Foldr as Examples.MyTests.Example08Foldr
+import Examples.MyTests.Example10Github as Examples.MyTests.Example10Github
 
 allTests :: Test.Spec.Spec Unit
 allTests = Test.Spec.parallel do
@@ -21,3 +22,4 @@ allTests = Test.Spec.parallel do
   Examples.MyTests.Example05InterfacesAndUnions.spec
   Examples.MyTests.Example06Typename.spec
   Examples.MyTests.Example08Foldr.spec
+  Examples.MyTests.Example10Github.spec

@@ -187,6 +187,12 @@ nonNullOrFail
   -> SelectionSet lockedTo a
 nonNullOrFail (SelectionSet fields decoder) = SelectionSet fields (\json -> decoder json >>= note MissingValue)
 
+nonNullElementsOrFail
+  :: forall lockedTo a
+   . SelectionSet lockedTo (Array (Maybe a))
+  -> SelectionSet lockedTo (Array a)
+nonNullElementsOrFail (SelectionSet fields decoder) = SelectionSet fields (\json -> decoder json >>= (sequence >>> note MissingValue))
+
 getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> Json -> Either JsonDecodeError a
 getSelectionSetDecoder (SelectionSet fields decoder) = decoder
 
