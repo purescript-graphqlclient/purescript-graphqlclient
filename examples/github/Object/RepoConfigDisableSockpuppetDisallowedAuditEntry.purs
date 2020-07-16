@@ -137,8 +137,8 @@ import Examples.Github.Scalars
 action :: SelectionSet Scope__RepoConfigDisableSockpuppetDisallowedAuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__RepoConfigDisableSockpuppetDisallowedAuditEntry (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: SelectionSet Scope__RepoConfigDisableSockpuppetDisallowedAuditEntry (Maybe r)
+actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
 
 actorIp :: SelectionSet Scope__RepoConfigDisableSockpuppetDisallowedAuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder

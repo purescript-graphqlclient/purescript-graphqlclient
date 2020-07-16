@@ -146,5 +146,5 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 milestoneTitle :: SelectionSet Scope__MilestonedEvent String
 milestoneTitle = selectionForField "milestoneTitle" [] graphqlDefaultResponseScalarDecoder
 
-subject :: forall r . SelectionSet Scope__MilestoneItem r -> SelectionSet Scope__MilestonedEvent r
-subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+subject :: SelectionSet Scope__MilestonedEvent r
+subject = selectionForField "subject" [] graphqlDefaultResponseScalarDecoder

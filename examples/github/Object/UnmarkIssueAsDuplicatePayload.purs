@@ -137,5 +137,5 @@ import Examples.Github.Scalars
 clientMutationId :: SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe String)
 clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
 
-duplicate :: forall r . SelectionSet Scope__IssueOrPullRequest r -> SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe r)
-duplicate = selectionForCompositeField "duplicate" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+duplicate :: SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe r)
+duplicate = selectionForField "duplicate" [] graphqlDefaultResponseScalarDecoder

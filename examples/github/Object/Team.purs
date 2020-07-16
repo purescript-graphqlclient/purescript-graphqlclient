@@ -156,7 +156,7 @@ avatarUrl :: AvatarUrlInput -> SelectionSet Scope__Team (Maybe Uri)
 avatarUrl input = selectionForField "avatarUrl" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
 
 type ChildTeamsInputRowOptional r = ( orderBy :: Optional TeamOrder
-                                    , userLogins :: Array (Maybe String)
+                                    , userLogins :: Optional (Array String)
                                     , immediateOnly :: Optional Boolean
                                     , after :: Optional String
                                     , before :: Optional String
@@ -165,11 +165,7 @@ type ChildTeamsInputRowOptional r = ( orderBy :: Optional TeamOrder
                                     | r
                                     )
 
-type ChildTeamsInputRowRequired r = ( userLogins :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                    | r
-                                    )
-
-type ChildTeamsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type ChildTeamsInput = { | RefsInputRowOptional + () }
 
 childTeams :: forall r . ChildTeamsInput -> SelectionSet Scope__TeamConnection r -> SelectionSet Scope__Team r
 childTeams input = selectionForCompositeField "childTeams" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -186,15 +182,11 @@ databaseId = selectionForField "databaseId" [] graphqlDefaultResponseScalarDecod
 description :: SelectionSet Scope__Team (Maybe String)
 description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
 
-type DiscussionInputRowOptional r = ( number :: Optional Int
+type DiscussionInputRowRequired r = ( number :: Int
                                     | r
                                     )
 
-type DiscussionInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                    | r
-                                    )
-
-type DiscussionInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type DiscussionInput = { | RefsInputRowRequired + () }
 
 discussion :: forall r . DiscussionInput -> SelectionSet Scope__TeamDiscussion r -> SelectionSet Scope__Team (Maybe r)
 discussion input = selectionForCompositeField "discussion" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

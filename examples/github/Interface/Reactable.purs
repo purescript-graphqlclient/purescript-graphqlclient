@@ -140,7 +140,7 @@ databaseId = selectionForField "databaseId" [] graphqlDefaultResponseScalarDecod
 id :: SelectionSet Scope__Reactable Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__Reactable (Array r)
+reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__Reactable (Maybe (Array r))
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReactionsInputRowOptional r = ( after :: Optional String

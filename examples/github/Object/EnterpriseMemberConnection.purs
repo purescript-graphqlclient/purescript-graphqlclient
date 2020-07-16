@@ -134,11 +134,11 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-edges :: forall r . SelectionSet Scope__EnterpriseMemberEdge r -> SelectionSet Scope__EnterpriseMemberConnection (Array (Maybe r))
+edges :: forall r . SelectionSet Scope__EnterpriseMemberEdge r -> SelectionSet Scope__EnterpriseMemberConnection (Maybe (Array (Maybe r)))
 edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-nodes :: forall r . SelectionSet Scope__EnterpriseMember r -> SelectionSet Scope__EnterpriseMemberConnection (Array (Maybe r))
-nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+nodes :: SelectionSet Scope__EnterpriseMemberConnection (Maybe (Array (Maybe r)))
+nodes = selectionForField "nodes" [] graphqlDefaultResponseScalarDecoder
 
 pageInfo :: forall r . SelectionSet Scope__PageInfo r -> SelectionSet Scope__EnterpriseMemberConnection r
 pageInfo = selectionForCompositeField "pageInfo" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

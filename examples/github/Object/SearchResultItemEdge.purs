@@ -137,8 +137,8 @@ import Examples.Github.Scalars
 cursor :: SelectionSet Scope__SearchResultItemEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 
-node :: forall r . SelectionSet Scope__SearchResultItem r -> SelectionSet Scope__SearchResultItemEdge (Maybe r)
-node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+node :: SelectionSet Scope__SearchResultItemEdge (Maybe r)
+node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder
 
-textMatches :: forall r . SelectionSet Scope__TextMatch r -> SelectionSet Scope__SearchResultItemEdge (Array (Maybe r))
+textMatches :: forall r . SelectionSet Scope__TextMatch r -> SelectionSet Scope__SearchResultItemEdge (Maybe (Array (Maybe r)))
 textMatches = selectionForCompositeField "textMatches" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

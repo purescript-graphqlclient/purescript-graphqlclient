@@ -137,7 +137,7 @@ import Examples.Github.Scalars
 clientMutationId :: SelectionSet Scope__UpdateTopicsPayload (Maybe String)
 clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
 
-invalidTopicNames :: SelectionSet Scope__UpdateTopicsPayload (Array String)
+invalidTopicNames :: SelectionSet Scope__UpdateTopicsPayload (Maybe (Array String))
 invalidTopicNames = selectionForField "invalidTopicNames" [] graphqlDefaultResponseScalarDecoder
 
 repository :: forall r . SelectionSet Scope__Repository r -> SelectionSet Scope__UpdateTopicsPayload (Maybe r)

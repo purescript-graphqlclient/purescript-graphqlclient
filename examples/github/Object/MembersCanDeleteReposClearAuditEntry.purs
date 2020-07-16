@@ -137,8 +137,8 @@ import Examples.Github.Scalars
 action :: SelectionSet Scope__MembersCanDeleteReposClearAuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__MembersCanDeleteReposClearAuditEntry (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: SelectionSet Scope__MembersCanDeleteReposClearAuditEntry (Maybe r)
+actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
 
 actorIp :: SelectionSet Scope__MembersCanDeleteReposClearAuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder

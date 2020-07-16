@@ -182,7 +182,7 @@ number = selectionForField "number" [] graphqlDefaultResponseScalarDecoder
 publishedAt :: SelectionSet Scope__TeamDiscussionComment (Maybe DateTime)
 publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDecoder
 
-reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__TeamDiscussionComment (Array r)
+reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__TeamDiscussionComment (Maybe (Array r))
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReactionsInputRowOptional r = ( after :: Optional String

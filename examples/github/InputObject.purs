@@ -191,8 +191,8 @@ type AddPullRequestReviewInput = { pullRequestId :: Id
                                  , commitOID :: Optional GitObjectId
                                  , body :: Optional String
                                  , event :: Optional PullRequestReviewEvent
-                                 , comments :: Array (Maybe DraftPullRequestReviewComment)
-                                 , threads :: Array (Maybe DraftPullRequestReviewThread)
+                                 , comments :: Optional (Array (Maybe DraftPullRequestReviewComment))
+                                 , threads :: Optional (Array (Maybe DraftPullRequestReviewThread))
                                  , clientMutationId :: Optional String
                                  }
 
@@ -279,7 +279,7 @@ type ClosePullRequestInput = { pullRequestId :: Id
 
 -- | original name - CommitAuthor
 type CommitAuthor = { id :: Optional Id
-                    , emails :: Array String
+                    , emails :: Optional (Array String)
                     }
 
 -- | original name - CommitContributionOrder
@@ -311,10 +311,10 @@ type CreateBranchProtectionRuleInput = { repositoryId :: Id
                                        , requiresCodeOwnerReviews :: Optional Boolean
                                        , dismissesStaleReviews :: Optional Boolean
                                        , restrictsReviewDismissals :: Optional Boolean
-                                       , reviewDismissalActorIds :: Array Id
+                                       , reviewDismissalActorIds :: Optional (Array Id)
                                        , restrictsPushes :: Optional Boolean
-                                       , pushActorIds :: Array Id
-                                       , requiredStatusCheckContexts :: Array String
+                                       , pushActorIds :: Optional (Array Id)
+                                       , requiredStatusCheckContexts :: Optional (Array String)
                                        , clientMutationId :: Optional String
                                        }
 
@@ -339,10 +339,10 @@ type CreateIpAllowListEntryInput = { ownerId :: Id
 type CreateIssueInput = { repositoryId :: Id
                         , title :: String
                         , body :: Optional String
-                        , assigneeIds :: Array Id
+                        , assigneeIds :: Optional (Array Id)
                         , milestoneId :: Optional Id
-                        , labelIds :: Array Id
-                        , projectIds :: Array Id
+                        , labelIds :: Optional (Array Id)
+                        , projectIds :: Optional (Array Id)
                         , clientMutationId :: Optional String
                         }
 
@@ -351,7 +351,7 @@ type CreateProjectInput = { ownerId :: Id
                           , name :: String
                           , body :: Optional String
                           , template :: Optional ProjectTemplate
-                          , repositoryIds :: Array Id
+                          , repositoryIds :: Optional (Array Id)
                           , clientMutationId :: Optional String
                           }
 
@@ -554,11 +554,11 @@ type IpAllowListEntryOrder = { field :: IpAllowListEntryOrderField
 -- | original name - IssueFilters
 type IssueFilters = { assignee :: Optional String
                     , createdBy :: Optional String
-                    , labels :: Array String
+                    , labels :: Optional (Array String)
                     , mentioned :: Optional String
                     , milestone :: Optional String
                     , since :: Optional DateTime
-                    , states :: Array IssueState
+                    , states :: Optional (Array IssueState)
                     , viewerSubscribed :: Optional Boolean
                     }
 
@@ -753,8 +753,8 @@ type RepositoryOrder = { field :: RepositoryOrderField
 
 -- | original name - RequestReviewsInput
 type RequestReviewsInput = { pullRequestId :: Id
-                           , userIds :: Array Id
-                           , teamIds :: Array Id
+                           , userIds :: Optional (Array Id)
+                           , teamIds :: Optional (Array Id)
                            , union :: Optional Boolean
                            , clientMutationId :: Optional String
                            }
@@ -897,10 +897,10 @@ type UpdateBranchProtectionRuleInput = { branchProtectionRuleId :: Id
                                        , requiresCodeOwnerReviews :: Optional Boolean
                                        , dismissesStaleReviews :: Optional Boolean
                                        , restrictsReviewDismissals :: Optional Boolean
-                                       , reviewDismissalActorIds :: Array Id
+                                       , reviewDismissalActorIds :: Optional (Array Id)
                                        , restrictsPushes :: Optional Boolean
-                                       , pushActorIds :: Array Id
-                                       , requiredStatusCheckContexts :: Array String
+                                       , pushActorIds :: Optional (Array Id)
+                                       , requiredStatusCheckContexts :: Optional (Array String)
                                        , clientMutationId :: Optional String
                                        }
 
@@ -1038,11 +1038,11 @@ type UpdateIssueCommentInput = { id :: Id
 type UpdateIssueInput = { id :: Id
                         , title :: Optional String
                         , body :: Optional String
-                        , assigneeIds :: Array Id
+                        , assigneeIds :: Optional (Array Id)
                         , milestoneId :: Optional Id
-                        , labelIds :: Array Id
+                        , labelIds :: Optional (Array Id)
                         , state :: Optional IssueState
-                        , projectIds :: Array Id
+                        , projectIds :: Optional (Array Id)
                         , clientMutationId :: Optional String
                         }
 
@@ -1075,10 +1075,10 @@ type UpdatePullRequestInput = { pullRequestId :: Id
                               , body :: Optional String
                               , state :: Optional PullRequestUpdateState
                               , maintainerCanModify :: Optional Boolean
-                              , assigneeIds :: Array Id
+                              , assigneeIds :: Optional (Array Id)
                               , milestoneId :: Optional Id
-                              , labelIds :: Array Id
-                              , projectIds :: Array Id
+                              , labelIds :: Optional (Array Id)
+                              , projectIds :: Optional (Array Id)
                               , clientMutationId :: Optional String
                               }
 

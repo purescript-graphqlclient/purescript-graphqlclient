@@ -137,8 +137,8 @@ import Examples.Github.Scalars
 action :: SelectionSet Scope__OrgDisableTwoFactorRequirementAuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__OrgDisableTwoFactorRequirementAuditEntry (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: SelectionSet Scope__OrgDisableTwoFactorRequirementAuditEntry (Maybe r)
+actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
 
 actorIp :: SelectionSet Scope__OrgDisableTwoFactorRequirementAuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder

@@ -184,12 +184,11 @@ type AllowPrivateRepositoryForkingSettingOrganizationsInputRowOptional r = ( aft
                                                                            , before :: Optional String
                                                                            , first :: Optional Int
                                                                            , last :: Optional Int
-                                                                           , value :: Optional Boolean
                                                                            , orderBy :: Optional OrganizationOrder
                                                                            | r
                                                                            )
 
-type AllowPrivateRepositoryForkingSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type AllowPrivateRepositoryForkingSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                            | r
                                                                            )
 
@@ -205,12 +204,11 @@ type DefaultRepositoryPermissionSettingOrganizationsInputRowOptional r = ( after
                                                                          , before :: Optional String
                                                                          , first :: Optional Int
                                                                          , last :: Optional Int
-                                                                         , value :: Optional DefaultRepositoryPermissionField
                                                                          , orderBy :: Optional OrganizationOrder
                                                                          | r
                                                                          )
 
-type DefaultRepositoryPermissionSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type DefaultRepositoryPermissionSettingOrganizationsInputRowRequired r = ( value :: DefaultRepositoryPermissionField
                                                                          | r
                                                                          )
 
@@ -262,12 +260,11 @@ type MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowOptional r 
                                                                                   , before :: Optional String
                                                                                   , first :: Optional Int
                                                                                   , last :: Optional Int
-                                                                                  , value :: Optional Boolean
                                                                                   , orderBy :: Optional OrganizationOrder
                                                                                   | r
                                                                                   )
 
-type MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                                   | r
                                                                                   )
 
@@ -292,12 +289,11 @@ type MembersCanCreateRepositoriesSettingOrganizationsInputRowOptional r = ( afte
                                                                           , before :: Optional String
                                                                           , first :: Optional Int
                                                                           , last :: Optional Int
-                                                                          , value :: Optional OrganizationMembersCanCreateRepositoriesSettingValue
                                                                           , orderBy :: Optional OrganizationOrder
                                                                           | r
                                                                           )
 
-type MembersCanCreateRepositoriesSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type MembersCanCreateRepositoriesSettingOrganizationsInputRowRequired r = ( value :: OrganizationMembersCanCreateRepositoriesSettingValue
                                                                           | r
                                                                           )
 
@@ -313,12 +309,11 @@ type MembersCanDeleteIssuesSettingOrganizationsInputRowOptional r = ( after :: O
                                                                     , before :: Optional String
                                                                     , first :: Optional Int
                                                                     , last :: Optional Int
-                                                                    , value :: Optional Boolean
                                                                     , orderBy :: Optional OrganizationOrder
                                                                     | r
                                                                     )
 
-type MembersCanDeleteIssuesSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type MembersCanDeleteIssuesSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                     | r
                                                                     )
 
@@ -334,12 +329,11 @@ type MembersCanDeleteRepositoriesSettingOrganizationsInputRowOptional r = ( afte
                                                                           , before :: Optional String
                                                                           , first :: Optional Int
                                                                           , last :: Optional Int
-                                                                          , value :: Optional Boolean
                                                                           , orderBy :: Optional OrganizationOrder
                                                                           | r
                                                                           )
 
-type MembersCanDeleteRepositoriesSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type MembersCanDeleteRepositoriesSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                           | r
                                                                           )
 
@@ -355,12 +349,11 @@ type MembersCanInviteCollaboratorsSettingOrganizationsInputRowOptional r = ( aft
                                                                            , before :: Optional String
                                                                            , first :: Optional Int
                                                                            , last :: Optional Int
-                                                                           , value :: Optional Boolean
                                                                            , orderBy :: Optional OrganizationOrder
                                                                            | r
                                                                            )
 
-type MembersCanInviteCollaboratorsSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type MembersCanInviteCollaboratorsSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                            | r
                                                                            )
 
@@ -379,12 +372,11 @@ type MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowOptional r = (
                                                                                , before :: Optional String
                                                                                , first :: Optional Int
                                                                                , last :: Optional Int
-                                                                               , value :: Optional Boolean
                                                                                , orderBy :: Optional OrganizationOrder
                                                                                | r
                                                                                )
 
-type MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                                | r
                                                                                )
 
@@ -400,12 +392,11 @@ type MembersCanViewDependencyInsightsSettingOrganizationsInputRowOptional r = ( 
                                                                               , before :: Optional String
                                                                               , first :: Optional Int
                                                                               , last :: Optional Int
-                                                                              , value :: Optional Boolean
                                                                               , orderBy :: Optional OrganizationOrder
                                                                               | r
                                                                               )
 
-type MembersCanViewDependencyInsightsSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type MembersCanViewDependencyInsightsSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                               | r
                                                                               )
 
@@ -421,12 +412,11 @@ type OrganizationProjectsSettingOrganizationsInputRowOptional r = ( after :: Opt
                                                                   , before :: Optional String
                                                                   , first :: Optional Int
                                                                   , last :: Optional Int
-                                                                  , value :: Optional Boolean
                                                                   , orderBy :: Optional OrganizationOrder
                                                                   | r
                                                                   )
 
-type OrganizationProjectsSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type OrganizationProjectsSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                   | r
                                                                   )
 
@@ -514,12 +504,11 @@ type RepositoryProjectsSettingOrganizationsInputRowOptional r = ( after :: Optio
                                                                 , before :: Optional String
                                                                 , first :: Optional Int
                                                                 , last :: Optional Int
-                                                                , value :: Optional Boolean
                                                                 , orderBy :: Optional OrganizationOrder
                                                                 | r
                                                                 )
 
-type RepositoryProjectsSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type RepositoryProjectsSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                 | r
                                                                 )
 
@@ -535,12 +524,11 @@ type SamlIdentityProviderSettingOrganizationsInputRowOptional r = ( after :: Opt
                                                                   , before :: Optional String
                                                                   , first :: Optional Int
                                                                   , last :: Optional Int
-                                                                  , value :: Optional IdentityProviderConfigurationState
                                                                   , orderBy :: Optional OrganizationOrder
                                                                   | r
                                                                   )
 
-type SamlIdentityProviderSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type SamlIdentityProviderSettingOrganizationsInputRowRequired r = ( value :: IdentityProviderConfigurationState
                                                                   | r
                                                                   )
 
@@ -556,12 +544,11 @@ type TeamDiscussionsSettingOrganizationsInputRowOptional r = ( after :: Optional
                                                              , before :: Optional String
                                                              , first :: Optional Int
                                                              , last :: Optional Int
-                                                             , value :: Optional Boolean
                                                              , orderBy :: Optional OrganizationOrder
                                                              | r
                                                              )
 
-type TeamDiscussionsSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type TeamDiscussionsSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                              | r
                                                              )
 
@@ -577,12 +564,11 @@ type TwoFactorRequiredSettingOrganizationsInputRowOptional r = ( after :: Option
                                                                , before :: Optional String
                                                                , first :: Optional Int
                                                                , last :: Optional Int
-                                                               , value :: Optional Boolean
                                                                , orderBy :: Optional OrganizationOrder
                                                                | r
                                                                )
 
-type TwoFactorRequiredSettingOrganizationsInputRowRequired r = ( value :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
+type TwoFactorRequiredSettingOrganizationsInputRowRequired r = ( value :: Boolean
                                                                | r
                                                                )
 

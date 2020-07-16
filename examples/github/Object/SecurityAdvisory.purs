@@ -173,7 +173,7 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 type VulnerabilitiesInputRowOptional r = ( orderBy :: Optional SecurityVulnerabilityOrder
                                          , ecosystem :: Optional SecurityAdvisoryEcosystem
                                          , package :: Optional String
-                                         , severities :: Array (Maybe SecurityAdvisorySeverity)
+                                         , severities :: Optional (Array SecurityAdvisorySeverity)
                                          , after :: Optional String
                                          , before :: Optional String
                                          , first :: Optional Int
@@ -181,11 +181,7 @@ type VulnerabilitiesInputRowOptional r = ( orderBy :: Optional SecurityVulnerabi
                                          | r
                                          )
 
-type VulnerabilitiesInputRowRequired r = ( severities :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                         | r
-                                         )
-
-type VulnerabilitiesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type VulnerabilitiesInput = { | RefsInputRowOptional + () }
 
 vulnerabilities :: forall r . VulnerabilitiesInput -> SelectionSet Scope__SecurityVulnerabilityConnection r -> SelectionSet Scope__SecurityAdvisory r
 vulnerabilities input = selectionForCompositeField "vulnerabilities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

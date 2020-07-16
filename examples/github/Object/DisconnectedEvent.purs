@@ -146,8 +146,8 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 isCrossRepository :: SelectionSet Scope__DisconnectedEvent Boolean
 isCrossRepository = selectionForField "isCrossRepository" [] graphqlDefaultResponseScalarDecoder
 
-source :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__DisconnectedEvent r
-source = selectionForCompositeField "source" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+source :: SelectionSet Scope__DisconnectedEvent r
+source = selectionForField "source" [] graphqlDefaultResponseScalarDecoder
 
-subject :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__DisconnectedEvent r
-subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+subject :: SelectionSet Scope__DisconnectedEvent r
+subject = selectionForField "subject" [] graphqlDefaultResponseScalarDecoder

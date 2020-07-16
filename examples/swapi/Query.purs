@@ -10,15 +10,11 @@ import Examples.Swapi.Enum.Phrase
 import Examples.Swapi.Scopes
 import Examples.SwapiCustomScalars
 
-type DroidInputRowOptional r = ( id :: Optional Id
+type DroidInputRowRequired r = ( id :: Id
                                | r
                                )
 
-type DroidInputRowRequired r = ( id :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                               | r
-                               )
-
-type DroidInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type DroidInput = { | RefsInputRowRequired + () }
 
 droid :: forall r . DroidInput -> SelectionSet Scope__Droid r -> SelectionSet Scope__RootQuery (Maybe r)
 droid input = selectionForCompositeField "droid" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -26,15 +22,11 @@ droid input = selectionForCompositeField "droid" (toGraphqlArguments input) grap
 forcedError :: SelectionSet Scope__RootQuery (Maybe String)
 forcedError = selectionForField "forcedError" [] graphqlDefaultResponseScalarDecoder
 
-type GreetInputRowOptional r = ( input :: Optional Greeting
+type GreetInputRowRequired r = ( input :: Greeting
                                | r
                                )
 
-type GreetInputRowRequired r = ( input :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                               | r
-                               )
-
-type GreetInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type GreetInput = { | RefsInputRowRequired + () }
 
 greet :: GreetInput -> SelectionSet Scope__RootQuery String
 greet input = selectionForField "greet" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
@@ -57,18 +49,14 @@ type HeroUnionInputRowOptional r = ( episode :: Optional Episode
 
 type HeroUnionInput = { | RefsInputRowOptional + () }
 
-heroUnion :: forall r . HeroUnionInput -> SelectionSet Scope__CharacterUnion r -> SelectionSet Scope__RootQuery r
-heroUnion input = selectionForCompositeField "heroUnion" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+heroUnion :: HeroUnionInput -> SelectionSet Scope__RootQuery r
+heroUnion input = selectionForField "heroUnion" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
 
-type HumanInputRowOptional r = ( id :: Optional Id
+type HumanInputRowRequired r = ( id :: Id
                                | r
                                )
 
-type HumanInputRowRequired r = ( id :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                               | r
-                               )
-
-type HumanInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type HumanInput = { | RefsInputRowRequired + () }
 
 human :: forall r . HumanInput -> SelectionSet Scope__Human r -> SelectionSet Scope__RootQuery (Maybe r)
 human input = selectionForCompositeField "human" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

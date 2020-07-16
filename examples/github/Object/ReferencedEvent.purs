@@ -155,5 +155,5 @@ isCrossRepository = selectionForField "isCrossRepository" [] graphqlDefaultRespo
 isDirectReference :: SelectionSet Scope__ReferencedEvent Boolean
 isDirectReference = selectionForField "isDirectReference" [] graphqlDefaultResponseScalarDecoder
 
-subject :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__ReferencedEvent r
-subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+subject :: SelectionSet Scope__ReferencedEvent r
+subject = selectionForField "subject" [] graphqlDefaultResponseScalarDecoder

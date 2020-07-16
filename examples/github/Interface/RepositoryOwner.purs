@@ -151,8 +151,8 @@ login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 
 type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                       , orderBy :: Optional RepositoryOrder
-                                      , affiliations :: Array (Maybe RepositoryAffiliation)
-                                      , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
+                                      , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
+                                      , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
                                       , isLocked :: Optional Boolean
                                       , after :: Optional String
                                       , before :: Optional String
@@ -167,15 +167,11 @@ type RepositoriesInput = { | RefsInputRowOptional + () }
 repositories :: forall r . RepositoriesInput -> SelectionSet Scope__RepositoryConnection r -> SelectionSet Scope__RepositoryOwner r
 repositories input = selectionForCompositeField "repositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryInputRowOptional r = ( name :: Optional String
+type RepositoryInputRowRequired r = ( name :: String
                                     | r
                                     )
 
-type RepositoryInputRowRequired r = ( name :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                    | r
-                                    )
-
-type RepositoryInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type RepositoryInput = { | RefsInputRowRequired + () }
 
 repository :: forall r . RepositoryInput -> SelectionSet Scope__Repository r -> SelectionSet Scope__RepositoryOwner (Maybe r)
 repository input = selectionForCompositeField "repository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

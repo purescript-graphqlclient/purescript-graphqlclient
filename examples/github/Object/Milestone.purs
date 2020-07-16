@@ -159,8 +159,8 @@ issuePrioritiesDebug :: SelectionSet Scope__Milestone String
 issuePrioritiesDebug = selectionForField "issuePrioritiesDebug" [] graphqlDefaultResponseScalarDecoder
 
 type IssuesInputRowOptional r = ( orderBy :: Optional IssueOrder
-                                , labels :: Array (Maybe String)
-                                , states :: Array (Maybe IssueState)
+                                , labels :: Optional (Array String)
+                                , states :: Optional (Array IssueState)
                                 , filterBy :: Optional IssueFilters
                                 , after :: Optional String
                                 , before :: Optional String
@@ -169,12 +169,7 @@ type IssuesInputRowOptional r = ( orderBy :: Optional IssueOrder
                                 | r
                                 )
 
-type IssuesInputRowRequired r = ( labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                , states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                | r
-                                )
-
-type IssuesInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type IssuesInput = { | RefsInputRowOptional + () }
 
 issues :: forall r . IssuesInput -> SelectionSet Scope__IssueConnection r -> SelectionSet Scope__Milestone r
 issues input = selectionForCompositeField "issues" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -182,8 +177,8 @@ issues input = selectionForCompositeField "issues" (toGraphqlArguments input) gr
 number :: SelectionSet Scope__Milestone Int
 number = selectionForField "number" [] graphqlDefaultResponseScalarDecoder
 
-type PullRequestsInputRowOptional r = ( states :: Array (Maybe PullRequestState)
-                                      , labels :: Array (Maybe String)
+type PullRequestsInputRowOptional r = ( states :: Optional (Array PullRequestState)
+                                      , labels :: Optional (Array String)
                                       , headRefName :: Optional String
                                       , baseRefName :: Optional String
                                       , orderBy :: Optional IssueOrder
@@ -194,12 +189,7 @@ type PullRequestsInputRowOptional r = ( states :: Array (Maybe PullRequestState)
                                       | r
                                       )
 
-type PullRequestsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                      , labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                      | r
-                                      )
-
-type PullRequestsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type PullRequestsInput = { | RefsInputRowOptional + () }
 
 pullRequests :: forall r . PullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Milestone r
 pullRequests input = selectionForCompositeField "pullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

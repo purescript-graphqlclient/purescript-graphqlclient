@@ -158,14 +158,14 @@ earliestRestrictedContributionDate = selectionForField "earliestRestrictedContri
 endedAt :: SelectionSet Scope__ContributionsCollection DateTime
 endedAt = selectionForField "endedAt" [] graphqlDefaultResponseScalarDecoder
 
-firstIssueContribution :: forall r . SelectionSet Scope__CreatedIssueOrRestrictedContribution r -> SelectionSet Scope__ContributionsCollection (Maybe r)
-firstIssueContribution = selectionForCompositeField "firstIssueContribution" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+firstIssueContribution :: SelectionSet Scope__ContributionsCollection (Maybe r)
+firstIssueContribution = selectionForField "firstIssueContribution" [] graphqlDefaultResponseScalarDecoder
 
-firstPullRequestContribution :: forall r . SelectionSet Scope__CreatedPullRequestOrRestrictedContribution r -> SelectionSet Scope__ContributionsCollection (Maybe r)
-firstPullRequestContribution = selectionForCompositeField "firstPullRequestContribution" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+firstPullRequestContribution :: SelectionSet Scope__ContributionsCollection (Maybe r)
+firstPullRequestContribution = selectionForField "firstPullRequestContribution" [] graphqlDefaultResponseScalarDecoder
 
-firstRepositoryContribution :: forall r . SelectionSet Scope__CreatedRepositoryOrRestrictedContribution r -> SelectionSet Scope__ContributionsCollection (Maybe r)
-firstRepositoryContribution = selectionForCompositeField "firstRepositoryContribution" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+firstRepositoryContribution :: SelectionSet Scope__ContributionsCollection (Maybe r)
+firstRepositoryContribution = selectionForField "firstRepositoryContribution" [] graphqlDefaultResponseScalarDecoder
 
 hasActivityInThePast :: SelectionSet Scope__ContributionsCollection Boolean
 hasActivityInThePast = selectionForField "hasActivityInThePast" [] graphqlDefaultResponseScalarDecoder

@@ -137,22 +137,18 @@ import Examples.Github.Enum.UserStatusOrderField
 id :: SelectionSet Scope__ProjectOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-type ProjectInputRowOptional r = ( number :: Optional Int
+type ProjectInputRowRequired r = ( number :: Int
                                  | r
                                  )
 
-type ProjectInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                 | r
-                                 )
-
-type ProjectInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type ProjectInput = { | RefsInputRowRequired + () }
 
 project :: forall r . ProjectInput -> SelectionSet Scope__Project r -> SelectionSet Scope__ProjectOwner (Maybe r)
 project input = selectionForCompositeField "project" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ProjectsInputRowOptional r = ( orderBy :: Optional ProjectOrder
                                   , search :: Optional String
-                                  , states :: Array (Maybe ProjectState)
+                                  , states :: Optional (Array ProjectState)
                                   , after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
@@ -160,11 +156,7 @@ type ProjectsInputRowOptional r = ( orderBy :: Optional ProjectOrder
                                   | r
                                   )
 
-type ProjectsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                  | r
-                                  )
-
-type ProjectsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type ProjectsInput = { | RefsInputRowOptional + () }
 
 projects :: forall r . ProjectsInput -> SelectionSet Scope__ProjectConnection r -> SelectionSet Scope__ProjectOwner r
 projects input = selectionForCompositeField "projects" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

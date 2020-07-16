@@ -188,7 +188,7 @@ position = selectionForField "position" [] graphqlDefaultResponseScalarDecoder
 publishedAt :: SelectionSet Scope__CommitComment (Maybe DateTime)
 publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDecoder
 
-reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__CommitComment (Array r)
+reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__CommitComment (Maybe (Array r))
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReactionsInputRowOptional r = ( after :: Optional String

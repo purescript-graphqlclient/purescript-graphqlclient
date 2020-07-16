@@ -137,17 +137,17 @@ import Examples.Github.Scalars
 gitHubServicesSha :: SelectionSet Scope__GitHubMetadata GitObjectId
 gitHubServicesSha = selectionForField "gitHubServicesSha" [] graphqlDefaultResponseScalarDecoder
 
-gitIpAddresses :: SelectionSet Scope__GitHubMetadata (Array String)
+gitIpAddresses :: SelectionSet Scope__GitHubMetadata (Maybe (Array String))
 gitIpAddresses = selectionForField "gitIpAddresses" [] graphqlDefaultResponseScalarDecoder
 
-hookIpAddresses :: SelectionSet Scope__GitHubMetadata (Array String)
+hookIpAddresses :: SelectionSet Scope__GitHubMetadata (Maybe (Array String))
 hookIpAddresses = selectionForField "hookIpAddresses" [] graphqlDefaultResponseScalarDecoder
 
-importerIpAddresses :: SelectionSet Scope__GitHubMetadata (Array String)
+importerIpAddresses :: SelectionSet Scope__GitHubMetadata (Maybe (Array String))
 importerIpAddresses = selectionForField "importerIpAddresses" [] graphqlDefaultResponseScalarDecoder
 
 isPasswordAuthenticationVerifiable :: SelectionSet Scope__GitHubMetadata Boolean
 isPasswordAuthenticationVerifiable = selectionForField "isPasswordAuthenticationVerifiable" [] graphqlDefaultResponseScalarDecoder
 
-pagesIpAddresses :: SelectionSet Scope__GitHubMetadata (Array String)
+pagesIpAddresses :: SelectionSet Scope__GitHubMetadata (Maybe (Array String))
 pagesIpAddresses = selectionForField "pagesIpAddresses" [] graphqlDefaultResponseScalarDecoder

@@ -137,5 +137,5 @@ import Examples.Github.Scalars
 cursor :: SelectionSet Scope__PinnableItemEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 
-node :: forall r . SelectionSet Scope__PinnableItem r -> SelectionSet Scope__PinnableItemEdge (Maybe r)
-node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+node :: SelectionSet Scope__PinnableItemEdge (Maybe r)
+node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder

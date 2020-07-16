@@ -134,13 +134,13 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-edges :: forall r . SelectionSet Scope__StarredRepositoryEdge r -> SelectionSet Scope__StarredRepositoryConnection (Array (Maybe r))
+edges :: forall r . SelectionSet Scope__StarredRepositoryEdge r -> SelectionSet Scope__StarredRepositoryConnection (Maybe (Array (Maybe r)))
 edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 isOverLimit :: SelectionSet Scope__StarredRepositoryConnection Boolean
 isOverLimit = selectionForField "isOverLimit" [] graphqlDefaultResponseScalarDecoder
 
-nodes :: forall r . SelectionSet Scope__Repository r -> SelectionSet Scope__StarredRepositoryConnection (Array (Maybe r))
+nodes :: forall r . SelectionSet Scope__Repository r -> SelectionSet Scope__StarredRepositoryConnection (Maybe (Array (Maybe r)))
 nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 pageInfo :: forall r . SelectionSet Scope__PageInfo r -> SelectionSet Scope__StarredRepositoryConnection r

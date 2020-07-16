@@ -141,7 +141,7 @@ type PackagesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
-                                  , names :: Array (Maybe String)
+                                  , names :: Optional (Array (Maybe String))
                                   , repositoryId :: Optional Id
                                   , packageType :: Optional PackageType
                                   , orderBy :: Optional PackageOrder

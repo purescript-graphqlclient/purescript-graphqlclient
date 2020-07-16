@@ -140,8 +140,8 @@ actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrSca
 assignable :: forall r . SelectionSet Scope__Assignable r -> SelectionSet Scope__UnassignedEvent r
 assignable = selectionForCompositeField "assignable" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-assignee :: forall r . SelectionSet Scope__Assignee r -> SelectionSet Scope__UnassignedEvent (Maybe r)
-assignee = selectionForCompositeField "assignee" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+assignee :: SelectionSet Scope__UnassignedEvent (Maybe r)
+assignee = selectionForField "assignee" [] graphqlDefaultResponseScalarDecoder
 
 createdAt :: SelectionSet Scope__UnassignedEvent DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

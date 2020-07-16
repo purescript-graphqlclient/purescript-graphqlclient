@@ -140,5 +140,5 @@ organization = selectionForCompositeField "organization" [] graphqlDefaultRespon
 permission :: SelectionSet Scope__PermissionSource DefaultRepositoryPermissionField
 permission = selectionForField "permission" [] graphqlDefaultResponseScalarDecoder
 
-source :: forall r . SelectionSet Scope__PermissionGranter r -> SelectionSet Scope__PermissionSource r
-source = selectionForCompositeField "source" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+source :: SelectionSet Scope__PermissionSource r
+source = selectionForField "source" [] graphqlDefaultResponseScalarDecoder

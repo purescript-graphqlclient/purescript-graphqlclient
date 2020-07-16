@@ -161,7 +161,7 @@ login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__ProfileOwner (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type PinnableItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
+type PinnableItemsInputRowOptional r = ( types :: Optional (Array PinnableItemType)
                                        , after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
@@ -169,16 +169,12 @@ type PinnableItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
                                        | r
                                        )
 
-type PinnableItemsInputRowRequired r = ( types :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                       | r
-                                       )
-
-type PinnableItemsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type PinnableItemsInput = { | RefsInputRowOptional + () }
 
 pinnableItems :: forall r . PinnableItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileOwner r
 pinnableItems input = selectionForCompositeField "pinnableItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PinnedItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
+type PinnedItemsInputRowOptional r = ( types :: Optional (Array PinnableItemType)
                                      , after :: Optional String
                                      , before :: Optional String
                                      , first :: Optional Int
@@ -186,11 +182,7 @@ type PinnedItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
                                      | r
                                      )
 
-type PinnedItemsInputRowRequired r = ( types :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                     | r
-                                     )
-
-type PinnedItemsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type PinnedItemsInput = { | RefsInputRowOptional + () }
 
 pinnedItems :: forall r . PinnedItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileOwner r
 pinnedItems input = selectionForCompositeField "pinnedItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

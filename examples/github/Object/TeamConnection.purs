@@ -134,10 +134,10 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-edges :: forall r . SelectionSet Scope__TeamEdge r -> SelectionSet Scope__TeamConnection (Array (Maybe r))
+edges :: forall r . SelectionSet Scope__TeamEdge r -> SelectionSet Scope__TeamConnection (Maybe (Array (Maybe r)))
 edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-nodes :: forall r . SelectionSet Scope__Team r -> SelectionSet Scope__TeamConnection (Array (Maybe r))
+nodes :: forall r . SelectionSet Scope__Team r -> SelectionSet Scope__TeamConnection (Maybe (Array (Maybe r)))
 nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 pageInfo :: forall r . SelectionSet Scope__PageInfo r -> SelectionSet Scope__TeamConnection r

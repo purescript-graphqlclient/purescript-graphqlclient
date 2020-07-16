@@ -161,7 +161,7 @@ idpCertificate = selectionForField "idpCertificate" [] graphqlDefaultResponseSca
 issuer :: SelectionSet Scope__EnterpriseIdentityProvider (Maybe String)
 issuer = selectionForField "issuer" [] graphqlDefaultResponseScalarDecoder
 
-recoveryCodes :: SelectionSet Scope__EnterpriseIdentityProvider (Array String)
+recoveryCodes :: SelectionSet Scope__EnterpriseIdentityProvider (Maybe (Array String))
 recoveryCodes = selectionForField "recoveryCodes" [] graphqlDefaultResponseScalarDecoder
 
 signatureMethod :: SelectionSet Scope__EnterpriseIdentityProvider (Maybe SamlSignatureAlgorithm)

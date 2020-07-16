@@ -137,8 +137,8 @@ import Examples.Github.Scalars
 column :: forall r . SelectionSet Scope__ProjectColumn r -> SelectionSet Scope__ProjectCard (Maybe r)
 column = selectionForCompositeField "column" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-content :: forall r . SelectionSet Scope__ProjectCardItem r -> SelectionSet Scope__ProjectCard (Maybe r)
-content = selectionForCompositeField "content" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+content :: SelectionSet Scope__ProjectCard (Maybe r)
+content = selectionForField "content" [] graphqlDefaultResponseScalarDecoder
 
 createdAt :: SelectionSet Scope__ProjectCard DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

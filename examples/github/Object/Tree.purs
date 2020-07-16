@@ -143,7 +143,7 @@ commitResourcePath = selectionForField "commitResourcePath" [] graphqlDefaultRes
 commitUrl :: SelectionSet Scope__Tree Uri
 commitUrl = selectionForField "commitUrl" [] graphqlDefaultResponseScalarDecoder
 
-entries :: forall r . SelectionSet Scope__TreeEntry r -> SelectionSet Scope__Tree (Array r)
+entries :: forall r . SelectionSet Scope__TreeEntry r -> SelectionSet Scope__Tree (Maybe (Array r))
 entries = selectionForCompositeField "entries" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 id :: SelectionSet Scope__Tree Id

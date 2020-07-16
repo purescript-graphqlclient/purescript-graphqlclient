@@ -143,5 +143,5 @@ node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScala
 permission :: SelectionSet Scope__RepositoryCollaboratorEdge RepositoryPermission
 permission = selectionForField "permission" [] graphqlDefaultResponseScalarDecoder
 
-permissionSources :: forall r . SelectionSet Scope__PermissionSource r -> SelectionSet Scope__RepositoryCollaboratorEdge (Array r)
+permissionSources :: forall r . SelectionSet Scope__PermissionSource r -> SelectionSet Scope__RepositoryCollaboratorEdge (Maybe (Array r))
 permissionSources = selectionForCompositeField "permissionSources" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

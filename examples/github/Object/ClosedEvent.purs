@@ -140,8 +140,8 @@ actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrSca
 closable :: forall r . SelectionSet Scope__Closable r -> SelectionSet Scope__ClosedEvent r
 closable = selectionForCompositeField "closable" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-closer :: forall r . SelectionSet Scope__Closer r -> SelectionSet Scope__ClosedEvent (Maybe r)
-closer = selectionForCompositeField "closer" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+closer :: SelectionSet Scope__ClosedEvent (Maybe r)
+closer = selectionForField "closer" [] graphqlDefaultResponseScalarDecoder
 
 createdAt :: SelectionSet Scope__ClosedEvent DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

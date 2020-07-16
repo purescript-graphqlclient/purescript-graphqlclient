@@ -250,7 +250,7 @@ type ProjectCardsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
-                                      , archivedStates :: Array (Maybe ProjectCardArchivedState)
+                                      , archivedStates :: Optional (Array (Maybe ProjectCardArchivedState))
                                       | r
                                       )
 
@@ -262,7 +262,7 @@ projectCards input = selectionForCompositeField "projectCards" (toGraphqlArgumen
 publishedAt :: SelectionSet Scope__Issue (Maybe DateTime)
 publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDecoder
 
-reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__Issue (Array r)
+reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__Issue (Maybe (Array r))
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReactionsInputRowOptional r = ( after :: Optional String
@@ -303,7 +303,7 @@ timeline input = selectionForCompositeField "timeline" (toGraphqlArguments input
 
 type TimelineItemsInputRowOptional r = ( since :: Optional DateTime
                                        , skip :: Optional Int
-                                       , itemTypes :: Array (Maybe IssueTimelineItemsItemType)
+                                       , itemTypes :: Optional (Array IssueTimelineItemsItemType)
                                        , after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
@@ -311,11 +311,7 @@ type TimelineItemsInputRowOptional r = ( since :: Optional DateTime
                                        | r
                                        )
 
-type TimelineItemsInputRowRequired r = ( itemTypes :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                       | r
-                                       )
-
-type TimelineItemsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type TimelineItemsInput = { | RefsInputRowOptional + () }
 
 timelineItems :: forall r . TimelineItemsInput -> SelectionSet Scope__IssueTimelineItemsConnection r -> SelectionSet Scope__Issue r
 timelineItems input = selectionForCompositeField "timelineItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

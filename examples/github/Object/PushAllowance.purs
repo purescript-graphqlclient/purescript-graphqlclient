@@ -134,8 +134,8 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-actor :: forall r . SelectionSet Scope__PushAllowanceActor r -> SelectionSet Scope__PushAllowance (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: SelectionSet Scope__PushAllowance (Maybe r)
+actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
 
 branchProtectionRule :: forall r . SelectionSet Scope__BranchProtectionRule r -> SelectionSet Scope__PushAllowance (Maybe r)
 branchProtectionRule = selectionForCompositeField "branchProtectionRule" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

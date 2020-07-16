@@ -162,15 +162,11 @@ authoredByCommitter = selectionForField "authoredByCommitter" [] graphqlDefaultR
 authoredDate :: SelectionSet Scope__Commit DateTime
 authoredDate = selectionForField "authoredDate" [] graphqlDefaultResponseScalarDecoder
 
-type BlameInputRowOptional r = ( path :: Optional String
+type BlameInputRowRequired r = ( path :: String
                                | r
                                )
 
-type BlameInputRowRequired r = ( path :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                               | r
-                               )
-
-type BlameInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type BlameInput = { | RefsInputRowRequired + () }
 
 blame :: forall r . BlameInput -> SelectionSet Scope__Blame r -> SelectionSet Scope__Commit r
 blame input = selectionForCompositeField "blame" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -208,7 +204,7 @@ committer = selectionForCompositeField "committer" [] graphqlDefaultResponseFunc
 deletions :: SelectionSet Scope__Commit Int
 deletions = selectionForField "deletions" [] graphqlDefaultResponseScalarDecoder
 
-type DeploymentsInputRowOptional r = ( environments :: Array (Maybe String)
+type DeploymentsInputRowOptional r = ( environments :: Optional (Array String)
                                      , orderBy :: Optional DeploymentOrder
                                      , after :: Optional String
                                      , before :: Optional String
@@ -217,11 +213,7 @@ type DeploymentsInputRowOptional r = ( environments :: Array (Maybe String)
                                      | r
                                      )
 
-type DeploymentsInputRowRequired r = ( environments :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                     | r
-                                     )
-
-type DeploymentsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type DeploymentsInput = { | RefsInputRowOptional + () }
 
 deployments :: forall r . DeploymentsInput -> SelectionSet Scope__DeploymentConnection r -> SelectionSet Scope__Commit (Maybe r)
 deployments input = selectionForCompositeField "deployments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

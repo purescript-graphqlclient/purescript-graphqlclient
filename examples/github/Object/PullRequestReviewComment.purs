@@ -209,7 +209,7 @@ pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponse
 pullRequestReview :: forall r . SelectionSet Scope__PullRequestReview r -> SelectionSet Scope__PullRequestReviewComment (Maybe r)
 pullRequestReview = selectionForCompositeField "pullRequestReview" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__PullRequestReviewComment (Array r)
+reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__PullRequestReviewComment (Maybe (Array r))
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReactionsInputRowOptional r = ( after :: Optional String

@@ -134,14 +134,14 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-edges :: forall r . SelectionSet Scope__PullRequestTimelineItemsEdge r -> SelectionSet Scope__PullRequestTimelineItemsConnection (Array (Maybe r))
+edges :: forall r . SelectionSet Scope__PullRequestTimelineItemsEdge r -> SelectionSet Scope__PullRequestTimelineItemsConnection (Maybe (Array (Maybe r)))
 edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 filteredCount :: SelectionSet Scope__PullRequestTimelineItemsConnection Int
 filteredCount = selectionForField "filteredCount" [] graphqlDefaultResponseScalarDecoder
 
-nodes :: forall r . SelectionSet Scope__PullRequestTimelineItems r -> SelectionSet Scope__PullRequestTimelineItemsConnection (Array (Maybe r))
-nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+nodes :: SelectionSet Scope__PullRequestTimelineItemsConnection (Maybe (Array (Maybe r)))
+nodes = selectionForField "nodes" [] graphqlDefaultResponseScalarDecoder
 
 pageCount :: SelectionSet Scope__PullRequestTimelineItemsConnection Int
 pageCount = selectionForField "pageCount" [] graphqlDefaultResponseScalarDecoder

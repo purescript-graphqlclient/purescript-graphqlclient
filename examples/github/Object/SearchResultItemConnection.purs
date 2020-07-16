@@ -137,14 +137,14 @@ import Examples.Github.Scalars
 codeCount :: SelectionSet Scope__SearchResultItemConnection Int
 codeCount = selectionForField "codeCount" [] graphqlDefaultResponseScalarDecoder
 
-edges :: forall r . SelectionSet Scope__SearchResultItemEdge r -> SelectionSet Scope__SearchResultItemConnection (Array (Maybe r))
+edges :: forall r . SelectionSet Scope__SearchResultItemEdge r -> SelectionSet Scope__SearchResultItemConnection (Maybe (Array (Maybe r)))
 edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 issueCount :: SelectionSet Scope__SearchResultItemConnection Int
 issueCount = selectionForField "issueCount" [] graphqlDefaultResponseScalarDecoder
 
-nodes :: forall r . SelectionSet Scope__SearchResultItem r -> SelectionSet Scope__SearchResultItemConnection (Array (Maybe r))
-nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+nodes :: SelectionSet Scope__SearchResultItemConnection (Maybe (Array (Maybe r)))
+nodes = selectionForField "nodes" [] graphqlDefaultResponseScalarDecoder
 
 pageInfo :: forall r . SelectionSet Scope__PageInfo r -> SelectionSet Scope__SearchResultItemConnection r
 pageInfo = selectionForCompositeField "pageInfo" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

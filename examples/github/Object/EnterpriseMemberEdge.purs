@@ -140,5 +140,5 @@ cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 isUnlicensed :: SelectionSet Scope__EnterpriseMemberEdge Boolean
 isUnlicensed = selectionForField "isUnlicensed" [] graphqlDefaultResponseScalarDecoder
 
-node :: forall r . SelectionSet Scope__EnterpriseMember r -> SelectionSet Scope__EnterpriseMemberEdge (Maybe r)
-node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+node :: SelectionSet Scope__EnterpriseMemberEdge (Maybe r)
+node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder

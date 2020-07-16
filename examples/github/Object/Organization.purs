@@ -253,7 +253,7 @@ type PackagesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
-                                  , names :: Array (Maybe String)
+                                  , names :: Optional (Array (Maybe String))
                                   , repositoryId :: Optional Id
                                   , packageType :: Optional PackageType
                                   , orderBy :: Optional PackageOrder
@@ -277,7 +277,7 @@ type PendingMembersInput = { | RefsInputRowOptional + () }
 pendingMembers :: forall r . PendingMembersInput -> SelectionSet Scope__UserConnection r -> SelectionSet Scope__Organization r
 pendingMembers input = selectionForCompositeField "pendingMembers" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PinnableItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
+type PinnableItemsInputRowOptional r = ( types :: Optional (Array PinnableItemType)
                                        , after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
@@ -285,16 +285,12 @@ type PinnableItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
                                        | r
                                        )
 
-type PinnableItemsInputRowRequired r = ( types :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                       | r
-                                       )
-
-type PinnableItemsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type PinnableItemsInput = { | RefsInputRowOptional + () }
 
 pinnableItems :: forall r . PinnableItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__Organization r
 pinnableItems input = selectionForCompositeField "pinnableItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PinnedItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
+type PinnedItemsInputRowOptional r = ( types :: Optional (Array PinnableItemType)
                                      , after :: Optional String
                                      , before :: Optional String
                                      , first :: Optional Int
@@ -302,11 +298,7 @@ type PinnedItemsInputRowOptional r = ( types :: Array (Maybe PinnableItemType)
                                      | r
                                      )
 
-type PinnedItemsInputRowRequired r = ( types :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                     | r
-                                     )
-
-type PinnedItemsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type PinnedItemsInput = { | RefsInputRowOptional + () }
 
 pinnedItems :: forall r . PinnedItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__Organization r
 pinnedItems input = selectionForCompositeField "pinnedItems" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -314,22 +306,18 @@ pinnedItems input = selectionForCompositeField "pinnedItems" (toGraphqlArguments
 pinnedItemsRemaining :: SelectionSet Scope__Organization Int
 pinnedItemsRemaining = selectionForField "pinnedItemsRemaining" [] graphqlDefaultResponseScalarDecoder
 
-type ProjectInputRowOptional r = ( number :: Optional Int
+type ProjectInputRowRequired r = ( number :: Int
                                  | r
                                  )
 
-type ProjectInputRowRequired r = ( number :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                 | r
-                                 )
-
-type ProjectInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type ProjectInput = { | RefsInputRowRequired + () }
 
 project :: forall r . ProjectInput -> SelectionSet Scope__Project r -> SelectionSet Scope__Organization (Maybe r)
 project input = selectionForCompositeField "project" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ProjectsInputRowOptional r = ( orderBy :: Optional ProjectOrder
                                   , search :: Optional String
-                                  , states :: Array (Maybe ProjectState)
+                                  , states :: Optional (Array ProjectState)
                                   , after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
@@ -337,11 +325,7 @@ type ProjectsInputRowOptional r = ( orderBy :: Optional ProjectOrder
                                   | r
                                   )
 
-type ProjectsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                  | r
-                                  )
-
-type ProjectsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type ProjectsInput = { | RefsInputRowOptional + () }
 
 projects :: forall r . ProjectsInput -> SelectionSet Scope__ProjectConnection r -> SelectionSet Scope__Organization r
 projects input = selectionForCompositeField "projects" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -354,8 +338,8 @@ projectsUrl = selectionForField "projectsUrl" [] graphqlDefaultResponseScalarDec
 
 type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                       , orderBy :: Optional RepositoryOrder
-                                      , affiliations :: Array (Maybe RepositoryAffiliation)
-                                      , ownerAffiliations :: Array (Maybe RepositoryAffiliation)
+                                      , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
+                                      , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
                                       , isLocked :: Optional Boolean
                                       , after :: Optional String
                                       , before :: Optional String
@@ -370,15 +354,11 @@ type RepositoriesInput = { | RefsInputRowOptional + () }
 repositories :: forall r . RepositoriesInput -> SelectionSet Scope__RepositoryConnection r -> SelectionSet Scope__Organization r
 repositories input = selectionForCompositeField "repositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryInputRowOptional r = ( name :: Optional String
+type RepositoryInputRowRequired r = ( name :: String
                                     | r
                                     )
 
-type RepositoryInputRowRequired r = ( name :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                    | r
-                                    )
-
-type RepositoryInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type RepositoryInput = { | RefsInputRowRequired + () }
 
 repository :: forall r . RepositoryInput -> SelectionSet Scope__Repository r -> SelectionSet Scope__Organization (Maybe r)
 repository input = selectionForCompositeField "repository" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -422,15 +402,11 @@ type SponsorshipsAsSponsorInput = { | RefsInputRowOptional + () }
 sponsorshipsAsSponsor :: forall r . SponsorshipsAsSponsorInput -> SelectionSet Scope__SponsorshipConnection r -> SelectionSet Scope__Organization r
 sponsorshipsAsSponsor input = selectionForCompositeField "sponsorshipsAsSponsor" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type TeamInputRowOptional r = ( slug :: Optional String
+type TeamInputRowRequired r = ( slug :: String
                               | r
                               )
 
-type TeamInputRowRequired r = ( slug :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                              | r
-                              )
-
-type TeamInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type TeamInput = { | RefsInputRowRequired + () }
 
 team :: forall r . TeamInput -> SelectionSet Scope__Team r -> SelectionSet Scope__Organization (Maybe r)
 team input = selectionForCompositeField "team" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -438,7 +414,7 @@ team input = selectionForCompositeField "team" (toGraphqlArguments input) graphq
 type TeamsInputRowOptional r = ( privacy :: Optional TeamPrivacy
                                , role :: Optional TeamRole
                                , query :: Optional String
-                               , userLogins :: Array (Maybe String)
+                               , userLogins :: Optional (Array String)
                                , orderBy :: Optional TeamOrder
                                , ldapMapped :: Optional Boolean
                                , rootTeamsOnly :: Optional Boolean
@@ -449,11 +425,7 @@ type TeamsInputRowOptional r = ( privacy :: Optional TeamPrivacy
                                | r
                                )
 
-type TeamsInputRowRequired r = ( userLogins :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                               | r
-                               )
-
-type TeamsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type TeamsInput = { | RefsInputRowOptional + () }
 
 teams :: forall r . TeamsInput -> SelectionSet Scope__TeamConnection r -> SelectionSet Scope__Organization r
 teams input = selectionForCompositeField "teams" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

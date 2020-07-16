@@ -185,7 +185,7 @@ publishedAt = selectionForField "publishedAt" [] graphqlDefaultResponseScalarDec
 pullRequest :: forall r . SelectionSet Scope__PullRequest r -> SelectionSet Scope__IssueComment (Maybe r)
 pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__IssueComment (Array r)
+reactionGroups :: forall r . SelectionSet Scope__ReactionGroup r -> SelectionSet Scope__IssueComment (Maybe (Array r))
 reactionGroups = selectionForCompositeField "reactionGroups" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReactionsInputRowOptional r = ( after :: Optional String

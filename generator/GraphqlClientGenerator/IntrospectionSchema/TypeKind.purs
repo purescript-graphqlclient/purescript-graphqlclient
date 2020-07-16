@@ -21,8 +21,7 @@ derive instance eqTypeKind :: Eq TypeKind
 
 derive instance genericTypeKind :: GenericRep.Generic TypeKind _
 
-instance showTypeKind :: Show TypeKind where
-  show = GenericRep.genericShow
+instance showTypeKind :: Show TypeKind where show = GenericRep.genericShow
 
 instance typeKindGraphqlDefaultResponseScalarDecoder :: GraphqlClient.Implementation.GraphqlDefaultResponseScalarDecoder TypeKind where
   graphqlDefaultResponseScalarDecoder = GraphqlClient.GraphqlEnum.genericDecodeGraphqlEnum

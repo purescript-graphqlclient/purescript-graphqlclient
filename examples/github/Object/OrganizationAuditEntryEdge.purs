@@ -137,5 +137,5 @@ import Examples.Github.Scalars
 cursor :: SelectionSet Scope__OrganizationAuditEntryEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 
-node :: forall r . SelectionSet Scope__OrganizationAuditEntry r -> SelectionSet Scope__OrganizationAuditEntryEdge (Maybe r)
-node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+node :: SelectionSet Scope__OrganizationAuditEntryEdge (Maybe r)
+node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder

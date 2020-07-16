@@ -137,5 +137,5 @@ import Examples.Github.Scalars
 cursor :: SelectionSet Scope__IssueTimelineItemsEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 
-node :: forall r . SelectionSet Scope__IssueTimelineItems r -> SelectionSet Scope__IssueTimelineItemsEdge (Maybe r)
-node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+node :: SelectionSet Scope__IssueTimelineItemsEdge (Maybe r)
+node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder

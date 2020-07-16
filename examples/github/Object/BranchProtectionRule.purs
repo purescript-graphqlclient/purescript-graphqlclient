@@ -195,7 +195,7 @@ repository = selectionForCompositeField "repository" [] graphqlDefaultResponseFu
 requiredApprovingReviewCount :: SelectionSet Scope__BranchProtectionRule (Maybe Int)
 requiredApprovingReviewCount = selectionForField "requiredApprovingReviewCount" [] graphqlDefaultResponseScalarDecoder
 
-requiredStatusCheckContexts :: SelectionSet Scope__BranchProtectionRule (Array (Maybe String))
+requiredStatusCheckContexts :: SelectionSet Scope__BranchProtectionRule (Maybe (Array (Maybe String)))
 requiredStatusCheckContexts = selectionForField "requiredStatusCheckContexts" [] graphqlDefaultResponseScalarDecoder
 
 requiresApprovingReviews :: SelectionSet Scope__BranchProtectionRule Boolean

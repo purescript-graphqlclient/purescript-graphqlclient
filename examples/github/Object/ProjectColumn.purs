@@ -138,7 +138,7 @@ type CardsInputRowOptional r = ( after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int
-                               , archivedStates :: Array (Maybe ProjectCardArchivedState)
+                               , archivedStates :: Optional (Array (Maybe ProjectCardArchivedState))
                                | r
                                )
 

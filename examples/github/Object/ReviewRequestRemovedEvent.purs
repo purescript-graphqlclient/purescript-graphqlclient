@@ -146,5 +146,5 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 pullRequest :: forall r . SelectionSet Scope__PullRequest r -> SelectionSet Scope__ReviewRequestRemovedEvent r
 pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-requestedReviewer :: forall r . SelectionSet Scope__RequestedReviewer r -> SelectionSet Scope__ReviewRequestRemovedEvent (Maybe r)
-requestedReviewer = selectionForCompositeField "requestedReviewer" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+requestedReviewer :: SelectionSet Scope__ReviewRequestRemovedEvent (Maybe r)
+requestedReviewer = selectionForField "requestedReviewer" [] graphqlDefaultResponseScalarDecoder

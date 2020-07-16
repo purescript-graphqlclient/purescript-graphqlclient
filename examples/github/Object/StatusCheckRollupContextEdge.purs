@@ -137,5 +137,5 @@ import Examples.Github.Scalars
 cursor :: SelectionSet Scope__StatusCheckRollupContextEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder
 
-node :: forall r . SelectionSet Scope__StatusCheckRollupContext r -> SelectionSet Scope__StatusCheckRollupContextEdge (Maybe r)
-node = selectionForCompositeField "node" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+node :: SelectionSet Scope__StatusCheckRollupContextEdge (Maybe r)
+node = selectionForField "node" [] graphqlDefaultResponseScalarDecoder

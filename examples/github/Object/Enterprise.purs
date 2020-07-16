@@ -164,7 +164,7 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 location :: SelectionSet Scope__Enterprise (Maybe String)
 location = selectionForField "location" [] graphqlDefaultResponseScalarDecoder
 
-type MembersInputRowOptional r = ( organizationLogins :: Array (Maybe String)
+type MembersInputRowOptional r = ( organizationLogins :: Optional (Array String)
                                  , query :: Optional String
                                  , orderBy :: Optional EnterpriseMemberOrder
                                  , role :: Optional EnterpriseUserAccountMembershipRole
@@ -176,11 +176,7 @@ type MembersInputRowOptional r = ( organizationLogins :: Array (Maybe String)
                                  | r
                                  )
 
-type MembersInputRowRequired r = ( organizationLogins :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                 | r
-                                 )
-
-type MembersInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type MembersInput = { | RefsInputRowOptional + () }
 
 members :: forall r . MembersInput -> SelectionSet Scope__EnterpriseMemberConnection r -> SelectionSet Scope__Enterprise r
 members input = selectionForCompositeField "members" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

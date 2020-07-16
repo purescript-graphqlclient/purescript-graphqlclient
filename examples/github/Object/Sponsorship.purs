@@ -149,8 +149,8 @@ privacyLevel = selectionForField "privacyLevel" [] graphqlDefaultResponseScalarD
 sponsor :: forall r . SelectionSet Scope__User r -> SelectionSet Scope__Sponsorship (Maybe r)
 sponsor = selectionForCompositeField "sponsor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-sponsorEntity :: forall r . SelectionSet Scope__Sponsor r -> SelectionSet Scope__Sponsorship (Maybe r)
-sponsorEntity = selectionForCompositeField "sponsorEntity" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+sponsorEntity :: SelectionSet Scope__Sponsorship (Maybe r)
+sponsorEntity = selectionForField "sponsorEntity" [] graphqlDefaultResponseScalarDecoder
 
 sponsorable :: forall r . SelectionSet Scope__Sponsorable r -> SelectionSet Scope__Sponsorship r
 sponsorable = selectionForCompositeField "sponsorable" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

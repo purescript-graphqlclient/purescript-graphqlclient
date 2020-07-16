@@ -152,11 +152,11 @@ referencedAt = selectionForField "referencedAt" [] graphqlDefaultResponseScalarD
 resourcePath :: SelectionSet Scope__CrossReferencedEvent Uri
 resourcePath = selectionForField "resourcePath" [] graphqlDefaultResponseScalarDecoder
 
-source :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__CrossReferencedEvent r
-source = selectionForCompositeField "source" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+source :: SelectionSet Scope__CrossReferencedEvent r
+source = selectionForField "source" [] graphqlDefaultResponseScalarDecoder
 
-target :: forall r . SelectionSet Scope__ReferencedSubject r -> SelectionSet Scope__CrossReferencedEvent r
-target = selectionForCompositeField "target" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+target :: SelectionSet Scope__CrossReferencedEvent r
+target = selectionForField "target" [] graphqlDefaultResponseScalarDecoder
 
 url :: SelectionSet Scope__CrossReferencedEvent Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder

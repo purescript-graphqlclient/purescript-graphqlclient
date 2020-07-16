@@ -149,8 +149,8 @@ isActive = selectionForField "isActive" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__IpAllowListEntry (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-owner :: forall r . SelectionSet Scope__IpAllowListOwner r -> SelectionSet Scope__IpAllowListEntry r
-owner = selectionForCompositeField "owner" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+owner :: SelectionSet Scope__IpAllowListEntry r
+owner = selectionForField "owner" [] graphqlDefaultResponseScalarDecoder
 
 updatedAt :: SelectionSet Scope__IpAllowListEntry DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder

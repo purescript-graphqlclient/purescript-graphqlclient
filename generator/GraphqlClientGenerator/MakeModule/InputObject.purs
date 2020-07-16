@@ -1,5 +1,6 @@
 module GraphqlClientGenerator.MakeModule.InputObject where
 
+import Protolude
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
@@ -8,7 +9,6 @@ import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Ful
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import Language.PS.CST (Comments(..), DataHead(..), Declaration(..), ImportDecl(..), Label(..), Module(..), ModuleName, ProperName(..), Row(..), Type(..))
 import Language.PS.CST.Sugar (mkModuleName)
-import Protolude (Maybe(..), fromMaybe, (#), ($), (<#>), (<>))
 
 makeModule
   :: ImportDecl
@@ -65,7 +65,13 @@ makeModule importScalar apiModuleName moduleName inputObjectTypes instorpectionQ
               , dataHdVars: []
               }
             , type_: TypeRecord $ Row
-              { rowLabels: (fromMaybe [] inputObjectType.inputFields) <#> \(field :: InstorpectionQueryResult__InputValue) -> { label: Label field.name, type_: DeclarationsForFields.mkFieldType "Optional" $ DeclarationsForFields.collectTypeRefInfo field."type" }
+              { rowLabels:
+                let
+                  mkRow field =
+                    { label: Label field.name
+                    , type_: DeclarationsForFields.mkFieldTypeWithoutHoleAndOptionalForTopLevel field."type"
+                    }
+                 in (fromMaybe [] inputObjectType.inputFields) <#> mkRow
               , rowTail: Nothing
               }
             }

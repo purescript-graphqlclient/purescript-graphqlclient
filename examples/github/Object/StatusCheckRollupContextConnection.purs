@@ -134,11 +134,11 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-edges :: forall r . SelectionSet Scope__StatusCheckRollupContextEdge r -> SelectionSet Scope__StatusCheckRollupContextConnection (Array (Maybe r))
+edges :: forall r . SelectionSet Scope__StatusCheckRollupContextEdge r -> SelectionSet Scope__StatusCheckRollupContextConnection (Maybe (Array (Maybe r)))
 edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-nodes :: forall r . SelectionSet Scope__StatusCheckRollupContext r -> SelectionSet Scope__StatusCheckRollupContextConnection (Array (Maybe r))
-nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+nodes :: SelectionSet Scope__StatusCheckRollupContextConnection (Maybe (Array (Maybe r)))
+nodes = selectionForField "nodes" [] graphqlDefaultResponseScalarDecoder
 
 pageInfo :: forall r . SelectionSet Scope__PageInfo r -> SelectionSet Scope__StatusCheckRollupContextConnection r
 pageInfo = selectionForCompositeField "pageInfo" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

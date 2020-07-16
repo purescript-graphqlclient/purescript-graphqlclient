@@ -1,7 +1,7 @@
 module GraphqlClientGenerator.MakeModule.Lib.Fragments where
 
 import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKind
+import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull
 import Language.PS.CST
 import Language.PS.CST.Sugar
 import Protolude
@@ -12,14 +12,23 @@ import Data.NonEmpty (NonEmpty(..))
 import Data.String.Extra (pascalCase)
 import Data.String.Extra as StringsExtra
 
-declarationForPossibleTypes :: (String -> String) -> String -> Array InstorpectionQueryResult__TypeRef -> Array Declaration
+nameOfTypeKindWithNull :: TypeKindWithNull -> String
+nameOfTypeKindWithNull =
+  case _ of
+       TypeKindWithNull__Null        type_ -> nameOfTypeKindWithNull type_
+       TypeKindWithNull__List        type_ -> nameOfTypeKindWithNull type_
+       TypeKindWithNull__Scalar      name -> name
+       TypeKindWithNull__Enum        name -> name
+       TypeKindWithNull__InputObject name -> name
+       TypeKindWithNull__Object      name -> name
+       TypeKindWithNull__Interface   name -> name
+       TypeKindWithNull__Union       name -> name
+
+declarationForPossibleTypes :: (String -> String) -> String -> Array TypeKindWithNull -> Array Declaration
 declarationForPossibleTypes nameToScope parentName typeRefs =
   let
       names :: Array String
-      names =
-        typeRefs
-        <#> _.name
-        # Array.catMaybes
+      names = typeRefs <#> nameOfTypeKindWithNull
   in
     [ DeclType
       { comments: Nothing

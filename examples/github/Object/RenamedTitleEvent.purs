@@ -149,5 +149,5 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 previousTitle :: SelectionSet Scope__RenamedTitleEvent String
 previousTitle = selectionForField "previousTitle" [] graphqlDefaultResponseScalarDecoder
 
-subject :: forall r . SelectionSet Scope__RenamedTitleSubject r -> SelectionSet Scope__RenamedTitleEvent r
-subject = selectionForCompositeField "subject" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+subject :: SelectionSet Scope__RenamedTitleEvent r
+subject = selectionForField "subject" [] graphqlDefaultResponseScalarDecoder

@@ -134,8 +134,8 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type AssociatedPullRequestsInputRowOptional r = ( states :: Array (Maybe PullRequestState)
-                                                , labels :: Array (Maybe String)
+type AssociatedPullRequestsInputRowOptional r = ( states :: Optional (Array PullRequestState)
+                                                , labels :: Optional (Array String)
                                                 , headRefName :: Optional String
                                                 , baseRefName :: Optional String
                                                 , orderBy :: Optional IssueOrder
@@ -146,12 +146,7 @@ type AssociatedPullRequestsInputRowOptional r = ( states :: Array (Maybe PullReq
                                                 | r
                                                 )
 
-type AssociatedPullRequestsInputRowRequired r = ( states :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                                , labels :: ERROR_NULL_OR_LIST_BUT_WITHOUT_TYPE_INSIDE
-                                                | r
-                                                )
-
-type AssociatedPullRequestsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type AssociatedPullRequestsInput = { | RefsInputRowOptional + () }
 
 associatedPullRequests :: forall r . AssociatedPullRequestsInput -> SelectionSet Scope__PullRequestConnection r -> SelectionSet Scope__Ref r
 associatedPullRequests input = selectionForCompositeField "associatedPullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

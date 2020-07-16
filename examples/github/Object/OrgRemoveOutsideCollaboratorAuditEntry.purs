@@ -137,8 +137,8 @@ import Examples.Github.Scalars
 action :: SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry (Maybe r)
+actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
 
 actorIp :: SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder
@@ -161,7 +161,7 @@ createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 id :: SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-membershipTypes :: SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry (Array OrgRemoveOutsideCollaboratorAuditEntryMembershipType)
+membershipTypes :: SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry (Maybe (Array OrgRemoveOutsideCollaboratorAuditEntryMembershipType))
 membershipTypes = selectionForField "membershipTypes" [] graphqlDefaultResponseScalarDecoder
 
 operationType :: SelectionSet Scope__OrgRemoveOutsideCollaboratorAuditEntry (Maybe OperationType)

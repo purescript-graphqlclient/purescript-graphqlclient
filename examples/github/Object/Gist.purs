@@ -159,7 +159,7 @@ type FilesInputRowOptional r = ( limit :: Optional Int
 
 type FilesInput = { | RefsInputRowOptional + () }
 
-files :: forall r . FilesInput -> SelectionSet Scope__GistFile r -> SelectionSet Scope__Gist (Array (Maybe r))
+files :: forall r . FilesInput -> SelectionSet Scope__GistFile r -> SelectionSet Scope__Gist (Maybe (Array (Maybe r)))
 files input = selectionForCompositeField "files" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ForksInputRowOptional r = ( after :: Optional String

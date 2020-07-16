@@ -137,8 +137,8 @@ import Examples.Github.Scalars
 action :: SelectionSet Scope__OrgRestoreMemberAuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder
 
-actor :: forall r . SelectionSet Scope__AuditEntryActor r -> SelectionSet Scope__OrgRestoreMemberAuditEntry (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: SelectionSet Scope__OrgRestoreMemberAuditEntry (Maybe r)
+actor = selectionForField "actor" [] graphqlDefaultResponseScalarDecoder
 
 actorIp :: SelectionSet Scope__OrgRestoreMemberAuditEntry (Maybe String)
 actorIp = selectionForField "actorIp" [] graphqlDefaultResponseScalarDecoder
@@ -182,8 +182,8 @@ restoredCustomEmailRoutingsCount = selectionForField "restoredCustomEmailRouting
 restoredIssueAssignmentsCount :: SelectionSet Scope__OrgRestoreMemberAuditEntry (Maybe Int)
 restoredIssueAssignmentsCount = selectionForField "restoredIssueAssignmentsCount" [] graphqlDefaultResponseScalarDecoder
 
-restoredMemberships :: forall r . SelectionSet Scope__OrgRestoreMemberAuditEntryMembership r -> SelectionSet Scope__OrgRestoreMemberAuditEntry (Array r)
-restoredMemberships = selectionForCompositeField "restoredMemberships" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+restoredMemberships :: SelectionSet Scope__OrgRestoreMemberAuditEntry (Maybe (Array r))
+restoredMemberships = selectionForField "restoredMemberships" [] graphqlDefaultResponseScalarDecoder
 
 restoredMembershipsCount :: SelectionSet Scope__OrgRestoreMemberAuditEntry (Maybe Int)
 restoredMembershipsCount = selectionForField "restoredMembershipsCount" [] graphqlDefaultResponseScalarDecoder
