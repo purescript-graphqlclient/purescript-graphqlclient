@@ -75,8 +75,8 @@ nameOfTheObjectLikeTypeKind = case _ of
   TypeKindWithNull__Interface   s     -> Just s
   TypeKindWithNull__Union       _     -> Nothing
 
-isOptionalTypeKindWithNull :: InstorpectionQueryResult__InputValue -> Boolean
-isOptionalTypeKindWithNull inputValue =
+isOptionalInputValue :: InstorpectionQueryResult__InputValue -> Boolean
+isOptionalInputValue inputValue =
   isJust inputValue.defaultValue
   || case inputValue."type" of
           TypeKindWithNull__Null _ -> true
@@ -126,10 +126,10 @@ declInput :: String -> Array InstorpectionQueryResult__InputValue -> Array Decla
 declInput parentName args =
   let
     rowOptional :: Maybe Row
-    rowOptional = filterAndNonEmpty isOptionalTypeKindWithNull args <#> toRow mkFieldTypeWithHoleAndOptionalForTopLevel
+    rowOptional = filterAndNonEmpty isOptionalInputValue args <#> toRow mkFieldTypeWithHoleAndOptionalForTopLevel
 
     rowRequired :: Maybe Row
-    rowRequired = filterAndNonEmpty (not <<< isOptionalTypeKindWithNull) args <#> toRow mkFieldTypeWithHoleAndMaybe
+    rowRequired = filterAndNonEmpty (not <<< isOptionalInputValue) args <#> toRow mkFieldTypeWithHoleAndMaybe
   in
     (toRowType (parentName <> "InputRowOptional") rowOptional) <>
     (toRowType (parentName <> "InputRowRequired") rowRequired) <>
