@@ -13,19 +13,11 @@ import GraphqlClient.Argument
 hashString :: String -> String
 hashString = String.replaceAll (String.Pattern "-") (String.Replacement "") <<< show <<< Hashable.hash
 
-filterAbsent :: Array Argument -> Array (String /\ ArgumentValue)
-filterAbsent = Array.mapMaybe go
-  where
-  go = case _ of
-    RequiredArgument n v -> Just (n /\ v)
-    OptionalArgument n (Present v) -> Just (n /\ v)
-    OptionalArgument _ Absent -> Nothing
-
 type Cache = Maybe { argsWritten :: String, hash :: String }
 
 argsHash :: Array Argument -> Cache
 argsHash args =
-  case filterAbsent args of
+  case args of
        [] -> Nothing
        args' ->
          let
@@ -38,14 +30,14 @@ argsHash args =
 
 -------------------------
 
-writeGraphqlArguments :: Array (String /\ ArgumentValue) -> String
+writeGraphqlArguments :: Array Argument -> String
 writeGraphqlArguments [] = ""
 writeGraphqlArguments args =
   let args' = String.joinWith ", " $ writeGraphqlArgumentsNameVal <$> args
    in if String.null args' then "" else "(" <> args' <> ")"
 
-writeGraphqlArgumentsNameVal :: String /\ ArgumentValue -> String
-writeGraphqlArgumentsNameVal (name /\ value) = name <> ": " <> writeGraphqlArgumentsArgumentValue value
+writeGraphqlArgumentsNameVal :: Argument -> String
+writeGraphqlArgumentsNameVal (Argument name value) = name <> ": " <> writeGraphqlArgumentsArgumentValue value
 
 writeGraphqlArgumentsArgumentValue :: ArgumentValue -> String
 writeGraphqlArgumentsArgumentValue = case _ of
@@ -60,5 +52,5 @@ writeGraphqlArgumentsArgumentValue = case _ of
 writeGraphqlArgumentsArray :: Array Argument -> String
 writeGraphqlArgumentsArray [] = ""
 writeGraphqlArgumentsArray args =
-  let args' = String.joinWith ", " $ writeGraphqlArgumentsNameVal <$> (filterAbsent args)
+  let args' = String.joinWith ", " $ writeGraphqlArgumentsNameVal <$> args
     in if String.null args' then "" else "{ " <> args' <> " }"

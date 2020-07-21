@@ -30,5 +30,5 @@ You can edit this file as you like.
   -- , "inflection"
   ]
 , packages = ./packages.dhall
-, sources = [ "generator/**/*.purs", "src/**/*.purs", "test/**/*.purs" ]
+, sources = [ "src/**/*.purs" ]
 }

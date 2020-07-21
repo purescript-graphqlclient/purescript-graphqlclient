@@ -1,5 +1,6 @@
 module GraphqlClient.Implementation where
 
+import GraphqlClient.Argument
 import Protolude
 
 import Data.Argonaut.Core (Json, fromString)
@@ -9,13 +10,11 @@ import Data.Array as Array
 import Data.List ((:))
 import Data.List as List
 import Data.Symbol (class IsSymbol, reflectSymbol)
+import GraphqlClient.WriteGraphqlHash (Cache, argsHash)
 import Prim.Row as Row
 import Prim.RowList as RowList
 import Record as Record
 import Type.Data.RowList (RLProxy(..))
-import Unsafe.Coerce (unsafeCoerce)
-import GraphqlClient.Argument
-import GraphqlClient.WriteGraphqlHash (Cache, argsHash)
 
 data Scope__RootQuery
 data Scope__RootMutation
@@ -215,3 +214,4 @@ enumDecoder = enumDecoder'
     implementation name fromToMap json = lmap (Named name) do
       string <- ArgonautDecoders.Decoder.decodeString json
       go fromToMap string # note (UnexpectedValue json)
+

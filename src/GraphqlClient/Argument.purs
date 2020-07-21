@@ -15,6 +15,10 @@ import Record as Record
 import Type.Data.RowList (RLProxy(..))
 import Unsafe.Coerce (unsafeCoerce)
 
+import Prim.Row (class Union)
+import Type.Row (type (+))
+import Unsafe.Coerce (unsafeCoerce)
+
 data ArgumentValue
   = ArgumentValueString String
   | ArgumentValueInt Int
@@ -23,9 +27,7 @@ data ArgumentValue
   | ArgumentValueArray (Array ArgumentValue)
   | ArgumentValueObject (Array Argument)
 
-data Argument
-  = RequiredArgument String ArgumentValue
-  | OptionalArgument String (Optional ArgumentValue)
+data Argument = Argument String ArgumentValue
 
 class ToGraphqlArgumentValue a where
   toGraphqlArgumentValue :: a -> ArgumentValue
@@ -40,7 +42,7 @@ instance toGraphqlArgumentValueBoolean :: ToGraphqlArgumentValue Boolean where
   toGraphqlArgumentValue = ArgumentValueBoolean
 
 instance toGraphqlArgumentValueRecord :: (RowList.RowToList row list, ToGraphqlArgumentImplementationRecord list row) => ToGraphqlArgumentValue (Record row) where
-  toGraphqlArgumentValue record = ArgumentValueObject (toGraphqlArguments record)
+  toGraphqlArgumentValue record = ArgumentValueObject (toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy list) record)
 
 instance toGraphqlArgumentValueMaybe :: ToGraphqlArgumentValue a => ToGraphqlArgumentValue (Maybe a) where
   toGraphqlArgumentValue maybeA = ArgumentValueMaybe (map toGraphqlArgumentValue maybeA)
@@ -74,34 +76,10 @@ instance toGraphqlArgumentRecordConsChildRow ::
   toGraphqlArgumentImplementationRecord _proxy record =
     let
       (currentValue :: Record childRow) = Record.get (SProxy :: SProxy field) record
-      (currentValue' :: Array Argument) = toGraphqlArguments currentValue
-      (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) (ArgumentValueObject currentValue')
+      (currentValue' :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy childList) currentValue
+      (current :: Argument) = Argument (reflectSymbol (SProxy :: SProxy field)) (ArgumentValueObject currentValue')
       (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
-
-else
-
--- for optional values (optional nested records too)
-instance toGraphqlArgumentRecordConsOptional ::
-  ( ToGraphqlArgumentValue value
-  , ToGraphqlArgumentImplementationRecord tail row
-  , IsSymbol field
-  , Row.Cons field (Optional value) rowTail row
-  ) =>
-  ToGraphqlArgumentImplementationRecord (RowList.Cons field (Optional value) tail) row where
-  toGraphqlArgumentImplementationRecord _proxy record =
-    let
-      (currentValue :: Optional value) = Record.get (SProxy :: SProxy field) record
-      (currentValue' :: Optional ArgumentValue) = map toGraphqlArgumentValue currentValue
-      (current :: Argument) = OptionalArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
-      (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
-    in Array.cons current rest
-
-else
-
--- for everything else (Nil)
-instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord RowList.Nil row where
-  toGraphqlArgumentImplementationRecord _proxy _record = []
 
 else
 
@@ -117,18 +95,15 @@ instance toGraphqlArgumentRecordCons ::
     let
       (currentValue :: value) = Record.get (SProxy :: SProxy field) record
       (currentValue' :: ArgumentValue) = toGraphqlArgumentValue currentValue
-      (current :: Argument) = RequiredArgument (reflectSymbol (SProxy :: SProxy field)) currentValue'
+      (current :: Argument) = Argument (reflectSymbol (SProxy :: SProxy field)) currentValue'
       (rest :: Array Argument) = toGraphqlArgumentImplementationRecord (RLProxy :: RLProxy tail) record
     in Array.cons current rest
 
---------------------
+else
 
-data Optional x = Absent | Present x -- it's like Maybe, but with DefaultInput class, and only for input of graphql
-
-derive instance optionalFunctor :: Functor Optional
-
-instance optionalDefaultInput :: DefaultInput (Optional a) where
-  defaultInput = Absent
+-- for everything else (Nil)
+instance toGraphqlArgumentRecordNil :: ToGraphqlArgumentImplementationRecord RowList.Nil row where
+  toGraphqlArgumentImplementationRecord _proxy _record = []
 
 --------------------
 
@@ -156,3 +131,19 @@ instance defaultInputImplementationRecordCons ::
   defaultInputImplementationRecord _proxy =
     let rest = defaultInputImplementationRecord (RLProxy :: RLProxy tail)
     in Record.insert (SProxy :: SProxy field) defaultInput rest
+
+type FooRequiredRow (r :: # Type) = ( test1 :: String | r )
+type FooOptionalRow (r :: # Type) = ( test2 :: String, test3 :: { test3nested :: Int } | r )
+
+mkFoo
+  :: forall given optionalGiven optionalMissing list
+   . Union optionalGiven optionalMissing (FooOptionalRow ())
+  => Union (FooRequiredRow ()) optionalGiven given
+  => RowList.RowToList given list
+  => ToGraphqlArgumentImplementationRecord list given
+  => Record given
+  -> Array Argument
+mkFoo = toGraphqlArguments
+
+foo :: Array Argument
+foo = mkFoo { test1: "" }
