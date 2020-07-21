@@ -45,7 +45,7 @@ query =
   { repoInfo: _
   , topicId: _
   }
-  <$> (Examples.Github.Query.repository { owner: "dillonkearns", name: "mobster" } repo # nonNullOrFail)
+  <$> (Examples.Github.Query.repository { owner: "srghma", name: "purescript-dom-indexed" } repo # nonNullOrFail)
   <*> Examples.Github.Query.topic { name: "" } Examples.Github.Object.Topic.id
 
 repo :: SelectionSet Scope__Repository RepositoryInfo
@@ -69,7 +69,7 @@ release = { name: _ , url: _ }
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
-  repository788135211: repository(name: "mobster", owner: "dillonkearns") {
+  repository789914293: repository(name: "purescript-dom-indexed", owner: "srghma") {
     createdAt
     releases861569893: releases(first: 2) {
       totalCount
@@ -100,22 +100,22 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example10Github" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" [] query
+  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://api.github.com/graphql" [RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"] query
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
   response' `Test.Spec.shouldEqual`
     { repoInfo:
-      { createdAt: Examples.Github.Scalars.DateTime "asdf"
+      { createdAt: Examples.Github.Scalars.DateTime "2020-06-12T19:04:51Z"
       , earlyReleases:
-        { totalCount: 0
-        , releases: []
+        { releases: []
+        , totalCount: 0
         }
       , lateReleases:
-        { totalCount: 0
-        , releases: []
+        { releases: []
+        , totalCount: 0
         }
       , stargazersCount: 0
       }
-    , topicId: Nothing
+      , topicId: Nothing
     }

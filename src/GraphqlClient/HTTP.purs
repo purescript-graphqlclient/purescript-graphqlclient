@@ -8,7 +8,7 @@ import Affjax.RequestHeader as Affjax
 import Affjax.ResponseFormat as Affjax.ResponseFormat
 import Control.Monad.Except.Trans (runExceptT, throwError) as Transformers
 import Control.Monad.Trans.Class (lift) as Transformers
-import Data.Argonaut.Core (jsonNull)
+import Data.Argonaut.Core (jsonNull, stringifyWithSpace)
 import Data.Argonaut.Core as ArgonautCore
 import Data.Argonaut.Decode (class DecodeJson, JsonDecodeError(..), printJsonDecodeError)
 import Data.Argonaut.Decode.Decoders (decodeJObject, decodeNonEmptyArray, decodeString) as Data.Argonaut.Decode.Decoders
@@ -155,7 +155,7 @@ gqlRequestImpl url headers query decoder = Transformers.runExceptT do
   jsonBody <- case result of
     Left error -> Transformers.throwError $ GraphqlAffjaxError error
     Right response -> pure response.body
-  -- traceWithoutInspectM $ "[gqlRequest] jsonBody " <> ArgonautCore.stringifyWithIdentation 2 jsonBody -- TODO: move outside
+  -- | traceWithoutInspectM $ "[gqlRequest] jsonBody " <> ArgonautCore.stringifyWithSpace 2 jsonBody -- TODO: move outside
   except $ tryDecodeGraphqlResponse decoder jsonBody
 
 gqlRequestImplWithTrace
