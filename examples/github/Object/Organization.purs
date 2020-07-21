@@ -135,7 +135,7 @@ import Examples.Github.Enum.UserStatusOrderField
 import Examples.Github.Scopes
 import Examples.Github.Scalars
 
-type AnyPinnableItemsInputRowOptional r = ( type_ :: Optional PinnableItemType
+type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r
                                           )
 

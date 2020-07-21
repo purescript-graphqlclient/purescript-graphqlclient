@@ -7,20 +7,21 @@ import Protolude
 
 import Affjax.RequestHeader (RequestHeader(..))
 import Data.Generic.Rep.Show (genericShow)
-import Examples.Github.Object.Repository as Examples.Github.Object.Repository
-import Examples.Github.Object.Release as Examples.Github.Object.Release
-import Examples.Github.Object.StargazerConnection as Examples.Github.Object.StargazerConnection
-import Examples.Github.Object.Topic as Examples.Github.Object.Topic
-import Examples.Github.Object.ReleaseConnection as Examples.Github.Object.ReleaseConnection
-import Examples.Github.Query as Examples.Github.Query
-import Examples.Github.Scalars as Examples.Github.Scalars
 import Examples.Github.Enum.SearchType as Examples.Github.Enum.SearchType
-import Examples.Github.Union.SearchResultItem as Examples.Github.Union.SearchResultItem
+import Examples.Github.Object.PageInfo as Examples.Github.Object.PageInfo
+import Examples.Github.Object.Release as Examples.Github.Object.Release
+import Examples.Github.Object.ReleaseConnection as Examples.Github.Object.ReleaseConnection
+import Examples.Github.Object.Repository as Examples.Github.Object.Repository
 import Examples.Github.Object.SearchResultItemConnection as Examples.Github.Object.SearchResultItemConnection
 import Examples.Github.Object.SearchResultItemEdge as Examples.Github.Object.SearchResultItemEdge
-import Examples.Github.Object.PageInfo as Examples.Github.Object.PageInfo
+import Examples.Github.Object.StargazerConnection as Examples.Github.Object.StargazerConnection
+import Examples.Github.Object.Topic as Examples.Github.Object.Topic
+import Examples.Github.Query as Examples.Github.Query
+import Examples.Github.Scalars as Examples.Github.Scalars
+import Examples.Github.Union.SearchResultItem as Examples.Github.Union.SearchResultItem
 import GraphqlClient as GraphqlClient
-import Test.Spec (Spec, it) as Test.Spec
+import Record as Record
+import Test.Spec as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
 type Response = Paginator (Array Repo) String
@@ -46,9 +47,9 @@ type Repo =
 query :: Maybe String -> SelectionSet Scope__RootQuery Response
 query cursor =
   Examples.Github.Query.search
-    ( (defaultInput :: { | Examples.Github.Query.SearchInputRowOptional () })
-      { query = "language:purescript"
-      , type_ = Examples.Github.Enum.SearchType.Repository
+    ( Record.union (defaultInput :: { | Examples.Github.Query.SearchInputRowOptional () })
+      { query: "language:purescript"
+      , "type": Examples.Github.Enum.SearchType.Repository
       }
     )
     searchSelection
@@ -87,7 +88,6 @@ searchResultSelection =
       (Examples.Github.Union.SearchResultItem.maybeFragments
       { onRepository = repositorySelection <#> Just }
       )
-
 repositorySelection :: SelectionSet Scope__Repository Repo
 repositorySelection = ado
   name        <- Examples.Github.Object.Repository.nameWithOwner
@@ -100,30 +100,41 @@ repositorySelection = ado
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
+  search1551030854: search(query: "language:purescript", type: REPOSITORY) {
+    edges {
+      node {
+        __typename
+        ...on Repository {
+          nameWithOwner
+          description
+          createdAt
+          updatedAt
+          stargazers {
+            totalCount
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
 }
 """
 
-
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example11GithubPagination" do
-  writeGraphql query `Test.Spec.shouldEqual` expectedQuery
+  writeGraphql (query Nothing) `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://api.github.com/graphql" [RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"] query
+  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://api.github.com/graphql" [RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"] (query Nothing)
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
   response' `Test.Spec.shouldEqual`
-    { repoInfo:
-      { createdAt: Examples.Github.Scalars.DateTime "2020-06-12T19:04:51Z"
-      , earlyReleases:
-        { releases: []
-        , totalCount: 0
-        }
-      , lateReleases:
-        { releases: []
-        , totalCount: 0
-        }
-      , stargazersCount: 0
+    { data: []
+    , paginationData:
+      { cursor: Nothing
+      , hasNextPage: true
       }
-      , topicId: Nothing
     }

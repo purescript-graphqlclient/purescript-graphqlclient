@@ -770,7 +770,7 @@ type SavedReplyOrder = { field :: SavedReplyOrderField
                        }
 
 -- | original name - SecurityAdvisoryIdentifierFilter
-type SecurityAdvisoryIdentifierFilter = { type_ :: SecurityAdvisoryIdentifierType
+type SecurityAdvisoryIdentifierFilter = { "type" :: SecurityAdvisoryIdentifierType
                                         , value :: String
                                         }
 

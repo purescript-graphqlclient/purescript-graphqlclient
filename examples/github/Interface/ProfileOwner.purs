@@ -135,7 +135,7 @@ import Examples.Github.Enum.TopicSuggestionDeclineReason
 import Examples.Github.Enum.UserBlockDuration
 import Examples.Github.Enum.UserStatusOrderField
 
-type AnyPinnableItemsInputRowOptional r = ( type_ :: Optional PinnableItemType
+type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r
                                           )
 

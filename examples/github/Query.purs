@@ -324,7 +324,7 @@ type SearchInputRowOptional r = ( after :: Optional String
                                 )
 
 type SearchInputRowRequired r = ( query :: String
-                                , type_ :: SearchType
+                                , "type" :: SearchType
                                 | r
                                 )
 
