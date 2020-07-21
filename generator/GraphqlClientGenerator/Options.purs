@@ -81,33 +81,33 @@ appOptionsInput :: Parser AppOptionsInput
 appOptionsInput = appOptionsInputSchemaOrJsonUrl <|> appOptionsInputSchemaPath <|> appOptionsInputJsonPath
 
 appOptions :: Parser AppOptions
-appOptions = map AppOptions $ { input: _, output: _, api: _, headers: _, customScalarsModule: _ }
-  <$> appOptionsInput
-  <*> strOption
+appOptions = ado
+  input <- appOptionsInput
+  output <- strOption
     (  long "output"
     <> metavar "FILEPATH"
     <> help "Directory to output or override"
     )
-  <*> option api
+  api <- option api
     (  long "api"
     <> help "Module name to prepend"
     <> showDefault
     <> value (NonEmpty.singleton "Api")
     )
-    <*> (
-      many ( option requestHeader
-             (  long "header"
-             <> help """Header val in form of "key: val" """
-             )
-           ) <#> Array.fromFoldable
-    )
-  <*> Maybe.optional
+  headers <- many ( option requestHeader
+       (  long "header"
+       <> help "Header val in form of \"key: val\""
+       )
+     ) <#> Array.fromFoldable
+  customScalarsModule <- Maybe.optional
     ( option moduleName
       (  long "custom-scalars-module"
       <> help "Custom scalars module to generate. If no is specified - generator will generate default scalar module"
       <> showDefault
       )
     )
+ in AppOptions { input, output, api, headers, customScalarsModule }
+
 
 opts :: ParserInfo AppOptions
 opts = info (appOptions <**> helper)
