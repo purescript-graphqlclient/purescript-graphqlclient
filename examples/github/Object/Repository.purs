@@ -542,7 +542,7 @@ type RefsInputRowRequired r = ( refPrefix :: String
                               | r
                               )
 
-type RefsInput = { | RefsInputRowRequired + RefsInputRowRequired + () }
+type RefsInput = { | RefsInputRowOptional + RefsInputRowRequired + () }
 
 refs :: forall r . RefsInput -> SelectionSet Scope__RefConnection r -> SelectionSet Scope__Repository (Maybe r)
 refs input = selectionForCompositeField "refs" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

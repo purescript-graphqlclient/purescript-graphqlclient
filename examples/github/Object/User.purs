@@ -582,7 +582,7 @@ type TopRepositoriesInputRowRequired r = ( orderBy :: RepositoryOrder
                                          | r
                                          )
 
-type TopRepositoriesInput = { | TopRepositoriesInputRowRequired + TopRepositoriesInputRowRequired + () }
+type TopRepositoriesInput = { | TopRepositoriesInputRowOptional + TopRepositoriesInputRowRequired + () }
 
 topRepositories :: forall r . TopRepositoriesInput -> SelectionSet Scope__RepositoryConnection r -> SelectionSet Scope__User r
 topRepositories input = selectionForCompositeField "topRepositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer

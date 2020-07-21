@@ -155,7 +155,7 @@ type EnterpriseInputRowRequired r = ( slug :: String
                                     | r
                                     )
 
-type EnterpriseInput = { | EnterpriseInputRowRequired + EnterpriseInputRowRequired + () }
+type EnterpriseInput = { | EnterpriseInputRowOptional + EnterpriseInputRowRequired + () }
 
 enterprise :: forall r . EnterpriseInput -> SelectionSet Scope__Enterprise r -> SelectionSet Scope__RootQuery (Maybe r)
 enterprise input = selectionForCompositeField "enterprise" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -211,7 +211,7 @@ type MarketplaceCategoryInputRowRequired r = ( slug :: String
                                              | r
                                              )
 
-type MarketplaceCategoryInput = { | MarketplaceCategoryInputRowRequired + MarketplaceCategoryInputRowRequired + () }
+type MarketplaceCategoryInput = { | MarketplaceCategoryInputRowOptional + MarketplaceCategoryInputRowRequired + () }
 
 marketplaceCategory :: forall r . MarketplaceCategoryInput -> SelectionSet Scope__MarketplaceCategory r -> SelectionSet Scope__RootQuery (Maybe r)
 marketplaceCategory input = selectionForCompositeField "marketplaceCategory" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -328,7 +328,7 @@ type SearchInputRowRequired r = ( query :: String
                                 | r
                                 )
 
-type SearchInput = { | SearchInputRowRequired + SearchInputRowRequired + () }
+type SearchInput = { | SearchInputRowOptional + SearchInputRowRequired + () }
 
 search :: forall r . SearchInput -> SelectionSet Scope__SearchResultItemConnection r -> SelectionSet Scope__RootQuery r
 search input = selectionForCompositeField "search" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
