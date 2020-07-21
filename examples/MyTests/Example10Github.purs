@@ -97,17 +97,25 @@ query {
 
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Example06Typename" do
+spec = Test.Spec.it "Example10Github" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
-  -- | (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" [] query
+  (response :: Either (GraphqlError Response) Response) <- gqlRequest "https://elm-graphql.herokuapp.com" [] query
 
-  -- | (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
-  -- | response' `Test.Spec.shouldEqual`
-  -- |   { repoInfo: Human
-  -- |   , topicId:
-  -- |     { name: "Luke Skywalker"
-  -- |     , details: Human
-  -- |     }
-  -- |   }
+  response' `Test.Spec.shouldEqual`
+    { repoInfo:
+      { createdAt: Examples.Github.Scalars.DateTime "asdf"
+      , earlyReleases:
+        { totalCount: 0
+        , releases: []
+        }
+      , lateReleases:
+        { totalCount: 0
+        , releases: []
+        }
+      , stargazersCount: 0
+      }
+    , topicId: Nothing
+    }

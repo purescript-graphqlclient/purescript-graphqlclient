@@ -22,4 +22,4 @@ allTests = Test.Spec.parallel do
   Examples.MyTests.Example05InterfacesAndUnions.spec
   Examples.MyTests.Example06Typename.spec
   Examples.MyTests.Example08Foldr.spec
-  Examples.MyTests.Example10Github.spec
+  -- | Examples.MyTests.Example10Github.spec

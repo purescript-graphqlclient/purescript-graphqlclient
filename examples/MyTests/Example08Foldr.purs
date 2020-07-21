@@ -16,11 +16,12 @@ import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
 type Response = Int
 
+-- repos that improbably have any stars, so that we dont update tests very often
 repos :: _
 repos =
-  [ { owner: "dillonkearns", name: "mobster" }
-  , { owner: "dillonkearns", name: "elm-graphql" }
-  , { owner: "dillonkearns", name: "elm-typescript-interop" }
+  [ { owner: "srghma", name: "purescript-dom-indexed" }
+  , { owner: "srghma", name: "purescript-halogen-vdom-string-renderer" }
+  , { owner: "srghma", name: "purescript-halogen-storybook" }
   ]
 
 query :: SelectionSet Scope__RootQuery Response
@@ -32,17 +33,17 @@ stargazerCount = Examples.Github.Object.Repository.stargazers defaultInput Examp
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
-  repository788135211: repository(name: "mobster", owner: "dillonkearns") {
+  repository789914293: repository(name: "purescript-dom-indexed", owner: "srghma") {
     stargazers {
       totalCount
     }
   }
-  repository1200065311: repository(name: "elm-graphql", owner: "dillonkearns") {
+  repository2058496834: repository(name: "purescript-halogen-vdom-string-renderer", owner: "srghma") {
     stargazers {
       totalCount
     }
   }
-  repository595118603: repository(name: "elm-typescript-interop", owner: "dillonkearns") {
+  repository1504278890: repository(name: "purescript-halogen-storybook", owner: "srghma") {
     stargazers {
       totalCount
     }
@@ -58,4 +59,4 @@ spec = Test.Spec.it "Example08Foldr" do
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
-  response' `Test.Spec.shouldEqual` 984
+  response' `Test.Spec.shouldEqual` 0
