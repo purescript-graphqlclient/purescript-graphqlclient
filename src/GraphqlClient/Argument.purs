@@ -2,18 +2,12 @@ module GraphqlClient.Argument where
 
 import Protolude
 
-import Data.Argonaut.Core (Json, fromString)
-import Data.Argonaut.Decode (JsonDecodeError(..))
-import Data.Argonaut.Decode.Decoders as ArgonautDecoders.Decoder
 import Data.Array as Array
-import Data.List ((:))
-import Data.List as List
 import Data.Symbol (class IsSymbol, reflectSymbol)
 import Prim.Row as Row
 import Prim.RowList as RowList
 import Record as Record
 import Type.Data.RowList (RLProxy(..))
-import Unsafe.Coerce (unsafeCoerce)
 
 data ArgumentValue
   = ArgumentValueString String
