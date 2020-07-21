@@ -19,6 +19,6 @@ instance subscriptionStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultR
 instance subscriptionStateToGraphqlArgumentValue :: ToGraphqlArgumentValue SubscriptionState where
   toGraphqlArgumentValue =
     case _ of
-      Unsubscribed -> ArgumentValueString "UNSUBSCRIBED"
-      Subscribed -> ArgumentValueString "SUBSCRIBED"
-      Ignored -> ArgumentValueString "IGNORED"
+      Unsubscribed -> ArgumentValueEnum "UNSUBSCRIBED"
+      Subscribed -> ArgumentValueEnum "SUBSCRIBED"
+      Ignored -> ArgumentValueEnum "IGNORED"

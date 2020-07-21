@@ -18,5 +18,5 @@ instance teamMemberOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefau
 instance teamMemberOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamMemberOrderField where
   toGraphqlArgumentValue =
     case _ of
-      Login -> ArgumentValueString "LOGIN"
-      CreatedAt -> ArgumentValueString "CREATED_AT"
+      Login -> ArgumentValueEnum "LOGIN"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"

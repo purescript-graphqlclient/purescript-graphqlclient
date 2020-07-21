@@ -19,6 +19,6 @@ instance projectCardStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRe
 instance projectCardStateToGraphqlArgumentValue :: ToGraphqlArgumentValue ProjectCardState where
   toGraphqlArgumentValue =
     case _ of
-      ContentOnly -> ArgumentValueString "CONTENT_ONLY"
-      NoteOnly -> ArgumentValueString "NOTE_ONLY"
-      Redacted -> ArgumentValueString "REDACTED"
+      ContentOnly -> ArgumentValueEnum "CONTENT_ONLY"
+      NoteOnly -> ArgumentValueEnum "NOTE_ONLY"
+      Redacted -> ArgumentValueEnum "REDACTED"

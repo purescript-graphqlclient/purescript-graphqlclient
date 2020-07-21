@@ -21,8 +21,8 @@ instance enterpriseDefaultRepositoryPermissionSettingValueGraphqlDefaultResponse
 instance enterpriseDefaultRepositoryPermissionSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseDefaultRepositoryPermissionSettingValue where
   toGraphqlArgumentValue =
     case _ of
-      NoPolicy -> ArgumentValueString "NO_POLICY"
-      Admin -> ArgumentValueString "ADMIN"
-      Write -> ArgumentValueString "WRITE"
-      Read -> ArgumentValueString "READ"
-      None -> ArgumentValueString "NONE"
+      NoPolicy -> ArgumentValueEnum "NO_POLICY"
+      Admin -> ArgumentValueEnum "ADMIN"
+      Write -> ArgumentValueEnum "WRITE"
+      Read -> ArgumentValueEnum "READ"
+      None -> ArgumentValueEnum "NONE"

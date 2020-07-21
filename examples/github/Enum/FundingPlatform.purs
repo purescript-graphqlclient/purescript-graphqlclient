@@ -26,13 +26,13 @@ instance fundingPlatformGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRes
 instance fundingPlatformToGraphqlArgumentValue :: ToGraphqlArgumentValue FundingPlatform where
   toGraphqlArgumentValue =
     case _ of
-      Github -> ArgumentValueString "GITHUB"
-      Patreon -> ArgumentValueString "PATREON"
-      OpenCollective -> ArgumentValueString "OPEN_COLLECTIVE"
-      KoFi -> ArgumentValueString "KO_FI"
-      Tidelift -> ArgumentValueString "TIDELIFT"
-      CommunityBridge -> ArgumentValueString "COMMUNITY_BRIDGE"
-      Liberapay -> ArgumentValueString "LIBERAPAY"
-      Issuehunt -> ArgumentValueString "ISSUEHUNT"
-      Otechie -> ArgumentValueString "OTECHIE"
-      Custom -> ArgumentValueString "CUSTOM"
+      Github -> ArgumentValueEnum "GITHUB"
+      Patreon -> ArgumentValueEnum "PATREON"
+      OpenCollective -> ArgumentValueEnum "OPEN_COLLECTIVE"
+      KoFi -> ArgumentValueEnum "KO_FI"
+      Tidelift -> ArgumentValueEnum "TIDELIFT"
+      CommunityBridge -> ArgumentValueEnum "COMMUNITY_BRIDGE"
+      Liberapay -> ArgumentValueEnum "LIBERAPAY"
+      Issuehunt -> ArgumentValueEnum "ISSUEHUNT"
+      Otechie -> ArgumentValueEnum "OTECHIE"
+      Custom -> ArgumentValueEnum "CUSTOM"

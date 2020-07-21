@@ -21,8 +21,8 @@ instance orgRemoveMemberAuditEntryMembershipTypeGraphqlDefaultResponseScalarDeco
 instance orgRemoveMemberAuditEntryMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgRemoveMemberAuditEntryMembershipType where
   toGraphqlArgumentValue =
     case _ of
-      DirectMember -> ArgumentValueString "DIRECT_MEMBER"
-      Admin -> ArgumentValueString "ADMIN"
-      BillingManager -> ArgumentValueString "BILLING_MANAGER"
-      Unaffiliated -> ArgumentValueString "UNAFFILIATED"
-      OutsideCollaborator -> ArgumentValueString "OUTSIDE_COLLABORATOR"
+      DirectMember -> ArgumentValueEnum "DIRECT_MEMBER"
+      Admin -> ArgumentValueEnum "ADMIN"
+      BillingManager -> ArgumentValueEnum "BILLING_MANAGER"
+      Unaffiliated -> ArgumentValueEnum "UNAFFILIATED"
+      OutsideCollaborator -> ArgumentValueEnum "OUTSIDE_COLLABORATOR"

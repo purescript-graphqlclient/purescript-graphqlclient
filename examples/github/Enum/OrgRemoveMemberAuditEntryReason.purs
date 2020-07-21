@@ -21,8 +21,8 @@ instance orgRemoveMemberAuditEntryReasonGraphqlDefaultResponseScalarDecoder :: G
 instance orgRemoveMemberAuditEntryReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgRemoveMemberAuditEntryReason where
   toGraphqlArgumentValue =
     case _ of
-      TwoFactorRequirementNonCompliance -> ArgumentValueString "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
-      SamlExternalIdentityMissing -> ArgumentValueString "SAML_EXTERNAL_IDENTITY_MISSING"
-      SamlSsoEnforcementRequiresExternalIdentity -> ArgumentValueString "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY"
-      UserAccountDeleted -> ArgumentValueString "USER_ACCOUNT_DELETED"
-      TwoFactorAccountRecovery -> ArgumentValueString "TWO_FACTOR_ACCOUNT_RECOVERY"
+      TwoFactorRequirementNonCompliance -> ArgumentValueEnum "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
+      SamlExternalIdentityMissing -> ArgumentValueEnum "SAML_EXTERNAL_IDENTITY_MISSING"
+      SamlSsoEnforcementRequiresExternalIdentity -> ArgumentValueEnum "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY"
+      UserAccountDeleted -> ArgumentValueEnum "USER_ACCOUNT_DELETED"
+      TwoFactorAccountRecovery -> ArgumentValueEnum "TWO_FACTOR_ACCOUNT_RECOVERY"

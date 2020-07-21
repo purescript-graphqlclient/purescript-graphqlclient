@@ -18,5 +18,5 @@ instance securityAdvisoryIdentifierTypeGraphqlDefaultResponseScalarDecoder :: Gr
 instance securityAdvisoryIdentifierTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue SecurityAdvisoryIdentifierType where
   toGraphqlArgumentValue =
     case _ of
-      Cve -> ArgumentValueString "CVE"
-      Ghsa -> ArgumentValueString "GHSA"
+      Cve -> ArgumentValueEnum "CVE"
+      Ghsa -> ArgumentValueEnum "GHSA"

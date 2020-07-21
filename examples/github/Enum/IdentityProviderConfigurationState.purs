@@ -19,6 +19,6 @@ instance identityProviderConfigurationStateGraphqlDefaultResponseScalarDecoder :
 instance identityProviderConfigurationStateToGraphqlArgumentValue :: ToGraphqlArgumentValue IdentityProviderConfigurationState where
   toGraphqlArgumentValue =
     case _ of
-      Enforced -> ArgumentValueString "ENFORCED"
-      Configured -> ArgumentValueString "CONFIGURED"
-      Unconfigured -> ArgumentValueString "UNCONFIGURED"
+      Enforced -> ArgumentValueEnum "ENFORCED"
+      Configured -> ArgumentValueEnum "CONFIGURED"
+      Unconfigured -> ArgumentValueEnum "UNCONFIGURED"

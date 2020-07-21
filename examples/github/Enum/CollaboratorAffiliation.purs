@@ -19,6 +19,6 @@ instance collaboratorAffiliationGraphqlDefaultResponseScalarDecoder :: GraphqlDe
 instance collaboratorAffiliationToGraphqlArgumentValue :: ToGraphqlArgumentValue CollaboratorAffiliation where
   toGraphqlArgumentValue =
     case _ of
-      Outside -> ArgumentValueString "OUTSIDE"
-      Direct -> ArgumentValueString "DIRECT"
-      All -> ArgumentValueString "ALL"
+      Outside -> ArgumentValueEnum "OUTSIDE"
+      Direct -> ArgumentValueEnum "DIRECT"
+      All -> ArgumentValueEnum "ALL"

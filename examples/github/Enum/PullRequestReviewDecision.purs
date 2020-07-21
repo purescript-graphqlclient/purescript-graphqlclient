@@ -19,6 +19,6 @@ instance pullRequestReviewDecisionGraphqlDefaultResponseScalarDecoder :: Graphql
 instance pullRequestReviewDecisionToGraphqlArgumentValue :: ToGraphqlArgumentValue PullRequestReviewDecision where
   toGraphqlArgumentValue =
     case _ of
-      ChangesRequested -> ArgumentValueString "CHANGES_REQUESTED"
-      Approved -> ArgumentValueString "APPROVED"
-      ReviewRequired -> ArgumentValueString "REVIEW_REQUIRED"
+      ChangesRequested -> ArgumentValueEnum "CHANGES_REQUESTED"
+      Approved -> ArgumentValueEnum "APPROVED"
+      ReviewRequired -> ArgumentValueEnum "REVIEW_REQUIRED"

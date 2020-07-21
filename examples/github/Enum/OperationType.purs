@@ -23,10 +23,10 @@ instance operationTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRespo
 instance operationTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue OperationType where
   toGraphqlArgumentValue =
     case _ of
-      Access -> ArgumentValueString "ACCESS"
-      Authentication -> ArgumentValueString "AUTHENTICATION"
-      Create -> ArgumentValueString "CREATE"
-      Modify -> ArgumentValueString "MODIFY"
-      Remove -> ArgumentValueString "REMOVE"
-      Restore -> ArgumentValueString "RESTORE"
-      Transfer -> ArgumentValueString "TRANSFER"
+      Access -> ArgumentValueEnum "ACCESS"
+      Authentication -> ArgumentValueEnum "AUTHENTICATION"
+      Create -> ArgumentValueEnum "CREATE"
+      Modify -> ArgumentValueEnum "MODIFY"
+      Remove -> ArgumentValueEnum "REMOVE"
+      Restore -> ArgumentValueEnum "RESTORE"
+      Transfer -> ArgumentValueEnum "TRANSFER"

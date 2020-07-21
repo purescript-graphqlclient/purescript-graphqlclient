@@ -19,6 +19,6 @@ instance enterpriseServerUserAccountsUploadSyncStateGraphqlDefaultResponseScalar
 instance enterpriseServerUserAccountsUploadSyncStateToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseServerUserAccountsUploadSyncState where
   toGraphqlArgumentValue =
     case _ of
-      Pending -> ArgumentValueString "PENDING"
-      Success -> ArgumentValueString "SUCCESS"
-      Failure -> ArgumentValueString "FAILURE"
+      Pending -> ArgumentValueEnum "PENDING"
+      Success -> ArgumentValueEnum "SUCCESS"
+      Failure -> ArgumentValueEnum "FAILURE"

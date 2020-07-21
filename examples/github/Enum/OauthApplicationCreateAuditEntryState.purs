@@ -19,6 +19,6 @@ instance oauthApplicationCreateAuditEntryStateGraphqlDefaultResponseScalarDecode
 instance oauthApplicationCreateAuditEntryStateToGraphqlArgumentValue :: ToGraphqlArgumentValue OauthApplicationCreateAuditEntryState where
   toGraphqlArgumentValue =
     case _ of
-      Active -> ArgumentValueString "ACTIVE"
-      Suspended -> ArgumentValueString "SUSPENDED"
-      PendingDeletion -> ArgumentValueString "PENDING_DELETION"
+      Active -> ArgumentValueEnum "ACTIVE"
+      Suspended -> ArgumentValueEnum "SUSPENDED"
+      PendingDeletion -> ArgumentValueEnum "PENDING_DELETION"

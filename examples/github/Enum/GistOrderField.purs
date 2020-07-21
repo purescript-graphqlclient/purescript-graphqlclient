@@ -19,6 +19,6 @@ instance gistOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResp
 instance gistOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue GistOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      UpdatedAt -> ArgumentValueString "UPDATED_AT"
-      PushedAt -> ArgumentValueString "PUSHED_AT"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      UpdatedAt -> ArgumentValueEnum "UPDATED_AT"
+      PushedAt -> ArgumentValueEnum "PUSHED_AT"

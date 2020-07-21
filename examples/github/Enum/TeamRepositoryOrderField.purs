@@ -22,9 +22,9 @@ instance teamRepositoryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlD
 instance teamRepositoryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamRepositoryOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      UpdatedAt -> ArgumentValueString "UPDATED_AT"
-      PushedAt -> ArgumentValueString "PUSHED_AT"
-      Name -> ArgumentValueString "NAME"
-      Permission -> ArgumentValueString "PERMISSION"
-      Stargazers -> ArgumentValueString "STARGAZERS"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      UpdatedAt -> ArgumentValueEnum "UPDATED_AT"
+      PushedAt -> ArgumentValueEnum "PUSHED_AT"
+      Name -> ArgumentValueEnum "NAME"
+      Permission -> ArgumentValueEnum "PERMISSION"
+      Stargazers -> ArgumentValueEnum "STARGAZERS"

@@ -19,6 +19,6 @@ instance projectColumnPurposeGraphqlDefaultResponseScalarDecoder :: GraphqlDefau
 instance projectColumnPurposeToGraphqlArgumentValue :: ToGraphqlArgumentValue ProjectColumnPurpose where
   toGraphqlArgumentValue =
     case _ of
-      Todo -> ArgumentValueString "TODO"
-      InProgress -> ArgumentValueString "IN_PROGRESS"
-      Done -> ArgumentValueString "DONE"
+      Todo -> ArgumentValueEnum "TODO"
+      InProgress -> ArgumentValueEnum "IN_PROGRESS"
+      Done -> ArgumentValueEnum "DONE"

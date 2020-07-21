@@ -15,13 +15,13 @@ import Examples.MyTests.Example11GithubPagination as Examples.MyTests.Example11G
 
 allTests :: Test.Spec.Spec Unit
 allTests = Test.Spec.parallel do
-  -- | Examples.MyTests.Example00SingleFieldQuery.spec
-  -- | Examples.MyTests.Example01BasicQuery.spec
-  -- | Examples.MyTests.Example02AdoSyntax.spec
-  -- | Examples.MyTests.Example03Variables.spec
-  -- | Examples.MyTests.Example04ErrorDestructuring.spec
-  -- | Examples.MyTests.Example05InterfacesAndUnions.spec
-  -- | Examples.MyTests.Example06Typename.spec
-  -- | Examples.MyTests.Example08Foldr.spec
-  -- | Examples.MyTests.Example10Github.spec
+  Examples.MyTests.Example00SingleFieldQuery.spec
+  Examples.MyTests.Example01BasicQuery.spec
+  Examples.MyTests.Example02AdoSyntax.spec
+  Examples.MyTests.Example03Variables.spec
+  Examples.MyTests.Example04ErrorDestructuring.spec
+  Examples.MyTests.Example05InterfacesAndUnions.spec
+  Examples.MyTests.Example06Typename.spec
+  Examples.MyTests.Example08Foldr.spec
+  Examples.MyTests.Example10Github.spec
   Examples.MyTests.Example11GithubPagination.spec

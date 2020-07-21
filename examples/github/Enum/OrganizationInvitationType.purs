@@ -18,5 +18,5 @@ instance organizationInvitationTypeGraphqlDefaultResponseScalarDecoder :: Graphq
 instance organizationInvitationTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue OrganizationInvitationType where
   toGraphqlArgumentValue =
     case _ of
-      User -> ArgumentValueString "USER"
-      Email -> ArgumentValueString "EMAIL"
+      User -> ArgumentValueEnum "USER"
+      Email -> ArgumentValueEnum "EMAIL"

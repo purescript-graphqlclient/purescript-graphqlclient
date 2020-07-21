@@ -17,4 +17,4 @@ instance languageOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefault
 instance languageOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue LanguageOrderField where
   toGraphqlArgumentValue =
     case _ of
-      Size -> ArgumentValueString "SIZE"
+      Size -> ArgumentValueEnum "SIZE"

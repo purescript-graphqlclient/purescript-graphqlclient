@@ -18,5 +18,5 @@ instance teamPrivacyGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRespons
 instance teamPrivacyToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamPrivacy where
   toGraphqlArgumentValue =
     case _ of
-      Secret -> ArgumentValueString "SECRET"
-      Visible -> ArgumentValueString "VISIBLE"
+      Secret -> ArgumentValueEnum "SECRET"
+      Visible -> ArgumentValueEnum "VISIBLE"

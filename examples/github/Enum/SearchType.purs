@@ -19,6 +19,6 @@ instance searchTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponse
 instance searchTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue SearchType where
   toGraphqlArgumentValue =
     case _ of
-      Issue -> ArgumentValueString "ISSUE"
-      Repository -> ArgumentValueString "REPOSITORY"
-      User -> ArgumentValueString "USER"
+      Issue -> ArgumentValueEnum "ISSUE"
+      Repository -> ArgumentValueEnum "REPOSITORY"
+      User -> ArgumentValueEnum "USER"

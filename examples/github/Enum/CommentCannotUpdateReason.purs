@@ -23,10 +23,10 @@ instance commentCannotUpdateReasonGraphqlDefaultResponseScalarDecoder :: Graphql
 instance commentCannotUpdateReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue CommentCannotUpdateReason where
   toGraphqlArgumentValue =
     case _ of
-      Archived -> ArgumentValueString "ARCHIVED"
-      InsufficientAccess -> ArgumentValueString "INSUFFICIENT_ACCESS"
-      Locked -> ArgumentValueString "LOCKED"
-      LoginRequired -> ArgumentValueString "LOGIN_REQUIRED"
-      Maintenance -> ArgumentValueString "MAINTENANCE"
-      VerifiedEmailRequired -> ArgumentValueString "VERIFIED_EMAIL_REQUIRED"
-      Denied -> ArgumentValueString "DENIED"
+      Archived -> ArgumentValueEnum "ARCHIVED"
+      InsufficientAccess -> ArgumentValueEnum "INSUFFICIENT_ACCESS"
+      Locked -> ArgumentValueEnum "LOCKED"
+      LoginRequired -> ArgumentValueEnum "LOGIN_REQUIRED"
+      Maintenance -> ArgumentValueEnum "MAINTENANCE"
+      VerifiedEmailRequired -> ArgumentValueEnum "VERIFIED_EMAIL_REQUIRED"
+      Denied -> ArgumentValueEnum "DENIED"

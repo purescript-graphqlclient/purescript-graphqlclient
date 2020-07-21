@@ -25,12 +25,12 @@ instance phraseGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScal
 instance phraseToGraphqlArgumentValue :: ToGraphqlArgumentValue Phrase where
   toGraphqlArgumentValue =
     case _ of
-      BadFeeling -> ArgumentValueString "BAD_FEELING"
-      Droids -> ArgumentValueString "DROIDS"
-      Faith -> ArgumentValueString "FAITH"
-      Father -> ArgumentValueString "FATHER"
-      Help -> ArgumentValueString "HELP"
-      TheForce -> ArgumentValueString "THE_FORCE"
-      Traitor -> ArgumentValueString "TRAITOR"
-      Trap -> ArgumentValueString "TRAP"
-      Try -> ArgumentValueString "TRY"
+      BadFeeling -> ArgumentValueEnum "BAD_FEELING"
+      Droids -> ArgumentValueEnum "DROIDS"
+      Faith -> ArgumentValueEnum "FAITH"
+      Father -> ArgumentValueEnum "FATHER"
+      Help -> ArgumentValueEnum "HELP"
+      TheForce -> ArgumentValueEnum "THE_FORCE"
+      Traitor -> ArgumentValueEnum "TRAITOR"
+      Trap -> ArgumentValueEnum "TRAP"
+      Try -> ArgumentValueEnum "TRY"

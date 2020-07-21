@@ -18,5 +18,5 @@ instance pullRequestReviewCommentStateGraphqlDefaultResponseScalarDecoder :: Gra
 instance pullRequestReviewCommentStateToGraphqlArgumentValue :: ToGraphqlArgumentValue PullRequestReviewCommentState where
   toGraphqlArgumentValue =
     case _ of
-      Pending -> ArgumentValueString "PENDING"
-      Submitted -> ArgumentValueString "SUBMITTED"
+      Pending -> ArgumentValueEnum "PENDING"
+      Submitted -> ArgumentValueEnum "SUBMITTED"

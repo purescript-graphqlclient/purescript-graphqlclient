@@ -18,5 +18,5 @@ instance projectCardArchivedStateGraphqlDefaultResponseScalarDecoder :: GraphqlD
 instance projectCardArchivedStateToGraphqlArgumentValue :: ToGraphqlArgumentValue ProjectCardArchivedState where
   toGraphqlArgumentValue =
     case _ of
-      Archived -> ArgumentValueString "ARCHIVED"
-      NotArchived -> ArgumentValueString "NOT_ARCHIVED"
+      Archived -> ArgumentValueEnum "ARCHIVED"
+      NotArchived -> ArgumentValueEnum "NOT_ARCHIVED"

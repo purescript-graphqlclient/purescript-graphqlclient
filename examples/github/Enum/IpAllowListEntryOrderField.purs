@@ -18,5 +18,5 @@ instance ipAllowListEntryOrderFieldGraphqlDefaultResponseScalarDecoder :: Graphq
 instance ipAllowListEntryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue IpAllowListEntryOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      AllowListValue -> ArgumentValueString "ALLOW_LIST_VALUE"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      AllowListValue -> ArgumentValueEnum "ALLOW_LIST_VALUE"

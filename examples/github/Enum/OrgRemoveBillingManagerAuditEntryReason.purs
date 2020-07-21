@@ -19,6 +19,6 @@ instance orgRemoveBillingManagerAuditEntryReasonGraphqlDefaultResponseScalarDeco
 instance orgRemoveBillingManagerAuditEntryReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgRemoveBillingManagerAuditEntryReason where
   toGraphqlArgumentValue =
     case _ of
-      TwoFactorRequirementNonCompliance -> ArgumentValueString "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
-      SamlExternalIdentityMissing -> ArgumentValueString "SAML_EXTERNAL_IDENTITY_MISSING"
-      SamlSsoEnforcementRequiresExternalIdentity -> ArgumentValueString "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY"
+      TwoFactorRequirementNonCompliance -> ArgumentValueEnum "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
+      SamlExternalIdentityMissing -> ArgumentValueEnum "SAML_EXTERNAL_IDENTITY_MISSING"
+      SamlSsoEnforcementRequiresExternalIdentity -> ArgumentValueEnum "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY"

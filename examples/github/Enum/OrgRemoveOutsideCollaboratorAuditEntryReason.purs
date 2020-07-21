@@ -18,5 +18,5 @@ instance orgRemoveOutsideCollaboratorAuditEntryReasonGraphqlDefaultResponseScala
 instance orgRemoveOutsideCollaboratorAuditEntryReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgRemoveOutsideCollaboratorAuditEntryReason where
   toGraphqlArgumentValue =
     case _ of
-      TwoFactorRequirementNonCompliance -> ArgumentValueString "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
-      SamlExternalIdentityMissing -> ArgumentValueString "SAML_EXTERNAL_IDENTITY_MISSING"
+      TwoFactorRequirementNonCompliance -> ArgumentValueEnum "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
+      SamlExternalIdentityMissing -> ArgumentValueEnum "SAML_EXTERNAL_IDENTITY_MISSING"

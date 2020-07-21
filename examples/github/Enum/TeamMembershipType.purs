@@ -19,6 +19,6 @@ instance teamMembershipTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefault
 instance teamMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamMembershipType where
   toGraphqlArgumentValue =
     case _ of
-      Immediate -> ArgumentValueString "IMMEDIATE"
-      ChildTeam -> ArgumentValueString "CHILD_TEAM"
-      All -> ArgumentValueString "ALL"
+      Immediate -> ArgumentValueEnum "IMMEDIATE"
+      ChildTeam -> ArgumentValueEnum "CHILD_TEAM"
+      All -> ArgumentValueEnum "ALL"

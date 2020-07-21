@@ -22,9 +22,9 @@ instance securityAdvisoryEcosystemGraphqlDefaultResponseScalarDecoder :: Graphql
 instance securityAdvisoryEcosystemToGraphqlArgumentValue :: ToGraphqlArgumentValue SecurityAdvisoryEcosystem where
   toGraphqlArgumentValue =
     case _ of
-      Rubygems -> ArgumentValueString "RUBYGEMS"
-      Npm -> ArgumentValueString "NPM"
-      Pip -> ArgumentValueString "PIP"
-      Maven -> ArgumentValueString "MAVEN"
-      Nuget -> ArgumentValueString "NUGET"
-      Composer -> ArgumentValueString "COMPOSER"
+      Rubygems -> ArgumentValueEnum "RUBYGEMS"
+      Npm -> ArgumentValueEnum "NPM"
+      Pip -> ArgumentValueEnum "PIP"
+      Maven -> ArgumentValueEnum "MAVEN"
+      Nuget -> ArgumentValueEnum "NUGET"
+      Composer -> ArgumentValueEnum "COMPOSER"

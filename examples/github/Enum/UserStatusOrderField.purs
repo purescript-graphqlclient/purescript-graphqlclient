@@ -17,4 +17,4 @@ instance userStatusOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefau
 instance userStatusOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue UserStatusOrderField where
   toGraphqlArgumentValue =
     case _ of
-      UpdatedAt -> ArgumentValueString "UPDATED_AT"
+      UpdatedAt -> ArgumentValueEnum "UPDATED_AT"

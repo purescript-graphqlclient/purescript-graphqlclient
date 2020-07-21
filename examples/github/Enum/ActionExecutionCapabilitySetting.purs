@@ -20,7 +20,7 @@ instance actionExecutionCapabilitySettingGraphqlDefaultResponseScalarDecoder :: 
 instance actionExecutionCapabilitySettingToGraphqlArgumentValue :: ToGraphqlArgumentValue ActionExecutionCapabilitySetting where
   toGraphqlArgumentValue =
     case _ of
-      Disabled -> ArgumentValueString "DISABLED"
-      AllActions -> ArgumentValueString "ALL_ACTIONS"
-      LocalActionsOnly -> ArgumentValueString "LOCAL_ACTIONS_ONLY"
-      NoPolicy -> ArgumentValueString "NO_POLICY"
+      Disabled -> ArgumentValueEnum "DISABLED"
+      AllActions -> ArgumentValueEnum "ALL_ACTIONS"
+      LocalActionsOnly -> ArgumentValueEnum "LOCAL_ACTIONS_ONLY"
+      NoPolicy -> ArgumentValueEnum "NO_POLICY"

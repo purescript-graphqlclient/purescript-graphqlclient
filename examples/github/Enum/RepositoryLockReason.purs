@@ -20,7 +20,7 @@ instance repositoryLockReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefau
 instance repositoryLockReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryLockReason where
   toGraphqlArgumentValue =
     case _ of
-      Moving -> ArgumentValueString "MOVING"
-      Billing -> ArgumentValueString "BILLING"
-      Rename -> ArgumentValueString "RENAME"
-      Migrating -> ArgumentValueString "MIGRATING"
+      Moving -> ArgumentValueEnum "MOVING"
+      Billing -> ArgumentValueEnum "BILLING"
+      Rename -> ArgumentValueEnum "RENAME"
+      Migrating -> ArgumentValueEnum "MIGRATING"

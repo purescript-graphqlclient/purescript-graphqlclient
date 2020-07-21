@@ -20,7 +20,7 @@ instance organizationInvitationRoleGraphqlDefaultResponseScalarDecoder :: Graphq
 instance organizationInvitationRoleToGraphqlArgumentValue :: ToGraphqlArgumentValue OrganizationInvitationRole where
   toGraphqlArgumentValue =
     case _ of
-      DirectMember -> ArgumentValueString "DIRECT_MEMBER"
-      Admin -> ArgumentValueString "ADMIN"
-      BillingManager -> ArgumentValueString "BILLING_MANAGER"
-      Reinstate -> ArgumentValueString "REINSTATE"
+      DirectMember -> ArgumentValueEnum "DIRECT_MEMBER"
+      Admin -> ArgumentValueEnum "ADMIN"
+      BillingManager -> ArgumentValueEnum "BILLING_MANAGER"
+      Reinstate -> ArgumentValueEnum "REINSTATE"

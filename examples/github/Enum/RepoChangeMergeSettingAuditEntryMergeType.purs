@@ -19,6 +19,6 @@ instance repoChangeMergeSettingAuditEntryMergeTypeGraphqlDefaultResponseScalarDe
 instance repoChangeMergeSettingAuditEntryMergeTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue RepoChangeMergeSettingAuditEntryMergeType where
   toGraphqlArgumentValue =
     case _ of
-      Merge -> ArgumentValueString "MERGE"
-      Rebase -> ArgumentValueString "REBASE"
-      Squash -> ArgumentValueString "SQUASH"
+      Merge -> ArgumentValueEnum "MERGE"
+      Rebase -> ArgumentValueEnum "REBASE"
+      Squash -> ArgumentValueEnum "SQUASH"

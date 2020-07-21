@@ -21,8 +21,8 @@ instance userBlockDurationGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultR
 instance userBlockDurationToGraphqlArgumentValue :: ToGraphqlArgumentValue UserBlockDuration where
   toGraphqlArgumentValue =
     case _ of
-      OneDay -> ArgumentValueString "ONE_DAY"
-      ThreeDays -> ArgumentValueString "THREE_DAYS"
-      OneWeek -> ArgumentValueString "ONE_WEEK"
-      OneMonth -> ArgumentValueString "ONE_MONTH"
-      Permanent -> ArgumentValueString "PERMANENT"
+      OneDay -> ArgumentValueEnum "ONE_DAY"
+      ThreeDays -> ArgumentValueEnum "THREE_DAYS"
+      OneWeek -> ArgumentValueEnum "ONE_WEEK"
+      OneMonth -> ArgumentValueEnum "ONE_MONTH"
+      Permanent -> ArgumentValueEnum "PERMANENT"

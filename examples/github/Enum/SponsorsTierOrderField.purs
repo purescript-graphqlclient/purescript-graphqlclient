@@ -18,5 +18,5 @@ instance sponsorsTierOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDef
 instance sponsorsTierOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue SponsorsTierOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      MonthlyPriceInCents -> ArgumentValueString "MONTHLY_PRICE_IN_CENTS"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      MonthlyPriceInCents -> ArgumentValueEnum "MONTHLY_PRICE_IN_CENTS"

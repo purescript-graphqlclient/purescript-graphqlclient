@@ -21,8 +21,8 @@ instance statusStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRespons
 instance statusStateToGraphqlArgumentValue :: ToGraphqlArgumentValue StatusState where
   toGraphqlArgumentValue =
     case _ of
-      Expected -> ArgumentValueString "EXPECTED"
-      Error -> ArgumentValueString "ERROR"
-      Failure -> ArgumentValueString "FAILURE"
-      Pending -> ArgumentValueString "PENDING"
-      Success -> ArgumentValueString "SUCCESS"
+      Expected -> ArgumentValueEnum "EXPECTED"
+      Error -> ArgumentValueEnum "ERROR"
+      Failure -> ArgumentValueEnum "FAILURE"
+      Pending -> ArgumentValueEnum "PENDING"
+      Success -> ArgumentValueEnum "SUCCESS"

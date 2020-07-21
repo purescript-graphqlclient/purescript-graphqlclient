@@ -18,5 +18,5 @@ instance enterpriseAdministratorRoleGraphqlDefaultResponseScalarDecoder :: Graph
 instance enterpriseAdministratorRoleToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseAdministratorRole where
   toGraphqlArgumentValue =
     case _ of
-      Owner -> ArgumentValueString "OWNER"
-      BillingManager -> ArgumentValueString "BILLING_MANAGER"
+      Owner -> ArgumentValueEnum "OWNER"
+      BillingManager -> ArgumentValueEnum "BILLING_MANAGER"

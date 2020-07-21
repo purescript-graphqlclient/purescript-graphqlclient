@@ -18,5 +18,5 @@ instance pullRequestOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefa
 instance pullRequestOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue PullRequestOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      UpdatedAt -> ArgumentValueString "UPDATED_AT"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      UpdatedAt -> ArgumentValueEnum "UPDATED_AT"

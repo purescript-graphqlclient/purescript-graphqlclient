@@ -20,7 +20,7 @@ instance samlSignatureAlgorithmGraphqlDefaultResponseScalarDecoder :: GraphqlDef
 instance samlSignatureAlgorithmToGraphqlArgumentValue :: ToGraphqlArgumentValue SamlSignatureAlgorithm where
   toGraphqlArgumentValue =
     case _ of
-      RsaSha1 -> ArgumentValueString "RSA_SHA1"
-      RsaSha256 -> ArgumentValueString "RSA_SHA256"
-      RsaSha384 -> ArgumentValueString "RSA_SHA384"
-      RsaSha512 -> ArgumentValueString "RSA_SHA512"
+      RsaSha1 -> ArgumentValueEnum "RSA_SHA1"
+      RsaSha256 -> ArgumentValueEnum "RSA_SHA256"
+      RsaSha384 -> ArgumentValueEnum "RSA_SHA384"
+      RsaSha512 -> ArgumentValueEnum "RSA_SHA512"

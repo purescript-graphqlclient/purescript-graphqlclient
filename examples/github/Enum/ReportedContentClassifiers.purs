@@ -22,9 +22,9 @@ instance reportedContentClassifiersGraphqlDefaultResponseScalarDecoder :: Graphq
 instance reportedContentClassifiersToGraphqlArgumentValue :: ToGraphqlArgumentValue ReportedContentClassifiers where
   toGraphqlArgumentValue =
     case _ of
-      Spam -> ArgumentValueString "SPAM"
-      Abuse -> ArgumentValueString "ABUSE"
-      OffTopic -> ArgumentValueString "OFF_TOPIC"
-      Outdated -> ArgumentValueString "OUTDATED"
-      Duplicate -> ArgumentValueString "DUPLICATE"
-      Resolved -> ArgumentValueString "RESOLVED"
+      Spam -> ArgumentValueEnum "SPAM"
+      Abuse -> ArgumentValueEnum "ABUSE"
+      OffTopic -> ArgumentValueEnum "OFF_TOPIC"
+      Outdated -> ArgumentValueEnum "OUTDATED"
+      Duplicate -> ArgumentValueEnum "DUPLICATE"
+      Resolved -> ArgumentValueEnum "RESOLVED"

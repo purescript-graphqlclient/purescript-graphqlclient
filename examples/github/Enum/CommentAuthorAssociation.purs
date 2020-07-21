@@ -23,10 +23,10 @@ instance commentAuthorAssociationGraphqlDefaultResponseScalarDecoder :: GraphqlD
 instance commentAuthorAssociationToGraphqlArgumentValue :: ToGraphqlArgumentValue CommentAuthorAssociation where
   toGraphqlArgumentValue =
     case _ of
-      Member -> ArgumentValueString "MEMBER"
-      Owner -> ArgumentValueString "OWNER"
-      Collaborator -> ArgumentValueString "COLLABORATOR"
-      Contributor -> ArgumentValueString "CONTRIBUTOR"
-      FirstTimeContributor -> ArgumentValueString "FIRST_TIME_CONTRIBUTOR"
-      FirstTimer -> ArgumentValueString "FIRST_TIMER"
-      None -> ArgumentValueString "NONE"
+      Member -> ArgumentValueEnum "MEMBER"
+      Owner -> ArgumentValueEnum "OWNER"
+      Collaborator -> ArgumentValueEnum "COLLABORATOR"
+      Contributor -> ArgumentValueEnum "CONTRIBUTOR"
+      FirstTimeContributor -> ArgumentValueEnum "FIRST_TIME_CONTRIBUTOR"
+      FirstTimer -> ArgumentValueEnum "FIRST_TIMER"
+      None -> ArgumentValueEnum "NONE"

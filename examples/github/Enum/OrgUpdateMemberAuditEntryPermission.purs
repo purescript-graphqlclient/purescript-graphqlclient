@@ -18,5 +18,5 @@ instance orgUpdateMemberAuditEntryPermissionGraphqlDefaultResponseScalarDecoder 
 instance orgUpdateMemberAuditEntryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgUpdateMemberAuditEntryPermission where
   toGraphqlArgumentValue =
     case _ of
-      Read -> ArgumentValueString "READ"
-      Admin -> ArgumentValueString "ADMIN"
+      Read -> ArgumentValueEnum "READ"
+      Admin -> ArgumentValueEnum "ADMIN"

@@ -24,11 +24,11 @@ instance reactionContentGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRes
 instance reactionContentToGraphqlArgumentValue :: ToGraphqlArgumentValue ReactionContent where
   toGraphqlArgumentValue =
     case _ of
-      ThumbsUp -> ArgumentValueString "THUMBS_UP"
-      ThumbsDown -> ArgumentValueString "THUMBS_DOWN"
-      Laugh -> ArgumentValueString "LAUGH"
-      Hooray -> ArgumentValueString "HOORAY"
-      Confused -> ArgumentValueString "CONFUSED"
-      Heart -> ArgumentValueString "HEART"
-      Rocket -> ArgumentValueString "ROCKET"
-      Eyes -> ArgumentValueString "EYES"
+      ThumbsUp -> ArgumentValueEnum "THUMBS_UP"
+      ThumbsDown -> ArgumentValueEnum "THUMBS_DOWN"
+      Laugh -> ArgumentValueEnum "LAUGH"
+      Hooray -> ArgumentValueEnum "HOORAY"
+      Confused -> ArgumentValueEnum "CONFUSED"
+      Heart -> ArgumentValueEnum "HEART"
+      Rocket -> ArgumentValueEnum "ROCKET"
+      Eyes -> ArgumentValueEnum "EYES"

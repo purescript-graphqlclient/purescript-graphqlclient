@@ -17,4 +17,4 @@ instance packageVersionOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlD
 instance packageVersionOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue PackageVersionOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"

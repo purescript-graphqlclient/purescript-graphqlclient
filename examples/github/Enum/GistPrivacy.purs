@@ -19,6 +19,6 @@ instance gistPrivacyGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRespons
 instance gistPrivacyToGraphqlArgumentValue :: ToGraphqlArgumentValue GistPrivacy where
   toGraphqlArgumentValue =
     case _ of
-      Public -> ArgumentValueString "PUBLIC"
-      Secret -> ArgumentValueString "SECRET"
-      All -> ArgumentValueString "ALL"
+      Public -> ArgumentValueEnum "PUBLIC"
+      Secret -> ArgumentValueEnum "SECRET"
+      All -> ArgumentValueEnum "ALL"

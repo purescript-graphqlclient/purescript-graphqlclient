@@ -19,6 +19,6 @@ instance pullRequestMergeMethodGraphqlDefaultResponseScalarDecoder :: GraphqlDef
 instance pullRequestMergeMethodToGraphqlArgumentValue :: ToGraphqlArgumentValue PullRequestMergeMethod where
   toGraphqlArgumentValue =
     case _ of
-      Merge -> ArgumentValueString "MERGE"
-      Squash -> ArgumentValueString "SQUASH"
-      Rebase -> ArgumentValueString "REBASE"
+      Merge -> ArgumentValueEnum "MERGE"
+      Squash -> ArgumentValueEnum "SQUASH"
+      Rebase -> ArgumentValueEnum "REBASE"

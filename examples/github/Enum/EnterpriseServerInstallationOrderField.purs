@@ -19,6 +19,6 @@ instance enterpriseServerInstallationOrderFieldGraphqlDefaultResponseScalarDecod
 instance enterpriseServerInstallationOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseServerInstallationOrderField where
   toGraphqlArgumentValue =
     case _ of
-      HostName -> ArgumentValueString "HOST_NAME"
-      CustomerName -> ArgumentValueString "CUSTOMER_NAME"
-      CreatedAt -> ArgumentValueString "CREATED_AT"
+      HostName -> ArgumentValueEnum "HOST_NAME"
+      CustomerName -> ArgumentValueEnum "CUSTOMER_NAME"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"

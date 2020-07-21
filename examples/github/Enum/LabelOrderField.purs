@@ -18,5 +18,5 @@ instance labelOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRes
 instance labelOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue LabelOrderField where
   toGraphqlArgumentValue =
     case _ of
-      Name -> ArgumentValueString "NAME"
-      CreatedAt -> ArgumentValueString "CREATED_AT"
+      Name -> ArgumentValueEnum "NAME"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"

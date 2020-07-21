@@ -20,7 +20,7 @@ instance orgUpdateDefaultRepositoryPermissionAuditEntryPermissionGraphqlDefaultR
 instance orgUpdateDefaultRepositoryPermissionAuditEntryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgUpdateDefaultRepositoryPermissionAuditEntryPermission where
   toGraphqlArgumentValue =
     case _ of
-      Read -> ArgumentValueString "READ"
-      Write -> ArgumentValueString "WRITE"
-      Admin -> ArgumentValueString "ADMIN"
-      None -> ArgumentValueString "NONE"
+      Read -> ArgumentValueEnum "READ"
+      Write -> ArgumentValueEnum "WRITE"
+      Admin -> ArgumentValueEnum "ADMIN"
+      None -> ArgumentValueEnum "NONE"

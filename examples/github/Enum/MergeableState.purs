@@ -19,6 +19,6 @@ instance mergeableStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResp
 instance mergeableStateToGraphqlArgumentValue :: ToGraphqlArgumentValue MergeableState where
   toGraphqlArgumentValue =
     case _ of
-      Mergeable -> ArgumentValueString "MERGEABLE"
-      Conflicting -> ArgumentValueString "CONFLICTING"
-      Unknown -> ArgumentValueString "UNKNOWN"
+      Mergeable -> ArgumentValueEnum "MERGEABLE"
+      Conflicting -> ArgumentValueEnum "CONFLICTING"
+      Unknown -> ArgumentValueEnum "UNKNOWN"

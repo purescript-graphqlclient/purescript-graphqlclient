@@ -20,7 +20,7 @@ instance pullRequestReviewEventGraphqlDefaultResponseScalarDecoder :: GraphqlDef
 instance pullRequestReviewEventToGraphqlArgumentValue :: ToGraphqlArgumentValue PullRequestReviewEvent where
   toGraphqlArgumentValue =
     case _ of
-      Comment -> ArgumentValueString "COMMENT"
-      Approve -> ArgumentValueString "APPROVE"
-      RequestChanges -> ArgumentValueString "REQUEST_CHANGES"
-      Dismiss -> ArgumentValueString "DISMISS"
+      Comment -> ArgumentValueEnum "COMMENT"
+      Approve -> ArgumentValueEnum "APPROVE"
+      RequestChanges -> ArgumentValueEnum "REQUEST_CHANGES"
+      Dismiss -> ArgumentValueEnum "DISMISS"

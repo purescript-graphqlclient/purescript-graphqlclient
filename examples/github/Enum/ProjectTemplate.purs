@@ -20,7 +20,7 @@ instance projectTemplateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRes
 instance projectTemplateToGraphqlArgumentValue :: ToGraphqlArgumentValue ProjectTemplate where
   toGraphqlArgumentValue =
     case _ of
-      BasicKanban -> ArgumentValueString "BASIC_KANBAN"
-      AutomatedKanbanV2 -> ArgumentValueString "AUTOMATED_KANBAN_V2"
-      AutomatedReviewsKanban -> ArgumentValueString "AUTOMATED_REVIEWS_KANBAN"
-      BugTriage -> ArgumentValueString "BUG_TRIAGE"
+      BasicKanban -> ArgumentValueEnum "BASIC_KANBAN"
+      AutomatedKanbanV2 -> ArgumentValueEnum "AUTOMATED_KANBAN_V2"
+      AutomatedReviewsKanban -> ArgumentValueEnum "AUTOMATED_REVIEWS_KANBAN"
+      BugTriage -> ArgumentValueEnum "BUG_TRIAGE"

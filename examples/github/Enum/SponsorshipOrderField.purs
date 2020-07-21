@@ -17,4 +17,4 @@ instance sponsorshipOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefa
 instance sponsorshipOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue SponsorshipOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"

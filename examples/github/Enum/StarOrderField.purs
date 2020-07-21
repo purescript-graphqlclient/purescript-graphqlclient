@@ -17,4 +17,4 @@ instance starOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResp
 instance starOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue StarOrderField where
   toGraphqlArgumentValue =
     case _ of
-      StarredAt -> ArgumentValueString "STARRED_AT"
+      StarredAt -> ArgumentValueEnum "STARRED_AT"

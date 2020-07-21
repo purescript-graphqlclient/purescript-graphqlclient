@@ -18,5 +18,5 @@ instance orderDirectionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResp
 instance orderDirectionToGraphqlArgumentValue :: ToGraphqlArgumentValue OrderDirection where
   toGraphqlArgumentValue =
     case _ of
-      Asc -> ArgumentValueString "ASC"
-      Desc -> ArgumentValueString "DESC"
+      Asc -> ArgumentValueEnum "ASC"
+      Desc -> ArgumentValueEnum "DESC"

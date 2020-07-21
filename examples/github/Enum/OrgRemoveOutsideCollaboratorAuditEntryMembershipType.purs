@@ -19,6 +19,6 @@ instance orgRemoveOutsideCollaboratorAuditEntryMembershipTypeGraphqlDefaultRespo
 instance orgRemoveOutsideCollaboratorAuditEntryMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgRemoveOutsideCollaboratorAuditEntryMembershipType where
   toGraphqlArgumentValue =
     case _ of
-      OutsideCollaborator -> ArgumentValueString "OUTSIDE_COLLABORATOR"
-      Unaffiliated -> ArgumentValueString "UNAFFILIATED"
-      BillingManager -> ArgumentValueString "BILLING_MANAGER"
+      OutsideCollaborator -> ArgumentValueEnum "OUTSIDE_COLLABORATOR"
+      Unaffiliated -> ArgumentValueEnum "UNAFFILIATED"
+      BillingManager -> ArgumentValueEnum "BILLING_MANAGER"

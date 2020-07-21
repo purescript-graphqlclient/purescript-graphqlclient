@@ -18,5 +18,5 @@ instance releaseOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultR
 instance releaseOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue ReleaseOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      Name -> ArgumentValueString "NAME"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      Name -> ArgumentValueEnum "NAME"

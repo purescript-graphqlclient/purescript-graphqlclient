@@ -18,5 +18,5 @@ instance enterpriseUserAccountMembershipRoleGraphqlDefaultResponseScalarDecoder 
 instance enterpriseUserAccountMembershipRoleToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseUserAccountMembershipRole where
   toGraphqlArgumentValue =
     case _ of
-      Member -> ArgumentValueString "MEMBER"
-      Owner -> ArgumentValueString "OWNER"
+      Member -> ArgumentValueEnum "MEMBER"
+      Owner -> ArgumentValueEnum "OWNER"

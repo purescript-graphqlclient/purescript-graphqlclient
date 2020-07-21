@@ -25,12 +25,12 @@ instance deploymentStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRes
 instance deploymentStateToGraphqlArgumentValue :: ToGraphqlArgumentValue DeploymentState where
   toGraphqlArgumentValue =
     case _ of
-      Abandoned -> ArgumentValueString "ABANDONED"
-      Active -> ArgumentValueString "ACTIVE"
-      Destroyed -> ArgumentValueString "DESTROYED"
-      Error -> ArgumentValueString "ERROR"
-      Failure -> ArgumentValueString "FAILURE"
-      Inactive -> ArgumentValueString "INACTIVE"
-      Pending -> ArgumentValueString "PENDING"
-      Queued -> ArgumentValueString "QUEUED"
-      InProgress -> ArgumentValueString "IN_PROGRESS"
+      Abandoned -> ArgumentValueEnum "ABANDONED"
+      Active -> ArgumentValueEnum "ACTIVE"
+      Destroyed -> ArgumentValueEnum "DESTROYED"
+      Error -> ArgumentValueEnum "ERROR"
+      Failure -> ArgumentValueEnum "FAILURE"
+      Inactive -> ArgumentValueEnum "INACTIVE"
+      Pending -> ArgumentValueEnum "PENDING"
+      Queued -> ArgumentValueEnum "QUEUED"
+      InProgress -> ArgumentValueEnum "IN_PROGRESS"

@@ -20,7 +20,7 @@ instance lockReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponse
 instance lockReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue LockReason where
   toGraphqlArgumentValue =
     case _ of
-      OffTopic -> ArgumentValueString "OFF_TOPIC"
-      TooHeated -> ArgumentValueString "TOO_HEATED"
-      Resolved -> ArgumentValueString "RESOLVED"
-      Spam -> ArgumentValueString "SPAM"
+      OffTopic -> ArgumentValueEnum "OFF_TOPIC"
+      TooHeated -> ArgumentValueEnum "TOO_HEATED"
+      Resolved -> ArgumentValueEnum "RESOLVED"
+      Spam -> ArgumentValueEnum "SPAM"

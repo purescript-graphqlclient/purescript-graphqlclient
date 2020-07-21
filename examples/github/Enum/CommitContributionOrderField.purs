@@ -18,5 +18,5 @@ instance commitContributionOrderFieldGraphqlDefaultResponseScalarDecoder :: Grap
 instance commitContributionOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue CommitContributionOrderField where
   toGraphqlArgumentValue =
     case _ of
-      OccurredAt -> ArgumentValueString "OCCURRED_AT"
-      CommitCount -> ArgumentValueString "COMMIT_COUNT"
+      OccurredAt -> ArgumentValueEnum "OCCURRED_AT"
+      CommitCount -> ArgumentValueEnum "COMMIT_COUNT"

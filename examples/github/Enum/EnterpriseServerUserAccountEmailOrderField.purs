@@ -17,4 +17,4 @@ instance enterpriseServerUserAccountEmailOrderFieldGraphqlDefaultResponseScalarD
 instance enterpriseServerUserAccountEmailOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseServerUserAccountEmailOrderField where
   toGraphqlArgumentValue =
     case _ of
-      Email -> ArgumentValueString "EMAIL"
+      Email -> ArgumentValueEnum "EMAIL"

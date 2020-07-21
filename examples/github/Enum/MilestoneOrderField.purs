@@ -20,7 +20,7 @@ instance milestoneOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaul
 instance milestoneOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue MilestoneOrderField where
   toGraphqlArgumentValue =
     case _ of
-      DueDate -> ArgumentValueString "DUE_DATE"
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      UpdatedAt -> ArgumentValueString "UPDATED_AT"
-      Number -> ArgumentValueString "NUMBER"
+      DueDate -> ArgumentValueEnum "DUE_DATE"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      UpdatedAt -> ArgumentValueEnum "UPDATED_AT"
+      Number -> ArgumentValueEnum "NUMBER"

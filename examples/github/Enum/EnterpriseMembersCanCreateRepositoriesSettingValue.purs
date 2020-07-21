@@ -21,8 +21,8 @@ instance enterpriseMembersCanCreateRepositoriesSettingValueGraphqlDefaultRespons
 instance enterpriseMembersCanCreateRepositoriesSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseMembersCanCreateRepositoriesSettingValue where
   toGraphqlArgumentValue =
     case _ of
-      NoPolicy -> ArgumentValueString "NO_POLICY"
-      All -> ArgumentValueString "ALL"
-      Public -> ArgumentValueString "PUBLIC"
-      Private -> ArgumentValueString "PRIVATE"
-      Disabled -> ArgumentValueString "DISABLED"
+      NoPolicy -> ArgumentValueEnum "NO_POLICY"
+      All -> ArgumentValueEnum "ALL"
+      Public -> ArgumentValueEnum "PUBLIC"
+      Private -> ArgumentValueEnum "PRIVATE"
+      Disabled -> ArgumentValueEnum "DISABLED"

@@ -19,6 +19,6 @@ instance issueOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRes
 instance issueOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue IssueOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      UpdatedAt -> ArgumentValueString "UPDATED_AT"
-      Comments -> ArgumentValueString "COMMENTS"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      UpdatedAt -> ArgumentValueEnum "UPDATED_AT"
+      Comments -> ArgumentValueEnum "COMMENTS"

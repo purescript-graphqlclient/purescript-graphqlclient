@@ -18,5 +18,5 @@ instance refOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRespo
 instance refOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue RefOrderField where
   toGraphqlArgumentValue =
     case _ of
-      TagCommitDate -> ArgumentValueString "TAG_COMMIT_DATE"
-      Alphabetical -> ArgumentValueString "ALPHABETICAL"
+      TagCommitDate -> ArgumentValueEnum "TAG_COMMIT_DATE"
+      Alphabetical -> ArgumentValueEnum "ALPHABETICAL"

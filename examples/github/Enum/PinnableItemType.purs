@@ -24,11 +24,11 @@ instance pinnableItemTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRe
 instance pinnableItemTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue PinnableItemType where
   toGraphqlArgumentValue =
     case _ of
-      Repository -> ArgumentValueString "REPOSITORY"
-      Gist -> ArgumentValueString "GIST"
-      Issue -> ArgumentValueString "ISSUE"
-      Project -> ArgumentValueString "PROJECT"
-      PullRequest -> ArgumentValueString "PULL_REQUEST"
-      User -> ArgumentValueString "USER"
-      Organization -> ArgumentValueString "ORGANIZATION"
-      Team -> ArgumentValueString "TEAM"
+      Repository -> ArgumentValueEnum "REPOSITORY"
+      Gist -> ArgumentValueEnum "GIST"
+      Issue -> ArgumentValueEnum "ISSUE"
+      Project -> ArgumentValueEnum "PROJECT"
+      PullRequest -> ArgumentValueEnum "PULL_REQUEST"
+      User -> ArgumentValueEnum "USER"
+      Organization -> ArgumentValueEnum "ORGANIZATION"
+      Team -> ArgumentValueEnum "TEAM"

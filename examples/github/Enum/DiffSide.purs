@@ -18,5 +18,5 @@ instance diffSideGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseSc
 instance diffSideToGraphqlArgumentValue :: ToGraphqlArgumentValue DiffSide where
   toGraphqlArgumentValue =
     case _ of
-      Left -> ArgumentValueString "LEFT"
-      Right -> ArgumentValueString "RIGHT"
+      Left -> ArgumentValueEnum "LEFT"
+      Right -> ArgumentValueEnum "RIGHT"

@@ -20,7 +20,7 @@ instance topicSuggestionDeclineReasonGraphqlDefaultResponseScalarDecoder :: Grap
 instance topicSuggestionDeclineReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue TopicSuggestionDeclineReason where
   toGraphqlArgumentValue =
     case _ of
-      NotRelevant -> ArgumentValueString "NOT_RELEVANT"
-      TooSpecific -> ArgumentValueString "TOO_SPECIFIC"
-      PersonalPreference -> ArgumentValueString "PERSONAL_PREFERENCE"
-      TooGeneral -> ArgumentValueString "TOO_GENERAL"
+      NotRelevant -> ArgumentValueEnum "NOT_RELEVANT"
+      TooSpecific -> ArgumentValueEnum "TOO_SPECIFIC"
+      PersonalPreference -> ArgumentValueEnum "PERSONAL_PREFERENCE"
+      TooGeneral -> ArgumentValueEnum "TOO_GENERAL"

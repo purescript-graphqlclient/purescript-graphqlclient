@@ -18,5 +18,5 @@ instance enterpriseServerUserAccountOrderFieldGraphqlDefaultResponseScalarDecode
 instance enterpriseServerUserAccountOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseServerUserAccountOrderField where
   toGraphqlArgumentValue =
     case _ of
-      Login -> ArgumentValueString "LOGIN"
-      RemoteCreatedAt -> ArgumentValueString "REMOTE_CREATED_AT"
+      Login -> ArgumentValueEnum "LOGIN"
+      RemoteCreatedAt -> ArgumentValueEnum "REMOTE_CREATED_AT"

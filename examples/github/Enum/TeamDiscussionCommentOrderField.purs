@@ -17,4 +17,4 @@ instance teamDiscussionCommentOrderFieldGraphqlDefaultResponseScalarDecoder :: G
 instance teamDiscussionCommentOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamDiscussionCommentOrderField where
   toGraphqlArgumentValue =
     case _ of
-      Number -> ArgumentValueString "NUMBER"
+      Number -> ArgumentValueEnum "NUMBER"

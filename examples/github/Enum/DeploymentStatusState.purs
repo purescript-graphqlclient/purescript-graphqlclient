@@ -23,10 +23,10 @@ instance deploymentStatusStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefa
 instance deploymentStatusStateToGraphqlArgumentValue :: ToGraphqlArgumentValue DeploymentStatusState where
   toGraphqlArgumentValue =
     case _ of
-      Pending -> ArgumentValueString "PENDING"
-      Success -> ArgumentValueString "SUCCESS"
-      Failure -> ArgumentValueString "FAILURE"
-      Inactive -> ArgumentValueString "INACTIVE"
-      Error -> ArgumentValueString "ERROR"
-      Queued -> ArgumentValueString "QUEUED"
-      InProgress -> ArgumentValueString "IN_PROGRESS"
+      Pending -> ArgumentValueEnum "PENDING"
+      Success -> ArgumentValueEnum "SUCCESS"
+      Failure -> ArgumentValueEnum "FAILURE"
+      Inactive -> ArgumentValueEnum "INACTIVE"
+      Error -> ArgumentValueEnum "ERROR"
+      Queued -> ArgumentValueEnum "QUEUED"
+      InProgress -> ArgumentValueEnum "IN_PROGRESS"

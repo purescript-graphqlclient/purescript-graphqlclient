@@ -17,4 +17,4 @@ instance teamOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResp
 instance teamOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamOrderField where
   toGraphqlArgumentValue =
     case _ of
-      Name -> ArgumentValueString "NAME"
+      Name -> ArgumentValueEnum "NAME"

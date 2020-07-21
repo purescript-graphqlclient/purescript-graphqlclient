@@ -18,5 +18,5 @@ instance repositoryInvitationOrderFieldGraphqlDefaultResponseScalarDecoder :: Gr
 instance repositoryInvitationOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryInvitationOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
-      InviteeLogin -> ArgumentValueString "INVITEE_LOGIN"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
+      InviteeLogin -> ArgumentValueEnum "INVITEE_LOGIN"

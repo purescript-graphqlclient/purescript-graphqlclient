@@ -18,5 +18,5 @@ instance enterpriseMembersCanMakePurchasesSettingValueGraphqlDefaultResponseScal
 instance enterpriseMembersCanMakePurchasesSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseMembersCanMakePurchasesSettingValue where
   toGraphqlArgumentValue =
     case _ of
-      Enabled -> ArgumentValueString "ENABLED"
-      Disabled -> ArgumentValueString "DISABLED"
+      Enabled -> ArgumentValueEnum "ENABLED"
+      Disabled -> ArgumentValueEnum "DISABLED"

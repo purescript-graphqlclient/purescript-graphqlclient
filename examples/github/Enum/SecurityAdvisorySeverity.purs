@@ -20,7 +20,7 @@ instance securityAdvisorySeverityGraphqlDefaultResponseScalarDecoder :: GraphqlD
 instance securityAdvisorySeverityToGraphqlArgumentValue :: ToGraphqlArgumentValue SecurityAdvisorySeverity where
   toGraphqlArgumentValue =
     case _ of
-      Low -> ArgumentValueString "LOW"
-      Moderate -> ArgumentValueString "MODERATE"
-      High -> ArgumentValueString "HIGH"
-      Critical -> ArgumentValueString "CRITICAL"
+      Low -> ArgumentValueEnum "LOW"
+      Moderate -> ArgumentValueEnum "MODERATE"
+      High -> ArgumentValueEnum "HIGH"
+      Critical -> ArgumentValueEnum "CRITICAL"

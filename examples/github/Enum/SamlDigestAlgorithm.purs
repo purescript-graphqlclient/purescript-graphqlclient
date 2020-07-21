@@ -20,7 +20,7 @@ instance samlDigestAlgorithmGraphqlDefaultResponseScalarDecoder :: GraphqlDefaul
 instance samlDigestAlgorithmToGraphqlArgumentValue :: ToGraphqlArgumentValue SamlDigestAlgorithm where
   toGraphqlArgumentValue =
     case _ of
-      Sha1 -> ArgumentValueString "SHA1"
-      Sha256 -> ArgumentValueString "SHA256"
-      Sha384 -> ArgumentValueString "SHA384"
-      Sha512 -> ArgumentValueString "SHA512"
+      Sha1 -> ArgumentValueEnum "SHA1"
+      Sha256 -> ArgumentValueEnum "SHA256"
+      Sha384 -> ArgumentValueEnum "SHA384"
+      Sha512 -> ArgumentValueEnum "SHA512"

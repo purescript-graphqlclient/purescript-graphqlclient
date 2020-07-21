@@ -50,6 +50,7 @@ writeGraphqlArgumentsNameVal (name /\ value) = name <> ": " <> writeGraphqlArgum
 writeGraphqlArgumentsArgumentValue :: ArgumentValue -> String
 writeGraphqlArgumentsArgumentValue = case _ of
   ArgumentValueString s -> "\"" <> s <> "\""
+  ArgumentValueEnum s -> s
   ArgumentValueInt i -> Int.toStringAs Int.decimal i
   ArgumentValueBoolean b -> if b then "true" else "false"
   ArgumentValueMaybe maybeArg -> maybe "null" writeGraphqlArgumentsArgumentValue maybeArg

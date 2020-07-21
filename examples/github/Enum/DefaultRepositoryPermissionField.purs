@@ -20,7 +20,7 @@ instance defaultRepositoryPermissionFieldGraphqlDefaultResponseScalarDecoder :: 
 instance defaultRepositoryPermissionFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue DefaultRepositoryPermissionField where
   toGraphqlArgumentValue =
     case _ of
-      None -> ArgumentValueString "NONE"
-      Read -> ArgumentValueString "READ"
-      Write -> ArgumentValueString "WRITE"
-      Admin -> ArgumentValueString "ADMIN"
+      None -> ArgumentValueEnum "NONE"
+      Read -> ArgumentValueEnum "READ"
+      Write -> ArgumentValueEnum "WRITE"
+      Admin -> ArgumentValueEnum "ADMIN"

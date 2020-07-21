@@ -19,6 +19,6 @@ instance enterpriseEnabledDisabledSettingValueGraphqlDefaultResponseScalarDecode
 instance enterpriseEnabledDisabledSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseEnabledDisabledSettingValue where
   toGraphqlArgumentValue =
     case _ of
-      Enabled -> ArgumentValueString "ENABLED"
-      Disabled -> ArgumentValueString "DISABLED"
-      NoPolicy -> ArgumentValueString "NO_POLICY"
+      Enabled -> ArgumentValueEnum "ENABLED"
+      Disabled -> ArgumentValueEnum "DISABLED"
+      NoPolicy -> ArgumentValueEnum "NO_POLICY"

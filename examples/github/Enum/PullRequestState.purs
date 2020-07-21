@@ -19,6 +19,6 @@ instance pullRequestStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRe
 instance pullRequestStateToGraphqlArgumentValue :: ToGraphqlArgumentValue PullRequestState where
   toGraphqlArgumentValue =
     case _ of
-      Open -> ArgumentValueString "OPEN"
-      Closed -> ArgumentValueString "CLOSED"
-      Merged -> ArgumentValueString "MERGED"
+      Open -> ArgumentValueEnum "OPEN"
+      Closed -> ArgumentValueEnum "CLOSED"
+      Merged -> ArgumentValueEnum "MERGED"

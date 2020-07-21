@@ -11,6 +11,7 @@ import Type.Data.RowList (RLProxy(..))
 
 data ArgumentValue
   = ArgumentValueString String
+  | ArgumentValueEnum String
   | ArgumentValueInt Int
   | ArgumentValueBoolean Boolean
   | ArgumentValueMaybe (Maybe ArgumentValue)

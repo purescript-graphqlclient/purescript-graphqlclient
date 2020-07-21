@@ -18,5 +18,5 @@ instance enterpriseUserDeploymentGraphqlDefaultResponseScalarDecoder :: GraphqlD
 instance enterpriseUserDeploymentToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseUserDeployment where
   toGraphqlArgumentValue =
     case _ of
-      Cloud -> ArgumentValueString "CLOUD"
-      Server -> ArgumentValueString "SERVER"
+      Cloud -> ArgumentValueEnum "CLOUD"
+      Server -> ArgumentValueEnum "SERVER"

@@ -21,8 +21,8 @@ instance repositoryPermissionGraphqlDefaultResponseScalarDecoder :: GraphqlDefau
 instance repositoryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryPermission where
   toGraphqlArgumentValue =
     case _ of
-      Admin -> ArgumentValueString "ADMIN"
-      Maintain -> ArgumentValueString "MAINTAIN"
-      Write -> ArgumentValueString "WRITE"
-      Triage -> ArgumentValueString "TRIAGE"
-      Read -> ArgumentValueString "READ"
+      Admin -> ArgumentValueEnum "ADMIN"
+      Maintain -> ArgumentValueEnum "MAINTAIN"
+      Write -> ArgumentValueEnum "WRITE"
+      Triage -> ArgumentValueEnum "TRIAGE"
+      Read -> ArgumentValueEnum "READ"

@@ -18,5 +18,5 @@ instance ipAllowListEnabledSettingValueGraphqlDefaultResponseScalarDecoder :: Gr
 instance ipAllowListEnabledSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue IpAllowListEnabledSettingValue where
   toGraphqlArgumentValue =
     case _ of
-      Enabled -> ArgumentValueString "ENABLED"
-      Disabled -> ArgumentValueString "DISABLED"
+      Enabled -> ArgumentValueEnum "ENABLED"
+      Disabled -> ArgumentValueEnum "DISABLED"

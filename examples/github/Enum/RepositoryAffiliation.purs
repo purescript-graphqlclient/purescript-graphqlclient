@@ -19,6 +19,6 @@ instance repositoryAffiliationGraphqlDefaultResponseScalarDecoder :: GraphqlDefa
 instance repositoryAffiliationToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryAffiliation where
   toGraphqlArgumentValue =
     case _ of
-      Owner -> ArgumentValueString "OWNER"
-      Collaborator -> ArgumentValueString "COLLABORATOR"
-      OrganizationMember -> ArgumentValueString "ORGANIZATION_MEMBER"
+      Owner -> ArgumentValueEnum "OWNER"
+      Collaborator -> ArgumentValueEnum "COLLABORATOR"
+      OrganizationMember -> ArgumentValueEnum "ORGANIZATION_MEMBER"

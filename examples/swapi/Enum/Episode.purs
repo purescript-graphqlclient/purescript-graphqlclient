@@ -19,6 +19,6 @@ instance episodeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseSca
 instance episodeToGraphqlArgumentValue :: ToGraphqlArgumentValue Episode where
   toGraphqlArgumentValue =
     case _ of
-      Empire -> ArgumentValueString "EMPIRE"
-      Jedi -> ArgumentValueString "JEDI"
-      Newhope -> ArgumentValueString "NEWHOPE"
+      Empire -> ArgumentValueEnum "EMPIRE"
+      Jedi -> ArgumentValueEnum "JEDI"
+      Newhope -> ArgumentValueEnum "NEWHOPE"

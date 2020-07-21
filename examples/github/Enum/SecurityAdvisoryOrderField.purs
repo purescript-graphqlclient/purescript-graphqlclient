@@ -18,5 +18,5 @@ instance securityAdvisoryOrderFieldGraphqlDefaultResponseScalarDecoder :: Graphq
 instance securityAdvisoryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue SecurityAdvisoryOrderField where
   toGraphqlArgumentValue =
     case _ of
-      PublishedAt -> ArgumentValueString "PUBLISHED_AT"
-      UpdatedAt -> ArgumentValueString "UPDATED_AT"
+      PublishedAt -> ArgumentValueEnum "PUBLISHED_AT"
+      UpdatedAt -> ArgumentValueEnum "UPDATED_AT"

@@ -19,6 +19,6 @@ instance repositoryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefau
 instance repositoryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryVisibility where
   toGraphqlArgumentValue =
     case _ of
-      Private -> ArgumentValueString "PRIVATE"
-      Public -> ArgumentValueString "PUBLIC"
-      Internal -> ArgumentValueString "INTERNAL"
+      Private -> ArgumentValueEnum "PRIVATE"
+      Public -> ArgumentValueEnum "PUBLIC"
+      Internal -> ArgumentValueEnum "INTERNAL"

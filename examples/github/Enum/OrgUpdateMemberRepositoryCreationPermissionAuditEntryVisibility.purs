@@ -24,11 +24,11 @@ instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityGraphqlD
 instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
   toGraphqlArgumentValue =
     case _ of
-      All -> ArgumentValueString "ALL"
-      Public -> ArgumentValueString "PUBLIC"
-      None -> ArgumentValueString "NONE"
-      Private -> ArgumentValueString "PRIVATE"
-      Internal -> ArgumentValueString "INTERNAL"
-      PublicInternal -> ArgumentValueString "PUBLIC_INTERNAL"
-      PrivateInternal -> ArgumentValueString "PRIVATE_INTERNAL"
-      PublicPrivate -> ArgumentValueString "PUBLIC_PRIVATE"
+      All -> ArgumentValueEnum "ALL"
+      Public -> ArgumentValueEnum "PUBLIC"
+      None -> ArgumentValueEnum "NONE"
+      Private -> ArgumentValueEnum "PRIVATE"
+      Internal -> ArgumentValueEnum "INTERNAL"
+      PublicInternal -> ArgumentValueEnum "PUBLIC_INTERNAL"
+      PrivateInternal -> ArgumentValueEnum "PRIVATE_INTERNAL"
+      PublicPrivate -> ArgumentValueEnum "PUBLIC_PRIVATE"

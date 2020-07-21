@@ -19,6 +19,6 @@ instance repoCreateAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: Gr
 instance repoCreateAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue RepoCreateAuditEntryVisibility where
   toGraphqlArgumentValue =
     case _ of
-      Internal -> ArgumentValueString "INTERNAL"
-      Private -> ArgumentValueString "PRIVATE"
-      Public -> ArgumentValueString "PUBLIC"
+      Internal -> ArgumentValueEnum "INTERNAL"
+      Private -> ArgumentValueEnum "PRIVATE"
+      Public -> ArgumentValueEnum "PUBLIC"

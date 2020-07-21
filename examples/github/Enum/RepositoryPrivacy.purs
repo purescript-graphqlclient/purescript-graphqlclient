@@ -18,5 +18,5 @@ instance repositoryPrivacyGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultR
 instance repositoryPrivacyToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryPrivacy where
   toGraphqlArgumentValue =
     case _ of
-      Public -> ArgumentValueString "PUBLIC"
-      Private -> ArgumentValueString "PRIVATE"
+      Public -> ArgumentValueEnum "PUBLIC"
+      Private -> ArgumentValueEnum "PRIVATE"

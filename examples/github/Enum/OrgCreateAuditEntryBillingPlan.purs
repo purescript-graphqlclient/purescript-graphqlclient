@@ -21,8 +21,8 @@ instance orgCreateAuditEntryBillingPlanGraphqlDefaultResponseScalarDecoder :: Gr
 instance orgCreateAuditEntryBillingPlanToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgCreateAuditEntryBillingPlan where
   toGraphqlArgumentValue =
     case _ of
-      Free -> ArgumentValueString "FREE"
-      Business -> ArgumentValueString "BUSINESS"
-      BusinessPlus -> ArgumentValueString "BUSINESS_PLUS"
-      Unlimited -> ArgumentValueString "UNLIMITED"
-      TieredPerSeat -> ArgumentValueString "TIERED_PER_SEAT"
+      Free -> ArgumentValueEnum "FREE"
+      Business -> ArgumentValueEnum "BUSINESS"
+      BusinessPlus -> ArgumentValueEnum "BUSINESS_PLUS"
+      Unlimited -> ArgumentValueEnum "UNLIMITED"
+      TieredPerSeat -> ArgumentValueEnum "TIERED_PER_SEAT"

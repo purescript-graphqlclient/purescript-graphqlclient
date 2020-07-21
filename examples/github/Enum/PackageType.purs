@@ -23,10 +23,10 @@ instance packageTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRespons
 instance packageTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue PackageType where
   toGraphqlArgumentValue =
     case _ of
-      Npm -> ArgumentValueString "NPM"
-      Rubygems -> ArgumentValueString "RUBYGEMS"
-      Maven -> ArgumentValueString "MAVEN"
-      Docker -> ArgumentValueString "DOCKER"
-      Debian -> ArgumentValueString "DEBIAN"
-      Nuget -> ArgumentValueString "NUGET"
-      Pypi -> ArgumentValueString "PYPI"
+      Npm -> ArgumentValueEnum "NPM"
+      Rubygems -> ArgumentValueEnum "RUBYGEMS"
+      Maven -> ArgumentValueEnum "MAVEN"
+      Docker -> ArgumentValueEnum "DOCKER"
+      Debian -> ArgumentValueEnum "DEBIAN"
+      Nuget -> ArgumentValueEnum "NUGET"
+      Pypi -> ArgumentValueEnum "PYPI"

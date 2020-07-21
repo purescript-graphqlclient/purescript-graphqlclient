@@ -18,5 +18,5 @@ instance projectStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultRespon
 instance projectStateToGraphqlArgumentValue :: ToGraphqlArgumentValue ProjectState where
   toGraphqlArgumentValue =
     case _ of
-      Open -> ArgumentValueString "OPEN"
-      Closed -> ArgumentValueString "CLOSED"
+      Open -> ArgumentValueEnum "OPEN"
+      Closed -> ArgumentValueEnum "CLOSED"

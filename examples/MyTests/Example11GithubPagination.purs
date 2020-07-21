@@ -6,6 +6,7 @@ import GraphqlClient
 import Protolude
 
 import Affjax.RequestHeader (RequestHeader(..))
+import Data.Array (length) as Array
 import Data.Generic.Rep.Show (genericShow)
 import Examples.Github.Enum.SearchType as Examples.Github.Enum.SearchType
 import Examples.Github.Object.PageInfo as Examples.Github.Object.PageInfo
@@ -46,13 +47,16 @@ type Repo =
 
 query :: Maybe String -> SelectionSet Scope__RootQuery Response
 query cursor =
-  Examples.Github.Query.search
-    ( Record.union (defaultInput :: { | Examples.Github.Query.SearchInputRowOptional () })
-      { query: "language:purescript"
-      , "type": Examples.Github.Enum.SearchType.Repository
-      }
-    )
-    searchSelection
+  let
+      args =
+        ( Record.merge
+          { query: "language:purescript"
+          , "type": Examples.Github.Enum.SearchType.Repository
+          , first: Present 10 -- first OR last is required
+          }
+          (defaultInput :: { | Examples.Github.Query.SearchInputRowOptional () })
+        )
+  in Examples.Github.Query.search args searchSelection
 
 searchSelection :: SelectionSet Scope__SearchResultItemConnection Response
 searchSelection = ado
@@ -100,7 +104,7 @@ repositorySelection = ado
 expectedQuery :: String
 expectedQuery = inlineAndTrim """
 query {
-  search1551030854: search(query: "language:purescript", type: REPOSITORY) {
+  search158737529: search(first: 10, query: "language:purescript", type: REPOSITORY) {
     edges {
       node {
         __typename
@@ -131,10 +135,6 @@ spec = Test.Spec.it "Example11GithubPagination" do
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
-  response' `Test.Spec.shouldEqual`
-    { data: []
-    , paginationData:
-      { cursor: Nothing
-      , hasNextPage: true
-      }
-    }
+  Array.length response'.data `Test.Spec.shouldEqual` 10
+  isJust response'.paginationData.cursor `Test.Spec.shouldEqual` true
+  response'.paginationData.hasNextPage `Test.Spec.shouldEqual` true

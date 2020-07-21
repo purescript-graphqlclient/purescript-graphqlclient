@@ -21,8 +21,8 @@ instance pullRequestReviewStateGraphqlDefaultResponseScalarDecoder :: GraphqlDef
 instance pullRequestReviewStateToGraphqlArgumentValue :: ToGraphqlArgumentValue PullRequestReviewState where
   toGraphqlArgumentValue =
     case _ of
-      Pending -> ArgumentValueString "PENDING"
-      Commented -> ArgumentValueString "COMMENTED"
-      Approved -> ArgumentValueString "APPROVED"
-      ChangesRequested -> ArgumentValueString "CHANGES_REQUESTED"
-      Dismissed -> ArgumentValueString "DISMISSED"
+      Pending -> ArgumentValueEnum "PENDING"
+      Commented -> ArgumentValueEnum "COMMENTED"
+      Approved -> ArgumentValueEnum "APPROVED"
+      ChangesRequested -> ArgumentValueEnum "CHANGES_REQUESTED"
+      Dismissed -> ArgumentValueEnum "DISMISSED"

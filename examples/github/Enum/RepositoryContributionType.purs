@@ -21,8 +21,8 @@ instance repositoryContributionTypeGraphqlDefaultResponseScalarDecoder :: Graphq
 instance repositoryContributionTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryContributionType where
   toGraphqlArgumentValue =
     case _ of
-      Commit -> ArgumentValueString "COMMIT"
-      Issue -> ArgumentValueString "ISSUE"
-      PullRequest -> ArgumentValueString "PULL_REQUEST"
-      Repository -> ArgumentValueString "REPOSITORY"
-      PullRequestReview -> ArgumentValueString "PULL_REQUEST_REVIEW"
+      Commit -> ArgumentValueEnum "COMMIT"
+      Issue -> ArgumentValueEnum "ISSUE"
+      PullRequest -> ArgumentValueEnum "PULL_REQUEST"
+      Repository -> ArgumentValueEnum "REPOSITORY"
+      PullRequestReview -> ArgumentValueEnum "PULL_REQUEST_REVIEW"

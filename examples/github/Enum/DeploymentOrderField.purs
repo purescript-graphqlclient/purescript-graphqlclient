@@ -17,4 +17,4 @@ instance deploymentOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefau
 instance deploymentOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue DeploymentOrderField where
   toGraphqlArgumentValue =
     case _ of
-      CreatedAt -> ArgumentValueString "CREATED_AT"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"
