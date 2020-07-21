@@ -162,7 +162,7 @@ declInput parentName args =
                     Just rowOptional''' ->
                       case rowRequired'' of
                           Nothing -> Just $ rowOptional''' emptyRow
-                          Just rowRequired''' -> Just $ rowRequired''' $ rowRequired''' emptyRow
+                          Just rowRequired''' -> Just $ rowOptional''' $ rowRequired''' emptyRow
         }
       }
     ]
