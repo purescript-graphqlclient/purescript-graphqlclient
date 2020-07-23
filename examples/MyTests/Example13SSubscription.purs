@@ -80,7 +80,7 @@ spec = Test.Spec.it "Example13SSubscription" do
 
   response'.character `Test.Spec.shouldEqual` Nothing
 
-  (GraphqlClient.toGraphqlArgumentValue (traceId response'.phrase) == GraphqlClient.ArgumentValueEnum "FATHER") `Test.Spec.shouldEqual` true
+  (response'.phrase == Father) `Test.Spec.shouldEqual` true
 
   ----------------
 

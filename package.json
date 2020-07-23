@@ -9,8 +9,7 @@
   },
   "scripts": {
     "test": "spago test --main MyTest.Main --purs-args \"--censor-warnings\"",
-    "examples:test:run": "./examples/run-tests.js",
-    "examples:test:build": "spago --config examples/spago.dhall build --purs-args \"--censor-warnings\""
+    "examples:test": "spago --config examples/spago.dhall test --main Examples.MyTests.Main --purs-args \"--censor-warnings\""
   },
   "repository": {
     "type": "git",
