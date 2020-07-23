@@ -105,6 +105,14 @@ main = do
         in
           void (printModule outputDir fileName content)
 
+      printModuleForMaybeFiles :: String -> Maybe String -> Aff Unit
+      printModuleForMaybeFiles fileName = maybe (pure unit) \content ->
+        let
+          outputDir :: FilePath
+          outputDir = outputDirAbs
+        in
+          void (printModule outputDir fileName content)
+
     foldMapValuesWithIndexL printModuleForDirs filesMap.dirs
     foldMapValuesWithIndexL printModuleForFiles filesMap.files
-    filesMap."Scalars" # maybe (pure unit) (\content -> void $ printModule outputDirAbs "Scalars" content)
+    foldMapValuesWithIndexL printModuleForMaybeFiles filesMap.maybeFiles

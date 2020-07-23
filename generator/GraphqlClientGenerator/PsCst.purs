@@ -12,6 +12,7 @@ import Data.String.Extra as StringsExtra
 import Data.String.Utils as String
 import GraphqlClient.Utils (anyPredicate)
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult, InstorpectionQueryResult__Field, InstorpectionQueryResult__FullType)
+import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
 import GraphqlClientGenerator.MakeModule.InputObject as MakeModule.InputObject
@@ -21,6 +22,8 @@ import GraphqlClientGenerator.MakeModule.Query as MakeModule.Query
 import GraphqlClientGenerator.MakeModule.Scalars as MakeModule.Scalars
 import GraphqlClientGenerator.MakeModule.Scopes as MakeModule.Scopes
 import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
+import GraphqlClientGenerator.MakeModule.Mutation as MakeModule.Mutation
+import GraphqlClientGenerator.MakeModule.Subscription as MakeModule.Subscription
 import Language.PS.CST (ImportDecl(..), Module, ModuleName)
 import Language.PS.CST.Printers (printModuleToString)
 import Language.PS.CST.Sugar (mkModuleName)
@@ -37,17 +40,12 @@ type FilesMap =
     , "InputObject" :: String
     , "Scopes" :: String
     }
-  , "Scalars" :: Maybe String
+  , maybeFiles ::
+    { "Scalars" :: Maybe String
+    , "Mutation" :: Maybe String
+    , "Subscription" :: Maybe String
+    }
   }
-  -- | , "InputObject" :: String
-  -- | , "Interface" :: String
-  -- | , "Mutation" :: String
-  -- | , "Object" :: String
-  -- | , "Query" :: String
-  -- | , "ScalarCodecs" :: String
-  -- | , "Subscription" :: String
-  -- | , "Union" :: String
-  -- | , "VerifyScalarCodecs" :: String
 
 isBuiltIn :: String -> Boolean
 isBuiltIn = String.startsWith "__"
@@ -215,17 +213,59 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
           instorpectionQueryResult__FullType__union_names
           (mkModuleName $ apiModuleName <> NonEmpty.singleton "Scopes")
       }
-    , "Scalars":
-      case customScalarsModule of
-           Just _ -> Nothing
-           Nothing ->
-            let
-              moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Scalars"
+    , maybeFiles:
+      { "Scalars":
+          case customScalarsModule of
+            Just _ -> Nothing
+            Nothing ->
+              let
+                moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Scalars"
 
-              scalarTypes :: Array InstorpectionQueryResult__FullType
-              scalarTypes =
-                introspectionQueryResult.__schema.types
-                # Array.filter (\fullType -> fullType."kind" == TypeKind.Scalar)
-                # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
-            in Just $ printModuleToString $ MakeModule.Scalars.makeModule moduleName scalarTypes
+                scalarTypes :: Array InstorpectionQueryResult__FullType
+                scalarTypes =
+                  introspectionQueryResult.__schema.types
+                  # Array.filter (\fullType -> fullType."kind" == TypeKind.Scalar)
+                  # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
+              in Just $ printModuleToString $ MakeModule.Scalars.makeModule moduleName scalarTypes
+      , "Mutation": do
+          (mutationType :: { name :: String }) <- introspectionQueryResult.__schema.mutationType
+          (mutation :: InstorpectionQueryResult__FullType) <- Array.find (\x -> x.name == mutationType.name) introspectionQueryResult.__schema.types
+          (fields :: Array InstorpectionQueryResult__Field) <- mutation.fields >>= case _ of
+                                                                                        [] -> Nothing
+                                                                                        arr -> Just arr
+
+          let moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Mutation"
+
+          Just $ printModuleToString $
+            MakeModule.Mutation.makeModule
+            nameToScope
+            importScalar
+            apiModuleName
+            instorpectionQueryResult__FullType__enum_names
+            instorpectionQueryResult__FullType__interface_names
+            instorpectionQueryResult__FullType__object_names
+            instorpectionQueryResult__FullType__union_names
+            moduleName
+            fields
+      , "Subscription": do
+          (subscriptionType :: { name :: String }) <- introspectionQueryResult.__schema.subscriptionType
+          (subscription :: InstorpectionQueryResult__FullType) <- Array.find (\x -> x.name == subscriptionType.name) introspectionQueryResult.__schema.types
+          (fields :: Array InstorpectionQueryResult__Field) <- subscription.fields >>= case _ of
+                                                                                        [] -> Nothing
+                                                                                        arr -> Just arr
+
+          let moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Subscription"
+
+          Just $ printModuleToString $
+            MakeModule.Subscription.makeModule
+            nameToScope
+            importScalar
+            apiModuleName
+            instorpectionQueryResult__FullType__enum_names
+            instorpectionQueryResult__FullType__interface_names
+            instorpectionQueryResult__FullType__object_names
+            instorpectionQueryResult__FullType__union_names
+            moduleName
+            fields
+      }
     }

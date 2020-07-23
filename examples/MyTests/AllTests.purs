@@ -12,6 +12,7 @@ import Examples.MyTests.Example06Typename as Examples.MyTests.Example06Typename
 import Examples.MyTests.Example08Foldr as Examples.MyTests.Example08Foldr
 import Examples.MyTests.Example10Github as Examples.MyTests.Example10Github
 import Examples.MyTests.Example11GithubPagination as Examples.MyTests.Example11GithubPagination
+import Examples.MyTests.Example12Mutation as Examples.MyTests.Example12Mutation
 
 allTests :: Test.Spec.Spec Unit
 allTests = Test.Spec.parallel do
@@ -25,3 +26,4 @@ allTests = Test.Spec.parallel do
   Examples.MyTests.Example08Foldr.spec
   Examples.MyTests.Example10Github.spec
   Examples.MyTests.Example11GithubPagination.spec
+  Examples.MyTests.Example12Mutation.spec
