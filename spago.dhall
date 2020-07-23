@@ -27,7 +27,7 @@ You can edit this file as you like.
   , "ps-cst"
   , "homogeneous-records"
   , "unordered-collection"
-  -- , "inflection"
+  , "web-socket"
   ]
 , packages = ./packages.dhall
 , sources = [ "generator/**/*.purs", "src/**/*.purs", "test/**/*.purs" ]
