@@ -30,5 +30,5 @@ You can edit this file as you like.
   , "web-socket"
   ]
 , packages = ./packages.dhall
-, sources = [ "generator/**/*.purs", "src/**/*.purs", "test/**/*.purs", "examples/**/*.purs" ]
+, sources = [ "generator/**/*.purs", "src/**/*.purs", "test/**/*.purs" ]
 }
