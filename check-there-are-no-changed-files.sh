@@ -22,7 +22,7 @@ function retry()
         done
 }
 
-retry 1 yarn run test
+retry 2 yarn run test
 
 ./regenerate-examples.sh
 
@@ -36,6 +36,6 @@ if [[ -n $changed_files ]]; then
   exit 1;
 fi
 
-retry 1 yarn run examples:test
+retry 2 yarn run examples:test
 
 echo 'SUCCESS'
