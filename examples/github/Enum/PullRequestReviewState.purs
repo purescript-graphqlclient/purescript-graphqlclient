@@ -1,8 +1,14 @@
 module Examples.Github.Enum.PullRequestReviewState where
 
-import Prelude
-import GraphqlClient
 import Data.Tuple
+  ( Tuple(..)
+  )
+import GraphqlClient
+  ( class GraphqlDefaultResponseScalarDecoder
+  , enumDecoder
+  , class ToGraphqlArgumentValue
+  , ArgumentValue(..)
+  )
 
 -- | original name - PullRequestReviewState
 data PullRequestReviewState

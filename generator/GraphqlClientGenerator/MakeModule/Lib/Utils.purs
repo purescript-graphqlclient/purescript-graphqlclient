@@ -1,14 +1,16 @@
 module GraphqlClientGenerator.MakeModule.Lib.Utils where
 
-import Protolude (Maybe(..), ($), (<>))
+import Language.PS.SmartCST
+import Language.PS.SmartCST
+import Protolude
 
-import Language.PS.CST (DataHead(..), Declaration(..), Expr(..), ProperName(..), Type(..))
-import Language.PS.CST.Sugar (nonQualifiedName)
+import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
 
 tupleDecl :: Type -> Type -> Type
 tupleDecl x y =
-  (TypeConstructor $ nonQualifiedName (ProperName "Tuple"))
+  (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Tuple"]) (ProperName "Tuple"))
   `TypeApp`
   x
   `TypeApp`
@@ -16,7 +18,7 @@ tupleDecl x y =
 
 tupleExpr :: Expr -> Expr -> Expr
 tupleExpr x y =
-  (ExprConstructor $ nonQualifiedName (ProperName "Tuple"))
+  (ExprConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Tuple"]) (ConstructorProperName { constructor: ProperName "Tuple", type_: ProperName "Tuple" }))
   `ExprApp`
   x
   `ExprApp`
@@ -31,3 +33,19 @@ declDataWithoutConstructors name = DeclData
       }
   , constructors: []
   }
+
+appendToModule :: ModuleName -> Array String -> ModuleName
+appendToModule (ModuleName xs) = ModuleName <<< NonEmpty.appendArray xs <<< map ProperName
+
+qualifyScope :: NonEmptyArray String -> String -> SmartQualifiedName (ProperName ProperNameType_TypeName)
+qualifyScope apiModuleName scopeName =
+  let
+    shouldBeImportedFromGraphqlClient =
+      case scopeName of
+           "Scope__RootSubscription" -> true
+           "Scope__RootMutation" -> true
+           "Scope__RootQuery" -> true
+           _ -> false
+  in if shouldBeImportedFromGraphqlClient
+       then SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphqlClient") $ ProperName scopeName
+       else SmartQualifiedName__Simple (mkModuleName $ apiModuleName <> NonEmpty.singleton "Scopes") $ ProperName scopeName

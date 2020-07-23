@@ -1,15 +1,37 @@
 module Examples.Swapi.Query where
 
-import Prelude
-import GraphqlClient
-import Data.Maybe
-import Examples.Swapi.InputObject
-import Type.Row
-import Examples.Swapi.Enum.Episode
-import Examples.Swapi.Enum.Language
-import Examples.Swapi.Enum.Phrase
-import Examples.Swapi.Scopes
 import Examples.SwapiCustomScalars
+  ( Id
+  , PosixTime
+  )
+import Type.Row
+  ( type (+)
+  )
+import GraphqlClient
+  ( SelectionSet
+  , Scope__RootQuery
+  , selectionForCompositeField
+  , toGraphqlArguments
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  , Optional
+  )
+import Examples.Swapi.Scopes
+  ( Scope__Droid
+  , Scope__Character
+  , Scope__CharacterUnion
+  , Scope__Human
+  )
+import Data.Maybe
+  ( Maybe
+  )
+import Examples.Swapi.InputObject
+  ( Greeting
+  ) as Examples.Swapi.InputObject
+import Examples.Swapi.Enum.Episode
+  ( Episode
+  )
 
 type DroidInputRowRequired r = ( id :: Id
                                | r
@@ -23,7 +45,7 @@ droid input = selectionForCompositeField "droid" (toGraphqlArguments input) grap
 forcedError :: SelectionSet Scope__RootQuery (Maybe String)
 forcedError = selectionForField "forcedError" [] graphqlDefaultResponseScalarDecoder
 
-type GreetInputRowRequired r = ( input :: Greeting
+type GreetInputRowRequired r = ( input :: Examples.Swapi.InputObject.Greeting
                                | r
                                )
 

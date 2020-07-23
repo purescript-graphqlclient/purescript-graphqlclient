@@ -9,8 +9,8 @@ import Data.Array.NonEmpty as NonEmpty
 import Data.Generic.Rep.Show (genericShow)
 import Data.Maybe as Maybe
 import Data.String as String
-import Language.PS.CST (ModuleName)
-import Language.PS.CST.Sugar (mkModuleName)
+import Language.PS.SmartCST
+import Language.PS.SmartCST
 import Node.Path (FilePath)
 import Options.Applicative (Parser, ParserInfo, ReadM, fullDesc, header, help, helper, info, long, many, metavar, option, progDesc, showDefault, strOption, value, (<**>))
 import Options.Applicative.Builder (eitherReader)

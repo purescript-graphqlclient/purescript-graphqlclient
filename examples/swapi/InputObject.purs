@@ -1,13 +1,11 @@
 module Examples.Swapi.InputObject where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
-import Examples.Swapi.Scopes
-import Examples.SwapiCustomScalars
-import Examples.Swapi.Enum.Episode
+  ( Optional
+  )
 import Examples.Swapi.Enum.Language
-import Examples.Swapi.Enum.Phrase
+  ( Language
+  )
 
 -- | original name - Greeting
 type Greeting = { language :: Optional Language

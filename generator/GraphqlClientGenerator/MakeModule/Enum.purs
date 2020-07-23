@@ -2,8 +2,8 @@ module GraphqlClientGenerator.MakeModule.Enum where
 
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__EnumValue, InstorpectionQueryResult__FullType)
 import GraphqlClientGenerator.MakeModule.Lib.Utils (tupleDecl, tupleExpr)
-import Language.PS.CST (Binder(..), Comments(..), DataCtor(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), ImportDecl(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..))
-import Language.PS.CST.Sugar (arrayType, mkModuleName, nonQualifiedExprIdent, nonQualifiedName, nonQualifiedNameExprConstructor, nonQualifiedNameTypeConstructor)
+import Language.PS.SmartCST
+import Language.PS.SmartCST
 import Protolude (type ($), Maybe(..), flip, fromMaybe, join, maybe, (#), ($), (<#>), (<>))
 
 import Data.Array.NonEmpty (NonEmptyArray)
@@ -18,23 +18,6 @@ makeModule moduleName fullType =
   in
   Module
   { moduleName
-  , imports:
-    [ ImportDecl
-      { moduleName: mkModuleName $ NonEmpty.singleton "Prelude"
-      , names: []
-      , qualification: Nothing
-      }
-    , ImportDecl
-      { moduleName: mkModuleName $ NonEmpty.singleton "GraphqlClient"
-      , names: []
-      , qualification: Nothing
-      }
-    , ImportDecl
-      { moduleName: mkModuleName $ NonEmpty.cons' "Data" ["Tuple"]
-      , names: []
-      , qualification: Nothing
-      }
-    ]
   , exports: []
   , declarations:
     [ DeclData
@@ -51,7 +34,12 @@ makeModule moduleName fullType =
     , DeclSignature
       { comments: Nothing
       , ident: Ident "fromToMap"
-      , type_: arrayType (tupleDecl (nonQualifiedNameTypeConstructor "String") (nonQualifiedNameTypeConstructor $ StringsExtra.pascalCase fullType.name))
+      , type_:
+        arrayType
+          ( tupleDecl
+            (TypeConstructor $ SmartQualifiedName__Ignore $ ProperName "String")
+            (TypeConstructor $ SmartQualifiedName__Ignore $ ProperName $ StringsExtra.pascalCase fullType.name)
+          )
       }
     , DeclValue
       { comments: Nothing
@@ -62,7 +50,17 @@ makeModule moduleName fullType =
           { expr: ExprArray
               ( fullType.enumValues
               # fromMaybe []
-              <#> (\field -> tupleExpr (ExprString field.name) (ExprConstructor $ nonQualifiedName (ProperName $ StringsExtra.pascalCase field.name)))
+              <#> (\field ->
+                    tupleExpr
+                    (ExprString field.name)
+                    (ExprConstructor $ SmartQualifiedName__Ignore
+                      (ConstructorProperName
+                        { constructor: ProperName $ StringsExtra.pascalCase field.name
+                        , type_: ProperName "WONT_BE_RENDERED"
+                        }
+                      )
+                    )
+                  )
               )
           , whereBindings: []
           }
@@ -73,21 +71,21 @@ makeModule moduleName fullType =
         , instances:
           NonEmpty.singleton
           { head:
-            { instClass: nonQualifiedName (ProperName "GraphqlDefaultResponseScalarDecoder" )
+            { instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) (ProperName "GraphqlDefaultResponseScalarDecoder" )
             , instConstraints: []
             , instName: Ident (StringsExtra.camelCase fullType.name <> "GraphqlDefaultResponseScalarDecoder")
-            , instTypes: NonEmpty.singleton $ nonQualifiedNameTypeConstructor (StringsExtra.pascalCase fullType.name)
+            , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Ignore $ ProperName (StringsExtra.pascalCase fullType.name)
             }
           , body:
             [ InstanceBindingName
               { binders: []
               , guarded: Unconditional
                 { expr:
-                  (ExprIdent (nonQualifiedName $ Ident "enumDecoder"))
+                  (ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ Ident "enumDecoder"))
                   `ExprApp`
                   (ExprString (StringsExtra.pascalCase fullType.name))
                   `ExprApp`
-                  (ExprIdent (nonQualifiedName $ Ident "fromToMap"))
+                  (ExprIdent (SmartQualifiedName__Ignore $ Ident "fromToMap"))
                 , whereBindings: []
                 }
               , name: Ident "graphqlDefaultResponseScalarDecoder"
@@ -100,10 +98,10 @@ makeModule moduleName fullType =
         , instances:
           NonEmpty.singleton
           { head:
-            { instClass: nonQualifiedName (ProperName "ToGraphqlArgumentValue" )
+            { instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) (ProperName "ToGraphqlArgumentValue" )
             , instConstraints: []
             , instName: Ident (StringsExtra.camelCase fullType.name <> "ToGraphqlArgumentValue")
-            , instTypes: NonEmpty.singleton $ nonQualifiedNameTypeConstructor (StringsExtra.pascalCase fullType.name)
+            , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Ignore $ ProperName (StringsExtra.pascalCase fullType.name)
             }
           , body:
             [InstanceBindingName
@@ -111,14 +109,30 @@ makeModule moduleName fullType =
               , binders: []
               , guarded: Unconditional
                 { whereBindings: []
-                , expr: flip (maybe (nonQualifiedExprIdent "ERROR_IS_EMPTY_ARRAY")) enumValues' \enumValues'' ->
+                , expr: flip (maybe (ExprIdent $ SmartQualifiedName__Ignore $ Ident "ERROR_IS_EMPTY_ARRAY")) enumValues' \enumValues'' ->
                   ExprCase
                     { head: NonEmpty.singleton ExprSection
                     , branches: enumValues'' <#> \enumValue ->
-                        { binders: NonEmpty.singleton (BinderConstructor { name: nonQualifiedName $ ProperName $ StringsExtra.pascalCase enumValue.name, args: [] })
+                        { binders: NonEmpty.singleton (
+                            BinderConstructor
+                              { name: SmartQualifiedName__Ignore
+                                (ConstructorProperName
+                                  { constructor: ProperName (StringsExtra.pascalCase enumValue.name)
+                                  , type_:  ProperName "WONT_BE_RENDERED"
+                                  }
+                                )
+                              , args: []
+                              }
+                          )
                         , body: Unconditional
                             { whereBindings: []
-                            , expr: (nonQualifiedNameExprConstructor "ArgumentValueEnum") `ExprApp` (ExprString enumValue.name)
+                            , expr:
+                              (ExprConstructor $
+                                SmartQualifiedName__Simple
+                                (mkModuleName $ NonEmpty.singleton "GraphqlClient")
+                                (ConstructorProperName { constructor: ProperName "ArgumentValueEnum", type_: ProperName "ArgumentValue" }))
+                              `ExprApp`
+                              (ExprString enumValue.name)
                             }
                         }
                     }

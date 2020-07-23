@@ -4,14 +4,14 @@ import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
-import GraphqlClientGenerator.MakeModule.Lib.Imports as Imports
-import Language.PS.CST (ImportDecl(..), Module(..), ModuleName)
-import Language.PS.CST.Sugar (mkModuleName)
+
+import Language.PS.SmartCST
+import Language.PS.SmartCST
 import Protolude (Maybe(..), ($), (<#>), (<>))
 
 makeModule
   :: (String -> String)
-  -> ImportDecl
+  -> ModuleName
   -> NonEmptyArray String
   -> Array String
   -> Array String
@@ -22,7 +22,7 @@ makeModule
   -> Module
 makeModule
   nameToScope
-  importScalar
+  scalarModule
   apiModuleName
   instorpectionMutationResult__FullType__enum_names
   instorpectionMutationResult__FullType__interface_names
@@ -31,23 +31,6 @@ makeModule
   moduleName
   fields = Module
   { moduleName
-  , imports:
-      Imports.imports apiModuleName <>
-      (instorpectionMutationResult__FullType__enum_names <#>
-        (\name -> ImportDecl
-          { moduleName: mkModuleName $ apiModuleName <> NonEmpty.cons' "Enum" [name]
-          , names: []
-          , qualification: Nothing
-          }
-        )
-      ) <>
-      [ ImportDecl
-        { moduleName: mkModuleName $ apiModuleName <> NonEmpty.singleton "Scopes"
-        , names: []
-        , qualification: Nothing
-        }
-      , importScalar
-      ]
   , exports: []
-  , declarations: DeclarationsForFields.declarationsForFields nameToScope "RootMutation" fields
+  , declarations: DeclarationsForFields.declarationsForFields { apiModuleName, scalarModule } nameToScope "RootMutation" fields
   }

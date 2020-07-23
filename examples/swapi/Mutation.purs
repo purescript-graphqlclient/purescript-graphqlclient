@@ -1,15 +1,29 @@
 module Examples.Swapi.Mutation where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
-import Examples.Swapi.InputObject
-import Type.Row
-import Examples.Swapi.Enum.Episode
-import Examples.Swapi.Enum.Language
-import Examples.Swapi.Enum.Phrase
-import Examples.Swapi.Scopes
+  ( SelectionSet
+  , Scope__RootMutation
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  , selectionForCompositeField
+  , toGraphqlArguments
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+  )
 import Examples.SwapiCustomScalars
+  ( Id
+  )
+import Examples.Swapi.Enum.Phrase
+  ( Phrase
+  )
+import Type.Row
+  ( type (+)
+  )
+import Examples.Swapi.Scopes
+  ( Scope__ChatMessage
+  )
+import Data.Maybe
+  ( Maybe
+  )
 
 increment :: SelectionSet Scope__RootMutation Int
 increment = selectionForField "increment" [] graphqlDefaultResponseScalarDecoder

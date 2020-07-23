@@ -1,8 +1,14 @@
 module Examples.Github.Enum.TeamPrivacy where
 
-import Prelude
-import GraphqlClient
 import Data.Tuple
+  ( Tuple(..)
+  )
+import GraphqlClient
+  ( class GraphqlDefaultResponseScalarDecoder
+  , enumDecoder
+  , class ToGraphqlArgumentValue
+  , ArgumentValue(..)
+  )
 
 -- | original name - TeamPrivacy
 data TeamPrivacy

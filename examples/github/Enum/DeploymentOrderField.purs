@@ -1,8 +1,14 @@
 module Examples.Github.Enum.DeploymentOrderField where
 
-import Prelude
-import GraphqlClient
 import Data.Tuple
+  ( Tuple(..)
+  )
+import GraphqlClient
+  ( class GraphqlDefaultResponseScalarDecoder
+  , enumDecoder
+  , class ToGraphqlArgumentValue
+  , ArgumentValue(..)
+  )
 
 -- | original name - DeploymentOrderField
 data DeploymentOrderField

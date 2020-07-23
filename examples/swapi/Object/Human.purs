@@ -1,15 +1,25 @@
 module Examples.Swapi.Object.Human where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
-import Examples.Swapi.InputObject
-import Type.Row
-import Examples.Swapi.Enum.Episode
-import Examples.Swapi.Enum.Language
-import Examples.Swapi.Enum.Phrase
+  ( SelectionSet
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  , selectionForCompositeField
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+  )
 import Examples.Swapi.Scopes
+  ( Scope__Human
+  , Scope__Character
+  )
+import Examples.Swapi.Enum.Episode
+  ( Episode
+  )
+import Data.Maybe
+  ( Maybe
+  )
 import Examples.SwapiCustomScalars
+  ( Id
+  )
 
 appearsIn :: SelectionSet Scope__Human (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder

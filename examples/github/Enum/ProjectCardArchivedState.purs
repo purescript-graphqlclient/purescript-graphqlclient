@@ -1,8 +1,14 @@
 module Examples.Github.Enum.ProjectCardArchivedState where
 
-import Prelude
-import GraphqlClient
 import Data.Tuple
+  ( Tuple(..)
+  )
+import GraphqlClient
+  ( class GraphqlDefaultResponseScalarDecoder
+  , enumDecoder
+  , class ToGraphqlArgumentValue
+  , ArgumentValue(..)
+  )
 
 -- | original name - ProjectCardArchivedState
 data ProjectCardArchivedState

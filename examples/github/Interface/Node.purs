@@ -1,139 +1,204 @@
 module Examples.Github.Interface.Node where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
-import Examples.Github.InputObject
-import Type.Row
+  ( SelectionSet
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  , exhaustiveFragmentSelection
+  , buildFragment
+  )
 import Examples.Github.Scopes
+  ( Scope__Node
+  , Scope__AddedToProjectEvent
+  , Scope__App
+  , Scope__AssignedEvent
+  , Scope__AutomaticBaseChangeFailedEvent
+  , Scope__AutomaticBaseChangeSucceededEvent
+  , Scope__BaseRefChangedEvent
+  , Scope__BaseRefForcePushedEvent
+  , Scope__Blob
+  , Scope__Bot
+  , Scope__BranchProtectionRule
+  , Scope__ClosedEvent
+  , Scope__CodeOfConduct
+  , Scope__CommentDeletedEvent
+  , Scope__Commit
+  , Scope__CommitComment
+  , Scope__CommitCommentThread
+  , Scope__ConnectedEvent
+  , Scope__ConvertToDraftEvent
+  , Scope__ConvertedNoteToIssueEvent
+  , Scope__CrossReferencedEvent
+  , Scope__DemilestonedEvent
+  , Scope__DeployKey
+  , Scope__DeployedEvent
+  , Scope__Deployment
+  , Scope__DeploymentEnvironmentChangedEvent
+  , Scope__DeploymentStatus
+  , Scope__DisconnectedEvent
+  , Scope__Enterprise
+  , Scope__EnterpriseAdministratorInvitation
+  , Scope__EnterpriseIdentityProvider
+  , Scope__EnterpriseRepositoryInfo
+  , Scope__EnterpriseServerInstallation
+  , Scope__EnterpriseServerUserAccount
+  , Scope__EnterpriseServerUserAccountEmail
+  , Scope__EnterpriseServerUserAccountsUpload
+  , Scope__EnterpriseUserAccount
+  , Scope__ExternalIdentity
+  , Scope__Gist
+  , Scope__GistComment
+  , Scope__HeadRefDeletedEvent
+  , Scope__HeadRefForcePushedEvent
+  , Scope__HeadRefRestoredEvent
+  , Scope__IpAllowListEntry
+  , Scope__Issue
+  , Scope__IssueComment
+  , Scope__Label
+  , Scope__LabeledEvent
+  , Scope__Language
+  , Scope__License
+  , Scope__LockedEvent
+  , Scope__Mannequin
+  , Scope__MarkedAsDuplicateEvent
+  , Scope__MarketplaceCategory
+  , Scope__MarketplaceListing
+  , Scope__MembersCanDeleteReposClearAuditEntry
+  , Scope__MembersCanDeleteReposDisableAuditEntry
+  , Scope__MembersCanDeleteReposEnableAuditEntry
+  , Scope__MentionedEvent
+  , Scope__MergedEvent
+  , Scope__Milestone
+  , Scope__MilestonedEvent
+  , Scope__MovedColumnsInProjectEvent
+  , Scope__OauthApplicationCreateAuditEntry
+  , Scope__OrgAddBillingManagerAuditEntry
+  , Scope__OrgAddMemberAuditEntry
+  , Scope__OrgBlockUserAuditEntry
+  , Scope__OrgConfigDisableCollaboratorsOnlyAuditEntry
+  , Scope__OrgConfigEnableCollaboratorsOnlyAuditEntry
+  , Scope__OrgCreateAuditEntry
+  , Scope__OrgDisableOauthAppRestrictionsAuditEntry
+  , Scope__OrgDisableSamlAuditEntry
+  , Scope__OrgDisableTwoFactorRequirementAuditEntry
+  , Scope__OrgEnableOauthAppRestrictionsAuditEntry
+  , Scope__OrgEnableSamlAuditEntry
+  , Scope__OrgEnableTwoFactorRequirementAuditEntry
+  , Scope__OrgInviteMemberAuditEntry
+  , Scope__OrgInviteToBusinessAuditEntry
+  , Scope__OrgOauthAppAccessApprovedAuditEntry
+  , Scope__OrgOauthAppAccessDeniedAuditEntry
+  , Scope__OrgOauthAppAccessRequestedAuditEntry
+  , Scope__OrgRemoveBillingManagerAuditEntry
+  , Scope__OrgRemoveMemberAuditEntry
+  , Scope__OrgRemoveOutsideCollaboratorAuditEntry
+  , Scope__OrgRestoreMemberAuditEntry
+  , Scope__OrgUnblockUserAuditEntry
+  , Scope__OrgUpdateDefaultRepositoryPermissionAuditEntry
+  , Scope__OrgUpdateMemberAuditEntry
+  , Scope__OrgUpdateMemberRepositoryCreationPermissionAuditEntry
+  , Scope__OrgUpdateMemberRepositoryInvitationPermissionAuditEntry
+  , Scope__Organization
+  , Scope__OrganizationIdentityProvider
+  , Scope__OrganizationInvitation
+  , Scope__Package
+  , Scope__PackageFile
+  , Scope__PackageTag
+  , Scope__PackageVersion
+  , Scope__PinnedEvent
+  , Scope__PrivateRepositoryForkingDisableAuditEntry
+  , Scope__PrivateRepositoryForkingEnableAuditEntry
+  , Scope__Project
+  , Scope__ProjectCard
+  , Scope__ProjectColumn
+  , Scope__PublicKey
+  , Scope__PullRequest
+  , Scope__PullRequestCommit
+  , Scope__PullRequestCommitCommentThread
+  , Scope__PullRequestReview
+  , Scope__PullRequestReviewComment
+  , Scope__PullRequestReviewThread
+  , Scope__PushAllowance
+  , Scope__Reaction
+  , Scope__ReadyForReviewEvent
+  , Scope__Ref
+  , Scope__ReferencedEvent
+  , Scope__Release
+  , Scope__ReleaseAsset
+  , Scope__RemovedFromProjectEvent
+  , Scope__RenamedTitleEvent
+  , Scope__ReopenedEvent
+  , Scope__RepoAccessAuditEntry
+  , Scope__RepoAddMemberAuditEntry
+  , Scope__RepoAddTopicAuditEntry
+  , Scope__RepoArchivedAuditEntry
+  , Scope__RepoChangeMergeSettingAuditEntry
+  , Scope__RepoConfigDisableAnonymousGitAccessAuditEntry
+  , Scope__RepoConfigDisableCollaboratorsOnlyAuditEntry
+  , Scope__RepoConfigDisableContributorsOnlyAuditEntry
+  , Scope__RepoConfigDisableSockpuppetDisallowedAuditEntry
+  , Scope__RepoConfigEnableAnonymousGitAccessAuditEntry
+  , Scope__RepoConfigEnableCollaboratorsOnlyAuditEntry
+  , Scope__RepoConfigEnableContributorsOnlyAuditEntry
+  , Scope__RepoConfigEnableSockpuppetDisallowedAuditEntry
+  , Scope__RepoConfigLockAnonymousGitAccessAuditEntry
+  , Scope__RepoConfigUnlockAnonymousGitAccessAuditEntry
+  , Scope__RepoCreateAuditEntry
+  , Scope__RepoDestroyAuditEntry
+  , Scope__RepoRemoveMemberAuditEntry
+  , Scope__RepoRemoveTopicAuditEntry
+  , Scope__Repository
+  , Scope__RepositoryInvitation
+  , Scope__RepositoryTopic
+  , Scope__RepositoryVisibilityChangeDisableAuditEntry
+  , Scope__RepositoryVisibilityChangeEnableAuditEntry
+  , Scope__RepositoryVulnerabilityAlert
+  , Scope__ReviewDismissalAllowance
+  , Scope__ReviewDismissedEvent
+  , Scope__ReviewRequest
+  , Scope__ReviewRequestRemovedEvent
+  , Scope__ReviewRequestedEvent
+  , Scope__SavedReply
+  , Scope__SecurityAdvisory
+  , Scope__SponsorsListing
+  , Scope__SponsorsTier
+  , Scope__Sponsorship
+  , Scope__Status
+  , Scope__StatusCheckRollup
+  , Scope__StatusContext
+  , Scope__SubscribedEvent
+  , Scope__Tag
+  , Scope__Team
+  , Scope__TeamAddMemberAuditEntry
+  , Scope__TeamAddRepositoryAuditEntry
+  , Scope__TeamChangeParentTeamAuditEntry
+  , Scope__TeamDiscussion
+  , Scope__TeamDiscussionComment
+  , Scope__TeamRemoveMemberAuditEntry
+  , Scope__TeamRemoveRepositoryAuditEntry
+  , Scope__Topic
+  , Scope__TransferredEvent
+  , Scope__Tree
+  , Scope__UnassignedEvent
+  , Scope__UnlabeledEvent
+  , Scope__UnlockedEvent
+  , Scope__UnmarkedAsDuplicateEvent
+  , Scope__UnpinnedEvent
+  , Scope__UnsubscribedEvent
+  , Scope__User
+  , Scope__UserBlockedEvent
+  , Scope__UserContentEdit
+  , Scope__UserStatus
+  )
 import Examples.Github.Scalars
-import Examples.Github.Enum.ActionExecutionCapabilitySetting
-import Examples.Github.Enum.AuditLogOrderField
-import Examples.Github.Enum.CollaboratorAffiliation
-import Examples.Github.Enum.CommentAuthorAssociation
-import Examples.Github.Enum.CommentCannotUpdateReason
-import Examples.Github.Enum.CommitContributionOrderField
-import Examples.Github.Enum.DefaultRepositoryPermissionField
-import Examples.Github.Enum.DeploymentOrderField
-import Examples.Github.Enum.DeploymentState
-import Examples.Github.Enum.DeploymentStatusState
-import Examples.Github.Enum.DiffSide
-import Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField
-import Examples.Github.Enum.EnterpriseAdministratorRole
-import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
-import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
-import Examples.Github.Enum.EnterpriseEnabledSettingValue
-import Examples.Github.Enum.EnterpriseMemberOrderField
-import Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue
-import Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue
-import Examples.Github.Enum.EnterpriseServerInstallationOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountEmailOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountsUploadOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountsUploadSyncState
-import Examples.Github.Enum.EnterpriseUserAccountMembershipRole
-import Examples.Github.Enum.EnterpriseUserDeployment
-import Examples.Github.Enum.FundingPlatform
-import Examples.Github.Enum.GistOrderField
-import Examples.Github.Enum.GistPrivacy
-import Examples.Github.Enum.GitSignatureState
-import Examples.Github.Enum.IdentityProviderConfigurationState
-import Examples.Github.Enum.IpAllowListEnabledSettingValue
-import Examples.Github.Enum.IpAllowListEntryOrderField
-import Examples.Github.Enum.IssueOrderField
-import Examples.Github.Enum.IssueState
-import Examples.Github.Enum.IssueTimelineItemsItemType
-import Examples.Github.Enum.LabelOrderField
-import Examples.Github.Enum.LanguageOrderField
-import Examples.Github.Enum.LockReason
-import Examples.Github.Enum.MergeableState
-import Examples.Github.Enum.MilestoneOrderField
-import Examples.Github.Enum.MilestoneState
-import Examples.Github.Enum.OauthApplicationCreateAuditEntryState
-import Examples.Github.Enum.OperationType
-import Examples.Github.Enum.OrderDirection
-import Examples.Github.Enum.OrgAddMemberAuditEntryPermission
-import Examples.Github.Enum.OrgCreateAuditEntryBillingPlan
-import Examples.Github.Enum.OrgRemoveBillingManagerAuditEntryReason
-import Examples.Github.Enum.OrgRemoveMemberAuditEntryMembershipType
-import Examples.Github.Enum.OrgRemoveMemberAuditEntryReason
-import Examples.Github.Enum.OrgRemoveOutsideCollaboratorAuditEntryMembershipType
-import Examples.Github.Enum.OrgRemoveOutsideCollaboratorAuditEntryReason
-import Examples.Github.Enum.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
-import Examples.Github.Enum.OrgUpdateMemberAuditEntryPermission
-import Examples.Github.Enum.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
-import Examples.Github.Enum.OrganizationInvitationRole
-import Examples.Github.Enum.OrganizationInvitationType
-import Examples.Github.Enum.OrganizationMemberRole
-import Examples.Github.Enum.OrganizationMembersCanCreateRepositoriesSettingValue
-import Examples.Github.Enum.OrganizationOrderField
-import Examples.Github.Enum.PackageFileOrderField
-import Examples.Github.Enum.PackageOrderField
-import Examples.Github.Enum.PackageType
-import Examples.Github.Enum.PackageVersionOrderField
-import Examples.Github.Enum.PinnableItemType
-import Examples.Github.Enum.ProjectCardArchivedState
-import Examples.Github.Enum.ProjectCardState
-import Examples.Github.Enum.ProjectColumnPurpose
-import Examples.Github.Enum.ProjectOrderField
-import Examples.Github.Enum.ProjectState
-import Examples.Github.Enum.ProjectTemplate
-import Examples.Github.Enum.PullRequestMergeMethod
-import Examples.Github.Enum.PullRequestOrderField
-import Examples.Github.Enum.PullRequestReviewCommentState
-import Examples.Github.Enum.PullRequestReviewDecision
-import Examples.Github.Enum.PullRequestReviewEvent
-import Examples.Github.Enum.PullRequestReviewState
-import Examples.Github.Enum.PullRequestState
-import Examples.Github.Enum.PullRequestTimelineItemsItemType
-import Examples.Github.Enum.PullRequestUpdateState
-import Examples.Github.Enum.ReactionContent
-import Examples.Github.Enum.ReactionOrderField
-import Examples.Github.Enum.RefOrderField
-import Examples.Github.Enum.ReleaseOrderField
-import Examples.Github.Enum.RepoAccessAuditEntryVisibility
-import Examples.Github.Enum.RepoAddMemberAuditEntryVisibility
-import Examples.Github.Enum.RepoArchivedAuditEntryVisibility
-import Examples.Github.Enum.RepoChangeMergeSettingAuditEntryMergeType
-import Examples.Github.Enum.RepoCreateAuditEntryVisibility
-import Examples.Github.Enum.RepoDestroyAuditEntryVisibility
-import Examples.Github.Enum.RepoRemoveMemberAuditEntryVisibility
-import Examples.Github.Enum.ReportedContentClassifiers
-import Examples.Github.Enum.RepositoryAffiliation
-import Examples.Github.Enum.RepositoryContributionType
-import Examples.Github.Enum.RepositoryInvitationOrderField
-import Examples.Github.Enum.RepositoryLockReason
-import Examples.Github.Enum.RepositoryOrderField
-import Examples.Github.Enum.RepositoryPermission
-import Examples.Github.Enum.RepositoryPrivacy
-import Examples.Github.Enum.RepositoryVisibility
-import Examples.Github.Enum.SamlDigestAlgorithm
-import Examples.Github.Enum.SamlSignatureAlgorithm
-import Examples.Github.Enum.SavedReplyOrderField
-import Examples.Github.Enum.SearchType
-import Examples.Github.Enum.SecurityAdvisoryEcosystem
-import Examples.Github.Enum.SecurityAdvisoryIdentifierType
-import Examples.Github.Enum.SecurityAdvisoryOrderField
-import Examples.Github.Enum.SecurityAdvisorySeverity
-import Examples.Github.Enum.SecurityVulnerabilityOrderField
-import Examples.Github.Enum.SponsorsTierOrderField
-import Examples.Github.Enum.SponsorshipOrderField
-import Examples.Github.Enum.SponsorshipPrivacy
-import Examples.Github.Enum.StarOrderField
-import Examples.Github.Enum.StatusState
-import Examples.Github.Enum.SubscriptionState
-import Examples.Github.Enum.TeamDiscussionCommentOrderField
-import Examples.Github.Enum.TeamDiscussionOrderField
-import Examples.Github.Enum.TeamMemberOrderField
-import Examples.Github.Enum.TeamMemberRole
-import Examples.Github.Enum.TeamMembershipType
-import Examples.Github.Enum.TeamOrderField
-import Examples.Github.Enum.TeamPrivacy
-import Examples.Github.Enum.TeamRepositoryOrderField
-import Examples.Github.Enum.TeamRole
-import Examples.Github.Enum.TopicSuggestionDeclineReason
-import Examples.Github.Enum.UserBlockDuration
-import Examples.Github.Enum.UserStatusOrderField
+  ( Id
+  )
+import Data.Maybe
+  ( Maybe(..)
+  )
+import Prelude
+  ( pure
+  )
 
 id :: SelectionSet Scope__Node Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder

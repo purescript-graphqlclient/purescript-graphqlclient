@@ -1,15 +1,25 @@
 module Examples.Swapi.Object.Droid where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
-import Examples.Swapi.InputObject
-import Type.Row
-import Examples.Swapi.Enum.Episode
-import Examples.Swapi.Enum.Language
-import Examples.Swapi.Enum.Phrase
+  ( SelectionSet
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  , selectionForCompositeField
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+  )
 import Examples.Swapi.Scopes
+  ( Scope__Droid
+  , Scope__Character
+  )
+import Examples.Swapi.Enum.Episode
+  ( Episode
+  )
 import Examples.SwapiCustomScalars
+  ( Id
+  )
+import Data.Maybe
+  ( Maybe
+  )
 
 appearsIn :: SelectionSet Scope__Droid (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder

@@ -1,34 +1,18 @@
 module GraphqlClientGenerator.MakeModule.Scalars where
 
-import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
-import Language.PS.CST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), ImportDecl(..), Module(..), ModuleName, ProperName(..), Type(..))
-import Language.PS.CST.Sugar (mkModuleName, nonQualifiedName, stringType)
-import Protolude (Maybe(..), (#), ($), (<#>), (<>))
+import Language.PS.SmartCST
+import Language.PS.SmartCST
 
 import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty
+import Data.NonEmpty (NonEmpty(..))
 import Data.String.Extra as StringsExtra
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
+import Protolude (Maybe(..), (#), ($), (<#>), (<>))
 
 makeModule :: ModuleName -> Array InstorpectionQueryResult__FullType -> Module
 makeModule moduleName scalarTypes = Module
   { moduleName
-  , imports:
-    [ ImportDecl
-      { moduleName: mkModuleName $ NonEmpty.singleton "Prelude"
-      , names: []
-      , qualification: Nothing
-      }
-    , ImportDecl
-      { moduleName: mkModuleName $ NonEmpty.singleton "GraphqlClient"
-      , names: []
-      , qualification: Nothing
-      }
-    , ImportDecl
-      { moduleName: mkModuleName $ NonEmpty.cons' "Data" ["Newtype"]
-      , names: []
-      , qualification: Nothing
-      }
-    ]
   , exports: []
   , declarations:
       scalarTypes <#>
@@ -37,15 +21,15 @@ makeModule moduleName scalarTypes = Module
           pascalName :: String
           pascalName = StringsExtra.pascalCase scalarType.name
 
-          mkDeriveAsNewtype :: String -> Declaration
-          mkDeriveAsNewtype typeName = DeclDerive
+          mkDeriveAsNewtype :: String -> ModuleName -> Declaration
+          mkDeriveAsNewtype typeName module_ = DeclDerive
             { comments: Nothing
             , deriveType: DeclDeriveType_Newtype
             , head:
               { instName: Ident $ StringsExtra.camelCase typeName <> pascalName
               , instConstraints: []
-              , instClass: nonQualifiedName $ ProperName typeName
-              , instTypes: NonEmpty.singleton $ TypeConstructor $ nonQualifiedName $ ProperName pascalName
+              , instClass: SmartQualifiedName__Simple module_ $ ProperName typeName
+              , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName
               }
             }
         in
@@ -58,31 +42,21 @@ makeModule moduleName scalarTypes = Module
               }
             , type_: stringType
             }
-          , mkDeriveAsNewtype "Eq"
-          , mkDeriveAsNewtype "Ord"
-          , mkDeriveAsNewtype "Show"
+          , mkDeriveAsNewtype "Eq" (mkModuleName $ NonEmpty.singleton "Prelude")
+          , mkDeriveAsNewtype "Ord" (mkModuleName $ NonEmpty.singleton "Prelude")
+          , mkDeriveAsNewtype "Show" (mkModuleName $ NonEmpty.singleton "Prelude")
           , DeclDerive
             { comments: Nothing
             , deriveType: DeclDeriveType_Odrinary
             , head:
               { instName: Ident $ "newtype" <> pascalName
               , instConstraints: []
-              , instClass: nonQualifiedName $ ProperName "Newtype"
-              , instTypes: NonEmpty.cons' (TypeConstructor $ nonQualifiedName $ ProperName pascalName) [TypeWildcard]
+              , instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Newtype"]) $ ProperName "Newtype"
+              , instTypes: NonEmpty.cons' (TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName) [TypeWildcard]
               }
             }
-          -- | , DeclDerive
-          -- |   { comments: Nothing
-          -- |   , deriveType: DeclDeriveType_Odrinary
-          -- |   , head:
-          -- |     { instName: Ident $ "generic" <> pascalName
-          -- |     , instConstraints: []
-          -- |     , instClass: nonQualifiedName $ ProperName "Generic"
-          -- |     , instTypes: (TypeConstructor $ nonQualifiedName $ ProperName pascalName) :| [TypeWildcard]
-          -- |     }
-          -- |   }
-          , mkDeriveAsNewtype "GraphqlDefaultResponseScalarDecoder"
-          , mkDeriveAsNewtype "ToGraphqlArgumentValue"
+          , mkDeriveAsNewtype "GraphqlDefaultResponseScalarDecoder" (mkModuleName $ NonEmpty.singleton "GraphqlClient")
+          , mkDeriveAsNewtype "ToGraphqlArgumentValue" (mkModuleName $ NonEmpty.singleton "GraphqlClient")
           ]
       )
       # Array.concat

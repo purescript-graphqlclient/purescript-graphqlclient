@@ -1,139 +1,93 @@
 module Examples.Github.Object.User where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
-import Examples.Github.InputObject
-import Type.Row
-import Examples.Github.Enum.ActionExecutionCapabilitySetting
-import Examples.Github.Enum.AuditLogOrderField
-import Examples.Github.Enum.CollaboratorAffiliation
-import Examples.Github.Enum.CommentAuthorAssociation
-import Examples.Github.Enum.CommentCannotUpdateReason
-import Examples.Github.Enum.CommitContributionOrderField
-import Examples.Github.Enum.DefaultRepositoryPermissionField
-import Examples.Github.Enum.DeploymentOrderField
-import Examples.Github.Enum.DeploymentState
-import Examples.Github.Enum.DeploymentStatusState
-import Examples.Github.Enum.DiffSide
-import Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField
-import Examples.Github.Enum.EnterpriseAdministratorRole
-import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
-import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
-import Examples.Github.Enum.EnterpriseEnabledSettingValue
-import Examples.Github.Enum.EnterpriseMemberOrderField
-import Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue
-import Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue
-import Examples.Github.Enum.EnterpriseServerInstallationOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountEmailOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountsUploadOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountsUploadSyncState
-import Examples.Github.Enum.EnterpriseUserAccountMembershipRole
-import Examples.Github.Enum.EnterpriseUserDeployment
-import Examples.Github.Enum.FundingPlatform
-import Examples.Github.Enum.GistOrderField
-import Examples.Github.Enum.GistPrivacy
-import Examples.Github.Enum.GitSignatureState
-import Examples.Github.Enum.IdentityProviderConfigurationState
-import Examples.Github.Enum.IpAllowListEnabledSettingValue
-import Examples.Github.Enum.IpAllowListEntryOrderField
-import Examples.Github.Enum.IssueOrderField
-import Examples.Github.Enum.IssueState
-import Examples.Github.Enum.IssueTimelineItemsItemType
-import Examples.Github.Enum.LabelOrderField
-import Examples.Github.Enum.LanguageOrderField
-import Examples.Github.Enum.LockReason
-import Examples.Github.Enum.MergeableState
-import Examples.Github.Enum.MilestoneOrderField
-import Examples.Github.Enum.MilestoneState
-import Examples.Github.Enum.OauthApplicationCreateAuditEntryState
-import Examples.Github.Enum.OperationType
-import Examples.Github.Enum.OrderDirection
-import Examples.Github.Enum.OrgAddMemberAuditEntryPermission
-import Examples.Github.Enum.OrgCreateAuditEntryBillingPlan
-import Examples.Github.Enum.OrgRemoveBillingManagerAuditEntryReason
-import Examples.Github.Enum.OrgRemoveMemberAuditEntryMembershipType
-import Examples.Github.Enum.OrgRemoveMemberAuditEntryReason
-import Examples.Github.Enum.OrgRemoveOutsideCollaboratorAuditEntryMembershipType
-import Examples.Github.Enum.OrgRemoveOutsideCollaboratorAuditEntryReason
-import Examples.Github.Enum.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
-import Examples.Github.Enum.OrgUpdateMemberAuditEntryPermission
-import Examples.Github.Enum.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
-import Examples.Github.Enum.OrganizationInvitationRole
-import Examples.Github.Enum.OrganizationInvitationType
-import Examples.Github.Enum.OrganizationMemberRole
-import Examples.Github.Enum.OrganizationMembersCanCreateRepositoriesSettingValue
-import Examples.Github.Enum.OrganizationOrderField
-import Examples.Github.Enum.PackageFileOrderField
-import Examples.Github.Enum.PackageOrderField
-import Examples.Github.Enum.PackageType
-import Examples.Github.Enum.PackageVersionOrderField
+  ( Optional
+  , SelectionSet
+  , selectionForField
+  , toGraphqlArguments
+  , graphqlDefaultResponseScalarDecoder
+  , selectionForCompositeField
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+  )
 import Examples.Github.Enum.PinnableItemType
-import Examples.Github.Enum.ProjectCardArchivedState
-import Examples.Github.Enum.ProjectCardState
-import Examples.Github.Enum.ProjectColumnPurpose
-import Examples.Github.Enum.ProjectOrderField
-import Examples.Github.Enum.ProjectState
-import Examples.Github.Enum.ProjectTemplate
-import Examples.Github.Enum.PullRequestMergeMethod
-import Examples.Github.Enum.PullRequestOrderField
-import Examples.Github.Enum.PullRequestReviewCommentState
-import Examples.Github.Enum.PullRequestReviewDecision
-import Examples.Github.Enum.PullRequestReviewEvent
-import Examples.Github.Enum.PullRequestReviewState
-import Examples.Github.Enum.PullRequestState
-import Examples.Github.Enum.PullRequestTimelineItemsItemType
-import Examples.Github.Enum.PullRequestUpdateState
-import Examples.Github.Enum.ReactionContent
-import Examples.Github.Enum.ReactionOrderField
-import Examples.Github.Enum.RefOrderField
-import Examples.Github.Enum.ReleaseOrderField
-import Examples.Github.Enum.RepoAccessAuditEntryVisibility
-import Examples.Github.Enum.RepoAddMemberAuditEntryVisibility
-import Examples.Github.Enum.RepoArchivedAuditEntryVisibility
-import Examples.Github.Enum.RepoChangeMergeSettingAuditEntryMergeType
-import Examples.Github.Enum.RepoCreateAuditEntryVisibility
-import Examples.Github.Enum.RepoDestroyAuditEntryVisibility
-import Examples.Github.Enum.RepoRemoveMemberAuditEntryVisibility
-import Examples.Github.Enum.ReportedContentClassifiers
-import Examples.Github.Enum.RepositoryAffiliation
-import Examples.Github.Enum.RepositoryContributionType
-import Examples.Github.Enum.RepositoryInvitationOrderField
-import Examples.Github.Enum.RepositoryLockReason
-import Examples.Github.Enum.RepositoryOrderField
-import Examples.Github.Enum.RepositoryPermission
-import Examples.Github.Enum.RepositoryPrivacy
-import Examples.Github.Enum.RepositoryVisibility
-import Examples.Github.Enum.SamlDigestAlgorithm
-import Examples.Github.Enum.SamlSignatureAlgorithm
-import Examples.Github.Enum.SavedReplyOrderField
-import Examples.Github.Enum.SearchType
-import Examples.Github.Enum.SecurityAdvisoryEcosystem
-import Examples.Github.Enum.SecurityAdvisoryIdentifierType
-import Examples.Github.Enum.SecurityAdvisoryOrderField
-import Examples.Github.Enum.SecurityAdvisorySeverity
-import Examples.Github.Enum.SecurityVulnerabilityOrderField
-import Examples.Github.Enum.SponsorsTierOrderField
-import Examples.Github.Enum.SponsorshipOrderField
-import Examples.Github.Enum.SponsorshipPrivacy
-import Examples.Github.Enum.StarOrderField
-import Examples.Github.Enum.StatusState
-import Examples.Github.Enum.SubscriptionState
-import Examples.Github.Enum.TeamDiscussionCommentOrderField
-import Examples.Github.Enum.TeamDiscussionOrderField
-import Examples.Github.Enum.TeamMemberOrderField
-import Examples.Github.Enum.TeamMemberRole
-import Examples.Github.Enum.TeamMembershipType
-import Examples.Github.Enum.TeamOrderField
-import Examples.Github.Enum.TeamPrivacy
-import Examples.Github.Enum.TeamRepositoryOrderField
-import Examples.Github.Enum.TeamRole
-import Examples.Github.Enum.TopicSuggestionDeclineReason
-import Examples.Github.Enum.UserBlockDuration
-import Examples.Github.Enum.UserStatusOrderField
+  ( PinnableItemType
+  )
+import Type.Row
+  ( type (+)
+  )
 import Examples.Github.Scopes
+  ( Scope__User
+  , Scope__CommitCommentConnection
+  , Scope__ContributionsCollection
+  , Scope__FollowerConnection
+  , Scope__FollowingConnection
+  , Scope__Gist
+  , Scope__GistCommentConnection
+  , Scope__GistConnection
+  , Scope__Hovercard
+  , Scope__IssueCommentConnection
+  , Scope__IssueConnection
+  , Scope__ProfileItemShowcase
+  , Scope__Organization
+  , Scope__OrganizationConnection
+  , Scope__PackageConnection
+  , Scope__PinnableItemConnection
+  , Scope__Project
+  , Scope__ProjectConnection
+  , Scope__PublicKeyConnection
+  , Scope__PullRequestConnection
+  , Scope__RepositoryConnection
+  , Scope__Repository
+  , Scope__SavedReplyConnection
+  , Scope__SponsorsListing
+  , Scope__SponsorshipConnection
+  , Scope__StarredRepositoryConnection
+  , Scope__UserStatus
+  )
 import Examples.Github.Scalars
+  ( Uri
+  , Html
+  , Id
+  , DateTime
+  )
+import Data.Maybe
+  ( Maybe
+  )
+import Examples.Github.Enum.GistPrivacy
+  ( GistPrivacy
+  )
+import Examples.Github.InputObject
+  ( GistOrder
+  , IssueOrder
+  , IssueFilters
+  , PackageOrder
+  , ProjectOrder
+  , RepositoryOrder
+  , SavedReplyOrder
+  , SponsorshipOrder
+  , StarOrder
+  ) as Examples.Github.InputObject
+import Examples.Github.Enum.IssueState
+  ( IssueState
+  )
+import Examples.Github.Enum.PackageType
+  ( PackageType
+  )
+import Examples.Github.Enum.ProjectState
+  ( ProjectState
+  )
+import Examples.Github.Enum.PullRequestState
+  ( PullRequestState
+  )
+import Examples.Github.Enum.RepositoryPrivacy
+  ( RepositoryPrivacy
+  )
+import Examples.Github.Enum.RepositoryAffiliation
+  ( RepositoryAffiliation
+  )
+import Examples.Github.Enum.RepositoryContributionType
+  ( RepositoryContributionType
+  )
 
 type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r
@@ -243,7 +197,7 @@ gistComments :: forall r . GistCommentsInput -> SelectionSet Scope__GistCommentC
 gistComments input = selectionForCompositeField "gistComments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type GistsInputRowOptional r = ( privacy :: Optional GistPrivacy
-                               , orderBy :: Optional GistOrder
+                               , orderBy :: Optional Examples.Github.InputObject.GistOrder
                                , after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
@@ -301,10 +255,10 @@ type IssueCommentsInput = { | IssueCommentsInputRowOptional + () }
 issueComments :: forall r . IssueCommentsInput -> SelectionSet Scope__IssueCommentConnection r -> SelectionSet Scope__User r
 issueComments input = selectionForCompositeField "issueComments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type IssuesInputRowOptional r = ( orderBy :: Optional IssueOrder
+type IssuesInputRowOptional r = ( orderBy :: Optional Examples.Github.InputObject.IssueOrder
                                 , labels :: Optional (Array String)
                                 , states :: Optional (Array IssueState)
-                                , filterBy :: Optional IssueFilters
+                                , filterBy :: Optional Examples.Github.InputObject.IssueFilters
                                 , after :: Optional String
                                 , before :: Optional String
                                 , first :: Optional Int
@@ -366,7 +320,7 @@ type PackagesInputRowOptional r = ( after :: Optional String
                                   , names :: Optional (Array (Maybe String))
                                   , repositoryId :: Optional Id
                                   , packageType :: Optional PackageType
-                                  , orderBy :: Optional PackageOrder
+                                  , orderBy :: Optional Examples.Github.InputObject.PackageOrder
                                   | r
                                   )
 
@@ -413,7 +367,7 @@ type ProjectInput = { | ProjectInputRowRequired + () }
 project :: forall r . ProjectInput -> SelectionSet Scope__Project r -> SelectionSet Scope__User (Maybe r)
 project input = selectionForCompositeField "project" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ProjectsInputRowOptional r = ( orderBy :: Optional ProjectOrder
+type ProjectsInputRowOptional r = ( orderBy :: Optional Examples.Github.InputObject.ProjectOrder
                                   , search :: Optional String
                                   , states :: Optional (Array ProjectState)
                                   , after :: Optional String
@@ -450,7 +404,7 @@ type PullRequestsInputRowOptional r = ( states :: Optional (Array PullRequestSta
                                       , labels :: Optional (Array String)
                                       , headRefName :: Optional String
                                       , baseRefName :: Optional String
-                                      , orderBy :: Optional IssueOrder
+                                      , orderBy :: Optional Examples.Github.InputObject.IssueOrder
                                       , after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
@@ -464,7 +418,7 @@ pullRequests :: forall r . PullRequestsInput -> SelectionSet Scope__PullRequestC
 pullRequests input = selectionForCompositeField "pullRequests" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
-                                      , orderBy :: Optional RepositoryOrder
+                                      , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
                                       , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
                                       , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
                                       , isLocked :: Optional Boolean
@@ -482,7 +436,7 @@ repositories :: forall r . RepositoriesInput -> SelectionSet Scope__RepositoryCo
 repositories input = selectionForCompositeField "repositories" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RepositoriesContributedToInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
-                                                   , orderBy :: Optional RepositoryOrder
+                                                   , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
                                                    , isLocked :: Optional Boolean
                                                    , includeUserRepositories :: Optional Boolean
                                                    , contributionTypes :: Optional (Array (Maybe RepositoryContributionType))
@@ -514,7 +468,7 @@ type SavedRepliesInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
-                                      , orderBy :: Optional SavedReplyOrder
+                                      , orderBy :: Optional Examples.Github.InputObject.SavedReplyOrder
                                       | r
                                       )
 
@@ -531,7 +485,7 @@ type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional String
                                                   , first :: Optional Int
                                                   , last :: Optional Int
                                                   , includePrivate :: Optional Boolean
-                                                  , orderBy :: Optional SponsorshipOrder
+                                                  , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
                                                   | r
                                                   )
 
@@ -544,7 +498,7 @@ type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional String
                                                , before :: Optional String
                                                , first :: Optional Int
                                                , last :: Optional Int
-                                               , orderBy :: Optional SponsorshipOrder
+                                               , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
                                                | r
                                                )
 
@@ -558,7 +512,7 @@ type StarredRepositoriesInputRowOptional r = ( after :: Optional String
                                              , first :: Optional Int
                                              , last :: Optional Int
                                              , ownedByViewer :: Optional Boolean
-                                             , orderBy :: Optional StarOrder
+                                             , orderBy :: Optional Examples.Github.InputObject.StarOrder
                                              | r
                                              )
 
@@ -578,7 +532,7 @@ type TopRepositoriesInputRowOptional r = ( after :: Optional String
                                          | r
                                          )
 
-type TopRepositoriesInputRowRequired r = ( orderBy :: RepositoryOrder
+type TopRepositoriesInputRowRequired r = ( orderBy :: Examples.Github.InputObject.RepositoryOrder
                                          | r
                                          )
 
@@ -609,7 +563,7 @@ viewerIsFollowing :: SelectionSet Scope__User Boolean
 viewerIsFollowing = selectionForField "viewerIsFollowing" [] graphqlDefaultResponseScalarDecoder
 
 type WatchingInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
-                                  , orderBy :: Optional RepositoryOrder
+                                  , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
                                   , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
                                   , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
                                   , isLocked :: Optional Boolean

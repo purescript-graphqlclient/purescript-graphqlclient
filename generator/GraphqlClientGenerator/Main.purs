@@ -52,7 +52,7 @@ main = do
           let
             urlString = unwrap url
 
-          resp <- GraphqlClient.gqlRequest urlString appOptions.headers introspectionQuery
+          resp <- GraphqlClient.graphqlQueryRequest urlString appOptions.headers introspectionQuery
             >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
           pure resp

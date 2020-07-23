@@ -2,13 +2,13 @@ module GraphqlClientGenerator.MakeModule.Lib.Fragments where
 
 import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull
-import Language.PS.CST
-import Language.PS.CST.Sugar
+import GraphqlClientGenerator.MakeModule.Lib.Utils
+import Language.PS.SmartCST
 import Protolude
 
 import Data.Array as Array
+import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
-import Data.NonEmpty (NonEmpty(..))
 import Data.String.Extra (pascalCase)
 import Data.String.Extra as StringsExtra
 
@@ -24,11 +24,11 @@ nameOfTypeKindWithNull =
        TypeKindWithNull__Interface   name -> name
        TypeKindWithNull__Union       name -> name
 
-declarationForPossibleTypes :: (String -> String) -> String -> Array TypeKindWithNull -> Array Declaration
-declarationForPossibleTypes nameToScope parentName typeRefs =
+declarationForPossibleTypes :: NonEmptyArray String -> (String -> String) -> String -> Array TypeKindWithNull -> Array Declaration
+declarationForPossibleTypes apiModuleName nameToScope parentName typeRefs =
   let
-      names :: Array String
-      names = typeRefs <#> nameOfTypeKindWithNull
+    names :: Array String
+    names = typeRefs <#> nameOfTypeKindWithNull
   in
     [ DeclType
       { comments: Nothing
@@ -36,15 +36,15 @@ declarationForPossibleTypes nameToScope parentName typeRefs =
         { dataHdName: ProperName "Fragments"
         , dataHdVars: [TypeVarName (Ident "decodesTo")]
         }
-      , type_: TypeRecord $ Row
+      , type_: TypeRecord
         { rowLabels: names <#> \name ->
           { label: Label $ "on" <> StringsExtra.pascalCase name
           , type_:
-            nonQualifiedNameTypeConstructor "SelectionSet"
+            (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphqlClient") (ProperName "SelectionSet"))
             `TypeApp`
-            nonQualifiedNameTypeConstructor (nameToScope name)
+            (TypeConstructor $ qualifyScope apiModuleName (nameToScope name))
             `TypeApp`
-            TypeVar (Ident "decodesTo")
+            (TypeVar (Ident "decodesTo"))
           }
         , rowTail: Nothing
         }
@@ -53,16 +53,16 @@ declarationForPossibleTypes nameToScope parentName typeRefs =
       { comments: Nothing
       , ident: Ident "fragments"
       , type_: TypeForall (NonEmpty.singleton $ TypeVarName $ Ident "decodesTo")
-        ( ( TypeConstructor (nonQualifiedName $ ProperName "Fragments")
+        ( ( TypeConstructor (SmartQualifiedName__Ignore (ProperName "Fragments"))
           `TypeApp`
           (TypeVar $ Ident "decodesTo")
           )
           `TypeArr`
-          ( nonQualifiedNameTypeConstructor "SelectionSet"
+          ( (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphqlClient") $ ProperName "SelectionSet")
             `TypeApp`
-            nonQualifiedNameTypeConstructor (nameToScope parentName)
+            (TypeConstructor $ qualifyScope apiModuleName (nameToScope parentName))
             `TypeApp`
-            TypeVar (Ident "decodesTo")
+            (TypeVar (Ident "decodesTo"))
           )
         )
       }
@@ -73,15 +73,15 @@ declarationForPossibleTypes nameToScope parentName typeRefs =
         , binders: [BinderVar $ Ident "selections"]
         , guarded: Unconditional
             { expr:
-              ExprIdent (nonQualifiedName $ Ident "exhaustiveFragmentSelection")
+              ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphqlClient") $ Ident "exhaustiveFragmentSelection")
               `ExprApp`
               ExprArray (names <#> \name ->
-                (ExprIdent (nonQualifiedName $ Ident "buildFragment")
+                (ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphqlClient") $ Ident "buildFragment")
                 `ExprApp`
                 ExprString name
                 `ExprApp`
                 ExprRecordAccessor
-                  { recExpr: ExprIdent (nonQualifiedName $ Ident $ "selections")
+                  { recExpr: ExprVar $ Ident $ "selections"
                   , recPath: NonEmpty.singleton (Label $ "on" <> StringsExtra.pascalCase name)
                   }
                 ))
@@ -93,9 +93,9 @@ declarationForPossibleTypes nameToScope parentName typeRefs =
       { comments: Nothing
       , ident: Ident "maybeFragments"
       , type_: TypeForall (NonEmpty.singleton $ TypeVarName $ Ident "decodesTo")
-        ( ( TypeConstructor (nonQualifiedName $ ProperName "Fragments")
+        ( ( TypeConstructor (SmartQualifiedName__Ignore $ ProperName "Fragments")
             `TypeApp`
-            ( TypeConstructor (nonQualifiedName $ ProperName "Maybe")
+            ( TypeConstructor (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Maybe"]) $ ProperName "Maybe")
               `TypeApp`
               (TypeVar $ Ident "decodesTo")
             )
@@ -111,9 +111,9 @@ declarationForPossibleTypes nameToScope parentName typeRefs =
             { expr:
               ExprRecord $ names <#> \name -> RecordField
                 (Label $ "on" <> StringsExtra.pascalCase name)
-                ( (ExprIdent $ nonQualifiedName $ Ident "pure")
+                ( (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "Prelude") $ Ident "pure")
                   `ExprApp`
-                  (ExprConstructor $ nonQualifiedName $ ProperName "Nothing")
+                  (ExprConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Maybe"]) (ConstructorProperName { constructor: ProperName "Nothing", type_: ProperName "Maybe" }))
                 )
             , whereBindings: []
             }

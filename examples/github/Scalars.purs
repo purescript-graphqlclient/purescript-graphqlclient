@@ -1,8 +1,17 @@
 module Examples.Github.Scalars where
 
 import Prelude
-import GraphqlClient
+  ( class Eq
+  , class Ord
+  , class Show
+  )
 import Data.Newtype
+  ( class Newtype
+  )
+import GraphqlClient
+  ( class GraphqlDefaultResponseScalarDecoder
+  , class ToGraphqlArgumentValue
+  )
 
 -- | original name - Date
 newtype Date = Date String

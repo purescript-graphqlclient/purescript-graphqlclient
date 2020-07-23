@@ -1,23 +1,34 @@
 module GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields where
 
-import Language.PS.CST
-import Language.PS.CST.Sugar
+import GraphqlClientGenerator.IntrospectionSchema
+import GraphqlClientGenerator.MakeModule.Lib.Utils
+import Language.PS.SmartCST
 import Protolude
 
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
-import Data.List ((:))
-import Data.List as List
 import Data.String.Extra as StringsExtra
-import GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull(..))
 
-applyToConstructorType :: String -> Type -> Type
-applyToConstructorType name typeInside = nonQualifiedNameTypeConstructor name `TypeApp` typeInside
+optionalType :: Type -> Type
+optionalType = TypeApp (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName (NonEmpty.cons' "GraphqlClient" [])) $ ProperName "Optional")
 
-typeRefType :: String -> Type
-typeRefType = StringsExtra.pascalCase >>> graphqlTypeToPurescriptType >>> nonQualifiedNameTypeConstructor
+typeRefTypeScalar :: ModuleName -> String -> Type
+typeRefTypeScalar customOrNotScalarModule name =
+  let
+    objectName' = graphqlTypeToPurescriptType $ StringsExtra.pascalCase name
+
+    isPrimScalar =
+      case objectName' of
+           "Number" -> true
+           "Boolean" -> true
+           "String" -> true
+           "Int" -> true
+           _ -> false
+   in if isPrimScalar
+        then TypeConstructor (SmartQualifiedName__Ignore (ProperName objectName'))
+        else TypeConstructor (SmartQualifiedName__Simple customOrNotScalarModule (ProperName objectName'))
 
 graphqlTypeToPurescriptType :: String -> String
 graphqlTypeToPurescriptType =
@@ -25,44 +36,63 @@ graphqlTypeToPurescriptType =
     "Float" -> "Number"
     x -> x
 
+typeRefTypeNonScalarObjectFromFileInDir :: NonEmptyArray String -> String -> String -> Type
+typeRefTypeNonScalarObjectFromFileInDir apiModuleName fromModuleName objectName =
+  let
+    objectName' = StringsExtra.pascalCase objectName
+    moduleName' = mkModuleName $ apiModuleName <> NonEmpty.cons' fromModuleName [objectName']
+   in TypeConstructor (SmartQualifiedName__Simple moduleName' (ProperName objectName'))
+
+typeRefTypeNonScalarObjectFromFileInRootDir :: NonEmptyArray String -> String -> String -> Type
+typeRefTypeNonScalarObjectFromFileInRootDir apiModuleName fromModuleName objectName =
+  let
+    objectName' = StringsExtra.pascalCase objectName
+    moduleName' = mkModuleName $ apiModuleName <> NonEmpty.cons' fromModuleName []
+   in TypeConstructor (SmartQualifiedName__Full moduleName' (ProperName objectName'))
+
 typeRefTypeScopeHole :: Type
-typeRefTypeScopeHole = nonQualifiedNameTypeConstructor "r"
+typeRefTypeScopeHole = TypeVar $ Ident "r"
 
-mkFieldTypeWithoutHoleAndMaybe :: TypeKindWithNull -> Type
-mkFieldTypeWithoutHoleAndMaybe =
-  case _ of
-       TypeKindWithNull__Null        type_ -> applyToConstructorType "Maybe" $ mkFieldTypeWithHoleAndMaybe type_
-       TypeKindWithNull__List        type_ -> applyToConstructorType "Array" $ mkFieldTypeWithHoleAndMaybe type_ -- reset to true again
-       TypeKindWithNull__Scalar      name  -> typeRefType name
-       TypeKindWithNull__Enum        name  -> typeRefType name
-       TypeKindWithNull__InputObject name  -> typeRefType name
-       TypeKindWithNull__Object      name  -> typeRefType name
-       TypeKindWithNull__Interface   name  -> typeRefType name
-       TypeKindWithNull__Union       name  -> typeRefType name
+type Context =
+  { apiModuleName :: NonEmptyArray String
+  , scalarModule :: ModuleName
+  }
 
-mkFieldTypeWithoutHoleAndOptionalForTopLevel :: TypeKindWithNull -> Type
-mkFieldTypeWithoutHoleAndOptionalForTopLevel =
+mkFieldTypeWithoutHoleAndMaybe :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithoutHoleAndMaybe context =
   case _ of
-       TypeKindWithNull__Null type_ -> applyToConstructorType "Optional" $ mkFieldTypeWithoutHoleAndMaybe type_
-       other -> mkFieldTypeWithoutHoleAndMaybe other
+       TypeKindWithNull__Null        type_ -> maybeType $ mkFieldTypeWithHoleAndMaybe context type_
+       TypeKindWithNull__List        type_ -> arrayType $ mkFieldTypeWithHoleAndMaybe context type_ -- reset to true again
+       TypeKindWithNull__Scalar      name  -> typeRefTypeScalar context.scalarModule name
+       TypeKindWithNull__Enum        name  -> typeRefTypeNonScalarObjectFromFileInDir context.apiModuleName "Enum" name
+       TypeKindWithNull__InputObject name  -> typeRefTypeNonScalarObjectFromFileInRootDir context.apiModuleName "InputObject" name
+       TypeKindWithNull__Object      name  -> typeRefTypeNonScalarObjectFromFileInDir context.apiModuleName "Object" name
+       TypeKindWithNull__Interface   name  -> typeRefTypeNonScalarObjectFromFileInDir context.apiModuleName "Interface" name
+       TypeKindWithNull__Union       name  -> typeRefTypeNonScalarObjectFromFileInDir context.apiModuleName "Union" name
 
-mkFieldTypeWithHoleAndMaybe :: TypeKindWithNull -> Type
-mkFieldTypeWithHoleAndMaybe =
+mkFieldTypeWithoutHoleAndOptionalForTopLevel :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithoutHoleAndOptionalForTopLevel context =
   case _ of
-       TypeKindWithNull__Null        type_ -> applyToConstructorType "Maybe" $ mkFieldTypeWithHoleAndMaybe type_
-       TypeKindWithNull__List        type_ -> applyToConstructorType "Array" $ mkFieldTypeWithHoleAndMaybe type_ -- reset to true again
-       TypeKindWithNull__Scalar      name  -> typeRefType name
-       TypeKindWithNull__Enum        name  -> typeRefType name
-       TypeKindWithNull__InputObject name  -> typeRefType name
+       TypeKindWithNull__Null type_ -> optionalType $ mkFieldTypeWithoutHoleAndMaybe context type_
+       other -> mkFieldTypeWithoutHoleAndMaybe context other
+
+mkFieldTypeWithHoleAndMaybe :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithHoleAndMaybe context =
+  case _ of
+       TypeKindWithNull__Null        type_ -> maybeType $ mkFieldTypeWithHoleAndMaybe context type_
+       TypeKindWithNull__List        type_ -> arrayType $ mkFieldTypeWithHoleAndMaybe context type_ -- reset to true again
+       TypeKindWithNull__Scalar      name  -> typeRefTypeScalar context.scalarModule name
+       TypeKindWithNull__Enum        name  -> typeRefTypeNonScalarObjectFromFileInDir context.apiModuleName "Enum" name
+       TypeKindWithNull__InputObject name  -> typeRefTypeNonScalarObjectFromFileInRootDir context.apiModuleName "InputObject" name
        TypeKindWithNull__Object      _     -> typeRefTypeScopeHole
        TypeKindWithNull__Interface   _     -> typeRefTypeScopeHole
        TypeKindWithNull__Union       _     -> typeRefTypeScopeHole
 
-mkFieldTypeWithHoleAndOptionalForTopLevel :: TypeKindWithNull -> Type
-mkFieldTypeWithHoleAndOptionalForTopLevel =
+mkFieldTypeWithHoleAndOptionalForTopLevel :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithHoleAndOptionalForTopLevel context =
   case _ of
-       TypeKindWithNull__Null type_ -> applyToConstructorType "Optional" $ mkFieldTypeWithHoleAndMaybe type_
-       other -> mkFieldTypeWithHoleAndMaybe other
+       TypeKindWithNull__Null type_ -> optionalType $ mkFieldTypeWithHoleAndMaybe context type_
+       other -> mkFieldTypeWithHoleAndMaybe context other
 
 nameOfTheObjectLikeTypeKind :: TypeKindWithNull -> Maybe String
 nameOfTheObjectLikeTypeKind = case _ of
@@ -92,19 +122,13 @@ toRow
   :: (TypeKindWithNull -> Type)
   -> NonEmptyArray InstorpectionQueryResult__InputValue
   -> Row
-toRow mkType els = Row
+toRow mkType els =
   { rowLabels: NonEmpty.toArray els <#> \el -> { label: Label el.name, type_: mkType el."type" }
   , rowTail: Just (TypeVar $ Ident "r")
   }
 
 rowPlus :: Type -> Type -> Type
-rowPlus x y = TypeOp x (nonQualifiedName $ OpName "+") y
-
-emptyRow :: Type
-emptyRow = TypeRow $ Row
-  { rowLabels: []
-  , rowTail: Nothing
-  }
+rowPlus x y = TypeOp x (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Type" ["Row"]) $ OpName "+") y
 
 toRowType :: String -> Maybe Row -> Array Declaration
 toRowType name =
@@ -122,14 +146,14 @@ toRowType name =
     ]
   )
 
-declInput :: String -> Array InstorpectionQueryResult__InputValue -> Array Declaration
-declInput parentName args =
+declInput :: Context -> String -> Array InstorpectionQueryResult__InputValue -> Array Declaration
+declInput context parentName args =
   let
     rowOptional :: Maybe Row
-    rowOptional = filterAndNonEmpty isOptionalInputValue args <#> toRow mkFieldTypeWithHoleAndOptionalForTopLevel
+    rowOptional = filterAndNonEmpty isOptionalInputValue args <#> toRow (mkFieldTypeWithHoleAndOptionalForTopLevel context)
 
     rowRequired :: Maybe Row
-    rowRequired = filterAndNonEmpty (not <<< isOptionalInputValue) args <#> toRow mkFieldTypeWithHoleAndMaybe
+    rowRequired = filterAndNonEmpty (not <<< isOptionalInputValue) args <#> toRow (mkFieldTypeWithHoleAndMaybe context)
   in
     (toRowType (parentName <> "InputRowOptional") rowOptional) <>
     (toRowType (parentName <> "InputRowRequired") rowRequired) <>
@@ -139,15 +163,15 @@ declInput parentName args =
         { dataHdName: ProperName $ parentName <> "Input"
         , dataHdVars: []
         }
-      , type_: TypeRecord $ Row
+      , type_: TypeRecord
         { rowLabels: []
         , rowTail:
           let
             rowOptional' :: Maybe Type
-            rowOptional' = map (const (TypeConstructor $ nonQualifiedName $ ProperName $ parentName <> "InputRowOptional")) rowOptional
+            rowOptional' = map (const (TypeConstructor $ SmartQualifiedName__Ignore $ ProperName $ parentName <> "InputRowOptional")) rowOptional
 
             rowRequired' :: Maybe Type
-            rowRequired' = map (const (TypeConstructor $ nonQualifiedName $ ProperName $ parentName <> "InputRowRequired")) rowRequired
+            rowRequired' = map (const (TypeConstructor $ SmartQualifiedName__Ignore $ ProperName $ parentName <> "InputRowRequired")) rowRequired
 
             rowOptional'' :: Maybe (Type -> Type)
             rowOptional'' = rowOptional' <#> rowPlus
@@ -158,18 +182,18 @@ declInput parentName args =
                     Nothing ->
                       case rowRequired'' of
                           Nothing -> Just $ TypeVar $ Ident "ERROR"
-                          Just rowRequired''' -> Just $ rowRequired''' emptyRow
+                          Just rowRequired''' -> Just $ rowRequired''' (TypeRow emptyRow)
                     Just rowOptional''' ->
                       case rowRequired'' of
-                          Nothing -> Just $ rowOptional''' emptyRow
-                          Just rowRequired''' -> Just $ rowOptional''' $ rowRequired''' emptyRow
+                          Nothing -> Just $ rowOptional''' (TypeRow emptyRow)
+                          Just rowRequired''' -> Just $ rowOptional''' $ rowRequired''' (TypeRow emptyRow)
         }
       }
     ]
 
-declarationsForField :: (String -> String) -> String -> InstorpectionQueryResult__Field -> Array Declaration
-declarationsForField nameToScope parentName field =
-  (if Array.null field.args then [] else declInput (StringsExtra.pascalCase field.name) field.args) <>
+declarationsForField :: Context -> (String -> String) -> String -> InstorpectionQueryResult__Field -> Array Declaration
+declarationsForField context nameToScope parentName field =
+  (if Array.null field.args then [] else declInput context (StringsExtra.pascalCase field.name) field.args) <>
   [ DeclSignature
     { comments: Nothing
     , ident: Ident field.name
@@ -179,7 +203,7 @@ declarationsForField nameToScope parentName field =
         input =
           if Array.null field.args
             then Nothing
-            else Just $ nonQualifiedNameTypeConstructor $ StringsExtra.pascalCase field.name <> "Input"
+            else Just $ TypeConstructor $ SmartQualifiedName__Ignore $ ProperName $ StringsExtra.pascalCase field.name <> "Input"
 
         maybeWrapInInput :: Type -> Type
         maybeWrapInInput x =
@@ -189,25 +213,25 @@ declarationsForField nameToScope parentName field =
 
         inside :: Type
         inside =
-          nonQualifiedNameTypeConstructor "SelectionSet"
+          (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ ProperName "SelectionSet")
           `TypeApp`
-          nonQualifiedNameTypeConstructor (nameToScope parentName)
+          (TypeConstructor $ qualifyScope context.apiModuleName (nameToScope parentName))
           `TypeApp`
-          mkFieldTypeWithHoleAndMaybe field."type"
+          (mkFieldTypeWithHoleAndMaybe context field."type")
         in case nameOfTheObjectLikeTypeKind field."type" of
                 Just name ->
                   let
                     insideDecoderAndResult :: Type
                     insideDecoderAndResult =
-                      ( nonQualifiedNameTypeConstructor "SelectionSet"
-                      `TypeApp`
-                      (nonQualifiedNameTypeConstructor $ nameToScope name)
-                      `TypeApp`
-                      typeVar "r"
+                      ( (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ ProperName "SelectionSet")
+                        `TypeApp`
+                        (TypeConstructor $ qualifyScope context.apiModuleName (nameToScope name))
+                        `TypeApp`
+                        (TypeVar $ Ident "r")
                       )
                       ====>>
                       inside
-                  in TypeForall (NonEmpty.singleton (typeVarName "r")) (maybeWrapInInput insideDecoderAndResult)
+                  in TypeForall (NonEmpty.singleton (TypeVarName $ Ident "r")) (maybeWrapInInput insideDecoderAndResult)
                 Nothing -> maybeWrapInInput inside
     }
   , DeclValue
@@ -224,33 +248,36 @@ declarationsForField nameToScope parentName field =
               inputArg =
                 if Array.null field.args
                   then ExprArray []
-                  else nonQualifiedExprIdent "toGraphqlArguments" `ExprApp` nonQualifiedExprIdent "input"
+                  else
+                    (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ Ident "toGraphqlArguments")
+                    `ExprApp`
+                    (ExprVar $ Ident "input")
             in Unconditional
               { expr: case nameOfTheObjectLikeTypeKind field."type" of
                   Nothing ->
-                    nonQualifiedExprIdent "selectionForField"
+                    (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ Ident "selectionForField")
                     `ExprApp`
-                    ExprString field.name
+                    (ExprString field.name)
                     `ExprApp`
                     inputArg
                     `ExprApp`
-                    nonQualifiedExprIdent "graphqlDefaultResponseScalarDecoder"
+                    (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ Ident "graphqlDefaultResponseScalarDecoder")
                   Just _ ->
-                    nonQualifiedExprIdent "selectionForCompositeField"
+                    (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ Ident "selectionForCompositeField")
                     `ExprApp`
-                    ExprString field.name
+                    (ExprString field.name)
                     `ExprApp`
                     inputArg
                     `ExprApp`
-                    nonQualifiedExprIdent "graphqlDefaultResponseFunctorOrScalarDecoderTransformer"
+                    (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphqlClient" []) $ Ident "graphqlDefaultResponseFunctorOrScalarDecoderTransformer")
               , whereBindings: []
               }
         }
       }
   ]
 
-declarationsForFields :: (String -> String) -> String -> Array InstorpectionQueryResult__Field -> Array Declaration
-declarationsForFields nameToScope parentName fields =
+declarationsForFields :: Context -> (String -> String) -> String -> Array InstorpectionQueryResult__Field -> Array Declaration
+declarationsForFields context nameToScope parentName fields =
   fields
-  <#> declarationsForField nameToScope parentName
+  <#> declarationsForField context nameToScope parentName
   # Array.concat

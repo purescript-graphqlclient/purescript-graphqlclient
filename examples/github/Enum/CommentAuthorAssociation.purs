@@ -1,8 +1,14 @@
 module Examples.Github.Enum.CommentAuthorAssociation where
 
-import Prelude
-import GraphqlClient
 import Data.Tuple
+  ( Tuple(..)
+  )
+import GraphqlClient
+  ( class GraphqlDefaultResponseScalarDecoder
+  , enumDecoder
+  , class ToGraphqlArgumentValue
+  , ArgumentValue(..)
+  )
 
 -- | original name - CommentAuthorAssociation
 data CommentAuthorAssociation

@@ -1,145 +1,81 @@
 module Examples.Github.Object.EnterpriseOwnerInfo where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
+  ( Optional
+  , SelectionSet
+  , selectionForCompositeField
+  , toGraphqlArguments
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  )
 import Examples.Github.InputObject
+  ( OrganizationOrder
+  , EnterpriseMemberOrder
+  , EnterpriseServerInstallationOrder
+  , IpAllowListEntryOrder
+  , EnterpriseAdministratorInvitationOrder
+  , RepositoryInvitationOrder
+  ) as Examples.Github.InputObject
 import Type.Row
-import Examples.Github.Enum.ActionExecutionCapabilitySetting
-import Examples.Github.Enum.AuditLogOrderField
-import Examples.Github.Enum.CollaboratorAffiliation
-import Examples.Github.Enum.CommentAuthorAssociation
-import Examples.Github.Enum.CommentCannotUpdateReason
-import Examples.Github.Enum.CommitContributionOrderField
-import Examples.Github.Enum.DefaultRepositoryPermissionField
-import Examples.Github.Enum.DeploymentOrderField
-import Examples.Github.Enum.DeploymentState
-import Examples.Github.Enum.DeploymentStatusState
-import Examples.Github.Enum.DiffSide
-import Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField
-import Examples.Github.Enum.EnterpriseAdministratorRole
-import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
-import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
-import Examples.Github.Enum.EnterpriseEnabledSettingValue
-import Examples.Github.Enum.EnterpriseMemberOrderField
-import Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue
-import Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue
-import Examples.Github.Enum.EnterpriseServerInstallationOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountEmailOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountsUploadOrderField
-import Examples.Github.Enum.EnterpriseServerUserAccountsUploadSyncState
-import Examples.Github.Enum.EnterpriseUserAccountMembershipRole
-import Examples.Github.Enum.EnterpriseUserDeployment
-import Examples.Github.Enum.FundingPlatform
-import Examples.Github.Enum.GistOrderField
-import Examples.Github.Enum.GistPrivacy
-import Examples.Github.Enum.GitSignatureState
-import Examples.Github.Enum.IdentityProviderConfigurationState
-import Examples.Github.Enum.IpAllowListEnabledSettingValue
-import Examples.Github.Enum.IpAllowListEntryOrderField
-import Examples.Github.Enum.IssueOrderField
-import Examples.Github.Enum.IssueState
-import Examples.Github.Enum.IssueTimelineItemsItemType
-import Examples.Github.Enum.LabelOrderField
-import Examples.Github.Enum.LanguageOrderField
-import Examples.Github.Enum.LockReason
-import Examples.Github.Enum.MergeableState
-import Examples.Github.Enum.MilestoneOrderField
-import Examples.Github.Enum.MilestoneState
-import Examples.Github.Enum.OauthApplicationCreateAuditEntryState
-import Examples.Github.Enum.OperationType
-import Examples.Github.Enum.OrderDirection
-import Examples.Github.Enum.OrgAddMemberAuditEntryPermission
-import Examples.Github.Enum.OrgCreateAuditEntryBillingPlan
-import Examples.Github.Enum.OrgRemoveBillingManagerAuditEntryReason
-import Examples.Github.Enum.OrgRemoveMemberAuditEntryMembershipType
-import Examples.Github.Enum.OrgRemoveMemberAuditEntryReason
-import Examples.Github.Enum.OrgRemoveOutsideCollaboratorAuditEntryMembershipType
-import Examples.Github.Enum.OrgRemoveOutsideCollaboratorAuditEntryReason
-import Examples.Github.Enum.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
-import Examples.Github.Enum.OrgUpdateMemberAuditEntryPermission
-import Examples.Github.Enum.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
-import Examples.Github.Enum.OrganizationInvitationRole
-import Examples.Github.Enum.OrganizationInvitationType
-import Examples.Github.Enum.OrganizationMemberRole
-import Examples.Github.Enum.OrganizationMembersCanCreateRepositoriesSettingValue
-import Examples.Github.Enum.OrganizationOrderField
-import Examples.Github.Enum.PackageFileOrderField
-import Examples.Github.Enum.PackageOrderField
-import Examples.Github.Enum.PackageType
-import Examples.Github.Enum.PackageVersionOrderField
-import Examples.Github.Enum.PinnableItemType
-import Examples.Github.Enum.ProjectCardArchivedState
-import Examples.Github.Enum.ProjectCardState
-import Examples.Github.Enum.ProjectColumnPurpose
-import Examples.Github.Enum.ProjectOrderField
-import Examples.Github.Enum.ProjectState
-import Examples.Github.Enum.ProjectTemplate
-import Examples.Github.Enum.PullRequestMergeMethod
-import Examples.Github.Enum.PullRequestOrderField
-import Examples.Github.Enum.PullRequestReviewCommentState
-import Examples.Github.Enum.PullRequestReviewDecision
-import Examples.Github.Enum.PullRequestReviewEvent
-import Examples.Github.Enum.PullRequestReviewState
-import Examples.Github.Enum.PullRequestState
-import Examples.Github.Enum.PullRequestTimelineItemsItemType
-import Examples.Github.Enum.PullRequestUpdateState
-import Examples.Github.Enum.ReactionContent
-import Examples.Github.Enum.ReactionOrderField
-import Examples.Github.Enum.RefOrderField
-import Examples.Github.Enum.ReleaseOrderField
-import Examples.Github.Enum.RepoAccessAuditEntryVisibility
-import Examples.Github.Enum.RepoAddMemberAuditEntryVisibility
-import Examples.Github.Enum.RepoArchivedAuditEntryVisibility
-import Examples.Github.Enum.RepoChangeMergeSettingAuditEntryMergeType
-import Examples.Github.Enum.RepoCreateAuditEntryVisibility
-import Examples.Github.Enum.RepoDestroyAuditEntryVisibility
-import Examples.Github.Enum.RepoRemoveMemberAuditEntryVisibility
-import Examples.Github.Enum.ReportedContentClassifiers
-import Examples.Github.Enum.RepositoryAffiliation
-import Examples.Github.Enum.RepositoryContributionType
-import Examples.Github.Enum.RepositoryInvitationOrderField
-import Examples.Github.Enum.RepositoryLockReason
-import Examples.Github.Enum.RepositoryOrderField
-import Examples.Github.Enum.RepositoryPermission
-import Examples.Github.Enum.RepositoryPrivacy
-import Examples.Github.Enum.RepositoryVisibility
-import Examples.Github.Enum.SamlDigestAlgorithm
-import Examples.Github.Enum.SamlSignatureAlgorithm
-import Examples.Github.Enum.SavedReplyOrderField
-import Examples.Github.Enum.SearchType
-import Examples.Github.Enum.SecurityAdvisoryEcosystem
-import Examples.Github.Enum.SecurityAdvisoryIdentifierType
-import Examples.Github.Enum.SecurityAdvisoryOrderField
-import Examples.Github.Enum.SecurityAdvisorySeverity
-import Examples.Github.Enum.SecurityVulnerabilityOrderField
-import Examples.Github.Enum.SponsorsTierOrderField
-import Examples.Github.Enum.SponsorshipOrderField
-import Examples.Github.Enum.SponsorshipPrivacy
-import Examples.Github.Enum.StarOrderField
-import Examples.Github.Enum.StatusState
-import Examples.Github.Enum.SubscriptionState
-import Examples.Github.Enum.TeamDiscussionCommentOrderField
-import Examples.Github.Enum.TeamDiscussionOrderField
-import Examples.Github.Enum.TeamMemberOrderField
-import Examples.Github.Enum.TeamMemberRole
-import Examples.Github.Enum.TeamMembershipType
-import Examples.Github.Enum.TeamOrderField
-import Examples.Github.Enum.TeamPrivacy
-import Examples.Github.Enum.TeamRepositoryOrderField
-import Examples.Github.Enum.TeamRole
-import Examples.Github.Enum.TopicSuggestionDeclineReason
-import Examples.Github.Enum.UserBlockDuration
-import Examples.Github.Enum.UserStatusOrderField
+  ( type (+)
+  )
 import Examples.Github.Scopes
-import Examples.Github.Scalars
+  ( Scope__OrganizationConnection
+  , Scope__EnterpriseOwnerInfo
+  , Scope__EnterpriseAdministratorConnection
+  , Scope__UserConnection
+  , Scope__EnterpriseServerInstallationConnection
+  , Scope__IpAllowListEntryConnection
+  , Scope__EnterpriseOutsideCollaboratorConnection
+  , Scope__EnterpriseAdministratorInvitationConnection
+  , Scope__RepositoryInvitationConnection
+  , Scope__EnterprisePendingCollaboratorConnection
+  , Scope__EnterprisePendingMemberInvitationConnection
+  , Scope__EnterpriseIdentityProvider
+  )
+import Examples.Github.Enum.EnterpriseAdministratorRole
+  ( EnterpriseAdministratorRole
+  )
+import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
+  ( EnterpriseEnabledDisabledSettingValue
+  )
+import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
+  ( EnterpriseDefaultRepositoryPermissionSettingValue
+  )
+import Examples.Github.Enum.DefaultRepositoryPermissionField
+  ( DefaultRepositoryPermissionField
+  )
+import Examples.Github.Enum.IpAllowListEnabledSettingValue
+  ( IpAllowListEnabledSettingValue
+  )
+import Data.Maybe
+  ( Maybe
+  )
+import Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue
+  ( EnterpriseMembersCanCreateRepositoriesSettingValue
+  )
+import Examples.Github.Enum.OrganizationMembersCanCreateRepositoriesSettingValue
+  ( OrganizationMembersCanCreateRepositoriesSettingValue
+  )
+import Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue
+  ( EnterpriseMembersCanMakePurchasesSettingValue
+  )
+import Examples.Github.Enum.RepositoryVisibility
+  ( RepositoryVisibility
+  )
+import Examples.Github.Enum.IdentityProviderConfigurationState
+  ( IdentityProviderConfigurationState
+  )
+import Examples.Github.Enum.EnterpriseEnabledSettingValue
+  ( EnterpriseEnabledSettingValue
+  )
 
 type ActionExecutionCapabilitySettingOrganizationsInputRowOptional r = ( after :: Optional String
                                                                        , before :: Optional String
                                                                        , first :: Optional Int
                                                                        , last :: Optional Int
-                                                                       , orderBy :: Optional OrganizationOrder
+                                                                       , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                        | r
                                                                        )
 
@@ -150,7 +86,7 @@ actionExecutionCapabilitySettingOrganizations input = selectionForCompositeField
 
 type AdminsInputRowOptional r = ( query :: Optional String
                                 , role :: Optional EnterpriseAdministratorRole
-                                , orderBy :: Optional EnterpriseMemberOrder
+                                , orderBy :: Optional Examples.Github.InputObject.EnterpriseMemberOrder
                                 , after :: Optional String
                                 , before :: Optional String
                                 , first :: Optional Int
@@ -185,7 +121,7 @@ type AllowPrivateRepositoryForkingSettingOrganizationsInputRowOptional r = ( aft
                                                                            , before :: Optional String
                                                                            , first :: Optional Int
                                                                            , last :: Optional Int
-                                                                           , orderBy :: Optional OrganizationOrder
+                                                                           , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                            | r
                                                                            )
 
@@ -205,7 +141,7 @@ type DefaultRepositoryPermissionSettingOrganizationsInputRowOptional r = ( after
                                                                          , before :: Optional String
                                                                          , first :: Optional Int
                                                                          , last :: Optional Int
-                                                                         , orderBy :: Optional OrganizationOrder
+                                                                         , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                          | r
                                                                          )
 
@@ -223,7 +159,7 @@ type EnterpriseServerInstallationsInputRowOptional r = ( after :: Optional Strin
                                                        , first :: Optional Int
                                                        , last :: Optional Int
                                                        , connectedOnly :: Optional Boolean
-                                                       , orderBy :: Optional EnterpriseServerInstallationOrder
+                                                       , orderBy :: Optional Examples.Github.InputObject.EnterpriseServerInstallationOrder
                                                        | r
                                                        )
 
@@ -239,7 +175,7 @@ type IpAllowListEntriesInputRowOptional r = ( after :: Optional String
                                             , before :: Optional String
                                             , first :: Optional Int
                                             , last :: Optional Int
-                                            , orderBy :: Optional IpAllowListEntryOrder
+                                            , orderBy :: Optional Examples.Github.InputObject.IpAllowListEntryOrder
                                             | r
                                             )
 
@@ -261,7 +197,7 @@ type MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowOptional r 
                                                                                   , before :: Optional String
                                                                                   , first :: Optional Int
                                                                                   , last :: Optional Int
-                                                                                  , orderBy :: Optional OrganizationOrder
+                                                                                  , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                                   | r
                                                                                   )
 
@@ -290,7 +226,7 @@ type MembersCanCreateRepositoriesSettingOrganizationsInputRowOptional r = ( afte
                                                                           , before :: Optional String
                                                                           , first :: Optional Int
                                                                           , last :: Optional Int
-                                                                          , orderBy :: Optional OrganizationOrder
+                                                                          , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                           | r
                                                                           )
 
@@ -310,7 +246,7 @@ type MembersCanDeleteIssuesSettingOrganizationsInputRowOptional r = ( after :: O
                                                                     , before :: Optional String
                                                                     , first :: Optional Int
                                                                     , last :: Optional Int
-                                                                    , orderBy :: Optional OrganizationOrder
+                                                                    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                     | r
                                                                     )
 
@@ -330,7 +266,7 @@ type MembersCanDeleteRepositoriesSettingOrganizationsInputRowOptional r = ( afte
                                                                           , before :: Optional String
                                                                           , first :: Optional Int
                                                                           , last :: Optional Int
-                                                                          , orderBy :: Optional OrganizationOrder
+                                                                          , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                           | r
                                                                           )
 
@@ -350,7 +286,7 @@ type MembersCanInviteCollaboratorsSettingOrganizationsInputRowOptional r = ( aft
                                                                            , before :: Optional String
                                                                            , first :: Optional Int
                                                                            , last :: Optional Int
-                                                                           , orderBy :: Optional OrganizationOrder
+                                                                           , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                            | r
                                                                            )
 
@@ -373,7 +309,7 @@ type MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowOptional r = (
                                                                                , before :: Optional String
                                                                                , first :: Optional Int
                                                                                , last :: Optional Int
-                                                                               , orderBy :: Optional OrganizationOrder
+                                                                               , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                                | r
                                                                                )
 
@@ -393,7 +329,7 @@ type MembersCanViewDependencyInsightsSettingOrganizationsInputRowOptional r = ( 
                                                                               , before :: Optional String
                                                                               , first :: Optional Int
                                                                               , last :: Optional Int
-                                                                              , orderBy :: Optional OrganizationOrder
+                                                                              , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                               | r
                                                                               )
 
@@ -413,7 +349,7 @@ type OrganizationProjectsSettingOrganizationsInputRowOptional r = ( after :: Opt
                                                                   , before :: Optional String
                                                                   , first :: Optional Int
                                                                   , last :: Optional Int
-                                                                  , orderBy :: Optional OrganizationOrder
+                                                                  , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                   | r
                                                                   )
 
@@ -428,7 +364,7 @@ organizationProjectsSettingOrganizations input = selectionForCompositeField "org
 
 type OutsideCollaboratorsInputRowOptional r = ( login :: Optional String
                                               , query :: Optional String
-                                              , orderBy :: Optional EnterpriseMemberOrder
+                                              , orderBy :: Optional Examples.Github.InputObject.EnterpriseMemberOrder
                                               , visibility :: Optional RepositoryVisibility
                                               , after :: Optional String
                                               , before :: Optional String
@@ -443,7 +379,7 @@ outsideCollaborators :: forall r . OutsideCollaboratorsInput -> SelectionSet Sco
 outsideCollaborators input = selectionForCompositeField "outsideCollaborators" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type PendingAdminInvitationsInputRowOptional r = ( query :: Optional String
-                                                 , orderBy :: Optional EnterpriseAdministratorInvitationOrder
+                                                 , orderBy :: Optional Examples.Github.InputObject.EnterpriseAdministratorInvitationOrder
                                                  , role :: Optional EnterpriseAdministratorRole
                                                  , after :: Optional String
                                                  , before :: Optional String
@@ -458,7 +394,7 @@ pendingAdminInvitations :: forall r . PendingAdminInvitationsInput -> SelectionS
 pendingAdminInvitations input = selectionForCompositeField "pendingAdminInvitations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type PendingCollaboratorInvitationsInputRowOptional r = ( query :: Optional String
-                                                        , orderBy :: Optional RepositoryInvitationOrder
+                                                        , orderBy :: Optional Examples.Github.InputObject.RepositoryInvitationOrder
                                                         , after :: Optional String
                                                         , before :: Optional String
                                                         , first :: Optional Int
@@ -472,7 +408,7 @@ pendingCollaboratorInvitations :: forall r . PendingCollaboratorInvitationsInput
 pendingCollaboratorInvitations input = selectionForCompositeField "pendingCollaboratorInvitations" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type PendingCollaboratorsInputRowOptional r = ( query :: Optional String
-                                              , orderBy :: Optional RepositoryInvitationOrder
+                                              , orderBy :: Optional Examples.Github.InputObject.RepositoryInvitationOrder
                                               , after :: Optional String
                                               , before :: Optional String
                                               , first :: Optional Int
@@ -505,7 +441,7 @@ type RepositoryProjectsSettingOrganizationsInputRowOptional r = ( after :: Optio
                                                                 , before :: Optional String
                                                                 , first :: Optional Int
                                                                 , last :: Optional Int
-                                                                , orderBy :: Optional OrganizationOrder
+                                                                , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                 | r
                                                                 )
 
@@ -525,7 +461,7 @@ type SamlIdentityProviderSettingOrganizationsInputRowOptional r = ( after :: Opt
                                                                   , before :: Optional String
                                                                   , first :: Optional Int
                                                                   , last :: Optional Int
-                                                                  , orderBy :: Optional OrganizationOrder
+                                                                  , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                   | r
                                                                   )
 
@@ -545,7 +481,7 @@ type TeamDiscussionsSettingOrganizationsInputRowOptional r = ( after :: Optional
                                                              , before :: Optional String
                                                              , first :: Optional Int
                                                              , last :: Optional Int
-                                                             , orderBy :: Optional OrganizationOrder
+                                                             , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                              | r
                                                              )
 
@@ -565,7 +501,7 @@ type TwoFactorRequiredSettingOrganizationsInputRowOptional r = ( after :: Option
                                                                , before :: Optional String
                                                                , first :: Optional Int
                                                                , last :: Optional Int
-                                                               , orderBy :: Optional OrganizationOrder
+                                                               , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
                                                                | r
                                                                )
 

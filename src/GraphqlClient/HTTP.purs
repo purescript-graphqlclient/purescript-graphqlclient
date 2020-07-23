@@ -20,7 +20,7 @@ import Data.Array.NonEmpty (toArray) as NonEmptyArray
 import Data.HTTP.Method (Method(..))
 import Foreign.Object (Object)
 import Foreign.Object as Foreign.Object
-import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet(..))
+import GraphqlClient.Implementation (Scope__RootQuery, Scope__RootMutation, Scope__RootSubscription, SelectionSet(..))
 import GraphqlClient.WriteGraphql (writeGraphql)
 
 {-
@@ -143,22 +143,22 @@ post url headers body =
                  , headers = headers
                  })
 
-gqlRequestImpl
+graphqlRequestImpl
   :: forall a
    . Affjax.URL
   -> Array Affjax.RequestHeader
   -> String
   -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (Either (GraphqlError a) a)
-gqlRequestImpl url headers query decoder = Transformers.runExceptT do
+graphqlRequestImpl url headers query decoder = Transformers.runExceptT do
   (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url headers $ ArgonautCodecs.Encode.encodeJson { query }
   jsonBody <- case result of
     Left error -> Transformers.throwError $ GraphqlAffjaxError error
     Right response -> pure response.body
-  -- | traceWithoutInspectM $ "[gqlRequest] jsonBody " <> ArgonautCore.stringifyWithSpace 2 jsonBody -- TODO: move outside
+  -- | traceWithoutInspectM $ "[graphqlRequestImpl] jsonBody " <> ArgonautCore.stringifyWithSpace 2 jsonBody -- TODO: move outside
   except $ tryDecodeGraphqlResponse decoder jsonBody
 
-gqlRequestImplWithTrace
+graphqlRequestImplWithTrace
   :: forall a
    . Show a
   => Affjax.URL
@@ -166,21 +166,32 @@ gqlRequestImplWithTrace
   -> String
   -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (Either (GraphqlError a) a)
-gqlRequestImplWithTrace url headers query decoder = do
-  traceWithoutInspectM $ "[gqlRequest] query = " <> query
-  result <- gqlRequestImpl url headers query decoder
+graphqlRequestImplWithTrace url headers query decoder = do
+  traceWithoutInspectM $ "[graphqlRequestImplWithTrace] query = " <> query
+  result <- graphqlRequestImpl url headers query decoder
   case result of
-    Right output -> traceWithoutInspectM $ "[gqlRequest] output" <> show output
-    Left graphqlError -> traceWithoutInspectM $ "[gqlRequest] " <> printGraphqlError graphqlError
+    Right output -> traceWithoutInspectM $ "[graphqlRequestImplWithTrace] output" <> show output
+    Left graphqlError -> traceWithoutInspectM $ "[graphqlRequestImplWithTrace] " <> printGraphqlError graphqlError
   pure $ result
 
-gqlRequest
+graphqlQueryRequest
   :: forall a
    . Affjax.URL
   -> Array Affjax.RequestHeader
   -> SelectionSet Scope__RootQuery a
   -> Aff (Either (GraphqlError a) a)
-gqlRequest url headers selectionSet@(SelectionSet _fields decoder) = do
+graphqlQueryRequest url headers selectionSet@(SelectionSet _fields decoder) = do
   let query = writeGraphql selectionSet
-  result <- gqlRequestImpl url headers query decoder
+  result <- graphqlRequestImpl url headers query decoder
+  pure $ result
+
+graphqlMutationRequest
+  :: forall a
+   . Affjax.URL
+  -> Array Affjax.RequestHeader
+  -> SelectionSet Scope__RootMutation a
+  -> Aff (Either (GraphqlError a) a)
+graphqlMutationRequest url headers selectionSet@(SelectionSet _fields decoder) = do
+  let query = writeGraphql selectionSet
+  result <- graphqlRequestImpl url headers query decoder
   pure $ result

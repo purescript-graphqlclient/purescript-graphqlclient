@@ -1,15 +1,22 @@
 module Examples.Swapi.Object.ChatMessage where
 
-import Prelude
 import GraphqlClient
-import Data.Maybe
-import Examples.Swapi.InputObject
-import Type.Row
-import Examples.Swapi.Enum.Episode
-import Examples.Swapi.Enum.Language
-import Examples.Swapi.Enum.Phrase
+  ( SelectionSet
+  , selectionForCompositeField
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  )
 import Examples.Swapi.Scopes
-import Examples.SwapiCustomScalars
+  ( Scope__Character
+  , Scope__ChatMessage
+  )
+import Data.Maybe
+  ( Maybe
+  )
+import Examples.Swapi.Enum.Phrase
+  ( Phrase
+  )
 
 character :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__ChatMessage (Maybe r)
 character = selectionForCompositeField "character" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
