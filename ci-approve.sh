@@ -1,28 +1,30 @@
 #!/usr/bin/env bash
 
-set -o errexit
+set -euxo pipefail
 
-cd "$(dirname "${BASH_SOURCE[0]}")/.."
+function retry()
+{
+        local n=0
+        local try=$1
+        local cmd="${@: 2}"
+        [[ $# -le 1 ]] && {
+        echo "Usage $0 <retry_number> <Command>"; }
 
-npm uninstall -g elm-graphql
-npm run build
-rm -f dillonkearns-elm-graphql-*.tgz
-npm pack
-npm install -g dillonkearns-elm-graphql-*.tgz
-rm dillonkearns-elm-graphql-*.tgz
-elm-graphql --version
+        until [[ $n -ge $try ]]
+        do
+                $cmd && break || {
+                        echo "Command Fail.."
+                        ((n++))
+                        echo "retry $n ::"
+                        sleep 1;
+                        }
 
-cd examples
-elm-graphql --introspection-file github-schema.json --base Github --output src
-elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
-npx elm-analyse |  grep -v 'INFO: '
+        done
+}
 
-cd ../ete_tests
-elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
+retry 2 yarn run test
 
-cd ..
-echo 'Ensuring documentation is valid...'
-npx elm make --docs=documentation.json
+./regenerate-examples.sh
 
 echo 'Confirming that generated code has been commited...'
 changed_files=$(git diff --name-only)
@@ -34,6 +36,6 @@ if [[ -n $changed_files ]]; then
   exit 1;
 fi
 
-npm run approve-compilation
+retry 2 yarn run examples:test
 
 echo 'SUCCESS'
