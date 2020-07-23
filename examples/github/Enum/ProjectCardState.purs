@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ProjectCardState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data ProjectCardState
   = ContentOnly
   | NoteOnly
   | Redacted
+
+derive instance eqProjectCardState :: Eq ProjectCardState
+
+derive instance ordProjectCardState :: Ord ProjectCardState
 
 fromToMap :: Array (Tuple String ProjectCardState)
 fromToMap = [Tuple "CONTENT_ONLY" ContentOnly, Tuple "NOTE_ONLY" NoteOnly, Tuple "REDACTED" Redacted]

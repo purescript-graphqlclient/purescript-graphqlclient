@@ -1,5 +1,9 @@
 module Examples.Github.Enum.RefOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data RefOrderField
   = TagCommitDate
   | Alphabetical
+
+derive instance eqRefOrderField :: Eq RefOrderField
+
+derive instance ordRefOrderField :: Ord RefOrderField
 
 fromToMap :: Array (Tuple String RefOrderField)
 fromToMap = [Tuple "TAG_COMMIT_DATE" TagCommitDate, Tuple "ALPHABETICAL" Alphabetical]

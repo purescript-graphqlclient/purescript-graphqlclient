@@ -1,5 +1,9 @@
 module Examples.Github.Enum.DiffSide where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data DiffSide
   = Left
   | Right
+
+derive instance eqDiffSide :: Eq DiffSide
+
+derive instance ordDiffSide :: Ord DiffSide
 
 fromToMap :: Array (Tuple String DiffSide)
 fromToMap = [Tuple "LEFT" Left, Tuple "RIGHT" Right]

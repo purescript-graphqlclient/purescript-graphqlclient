@@ -1,5 +1,9 @@
 module Examples.Github.Enum.StarOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - StarOrderField
 data StarOrderField
   = StarredAt
+
+derive instance eqStarOrderField :: Eq StarOrderField
+
+derive instance ordStarOrderField :: Ord StarOrderField
 
 fromToMap :: Array (Tuple String StarOrderField)
 fromToMap = [Tuple "STARRED_AT" StarredAt]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.SecurityAdvisoryIdentifierType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data SecurityAdvisoryIdentifierType
   = Cve
   | Ghsa
+
+derive instance eqSecurityAdvisoryIdentifierType :: Eq SecurityAdvisoryIdentifierType
+
+derive instance ordSecurityAdvisoryIdentifierType :: Ord SecurityAdvisoryIdentifierType
 
 fromToMap :: Array (Tuple String SecurityAdvisoryIdentifierType)
 fromToMap = [Tuple "CVE" Cve, Tuple "GHSA" Ghsa]

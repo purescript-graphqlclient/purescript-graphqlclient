@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OrgUpdateMemberAuditEntryPermission where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data OrgUpdateMemberAuditEntryPermission
   = Read
   | Admin
+
+derive instance eqOrgUpdateMemberAuditEntryPermission :: Eq OrgUpdateMemberAuditEntryPermission
+
+derive instance ordOrgUpdateMemberAuditEntryPermission :: Ord OrgUpdateMemberAuditEntryPermission
 
 fromToMap :: Array (Tuple String OrgUpdateMemberAuditEntryPermission)
 fromToMap = [Tuple "READ" Read, Tuple "ADMIN" Admin]

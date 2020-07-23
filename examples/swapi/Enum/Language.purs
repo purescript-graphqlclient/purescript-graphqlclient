@@ -1,5 +1,9 @@
 module Examples.Swapi.Enum.Language where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data Language
   = En
   | Es
   | No
+
+derive instance eqLanguage :: Eq Language
+
+derive instance ordLanguage :: Ord Language
 
 fromToMap :: Array (Tuple String Language)
 fromToMap = [Tuple "EN" En, Tuple "ES" Es, Tuple "NO" No]

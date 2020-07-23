@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OperationType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -19,6 +23,10 @@ data OperationType
   | Remove
   | Restore
   | Transfer
+
+derive instance eqOperationType :: Eq OperationType
+
+derive instance ordOperationType :: Ord OperationType
 
 fromToMap :: Array (Tuple String OperationType)
 fromToMap = [Tuple "ACCESS" Access, Tuple "AUTHENTICATION" Authentication, Tuple "CREATE" Create, Tuple "MODIFY" Modify, Tuple "REMOVE" Remove, Tuple "RESTORE" Restore, Tuple "TRANSFER" Transfer]

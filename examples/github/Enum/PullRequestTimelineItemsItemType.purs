@@ -1,5 +1,9 @@
 module Examples.Github.Enum.PullRequestTimelineItemsItemType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -62,6 +66,10 @@ data PullRequestTimelineItemsItemType
   | UnmarkedAsDuplicateEvent
   | UnpinnedEvent
   | UnsubscribedEvent
+
+derive instance eqPullRequestTimelineItemsItemType :: Eq PullRequestTimelineItemsItemType
+
+derive instance ordPullRequestTimelineItemsItemType :: Ord PullRequestTimelineItemsItemType
 
 fromToMap :: Array (Tuple String PullRequestTimelineItemsItemType)
 fromToMap = [Tuple "PULL_REQUEST_COMMIT" PullRequestCommit, Tuple "PULL_REQUEST_COMMIT_COMMENT_THREAD" PullRequestCommitCommentThread, Tuple "PULL_REQUEST_REVIEW" PullRequestReview, Tuple "PULL_REQUEST_REVIEW_THREAD" PullRequestReviewThread, Tuple "PULL_REQUEST_REVISION_MARKER" PullRequestRevisionMarker, Tuple "AUTOMATIC_BASE_CHANGE_FAILED_EVENT" AutomaticBaseChangeFailedEvent, Tuple "AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT" AutomaticBaseChangeSucceededEvent, Tuple "BASE_REF_CHANGED_EVENT" BaseRefChangedEvent, Tuple "BASE_REF_FORCE_PUSHED_EVENT" BaseRefForcePushedEvent, Tuple "DEPLOYED_EVENT" DeployedEvent, Tuple "DEPLOYMENT_ENVIRONMENT_CHANGED_EVENT" DeploymentEnvironmentChangedEvent, Tuple "HEAD_REF_DELETED_EVENT" HeadRefDeletedEvent, Tuple "HEAD_REF_FORCE_PUSHED_EVENT" HeadRefForcePushedEvent, Tuple "HEAD_REF_RESTORED_EVENT" HeadRefRestoredEvent, Tuple "MERGED_EVENT" MergedEvent, Tuple "REVIEW_DISMISSED_EVENT" ReviewDismissedEvent, Tuple "REVIEW_REQUESTED_EVENT" ReviewRequestedEvent, Tuple "REVIEW_REQUEST_REMOVED_EVENT" ReviewRequestRemovedEvent, Tuple "READY_FOR_REVIEW_EVENT" ReadyForReviewEvent, Tuple "CONVERT_TO_DRAFT_EVENT" ConvertToDraftEvent, Tuple "ISSUE_COMMENT" IssueComment, Tuple "CROSS_REFERENCED_EVENT" CrossReferencedEvent, Tuple "ADDED_TO_PROJECT_EVENT" AddedToProjectEvent, Tuple "ASSIGNED_EVENT" AssignedEvent, Tuple "CLOSED_EVENT" ClosedEvent, Tuple "COMMENT_DELETED_EVENT" CommentDeletedEvent, Tuple "CONNECTED_EVENT" ConnectedEvent, Tuple "CONVERTED_NOTE_TO_ISSUE_EVENT" ConvertedNoteToIssueEvent, Tuple "DEMILESTONED_EVENT" DemilestonedEvent, Tuple "DISCONNECTED_EVENT" DisconnectedEvent, Tuple "LABELED_EVENT" LabeledEvent, Tuple "LOCKED_EVENT" LockedEvent, Tuple "MARKED_AS_DUPLICATE_EVENT" MarkedAsDuplicateEvent, Tuple "MENTIONED_EVENT" MentionedEvent, Tuple "MILESTONED_EVENT" MilestonedEvent, Tuple "MOVED_COLUMNS_IN_PROJECT_EVENT" MovedColumnsInProjectEvent, Tuple "PINNED_EVENT" PinnedEvent, Tuple "REFERENCED_EVENT" ReferencedEvent, Tuple "REMOVED_FROM_PROJECT_EVENT" RemovedFromProjectEvent, Tuple "RENAMED_TITLE_EVENT" RenamedTitleEvent, Tuple "REOPENED_EVENT" ReopenedEvent, Tuple "SUBSCRIBED_EVENT" SubscribedEvent, Tuple "TRANSFERRED_EVENT" TransferredEvent, Tuple "UNASSIGNED_EVENT" UnassignedEvent, Tuple "UNLABELED_EVENT" UnlabeledEvent, Tuple "UNLOCKED_EVENT" UnlockedEvent, Tuple "USER_BLOCKED_EVENT" UserBlockedEvent, Tuple "UNMARKED_AS_DUPLICATE_EVENT" UnmarkedAsDuplicateEvent, Tuple "UNPINNED_EVENT" UnpinnedEvent, Tuple "UNSUBSCRIBED_EVENT" UnsubscribedEvent]

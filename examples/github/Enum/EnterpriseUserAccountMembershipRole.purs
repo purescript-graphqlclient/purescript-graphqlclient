@@ -1,5 +1,9 @@
 module Examples.Github.Enum.EnterpriseUserAccountMembershipRole where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data EnterpriseUserAccountMembershipRole
   = Member
   | Owner
+
+derive instance eqEnterpriseUserAccountMembershipRole :: Eq EnterpriseUserAccountMembershipRole
+
+derive instance ordEnterpriseUserAccountMembershipRole :: Ord EnterpriseUserAccountMembershipRole
 
 fromToMap :: Array (Tuple String EnterpriseUserAccountMembershipRole)
 fromToMap = [Tuple "MEMBER" Member, Tuple "OWNER" Owner]

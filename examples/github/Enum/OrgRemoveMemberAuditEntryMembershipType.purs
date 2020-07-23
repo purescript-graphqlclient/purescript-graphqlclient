@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OrgRemoveMemberAuditEntryMembershipType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -17,6 +21,10 @@ data OrgRemoveMemberAuditEntryMembershipType
   | BillingManager
   | Unaffiliated
   | OutsideCollaborator
+
+derive instance eqOrgRemoveMemberAuditEntryMembershipType :: Eq OrgRemoveMemberAuditEntryMembershipType
+
+derive instance ordOrgRemoveMemberAuditEntryMembershipType :: Ord OrgRemoveMemberAuditEntryMembershipType
 
 fromToMap :: Array (Tuple String OrgRemoveMemberAuditEntryMembershipType)
 fromToMap = [Tuple "DIRECT_MEMBER" DirectMember, Tuple "ADMIN" Admin, Tuple "BILLING_MANAGER" BillingManager, Tuple "UNAFFILIATED" Unaffiliated, Tuple "OUTSIDE_COLLABORATOR" OutsideCollaborator]

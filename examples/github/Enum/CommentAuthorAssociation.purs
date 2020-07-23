@@ -1,5 +1,9 @@
 module Examples.Github.Enum.CommentAuthorAssociation where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -19,6 +23,10 @@ data CommentAuthorAssociation
   | FirstTimeContributor
   | FirstTimer
   | None
+
+derive instance eqCommentAuthorAssociation :: Eq CommentAuthorAssociation
+
+derive instance ordCommentAuthorAssociation :: Ord CommentAuthorAssociation
 
 fromToMap :: Array (Tuple String CommentAuthorAssociation)
 fromToMap = [Tuple "MEMBER" Member, Tuple "OWNER" Owner, Tuple "COLLABORATOR" Collaborator, Tuple "CONTRIBUTOR" Contributor, Tuple "FIRST_TIME_CONTRIBUTOR" FirstTimeContributor, Tuple "FIRST_TIMER" FirstTimer, Tuple "NONE" None]

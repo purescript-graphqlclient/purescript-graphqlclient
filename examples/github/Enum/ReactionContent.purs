@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ReactionContent where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -20,6 +24,10 @@ data ReactionContent
   | Heart
   | Rocket
   | Eyes
+
+derive instance eqReactionContent :: Eq ReactionContent
+
+derive instance ordReactionContent :: Ord ReactionContent
 
 fromToMap :: Array (Tuple String ReactionContent)
 fromToMap = [Tuple "THUMBS_UP" ThumbsUp, Tuple "THUMBS_DOWN" ThumbsDown, Tuple "LAUGH" Laugh, Tuple "HOORAY" Hooray, Tuple "CONFUSED" Confused, Tuple "HEART" Heart, Tuple "ROCKET" Rocket, Tuple "EYES" Eyes]

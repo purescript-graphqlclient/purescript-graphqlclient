@@ -1,5 +1,9 @@
 module Examples.Github.Enum.PullRequestUpdateState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data PullRequestUpdateState
   = Open
   | Closed
+
+derive instance eqPullRequestUpdateState :: Eq PullRequestUpdateState
+
+derive instance ordPullRequestUpdateState :: Ord PullRequestUpdateState
 
 fromToMap :: Array (Tuple String PullRequestUpdateState)
 fromToMap = [Tuple "OPEN" Open, Tuple "CLOSED" Closed]

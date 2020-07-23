@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ReactionOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - ReactionOrderField
 data ReactionOrderField
   = CreatedAt
+
+derive instance eqReactionOrderField :: Eq ReactionOrderField
+
+derive instance ordReactionOrderField :: Ord ReactionOrderField
 
 fromToMap :: Array (Tuple String ReactionOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt]

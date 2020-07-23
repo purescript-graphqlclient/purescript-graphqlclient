@@ -1,5 +1,9 @@
 module Examples.Github.Enum.PackageFileOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - PackageFileOrderField
 data PackageFileOrderField
   = CreatedAt
+
+derive instance eqPackageFileOrderField :: Eq PackageFileOrderField
+
+derive instance ordPackageFileOrderField :: Ord PackageFileOrderField
 
 fromToMap :: Array (Tuple String PackageFileOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ProjectColumnPurpose where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data ProjectColumnPurpose
   = Todo
   | InProgress
   | Done
+
+derive instance eqProjectColumnPurpose :: Eq ProjectColumnPurpose
+
+derive instance ordProjectColumnPurpose :: Ord ProjectColumnPurpose
 
 fromToMap :: Array (Tuple String ProjectColumnPurpose)
 fromToMap = [Tuple "TODO" Todo, Tuple "IN_PROGRESS" InProgress, Tuple "DONE" Done]

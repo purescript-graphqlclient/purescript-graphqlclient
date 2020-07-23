@@ -1,5 +1,9 @@
 module Examples.Github.Enum.CommitContributionOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data CommitContributionOrderField
   = OccurredAt
   | CommitCount
+
+derive instance eqCommitContributionOrderField :: Eq CommitContributionOrderField
+
+derive instance ordCommitContributionOrderField :: Ord CommitContributionOrderField
 
 fromToMap :: Array (Tuple String CommitContributionOrderField)
 fromToMap = [Tuple "OCCURRED_AT" OccurredAt, Tuple "COMMIT_COUNT" CommitCount]

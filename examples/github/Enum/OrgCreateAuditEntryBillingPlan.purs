@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OrgCreateAuditEntryBillingPlan where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -17,6 +21,10 @@ data OrgCreateAuditEntryBillingPlan
   | BusinessPlus
   | Unlimited
   | TieredPerSeat
+
+derive instance eqOrgCreateAuditEntryBillingPlan :: Eq OrgCreateAuditEntryBillingPlan
+
+derive instance ordOrgCreateAuditEntryBillingPlan :: Ord OrgCreateAuditEntryBillingPlan
 
 fromToMap :: Array (Tuple String OrgCreateAuditEntryBillingPlan)
 fromToMap = [Tuple "FREE" Free, Tuple "BUSINESS" Business, Tuple "BUSINESS_PLUS" BusinessPlus, Tuple "UNLIMITED" Unlimited, Tuple "TIERED_PER_SEAT" TieredPerSeat]

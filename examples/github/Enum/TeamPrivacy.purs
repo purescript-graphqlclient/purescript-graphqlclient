@@ -1,5 +1,9 @@
 module Examples.Github.Enum.TeamPrivacy where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data TeamPrivacy
   = Secret
   | Visible
+
+derive instance eqTeamPrivacy :: Eq TeamPrivacy
+
+derive instance ordTeamPrivacy :: Ord TeamPrivacy
 
 fromToMap :: Array (Tuple String TeamPrivacy)
 fromToMap = [Tuple "SECRET" Secret, Tuple "VISIBLE" Visible]

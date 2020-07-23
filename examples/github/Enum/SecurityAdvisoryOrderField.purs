@@ -1,5 +1,9 @@
 module Examples.Github.Enum.SecurityAdvisoryOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data SecurityAdvisoryOrderField
   = PublishedAt
   | UpdatedAt
+
+derive instance eqSecurityAdvisoryOrderField :: Eq SecurityAdvisoryOrderField
+
+derive instance ordSecurityAdvisoryOrderField :: Ord SecurityAdvisoryOrderField
 
 fromToMap :: Array (Tuple String SecurityAdvisoryOrderField)
 fromToMap = [Tuple "PUBLISHED_AT" PublishedAt, Tuple "UPDATED_AT" UpdatedAt]

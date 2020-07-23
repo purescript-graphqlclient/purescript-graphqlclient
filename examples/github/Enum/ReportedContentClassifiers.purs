@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ReportedContentClassifiers where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -18,6 +22,10 @@ data ReportedContentClassifiers
   | Outdated
   | Duplicate
   | Resolved
+
+derive instance eqReportedContentClassifiers :: Eq ReportedContentClassifiers
+
+derive instance ordReportedContentClassifiers :: Ord ReportedContentClassifiers
 
 fromToMap :: Array (Tuple String ReportedContentClassifiers)
 fromToMap = [Tuple "SPAM" Spam, Tuple "ABUSE" Abuse, Tuple "OFF_TOPIC" OffTopic, Tuple "OUTDATED" Outdated, Tuple "DUPLICATE" Duplicate, Tuple "RESOLVED" Resolved]

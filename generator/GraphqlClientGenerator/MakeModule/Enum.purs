@@ -15,6 +15,21 @@ makeModule moduleName fullType =
   let
     enumValues' :: Maybe $ NonEmptyArray InstorpectionQueryResult__EnumValue
     enumValues' = fullType.enumValues <#> NonEmpty.fromFoldable # join
+
+    pascalName :: String
+    pascalName = StringsExtra.pascalCase fullType.name
+
+    mkDerive :: String -> ModuleName -> Declaration
+    mkDerive typeName module_ = DeclDerive
+      { comments: Nothing
+      , deriveType: DeclDeriveType_Odrinary
+      , head:
+        { instName: Ident $ StringsExtra.camelCase typeName <> pascalName
+        , instConstraints: []
+        , instClass: SmartQualifiedName__Simple module_ $ ProperName typeName
+        , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName
+        }
+      }
   in
   Module
   { moduleName
@@ -31,6 +46,8 @@ makeModule moduleName fullType =
           # fromMaybe []
           <#> (\field -> DataCtor { dataCtorName: ProperName $ StringsExtra.pascalCase field.name, dataCtorFields: [] })
       }
+    , mkDerive "Eq" (mkModuleName $ NonEmpty.singleton "Prelude")
+    , mkDerive "Ord" (mkModuleName $ NonEmpty.singleton "Prelude")
     , DeclSignature
       { comments: Nothing
       , ident: Ident "fromToMap"

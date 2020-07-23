@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -20,6 +24,10 @@ data OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
   | PublicInternal
   | PrivateInternal
   | PublicPrivate
+
+derive instance eqOrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility :: Eq OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
+
+derive instance ordOrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility :: Ord OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
 
 fromToMap :: Array (Tuple String OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility)
 fromToMap = [Tuple "ALL" All, Tuple "PUBLIC" Public, Tuple "NONE" None, Tuple "PRIVATE" Private, Tuple "INTERNAL" Internal, Tuple "PUBLIC_INTERNAL" PublicInternal, Tuple "PRIVATE_INTERNAL" PrivateInternal, Tuple "PUBLIC_PRIVATE" PublicPrivate]

@@ -18,9 +18,13 @@ data ArgumentValue
   | ArgumentValueArray (Array ArgumentValue)
   | ArgumentValueObject (Array Argument)
 
+derive instance eqArgumentValue :: Eq ArgumentValue
+
 data Argument
   = RequiredArgument String ArgumentValue
   | OptionalArgument String (Optional ArgumentValue)
+
+derive instance eqArgument :: Eq Argument
 
 class ToGraphqlArgumentValue a where
   toGraphqlArgumentValue :: a -> ArgumentValue
@@ -119,6 +123,8 @@ instance toGraphqlArgumentRecordCons ::
 --------------------
 
 data Optional x = Absent | Present x -- it's like Maybe, but with DefaultInput class, and only for input of graphql
+
+derive instance eqOptional :: Eq a => Eq (Optional a)
 
 derive instance optionalFunctor :: Functor Optional
 

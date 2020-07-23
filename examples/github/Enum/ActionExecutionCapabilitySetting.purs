@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ActionExecutionCapabilitySetting where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data ActionExecutionCapabilitySetting
   | AllActions
   | LocalActionsOnly
   | NoPolicy
+
+derive instance eqActionExecutionCapabilitySetting :: Eq ActionExecutionCapabilitySetting
+
+derive instance ordActionExecutionCapabilitySetting :: Ord ActionExecutionCapabilitySetting
 
 fromToMap :: Array (Tuple String ActionExecutionCapabilitySetting)
 fromToMap = [Tuple "DISABLED" Disabled, Tuple "ALL_ACTIONS" AllActions, Tuple "LOCAL_ACTIONS_ONLY" LocalActionsOnly, Tuple "NO_POLICY" NoPolicy]

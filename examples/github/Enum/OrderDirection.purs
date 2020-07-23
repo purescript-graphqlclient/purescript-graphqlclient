@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OrderDirection where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data OrderDirection
   = Asc
   | Desc
+
+derive instance eqOrderDirection :: Eq OrderDirection
+
+derive instance ordOrderDirection :: Ord OrderDirection
 
 fromToMap :: Array (Tuple String OrderDirection)
 fromToMap = [Tuple "ASC" Asc, Tuple "DESC" Desc]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.IssueOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data IssueOrderField
   = CreatedAt
   | UpdatedAt
   | Comments
+
+derive instance eqIssueOrderField :: Eq IssueOrderField
+
+derive instance ordIssueOrderField :: Ord IssueOrderField
 
 fromToMap :: Array (Tuple String IssueOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt, Tuple "UPDATED_AT" UpdatedAt, Tuple "COMMENTS" Comments]

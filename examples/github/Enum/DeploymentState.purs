@@ -1,5 +1,9 @@
 module Examples.Github.Enum.DeploymentState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -21,6 +25,10 @@ data DeploymentState
   | Pending
   | Queued
   | InProgress
+
+derive instance eqDeploymentState :: Eq DeploymentState
+
+derive instance ordDeploymentState :: Ord DeploymentState
 
 fromToMap :: Array (Tuple String DeploymentState)
 fromToMap = [Tuple "ABANDONED" Abandoned, Tuple "ACTIVE" Active, Tuple "DESTROYED" Destroyed, Tuple "ERROR" Error, Tuple "FAILURE" Failure, Tuple "INACTIVE" Inactive, Tuple "PENDING" Pending, Tuple "QUEUED" Queued, Tuple "IN_PROGRESS" InProgress]

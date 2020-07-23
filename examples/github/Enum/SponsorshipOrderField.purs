@@ -1,5 +1,9 @@
 module Examples.Github.Enum.SponsorshipOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - SponsorshipOrderField
 data SponsorshipOrderField
   = CreatedAt
+
+derive instance eqSponsorshipOrderField :: Eq SponsorshipOrderField
+
+derive instance ordSponsorshipOrderField :: Ord SponsorshipOrderField
 
 fromToMap :: Array (Tuple String SponsorshipOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt]

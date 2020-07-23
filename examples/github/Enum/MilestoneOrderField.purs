@@ -1,5 +1,9 @@
 module Examples.Github.Enum.MilestoneOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data MilestoneOrderField
   | CreatedAt
   | UpdatedAt
   | Number
+
+derive instance eqMilestoneOrderField :: Eq MilestoneOrderField
+
+derive instance ordMilestoneOrderField :: Ord MilestoneOrderField
 
 fromToMap :: Array (Tuple String MilestoneOrderField)
 fromToMap = [Tuple "DUE_DATE" DueDate, Tuple "CREATED_AT" CreatedAt, Tuple "UPDATED_AT" UpdatedAt, Tuple "NUMBER" Number]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OrganizationInvitationType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data OrganizationInvitationType
   = User
   | Email
+
+derive instance eqOrganizationInvitationType :: Eq OrganizationInvitationType
+
+derive instance ordOrganizationInvitationType :: Ord OrganizationInvitationType
 
 fromToMap :: Array (Tuple String OrganizationInvitationType)
 fromToMap = [Tuple "USER" User, Tuple "EMAIL" Email]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ProjectTemplate where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data ProjectTemplate
   | AutomatedKanbanV2
   | AutomatedReviewsKanban
   | BugTriage
+
+derive instance eqProjectTemplate :: Eq ProjectTemplate
+
+derive instance ordProjectTemplate :: Ord ProjectTemplate
 
 fromToMap :: Array (Tuple String ProjectTemplate)
 fromToMap = [Tuple "BASIC_KANBAN" BasicKanban, Tuple "AUTOMATED_KANBAN_V2" AutomatedKanbanV2, Tuple "AUTOMATED_REVIEWS_KANBAN" AutomatedReviewsKanban, Tuple "BUG_TRIAGE" BugTriage]

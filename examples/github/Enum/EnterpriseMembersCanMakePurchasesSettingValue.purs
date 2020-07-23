@@ -1,5 +1,9 @@
 module Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data EnterpriseMembersCanMakePurchasesSettingValue
   = Enabled
   | Disabled
+
+derive instance eqEnterpriseMembersCanMakePurchasesSettingValue :: Eq EnterpriseMembersCanMakePurchasesSettingValue
+
+derive instance ordEnterpriseMembersCanMakePurchasesSettingValue :: Ord EnterpriseMembersCanMakePurchasesSettingValue
 
 fromToMap :: Array (Tuple String EnterpriseMembersCanMakePurchasesSettingValue)
 fromToMap = [Tuple "ENABLED" Enabled, Tuple "DISABLED" Disabled]

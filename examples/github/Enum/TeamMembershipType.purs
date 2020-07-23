@@ -1,5 +1,9 @@
 module Examples.Github.Enum.TeamMembershipType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data TeamMembershipType
   = Immediate
   | ChildTeam
   | All
+
+derive instance eqTeamMembershipType :: Eq TeamMembershipType
+
+derive instance ordTeamMembershipType :: Ord TeamMembershipType
 
 fromToMap :: Array (Tuple String TeamMembershipType)
 fromToMap = [Tuple "IMMEDIATE" Immediate, Tuple "CHILD_TEAM" ChildTeam, Tuple "ALL" All]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.SecurityAdvisorySeverity where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data SecurityAdvisorySeverity
   | Moderate
   | High
   | Critical
+
+derive instance eqSecurityAdvisorySeverity :: Eq SecurityAdvisorySeverity
+
+derive instance ordSecurityAdvisorySeverity :: Ord SecurityAdvisorySeverity
 
 fromToMap :: Array (Tuple String SecurityAdvisorySeverity)
 fromToMap = [Tuple "LOW" Low, Tuple "MODERATE" Moderate, Tuple "HIGH" High, Tuple "CRITICAL" Critical]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
   | Write
   | Admin
   | None
+
+derive instance eqOrgUpdateDefaultRepositoryPermissionAuditEntryPermission :: Eq OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
+
+derive instance ordOrgUpdateDefaultRepositoryPermissionAuditEntryPermission :: Ord OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
 
 fromToMap :: Array (Tuple String OrgUpdateDefaultRepositoryPermissionAuditEntryPermission)
 fromToMap = [Tuple "READ" Read, Tuple "WRITE" Write, Tuple "ADMIN" Admin, Tuple "NONE" None]

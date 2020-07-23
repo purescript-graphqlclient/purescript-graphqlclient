@@ -1,5 +1,9 @@
 module Examples.Github.Enum.RepoCreateAuditEntryVisibility where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data RepoCreateAuditEntryVisibility
   = Internal
   | Private
   | Public
+
+derive instance eqRepoCreateAuditEntryVisibility :: Eq RepoCreateAuditEntryVisibility
+
+derive instance ordRepoCreateAuditEntryVisibility :: Ord RepoCreateAuditEntryVisibility
 
 fromToMap :: Array (Tuple String RepoCreateAuditEntryVisibility)
 fromToMap = [Tuple "INTERNAL" Internal, Tuple "PRIVATE" Private, Tuple "PUBLIC" Public]

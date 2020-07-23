@@ -1,5 +1,9 @@
 module Examples.Github.Enum.UserBlockDuration where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -17,6 +21,10 @@ data UserBlockDuration
   | OneWeek
   | OneMonth
   | Permanent
+
+derive instance eqUserBlockDuration :: Eq UserBlockDuration
+
+derive instance ordUserBlockDuration :: Ord UserBlockDuration
 
 fromToMap :: Array (Tuple String UserBlockDuration)
 fromToMap = [Tuple "ONE_DAY" OneDay, Tuple "THREE_DAYS" ThreeDays, Tuple "ONE_WEEK" OneWeek, Tuple "ONE_MONTH" OneMonth, Tuple "PERMANENT" Permanent]

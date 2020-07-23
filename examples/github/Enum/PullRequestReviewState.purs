@@ -1,5 +1,9 @@
 module Examples.Github.Enum.PullRequestReviewState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -17,6 +21,10 @@ data PullRequestReviewState
   | Approved
   | ChangesRequested
   | Dismissed
+
+derive instance eqPullRequestReviewState :: Eq PullRequestReviewState
+
+derive instance ordPullRequestReviewState :: Ord PullRequestReviewState
 
 fromToMap :: Array (Tuple String PullRequestReviewState)
 fromToMap = [Tuple "PENDING" Pending, Tuple "COMMENTED" Commented, Tuple "APPROVED" Approved, Tuple "CHANGES_REQUESTED" ChangesRequested, Tuple "DISMISSED" Dismissed]

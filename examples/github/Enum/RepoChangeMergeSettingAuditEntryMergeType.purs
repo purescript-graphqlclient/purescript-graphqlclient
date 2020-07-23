@@ -1,5 +1,9 @@
 module Examples.Github.Enum.RepoChangeMergeSettingAuditEntryMergeType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data RepoChangeMergeSettingAuditEntryMergeType
   = Merge
   | Rebase
   | Squash
+
+derive instance eqRepoChangeMergeSettingAuditEntryMergeType :: Eq RepoChangeMergeSettingAuditEntryMergeType
+
+derive instance ordRepoChangeMergeSettingAuditEntryMergeType :: Ord RepoChangeMergeSettingAuditEntryMergeType
 
 fromToMap :: Array (Tuple String RepoChangeMergeSettingAuditEntryMergeType)
 fromToMap = [Tuple "MERGE" Merge, Tuple "REBASE" Rebase, Tuple "SQUASH" Squash]

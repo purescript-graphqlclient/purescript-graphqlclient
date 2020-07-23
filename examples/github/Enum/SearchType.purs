@@ -1,5 +1,9 @@
 module Examples.Github.Enum.SearchType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data SearchType
   = Issue
   | Repository
   | User
+
+derive instance eqSearchType :: Eq SearchType
+
+derive instance ordSearchType :: Ord SearchType
 
 fromToMap :: Array (Tuple String SearchType)
 fromToMap = [Tuple "ISSUE" Issue, Tuple "REPOSITORY" Repository, Tuple "USER" User]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.AuditLogOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - AuditLogOrderField
 data AuditLogOrderField
   = CreatedAt
+
+derive instance eqAuditLogOrderField :: Eq AuditLogOrderField
+
+derive instance ordAuditLogOrderField :: Ord AuditLogOrderField
 
 fromToMap :: Array (Tuple String AuditLogOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt]

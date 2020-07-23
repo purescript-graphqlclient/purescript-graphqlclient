@@ -1,5 +1,9 @@
 module Examples.Github.Enum.PackageType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -19,6 +23,10 @@ data PackageType
   | Debian
   | Nuget
   | Pypi
+
+derive instance eqPackageType :: Eq PackageType
+
+derive instance ordPackageType :: Ord PackageType
 
 fromToMap :: Array (Tuple String PackageType)
 fromToMap = [Tuple "NPM" Npm, Tuple "RUBYGEMS" Rubygems, Tuple "MAVEN" Maven, Tuple "DOCKER" Docker, Tuple "DEBIAN" Debian, Tuple "NUGET" Nuget, Tuple "PYPI" Pypi]

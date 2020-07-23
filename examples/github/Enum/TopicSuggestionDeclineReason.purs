@@ -1,5 +1,9 @@
 module Examples.Github.Enum.TopicSuggestionDeclineReason where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data TopicSuggestionDeclineReason
   | TooSpecific
   | PersonalPreference
   | TooGeneral
+
+derive instance eqTopicSuggestionDeclineReason :: Eq TopicSuggestionDeclineReason
+
+derive instance ordTopicSuggestionDeclineReason :: Ord TopicSuggestionDeclineReason
 
 fromToMap :: Array (Tuple String TopicSuggestionDeclineReason)
 fromToMap = [Tuple "NOT_RELEVANT" NotRelevant, Tuple "TOO_SPECIFIC" TooSpecific, Tuple "PERSONAL_PREFERENCE" PersonalPreference, Tuple "TOO_GENERAL" TooGeneral]

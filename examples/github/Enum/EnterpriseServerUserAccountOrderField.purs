@@ -1,5 +1,9 @@
 module Examples.Github.Enum.EnterpriseServerUserAccountOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data EnterpriseServerUserAccountOrderField
   = Login
   | RemoteCreatedAt
+
+derive instance eqEnterpriseServerUserAccountOrderField :: Eq EnterpriseServerUserAccountOrderField
+
+derive instance ordEnterpriseServerUserAccountOrderField :: Ord EnterpriseServerUserAccountOrderField
 
 fromToMap :: Array (Tuple String EnterpriseServerUserAccountOrderField)
 fromToMap = [Tuple "LOGIN" Login, Tuple "REMOTE_CREATED_AT" RemoteCreatedAt]

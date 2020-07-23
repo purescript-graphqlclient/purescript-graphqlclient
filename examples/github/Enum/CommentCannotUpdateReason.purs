@@ -1,5 +1,9 @@
 module Examples.Github.Enum.CommentCannotUpdateReason where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -19,6 +23,10 @@ data CommentCannotUpdateReason
   | Maintenance
   | VerifiedEmailRequired
   | Denied
+
+derive instance eqCommentCannotUpdateReason :: Eq CommentCannotUpdateReason
+
+derive instance ordCommentCannotUpdateReason :: Ord CommentCannotUpdateReason
 
 fromToMap :: Array (Tuple String CommentCannotUpdateReason)
 fromToMap = [Tuple "ARCHIVED" Archived, Tuple "INSUFFICIENT_ACCESS" InsufficientAccess, Tuple "LOCKED" Locked, Tuple "LOGIN_REQUIRED" LoginRequired, Tuple "MAINTENANCE" Maintenance, Tuple "VERIFIED_EMAIL_REQUIRED" VerifiedEmailRequired, Tuple "DENIED" Denied]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.RepositoryContributionType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -17,6 +21,10 @@ data RepositoryContributionType
   | PullRequest
   | Repository
   | PullRequestReview
+
+derive instance eqRepositoryContributionType :: Eq RepositoryContributionType
+
+derive instance ordRepositoryContributionType :: Ord RepositoryContributionType
 
 fromToMap :: Array (Tuple String RepositoryContributionType)
 fromToMap = [Tuple "COMMIT" Commit, Tuple "ISSUE" Issue, Tuple "PULL_REQUEST" PullRequest, Tuple "REPOSITORY" Repository, Tuple "PULL_REQUEST_REVIEW" PullRequestReview]

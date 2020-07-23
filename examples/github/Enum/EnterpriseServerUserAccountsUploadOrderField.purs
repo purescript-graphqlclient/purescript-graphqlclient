@@ -1,5 +1,9 @@
 module Examples.Github.Enum.EnterpriseServerUserAccountsUploadOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - EnterpriseServerUserAccountsUploadOrderField
 data EnterpriseServerUserAccountsUploadOrderField
   = CreatedAt
+
+derive instance eqEnterpriseServerUserAccountsUploadOrderField :: Eq EnterpriseServerUserAccountsUploadOrderField
+
+derive instance ordEnterpriseServerUserAccountsUploadOrderField :: Ord EnterpriseServerUserAccountsUploadOrderField
 
 fromToMap :: Array (Tuple String EnterpriseServerUserAccountsUploadOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt]

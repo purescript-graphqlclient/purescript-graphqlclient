@@ -1,5 +1,9 @@
 module Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - EnterpriseAdministratorInvitationOrderField
 data EnterpriseAdministratorInvitationOrderField
   = CreatedAt
+
+derive instance eqEnterpriseAdministratorInvitationOrderField :: Eq EnterpriseAdministratorInvitationOrderField
+
+derive instance ordEnterpriseAdministratorInvitationOrderField :: Ord EnterpriseAdministratorInvitationOrderField
 
 fromToMap :: Array (Tuple String EnterpriseAdministratorInvitationOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt]

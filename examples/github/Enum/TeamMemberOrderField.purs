@@ -1,5 +1,9 @@
 module Examples.Github.Enum.TeamMemberOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data TeamMemberOrderField
   = Login
   | CreatedAt
+
+derive instance eqTeamMemberOrderField :: Eq TeamMemberOrderField
+
+derive instance ordTeamMemberOrderField :: Ord TeamMemberOrderField
 
 fromToMap :: Array (Tuple String TeamMemberOrderField)
 fromToMap = [Tuple "LOGIN" Login, Tuple "CREATED_AT" CreatedAt]

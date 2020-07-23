@@ -1,5 +1,9 @@
 module Examples.Github.Enum.MilestoneState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data MilestoneState
   = Open
   | Closed
+
+derive instance eqMilestoneState :: Eq MilestoneState
+
+derive instance ordMilestoneState :: Ord MilestoneState
 
 fromToMap :: Array (Tuple String MilestoneState)
 fromToMap = [Tuple "OPEN" Open, Tuple "CLOSED" Closed]

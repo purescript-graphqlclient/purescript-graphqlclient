@@ -1,5 +1,9 @@
 module Examples.Github.Enum.LockReason where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data LockReason
   | TooHeated
   | Resolved
   | Spam
+
+derive instance eqLockReason :: Eq LockReason
+
+derive instance ordLockReason :: Ord LockReason
 
 fromToMap :: Array (Tuple String LockReason)
 fromToMap = [Tuple "OFF_TOPIC" OffTopic, Tuple "TOO_HEATED" TooHeated, Tuple "RESOLVED" Resolved, Tuple "SPAM" Spam]

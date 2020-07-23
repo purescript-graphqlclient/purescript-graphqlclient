@@ -1,5 +1,9 @@
 module Examples.Github.Enum.PullRequestReviewCommentState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data PullRequestReviewCommentState
   = Pending
   | Submitted
+
+derive instance eqPullRequestReviewCommentState :: Eq PullRequestReviewCommentState
+
+derive instance ordPullRequestReviewCommentState :: Ord PullRequestReviewCommentState
 
 fromToMap :: Array (Tuple String PullRequestReviewCommentState)
 fromToMap = [Tuple "PENDING" Pending, Tuple "SUBMITTED" Submitted]

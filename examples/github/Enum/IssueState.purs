@@ -1,5 +1,9 @@
 module Examples.Github.Enum.IssueState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data IssueState
   = Open
   | Closed
+
+derive instance eqIssueState :: Eq IssueState
+
+derive instance ordIssueState :: Ord IssueState
 
 fromToMap :: Array (Tuple String IssueState)
 fromToMap = [Tuple "OPEN" Open, Tuple "CLOSED" Closed]

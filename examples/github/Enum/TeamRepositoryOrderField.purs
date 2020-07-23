@@ -1,5 +1,9 @@
 module Examples.Github.Enum.TeamRepositoryOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -18,6 +22,10 @@ data TeamRepositoryOrderField
   | Name
   | Permission
   | Stargazers
+
+derive instance eqTeamRepositoryOrderField :: Eq TeamRepositoryOrderField
+
+derive instance ordTeamRepositoryOrderField :: Ord TeamRepositoryOrderField
 
 fromToMap :: Array (Tuple String TeamRepositoryOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt, Tuple "UPDATED_AT" UpdatedAt, Tuple "PUSHED_AT" PushedAt, Tuple "NAME" Name, Tuple "PERMISSION" Permission, Tuple "STARGAZERS" Stargazers]

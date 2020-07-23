@@ -1,5 +1,9 @@
 module Examples.Github.Enum.IssueTimelineItemsItemType where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -42,6 +46,10 @@ data IssueTimelineItemsItemType
   | UnmarkedAsDuplicateEvent
   | UnpinnedEvent
   | UnsubscribedEvent
+
+derive instance eqIssueTimelineItemsItemType :: Eq IssueTimelineItemsItemType
+
+derive instance ordIssueTimelineItemsItemType :: Ord IssueTimelineItemsItemType
 
 fromToMap :: Array (Tuple String IssueTimelineItemsItemType)
 fromToMap = [Tuple "ISSUE_COMMENT" IssueComment, Tuple "CROSS_REFERENCED_EVENT" CrossReferencedEvent, Tuple "ADDED_TO_PROJECT_EVENT" AddedToProjectEvent, Tuple "ASSIGNED_EVENT" AssignedEvent, Tuple "CLOSED_EVENT" ClosedEvent, Tuple "COMMENT_DELETED_EVENT" CommentDeletedEvent, Tuple "CONNECTED_EVENT" ConnectedEvent, Tuple "CONVERTED_NOTE_TO_ISSUE_EVENT" ConvertedNoteToIssueEvent, Tuple "DEMILESTONED_EVENT" DemilestonedEvent, Tuple "DISCONNECTED_EVENT" DisconnectedEvent, Tuple "LABELED_EVENT" LabeledEvent, Tuple "LOCKED_EVENT" LockedEvent, Tuple "MARKED_AS_DUPLICATE_EVENT" MarkedAsDuplicateEvent, Tuple "MENTIONED_EVENT" MentionedEvent, Tuple "MILESTONED_EVENT" MilestonedEvent, Tuple "MOVED_COLUMNS_IN_PROJECT_EVENT" MovedColumnsInProjectEvent, Tuple "PINNED_EVENT" PinnedEvent, Tuple "REFERENCED_EVENT" ReferencedEvent, Tuple "REMOVED_FROM_PROJECT_EVENT" RemovedFromProjectEvent, Tuple "RENAMED_TITLE_EVENT" RenamedTitleEvent, Tuple "REOPENED_EVENT" ReopenedEvent, Tuple "SUBSCRIBED_EVENT" SubscribedEvent, Tuple "TRANSFERRED_EVENT" TransferredEvent, Tuple "UNASSIGNED_EVENT" UnassignedEvent, Tuple "UNLABELED_EVENT" UnlabeledEvent, Tuple "UNLOCKED_EVENT" UnlockedEvent, Tuple "USER_BLOCKED_EVENT" UserBlockedEvent, Tuple "UNMARKED_AS_DUPLICATE_EVENT" UnmarkedAsDuplicateEvent, Tuple "UNPINNED_EVENT" UnpinnedEvent, Tuple "UNSUBSCRIBED_EVENT" UnsubscribedEvent]

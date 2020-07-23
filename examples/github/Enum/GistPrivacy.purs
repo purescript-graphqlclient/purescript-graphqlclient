@@ -1,5 +1,9 @@
 module Examples.Github.Enum.GistPrivacy where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data GistPrivacy
   = Public
   | Secret
   | All
+
+derive instance eqGistPrivacy :: Eq GistPrivacy
+
+derive instance ordGistPrivacy :: Ord GistPrivacy
 
 fromToMap :: Array (Tuple String GistPrivacy)
 fromToMap = [Tuple "PUBLIC" Public, Tuple "SECRET" Secret, Tuple "ALL" All]

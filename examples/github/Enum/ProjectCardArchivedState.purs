@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ProjectCardArchivedState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data ProjectCardArchivedState
   = Archived
   | NotArchived
+
+derive instance eqProjectCardArchivedState :: Eq ProjectCardArchivedState
+
+derive instance ordProjectCardArchivedState :: Ord ProjectCardArchivedState
 
 fromToMap :: Array (Tuple String ProjectCardArchivedState)
 fromToMap = [Tuple "ARCHIVED" Archived, Tuple "NOT_ARCHIVED" NotArchived]

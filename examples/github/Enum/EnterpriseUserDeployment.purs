@@ -1,5 +1,9 @@
 module Examples.Github.Enum.EnterpriseUserDeployment where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -14,6 +18,10 @@ import GraphqlClient
 data EnterpriseUserDeployment
   = Cloud
   | Server
+
+derive instance eqEnterpriseUserDeployment :: Eq EnterpriseUserDeployment
+
+derive instance ordEnterpriseUserDeployment :: Ord EnterpriseUserDeployment
 
 fromToMap :: Array (Tuple String EnterpriseUserDeployment)
 fromToMap = [Tuple "CLOUD" Cloud, Tuple "SERVER" Server]

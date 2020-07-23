@@ -1,5 +1,9 @@
 module Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -17,6 +21,10 @@ data EnterpriseDefaultRepositoryPermissionSettingValue
   | Write
   | Read
   | None
+
+derive instance eqEnterpriseDefaultRepositoryPermissionSettingValue :: Eq EnterpriseDefaultRepositoryPermissionSettingValue
+
+derive instance ordEnterpriseDefaultRepositoryPermissionSettingValue :: Ord EnterpriseDefaultRepositoryPermissionSettingValue
 
 fromToMap :: Array (Tuple String EnterpriseDefaultRepositoryPermissionSettingValue)
 fromToMap = [Tuple "NO_POLICY" NoPolicy, Tuple "ADMIN" Admin, Tuple "WRITE" Write, Tuple "READ" Read, Tuple "NONE" None]

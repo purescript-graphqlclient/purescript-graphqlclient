@@ -1,5 +1,9 @@
 module Examples.Github.Enum.IdentityProviderConfigurationState where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data IdentityProviderConfigurationState
   = Enforced
   | Configured
   | Unconfigured
+
+derive instance eqIdentityProviderConfigurationState :: Eq IdentityProviderConfigurationState
+
+derive instance ordIdentityProviderConfigurationState :: Ord IdentityProviderConfigurationState
 
 fromToMap :: Array (Tuple String IdentityProviderConfigurationState)
 fromToMap = [Tuple "ENFORCED" Enforced, Tuple "CONFIGURED" Configured, Tuple "UNCONFIGURED" Unconfigured]

@@ -1,5 +1,9 @@
 module Examples.Github.Enum.ProjectOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -15,6 +19,10 @@ data ProjectOrderField
   = CreatedAt
   | UpdatedAt
   | Name
+
+derive instance eqProjectOrderField :: Eq ProjectOrderField
+
+derive instance ordProjectOrderField :: Ord ProjectOrderField
 
 fromToMap :: Array (Tuple String ProjectOrderField)
 fromToMap = [Tuple "CREATED_AT" CreatedAt, Tuple "UPDATED_AT" UpdatedAt, Tuple "NAME" Name]

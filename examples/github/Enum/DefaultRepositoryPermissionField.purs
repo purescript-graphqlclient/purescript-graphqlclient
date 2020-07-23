@@ -1,5 +1,9 @@
 module Examples.Github.Enum.DefaultRepositoryPermissionField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -16,6 +20,10 @@ data DefaultRepositoryPermissionField
   | Read
   | Write
   | Admin
+
+derive instance eqDefaultRepositoryPermissionField :: Eq DefaultRepositoryPermissionField
+
+derive instance ordDefaultRepositoryPermissionField :: Ord DefaultRepositoryPermissionField
 
 fromToMap :: Array (Tuple String DefaultRepositoryPermissionField)
 fromToMap = [Tuple "NONE" None, Tuple "READ" Read, Tuple "WRITE" Write, Tuple "ADMIN" Admin]

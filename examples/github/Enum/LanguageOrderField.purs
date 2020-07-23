@@ -1,5 +1,9 @@
 module Examples.Github.Enum.LanguageOrderField where
 
+import Prelude
+  ( class Eq
+  , class Ord
+  )
 import Data.Tuple
   ( Tuple(..)
   )
@@ -13,6 +17,10 @@ import GraphqlClient
 -- | original name - LanguageOrderField
 data LanguageOrderField
   = Size
+
+derive instance eqLanguageOrderField :: Eq LanguageOrderField
+
+derive instance ordLanguageOrderField :: Ord LanguageOrderField
 
 fromToMap :: Array (Tuple String LanguageOrderField)
 fromToMap = [Tuple "SIZE" Size]
