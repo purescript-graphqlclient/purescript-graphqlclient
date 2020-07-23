@@ -5,11 +5,11 @@ import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwErro
 import Examples.SwapiCustomScalars (Id(..))
 
 import Examples.Swapi.Object.Human as Human
-import Examples.Swapi.Scopes
+import Examples.Swapi.Scopes (Scope__Human)
 import Examples.Swapi.Query as Query
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
-import Examples.MyTests.Util
+import Examples.MyTests.Util (inlineAndTrim)
 
 type Response = Maybe HumanResponse
 

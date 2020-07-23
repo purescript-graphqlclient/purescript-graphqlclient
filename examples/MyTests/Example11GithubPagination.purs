@@ -1,28 +1,24 @@
 module Examples.MyTests.Example11GithubPagination where
 
-import Examples.Github.Scopes
-import Examples.MyTests.Util
-import GraphqlClient
-import Protolude
+import Examples.Github.Scopes (Scope__PageInfo, Scope__Repository, Scope__SearchResultItem, Scope__SearchResultItemConnection)
+import Examples.MyTests.Util (inlineAndTrim)
+import GraphqlClient (GraphqlError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import Protolude (Either, Maybe(..), Unit, apply, bind, discard, error, isJust, map, pure, throwError, (#), ($), (<#>), (<<<), (\/))
 
 import Affjax.RequestHeader (RequestHeader(..))
 import Data.Array (length) as Array
-import Data.Generic.Rep.Show (genericShow)
 import Examples.Github.Enum.SearchType as Examples.Github.Enum.SearchType
 import Examples.Github.Object.PageInfo as Examples.Github.Object.PageInfo
-import Examples.Github.Object.Release as Examples.Github.Object.Release
-import Examples.Github.Object.ReleaseConnection as Examples.Github.Object.ReleaseConnection
 import Examples.Github.Object.Repository as Examples.Github.Object.Repository
 import Examples.Github.Object.SearchResultItemConnection as Examples.Github.Object.SearchResultItemConnection
 import Examples.Github.Object.SearchResultItemEdge as Examples.Github.Object.SearchResultItemEdge
 import Examples.Github.Object.StargazerConnection as Examples.Github.Object.StargazerConnection
-import Examples.Github.Object.Topic as Examples.Github.Object.Topic
 import Examples.Github.Query as Examples.Github.Query
 import Examples.Github.Scalars as Examples.Github.Scalars
 import Examples.Github.Union.SearchResultItem as Examples.Github.Union.SearchResultItem
 import GraphqlClient as GraphqlClient
 import Record as Record
-import Test.Spec as Test.Spec
+import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
 type Response = Paginator (Array Repo) String

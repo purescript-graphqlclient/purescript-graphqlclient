@@ -1,12 +1,11 @@
 module Examples.MyTests.Example08Foldr where
 
-import Examples.Github.Scopes
-import Examples.MyTests.Util
-import GraphqlClient
-import Protolude
+import Examples.Github.Scopes (Scope__Repository)
+import Examples.MyTests.Util (inlineAndTrim)
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullOrFail, printGraphqlError, writeGraphql)
+import Protolude (Either, Unit, bind, discard, error, pure, throwError, (#), ($), (+), (<#>), (<<<), (\/))
 
 import Affjax.RequestHeader (RequestHeader(..))
-import Data.Generic.Rep.Show (genericShow)
 import Examples.Github.Object.Repository as Examples.Github.Object.Repository
 import Examples.Github.Object.StargazerConnection as Examples.Github.Object.StargazerConnection
 import Examples.Github.Query as Examples.Github.Query
@@ -17,7 +16,10 @@ import Test.Spec.Assertions (shouldEqual) as Test.Spec
 type Response = Int
 
 -- repos that improbably have any stars, so that we dont update tests very often
-repos :: _
+repos :: Array
+  { name :: String
+  , owner :: String
+  }
 repos =
   [ { owner: "srghma", name: "purescript-dom-indexed" }
   , { owner: "srghma", name: "purescript-halogen-vdom-string-renderer" }

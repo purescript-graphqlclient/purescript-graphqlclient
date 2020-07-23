@@ -3,9 +3,6 @@ module GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull where
 import Protolude
 
 import Data.Generic.Rep (class Generic) as GenericRep
-import Data.Generic.Rep.Show (genericShow) as GenericRep
-import GraphqlClient.GraphqlEnum as GraphqlClient.GraphqlEnum
-import GraphqlClient.Implementation as GraphqlClient.Implementation
 
 import Type.Row (type (+))
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind (TypeKind(..))

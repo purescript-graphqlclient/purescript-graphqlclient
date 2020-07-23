@@ -1,7 +1,7 @@
 module GraphqlClientGenerator.PsCst where
 
-import Language.PS.SmartCST
-import Protolude
+import Language.PS.SmartCST (Module, ModuleName, mkModuleName, printModuleToString)
+import Protolude (Maybe(..), Tuple, bind, fromMaybe, maybe, not, (#), ($), (/\), (<#>), (<>), (==), (>>=), (>>>))
 
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
@@ -13,7 +13,6 @@ import Data.String.Extra as StringsExtra
 import Data.String.Utils as String
 import GraphqlClient.Utils (anyPredicate)
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult, InstorpectionQueryResult__Field, InstorpectionQueryResult__FullType)
-import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema)
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind as TypeKind
 import GraphqlClientGenerator.MakeModule.Enum as MakeModule.Enum
 import GraphqlClientGenerator.MakeModule.InputObject as MakeModule.InputObject
@@ -25,7 +24,6 @@ import GraphqlClientGenerator.MakeModule.Scalars as MakeModule.Scalars
 import GraphqlClientGenerator.MakeModule.Scopes as MakeModule.Scopes
 import GraphqlClientGenerator.MakeModule.Subscription as MakeModule.Subscription
 import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
-import Language.PS.CST.Types.Leafs (ModuleName(..))
 
 type FilesMap =
   { dirs ::

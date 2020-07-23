@@ -1,9 +1,9 @@
 module GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.MakeModule.Lib.Utils
-import Language.PS.SmartCST
-import Protolude
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field, InstorpectionQueryResult__InputValue)
+import GraphqlClientGenerator.MakeModule.Lib.Utils (qualifyScope)
+import Language.PS.SmartCST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ModuleName, OpName(..), ProperName(..), Row, SmartQualifiedName(..), Type(..), TypeVarBinding(..), arrayType, emptyRow, maybeType, mkModuleName, (====>>))
+import Protolude (type ($), Maybe(..), const, isJust, map, maybe, not, (#), ($), (<#>), (<<<), (<>), (||))
 
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)

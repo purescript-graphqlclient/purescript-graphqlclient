@@ -1,14 +1,12 @@
 module GraphqlClient.WriteGraphqlHash where
 
-import Protolude
+import Protolude (type (/\), Maybe(..), map, maybe, show, ($), (/\), (<$>), (<<<), (<>))
 
 import Data.Array as Array
-import Data.Array.NonEmpty (NonEmptyArray)
-import Data.Array.NonEmpty as NonEmptyArray
 import Data.Hashable as Hashable
 import Data.Int as Int
 import Data.String as String
-import GraphqlClient.Argument
+import GraphqlClient.Argument (Argument(..), ArgumentValue(..), Optional(..))
 
 hashString :: String -> String
 hashString = String.replaceAll (String.Pattern "-") (String.Replacement "") <<< show <<< Hashable.hash

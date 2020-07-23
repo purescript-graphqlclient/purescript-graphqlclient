@@ -1,13 +1,10 @@
 module Examples.MyTests.Example12Mutation where
 
-import Examples.MyTests.Util
-import Examples.Swapi.Scopes
+import Examples.MyTests.Util (inlineAndTrim)
 
-import Examples.Swapi.Interface.Character as Character
 import Examples.Swapi.Mutation as Mutation
-import Examples.SwapiCustomScalars (Id(..))
-import GraphqlClient (GraphqlError, Scope__RootMutation, SelectionSet, defaultInput, graphqlMutationRequest, printGraphqlError, writeGraphql)
-import Protolude
+import GraphqlClient (GraphqlError, Scope__RootMutation, SelectionSet, graphqlMutationRequest, printGraphqlError, writeGraphql)
+import Protolude (Either, Unit, bind, discard, error, pure, throwError, void, ($), (<<<), (\/))
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 

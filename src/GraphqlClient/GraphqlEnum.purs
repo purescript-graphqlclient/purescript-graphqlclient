@@ -3,10 +3,9 @@ module GraphqlClient.GraphqlEnum where
 import Prelude
 
 import Control.Alt ((<|>))
-import Control.Monad.Error.Class (throwError)
-import Data.Argonaut.Core (Json, caseJsonBoolean, caseJsonNull, caseJsonNumber, caseJsonString, fromString, isNull, stringify, toArray, toObject, toString)
+import Data.Argonaut.Core (Json, fromString)
 import Data.Argonaut.Decode as ArgonautCodecs
-import Data.Either (Either(..), note)
+import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic, Constructor(..), NoArguments(..), Sum(..), to)
 import Data.String (Pattern(..), Replacement(..), replaceAll)
 import Data.String.CaseInsensitive (CaseInsensitiveString(..))

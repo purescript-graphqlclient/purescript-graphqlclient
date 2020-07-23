@@ -1,14 +1,11 @@
 module GraphqlClientGenerator.MakeModule.Object where
 
 import Data.Array.NonEmpty (NonEmptyArray)
-import Data.Array.NonEmpty as NonEmpty
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 
-import GraphqlClientGenerator.MakeModule.Lib.Utils (declDataWithoutConstructors)
 import Language.PS.SmartCST
-import Language.PS.SmartCST
-import Protolude (Maybe(..), fromMaybe, ($), (<#>), (<>))
+import Protolude (fromMaybe)
 
 makeModule
   :: (String -> String)

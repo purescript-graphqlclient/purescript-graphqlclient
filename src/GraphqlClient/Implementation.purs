@@ -1,6 +1,6 @@
 module GraphqlClient.Implementation where
 
-import Protolude
+import Protolude (class Applicative, class Apply, class Functor, type (/\), Either(..), List(..), Maybe(..), bind, const, identity, lmap, note, pure, sequence, (#), ($), (/\), (<#>), (<*>), (<>), (==), (>>=), (>>>))
 
 import Data.Argonaut.Core (Json, fromString)
 import Data.Argonaut.Decode (JsonDecodeError(..))
@@ -8,13 +8,7 @@ import Data.Argonaut.Decode.Decoders as ArgonautDecoders.Decoder
 import Data.Array as Array
 import Data.List ((:))
 import Data.List as List
-import Data.Symbol (class IsSymbol, reflectSymbol)
-import Prim.Row as Row
-import Prim.RowList as RowList
-import Record as Record
-import Type.Data.RowList (RLProxy(..))
-import Unsafe.Coerce (unsafeCoerce)
-import GraphqlClient.Argument
+import GraphqlClient.Argument (Argument)
 import GraphqlClient.WriteGraphqlHash (Cache, argsHash)
 
 data Scope__RootQuery

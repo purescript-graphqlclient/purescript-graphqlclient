@@ -1,8 +1,8 @@
 module Examples.MyTests.Example05InterfacesAndUnions where
 
-import Examples.MyTests.Util
-import GraphqlClient
-import Protolude
+import Examples.MyTests.Util (inlineAndTrim)
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import Protolude (class Eq, class Generic, class Show, Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<#>), (<$>), (<*>), (<<<), (\/))
 
 import Data.Generic.Rep.Show (genericShow)
 import Examples.Swapi.Object.Droid as Examples.Swapi.Object.Droid
@@ -10,7 +10,7 @@ import Examples.Swapi.Object.Human as Examples.Swapi.Object.Human
 import Examples.Swapi.Query as Examples.Swapi.Query
 import Examples.Swapi.Union.CharacterUnion as Examples.Swapi.Union.CharacterUnion
 import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
-import Examples.Swapi.Scopes
+import Examples.Swapi.Scopes (Scope__Character, Scope__CharacterUnion)
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 

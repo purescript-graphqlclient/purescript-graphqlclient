@@ -1,12 +1,11 @@
 module Examples.MyTests.Example10Github where
 
-import Examples.Github.Scopes
-import Examples.MyTests.Util
-import GraphqlClient
-import Protolude
+import Examples.Github.Scopes (Scope__Release, Scope__ReleaseConnection, Scope__Repository)
+import Examples.MyTests.Util (inlineAndTrim)
+import GraphqlClient (GraphqlError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullElementsOrFail, nonNullOrFail, printGraphqlError, writeGraphql)
+import Protolude (Either, Maybe(..), Unit, bind, discard, error, fromMaybe, pure, throwError, (#), ($), (<#>), (<$>), (<*>), (<<<), (\/))
 
 import Affjax.RequestHeader (RequestHeader(..))
-import Data.Generic.Rep.Show (genericShow)
 import Examples.Github.Object.Repository as Examples.Github.Object.Repository
 import Examples.Github.Object.Release as Examples.Github.Object.Release
 import Examples.Github.Object.StargazerConnection as Examples.Github.Object.StargazerConnection
@@ -14,7 +13,6 @@ import Examples.Github.Object.Topic as Examples.Github.Object.Topic
 import Examples.Github.Object.ReleaseConnection as Examples.Github.Object.ReleaseConnection
 import Examples.Github.Query as Examples.Github.Query
 import Examples.Github.Scalars as Examples.Github.Scalars
-import GraphqlClient as GraphqlClient
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 

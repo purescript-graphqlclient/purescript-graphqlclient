@@ -1,6 +1,6 @@
 module MyTest.IntrospectionSpec where
 
-import Protolude
+import Protolude (Either(..), Unit, bind, discard, error, for_, pure, throwError, (#), ($), (<<<), (>>=), (>>>), (\/))
 
 import Affjax as Affjax
 import Data.Argonaut.Core (Json)
@@ -10,8 +10,8 @@ import GraphqlClient as GraphqlClient
 import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
 import Test.Spec as Test.Spec
 import Test.Spec.Assertions (shouldEqual)
-import Test.GraphqlRequest
-import Test.Json
+import Test.GraphqlRequest (request)
+import Test.Json (jsonShouldEqual)
 import Test.IntrospectionQuery as Test.IntrospectionQuery
 
 urls :: Array String

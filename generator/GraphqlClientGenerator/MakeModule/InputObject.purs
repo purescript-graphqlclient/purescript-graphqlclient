@@ -1,14 +1,15 @@
 module GraphqlClientGenerator.MakeModule.InputObject where
 
-import Protolude
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
-import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
-import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType, InstorpectionQueryResult__InputValue)
+import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
+import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
-import Language.PS.SmartCST
+import Language.PS.SmartCST (Comments(..), DataHead(..), Declaration(..), Label(..), Module(..), ModuleName, ProperName(..), Type(..))
+import Protolude (Maybe(..), fromMaybe, (#), ($), (<#>), (<>))
 
+mkRow :: forall t.  { apiModuleName :: NonEmptyArray String, scalarModule :: ModuleName } -> { name :: String, type :: TypeKindWithNull | t } -> { label :: Label, type_ :: Type }
 mkRow context field =
   { label: Label field.name
   , type_: DeclarationsForFields.mkFieldTypeWithoutHoleAndOptionalForTopLevel context field."type"

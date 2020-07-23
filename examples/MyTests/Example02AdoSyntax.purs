@@ -8,8 +8,8 @@ import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput
 import Examples.SwapiCustomScalars (Id(..))
 import Examples.Swapi.Query as Query
 import Examples.Swapi.Interface.Character as Character
-import Examples.Swapi.Scopes
-import Examples.MyTests.Util
+import Examples.Swapi.Scopes (Scope__Character)
+import Examples.MyTests.Util (inlineAndTrim)
 
 type Response = CharacterResponse
 

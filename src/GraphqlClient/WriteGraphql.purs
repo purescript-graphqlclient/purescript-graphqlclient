@@ -1,12 +1,10 @@
 module GraphqlClient.WriteGraphql where
 
-import Protolude
+import Protolude (Maybe(..), not, ($), (<$>), (<<<), (<>))
 
 import Data.Array as Array
-import Data.Hashable as Hashable
-import Data.Int as Int
 import Data.String as String
-import GraphqlClient.Implementation
+import GraphqlClient.Implementation (RawField(..), Scope__RootMutation, Scope__RootQuery, Scope__RootSubscription, SelectionSet(..))
 
 class WriteGraphql a where
   writeGraphql :: a -> String

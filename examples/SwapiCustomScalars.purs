@@ -1,8 +1,8 @@
 module Examples.SwapiCustomScalars where
 
-import Data.Newtype
-import GraphqlClient
-import Prelude
+import Data.Newtype (class Newtype)
+import GraphqlClient (class GraphqlDefaultResponseScalarDecoder, class ToGraphqlArgumentValue, ArgumentValue(..))
+import Prelude (class Eq, class Ord, class Show, map, (#), ($), (<<<), (<=<), (>>>))
 
 import Data.Argonaut.Decode (JsonDecodeError(..))
 import Data.Argonaut.Decode.Decoders (decodeString) as ArgonautDecoders.Decoder

@@ -1,15 +1,12 @@
 module GraphqlClientGenerator.MakeModule.Lib.Fragments where
 
-import GraphqlClientGenerator.IntrospectionSchema
-import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull
-import GraphqlClientGenerator.MakeModule.Lib.Utils
-import Language.PS.SmartCST
-import Protolude
+import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull(..))
+import GraphqlClientGenerator.MakeModule.Lib.Utils (qualifyScope)
+import Language.PS.SmartCST (Binder(..), ConstructorProperName(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), RecordLabeled(..), SmartQualifiedName(..), Type(..), TypeVarBinding(..), mkModuleName)
+import Protolude (Maybe(..), ($), (<#>), (<>))
 
-import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
-import Data.String.Extra (pascalCase)
 import Data.String.Extra as StringsExtra
 
 nameOfTypeKindWithNull :: TypeKindWithNull -> String

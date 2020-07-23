@@ -1,17 +1,17 @@
 module Examples.MyTests.Example13SSubscription where
 
-import Protolude
+import Protolude (Either, Maybe(..), Unit, apply, bind, discard, error, map, pure, throwError, (#), ($), (<<<), (==), (\/))
 
-import Examples.MyTests.Util
-import Examples.Swapi.Scopes
+import Examples.MyTests.Util (inlineAndTrim)
+import Examples.Swapi.Scopes (Scope__ChatMessage)
 
 import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
 import Examples.Swapi.Object.ChatMessage as Examples.Swapi.Object.ChatMessage
 import Examples.Swapi.Mutation as Mutation
 import Examples.Swapi.Subscription as Subscription
-import Examples.SwapiCustomScalars
-import Examples.Swapi.Enum.Phrase
-import GraphqlClient (GraphqlError, Scope__RootSubscription, Scope__RootMutation, SelectionSet, defaultInput, graphqlMutationRequest, printGraphqlError, writeGraphql)
+import Examples.SwapiCustomScalars (Id(..))
+import Examples.Swapi.Enum.Phrase (Phrase(..))
+import GraphqlClient (GraphqlError, Scope__RootMutation, Scope__RootSubscription, SelectionSet, graphqlMutationRequest, printGraphqlError, writeGraphql)
 import GraphqlClient as GraphqlClient
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec

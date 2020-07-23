@@ -1,11 +1,9 @@
 module GraphqlClientGenerator.MakeModule.Scalars where
 
 import Language.PS.SmartCST
-import Language.PS.SmartCST
 
 import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty
-import Data.NonEmpty (NonEmpty(..))
 import Data.String.Extra as StringsExtra
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import Protolude (Maybe(..), (#), ($), (<#>), (<>))

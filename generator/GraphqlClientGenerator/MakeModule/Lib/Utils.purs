@@ -1,12 +1,10 @@
 module GraphqlClientGenerator.MakeModule.Lib.Utils where
 
-import Language.PS.SmartCST
-import Language.PS.SmartCST
-import Protolude
+import Language.PS.SmartCST (ConstructorProperName(..), DataHead(..), Declaration(..), Expr(..), ModuleName(..), ProperName(..), ProperNameType_TypeName, SmartQualifiedName(..), Type(..), mkModuleName)
+import Protolude (Maybe(..), map, ($), (<<<), (<>))
 
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
-import Data.String.Extra as StringsExtra
 
 tupleDecl :: Type -> Type -> Type
 tupleDecl x y =

@@ -1,6 +1,6 @@
 module GraphqlClientGenerator.Options where
 
-import Protolude
+import Protolude (class Generic, class Show, Either(..), Maybe(..), apply, map, show, (#), ($), (<#>), (<$>), (<>), (<|>))
 
 import Affjax.RequestHeader as Affjax
 import Data.Array (fromFoldable) as Array
@@ -9,8 +9,7 @@ import Data.Array.NonEmpty as NonEmpty
 import Data.Generic.Rep.Show (genericShow)
 import Data.Maybe as Maybe
 import Data.String as String
-import Language.PS.SmartCST
-import Language.PS.SmartCST
+import Language.PS.SmartCST (ModuleName, mkModuleName)
 import Node.Path (FilePath)
 import Options.Applicative (Parser, ParserInfo, ReadM, fullDesc, header, help, helper, info, long, many, metavar, option, progDesc, showDefault, strOption, value, (<**>))
 import Options.Applicative.Builder (eitherReader)
