@@ -256,6 +256,9 @@ isArchived = selectionForField "isArchived" [] graphqlDefaultResponseScalarDecod
 isDisabled :: SelectionSet Scope__Repository Boolean
 isDisabled = selectionForField "isDisabled" [] graphqlDefaultResponseScalarDecoder
 
+isEmpty :: SelectionSet Scope__Repository Boolean
+isEmpty = selectionForField "isEmpty" [] graphqlDefaultResponseScalarDecoder
+
 isFork :: SelectionSet Scope__Repository Boolean
 isFork = selectionForField "isFork" [] graphqlDefaultResponseScalarDecoder
 
