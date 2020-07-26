@@ -2,7 +2,7 @@ module GraphqlClientGenerator.MakeModule.Lib.Fragments where
 
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull(..))
 import GraphqlClientGenerator.MakeModule.Lib.Utils (qualifyScope)
-import Language.PS.SmartCST (Binder(..), ConstructorProperName(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), RecordLabeled(..), SmartQualifiedName(..), Type(..), TypeVarBinding(..), mkModuleName)
+import Language.PS.SmartCST (Binder(..), SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), RecordLabeled(..), SmartQualifiedName(..), Type(..), TypeVarBinding(..), mkModuleName)
 import Protolude (Maybe(..), ($), (<#>), (<>))
 
 import Data.Array.NonEmpty (NonEmptyArray)
@@ -92,7 +92,7 @@ declarationForPossibleTypes apiModuleName nameToScope parentName typeRefs =
       , type_: TypeForall (NonEmpty.singleton $ TypeVarName $ Ident "decodesTo")
         ( ( TypeConstructor (SmartQualifiedName__Ignore $ ProperName "Fragments")
             `TypeApp`
-            ( TypeConstructor (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Maybe"]) $ ProperName "Maybe")
+            ( TypeConstructor (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Maybe"]) (ProperName "Maybe"))
               `TypeApp`
               (TypeVar $ Ident "decodesTo")
             )
@@ -108,9 +108,9 @@ declarationForPossibleTypes apiModuleName nameToScope parentName typeRefs =
             { expr:
               ExprRecord $ names <#> \name -> RecordField
                 (Label $ "on" <> StringsExtra.pascalCase name)
-                ( (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "Prelude") $ Ident "pure")
+                ( (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "Prelude") (Ident "pure"))
                   `ExprApp`
-                  (ExprConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Maybe"]) (ConstructorProperName { constructor: ProperName "Nothing", type_: ProperName "Maybe" }))
+                  (ExprConstructor $ SmartQualifiedNameConstructor__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Maybe"]) (ProperName "Nothing") (ProperName "Maybe"))
                 )
             , whereBindings: []
             }

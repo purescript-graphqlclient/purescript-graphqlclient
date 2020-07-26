@@ -1,6 +1,6 @@
 module GraphqlClientGenerator.MakeModule.Lib.Utils where
 
-import Language.PS.SmartCST (ConstructorProperName(..), DataHead(..), Declaration(..), Expr(..), ModuleName(..), ProperName(..), ProperNameType_TypeName, SmartQualifiedName(..), Type(..), mkModuleName)
+import Language.PS.SmartCST (SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), ModuleName(..), ProperName(..), ProperNameType_TypeName, SmartQualifiedName(..), Type(..), mkModuleName)
 import Protolude (Maybe(..), map, ($), (<<<), (<>))
 
 import Data.Array.NonEmpty (NonEmptyArray)
@@ -16,7 +16,7 @@ tupleDecl x y =
 
 tupleExpr :: Expr -> Expr -> Expr
 tupleExpr x y =
-  (ExprConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Tuple"]) (ConstructorProperName { constructor: ProperName "Tuple", type_: ProperName "Tuple" }))
+  (ExprConstructor $ SmartQualifiedNameConstructor__Simple (mkModuleName $ NonEmpty.cons' "Data" ["Tuple"]) (ProperName "Tuple") (ProperName "Tuple"))
   `ExprApp`
   x
   `ExprApp`

@@ -69,13 +69,7 @@ makeModule moduleName fullType =
               <#> (\field ->
                     tupleExpr
                     (ExprString field.name)
-                    (ExprConstructor $ SmartQualifiedName__Ignore
-                      (ConstructorProperName
-                        { constructor: ProperName $ StringsExtra.pascalCase field.name
-                        , type_: ProperName "WONT_BE_RENDERED"
-                        }
-                      )
-                    )
+                    (ExprConstructor $ SmartQualifiedNameConstructor__Ignore (ProperName $ StringsExtra.pascalCase field.name))
                   )
               )
           , whereBindings: []
@@ -131,22 +125,14 @@ makeModule moduleName fullType =
                     , branches: enumValues'' <#> \enumValue ->
                         { binders: NonEmpty.singleton (
                             BinderConstructor
-                              { name: SmartQualifiedName__Ignore
-                                (ConstructorProperName
-                                  { constructor: ProperName (StringsExtra.pascalCase enumValue.name)
-                                  , type_:  ProperName "WONT_BE_RENDERED"
-                                  }
-                                )
+                              { name: SmartQualifiedNameConstructor__Ignore (ProperName (StringsExtra.pascalCase enumValue.name))
                               , args: []
                               }
                           )
                         , body: Unconditional
                             { whereBindings: []
                             , expr:
-                              (ExprConstructor $
-                                SmartQualifiedName__Simple
-                                (mkModuleName $ NonEmpty.singleton "GraphqlClient")
-                                (ConstructorProperName { constructor: ProperName "ArgumentValueEnum", type_: ProperName "ArgumentValue" }))
+                              (ExprConstructor $ SmartQualifiedNameConstructor__Simple (mkModuleName $ NonEmpty.singleton "GraphqlClient") (ProperName "ArgumentValueEnum") (ProperName "ArgumentValue"))
                               `ExprApp`
                               (ExprString enumValue.name)
                             }
