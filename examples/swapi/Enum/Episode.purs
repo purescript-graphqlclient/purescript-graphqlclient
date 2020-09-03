@@ -1,12 +1,7 @@
 module Examples.Swapi.Enum.Episode where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,10 +10,7 @@ import GraphqlClient
   )
 
 -- | original name - Episode
-data Episode
-  = Empire
-  | Jedi
-  | Newhope
+data Episode = Empire | Jedi | Newhope
 
 derive instance eqEpisode :: Eq Episode
 

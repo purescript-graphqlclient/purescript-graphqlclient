@@ -15,7 +15,7 @@ install:
   - tar -xvf $HOME/spago.tar.gz -C $HOME/
   - chmod a+x $HOME/purescript/purs
   - chmod a+x $HOME/spago
-  - npm install
+  - yarn install
   - spago install
 script:
   - ./ci-approve.sh

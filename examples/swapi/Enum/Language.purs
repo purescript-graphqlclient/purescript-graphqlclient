@@ -1,12 +1,7 @@
 module Examples.Swapi.Enum.Language where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,10 +10,7 @@ import GraphqlClient
   )
 
 -- | original name - Language
-data Language
-  = En
-  | Es
-  | No
+data Language = En | Es | No
 
 derive instance eqLanguage :: Eq Language
 
