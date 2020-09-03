@@ -2,11 +2,13 @@ let upstream =
       https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20200716/packages.dhall sha256:c4683b4c4da0fd33e0df86fc24af035c059270dd245f68b79a7937098f6c6542
 
 let overrides =
+      -- https://github.com/purescript-contrib/purescript-argonaut-core/pull/41
       { argonaut-core =
               upstream.argonaut-core
           //  { repo = "https://github.com/srghma/purescript-argonaut-core.git"
               , version = "master"
               }
+      -- for protolude lib
       , either =
               upstream.either
           //  { repo = "https://github.com/srghma/purescript-either.git"
@@ -48,30 +50,26 @@ let additions =
           [ "console"
           , "effect"
           , "generics-rep"
-          , "heterogeneous"
-          , "matryoshka"
-          , "ordered-collections"
           , "psci-support"
           , "record"
-          , "record-extra"
           , "strings"
-          , "strings-extra"
-          , "unicode"
-          , "boxes"
+          , "spec"
+          , "node-path"
+          , "node-fs-aff"
+          , "ansi"
+          , "prettyprinter-renderable"
           ]
-        , repo = "https://github.com/srghma/purescript-ps-cst.git"
+        , repo = "https://github.com/purescript-codegen/purescript-ps-cst.git"
         , version = "master"
         }
-      , matryoshka =
+      , prettyprinter-renderable =
         { dependencies =
-          [ "fixed-points", "free", "prelude", "profunctor", "transformers" ]
-        , repo = "https://github.com/slamdata/purescript-matryoshka.git"
-        , version = "master"
-        }
-      , boxes =
-        { dependencies =
-          [ "generics-rep", "prelude", "profunctor", "strings", "stringutils" ]
-        , repo = "https://github.com/srghma/purescript-boxes.git"
+          [ "prelude"
+          , "unfoldable"
+          , "console"
+          , "stringutils"
+          ]
+        , repo = "https://github.com/purescript-codegen/purescript-prettyprinter-renderable.git"
         , version = "master"
         }
       , homogeneous-records =

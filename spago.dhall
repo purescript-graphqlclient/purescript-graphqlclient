@@ -1,7 +1,3 @@
-{-
-Welcome to a Spago project!
-You can edit this file as you like.
--}
 { name = "purescript-graphql-client"
 , dependencies =
   [ "affjax"
@@ -28,6 +24,7 @@ You can edit this file as you like.
   , "homogeneous-records"
   , "unordered-collection"
   , "web-socket"
+  , "strings-extra"
   ]
 , packages = ./packages.dhall
 , sources = [ "generator/**/*.purs", "src/**/*.purs", "test/**/*.purs" ]
