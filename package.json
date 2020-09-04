@@ -8,14 +8,16 @@
     "test": "test"
   },
   "scripts": {
-    "postinstall": "spago install && spago build",
-    "bundle": "spago bundle-app --main \"GraphqlClientGenerator.Main\" --to \"dist/pgc.js\" && terser --compress --mangle --output \"dist/pgc.min.js\" -- \"dist/pgc.js\" && rm \"dist/pgc.js\"",
-    "test": "spago test --main MyTest.Main",
-    "examples:test": "spago --config examples/spago.dhall test --main Examples.MyTests.Main"
+    "lib:test": "spago test --main MyTest.Main",
+    "lib:build": "spago build",
+    "generator:build": "spago --config generator-spago.dhall build",
+    "generator:test": "spago --config generator-spago.dhall test --main MyTest.Main",
+    "generator:bundle": "spago --config generator-spago.dhall bundle-app --main \"GraphqlClientGenerator.Main\" --to \"dist/purescript-graphql-client-generator.js\" && terser --compress --mangle --output \"dist/purescript-graphql-client-generator.min.js\" -- \"dist/purescript-graphql-client-generator.js\" && rm \"dist/purescript-graphql-client-generator.js\"",
+    "examples:test": "spago --config examples-spago.dhall test --main Examples.MyTests.Main"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dyerw/purescript-GraphqlClient.git"
+    "url": "git+https://github.com/purescript-graphql-client/purescript-graphql-client.git"
   },
   "keywords": [
     "graphql",
@@ -29,7 +31,7 @@
   },
   "homepage": "https://github.com/dyerw/purescript-GraphqlClient#readme",
   "bin": {
-    "purescript-graphql-client": "bin/purescript-graphql-client"
+    "purescript-graphql-client-generator": "bin/purescript-graphql-client-generator"
   },
   "dependencies": {
     "graphql": "^15.0.0",

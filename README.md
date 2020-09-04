@@ -20,10 +20,10 @@ npm install "git+https://github.com/purescript-graphql-client/purescript-graphql
 yarn add "git+https://github.com/purescript-graphql-client/purescript-graphql-client#COMMIT_HASH"
 ```
 
-### How to run
+### How to run generator
 
 ```sh
-purescript-graphql-client --input-url … --output … --api … --custom-scalars-module …
+purescript-graphql-client-generator --input-url … --output … --api … --custom-scalars-module …
 ```
 
 - - -
@@ -39,10 +39,14 @@ purescript-graphql-client --input-url … --output … --api … --custom-scalar
 yarn bundle
 ```
 
-### How to run generator
+### How to run generator from source
 
 ```sh
 yarn install
+
+# or for nix
+
+yarn install --ignore-optional
 
 # check ./regenerate-examples.sh file
 spago run \

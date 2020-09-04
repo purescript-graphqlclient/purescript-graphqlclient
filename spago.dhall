@@ -1,7 +1,6 @@
 { name = "purescript-graphql-client"
 , dependencies =
   [ "affjax"
-  , "console"
   , "effect"
   , "generics-rep"
   , "node-fs-aff"
@@ -14,18 +13,12 @@
   , "argonaut-generic"
   , "typelevel-prelude"
   , "debug"
-  , "mkdirp-aff"
   , "spec"
   , "variant"
-  , "ansi"
-  , "optparse"
   , "protolude"
-  , "ps-cst"
-  , "homogeneous-records"
-  , "unordered-collection"
   , "web-socket"
-  , "strings-extra"
+  , "unordered-collection"
   ]
 , packages = ./packages.dhall
-, sources = [ "generator/**/*.purs", "src/**/*.purs", "test/**/*.purs" ]
+, sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

@@ -31,14 +31,21 @@ let additions =
         }
       , protolude =
         { dependencies =
-          [ "prelude"
+          [ "affjax"
+          , "console"
           , "effect"
           , "node-fs-aff"
-          , "node-fs"
+          , "node-process"
           , "node-path"
-          , "either"
-          , "exceptions"
-          , "aff"
+          , "prelude"
+          , "proxy"
+          , "psci-support"
+          , "record"
+          , "typelevel-prelude"
+          , "debug"
+          , "variant"
+          , "ansi"
+          , "generics-rep"
           ]
         , repo = "https://github.com/srghma/purescript-protolude.git"
         , version = "master"

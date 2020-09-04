@@ -22,7 +22,8 @@ function retry()
         done
 }
 
-retry 2 yarn run test
+yarn run lib:test
+retry 2 yarn run generator:test
 
 ./regenerate-examples.sh
 

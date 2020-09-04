@@ -1,0 +1,2 @@
+#!/usr/bin/env node
+require("../dist/purescript-graphql-client-generator.min.js")
