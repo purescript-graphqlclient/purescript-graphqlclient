@@ -2,8 +2,8 @@
 
 ### TODO:
 
-1. circular input objects? do we want that? (use newtype if we want)
-2. subscriptions
+1. Circular input objects? Do we want that? (use `Newtype` if we want)
+2. Subscriptions
 
 ### Inspiration
 
@@ -27,6 +27,11 @@ purescript-graphql-client --input-url … --output … --api … --custom-scalar
 ```
 
 - - -
+
+## Requirements on the `$PATH` to build (see `package.json`’s `optionalDependencies`)
+
+- `purescript`
+- `spago`
 
 ### How to bundle a new build
 

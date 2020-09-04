@@ -2,6 +2,7 @@ bower_components/
 node_modules/
 .pulp-cache/
 /output/
+/dce-output/
 output-test/
 /generated-docs/
 /.psc-package/

@@ -38,21 +38,21 @@ instance showAppOptions :: Show AppOptions where show = genericShow
 requestHeader :: ReadM Affjax.RequestHeader
 requestHeader = eitherReader $ \s -> case String.split (String.Pattern ": ") s of
   [key, val] -> Right $ Affjax.RequestHeader key val
-  _ -> Left $ """Can't parse as request header (there should be only one ": "): """ <> show s
+  _ -> Left $ """Can’t parse as request header (there should be only one ": "): """ <> show s
 
 url :: ReadM Url
 url = eitherReader $ \s -> case Url.mkUrl s of
-  Nothing -> Left $ "Can't parse as Url: " <> show s
+  Nothing -> Left $ "Can’t parse as Url: " <> show s
   Just a -> Right a
 
 api :: ReadM (NonEmptyArray String)
 api = eitherReader $ \s -> case s # String.split (String.Pattern ".") # NonEmpty.fromArray of
-  Nothing -> Left $ "Can't parse as api module name: " <> show s
+  Nothing -> Left $ "Can’t parse as api module name: " <> show s
   Just a -> Right a
 
 moduleName :: ReadM ModuleName
 moduleName = eitherReader $ \s -> case s # String.split (String.Pattern ".") # NonEmpty.fromArray of
-  Nothing -> Left $ "Can't parse as module name: " <> show s
+  Nothing -> Left $ "Can’t parse as module name: " <> show s
   Just a -> Right (mkModuleName a)
 
 appOptionsInputSchemaOrJsonUrl :: Parser AppOptionsInput
@@ -95,13 +95,13 @@ appOptions = ado
     )
   headers <- many ( option requestHeader
        (  long "header"
-       <> help "Header val in form of \"key: val\""
+       <> help "Header value in form of “key: val”"
        )
      ) <#> Array.fromFoldable
   customScalarsModule <- Maybe.optional
     ( option moduleName
       (  long "custom-scalars-module"
-      <> help "Custom scalars module to generate. If no is specified - generator will generate default scalar module"
+      <> help "Custom scalars module to generate. If none is specified, the generator will generate using the default scalar module."
       <> showDefault
       )
     )
@@ -111,6 +111,6 @@ appOptions = ado
 opts :: ParserInfo AppOptions
 opts = info (appOptions <**> helper)
   (  fullDesc
-  <> progDesc "Graphql api GraphqlClientGenerator"
-  <> header "purescript-graphql-client-GraphqlClientGenerator - generates Api modules from schema"
+  <> progDesc "GraphQL API GraphqlClientGenerator"
+  <> header "purescript-graphql-client-GraphqlClientGenerator - generates API modules from GraphQL schemas"
   )
