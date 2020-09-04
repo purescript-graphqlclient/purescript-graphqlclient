@@ -8,6 +8,8 @@
     "test": "test"
   },
   "scripts": {
+    "postinstall": "spago install && spago build",
+    "bundle": "spago bundle-app --main \"GraphqlClientGenerator.Main\" --to \"dist/pgc.js\" && terser --compress --mangle --output \"dist/pgc.min.js\" -- \"dist/pgc.js\" && rm \"dist/pgc.js\"",
     "test": "spago test --main MyTest.Main",
     "examples:test": "spago --config examples/spago.dhall test --main Examples.MyTests.Main"
   },
@@ -26,14 +28,22 @@
     "url": "https://github.com/dyerw/purescript-GraphqlClient/issues"
   },
   "homepage": "https://github.com/dyerw/purescript-GraphqlClient#readme",
+  "bin": {
+    "purescript-graphql-client": "bin/purescript-graphql-client"
+  },
+  "dependencies": {
+    "graphql": "^15.0.0"
+  },
   "devDependencies": {
     "graphql-request": "^1.8.2",
     "json-diff": "^0.5.4",
     "purescript-psa": "^0.7.3",
+    "terser": "^5.3.0",
     "ws": "^7.3.1",
     "xhr2": "^0.2.0"
   },
-  "dependencies": {
-    "graphql": "^15.0.0"
+  "optionalDependencies": {
+    "purescript": "~0.13.8",
+    "spago": "~0.16.0"
   }
 }
