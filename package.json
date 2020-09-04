@@ -32,15 +32,15 @@
     "purescript-graphql-client": "bin/purescript-graphql-client"
   },
   "dependencies": {
-    "graphql": "^15.0.0"
+    "graphql": "^15.0.0",
+    "graphql-request": "^1.8.2",
+    "xhr2": "^0.2.0"
   },
   "devDependencies": {
-    "graphql-request": "^1.8.2",
     "json-diff": "^0.5.4",
     "purescript-psa": "^0.7.3",
     "terser": "^5.3.0",
-    "ws": "^7.3.1",
-    "xhr2": "^0.2.0"
+    "ws": "^7.3.1"
   },
   "optionalDependencies": {
     "purescript": "~0.13.8",
