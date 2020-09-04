@@ -2,13 +2,11 @@ let upstream =
       https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20200716/packages.dhall sha256:c4683b4c4da0fd33e0df86fc24af035c059270dd245f68b79a7937098f6c6542
 
 let overrides =
-      -- https://github.com/purescript-contrib/purescript-argonaut-core/pull/41
       { argonaut-core =
               upstream.argonaut-core
           //  { repo = "https://github.com/srghma/purescript-argonaut-core.git"
               , version = "master"
               }
-      -- for protolude lib
       , either =
               upstream.either
           //  { repo = "https://github.com/srghma/purescript-either.git"
@@ -50,26 +48,23 @@ let additions =
           [ "console"
           , "effect"
           , "generics-rep"
+          , "heterogeneous"
+          , "ordered-collections"
           , "psci-support"
           , "record"
+          , "record-extra"
           , "strings"
-          , "spec"
-          , "node-path"
-          , "node-fs-aff"
-          , "ansi"
-          , "prettyprinter-renderable"
+          , "strings-extra"
+          , "unicode"
+          , "boxes"
           ]
         , repo = "https://github.com/purescript-codegen/purescript-ps-cst.git"
-        , version = "master"
+        , version = "a94ff4a6baadd35da0c42fcd8a5b8efd336d324e"
         }
-      , prettyprinter-renderable =
+      , boxes =
         { dependencies =
-          [ "prelude"
-          , "unfoldable"
-          , "console"
-          , "stringutils"
-          ]
-        , repo = "https://github.com/purescript-codegen/purescript-prettyprinter-renderable.git"
+          [ "generics-rep", "prelude", "profunctor", "strings", "stringutils" ]
+        , repo = "https://github.com/srghma/purescript-boxes.git"
         , version = "master"
         }
       , homogeneous-records =

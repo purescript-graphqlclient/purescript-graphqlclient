@@ -25,9 +25,6 @@ import GraphqlClientGenerator.MakeModule.Scopes as MakeModule.Scopes
 import GraphqlClientGenerator.MakeModule.Subscription as MakeModule.Subscription
 import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
 
-psCstDefaultOutputFileWidth :: Int
-psCstDefaultOutputFileWidth = 120
-
 type FilesMap =
   { dirs ::
     { "Enum" :: Map String String
@@ -64,7 +61,7 @@ fullTypeToModuleMapItem
   let
     name = StringsExtra.pascalCase fullType.name
     moduleName = mkModuleName $ apiModuleName <> (NonEmpty.cons' submodule [name])
-   in name /\ (printModuleToString psCstDefaultOutputFileWidth $ mkModule moduleName fullType)
+   in name /\ (printModuleToString $ mkModule moduleName fullType)
 
 builtInScalarNames :: Array String
 builtInScalarNames =
@@ -178,7 +175,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
             introspectionQueryResult.__schema.types
             # Array.filter (\fullType -> fullType."kind" == TypeKind.InputObject)
             # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
-         in printModuleToString psCstDefaultOutputFileWidth $ MakeModule.InputObject.makeModule scalarModule apiModuleName moduleName inputObjectTypes
+         in printModuleToString $ MakeModule.InputObject.makeModule scalarModule apiModuleName moduleName inputObjectTypes
       , "Query":
         let
           moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Query"
@@ -189,7 +186,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
           queryFields :: Array InstorpectionQueryResult__Field
           queryFields = maybe [] (\x -> fromMaybe [] x.fields) queryType
          in
-          printModuleToString psCstDefaultOutputFileWidth $
+          printModuleToString $
             MakeModule.Query.makeModule
             nameToScope
             scalarModule
@@ -200,7 +197,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
             instorpectionQueryResult__FullType__union_names
             moduleName
             queryFields
-      , "Scopes": printModuleToString psCstDefaultOutputFileWidth $
+      , "Scopes": printModuleToString $
           MakeModule.Scopes.makeModule
           nameToScope
           apiModuleName
@@ -222,7 +219,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
                   introspectionQueryResult.__schema.types
                   # Array.filter (\fullType -> fullType."kind" == TypeKind.Scalar)
                   # Array.filter (\fullType -> not $ elem fullType.name builtInScalarNames)
-              in Just $ printModuleToString psCstDefaultOutputFileWidth $ MakeModule.Scalars.makeModule moduleName scalarTypes
+              in Just $ printModuleToString $ MakeModule.Scalars.makeModule moduleName scalarTypes
       , "Mutation": do
           (mutationType :: { name :: String }) <- introspectionQueryResult.__schema.mutationType
           (mutation :: InstorpectionQueryResult__FullType) <- Array.find (\x -> x.name == mutationType.name) introspectionQueryResult.__schema.types
@@ -232,7 +229,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
 
           let moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Mutation"
 
-          Just $ printModuleToString psCstDefaultOutputFileWidth $
+          Just $ printModuleToString $
             MakeModule.Mutation.makeModule
             nameToScope
             scalarModule
@@ -252,7 +249,7 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
 
           let moduleName = mkModuleName $ apiModuleName <> NonEmpty.singleton "Subscription"
 
-          Just $ printModuleToString psCstDefaultOutputFileWidth $
+          Just $ printModuleToString $
             MakeModule.Subscription.makeModule
             nameToScope
             scalarModule
