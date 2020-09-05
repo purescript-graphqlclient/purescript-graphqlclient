@@ -10,7 +10,9 @@ import Data.Argonaut.Parser (jsonParser) as ArgonautCore
 import Data.Foldable (null)
 import Data.Map (Map)
 import Data.TraversableWithIndex (forWithIndex)
+import Effect.Exception.Unsafe (unsafeThrow)
 import GraphqlClient as GraphqlClient
+import GraphqlClient.Implementation as GraphqlClient.Implementation
 import GraphqlClientGenerator.GraphqlJs as GraphqlJs
 import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
 import GraphqlClientGenerator.Options as GraphqlClientGenerator.Options
@@ -29,14 +31,11 @@ type App a = ReaderT GraphqlClientGenerator.Options.AppOptions Aff a
 includeDeprecated :: Boolean
 includeDeprecated = true
 
-introspectionQuery :: GraphqlClient.SelectionSet GraphqlClient.Scope__RootQuery GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
-introspectionQuery = GraphqlClientGenerator.IntrospectionSchema.introspectionQuery includeDeprecated
-
 introspectionQueryString :: String
-introspectionQueryString = GraphqlClient.writeGraphql introspectionQuery
+introspectionQueryString = GraphqlClient.writeGraphql (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery (\_ _ -> unsafeThrow "I dont care about decoder") includeDeprecated)
 
-introspectionQueryDecoder :: ArgonautCore.Json -> Either JsonDecodeError GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
-introspectionQueryDecoder = GraphqlClient.getSelectionSetDecoder introspectionQuery
+introspectionQueryDecoderForExternalJson :: ArgonautCore.Json -> Either JsonDecodeError GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
+introspectionQueryDecoderForExternalJson = GraphqlClient.getSelectionSetDecoder (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery GraphqlClient.Implementation.fieldNameWithoutHash includeDeprecated)
 
 dirIsEmpty :: FilePath -> Aff Boolean
 dirIsEmpty filepath = Node.FS.Aff.readdir filepath <#> null
@@ -52,7 +51,7 @@ main = do
           let
             urlString = unwrap url
 
-          resp <- GraphqlClient.graphqlQueryRequest urlString appOptions.headers introspectionQuery
+          resp <- GraphqlClient.graphqlQueryRequest urlString appOptions.headers (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery GraphqlClient.Implementation.fieldNameWithHash includeDeprecated)
             >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
           pure resp
@@ -61,12 +60,12 @@ main = do
 
           json <- GraphqlJs.generateIntrospectionJsonFromSchema text # throwError \/ pure
 
-          introspectionQueryDecoder json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
+          introspectionQueryDecoderForExternalJson json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
         (GraphqlClientGenerator.Options.AppOptionsInputJsonPath filepath) -> do
           text <- Node.FS.Aff.readTextFile UTF8 filepath
           json <- ArgonautCore.jsonParser text # (throwError <<< error) \/ pure
 
-          GraphqlClient.tryDecodeGraphqlResponse introspectionQueryDecoder json # (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
+          GraphqlClient.tryDecodeGraphqlResponse introspectionQueryDecoderForExternalJson json # (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
     outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesnt throw errors
 

@@ -1,19 +1,20 @@
 module GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue where
 
 import Protolude (Maybe)
-import GraphqlClient.Implementation (SelectionSet, graphqlDefaultResponseFunctorOrScalarDecoderTransformer, graphqlDefaultResponseScalarDecoder, selectionForCompositeField, selectionForField)
+import GraphqlClient.Implementation
+import GraphqlClient.WriteGraphqlHash
 import GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef as GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef
 
 data InstorpectionQueryResult_InputValue
 
-name :: SelectionSet InstorpectionQueryResult_InputValue String
-name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_InputValue String
+name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-description :: SelectionSet InstorpectionQueryResult_InputValue (Maybe String)
-description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
+description :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_InputValue (Maybe String)
+description fieldNameFn = selectionForFieldImplementation fieldNameFn "description" [] graphqlDefaultResponseScalarDecoder
 
-type_ :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_InputValue r
-type_ = selectionForCompositeField "type" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+type_ :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_InputValue r
+type_ fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "type" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-defaultValue :: SelectionSet InstorpectionQueryResult_InputValue (Maybe String)
-defaultValue = selectionForField "defaultValue" [] graphqlDefaultResponseScalarDecoder
+defaultValue :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_InputValue (Maybe String)
+defaultValue fieldNameFn = selectionForFieldImplementation fieldNameFn "defaultValue" [] graphqlDefaultResponseScalarDecoder

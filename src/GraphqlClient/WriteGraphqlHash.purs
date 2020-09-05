@@ -19,7 +19,28 @@ filterAbsent = Array.mapMaybe go
     OptionalArgument n (Present v) -> Just (n /\ v)
     OptionalArgument _ Absent -> Nothing
 
-type Cache = { argsWritten :: String, hash :: String }
+type Cache =
+  -- | the string representation of `args :: Array Argument`
+  -- |
+  -- | e.g.
+  -- |
+  -- | ```purs
+  -- | args = [ RequiredArgument "yyy" (ArgumentValueBoolean true) ] -- should be non-empty, because `Maybe Cache`
+  -- |
+  -- | argsWritten = writeGraphqlArguments args
+  -- |
+  -- | -- will return
+  -- |
+  -- | argsWritten = "(yyy: true)"
+  -- | ```
+  -- |
+  -- | NOTE: we DO NOT KEEP the args after they were converted to the string repesentation
+  -- | because I didn't fine a place where to use them
+  { argsWritten :: String
+
+  -- | a hash from argsWritten arg, used to be added to field names
+  , hash :: String
+  }
 
 argsHash :: Array Argument -> Maybe Cache
 argsHash args =

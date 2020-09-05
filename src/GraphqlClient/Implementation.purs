@@ -108,20 +108,109 @@ foldl f accum = Array.foldl (map2 f) (pure accum)
 
 data FragmentSelectionSet parentTypeLock a = FragmentSelectionSet String (Array RawField) (Json -> Either JsonDecodeError a)
 
-selectionForField :: forall parentTypeLock a . String -> Array Argument -> (Json -> Either JsonDecodeError a) -> SelectionSet parentTypeLock a
-selectionForField fieldName args decoder =
-  let
-    cache :: Maybe Cache
-    cache = argsHash args
+-- | When the field is requested with some argument - the generated field name should be unique
+-- | to prevent errors if the same field is requested with different arguments in some other place
+-- |
+-- | For example:
+-- |
+-- | given schema
+-- |
+-- | ```graphql
+-- | schema {
+-- |   query: RootQueryType
+-- | }
+-- |
+-- | type RootQueryType {
+-- |   xxx: Int!
+-- |   yyy(yyyArg: Boolean!): String!
+-- | }
+-- | ```
+-- |
+-- | and code
+-- |
+-- | ```purs
+-- | xxx :: SelectionSet Scope__RootQuery Int
+-- | xxx = selectionForField "xxx" [] graphqlDefaultResponseScalarDecoder
+-- |
+-- | yyy :: { yyyArg :: Boolean } -> SelectionSet Scope__RootQuery String
+-- | yyy input = selectionForField "yyy" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
+-- | -- which is equal to
+-- | -- yyy input = selectionForField "yyy" [RequiredArgument "yyyArg" (ArgumentValueBoolean input.yyyArg)] graphqlDefaultResponseScalarDecoder
+-- |
+-- | myQuery :: SelectionSet Scope__RootQuery { xxx :: Boolean, yyy1 :: String, yyy2 :: String }
+-- | myQuery =
+-- |   { xxx: _, yyy1: _, yyy2: _ }
+-- |   <$> xxx
+-- |   <*> yyy { yyyArg: true }
+-- |   <*> yyy { yyyArg: false }
+-- | ```
+-- |
+-- | should generate
+-- |
+-- | ```graphql
+-- | query {
+-- |   xxx
+-- |   yyyUNIQ_HASH_FROM_ARGS: yyy(yyyArg: true)
+-- |   yyyUNIQ_HASH_FROM_ARGS2: yyy(yyyArg: false)
+-- | }
+-- | ```
+-- |
+-- | The hash was generated because `selectionForField` arguments array WAS NOT EMPTY!
 
-    fieldName' :: String
-    fieldName' = case cache of
-                      Just cache' -> fieldName <> cache'.hash
-                      _ -> fieldName
-  in SelectionSet [Leaf fieldName cache] (\json -> do
+fieldNameWithHash :: Maybe Cache -> String -> String
+fieldNameWithHash (Just cache) fieldName = fieldName <> cache.hash
+fieldNameWithHash _ fieldName = fieldName
+
+-- Useful when json comes from external source, e.g. introspection schema from json file
+-- in that case we dont need hash in the field name
+-- only for internal use
+fieldNameWithoutHash :: Maybe Cache -> String -> String
+fieldNameWithoutHash _ fieldName = fieldName
+
+-- only for internal use
+selectionForFieldImplementation
+  :: forall parentTypeLock a
+   . (Maybe Cache -> String -> String)
+  -> String
+  -> Array Argument
+  -> (Json -> Either JsonDecodeError a)
+  -> SelectionSet parentTypeLock a
+selectionForFieldImplementation fieldNameFn fieldName args decoder =
+  let
+    maybeCache :: Maybe Cache
+    maybeCache = argsHash args
+  in SelectionSet [Leaf fieldName maybeCache] (\json -> do
     object <- ArgonautDecoders.Decoder.decodeJObject json
-    ArgonautDecoders.Decoder.getField decoder object fieldName'
+    ArgonautDecoders.Decoder.getField decoder object (fieldNameFn maybeCache fieldName)
   )
+
+selectionForField
+  :: forall parentTypeLock a
+   . String
+  -> Array Argument
+  -> (Json -> Either JsonDecodeError a)
+  -> SelectionSet parentTypeLock a
+selectionForField = selectionForFieldImplementation fieldNameWithHash
+
+-- only for internal use
+selectionForCompositeFieldImplementation
+  :: forall objectTypeLock lockedTo a b
+   . (Maybe Cache -> String -> String)
+  -> String
+  -> Array Argument
+  -> ((Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b)
+  -> SelectionSet objectTypeLock a
+  -> SelectionSet lockedTo b
+selectionForCompositeFieldImplementation fieldNameFn fieldName args jsonDecoderTransformer (SelectionSet fields childDecoder) =
+  let
+    maybeCache :: Maybe Cache
+    maybeCache = argsHash args
+  in SelectionSet
+    [ Composite fieldName fields maybeCache ]
+    (\json -> do
+      object <- ArgonautDecoders.Decoder.decodeJObject json
+      ArgonautDecoders.Decoder.getField (jsonDecoderTransformer childDecoder) object (fieldNameFn maybeCache fieldName)
+    )
 
 selectionForCompositeField
   :: forall objectTypeLock lockedTo a b
@@ -130,25 +219,7 @@ selectionForCompositeField
   -> ((Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b)
   -> SelectionSet objectTypeLock a
   -> SelectionSet lockedTo b
-selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet fields childDecoder) =
-  let
-    cache :: Maybe Cache
-    cache = argsHash args
-
-    fieldName' :: String
-    fieldName' = case cache of
-                      Just cache' -> fieldName <> cache'.hash
-                      _ -> fieldName
-  in SelectionSet
-    [ Composite fieldName fields cache ]
-    (\json -> do
-      -- | case cache of
-      -- |      Nothing -> pure unit
-      -- |      Just _ -> do
-      -- |         traceM { json, fieldName, args, cache }
-      object <- ArgonautDecoders.Decoder.decodeJObject json
-      ArgonautDecoders.Decoder.getField (jsonDecoderTransformer childDecoder) object fieldName'
-    )
+selectionForCompositeField = selectionForCompositeFieldImplementation fieldNameWithHash
 
 buildFragment :: forall decodesTo selectionLock fragmentLock . String -> SelectionSet selectionLock decodesTo -> FragmentSelectionSet fragmentLock decodesTo
 buildFragment fragmentTypeName (SelectionSet fields decoder) = FragmentSelectionSet fragmentTypeName fields decoder

@@ -1,6 +1,8 @@
 module GraphqlClientGenerator.IntrospectionSchema where
 
-import GraphqlClient (Scope__RootQuery, SelectionSet, bindSelectionSet)
+import GraphqlClient.Implementation
+import GraphqlClient.WriteGraphqlHash
+
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (InstorpectionQueryResult__TypeRef, InstorpectionQueryResult__TypeRef_shared, TypeKindWithNull, collectTypeRefInfo)
 import Protolude (type ($), type (<<<), Maybe, apply, map, note, (#), ($), (<$>), (<*>))
 
@@ -54,14 +56,14 @@ type InstorpectionQueryResult__InputValue
     , defaultValue :: Maybe String
     }
 
-typeRefFragment :: SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef InstorpectionQueryResult__TypeRef
-typeRefFragment = ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest ofTypeStop
+typeRefFragment :: (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef InstorpectionQueryResult__TypeRef
+typeRefFragment fieldNameFn = ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest ofTypeStop
   where
     ofTypeStop :: SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared ()))
     ofTypeStop =
       { kind: _, name: _ }
-      <$> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.kind
-      <*> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.name
+      <$> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.kind fieldNameFn
+      <*> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.name fieldNameFn
 
     ofTypeNest
       :: ∀ r
@@ -69,55 +71,55 @@ typeRefFragment = ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest $ ofTypeNest
       -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef (Record (InstorpectionQueryResult__TypeRef_shared (ofType :: Maybe r)))
     ofTypeNest other =
       { kind: _, name: _, ofType: _ }
-      <$> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.kind
-      <*> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.name
-      <*> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.ofType other
+      <$> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.kind fieldNameFn
+      <*> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.name fieldNameFn
+      <*> GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.ofType fieldNameFn other
 
-typeKindWithNullFragment :: SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef TypeKindWithNull
-typeKindWithNullFragment = bindSelectionSet (\typeRef -> collectTypeRefInfo typeRef # note (Named "TypeKindWithNull" $ UnexpectedValue $ unsafeCoerce typeRef)) typeRefFragment
+typeKindWithNullFragment :: (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef TypeKindWithNull
+typeKindWithNullFragment fieldNameFn = bindSelectionSet (\typeRef -> collectTypeRefInfo typeRef # note (Named "TypeKindWithNull" $ UnexpectedValue $ unsafeCoerce typeRef)) (typeRefFragment fieldNameFn)
 
-inputValueFragment :: SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue InstorpectionQueryResult__InputValue
-inputValueFragment = { name: _ , description: _ , type: _ , defaultValue: _ }
-  <$> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.name
-  <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.description
-  <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.type_ typeKindWithNullFragment
-  <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.defaultValue
+inputValueFragment :: (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue InstorpectionQueryResult__InputValue
+inputValueFragment fieldNameFn = { name: _ , description: _ , type: _ , defaultValue: _ }
+  <$> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.name fieldNameFn
+  <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.description fieldNameFn
+  <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.type_ fieldNameFn (typeKindWithNullFragment fieldNameFn)
+  <*> GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.defaultValue fieldNameFn
 
-introspectionQuery :: Boolean -> SelectionSet Scope__RootQuery InstorpectionQueryResult
-introspectionQuery includeDeprecated =
-  __schema ado
-    queryType'        <- queryType $ { name: _ } <$> queryType_name
-    mutationType'     <- mutationType $ { name: _ } <$> mutationType_name
-    subscriptionType' <- subscriptionType $ { name: _ } <$> subscriptionType_name
-    types'            <- types ado
-      types_kind'          <- types_kind
-      types_name'          <- types_name
-      types_description'   <- types_description
-      types_fields'        <- types_fields ({ includeDeprecated }) $
+introspectionQuery :: (Maybe Cache -> String -> String) -> Boolean -> SelectionSet Scope__RootQuery InstorpectionQueryResult
+introspectionQuery fieldNameFn includeDeprecated =
+  __schema fieldNameFn ado
+    queryType'        <- queryType fieldNameFn $ { name: _ } <$> queryType_name fieldNameFn
+    mutationType'     <- mutationType fieldNameFn $ { name: _ } <$> mutationType_name fieldNameFn
+    subscriptionType' <- subscriptionType fieldNameFn $ { name: _ } <$> subscriptionType_name fieldNameFn
+    types'            <- types fieldNameFn ado
+      types_kind'          <- types_kind fieldNameFn
+      types_name'          <- types_name fieldNameFn
+      types_description'   <- types_description fieldNameFn
+      types_fields'        <- types_fields fieldNameFn ({ includeDeprecated }) $
         { name: _
         , description: _
         , args: _
         , type: _
         , isDeprecated: _
         , deprecationReason: _
-        } <$> types_fields_name
-          <*> types_fields_description
-          <*> types_fields_args inputValueFragment
-          <*> types_fields_type typeKindWithNullFragment
-          <*> types_fields_isDeprecated
-          <*> types_fields_deprecationReason
-      types_inputFields' <- types_inputFields inputValueFragment
-      types_interfaces' <- types_interfaces typeKindWithNullFragment
-      types_enumValues' <- types_enumValues ({ includeDeprecated }) $
+        } <$> types_fields_name fieldNameFn
+          <*> types_fields_description fieldNameFn
+          <*> types_fields_args fieldNameFn (inputValueFragment fieldNameFn)
+          <*> types_fields_type fieldNameFn (typeKindWithNullFragment fieldNameFn)
+          <*> types_fields_isDeprecated fieldNameFn
+          <*> types_fields_deprecationReason fieldNameFn
+      types_inputFields' <- types_inputFields fieldNameFn (inputValueFragment fieldNameFn)
+      types_interfaces' <- types_interfaces fieldNameFn (typeKindWithNullFragment fieldNameFn)
+      types_enumValues' <- types_enumValues fieldNameFn ({ includeDeprecated }) $
         { name: _
         , description: _
         , isDeprecated: _
         , deprecationReason: _
-        } <$> types_enumValues_name
-          <*> types_enumValues_description
-          <*> types_enumValues_isDeprecated
-          <*> types_enumValues_deprecationReason
-      types_possibleTypes' <- types_possibleTypes typeKindWithNullFragment
+        } <$> types_enumValues_name fieldNameFn
+          <*> types_enumValues_description fieldNameFn
+          <*> types_enumValues_isDeprecated fieldNameFn
+          <*> types_enumValues_deprecationReason fieldNameFn
+      types_possibleTypes' <- types_possibleTypes fieldNameFn (typeKindWithNullFragment fieldNameFn)
       in { kind: types_kind'
          , name: types_name'
          , description: types_description'

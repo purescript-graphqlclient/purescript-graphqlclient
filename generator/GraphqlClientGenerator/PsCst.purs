@@ -27,8 +27,7 @@ import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
 import Dodo as Dodo
 
 printModuleToString :: Module -> String
--- | { pageWidth = 120 }
-printModuleToString = printModule >>> Dodo.print Dodo.plainText (Dodo.twoSpaces )
+printModuleToString = printModule >>> Dodo.print Dodo.plainText Dodo.twoSpaces
 
 type FilesMap =
   { dirs ::
@@ -129,25 +128,25 @@ mkFilesMap customScalarsModule apiModuleName introspectionQueryResult =
     instorpectionQueryResult__FullType__enum = onlyTypesWithoutExcluded TypeKind.Enum
 
     instorpectionQueryResult__FullType__enum_names :: Array String
-    instorpectionQueryResult__FullType__enum_names = instorpectionQueryResult__FullType__enum <#> _.name <#> StringsExtra.pascalCase
+    instorpectionQueryResult__FullType__enum_names = instorpectionQueryResult__FullType__enum <#> _.name <#> StringsExtra.pascalCase # Array.sort
 
     instorpectionQueryResult__FullType__interface :: Array InstorpectionQueryResult__FullType
     instorpectionQueryResult__FullType__interface = onlyTypesWithoutExcluded TypeKind.Interface
 
     instorpectionQueryResult__FullType__interface_names :: Array String
-    instorpectionQueryResult__FullType__interface_names = instorpectionQueryResult__FullType__interface <#> _.name <#> StringsExtra.pascalCase
+    instorpectionQueryResult__FullType__interface_names = instorpectionQueryResult__FullType__interface <#> _.name <#> StringsExtra.pascalCase # Array.sort
 
     instorpectionQueryResult__FullType__object :: Array InstorpectionQueryResult__FullType
     instorpectionQueryResult__FullType__object = onlyTypesWithoutExcluded TypeKind.Object
 
     instorpectionQueryResult__FullType__object_names :: Array String
-    instorpectionQueryResult__FullType__object_names = instorpectionQueryResult__FullType__object <#> _.name <#> StringsExtra.pascalCase
+    instorpectionQueryResult__FullType__object_names = instorpectionQueryResult__FullType__object <#> _.name <#> StringsExtra.pascalCase # Array.sort
 
     instorpectionQueryResult__FullType__union :: Array InstorpectionQueryResult__FullType
     instorpectionQueryResult__FullType__union = onlyTypesWithoutExcluded TypeKind.Union
 
     instorpectionQueryResult__FullType__union_names :: Array String
-    instorpectionQueryResult__FullType__union_names = instorpectionQueryResult__FullType__union <#> _.name <#> StringsExtra.pascalCase
+    instorpectionQueryResult__FullType__union_names = instorpectionQueryResult__FullType__union <#> _.name <#> StringsExtra.pascalCase # Array.sort
 
     scalarModule :: ModuleName
     scalarModule = fromMaybe (mkModuleName $ apiModuleName <> NonEmpty.singleton "Scalars") customScalarsModule

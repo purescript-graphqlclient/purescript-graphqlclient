@@ -1,16 +1,17 @@
 module GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef where
 
 import Protolude (Maybe)
-import GraphqlClient.Implementation (SelectionSet, graphqlDefaultResponseFunctorOrScalarDecoderTransformer, graphqlDefaultResponseScalarDecoder, selectionForCompositeField, selectionForField)
+import GraphqlClient.Implementation
+import GraphqlClient.WriteGraphqlHash
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind (TypeKind)
 
 data InstorpectionQueryResult_TypeRef
 
-kind :: SelectionSet InstorpectionQueryResult_TypeRef TypeKind
-kind = selectionForField "kind" [] graphqlDefaultResponseScalarDecoder
+kind :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_TypeRef TypeKind
+kind fieldNameFn = selectionForFieldImplementation fieldNameFn "kind" [] graphqlDefaultResponseScalarDecoder
 
-name :: SelectionSet InstorpectionQueryResult_TypeRef (Maybe String)
-name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_TypeRef (Maybe String)
+name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-ofType :: ∀ r . SelectionSet InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_TypeRef (Maybe r)
-ofType = selectionForCompositeField "ofType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+ofType :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_TypeRef (Maybe r)
+ofType fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "ofType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

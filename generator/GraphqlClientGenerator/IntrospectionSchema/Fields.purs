@@ -1,6 +1,9 @@
 module GraphqlClientGenerator.IntrospectionSchema.Fields where
 
-import GraphqlClient
+import GraphqlClient.Implementation
+import GraphqlClient.WriteGraphqlHash
+import GraphqlClient.Argument
+
 import Protolude (type ($), type (<<<), Maybe)
 
 import GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue as GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue
@@ -18,83 +21,83 @@ data InstorpectionQueryResult_Fields
 
 type IsDeprecatedInput = { includeDeprecated :: Boolean }
 
-__schema :: ∀ r . SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet Scope__RootQuery r
-__schema = selectionForCompositeField "__schema" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+__schema :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Schema r -> SelectionSet Scope__RootQuery r
+__schema fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "__schema" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-queryType :: ∀ r . SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema r
-queryType = selectionForCompositeField "queryType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+queryType :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_QueryType r -> SelectionSet InstorpectionQueryResult_Schema r
+queryType fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "queryType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-queryType_name :: SelectionSet InstorpectionQueryResult_QueryType String
-queryType_name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+queryType_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_QueryType String
+queryType_name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-queryType_description :: SelectionSet InstorpectionQueryResult_QueryType String
-queryType_description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
+queryType_description :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_QueryType String
+queryType_description fieldNameFn = selectionForFieldImplementation fieldNameFn "description" [] graphqlDefaultResponseScalarDecoder
 
-mutationType :: ∀ r . SelectionSet InstorpectionQueryResult_MutationType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
-mutationType = selectionForCompositeField "mutationType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+mutationType :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_MutationType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
+mutationType fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "mutationType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-mutationType_name :: SelectionSet InstorpectionQueryResult_MutationType String
-mutationType_name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+mutationType_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_MutationType String
+mutationType_name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-subscriptionType :: ∀ r . SelectionSet InstorpectionQueryResult_SubscriptionType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
-subscriptionType = selectionForCompositeField "subscriptionType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+subscriptionType :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_SubscriptionType r -> SelectionSet InstorpectionQueryResult_Schema (Maybe r)
+subscriptionType fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "subscriptionType" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-subscriptionType_name :: SelectionSet InstorpectionQueryResult_SubscriptionType String
-subscriptionType_name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+subscriptionType_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_SubscriptionType String
+subscriptionType_name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-types :: ∀ r . SelectionSet InstorpectionQueryResult_Types r -> SelectionSet InstorpectionQueryResult_Schema (Array r)
-types = selectionForCompositeField "types" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Types r -> SelectionSet InstorpectionQueryResult_Schema (Array r)
+types fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "types" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_kind :: SelectionSet InstorpectionQueryResult_Types TypeKind
-types_kind = selectionForField "kind" [] graphqlDefaultResponseScalarDecoder
+types_kind :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Types TypeKind
+types_kind fieldNameFn = selectionForFieldImplementation fieldNameFn "kind" [] graphqlDefaultResponseScalarDecoder
 
-types_name :: SelectionSet InstorpectionQueryResult_Types String
-types_name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+types_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Types String
+types_name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-types_description :: SelectionSet InstorpectionQueryResult_Types (Maybe String)
-types_description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
+types_description :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Types (Maybe String)
+types_description fieldNameFn = selectionForFieldImplementation fieldNameFn "description" [] graphqlDefaultResponseScalarDecoder
 
-types_fields :: ∀ r . IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_Fields r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
-types_fields inputRecord = selectionForCompositeField "fields" (toGraphqlArguments inputRecord) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types_fields :: ∀ r . (Maybe Cache -> String -> String) -> IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_Fields r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_fields fieldNameFn inputRecord = selectionForCompositeFieldImplementation fieldNameFn "fields" (toGraphqlArguments inputRecord) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_fields_name :: SelectionSet InstorpectionQueryResult_Fields String
-types_fields_name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+types_fields_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Fields String
+types_fields_name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-types_fields_description :: SelectionSet InstorpectionQueryResult_Fields (Maybe String)
-types_fields_description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
+types_fields_description :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Fields (Maybe String)
+types_fields_description fieldNameFn = selectionForFieldImplementation fieldNameFn "description" [] graphqlDefaultResponseScalarDecoder
 
-types_fields_args :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Fields (Array r)
-types_fields_args = selectionForCompositeField "args" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types_fields_args :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Fields (Array r)
+types_fields_args fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "args" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_fields_type :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Fields r
-types_fields_type = selectionForCompositeField "type" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types_fields_type :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Fields r
+types_fields_type fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "type" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_fields_isDeprecated :: SelectionSet InstorpectionQueryResult_Fields Boolean
-types_fields_isDeprecated = selectionForField "isDeprecated" [] graphqlDefaultResponseScalarDecoder
+types_fields_isDeprecated :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Fields Boolean
+types_fields_isDeprecated fieldNameFn = selectionForFieldImplementation fieldNameFn "isDeprecated" [] graphqlDefaultResponseScalarDecoder
 
-types_fields_deprecationReason :: SelectionSet InstorpectionQueryResult_Fields (Maybe String)
-types_fields_deprecationReason = selectionForField "deprecationReason" [] graphqlDefaultResponseScalarDecoder
+types_fields_deprecationReason :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Fields (Maybe String)
+types_fields_deprecationReason fieldNameFn = selectionForFieldImplementation fieldNameFn "deprecationReason" [] graphqlDefaultResponseScalarDecoder
 
-types_inputFields :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
-types_inputFields = selectionForCompositeField "inputFields" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types_inputFields :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_inputFields fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "inputFields" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_interfaces :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
-types_interfaces = selectionForCompositeField "interfaces" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types_interfaces :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_interfaces fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "interfaces" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_enumValues :: ∀ r . IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_EnumValues r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
-types_enumValues inputRecord = selectionForCompositeField "enumValues" (toGraphqlArguments inputRecord) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types_enumValues :: ∀ r . (Maybe Cache -> String -> String) -> IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_EnumValues r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
+types_enumValues fieldNameFn inputRecord = selectionForCompositeFieldImplementation fieldNameFn "enumValues" (toGraphqlArguments inputRecord) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_enumValues_name :: SelectionSet InstorpectionQueryResult_EnumValues String
-types_enumValues_name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+types_enumValues_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_EnumValues String
+types_enumValues_name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphqlDefaultResponseScalarDecoder
 
-types_enumValues_description :: SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
-types_enumValues_description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
+types_enumValues_description :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
+types_enumValues_description fieldNameFn = selectionForFieldImplementation fieldNameFn "description" [] graphqlDefaultResponseScalarDecoder
 
-types_enumValues_isDeprecated :: SelectionSet InstorpectionQueryResult_EnumValues Boolean
-types_enumValues_isDeprecated = selectionForField "isDeprecated" [] graphqlDefaultResponseScalarDecoder
+types_enumValues_isDeprecated :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_EnumValues Boolean
+types_enumValues_isDeprecated fieldNameFn = selectionForFieldImplementation fieldNameFn "isDeprecated" [] graphqlDefaultResponseScalarDecoder
 
-types_enumValues_deprecationReason :: SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
-types_enumValues_deprecationReason = selectionForField "deprecationReason" [] graphqlDefaultResponseScalarDecoder
+types_enumValues_deprecationReason :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
+types_enumValues_deprecationReason fieldNameFn = selectionForFieldImplementation fieldNameFn "deprecationReason" [] graphqlDefaultResponseScalarDecoder
 
-types_possibleTypes :: ∀ r . SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
-types_possibleTypes = selectionForCompositeField "possibleTypes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+types_possibleTypes :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
+types_possibleTypes fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "possibleTypes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

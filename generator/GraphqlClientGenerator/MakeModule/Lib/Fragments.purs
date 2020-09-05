@@ -3,8 +3,9 @@ module GraphqlClientGenerator.MakeModule.Lib.Fragments where
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull(..))
 import GraphqlClientGenerator.MakeModule.Lib.Utils (qualifyScope)
 import Language.PS.SmartCST (Binder(..), SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), RecordLabeled(..), SmartQualifiedName(..), Type(..), TypeVarBinding(..), mkModuleName)
-import Protolude (Maybe(..), ($), (<#>), (<>))
+import Protolude
 
+import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
@@ -25,7 +26,7 @@ declarationForPossibleTypes :: NonEmptyArray String -> (String -> String) -> Str
 declarationForPossibleTypes apiModuleName nameToScope parentName typeRefs =
   let
     names :: Array String
-    names = typeRefs <#> nameOfTypeKindWithNull
+    names = typeRefs <#> nameOfTypeKindWithNull # Array.sort
   in
     [ DeclType
       { comments: Nothing
