@@ -8,15 +8,22 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__MinimizeCommentPayload
-  , Scope__Minimizable
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (Scope__MinimizeCommentPayload, Scope__Minimizable)
+import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__MinimizeCommentPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-minimizedComment :: forall r . SelectionSet Scope__Minimizable r -> SelectionSet Scope__MinimizeCommentPayload (Maybe r)
-minimizedComment = selectionForCompositeField "minimizedComment" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+minimizedComment :: forall r . SelectionSet
+                               Scope__Minimizable
+                               r -> SelectionSet
+                                    Scope__MinimizeCommentPayload
+                                    (Maybe
+                                     r)
+minimizedComment = selectionForCompositeField
+                   "minimizedComment"
+                   []
+                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer

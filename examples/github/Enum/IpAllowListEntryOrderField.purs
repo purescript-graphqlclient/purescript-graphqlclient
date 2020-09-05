@@ -1,12 +1,7 @@
 module Examples.Github.Enum.IpAllowListEntryOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,21 +10,27 @@ import GraphqlClient
   )
 
 -- | original name - IpAllowListEntryOrderField
-data IpAllowListEntryOrderField
-  = CreatedAt
-  | AllowListValue
+data IpAllowListEntryOrderField = CreatedAt | AllowListValue
 
 derive instance eqIpAllowListEntryOrderField :: Eq IpAllowListEntryOrderField
 
 derive instance ordIpAllowListEntryOrderField :: Ord IpAllowListEntryOrderField
 
 fromToMap :: Array (Tuple String IpAllowListEntryOrderField)
-fromToMap = [Tuple "CREATED_AT" CreatedAt, Tuple "ALLOW_LIST_VALUE" AllowListValue]
+fromToMap = [ Tuple
+              "CREATED_AT"
+              CreatedAt
+            , Tuple "ALLOW_LIST_VALUE" AllowListValue
+            ]
 
-instance ipAllowListEntryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder IpAllowListEntryOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "IpAllowListEntryOrderField" fromToMap
+instance ipAllowListEntryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                          IpAllowListEntryOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "IpAllowListEntryOrderField"
+                                        fromToMap
 
-instance ipAllowListEntryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue IpAllowListEntryOrderField where
+instance ipAllowListEntryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                             IpAllowListEntryOrderField where
   toGraphqlArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

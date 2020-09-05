@@ -8,15 +8,25 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__UpdateProjectColumnPayload
-  , Scope__ProjectColumn
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (Scope__UpdateProjectColumnPayload, Scope__ProjectColumn)
+import Data.Maybe (Maybe)
 
-clientMutationId :: SelectionSet Scope__UpdateProjectColumnPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId :: SelectionSet
+                    Scope__UpdateProjectColumnPayload
+                    (Maybe
+                     String)
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-projectColumn :: forall r . SelectionSet Scope__ProjectColumn r -> SelectionSet Scope__UpdateProjectColumnPayload (Maybe r)
-projectColumn = selectionForCompositeField "projectColumn" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+projectColumn :: forall r . SelectionSet
+                            Scope__ProjectColumn
+                            r -> SelectionSet
+                                 Scope__UpdateProjectColumnPayload
+                                 (Maybe
+                                  r)
+projectColumn = selectionForCompositeField
+                "projectColumn"
+                []
+                graphqlDefaultResponseFunctorOrScalarDecoderTransformer

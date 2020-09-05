@@ -1,16 +1,9 @@
 module Examples.Github.Object.RateLimit where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__RateLimit
-  )
-import Examples.Github.Scalars
-  ( DateTime
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__RateLimit)
+import Examples.Github.Scalars (DateTime)
 
 cost :: SelectionSet Scope__RateLimit Int
 cost = selectionForField "cost" [] graphqlDefaultResponseScalarDecoder

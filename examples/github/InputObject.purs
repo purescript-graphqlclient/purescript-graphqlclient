@@ -1,210 +1,99 @@
 module Examples.Github.InputObject where
 
-import Examples.Github.Scalars
-  ( Id
-  , GitObjectId
-  , DateTime
-  , Uri
-  )
-import GraphqlClient
-  ( Optional
-  )
-import Examples.Github.Enum.PullRequestReviewEvent
-  ( PullRequestReviewEvent
-  )
-import Data.Maybe
-  ( Maybe
-  )
-import Examples.Github.Enum.DiffSide
-  ( DiffSide
-  )
-import Examples.Github.Enum.ReactionContent
-  ( ReactionContent
-  )
-import Examples.Github.Enum.AuditLogOrderField
-  ( AuditLogOrderField
-  )
-import Examples.Github.Enum.OrderDirection
-  ( OrderDirection
-  )
-import Examples.Github.Enum.RepositoryVisibility
-  ( RepositoryVisibility
-  )
+import Examples.Github.Scalars (Id, GitObjectId, DateTime, Uri)
+import GraphqlClient (Optional)
+import Examples.Github.Enum.PullRequestReviewEvent (PullRequestReviewEvent)
+import Data.Maybe (Maybe)
+import Examples.Github.Enum.DiffSide (DiffSide)
+import Examples.Github.Enum.ReactionContent (ReactionContent)
+import Examples.Github.Enum.AuditLogOrderField (AuditLogOrderField)
+import Examples.Github.Enum.OrderDirection (OrderDirection)
+import Examples.Github.Enum.RepositoryVisibility (RepositoryVisibility)
 import Examples.Github.Enum.CommitContributionOrderField
-  ( CommitContributionOrderField
-  )
-import Examples.Github.Enum.ProjectTemplate
-  ( ProjectTemplate
-  )
+  (CommitContributionOrderField)
+import Examples.Github.Enum.ProjectTemplate (ProjectTemplate)
 import Examples.Github.Enum.TopicSuggestionDeclineReason
-  ( TopicSuggestionDeclineReason
-  )
-import Examples.Github.Enum.DeploymentOrderField
-  ( DeploymentOrderField
-  )
+  (TopicSuggestionDeclineReason)
+import Examples.Github.Enum.DeploymentOrderField (DeploymentOrderField)
 import Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField
-  ( EnterpriseAdministratorInvitationOrderField
-  )
+  (EnterpriseAdministratorInvitationOrderField)
 import Examples.Github.Enum.EnterpriseMemberOrderField
-  ( EnterpriseMemberOrderField
-  )
+  (EnterpriseMemberOrderField)
 import Examples.Github.Enum.EnterpriseServerInstallationOrderField
-  ( EnterpriseServerInstallationOrderField
-  )
+  (EnterpriseServerInstallationOrderField)
 import Examples.Github.Enum.EnterpriseServerUserAccountEmailOrderField
-  ( EnterpriseServerUserAccountEmailOrderField
-  )
+  (EnterpriseServerUserAccountEmailOrderField)
 import Examples.Github.Enum.EnterpriseServerUserAccountOrderField
-  ( EnterpriseServerUserAccountOrderField
-  )
+  (EnterpriseServerUserAccountOrderField)
 import Examples.Github.Enum.EnterpriseServerUserAccountsUploadOrderField
-  ( EnterpriseServerUserAccountsUploadOrderField
-  )
-import Examples.Github.Enum.GistOrderField
-  ( GistOrderField
-  )
+  (EnterpriseServerUserAccountsUploadOrderField)
+import Examples.Github.Enum.GistOrderField (GistOrderField)
 import Examples.Github.Enum.EnterpriseAdministratorRole
-  ( EnterpriseAdministratorRole
-  )
+  (EnterpriseAdministratorRole)
 import Examples.Github.Enum.IpAllowListEntryOrderField
-  ( IpAllowListEntryOrderField
-  )
-import Examples.Github.Enum.IssueState
-  ( IssueState
-  )
-import Examples.Github.Enum.IssueOrderField
-  ( IssueOrderField
-  )
-import Examples.Github.Enum.LabelOrderField
-  ( LabelOrderField
-  )
-import Examples.Github.Enum.LanguageOrderField
-  ( LanguageOrderField
-  )
-import Examples.Github.Enum.LockReason
-  ( LockReason
-  )
-import Examples.Github.Enum.PullRequestMergeMethod
-  ( PullRequestMergeMethod
-  )
-import Examples.Github.Enum.MilestoneOrderField
-  ( MilestoneOrderField
-  )
+  (IpAllowListEntryOrderField)
+import Examples.Github.Enum.IssueState (IssueState)
+import Examples.Github.Enum.IssueOrderField (IssueOrderField)
+import Examples.Github.Enum.LabelOrderField (LabelOrderField)
+import Examples.Github.Enum.LanguageOrderField (LanguageOrderField)
+import Examples.Github.Enum.LockReason (LockReason)
+import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
+import Examples.Github.Enum.MilestoneOrderField (MilestoneOrderField)
 import Examples.Github.Enum.ReportedContentClassifiers
-  ( ReportedContentClassifiers
-  )
-import Examples.Github.Enum.OrganizationOrderField
-  ( OrganizationOrderField
-  )
-import Examples.Github.Enum.PackageFileOrderField
-  ( PackageFileOrderField
-  )
-import Examples.Github.Enum.PackageOrderField
-  ( PackageOrderField
-  )
-import Examples.Github.Enum.PackageVersionOrderField
-  ( PackageVersionOrderField
-  )
-import Examples.Github.Enum.ProjectOrderField
-  ( ProjectOrderField
-  )
-import Examples.Github.Enum.PullRequestOrderField
-  ( PullRequestOrderField
-  )
-import Examples.Github.Enum.ReactionOrderField
-  ( ReactionOrderField
-  )
-import Examples.Github.Enum.RefOrderField
-  ( RefOrderField
-  )
-import Examples.Github.Enum.ReleaseOrderField
-  ( ReleaseOrderField
-  )
+  (ReportedContentClassifiers)
+import Examples.Github.Enum.OrganizationOrderField (OrganizationOrderField)
+import Examples.Github.Enum.PackageFileOrderField (PackageFileOrderField)
+import Examples.Github.Enum.PackageOrderField (PackageOrderField)
+import Examples.Github.Enum.PackageVersionOrderField (PackageVersionOrderField)
+import Examples.Github.Enum.ProjectOrderField (ProjectOrderField)
+import Examples.Github.Enum.PullRequestOrderField (PullRequestOrderField)
+import Examples.Github.Enum.ReactionOrderField (ReactionOrderField)
+import Examples.Github.Enum.RefOrderField (RefOrderField)
+import Examples.Github.Enum.ReleaseOrderField (ReleaseOrderField)
 import Examples.Github.Enum.RepositoryInvitationOrderField
-  ( RepositoryInvitationOrderField
-  )
-import Examples.Github.Enum.RepositoryOrderField
-  ( RepositoryOrderField
-  )
-import Examples.Github.Enum.SavedReplyOrderField
-  ( SavedReplyOrderField
-  )
+  (RepositoryInvitationOrderField)
+import Examples.Github.Enum.RepositoryOrderField (RepositoryOrderField)
+import Examples.Github.Enum.SavedReplyOrderField (SavedReplyOrderField)
 import Examples.Github.Enum.SecurityAdvisoryIdentifierType
-  ( SecurityAdvisoryIdentifierType
-  )
+  (SecurityAdvisoryIdentifierType)
 import Examples.Github.Enum.SecurityAdvisoryOrderField
-  ( SecurityAdvisoryOrderField
-  )
+  (SecurityAdvisoryOrderField)
 import Examples.Github.Enum.SecurityVulnerabilityOrderField
-  ( SecurityVulnerabilityOrderField
-  )
-import Examples.Github.Enum.SamlSignatureAlgorithm
-  ( SamlSignatureAlgorithm
-  )
-import Examples.Github.Enum.SamlDigestAlgorithm
-  ( SamlDigestAlgorithm
-  )
-import Examples.Github.Enum.SponsorsTierOrderField
-  ( SponsorsTierOrderField
-  )
-import Examples.Github.Enum.SponsorshipOrderField
-  ( SponsorshipOrderField
-  )
-import Examples.Github.Enum.StarOrderField
-  ( StarOrderField
-  )
+  (SecurityVulnerabilityOrderField)
+import Examples.Github.Enum.SamlSignatureAlgorithm (SamlSignatureAlgorithm)
+import Examples.Github.Enum.SamlDigestAlgorithm (SamlDigestAlgorithm)
+import Examples.Github.Enum.SponsorsTierOrderField (SponsorsTierOrderField)
+import Examples.Github.Enum.SponsorshipOrderField (SponsorshipOrderField)
+import Examples.Github.Enum.StarOrderField (StarOrderField)
 import Examples.Github.Enum.TeamDiscussionCommentOrderField
-  ( TeamDiscussionCommentOrderField
-  )
-import Examples.Github.Enum.TeamDiscussionOrderField
-  ( TeamDiscussionOrderField
-  )
-import Examples.Github.Enum.TeamMemberOrderField
-  ( TeamMemberOrderField
-  )
-import Examples.Github.Enum.TeamOrderField
-  ( TeamOrderField
-  )
-import Examples.Github.Enum.TeamRepositoryOrderField
-  ( TeamRepositoryOrderField
-  )
+  (TeamDiscussionCommentOrderField)
+import Examples.Github.Enum.TeamDiscussionOrderField (TeamDiscussionOrderField)
+import Examples.Github.Enum.TeamMemberOrderField (TeamMemberOrderField)
+import Examples.Github.Enum.TeamOrderField (TeamOrderField)
+import Examples.Github.Enum.TeamRepositoryOrderField (TeamRepositoryOrderField)
 import Examples.Github.Enum.ActionExecutionCapabilitySetting
-  ( ActionExecutionCapabilitySetting
-  )
+  (ActionExecutionCapabilitySetting)
 import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
-  ( EnterpriseEnabledDisabledSettingValue
-  )
+  (EnterpriseEnabledDisabledSettingValue)
 import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
-  ( EnterpriseDefaultRepositoryPermissionSettingValue
-  )
+  (EnterpriseDefaultRepositoryPermissionSettingValue)
 import Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue
-  ( EnterpriseMembersCanCreateRepositoriesSettingValue
-  )
+  (EnterpriseMembersCanCreateRepositoriesSettingValue)
 import Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue
-  ( EnterpriseMembersCanMakePurchasesSettingValue
-  )
+  (EnterpriseMembersCanMakePurchasesSettingValue)
 import Examples.Github.Enum.EnterpriseEnabledSettingValue
-  ( EnterpriseEnabledSettingValue
-  )
+  (EnterpriseEnabledSettingValue)
 import Examples.Github.Enum.IpAllowListEnabledSettingValue
-  ( IpAllowListEnabledSettingValue
-  )
-import Examples.Github.Enum.ProjectState
-  ( ProjectState
-  )
-import Examples.Github.Enum.PullRequestUpdateState
-  ( PullRequestUpdateState
-  )
-import Examples.Github.Enum.SubscriptionState
-  ( SubscriptionState
-  )
-import Examples.Github.Enum.UserStatusOrderField
-  ( UserStatusOrderField
-  )
+  (IpAllowListEnabledSettingValue)
+import Examples.Github.Enum.ProjectState (ProjectState)
+import Examples.Github.Enum.PullRequestUpdateState (PullRequestUpdateState)
+import Examples.Github.Enum.SubscriptionState (SubscriptionState)
+import Examples.Github.Enum.UserStatusOrderField (UserStatusOrderField)
 
 -- | original name - AcceptEnterpriseAdministratorInvitationInput
 type AcceptEnterpriseAdministratorInvitationInput = { invitationId :: Id
-                                                    , clientMutationId :: Optional String
+                                                    , clientMutationId :: Optional
+                                                                          String
                                                     }
 
 -- | original name - AcceptTopicSuggestionInput
@@ -245,7 +134,8 @@ type AddProjectColumnInput = { projectId :: Id
                              }
 
 -- | original name - AddPullRequestReviewCommentInput
-type AddPullRequestReviewCommentInput = { pullRequestId :: Optional Id
+type AddPullRequestReviewCommentInput = { pullRequestId :: Optional
+                                                           Id
                                         , pullRequestReviewId :: Optional Id
                                         , commitOID :: Optional GitObjectId
                                         , body :: String
@@ -260,8 +150,14 @@ type AddPullRequestReviewInput = { pullRequestId :: Id
                                  , commitOID :: Optional GitObjectId
                                  , body :: Optional String
                                  , event :: Optional PullRequestReviewEvent
-                                 , comments :: Optional (Array (Maybe DraftPullRequestReviewComment))
-                                 , threads :: Optional (Array (Maybe DraftPullRequestReviewThread))
+                                 , comments :: Optional
+                                               (Array
+                                                (Maybe
+                                                 DraftPullRequestReviewComment))
+                                 , threads :: Optional
+                                              (Array
+                                               (Maybe
+                                                DraftPullRequestReviewThread))
                                  , clientMutationId :: Optional String
                                  }
 
@@ -284,9 +180,7 @@ type AddReactionInput = { subjectId :: Id
                         }
 
 -- | original name - AddStarInput
-type AddStarInput = { starrableId :: Id
-                    , clientMutationId :: Optional String
-                    }
+type AddStarInput = { starrableId :: Id, clientMutationId :: Optional String }
 
 -- | original name - ArchiveRepositoryInput
 type ArchiveRepositoryInput = { repositoryId :: Id
@@ -294,17 +188,20 @@ type ArchiveRepositoryInput = { repositoryId :: Id
                               }
 
 -- | original name - AuditLogOrder
-type AuditLogOrder = { field :: Optional AuditLogOrderField
+type AuditLogOrder = { field :: Optional
+                                AuditLogOrderField
                      , direction :: Optional OrderDirection
                      }
 
 -- | original name - CancelEnterpriseAdminInvitationInput
 type CancelEnterpriseAdminInvitationInput = { invitationId :: Id
-                                            , clientMutationId :: Optional String
+                                            , clientMutationId :: Optional
+                                                                  String
                                             }
 
 -- | original name - ChangeUserStatusInput
-type ChangeUserStatusInput = { emoji :: Optional String
+type ChangeUserStatusInput = { emoji :: Optional
+                                        String
                              , message :: Optional String
                              , organizationId :: Optional Id
                              , limitedAvailability :: Optional Boolean
@@ -338,9 +235,7 @@ type CloneTemplateRepositoryInput = { repositoryId :: Id
                                     }
 
 -- | original name - CloseIssueInput
-type CloseIssueInput = { issueId :: Id
-                       , clientMutationId :: Optional String
-                       }
+type CloseIssueInput = { issueId :: Id, clientMutationId :: Optional String }
 
 -- | original name - ClosePullRequestInput
 type ClosePullRequestInput = { pullRequestId :: Id
@@ -348,9 +243,7 @@ type ClosePullRequestInput = { pullRequestId :: Id
                              }
 
 -- | original name - CommitAuthor
-type CommitAuthor = { id :: Optional Id
-                    , emails :: Optional (Array String)
-                    }
+type CommitAuthor = { id :: Optional Id, emails :: Optional (Array String) }
 
 -- | original name - CommitContributionOrder
 type CommitContributionOrder = { field :: CommitContributionOrderField
@@ -358,8 +251,7 @@ type CommitContributionOrder = { field :: CommitContributionOrderField
                                }
 
 -- | original name - ContributionOrder
-type ContributionOrder = { direction :: OrderDirection
-                         }
+type ContributionOrder = { direction :: OrderDirection }
 
 -- | original name - ConvertProjectCardNoteToIssueInput
 type ConvertProjectCardNoteToIssueInput = { projectCardId :: Id
@@ -372,19 +264,31 @@ type ConvertProjectCardNoteToIssueInput = { projectCardId :: Id
 -- | original name - CreateBranchProtectionRuleInput
 type CreateBranchProtectionRuleInput = { repositoryId :: Id
                                        , pattern :: String
-                                       , requiresApprovingReviews :: Optional Boolean
-                                       , requiredApprovingReviewCount :: Optional Int
-                                       , requiresCommitSignatures :: Optional Boolean
+                                       , requiresApprovingReviews :: Optional
+                                                                     Boolean
+                                       , requiredApprovingReviewCount :: Optional
+                                                                         Int
+                                       , requiresCommitSignatures :: Optional
+                                                                     Boolean
                                        , isAdminEnforced :: Optional Boolean
-                                       , requiresStatusChecks :: Optional Boolean
-                                       , requiresStrictStatusChecks :: Optional Boolean
-                                       , requiresCodeOwnerReviews :: Optional Boolean
-                                       , dismissesStaleReviews :: Optional Boolean
-                                       , restrictsReviewDismissals :: Optional Boolean
-                                       , reviewDismissalActorIds :: Optional (Array Id)
+                                       , requiresStatusChecks :: Optional
+                                                                 Boolean
+                                       , requiresStrictStatusChecks :: Optional
+                                                                       Boolean
+                                       , requiresCodeOwnerReviews :: Optional
+                                                                     Boolean
+                                       , dismissesStaleReviews :: Optional
+                                                                  Boolean
+                                       , restrictsReviewDismissals :: Optional
+                                                                      Boolean
+                                       , reviewDismissalActorIds :: Optional
+                                                                    (Array
+                                                                     Id)
                                        , restrictsPushes :: Optional Boolean
                                        , pushActorIds :: Optional (Array Id)
-                                       , requiredStatusCheckContexts :: Optional (Array String)
+                                       , requiredStatusCheckContexts :: Optional
+                                                                        (Array
+                                                                         String)
                                        , clientMutationId :: Optional String
                                        }
 
@@ -483,9 +387,7 @@ type DeleteBranchProtectionRuleInput = { branchProtectionRuleId :: Id
                                        }
 
 -- | original name - DeleteDeploymentInput
-type DeleteDeploymentInput = { id :: Id
-                             , clientMutationId :: Optional String
-                             }
+type DeleteDeploymentInput = { id :: Id, clientMutationId :: Optional String }
 
 -- | original name - DeleteIpAllowListEntryInput
 type DeleteIpAllowListEntryInput = { ipAllowListEntryId :: Id
@@ -493,14 +395,10 @@ type DeleteIpAllowListEntryInput = { ipAllowListEntryId :: Id
                                    }
 
 -- | original name - DeleteIssueCommentInput
-type DeleteIssueCommentInput = { id :: Id
-                               , clientMutationId :: Optional String
-                               }
+type DeleteIssueCommentInput = { id :: Id, clientMutationId :: Optional String }
 
 -- | original name - DeleteIssueInput
-type DeleteIssueInput = { issueId :: Id
-                        , clientMutationId :: Optional String
-                        }
+type DeleteIssueInput = { issueId :: Id, clientMutationId :: Optional String }
 
 -- | original name - DeleteProjectCardInput
 type DeleteProjectCardInput = { cardId :: Id
@@ -528,9 +426,7 @@ type DeletePullRequestReviewInput = { pullRequestReviewId :: Id
                                     }
 
 -- | original name - DeleteRefInput
-type DeleteRefInput = { refId :: Id
-                      , clientMutationId :: Optional String
-                      }
+type DeleteRefInput = { refId :: Id, clientMutationId :: Optional String }
 
 -- | original name - DeleteTeamDiscussionCommentInput
 type DeleteTeamDiscussionCommentInput = { id :: Id
@@ -599,14 +495,10 @@ type EnterpriseServerUserAccountsUploadOrder = { field :: EnterpriseServerUserAc
                                                }
 
 -- | original name - FollowUserInput
-type FollowUserInput = { userId :: Id
-                       , clientMutationId :: Optional String
-                       }
+type FollowUserInput = { userId :: Id, clientMutationId :: Optional String }
 
 -- | original name - GistOrder
-type GistOrder = { field :: GistOrderField
-                 , direction :: OrderDirection
-                 }
+type GistOrder = { field :: GistOrderField, direction :: OrderDirection }
 
 -- | original name - InviteEnterpriseAdminInput
 type InviteEnterpriseAdminInput = { enterpriseId :: Id
@@ -622,7 +514,8 @@ type IpAllowListEntryOrder = { field :: IpAllowListEntryOrderField
                              }
 
 -- | original name - IssueFilters
-type IssueFilters = { assignee :: Optional String
+type IssueFilters = { assignee :: Optional
+                                  String
                     , createdBy :: Optional String
                     , labels :: Optional (Array String)
                     , mentioned :: Optional String
@@ -633,14 +526,10 @@ type IssueFilters = { assignee :: Optional String
                     }
 
 -- | original name - IssueOrder
-type IssueOrder = { field :: IssueOrderField
-                  , direction :: OrderDirection
-                  }
+type IssueOrder = { field :: IssueOrderField, direction :: OrderDirection }
 
 -- | original name - LabelOrder
-type LabelOrder = { field :: LabelOrderField
-                  , direction :: OrderDirection
-                  }
+type LabelOrder = { field :: LabelOrderField, direction :: OrderDirection }
 
 -- | original name - LanguageOrder
 type LanguageOrder = { field :: LanguageOrderField
@@ -713,24 +602,25 @@ type OrganizationOrder = { field :: OrganizationOrderField
                          }
 
 -- | original name - PackageFileOrder
-type PackageFileOrder = { field :: Optional PackageFileOrderField
+type PackageFileOrder = { field :: Optional
+                                   PackageFileOrderField
                         , direction :: Optional OrderDirection
                         }
 
 -- | original name - PackageOrder
-type PackageOrder = { field :: Optional PackageOrderField
+type PackageOrder = { field :: Optional
+                               PackageOrderField
                     , direction :: Optional OrderDirection
                     }
 
 -- | original name - PackageVersionOrder
-type PackageVersionOrder = { field :: Optional PackageVersionOrderField
+type PackageVersionOrder = { field :: Optional
+                                      PackageVersionOrderField
                            , direction :: Optional OrderDirection
                            }
 
 -- | original name - ProjectOrder
-type ProjectOrder = { field :: ProjectOrderField
-                    , direction :: OrderDirection
-                    }
+type ProjectOrder = { field :: ProjectOrderField, direction :: OrderDirection }
 
 -- | original name - PullRequestOrder
 type PullRequestOrder = { field :: PullRequestOrderField
@@ -743,19 +633,16 @@ type ReactionOrder = { field :: ReactionOrderField
                      }
 
 -- | original name - RefOrder
-type RefOrder = { field :: RefOrderField
-                , direction :: OrderDirection
-                }
+type RefOrder = { field :: RefOrderField, direction :: OrderDirection }
 
 -- | original name - RegenerateEnterpriseIdentityProviderRecoveryCodesInput
 type RegenerateEnterpriseIdentityProviderRecoveryCodesInput = { enterpriseId :: Id
-                                                              , clientMutationId :: Optional String
+                                                              , clientMutationId :: Optional
+                                                                                    String
                                                               }
 
 -- | original name - ReleaseOrder
-type ReleaseOrder = { field :: ReleaseOrderField
-                    , direction :: OrderDirection
-                    }
+type ReleaseOrder = { field :: ReleaseOrderField, direction :: OrderDirection }
 
 -- | original name - RemoveAssigneesFromAssignableInput
 type RemoveAssigneesFromAssignableInput = { assignableId :: Id
@@ -771,7 +658,8 @@ type RemoveEnterpriseAdminInput = { enterpriseId :: Id
 
 -- | original name - RemoveEnterpriseIdentityProviderInput
 type RemoveEnterpriseIdentityProviderInput = { enterpriseId :: Id
-                                             , clientMutationId :: Optional String
+                                             , clientMutationId :: Optional
+                                                                   String
                                              }
 
 -- | original name - RemoveEnterpriseOrganizationInput
@@ -804,9 +692,7 @@ type RemoveStarInput = { starrableId :: Id
                        }
 
 -- | original name - ReopenIssueInput
-type ReopenIssueInput = { issueId :: Id
-                        , clientMutationId :: Optional String
-                        }
+type ReopenIssueInput = { issueId :: Id, clientMutationId :: Optional String }
 
 -- | original name - ReopenPullRequestInput
 type ReopenPullRequestInput = { pullRequestId :: Id
@@ -877,12 +763,11 @@ type SponsorshipOrder = { field :: SponsorshipOrderField
                         }
 
 -- | original name - StarOrder
-type StarOrder = { field :: StarOrderField
-                 , direction :: OrderDirection
-                 }
+type StarOrder = { field :: StarOrderField, direction :: OrderDirection }
 
 -- | original name - SubmitPullRequestReviewInput
-type SubmitPullRequestReviewInput = { pullRequestId :: Optional Id
+type SubmitPullRequestReviewInput = { pullRequestId :: Optional
+                                                       Id
                                     , pullRequestReviewId :: Optional Id
                                     , event :: PullRequestReviewEvent
                                     , body :: Optional String
@@ -905,9 +790,7 @@ type TeamMemberOrder = { field :: TeamMemberOrderField
                        }
 
 -- | original name - TeamOrder
-type TeamOrder = { field :: TeamOrderField
-                 , direction :: OrderDirection
-                 }
+type TeamOrder = { field :: TeamOrderField, direction :: OrderDirection }
 
 -- | original name - TeamRepositoryOrder
 type TeamRepositoryOrder = { field :: TeamRepositoryOrderField
@@ -926,9 +809,7 @@ type UnarchiveRepositoryInput = { repositoryId :: Id
                                 }
 
 -- | original name - UnfollowUserInput
-type UnfollowUserInput = { userId :: Id
-                         , clientMutationId :: Optional String
-                         }
+type UnfollowUserInput = { userId :: Id, clientMutationId :: Optional String }
 
 -- | original name - UnlinkRepositoryFromProjectInput
 type UnlinkRepositoryFromProjectInput = { projectId :: Id
@@ -960,103 +841,133 @@ type UnresolveReviewThreadInput = { threadId :: Id
 -- | original name - UpdateBranchProtectionRuleInput
 type UpdateBranchProtectionRuleInput = { branchProtectionRuleId :: Id
                                        , pattern :: Optional String
-                                       , requiresApprovingReviews :: Optional Boolean
-                                       , requiredApprovingReviewCount :: Optional Int
-                                       , requiresCommitSignatures :: Optional Boolean
+                                       , requiresApprovingReviews :: Optional
+                                                                     Boolean
+                                       , requiredApprovingReviewCount :: Optional
+                                                                         Int
+                                       , requiresCommitSignatures :: Optional
+                                                                     Boolean
                                        , isAdminEnforced :: Optional Boolean
-                                       , requiresStatusChecks :: Optional Boolean
-                                       , requiresStrictStatusChecks :: Optional Boolean
-                                       , requiresCodeOwnerReviews :: Optional Boolean
-                                       , dismissesStaleReviews :: Optional Boolean
-                                       , restrictsReviewDismissals :: Optional Boolean
-                                       , reviewDismissalActorIds :: Optional (Array Id)
+                                       , requiresStatusChecks :: Optional
+                                                                 Boolean
+                                       , requiresStrictStatusChecks :: Optional
+                                                                       Boolean
+                                       , requiresCodeOwnerReviews :: Optional
+                                                                     Boolean
+                                       , dismissesStaleReviews :: Optional
+                                                                  Boolean
+                                       , restrictsReviewDismissals :: Optional
+                                                                      Boolean
+                                       , reviewDismissalActorIds :: Optional
+                                                                    (Array
+                                                                     Id)
                                        , restrictsPushes :: Optional Boolean
                                        , pushActorIds :: Optional (Array Id)
-                                       , requiredStatusCheckContexts :: Optional (Array String)
+                                       , requiredStatusCheckContexts :: Optional
+                                                                        (Array
+                                                                         String)
                                        , clientMutationId :: Optional String
                                        }
 
 -- | original name - UpdateEnterpriseActionExecutionCapabilitySettingInput
 type UpdateEnterpriseActionExecutionCapabilitySettingInput = { enterpriseId :: Id
                                                              , capability :: ActionExecutionCapabilitySetting
-                                                             , clientMutationId :: Optional String
+                                                             , clientMutationId :: Optional
+                                                                                   String
                                                              }
 
 -- | original name - UpdateEnterpriseAdministratorRoleInput
 type UpdateEnterpriseAdministratorRoleInput = { enterpriseId :: Id
                                               , login :: String
                                               , role :: EnterpriseAdministratorRole
-                                              , clientMutationId :: Optional String
+                                              , clientMutationId :: Optional
+                                                                    String
                                               }
 
 -- | original name - UpdateEnterpriseAllowPrivateRepositoryForkingSettingInput
 type UpdateEnterpriseAllowPrivateRepositoryForkingSettingInput = { enterpriseId :: Id
                                                                  , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                                 , clientMutationId :: Optional String
+                                                                 , clientMutationId :: Optional
+                                                                                       String
                                                                  }
 
 -- | original name - UpdateEnterpriseDefaultRepositoryPermissionSettingInput
 type UpdateEnterpriseDefaultRepositoryPermissionSettingInput = { enterpriseId :: Id
                                                                , settingValue :: EnterpriseDefaultRepositoryPermissionSettingValue
-                                                               , clientMutationId :: Optional String
+                                                               , clientMutationId :: Optional
+                                                                                     String
                                                                }
 
 -- | original name - UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingInput
 type UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingInput = { enterpriseId :: Id
                                                                         , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                                        , clientMutationId :: Optional String
+                                                                        , clientMutationId :: Optional
+                                                                                              String
                                                                         }
 
 -- | original name - UpdateEnterpriseMembersCanCreateRepositoriesSettingInput
 type UpdateEnterpriseMembersCanCreateRepositoriesSettingInput = { enterpriseId :: Id
-                                                                , settingValue :: Optional EnterpriseMembersCanCreateRepositoriesSettingValue
-                                                                , membersCanCreateRepositoriesPolicyEnabled :: Optional Boolean
-                                                                , membersCanCreatePublicRepositories :: Optional Boolean
-                                                                , membersCanCreatePrivateRepositories :: Optional Boolean
-                                                                , membersCanCreateInternalRepositories :: Optional Boolean
-                                                                , clientMutationId :: Optional String
+                                                                , settingValue :: Optional
+                                                                                  EnterpriseMembersCanCreateRepositoriesSettingValue
+                                                                , membersCanCreateRepositoriesPolicyEnabled :: Optional
+                                                                                                               Boolean
+                                                                , membersCanCreatePublicRepositories :: Optional
+                                                                                                        Boolean
+                                                                , membersCanCreatePrivateRepositories :: Optional
+                                                                                                         Boolean
+                                                                , membersCanCreateInternalRepositories :: Optional
+                                                                                                          Boolean
+                                                                , clientMutationId :: Optional
+                                                                                      String
                                                                 }
 
 -- | original name - UpdateEnterpriseMembersCanDeleteIssuesSettingInput
 type UpdateEnterpriseMembersCanDeleteIssuesSettingInput = { enterpriseId :: Id
                                                           , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                          , clientMutationId :: Optional String
+                                                          , clientMutationId :: Optional
+                                                                                String
                                                           }
 
 -- | original name - UpdateEnterpriseMembersCanDeleteRepositoriesSettingInput
 type UpdateEnterpriseMembersCanDeleteRepositoriesSettingInput = { enterpriseId :: Id
                                                                 , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                                , clientMutationId :: Optional String
+                                                                , clientMutationId :: Optional
+                                                                                      String
                                                                 }
 
 -- | original name - UpdateEnterpriseMembersCanInviteCollaboratorsSettingInput
 type UpdateEnterpriseMembersCanInviteCollaboratorsSettingInput = { enterpriseId :: Id
                                                                  , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                                 , clientMutationId :: Optional String
+                                                                 , clientMutationId :: Optional
+                                                                                       String
                                                                  }
 
 -- | original name - UpdateEnterpriseMembersCanMakePurchasesSettingInput
 type UpdateEnterpriseMembersCanMakePurchasesSettingInput = { enterpriseId :: Id
                                                            , settingValue :: EnterpriseMembersCanMakePurchasesSettingValue
-                                                           , clientMutationId :: Optional String
+                                                           , clientMutationId :: Optional
+                                                                                 String
                                                            }
 
 -- | original name - UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingInput
 type UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingInput = { enterpriseId :: Id
                                                                      , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                                     , clientMutationId :: Optional String
+                                                                     , clientMutationId :: Optional
+                                                                                           String
                                                                      }
 
 -- | original name - UpdateEnterpriseMembersCanViewDependencyInsightsSettingInput
 type UpdateEnterpriseMembersCanViewDependencyInsightsSettingInput = { enterpriseId :: Id
                                                                     , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                                    , clientMutationId :: Optional String
+                                                                    , clientMutationId :: Optional
+                                                                                          String
                                                                     }
 
 -- | original name - UpdateEnterpriseOrganizationProjectsSettingInput
 type UpdateEnterpriseOrganizationProjectsSettingInput = { enterpriseId :: Id
                                                         , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                        , clientMutationId :: Optional String
+                                                        , clientMutationId :: Optional
+                                                                              String
                                                         }
 
 -- | original name - UpdateEnterpriseProfileInput
@@ -1071,25 +982,29 @@ type UpdateEnterpriseProfileInput = { enterpriseId :: Id
 -- | original name - UpdateEnterpriseRepositoryProjectsSettingInput
 type UpdateEnterpriseRepositoryProjectsSettingInput = { enterpriseId :: Id
                                                       , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                      , clientMutationId :: Optional String
+                                                      , clientMutationId :: Optional
+                                                                            String
                                                       }
 
 -- | original name - UpdateEnterpriseTeamDiscussionsSettingInput
 type UpdateEnterpriseTeamDiscussionsSettingInput = { enterpriseId :: Id
                                                    , settingValue :: EnterpriseEnabledDisabledSettingValue
-                                                   , clientMutationId :: Optional String
+                                                   , clientMutationId :: Optional
+                                                                         String
                                                    }
 
 -- | original name - UpdateEnterpriseTwoFactorAuthenticationRequiredSettingInput
 type UpdateEnterpriseTwoFactorAuthenticationRequiredSettingInput = { enterpriseId :: Id
                                                                    , settingValue :: EnterpriseEnabledSettingValue
-                                                                   , clientMutationId :: Optional String
+                                                                   , clientMutationId :: Optional
+                                                                                         String
                                                                    }
 
 -- | original name - UpdateIpAllowListEnabledSettingInput
 type UpdateIpAllowListEnabledSettingInput = { ownerId :: Id
                                             , settingValue :: IpAllowListEnabledSettingValue
-                                            , clientMutationId :: Optional String
+                                            , clientMutationId :: Optional
+                                                                  String
                                             }
 
 -- | original name - UpdateIpAllowListEntryInput

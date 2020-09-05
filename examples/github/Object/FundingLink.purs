@@ -1,19 +1,10 @@
 module Examples.Github.Object.FundingLink where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__FundingLink
-  )
-import Examples.Github.Enum.FundingPlatform
-  ( FundingPlatform
-  )
-import Examples.Github.Scalars
-  ( Uri
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__FundingLink)
+import Examples.Github.Enum.FundingPlatform (FundingPlatform)
+import Examples.Github.Scalars (Uri)
 
 platform :: SelectionSet Scope__FundingLink FundingPlatform
 platform = selectionForField "platform" [] graphqlDefaultResponseScalarDecoder

@@ -1,12 +1,7 @@
 module Examples.Github.Enum.GitSignatureState where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -39,12 +34,35 @@ derive instance eqGitSignatureState :: Eq GitSignatureState
 derive instance ordGitSignatureState :: Ord GitSignatureState
 
 fromToMap :: Array (Tuple String GitSignatureState)
-fromToMap = [Tuple "VALID" Valid, Tuple "INVALID" Invalid, Tuple "MALFORMED_SIG" MalformedSig, Tuple "UNKNOWN_KEY" UnknownKey, Tuple "BAD_EMAIL" BadEmail, Tuple "UNVERIFIED_EMAIL" UnverifiedEmail, Tuple "NO_USER" NoUser, Tuple "UNKNOWN_SIG_TYPE" UnknownSigType, Tuple "UNSIGNED" Unsigned, Tuple "GPGVERIFY_UNAVAILABLE" GpgverifyUnavailable, Tuple "GPGVERIFY_ERROR" GpgverifyError, Tuple "NOT_SIGNING_KEY" NotSigningKey, Tuple "EXPIRED_KEY" ExpiredKey, Tuple "OCSP_PENDING" OcspPending, Tuple "OCSP_ERROR" OcspError, Tuple "BAD_CERT" BadCert, Tuple "OCSP_REVOKED" OcspRevoked]
+fromToMap = [ Tuple
+              "VALID"
+              Valid
+            , Tuple "INVALID" Invalid
+            , Tuple "MALFORMED_SIG" MalformedSig
+            , Tuple "UNKNOWN_KEY" UnknownKey
+            , Tuple "BAD_EMAIL" BadEmail
+            , Tuple "UNVERIFIED_EMAIL" UnverifiedEmail
+            , Tuple "NO_USER" NoUser
+            , Tuple "UNKNOWN_SIG_TYPE" UnknownSigType
+            , Tuple "UNSIGNED" Unsigned
+            , Tuple "GPGVERIFY_UNAVAILABLE" GpgverifyUnavailable
+            , Tuple "GPGVERIFY_ERROR" GpgverifyError
+            , Tuple "NOT_SIGNING_KEY" NotSigningKey
+            , Tuple "EXPIRED_KEY" ExpiredKey
+            , Tuple "OCSP_PENDING" OcspPending
+            , Tuple "OCSP_ERROR" OcspError
+            , Tuple "BAD_CERT" BadCert
+            , Tuple "OCSP_REVOKED" OcspRevoked
+            ]
 
-instance gitSignatureStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder GitSignatureState where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "GitSignatureState" fromToMap
+instance gitSignatureStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                 GitSignatureState where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "GitSignatureState"
+                                        fromToMap
 
-instance gitSignatureStateToGraphqlArgumentValue :: ToGraphqlArgumentValue GitSignatureState where
+instance gitSignatureStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                    GitSignatureState where
   toGraphqlArgumentValue =
     case _ of
       Valid -> ArgumentValueEnum "VALID"

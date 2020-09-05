@@ -10,17 +10,17 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__ProfileItemShowcase
-  , Scope__PinnableItemConnection
-  )
-import Type.Row
-  ( type (+)
-  )
+  (Scope__ProfileItemShowcase, Scope__PinnableItemConnection)
+import Type.Row (type (+))
 
 hasPinnedItems :: SelectionSet Scope__ProfileItemShowcase Boolean
-hasPinnedItems = selectionForField "hasPinnedItems" [] graphqlDefaultResponseScalarDecoder
+hasPinnedItems = selectionForField
+                 "hasPinnedItems"
+                 []
+                 graphqlDefaultResponseScalarDecoder
 
-type ItemsInputRowOptional r = ( after :: Optional String
+type ItemsInputRowOptional r = ( after :: Optional
+                                          String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int
@@ -29,5 +29,13 @@ type ItemsInputRowOptional r = ( after :: Optional String
 
 type ItemsInput = { | ItemsInputRowOptional + () }
 
-items :: forall r . ItemsInput -> SelectionSet Scope__PinnableItemConnection r -> SelectionSet Scope__ProfileItemShowcase r
-items input = selectionForCompositeField "items" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+items :: forall r . ItemsInput -> SelectionSet
+                                  Scope__PinnableItemConnection
+                                  r -> SelectionSet
+                                       Scope__ProfileItemShowcase
+                                       r
+items input = selectionForCompositeField
+              "items"
+              (toGraphqlArguments
+               input)
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer

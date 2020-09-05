@@ -1,12 +1,7 @@
 module Examples.Github.Enum.DeploymentOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,20 +10,23 @@ import GraphqlClient
   )
 
 -- | original name - DeploymentOrderField
-data DeploymentOrderField
-  = CreatedAt
+data DeploymentOrderField = CreatedAt
 
 derive instance eqDeploymentOrderField :: Eq DeploymentOrderField
 
 derive instance ordDeploymentOrderField :: Ord DeploymentOrderField
 
 fromToMap :: Array (Tuple String DeploymentOrderField)
-fromToMap = [Tuple "CREATED_AT" CreatedAt]
+fromToMap = [ Tuple "CREATED_AT" CreatedAt ]
 
-instance deploymentOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder DeploymentOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "DeploymentOrderField" fromToMap
+instance deploymentOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                    DeploymentOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "DeploymentOrderField"
+                                        fromToMap
 
-instance deploymentOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue DeploymentOrderField where
+instance deploymentOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                       DeploymentOrderField where
   toGraphqlArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

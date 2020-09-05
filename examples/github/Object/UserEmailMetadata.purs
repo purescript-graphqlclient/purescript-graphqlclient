@@ -1,16 +1,9 @@
 module Examples.Github.Object.UserEmailMetadata where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__UserEmailMetadata
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__UserEmailMetadata)
+import Data.Maybe (Maybe)
 
 primary :: SelectionSet Scope__UserEmailMetadata (Maybe Boolean)
 primary = selectionForField "primary" [] graphqlDefaultResponseScalarDecoder

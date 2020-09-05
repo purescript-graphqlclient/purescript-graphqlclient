@@ -1,12 +1,7 @@
 module Examples.Github.Enum.SecurityAdvisoryIdentifierType where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,21 +10,23 @@ import GraphqlClient
   )
 
 -- | original name - SecurityAdvisoryIdentifierType
-data SecurityAdvisoryIdentifierType
-  = Cve
-  | Ghsa
+data SecurityAdvisoryIdentifierType = Cve | Ghsa
 
 derive instance eqSecurityAdvisoryIdentifierType :: Eq SecurityAdvisoryIdentifierType
 
 derive instance ordSecurityAdvisoryIdentifierType :: Ord SecurityAdvisoryIdentifierType
 
 fromToMap :: Array (Tuple String SecurityAdvisoryIdentifierType)
-fromToMap = [Tuple "CVE" Cve, Tuple "GHSA" Ghsa]
+fromToMap = [ Tuple "CVE" Cve, Tuple "GHSA" Ghsa ]
 
-instance securityAdvisoryIdentifierTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder SecurityAdvisoryIdentifierType where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "SecurityAdvisoryIdentifierType" fromToMap
+instance securityAdvisoryIdentifierTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                              SecurityAdvisoryIdentifierType where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "SecurityAdvisoryIdentifierType"
+                                        fromToMap
 
-instance securityAdvisoryIdentifierTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue SecurityAdvisoryIdentifierType where
+instance securityAdvisoryIdentifierTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                 SecurityAdvisoryIdentifierType where
   toGraphqlArgumentValue =
     case _ of
       Cve -> ArgumentValueEnum "CVE"

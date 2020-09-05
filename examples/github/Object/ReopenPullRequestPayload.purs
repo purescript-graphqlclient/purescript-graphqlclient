@@ -8,15 +8,22 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__ReopenPullRequestPayload
-  , Scope__PullRequest
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (Scope__ReopenPullRequestPayload, Scope__PullRequest)
+import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__ReopenPullRequestPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-pullRequest :: forall r . SelectionSet Scope__PullRequest r -> SelectionSet Scope__ReopenPullRequestPayload (Maybe r)
-pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+pullRequest :: forall r . SelectionSet
+                          Scope__PullRequest
+                          r -> SelectionSet
+                               Scope__ReopenPullRequestPayload
+                               (Maybe
+                                r)
+pullRequest = selectionForCompositeField
+              "pullRequest"
+              []
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -7,19 +7,28 @@ import GraphqlClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  ( Scope__CloneProjectPayload
-  , Scope__Project
-  )
-import Data.Maybe
-  ( Maybe
-  )
+import Examples.Github.Scopes (Scope__CloneProjectPayload, Scope__Project)
+import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__CloneProjectPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
 jobStatusId :: SelectionSet Scope__CloneProjectPayload (Maybe String)
-jobStatusId = selectionForField "jobStatusId" [] graphqlDefaultResponseScalarDecoder
+jobStatusId = selectionForField
+              "jobStatusId"
+              []
+              graphqlDefaultResponseScalarDecoder
 
-project :: forall r . SelectionSet Scope__Project r -> SelectionSet Scope__CloneProjectPayload (Maybe r)
-project = selectionForCompositeField "project" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+project :: forall r . SelectionSet
+                      Scope__Project
+                      r -> SelectionSet
+                           Scope__CloneProjectPayload
+                           (Maybe
+                            r)
+project = selectionForCompositeField
+          "project"
+          []
+          graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -13,18 +13,48 @@ import Examples.Github.Scopes
   , Scope__CreatedPullRequestReviewContribution
   , Scope__PageInfo
   )
-import Data.Maybe
-  ( Maybe
-  )
+import Data.Maybe (Maybe)
 
-edges :: forall r . SelectionSet Scope__CreatedPullRequestReviewContributionEdge r -> SelectionSet Scope__CreatedPullRequestReviewContributionConnection (Maybe (Array (Maybe r)))
-edges = selectionForCompositeField "edges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+edges :: forall r . SelectionSet
+                    Scope__CreatedPullRequestReviewContributionEdge
+                    r -> SelectionSet
+                         Scope__CreatedPullRequestReviewContributionConnection
+                         (Maybe
+                          (Array
+                           (Maybe
+                            r)))
+edges = selectionForCompositeField
+        "edges"
+        []
+        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-nodes :: forall r . SelectionSet Scope__CreatedPullRequestReviewContribution r -> SelectionSet Scope__CreatedPullRequestReviewContributionConnection (Maybe (Array (Maybe r)))
-nodes = selectionForCompositeField "nodes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+nodes :: forall r . SelectionSet
+                    Scope__CreatedPullRequestReviewContribution
+                    r -> SelectionSet
+                         Scope__CreatedPullRequestReviewContributionConnection
+                         (Maybe
+                          (Array
+                           (Maybe
+                            r)))
+nodes = selectionForCompositeField
+        "nodes"
+        []
+        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-pageInfo :: forall r . SelectionSet Scope__PageInfo r -> SelectionSet Scope__CreatedPullRequestReviewContributionConnection r
-pageInfo = selectionForCompositeField "pageInfo" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+pageInfo :: forall r . SelectionSet
+                       Scope__PageInfo
+                       r -> SelectionSet
+                            Scope__CreatedPullRequestReviewContributionConnection
+                            r
+pageInfo = selectionForCompositeField
+           "pageInfo"
+           []
+           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-totalCount :: SelectionSet Scope__CreatedPullRequestReviewContributionConnection Int
-totalCount = selectionForField "totalCount" [] graphqlDefaultResponseScalarDecoder
+totalCount :: SelectionSet
+              Scope__CreatedPullRequestReviewContributionConnection
+              Int
+totalCount = selectionForField
+             "totalCount"
+             []
+             graphqlDefaultResponseScalarDecoder

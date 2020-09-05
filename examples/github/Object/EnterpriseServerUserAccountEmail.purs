@@ -8,13 +8,8 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__EnterpriseServerUserAccountEmail
-  , Scope__EnterpriseServerUserAccount
-  )
-import Examples.Github.Scalars
-  ( DateTime
-  , Id
-  )
+  (Scope__EnterpriseServerUserAccountEmail, Scope__EnterpriseServerUserAccount)
+import Examples.Github.Scalars (DateTime, Id)
 
 createdAt :: SelectionSet Scope__EnterpriseServerUserAccountEmail DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
@@ -31,5 +26,12 @@ isPrimary = selectionForField "isPrimary" [] graphqlDefaultResponseScalarDecoder
 updatedAt :: SelectionSet Scope__EnterpriseServerUserAccountEmail DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
-userAccount :: forall r . SelectionSet Scope__EnterpriseServerUserAccount r -> SelectionSet Scope__EnterpriseServerUserAccountEmail r
-userAccount = selectionForCompositeField "userAccount" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+userAccount :: forall r . SelectionSet
+                          Scope__EnterpriseServerUserAccount
+                          r -> SelectionSet
+                               Scope__EnterpriseServerUserAccountEmail
+                               r
+userAccount = selectionForCompositeField
+              "userAccount"
+              []
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer

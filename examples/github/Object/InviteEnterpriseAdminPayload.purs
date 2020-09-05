@@ -11,12 +11,24 @@ import Examples.Github.Scopes
   ( Scope__InviteEnterpriseAdminPayload
   , Scope__EnterpriseAdministratorInvitation
   )
-import Data.Maybe
-  ( Maybe
-  )
+import Data.Maybe (Maybe)
 
-clientMutationId :: SelectionSet Scope__InviteEnterpriseAdminPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId :: SelectionSet
+                    Scope__InviteEnterpriseAdminPayload
+                    (Maybe
+                     String)
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-invitation :: forall r . SelectionSet Scope__EnterpriseAdministratorInvitation r -> SelectionSet Scope__InviteEnterpriseAdminPayload (Maybe r)
-invitation = selectionForCompositeField "invitation" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+invitation :: forall r . SelectionSet
+                         Scope__EnterpriseAdministratorInvitation
+                         r -> SelectionSet
+                              Scope__InviteEnterpriseAdminPayload
+                              (Maybe
+                               r)
+invitation = selectionForCompositeField
+             "invitation"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer

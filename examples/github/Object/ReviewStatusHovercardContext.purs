@@ -1,19 +1,11 @@
 module Examples.Github.Object.ReviewStatusHovercardContext where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__ReviewStatusHovercardContext
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__ReviewStatusHovercardContext)
+import Data.Maybe (Maybe)
 import Examples.Github.Enum.PullRequestReviewDecision
-  ( PullRequestReviewDecision
-  )
+  (PullRequestReviewDecision)
 
 message :: SelectionSet Scope__ReviewStatusHovercardContext String
 message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder
@@ -21,5 +13,11 @@ message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder
 octicon :: SelectionSet Scope__ReviewStatusHovercardContext String
 octicon = selectionForField "octicon" [] graphqlDefaultResponseScalarDecoder
 
-reviewDecision :: SelectionSet Scope__ReviewStatusHovercardContext (Maybe PullRequestReviewDecision)
-reviewDecision = selectionForField "reviewDecision" [] graphqlDefaultResponseScalarDecoder
+reviewDecision :: SelectionSet
+                  Scope__ReviewStatusHovercardContext
+                  (Maybe
+                   PullRequestReviewDecision)
+reviewDecision = selectionForField
+                 "reviewDecision"
+                 []
+                 graphqlDefaultResponseScalarDecoder

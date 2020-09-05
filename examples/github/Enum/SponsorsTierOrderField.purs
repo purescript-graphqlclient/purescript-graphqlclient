@@ -1,12 +1,7 @@
 module Examples.Github.Enum.SponsorsTierOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,21 +10,27 @@ import GraphqlClient
   )
 
 -- | original name - SponsorsTierOrderField
-data SponsorsTierOrderField
-  = CreatedAt
-  | MonthlyPriceInCents
+data SponsorsTierOrderField = CreatedAt | MonthlyPriceInCents
 
 derive instance eqSponsorsTierOrderField :: Eq SponsorsTierOrderField
 
 derive instance ordSponsorsTierOrderField :: Ord SponsorsTierOrderField
 
 fromToMap :: Array (Tuple String SponsorsTierOrderField)
-fromToMap = [Tuple "CREATED_AT" CreatedAt, Tuple "MONTHLY_PRICE_IN_CENTS" MonthlyPriceInCents]
+fromToMap = [ Tuple
+              "CREATED_AT"
+              CreatedAt
+            , Tuple "MONTHLY_PRICE_IN_CENTS" MonthlyPriceInCents
+            ]
 
-instance sponsorsTierOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder SponsorsTierOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "SponsorsTierOrderField" fromToMap
+instance sponsorsTierOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                      SponsorsTierOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "SponsorsTierOrderField"
+                                        fromToMap
 
-instance sponsorsTierOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue SponsorsTierOrderField where
+instance sponsorsTierOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                         SponsorsTierOrderField where
   toGraphqlArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

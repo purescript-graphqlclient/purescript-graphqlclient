@@ -1,12 +1,7 @@
 module Examples.Github.Enum.ProjectOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,22 +10,28 @@ import GraphqlClient
   )
 
 -- | original name - ProjectOrderField
-data ProjectOrderField
-  = CreatedAt
-  | UpdatedAt
-  | Name
+data ProjectOrderField = CreatedAt | UpdatedAt | Name
 
 derive instance eqProjectOrderField :: Eq ProjectOrderField
 
 derive instance ordProjectOrderField :: Ord ProjectOrderField
 
 fromToMap :: Array (Tuple String ProjectOrderField)
-fromToMap = [Tuple "CREATED_AT" CreatedAt, Tuple "UPDATED_AT" UpdatedAt, Tuple "NAME" Name]
+fromToMap = [ Tuple
+              "CREATED_AT"
+              CreatedAt
+            , Tuple "UPDATED_AT" UpdatedAt
+            , Tuple "NAME" Name
+            ]
 
-instance projectOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder ProjectOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "ProjectOrderField" fromToMap
+instance projectOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                 ProjectOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "ProjectOrderField"
+                                        fromToMap
 
-instance projectOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue ProjectOrderField where
+instance projectOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                    ProjectOrderField where
   toGraphqlArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

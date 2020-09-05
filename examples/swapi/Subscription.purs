@@ -6,9 +6,14 @@ import GraphqlClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Swapi.Scopes
-  ( Scope__ChatMessage
-  )
+import Examples.Swapi.Scopes (Scope__ChatMessage)
 
-newMessage :: forall r . SelectionSet Scope__ChatMessage r -> SelectionSet Scope__RootSubscription r
-newMessage = selectionForCompositeField "newMessage" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+newMessage :: forall r . SelectionSet
+                         Scope__ChatMessage
+                         r -> SelectionSet
+                              Scope__RootSubscription
+                              r
+newMessage = selectionForCompositeField
+             "newMessage"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -1,5 +1,5 @@
 {
-  "name": "purescript-GraphqlClient",
+  "name": "purescript-graphql-client",
   "version": "1.0.0",
   "description": "Graphql client library",
   "main": "index.js",
@@ -24,12 +24,12 @@
     "purescript",
     "client"
   ],
-  "author": "Liam Dyer <liamd94@gmail.com>, Serhii Khoma <srghma@gmail.com>",
+  "author": "Serhii Khoma <srghma@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dyerw/purescript-GraphqlClient/issues"
+    "url": "https://github.com/purescript-graphql-client/purescript-graphql-client/issues"
   },
-  "homepage": "https://github.com/dyerw/purescript-GraphqlClient#readme",
+  "homepage": "https://github.com/purescript-graphql-client/purescript-graphql-client#readme",
   "bin": {
     "purescript-graphql-client-generator": "bin/purescript-graphql-client-generator"
   },

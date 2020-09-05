@@ -7,19 +7,29 @@ import GraphqlClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  ( Scope__BlameRange
-  , Scope__Commit
-  )
+import Examples.Github.Scopes (Scope__BlameRange, Scope__Commit)
 
 age :: SelectionSet Scope__BlameRange Int
 age = selectionForField "age" [] graphqlDefaultResponseScalarDecoder
 
-commit :: forall r . SelectionSet Scope__Commit r -> SelectionSet Scope__BlameRange r
-commit = selectionForCompositeField "commit" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+commit :: forall r . SelectionSet
+                     Scope__Commit
+                     r -> SelectionSet
+                          Scope__BlameRange
+                          r
+commit = selectionForCompositeField
+         "commit"
+         []
+         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 endingLine :: SelectionSet Scope__BlameRange Int
-endingLine = selectionForField "endingLine" [] graphqlDefaultResponseScalarDecoder
+endingLine = selectionForField
+             "endingLine"
+             []
+             graphqlDefaultResponseScalarDecoder
 
 startingLine :: SelectionSet Scope__BlameRange Int
-startingLine = selectionForField "startingLine" [] graphqlDefaultResponseScalarDecoder
+startingLine = selectionForField
+               "startingLine"
+               []
+               graphqlDefaultResponseScalarDecoder

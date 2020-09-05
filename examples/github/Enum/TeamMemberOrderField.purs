@@ -1,12 +1,7 @@
 module Examples.Github.Enum.TeamMemberOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,21 +10,23 @@ import GraphqlClient
   )
 
 -- | original name - TeamMemberOrderField
-data TeamMemberOrderField
-  = Login
-  | CreatedAt
+data TeamMemberOrderField = Login | CreatedAt
 
 derive instance eqTeamMemberOrderField :: Eq TeamMemberOrderField
 
 derive instance ordTeamMemberOrderField :: Ord TeamMemberOrderField
 
 fromToMap :: Array (Tuple String TeamMemberOrderField)
-fromToMap = [Tuple "LOGIN" Login, Tuple "CREATED_AT" CreatedAt]
+fromToMap = [ Tuple "LOGIN" Login, Tuple "CREATED_AT" CreatedAt ]
 
-instance teamMemberOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder TeamMemberOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "TeamMemberOrderField" fromToMap
+instance teamMemberOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                    TeamMemberOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "TeamMemberOrderField"
+                                        fromToMap
 
-instance teamMemberOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamMemberOrderField where
+instance teamMemberOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                       TeamMemberOrderField where
   toGraphqlArgumentValue =
     case _ of
       Login -> ArgumentValueEnum "LOGIN"

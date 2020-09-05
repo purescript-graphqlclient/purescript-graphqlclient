@@ -8,15 +8,25 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__UnmarkIssueAsDuplicatePayload
-  , Scope__IssueOrPullRequest
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (Scope__UnmarkIssueAsDuplicatePayload, Scope__IssueOrPullRequest)
+import Data.Maybe (Maybe)
 
-clientMutationId :: SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId :: SelectionSet
+                    Scope__UnmarkIssueAsDuplicatePayload
+                    (Maybe
+                     String)
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-duplicate :: forall r . SelectionSet Scope__IssueOrPullRequest r -> SelectionSet Scope__UnmarkIssueAsDuplicatePayload (Maybe r)
-duplicate = selectionForCompositeField "duplicate" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+duplicate :: forall r . SelectionSet
+                        Scope__IssueOrPullRequest
+                        r -> SelectionSet
+                             Scope__UnmarkIssueAsDuplicatePayload
+                             (Maybe
+                              r)
+duplicate = selectionForCompositeField
+            "duplicate"
+            []
+            graphqlDefaultResponseFunctorOrScalarDecoderTransformer

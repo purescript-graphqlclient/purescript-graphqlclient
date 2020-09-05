@@ -1,19 +1,10 @@
 module Examples.Github.Object.Language where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__Language
-  )
-import Data.Maybe
-  ( Maybe
-  )
-import Examples.Github.Scalars
-  ( Id
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__Language)
+import Data.Maybe (Maybe)
+import Examples.Github.Scalars (Id)
 
 color :: SelectionSet Scope__Language (Maybe String)
 color = selectionForField "color" [] graphqlDefaultResponseScalarDecoder

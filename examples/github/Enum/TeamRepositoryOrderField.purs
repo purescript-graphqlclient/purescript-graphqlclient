@@ -1,12 +1,7 @@
 module Examples.Github.Enum.TeamRepositoryOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -16,24 +11,31 @@ import GraphqlClient
 
 -- | original name - TeamRepositoryOrderField
 data TeamRepositoryOrderField
-  = CreatedAt
-  | UpdatedAt
-  | PushedAt
-  | Name
-  | Permission
-  | Stargazers
+  = CreatedAt | UpdatedAt | PushedAt | Name | Permission | Stargazers
 
 derive instance eqTeamRepositoryOrderField :: Eq TeamRepositoryOrderField
 
 derive instance ordTeamRepositoryOrderField :: Ord TeamRepositoryOrderField
 
 fromToMap :: Array (Tuple String TeamRepositoryOrderField)
-fromToMap = [Tuple "CREATED_AT" CreatedAt, Tuple "UPDATED_AT" UpdatedAt, Tuple "PUSHED_AT" PushedAt, Tuple "NAME" Name, Tuple "PERMISSION" Permission, Tuple "STARGAZERS" Stargazers]
+fromToMap = [ Tuple
+              "CREATED_AT"
+              CreatedAt
+            , Tuple "UPDATED_AT" UpdatedAt
+            , Tuple "PUSHED_AT" PushedAt
+            , Tuple "NAME" Name
+            , Tuple "PERMISSION" Permission
+            , Tuple "STARGAZERS" Stargazers
+            ]
 
-instance teamRepositoryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder TeamRepositoryOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "TeamRepositoryOrderField" fromToMap
+instance teamRepositoryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                        TeamRepositoryOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "TeamRepositoryOrderField"
+                                        fromToMap
 
-instance teamRepositoryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamRepositoryOrderField where
+instance teamRepositoryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                           TeamRepositoryOrderField where
   toGraphqlArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

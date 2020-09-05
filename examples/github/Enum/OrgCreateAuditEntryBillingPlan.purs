@@ -1,12 +1,7 @@
 module Examples.Github.Enum.OrgCreateAuditEntryBillingPlan where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -16,23 +11,30 @@ import GraphqlClient
 
 -- | original name - OrgCreateAuditEntryBillingPlan
 data OrgCreateAuditEntryBillingPlan
-  = Free
-  | Business
-  | BusinessPlus
-  | Unlimited
-  | TieredPerSeat
+  = Free | Business | BusinessPlus | Unlimited | TieredPerSeat
 
 derive instance eqOrgCreateAuditEntryBillingPlan :: Eq OrgCreateAuditEntryBillingPlan
 
 derive instance ordOrgCreateAuditEntryBillingPlan :: Ord OrgCreateAuditEntryBillingPlan
 
 fromToMap :: Array (Tuple String OrgCreateAuditEntryBillingPlan)
-fromToMap = [Tuple "FREE" Free, Tuple "BUSINESS" Business, Tuple "BUSINESS_PLUS" BusinessPlus, Tuple "UNLIMITED" Unlimited, Tuple "TIERED_PER_SEAT" TieredPerSeat]
+fromToMap = [ Tuple
+              "FREE"
+              Free
+            , Tuple "BUSINESS" Business
+            , Tuple "BUSINESS_PLUS" BusinessPlus
+            , Tuple "UNLIMITED" Unlimited
+            , Tuple "TIERED_PER_SEAT" TieredPerSeat
+            ]
 
-instance orgCreateAuditEntryBillingPlanGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder OrgCreateAuditEntryBillingPlan where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "OrgCreateAuditEntryBillingPlan" fromToMap
+instance orgCreateAuditEntryBillingPlanGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                              OrgCreateAuditEntryBillingPlan where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "OrgCreateAuditEntryBillingPlan"
+                                        fromToMap
 
-instance orgCreateAuditEntryBillingPlanToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgCreateAuditEntryBillingPlan where
+instance orgCreateAuditEntryBillingPlanToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                 OrgCreateAuditEntryBillingPlan where
   toGraphqlArgumentValue =
     case _ of
       Free -> ArgumentValueEnum "FREE"

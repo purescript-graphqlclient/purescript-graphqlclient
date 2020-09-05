@@ -14,22 +14,18 @@ import Examples.Github.Scopes
   , Scope__ExternalIdentityConnection
   , Scope__Organization
   )
-import Data.Maybe
-  ( Maybe
-  )
-import Examples.Github.Scalars
-  ( Uri
-  , Id
-  , X509Certificate
-  )
-import Type.Row
-  ( type (+)
-  )
+import Data.Maybe (Maybe)
+import Examples.Github.Scalars (Uri, Id, X509Certificate)
+import Type.Row (type (+))
 
 digestMethod :: SelectionSet Scope__OrganizationIdentityProvider (Maybe Uri)
-digestMethod = selectionForField "digestMethod" [] graphqlDefaultResponseScalarDecoder
+digestMethod = selectionForField
+               "digestMethod"
+               []
+               graphqlDefaultResponseScalarDecoder
 
-type ExternalIdentitiesInputRowOptional r = ( after :: Optional String
+type ExternalIdentitiesInputRowOptional r = ( after :: Optional
+                                                       String
                                             , before :: Optional String
                                             , first :: Optional Int
                                             , last :: Optional Int
@@ -38,23 +34,48 @@ type ExternalIdentitiesInputRowOptional r = ( after :: Optional String
 
 type ExternalIdentitiesInput = { | ExternalIdentitiesInputRowOptional + () }
 
-externalIdentities :: forall r . ExternalIdentitiesInput -> SelectionSet Scope__ExternalIdentityConnection r -> SelectionSet Scope__OrganizationIdentityProvider r
-externalIdentities input = selectionForCompositeField "externalIdentities" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+externalIdentities :: forall r . ExternalIdentitiesInput -> SelectionSet
+                                                            Scope__ExternalIdentityConnection
+                                                            r -> SelectionSet
+                                                                 Scope__OrganizationIdentityProvider
+                                                                 r
+externalIdentities input = selectionForCompositeField
+                           "externalIdentities"
+                           (toGraphqlArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 id :: SelectionSet Scope__OrganizationIdentityProvider Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-idpCertificate :: SelectionSet Scope__OrganizationIdentityProvider (Maybe X509Certificate)
-idpCertificate = selectionForField "idpCertificate" [] graphqlDefaultResponseScalarDecoder
+idpCertificate :: SelectionSet
+                  Scope__OrganizationIdentityProvider
+                  (Maybe
+                   X509Certificate)
+idpCertificate = selectionForField
+                 "idpCertificate"
+                 []
+                 graphqlDefaultResponseScalarDecoder
 
 issuer :: SelectionSet Scope__OrganizationIdentityProvider (Maybe String)
 issuer = selectionForField "issuer" [] graphqlDefaultResponseScalarDecoder
 
-organization :: forall r . SelectionSet Scope__Organization r -> SelectionSet Scope__OrganizationIdentityProvider (Maybe r)
-organization = selectionForCompositeField "organization" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+organization :: forall r . SelectionSet
+                           Scope__Organization
+                           r -> SelectionSet
+                                Scope__OrganizationIdentityProvider
+                                (Maybe
+                                 r)
+organization = selectionForCompositeField
+               "organization"
+               []
+               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 signatureMethod :: SelectionSet Scope__OrganizationIdentityProvider (Maybe Uri)
-signatureMethod = selectionForField "signatureMethod" [] graphqlDefaultResponseScalarDecoder
+signatureMethod = selectionForField
+                  "signatureMethod"
+                  []
+                  graphqlDefaultResponseScalarDecoder
 
 ssoUrl :: SelectionSet Scope__OrganizationIdentityProvider (Maybe Uri)
 ssoUrl = selectionForField "ssoUrl" [] graphqlDefaultResponseScalarDecoder

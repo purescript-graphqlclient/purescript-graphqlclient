@@ -1,12 +1,7 @@
 module Examples.Github.Enum.SecurityAdvisoryOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,21 +10,23 @@ import GraphqlClient
   )
 
 -- | original name - SecurityAdvisoryOrderField
-data SecurityAdvisoryOrderField
-  = PublishedAt
-  | UpdatedAt
+data SecurityAdvisoryOrderField = PublishedAt | UpdatedAt
 
 derive instance eqSecurityAdvisoryOrderField :: Eq SecurityAdvisoryOrderField
 
 derive instance ordSecurityAdvisoryOrderField :: Ord SecurityAdvisoryOrderField
 
 fromToMap :: Array (Tuple String SecurityAdvisoryOrderField)
-fromToMap = [Tuple "PUBLISHED_AT" PublishedAt, Tuple "UPDATED_AT" UpdatedAt]
+fromToMap = [ Tuple "PUBLISHED_AT" PublishedAt, Tuple "UPDATED_AT" UpdatedAt ]
 
-instance securityAdvisoryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder SecurityAdvisoryOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "SecurityAdvisoryOrderField" fromToMap
+instance securityAdvisoryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                          SecurityAdvisoryOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "SecurityAdvisoryOrderField"
+                                        fromToMap
 
-instance securityAdvisoryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue SecurityAdvisoryOrderField where
+instance securityAdvisoryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                             SecurityAdvisoryOrderField where
   toGraphqlArgumentValue =
     case _ of
       PublishedAt -> ArgumentValueEnum "PUBLISHED_AT"

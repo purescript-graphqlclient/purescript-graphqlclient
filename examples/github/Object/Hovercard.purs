@@ -5,10 +5,15 @@ import GraphqlClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  ( Scope__HovercardContext
-  , Scope__Hovercard
-  )
+import Examples.Github.Scopes (Scope__HovercardContext, Scope__Hovercard)
 
-contexts :: forall r . SelectionSet Scope__HovercardContext r -> SelectionSet Scope__Hovercard (Array r)
-contexts = selectionForCompositeField "contexts" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+contexts :: forall r . SelectionSet
+                       Scope__HovercardContext
+                       r -> SelectionSet
+                            Scope__Hovercard
+                            (Array
+                             r)
+contexts = selectionForCompositeField
+           "contexts"
+           []
+           graphqlDefaultResponseFunctorOrScalarDecoderTransformer

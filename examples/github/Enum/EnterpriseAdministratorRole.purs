@@ -1,12 +1,7 @@
 module Examples.Github.Enum.EnterpriseAdministratorRole where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,21 +10,23 @@ import GraphqlClient
   )
 
 -- | original name - EnterpriseAdministratorRole
-data EnterpriseAdministratorRole
-  = Owner
-  | BillingManager
+data EnterpriseAdministratorRole = Owner | BillingManager
 
 derive instance eqEnterpriseAdministratorRole :: Eq EnterpriseAdministratorRole
 
 derive instance ordEnterpriseAdministratorRole :: Ord EnterpriseAdministratorRole
 
 fromToMap :: Array (Tuple String EnterpriseAdministratorRole)
-fromToMap = [Tuple "OWNER" Owner, Tuple "BILLING_MANAGER" BillingManager]
+fromToMap = [ Tuple "OWNER" Owner, Tuple "BILLING_MANAGER" BillingManager ]
 
-instance enterpriseAdministratorRoleGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder EnterpriseAdministratorRole where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "EnterpriseAdministratorRole" fromToMap
+instance enterpriseAdministratorRoleGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                           EnterpriseAdministratorRole where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "EnterpriseAdministratorRole"
+                                        fromToMap
 
-instance enterpriseAdministratorRoleToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseAdministratorRole where
+instance enterpriseAdministratorRoleToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                              EnterpriseAdministratorRole where
   toGraphqlArgumentValue =
     case _ of
       Owner -> ArgumentValueEnum "OWNER"

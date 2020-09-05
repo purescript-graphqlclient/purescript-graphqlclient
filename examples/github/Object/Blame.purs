@@ -5,10 +5,15 @@ import GraphqlClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  ( Scope__BlameRange
-  , Scope__Blame
-  )
+import Examples.Github.Scopes (Scope__BlameRange, Scope__Blame)
 
-ranges :: forall r . SelectionSet Scope__BlameRange r -> SelectionSet Scope__Blame (Array r)
-ranges = selectionForCompositeField "ranges" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+ranges :: forall r . SelectionSet
+                     Scope__BlameRange
+                     r -> SelectionSet
+                          Scope__Blame
+                          (Array
+                           r)
+ranges = selectionForCompositeField
+         "ranges"
+         []
+         graphqlDefaultResponseFunctorOrScalarDecoderTransformer

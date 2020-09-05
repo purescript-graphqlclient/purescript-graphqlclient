@@ -1,12 +1,7 @@
 module Examples.Github.Enum.OrgUpdateMemberAuditEntryPermission where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,21 +10,23 @@ import GraphqlClient
   )
 
 -- | original name - OrgUpdateMemberAuditEntryPermission
-data OrgUpdateMemberAuditEntryPermission
-  = Read
-  | Admin
+data OrgUpdateMemberAuditEntryPermission = Read | Admin
 
 derive instance eqOrgUpdateMemberAuditEntryPermission :: Eq OrgUpdateMemberAuditEntryPermission
 
 derive instance ordOrgUpdateMemberAuditEntryPermission :: Ord OrgUpdateMemberAuditEntryPermission
 
 fromToMap :: Array (Tuple String OrgUpdateMemberAuditEntryPermission)
-fromToMap = [Tuple "READ" Read, Tuple "ADMIN" Admin]
+fromToMap = [ Tuple "READ" Read, Tuple "ADMIN" Admin ]
 
-instance orgUpdateMemberAuditEntryPermissionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder OrgUpdateMemberAuditEntryPermission where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "OrgUpdateMemberAuditEntryPermission" fromToMap
+instance orgUpdateMemberAuditEntryPermissionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                                   OrgUpdateMemberAuditEntryPermission where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "OrgUpdateMemberAuditEntryPermission"
+                                        fromToMap
 
-instance orgUpdateMemberAuditEntryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgUpdateMemberAuditEntryPermission where
+instance orgUpdateMemberAuditEntryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                      OrgUpdateMemberAuditEntryPermission where
   toGraphqlArgumentValue =
     case _ of
       Read -> ArgumentValueEnum "READ"

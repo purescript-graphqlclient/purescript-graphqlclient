@@ -7,6 +7,7 @@
   , "ps-cst"
   , "homogeneous-records"
   , "strings-extra"
+  , "stringutils"
   ]
 , packages = (./spago.dhall).packages
 , sources = (./spago.dhall).sources # [ "generator/**/*.purs" ]

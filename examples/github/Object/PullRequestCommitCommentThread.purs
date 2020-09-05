@@ -9,9 +9,7 @@ import GraphqlClient
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
-import Type.Row
-  ( type (+)
-  )
+import Type.Row (type (+))
 import Examples.Github.Scopes
   ( Scope__CommitCommentConnection
   , Scope__PullRequestCommitCommentThread
@@ -19,14 +17,11 @@ import Examples.Github.Scopes
   , Scope__PullRequest
   , Scope__Repository
   )
-import Examples.Github.Scalars
-  ( Id
-  )
-import Data.Maybe
-  ( Maybe
-  )
+import Examples.Github.Scalars (Id)
+import Data.Maybe (Maybe)
 
-type CommentsInputRowOptional r = ( after :: Optional String
+type CommentsInputRowOptional r = ( after :: Optional
+                                             String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -35,11 +30,26 @@ type CommentsInputRowOptional r = ( after :: Optional String
 
 type CommentsInput = { | CommentsInputRowOptional + () }
 
-comments :: forall r . CommentsInput -> SelectionSet Scope__CommitCommentConnection r -> SelectionSet Scope__PullRequestCommitCommentThread r
-comments input = selectionForCompositeField "comments" (toGraphqlArguments input) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+comments :: forall r . CommentsInput -> SelectionSet
+                                        Scope__CommitCommentConnection
+                                        r -> SelectionSet
+                                             Scope__PullRequestCommitCommentThread
+                                             r
+comments input = selectionForCompositeField
+                 "comments"
+                 (toGraphqlArguments
+                  input)
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-commit :: forall r . SelectionSet Scope__Commit r -> SelectionSet Scope__PullRequestCommitCommentThread r
-commit = selectionForCompositeField "commit" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+commit :: forall r . SelectionSet
+                     Scope__Commit
+                     r -> SelectionSet
+                          Scope__PullRequestCommitCommentThread
+                          r
+commit = selectionForCompositeField
+         "commit"
+         []
+         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 id :: SelectionSet Scope__PullRequestCommitCommentThread Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
@@ -50,8 +60,22 @@ path = selectionForField "path" [] graphqlDefaultResponseScalarDecoder
 position :: SelectionSet Scope__PullRequestCommitCommentThread (Maybe Int)
 position = selectionForField "position" [] graphqlDefaultResponseScalarDecoder
 
-pullRequest :: forall r . SelectionSet Scope__PullRequest r -> SelectionSet Scope__PullRequestCommitCommentThread r
-pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+pullRequest :: forall r . SelectionSet
+                          Scope__PullRequest
+                          r -> SelectionSet
+                               Scope__PullRequestCommitCommentThread
+                               r
+pullRequest = selectionForCompositeField
+              "pullRequest"
+              []
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-repository :: forall r . SelectionSet Scope__Repository r -> SelectionSet Scope__PullRequestCommitCommentThread r
-repository = selectionForCompositeField "repository" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+repository :: forall r . SelectionSet
+                         Scope__Repository
+                         r -> SelectionSet
+                              Scope__PullRequestCommitCommentThread
+                              r
+repository = selectionForCompositeField
+             "repository"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer

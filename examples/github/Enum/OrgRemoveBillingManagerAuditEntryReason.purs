@@ -1,12 +1,7 @@
 module Examples.Github.Enum.OrgRemoveBillingManagerAuditEntryReason where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -25,14 +20,28 @@ derive instance eqOrgRemoveBillingManagerAuditEntryReason :: Eq OrgRemoveBilling
 derive instance ordOrgRemoveBillingManagerAuditEntryReason :: Ord OrgRemoveBillingManagerAuditEntryReason
 
 fromToMap :: Array (Tuple String OrgRemoveBillingManagerAuditEntryReason)
-fromToMap = [Tuple "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE" TwoFactorRequirementNonCompliance, Tuple "SAML_EXTERNAL_IDENTITY_MISSING" SamlExternalIdentityMissing, Tuple "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY" SamlSsoEnforcementRequiresExternalIdentity]
+fromToMap = [ Tuple
+              "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
+              TwoFactorRequirementNonCompliance
+            , Tuple "SAML_EXTERNAL_IDENTITY_MISSING" SamlExternalIdentityMissing
+            , Tuple
+              "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY"
+              SamlSsoEnforcementRequiresExternalIdentity
+            ]
 
-instance orgRemoveBillingManagerAuditEntryReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder OrgRemoveBillingManagerAuditEntryReason where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "OrgRemoveBillingManagerAuditEntryReason" fromToMap
+instance orgRemoveBillingManagerAuditEntryReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                                       OrgRemoveBillingManagerAuditEntryReason where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "OrgRemoveBillingManagerAuditEntryReason"
+                                        fromToMap
 
-instance orgRemoveBillingManagerAuditEntryReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgRemoveBillingManagerAuditEntryReason where
+instance orgRemoveBillingManagerAuditEntryReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                          OrgRemoveBillingManagerAuditEntryReason where
   toGraphqlArgumentValue =
     case _ of
-      TwoFactorRequirementNonCompliance -> ArgumentValueEnum "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
-      SamlExternalIdentityMissing -> ArgumentValueEnum "SAML_EXTERNAL_IDENTITY_MISSING"
-      SamlSsoEnforcementRequiresExternalIdentity -> ArgumentValueEnum "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY"
+      TwoFactorRequirementNonCompliance -> ArgumentValueEnum
+                                           "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"
+      SamlExternalIdentityMissing -> ArgumentValueEnum
+                                     "SAML_EXTERNAL_IDENTITY_MISSING"
+      SamlSsoEnforcementRequiresExternalIdentity -> ArgumentValueEnum
+                                                    "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY"

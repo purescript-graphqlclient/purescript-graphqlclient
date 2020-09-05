@@ -1,16 +1,9 @@
 module Examples.Github.Object.EnterpriseRepositoryInfo where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__EnterpriseRepositoryInfo
-  )
-import Examples.Github.Scalars
-  ( Id
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__EnterpriseRepositoryInfo)
+import Examples.Github.Scalars (Id)
 
 id :: SelectionSet Scope__EnterpriseRepositoryInfo Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
@@ -22,4 +15,7 @@ name :: SelectionSet Scope__EnterpriseRepositoryInfo String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
 nameWithOwner :: SelectionSet Scope__EnterpriseRepositoryInfo String
-nameWithOwner = selectionForField "nameWithOwner" [] graphqlDefaultResponseScalarDecoder
+nameWithOwner = selectionForField
+                "nameWithOwner"
+                []
+                graphqlDefaultResponseScalarDecoder

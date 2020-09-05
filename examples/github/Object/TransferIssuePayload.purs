@@ -7,16 +7,22 @@ import GraphqlClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  ( Scope__TransferIssuePayload
-  , Scope__Issue
-  )
-import Data.Maybe
-  ( Maybe
-  )
+import Examples.Github.Scopes (Scope__TransferIssuePayload, Scope__Issue)
+import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__TransferIssuePayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-issue :: forall r . SelectionSet Scope__Issue r -> SelectionSet Scope__TransferIssuePayload (Maybe r)
-issue = selectionForCompositeField "issue" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+issue :: forall r . SelectionSet
+                    Scope__Issue
+                    r -> SelectionSet
+                         Scope__TransferIssuePayload
+                         (Maybe
+                          r)
+issue = selectionForCompositeField
+        "issue"
+        []
+        graphqlDefaultResponseFunctorOrScalarDecoderTransformer

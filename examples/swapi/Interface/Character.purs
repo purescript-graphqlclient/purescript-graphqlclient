@@ -9,23 +9,11 @@ import GraphqlClient
   , exhaustiveFragmentSelection
   , buildFragment
   )
-import Examples.Swapi.Scopes
-  ( Scope__Character
-  , Scope__Human
-  , Scope__Droid
-  )
-import Examples.Swapi.Enum.Episode
-  ( Episode
-  )
-import Examples.SwapiCustomScalars
-  ( Id
-  )
-import Data.Maybe
-  ( Maybe(..)
-  )
-import Prelude
-  ( pure
-  )
+import Examples.Swapi.Scopes (Scope__Character, Scope__Human, Scope__Droid)
+import Examples.Swapi.Enum.Episode (Episode)
+import Examples.SwapiCustomScalars (Id)
+import Data.Maybe (Maybe(..))
+import Prelude (pure)
 
 appearsIn :: SelectionSet Scope__Character (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
@@ -33,8 +21,16 @@ appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder
 avatarUrl :: SelectionSet Scope__Character String
 avatarUrl = selectionForField "avatarUrl" [] graphqlDefaultResponseScalarDecoder
 
-friends :: forall r . SelectionSet Scope__Character r -> SelectionSet Scope__Character (Array r)
-friends = selectionForCompositeField "friends" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+friends :: forall r . SelectionSet
+                      Scope__Character
+                      r -> SelectionSet
+                           Scope__Character
+                           (Array
+                            r)
+friends = selectionForCompositeField
+          "friends"
+          []
+          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 id :: SelectionSet Scope__Character Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
@@ -42,12 +38,22 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__Character String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onHuman :: SelectionSet Scope__Human decodesTo
+type Fragments decodesTo = { onHuman :: SelectionSet
+                                        Scope__Human
+                                        decodesTo
                            , onDroid :: SelectionSet Scope__Droid decodesTo
                            }
 
-fragments :: forall decodesTo . Fragments decodesTo -> SelectionSet Scope__Character decodesTo
-fragments selections = exhaustiveFragmentSelection [buildFragment "Human" selections.onHuman, buildFragment "Droid" selections.onDroid]
+fragments :: forall decodesTo . Fragments
+                                decodesTo -> SelectionSet
+                                             Scope__Character
+                                             decodesTo
+fragments selections = exhaustiveFragmentSelection
+                       [ buildFragment
+                         "Human"
+                         selections.onHuman
+                       , buildFragment "Droid" selections.onDroid
+                       ]
 
 maybeFragments :: forall decodesTo . Fragments (Maybe decodesTo)
 maybeFragments = { onHuman: pure Nothing, onDroid: pure Nothing }

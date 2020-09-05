@@ -1,6 +1,6 @@
 module GraphqlClientGenerator.PsCst where
 
-import Language.PS.SmartCST (Module, ModuleName, mkModuleName, printModuleToString)
+import Language.PS.SmartCST (Module, ModuleName, mkModuleName, printModule)
 import Protolude (Maybe(..), Tuple, bind, fromMaybe, maybe, not, (#), ($), (/\), (<#>), (<>), (==), (>>=), (>>>))
 
 import Data.Array as Array
@@ -24,6 +24,11 @@ import GraphqlClientGenerator.MakeModule.Scalars as MakeModule.Scalars
 import GraphqlClientGenerator.MakeModule.Scopes as MakeModule.Scopes
 import GraphqlClientGenerator.MakeModule.Subscription as MakeModule.Subscription
 import GraphqlClientGenerator.MakeModule.Union as MakeModule.Union
+import Dodo as Dodo
+
+printModuleToString :: Module -> String
+-- | { pageWidth = 120 }
+printModuleToString = printModule >>> Dodo.print Dodo.plainText (Dodo.twoSpaces )
 
 type FilesMap =
   { dirs ::

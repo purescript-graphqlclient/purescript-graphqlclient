@@ -13,18 +13,46 @@ import Examples.Github.Scopes
   , Scope__Organization
   , Scope__User
   )
-import Data.Maybe
-  ( Maybe
-  )
+import Data.Maybe (Maybe)
 
-clientMutationId :: SelectionSet Scope__RemoveEnterpriseOrganizationPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId :: SelectionSet
+                    Scope__RemoveEnterpriseOrganizationPayload
+                    (Maybe
+                     String)
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-enterprise :: forall r . SelectionSet Scope__Enterprise r -> SelectionSet Scope__RemoveEnterpriseOrganizationPayload (Maybe r)
-enterprise = selectionForCompositeField "enterprise" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+enterprise :: forall r . SelectionSet
+                         Scope__Enterprise
+                         r -> SelectionSet
+                              Scope__RemoveEnterpriseOrganizationPayload
+                              (Maybe
+                               r)
+enterprise = selectionForCompositeField
+             "enterprise"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-organization :: forall r . SelectionSet Scope__Organization r -> SelectionSet Scope__RemoveEnterpriseOrganizationPayload (Maybe r)
-organization = selectionForCompositeField "organization" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+organization :: forall r . SelectionSet
+                           Scope__Organization
+                           r -> SelectionSet
+                                Scope__RemoveEnterpriseOrganizationPayload
+                                (Maybe
+                                 r)
+organization = selectionForCompositeField
+               "organization"
+               []
+               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-viewer :: forall r . SelectionSet Scope__User r -> SelectionSet Scope__RemoveEnterpriseOrganizationPayload (Maybe r)
-viewer = selectionForCompositeField "viewer" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+viewer :: forall r . SelectionSet
+                     Scope__User
+                     r -> SelectionSet
+                          Scope__RemoveEnterpriseOrganizationPayload
+                          (Maybe
+                           r)
+viewer = selectionForCompositeField
+         "viewer"
+         []
+         graphqlDefaultResponseFunctorOrScalarDecoderTransformer

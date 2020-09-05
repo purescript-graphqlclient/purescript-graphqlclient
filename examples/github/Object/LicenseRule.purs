@@ -1,16 +1,14 @@
 module Examples.Github.Object.LicenseRule where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__LicenseRule
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__LicenseRule)
 
 description :: SelectionSet Scope__LicenseRule String
-description = selectionForField "description" [] graphqlDefaultResponseScalarDecoder
+description = selectionForField
+              "description"
+              []
+              graphqlDefaultResponseScalarDecoder
 
 key :: SelectionSet Scope__LicenseRule String
 key = selectionForField "key" [] graphqlDefaultResponseScalarDecoder

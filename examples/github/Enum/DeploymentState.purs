@@ -1,12 +1,7 @@
 module Examples.Github.Enum.DeploymentState where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -31,12 +26,25 @@ derive instance eqDeploymentState :: Eq DeploymentState
 derive instance ordDeploymentState :: Ord DeploymentState
 
 fromToMap :: Array (Tuple String DeploymentState)
-fromToMap = [Tuple "ABANDONED" Abandoned, Tuple "ACTIVE" Active, Tuple "DESTROYED" Destroyed, Tuple "ERROR" Error, Tuple "FAILURE" Failure, Tuple "INACTIVE" Inactive, Tuple "PENDING" Pending, Tuple "QUEUED" Queued, Tuple "IN_PROGRESS" InProgress]
+fromToMap = [ Tuple
+              "ABANDONED"
+              Abandoned
+            , Tuple "ACTIVE" Active
+            , Tuple "DESTROYED" Destroyed
+            , Tuple "ERROR" Error
+            , Tuple "FAILURE" Failure
+            , Tuple "INACTIVE" Inactive
+            , Tuple "PENDING" Pending
+            , Tuple "QUEUED" Queued
+            , Tuple "IN_PROGRESS" InProgress
+            ]
 
-instance deploymentStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder DeploymentState where
+instance deploymentStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                               DeploymentState where
   graphqlDefaultResponseScalarDecoder = enumDecoder "DeploymentState" fromToMap
 
-instance deploymentStateToGraphqlArgumentValue :: ToGraphqlArgumentValue DeploymentState where
+instance deploymentStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                  DeploymentState where
   toGraphqlArgumentValue =
     case _ of
       Abandoned -> ArgumentValueEnum "ABANDONED"

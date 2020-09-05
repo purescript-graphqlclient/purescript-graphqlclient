@@ -1,12 +1,7 @@
 module Examples.Github.Enum.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -29,13 +24,30 @@ derive instance eqOrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilit
 
 derive instance ordOrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility :: Ord OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility
 
-fromToMap :: Array (Tuple String OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility)
-fromToMap = [Tuple "ALL" All, Tuple "PUBLIC" Public, Tuple "NONE" None, Tuple "PRIVATE" Private, Tuple "INTERNAL" Internal, Tuple "PUBLIC_INTERNAL" PublicInternal, Tuple "PRIVATE_INTERNAL" PrivateInternal, Tuple "PUBLIC_PRIVATE" PublicPrivate]
+fromToMap :: Array
+             (Tuple
+              String
+              OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility)
+fromToMap = [ Tuple
+              "ALL"
+              All
+            , Tuple "PUBLIC" Public
+            , Tuple "NONE" None
+            , Tuple "PRIVATE" Private
+            , Tuple "INTERNAL" Internal
+            , Tuple "PUBLIC_INTERNAL" PublicInternal
+            , Tuple "PRIVATE_INTERNAL" PrivateInternal
+            , Tuple "PUBLIC_PRIVATE" PublicPrivate
+            ]
 
-instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility" fromToMap
+instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                                                               OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility"
+                                        fromToMap
 
-instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
+instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                                                  OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
   toGraphqlArgumentValue =
     case _ of
       All -> ArgumentValueEnum "ALL"

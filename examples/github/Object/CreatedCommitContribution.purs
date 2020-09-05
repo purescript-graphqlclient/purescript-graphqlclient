@@ -8,32 +8,52 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__CreatedCommitContribution
-  , Scope__Repository
-  , Scope__User
-  )
-import Examples.Github.Scalars
-  ( DateTime
-  , Uri
-  )
+  (Scope__CreatedCommitContribution, Scope__Repository, Scope__User)
+import Examples.Github.Scalars (DateTime, Uri)
 
 commitCount :: SelectionSet Scope__CreatedCommitContribution Int
-commitCount = selectionForField "commitCount" [] graphqlDefaultResponseScalarDecoder
+commitCount = selectionForField
+              "commitCount"
+              []
+              graphqlDefaultResponseScalarDecoder
 
 isRestricted :: SelectionSet Scope__CreatedCommitContribution Boolean
-isRestricted = selectionForField "isRestricted" [] graphqlDefaultResponseScalarDecoder
+isRestricted = selectionForField
+               "isRestricted"
+               []
+               graphqlDefaultResponseScalarDecoder
 
 occurredAt :: SelectionSet Scope__CreatedCommitContribution DateTime
-occurredAt = selectionForField "occurredAt" [] graphqlDefaultResponseScalarDecoder
+occurredAt = selectionForField
+             "occurredAt"
+             []
+             graphqlDefaultResponseScalarDecoder
 
-repository :: forall r . SelectionSet Scope__Repository r -> SelectionSet Scope__CreatedCommitContribution r
-repository = selectionForCompositeField "repository" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+repository :: forall r . SelectionSet
+                         Scope__Repository
+                         r -> SelectionSet
+                              Scope__CreatedCommitContribution
+                              r
+repository = selectionForCompositeField
+             "repository"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 resourcePath :: SelectionSet Scope__CreatedCommitContribution Uri
-resourcePath = selectionForField "resourcePath" [] graphqlDefaultResponseScalarDecoder
+resourcePath = selectionForField
+               "resourcePath"
+               []
+               graphqlDefaultResponseScalarDecoder
 
 url :: SelectionSet Scope__CreatedCommitContribution Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-user :: forall r . SelectionSet Scope__User r -> SelectionSet Scope__CreatedCommitContribution r
-user = selectionForCompositeField "user" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+user :: forall r . SelectionSet
+                   Scope__User
+                   r -> SelectionSet
+                        Scope__CreatedCommitContribution
+                        r
+user = selectionForCompositeField
+       "user"
+       []
+       graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -1,12 +1,7 @@
 module Examples.Github.Enum.RepositoryContributionType where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -16,23 +11,30 @@ import GraphqlClient
 
 -- | original name - RepositoryContributionType
 data RepositoryContributionType
-  = Commit
-  | Issue
-  | PullRequest
-  | Repository
-  | PullRequestReview
+  = Commit | Issue | PullRequest | Repository | PullRequestReview
 
 derive instance eqRepositoryContributionType :: Eq RepositoryContributionType
 
 derive instance ordRepositoryContributionType :: Ord RepositoryContributionType
 
 fromToMap :: Array (Tuple String RepositoryContributionType)
-fromToMap = [Tuple "COMMIT" Commit, Tuple "ISSUE" Issue, Tuple "PULL_REQUEST" PullRequest, Tuple "REPOSITORY" Repository, Tuple "PULL_REQUEST_REVIEW" PullRequestReview]
+fromToMap = [ Tuple
+              "COMMIT"
+              Commit
+            , Tuple "ISSUE" Issue
+            , Tuple "PULL_REQUEST" PullRequest
+            , Tuple "REPOSITORY" Repository
+            , Tuple "PULL_REQUEST_REVIEW" PullRequestReview
+            ]
 
-instance repositoryContributionTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder RepositoryContributionType where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "RepositoryContributionType" fromToMap
+instance repositoryContributionTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                          RepositoryContributionType where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "RepositoryContributionType"
+                                        fromToMap
 
-instance repositoryContributionTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue RepositoryContributionType where
+instance repositoryContributionTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                             RepositoryContributionType where
   toGraphqlArgumentValue =
     case _ of
       Commit -> ArgumentValueEnum "COMMIT"

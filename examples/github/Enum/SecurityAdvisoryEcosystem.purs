@@ -1,12 +1,7 @@
 module Examples.Github.Enum.SecurityAdvisoryEcosystem where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,25 +10,31 @@ import GraphqlClient
   )
 
 -- | original name - SecurityAdvisoryEcosystem
-data SecurityAdvisoryEcosystem
-  = Rubygems
-  | Npm
-  | Pip
-  | Maven
-  | Nuget
-  | Composer
+data SecurityAdvisoryEcosystem = Rubygems | Npm | Pip | Maven | Nuget | Composer
 
 derive instance eqSecurityAdvisoryEcosystem :: Eq SecurityAdvisoryEcosystem
 
 derive instance ordSecurityAdvisoryEcosystem :: Ord SecurityAdvisoryEcosystem
 
 fromToMap :: Array (Tuple String SecurityAdvisoryEcosystem)
-fromToMap = [Tuple "RUBYGEMS" Rubygems, Tuple "NPM" Npm, Tuple "PIP" Pip, Tuple "MAVEN" Maven, Tuple "NUGET" Nuget, Tuple "COMPOSER" Composer]
+fromToMap = [ Tuple
+              "RUBYGEMS"
+              Rubygems
+            , Tuple "NPM" Npm
+            , Tuple "PIP" Pip
+            , Tuple "MAVEN" Maven
+            , Tuple "NUGET" Nuget
+            , Tuple "COMPOSER" Composer
+            ]
 
-instance securityAdvisoryEcosystemGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder SecurityAdvisoryEcosystem where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "SecurityAdvisoryEcosystem" fromToMap
+instance securityAdvisoryEcosystemGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                         SecurityAdvisoryEcosystem where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "SecurityAdvisoryEcosystem"
+                                        fromToMap
 
-instance securityAdvisoryEcosystemToGraphqlArgumentValue :: ToGraphqlArgumentValue SecurityAdvisoryEcosystem where
+instance securityAdvisoryEcosystemToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                            SecurityAdvisoryEcosystem where
   toGraphqlArgumentValue =
     case _ of
       Rubygems -> ArgumentValueEnum "RUBYGEMS"

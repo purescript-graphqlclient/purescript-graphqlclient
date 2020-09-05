@@ -1,12 +1,7 @@
 module Examples.Github.Enum.CommentAuthorAssociation where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -29,12 +24,25 @@ derive instance eqCommentAuthorAssociation :: Eq CommentAuthorAssociation
 derive instance ordCommentAuthorAssociation :: Ord CommentAuthorAssociation
 
 fromToMap :: Array (Tuple String CommentAuthorAssociation)
-fromToMap = [Tuple "MEMBER" Member, Tuple "OWNER" Owner, Tuple "COLLABORATOR" Collaborator, Tuple "CONTRIBUTOR" Contributor, Tuple "FIRST_TIME_CONTRIBUTOR" FirstTimeContributor, Tuple "FIRST_TIMER" FirstTimer, Tuple "NONE" None]
+fromToMap = [ Tuple
+              "MEMBER"
+              Member
+            , Tuple "OWNER" Owner
+            , Tuple "COLLABORATOR" Collaborator
+            , Tuple "CONTRIBUTOR" Contributor
+            , Tuple "FIRST_TIME_CONTRIBUTOR" FirstTimeContributor
+            , Tuple "FIRST_TIMER" FirstTimer
+            , Tuple "NONE" None
+            ]
 
-instance commentAuthorAssociationGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder CommentAuthorAssociation where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "CommentAuthorAssociation" fromToMap
+instance commentAuthorAssociationGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                        CommentAuthorAssociation where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "CommentAuthorAssociation"
+                                        fromToMap
 
-instance commentAuthorAssociationToGraphqlArgumentValue :: ToGraphqlArgumentValue CommentAuthorAssociation where
+instance commentAuthorAssociationToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                           CommentAuthorAssociation where
   toGraphqlArgumentValue =
     case _ of
       Member -> ArgumentValueEnum "MEMBER"

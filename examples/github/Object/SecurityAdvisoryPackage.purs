@@ -1,18 +1,14 @@
 module Examples.Github.Object.SecurityAdvisoryPackage where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__SecurityAdvisoryPackage
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__SecurityAdvisoryPackage)
 import Examples.Github.Enum.SecurityAdvisoryEcosystem
-  ( SecurityAdvisoryEcosystem
-  )
+  (SecurityAdvisoryEcosystem)
 
-ecosystem :: SelectionSet Scope__SecurityAdvisoryPackage SecurityAdvisoryEcosystem
+ecosystem :: SelectionSet
+             Scope__SecurityAdvisoryPackage
+             SecurityAdvisoryEcosystem
 ecosystem = selectionForField "ecosystem" [] graphqlDefaultResponseScalarDecoder
 
 name :: SelectionSet Scope__SecurityAdvisoryPackage String

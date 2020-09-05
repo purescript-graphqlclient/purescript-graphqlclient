@@ -8,19 +8,33 @@ import GraphqlClient
   , graphqlDefaultResponseScalarDecoder
   )
 import Examples.Github.Scopes
-  ( Scope__Actor
-  , Scope__MergePullRequestPayload
-  , Scope__PullRequest
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (Scope__Actor, Scope__MergePullRequestPayload, Scope__PullRequest)
+import Data.Maybe (Maybe)
 
-actor :: forall r . SelectionSet Scope__Actor r -> SelectionSet Scope__MergePullRequestPayload (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: forall r . SelectionSet
+                    Scope__Actor
+                    r -> SelectionSet
+                         Scope__MergePullRequestPayload
+                         (Maybe
+                          r)
+actor = selectionForCompositeField
+        "actor"
+        []
+        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 clientMutationId :: SelectionSet Scope__MergePullRequestPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-pullRequest :: forall r . SelectionSet Scope__PullRequest r -> SelectionSet Scope__MergePullRequestPayload (Maybe r)
-pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+pullRequest :: forall r . SelectionSet
+                          Scope__PullRequest
+                          r -> SelectionSet
+                               Scope__MergePullRequestPayload
+                               (Maybe
+                                r)
+pullRequest = selectionForCompositeField
+              "pullRequest"
+              []
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer

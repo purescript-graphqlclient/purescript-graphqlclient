@@ -1,10 +1,6 @@
 module Examples.Github.Union.SearchResultItem where
 
-import GraphqlClient
-  ( SelectionSet
-  , exhaustiveFragmentSelection
-  , buildFragment
-  )
+import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__App
   , Scope__Issue
@@ -15,24 +11,59 @@ import Examples.Github.Scopes
   , Scope__User
   , Scope__SearchResultItem
   )
-import Data.Maybe
-  ( Maybe(..)
-  )
-import Prelude
-  ( pure
-  )
+import Data.Maybe (Maybe(..))
+import Prelude (pure)
 
-type Fragments decodesTo = { onApp :: SelectionSet Scope__App decodesTo
+type Fragments decodesTo = { onApp :: SelectionSet
+                                      Scope__App
+                                      decodesTo
                            , onIssue :: SelectionSet Scope__Issue decodesTo
-                           , onMarketplaceListing :: SelectionSet Scope__MarketplaceListing decodesTo
-                           , onOrganization :: SelectionSet Scope__Organization decodesTo
-                           , onPullRequest :: SelectionSet Scope__PullRequest decodesTo
-                           , onRepository :: SelectionSet Scope__Repository decodesTo
+                           , onMarketplaceListing :: SelectionSet
+                                                     Scope__MarketplaceListing
+                                                     decodesTo
+                           , onOrganization :: SelectionSet
+                                               Scope__Organization
+                                               decodesTo
+                           , onPullRequest :: SelectionSet
+                                              Scope__PullRequest
+                                              decodesTo
+                           , onRepository :: SelectionSet
+                                             Scope__Repository
+                                             decodesTo
                            , onUser :: SelectionSet Scope__User decodesTo
                            }
 
-fragments :: forall decodesTo . Fragments decodesTo -> SelectionSet Scope__SearchResultItem decodesTo
-fragments selections = exhaustiveFragmentSelection [buildFragment "App" selections.onApp, buildFragment "Issue" selections.onIssue, buildFragment "MarketplaceListing" selections.onMarketplaceListing, buildFragment "Organization" selections.onOrganization, buildFragment "PullRequest" selections.onPullRequest, buildFragment "Repository" selections.onRepository, buildFragment "User" selections.onUser]
+fragments :: forall decodesTo . Fragments
+                                decodesTo -> SelectionSet
+                                             Scope__SearchResultItem
+                                             decodesTo
+fragments selections = exhaustiveFragmentSelection
+                       [ buildFragment
+                         "App"
+                         selections.onApp
+                       , buildFragment "Issue" selections.onIssue
+                       , buildFragment
+                         "MarketplaceListing"
+                         selections.onMarketplaceListing
+                       , buildFragment "Organization" selections.onOrganization
+                       , buildFragment "PullRequest" selections.onPullRequest
+                       , buildFragment "Repository" selections.onRepository
+                       , buildFragment "User" selections.onUser
+                       ]
 
 maybeFragments :: forall decodesTo . Fragments (Maybe decodesTo)
-maybeFragments = { onApp: pure Nothing, onIssue: pure Nothing, onMarketplaceListing: pure Nothing, onOrganization: pure Nothing, onPullRequest: pure Nothing, onRepository: pure Nothing, onUser: pure Nothing }
+maybeFragments = { onApp: pure
+                          Nothing
+                 , onIssue: pure
+                            Nothing
+                 , onMarketplaceListing: pure
+                                         Nothing
+                 , onOrganization: pure
+                                   Nothing
+                 , onPullRequest: pure
+                                  Nothing
+                 , onRepository: pure
+                                 Nothing
+                 , onUser: pure
+                           Nothing
+                 }

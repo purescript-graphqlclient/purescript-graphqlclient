@@ -1,12 +1,7 @@
 module Examples.Github.Enum.TeamMembershipType where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,22 +10,28 @@ import GraphqlClient
   )
 
 -- | original name - TeamMembershipType
-data TeamMembershipType
-  = Immediate
-  | ChildTeam
-  | All
+data TeamMembershipType = Immediate | ChildTeam | All
 
 derive instance eqTeamMembershipType :: Eq TeamMembershipType
 
 derive instance ordTeamMembershipType :: Ord TeamMembershipType
 
 fromToMap :: Array (Tuple String TeamMembershipType)
-fromToMap = [Tuple "IMMEDIATE" Immediate, Tuple "CHILD_TEAM" ChildTeam, Tuple "ALL" All]
+fromToMap = [ Tuple
+              "IMMEDIATE"
+              Immediate
+            , Tuple "CHILD_TEAM" ChildTeam
+            , Tuple "ALL" All
+            ]
 
-instance teamMembershipTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder TeamMembershipType where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "TeamMembershipType" fromToMap
+instance teamMembershipTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                  TeamMembershipType where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "TeamMembershipType"
+                                        fromToMap
 
-instance teamMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamMembershipType where
+instance teamMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                     TeamMembershipType where
   toGraphqlArgumentValue =
     case _ of
       Immediate -> ArgumentValueEnum "IMMEDIATE"

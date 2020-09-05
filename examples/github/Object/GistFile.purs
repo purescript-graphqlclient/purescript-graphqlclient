@@ -9,19 +9,15 @@ import GraphqlClient
   , Optional
   , toGraphqlArguments
   )
-import Examples.Github.Scopes
-  ( Scope__GistFile
-  , Scope__Language
-  )
-import Data.Maybe
-  ( Maybe
-  )
-import Type.Row
-  ( type (+)
-  )
+import Examples.Github.Scopes (Scope__GistFile, Scope__Language)
+import Data.Maybe (Maybe)
+import Type.Row (type (+))
 
 encodedName :: SelectionSet Scope__GistFile (Maybe String)
-encodedName = selectionForField "encodedName" [] graphqlDefaultResponseScalarDecoder
+encodedName = selectionForField
+              "encodedName"
+              []
+              graphqlDefaultResponseScalarDecoder
 
 encoding :: SelectionSet Scope__GistFile (Maybe String)
 encoding = selectionForField "encoding" [] graphqlDefaultResponseScalarDecoder
@@ -33,10 +29,21 @@ isImage :: SelectionSet Scope__GistFile Boolean
 isImage = selectionForField "isImage" [] graphqlDefaultResponseScalarDecoder
 
 isTruncated :: SelectionSet Scope__GistFile Boolean
-isTruncated = selectionForField "isTruncated" [] graphqlDefaultResponseScalarDecoder
+isTruncated = selectionForField
+              "isTruncated"
+              []
+              graphqlDefaultResponseScalarDecoder
 
-language :: forall r . SelectionSet Scope__Language r -> SelectionSet Scope__GistFile (Maybe r)
-language = selectionForCompositeField "language" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+language :: forall r . SelectionSet
+                       Scope__Language
+                       r -> SelectionSet
+                            Scope__GistFile
+                            (Maybe
+                             r)
+language = selectionForCompositeField
+           "language"
+           []
+           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 name :: SelectionSet Scope__GistFile (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
@@ -44,11 +51,13 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 size :: SelectionSet Scope__GistFile (Maybe Int)
 size = selectionForField "size" [] graphqlDefaultResponseScalarDecoder
 
-type TextInputRowOptional r = ( truncate :: Optional Int
-                              | r
-                              )
+type TextInputRowOptional r = ( truncate :: Optional Int | r )
 
 type TextInput = { | TextInputRowOptional + () }
 
 text :: TextInput -> SelectionSet Scope__GistFile (Maybe String)
-text input = selectionForField "text" (toGraphqlArguments input) graphqlDefaultResponseScalarDecoder
+text input = selectionForField
+             "text"
+             (toGraphqlArguments
+              input)
+             graphqlDefaultResponseScalarDecoder

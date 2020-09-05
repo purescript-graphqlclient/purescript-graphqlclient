@@ -12,15 +12,35 @@ import Examples.Github.Scopes
   , Scope__Enterprise
   , Scope__Organization
   )
-import Data.Maybe
-  ( Maybe
-  )
+import Data.Maybe (Maybe)
 
-clientMutationId :: SelectionSet Scope__CreateEnterpriseOrganizationPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId :: SelectionSet
+                    Scope__CreateEnterpriseOrganizationPayload
+                    (Maybe
+                     String)
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-enterprise :: forall r . SelectionSet Scope__Enterprise r -> SelectionSet Scope__CreateEnterpriseOrganizationPayload (Maybe r)
-enterprise = selectionForCompositeField "enterprise" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+enterprise :: forall r . SelectionSet
+                         Scope__Enterprise
+                         r -> SelectionSet
+                              Scope__CreateEnterpriseOrganizationPayload
+                              (Maybe
+                               r)
+enterprise = selectionForCompositeField
+             "enterprise"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-organization :: forall r . SelectionSet Scope__Organization r -> SelectionSet Scope__CreateEnterpriseOrganizationPayload (Maybe r)
-organization = selectionForCompositeField "organization" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+organization :: forall r . SelectionSet
+                           Scope__Organization
+                           r -> SelectionSet
+                                Scope__CreateEnterpriseOrganizationPayload
+                                (Maybe
+                                 r)
+organization = selectionForCompositeField
+               "organization"
+               []
+               graphqlDefaultResponseFunctorOrScalarDecoderTransformer

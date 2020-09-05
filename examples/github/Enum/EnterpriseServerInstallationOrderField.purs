@@ -1,12 +1,7 @@
 module Examples.Github.Enum.EnterpriseServerInstallationOrderField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -16,21 +11,28 @@ import GraphqlClient
 
 -- | original name - EnterpriseServerInstallationOrderField
 data EnterpriseServerInstallationOrderField
-  = HostName
-  | CustomerName
-  | CreatedAt
+  = HostName | CustomerName | CreatedAt
 
 derive instance eqEnterpriseServerInstallationOrderField :: Eq EnterpriseServerInstallationOrderField
 
 derive instance ordEnterpriseServerInstallationOrderField :: Ord EnterpriseServerInstallationOrderField
 
 fromToMap :: Array (Tuple String EnterpriseServerInstallationOrderField)
-fromToMap = [Tuple "HOST_NAME" HostName, Tuple "CUSTOMER_NAME" CustomerName, Tuple "CREATED_AT" CreatedAt]
+fromToMap = [ Tuple
+              "HOST_NAME"
+              HostName
+            , Tuple "CUSTOMER_NAME" CustomerName
+            , Tuple "CREATED_AT" CreatedAt
+            ]
 
-instance enterpriseServerInstallationOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder EnterpriseServerInstallationOrderField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "EnterpriseServerInstallationOrderField" fromToMap
+instance enterpriseServerInstallationOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                                      EnterpriseServerInstallationOrderField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "EnterpriseServerInstallationOrderField"
+                                        fromToMap
 
-instance enterpriseServerInstallationOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue EnterpriseServerInstallationOrderField where
+instance enterpriseServerInstallationOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                         EnterpriseServerInstallationOrderField where
   toGraphqlArgumentValue =
     case _ of
       HostName -> ArgumentValueEnum "HOST_NAME"

@@ -11,15 +11,30 @@ import Examples.Github.Scopes
   ( Scope__UpdateEnterpriseMembersCanMakePurchasesSettingPayload
   , Scope__Enterprise
   )
-import Data.Maybe
-  ( Maybe
-  )
+import Data.Maybe (Maybe)
 
-clientMutationId :: SelectionSet Scope__UpdateEnterpriseMembersCanMakePurchasesSettingPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId :: SelectionSet
+                    Scope__UpdateEnterpriseMembersCanMakePurchasesSettingPayload
+                    (Maybe
+                     String)
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-enterprise :: forall r . SelectionSet Scope__Enterprise r -> SelectionSet Scope__UpdateEnterpriseMembersCanMakePurchasesSettingPayload (Maybe r)
-enterprise = selectionForCompositeField "enterprise" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+enterprise :: forall r . SelectionSet
+                         Scope__Enterprise
+                         r -> SelectionSet
+                              Scope__UpdateEnterpriseMembersCanMakePurchasesSettingPayload
+                              (Maybe
+                               r)
+enterprise = selectionForCompositeField
+             "enterprise"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-message :: SelectionSet Scope__UpdateEnterpriseMembersCanMakePurchasesSettingPayload (Maybe String)
+message :: SelectionSet
+           Scope__UpdateEnterpriseMembersCanMakePurchasesSettingPayload
+           (Maybe
+            String)
 message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder

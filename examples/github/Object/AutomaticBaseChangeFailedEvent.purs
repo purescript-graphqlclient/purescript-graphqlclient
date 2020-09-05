@@ -8,20 +8,20 @@ import GraphqlClient
   , graphqlDefaultResponseScalarDecoder
   )
 import Examples.Github.Scopes
-  ( Scope__Actor
-  , Scope__AutomaticBaseChangeFailedEvent
-  , Scope__PullRequest
-  )
-import Data.Maybe
-  ( Maybe
-  )
-import Examples.Github.Scalars
-  ( DateTime
-  , Id
-  )
+  (Scope__Actor, Scope__AutomaticBaseChangeFailedEvent, Scope__PullRequest)
+import Data.Maybe (Maybe)
+import Examples.Github.Scalars (DateTime, Id)
 
-actor :: forall r . SelectionSet Scope__Actor r -> SelectionSet Scope__AutomaticBaseChangeFailedEvent (Maybe r)
-actor = selectionForCompositeField "actor" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+actor :: forall r . SelectionSet
+                    Scope__Actor
+                    r -> SelectionSet
+                         Scope__AutomaticBaseChangeFailedEvent
+                         (Maybe
+                          r)
+actor = selectionForCompositeField
+        "actor"
+        []
+        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 createdAt :: SelectionSet Scope__AutomaticBaseChangeFailedEvent DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
@@ -35,5 +35,12 @@ newBase = selectionForField "newBase" [] graphqlDefaultResponseScalarDecoder
 oldBase :: SelectionSet Scope__AutomaticBaseChangeFailedEvent String
 oldBase = selectionForField "oldBase" [] graphqlDefaultResponseScalarDecoder
 
-pullRequest :: forall r . SelectionSet Scope__PullRequest r -> SelectionSet Scope__AutomaticBaseChangeFailedEvent r
-pullRequest = selectionForCompositeField "pullRequest" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+pullRequest :: forall r . SelectionSet
+                          Scope__PullRequest
+                          r -> SelectionSet
+                               Scope__AutomaticBaseChangeFailedEvent
+                               r
+pullRequest = selectionForCompositeField
+              "pullRequest"
+              []
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer

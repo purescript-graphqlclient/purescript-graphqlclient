@@ -8,24 +8,38 @@ import GraphqlClient
   , graphqlDefaultResponseScalarDecoder
   )
 import Examples.Github.Scopes
-  ( Scope__Team
-  , Scope__OrgRestoreMemberMembershipTeamAuditEntryData
-  )
-import Data.Maybe
-  ( Maybe
-  )
-import Examples.Github.Scalars
-  ( Uri
-  )
+  (Scope__Team, Scope__OrgRestoreMemberMembershipTeamAuditEntryData)
+import Data.Maybe (Maybe)
+import Examples.Github.Scalars (Uri)
 
-team :: forall r . SelectionSet Scope__Team r -> SelectionSet Scope__OrgRestoreMemberMembershipTeamAuditEntryData (Maybe r)
-team = selectionForCompositeField "team" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+team :: forall r . SelectionSet
+                   Scope__Team
+                   r -> SelectionSet
+                        Scope__OrgRestoreMemberMembershipTeamAuditEntryData
+                        (Maybe
+                         r)
+team = selectionForCompositeField
+       "team"
+       []
+       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-teamName :: SelectionSet Scope__OrgRestoreMemberMembershipTeamAuditEntryData (Maybe String)
+teamName :: SelectionSet
+            Scope__OrgRestoreMemberMembershipTeamAuditEntryData
+            (Maybe
+             String)
 teamName = selectionForField "teamName" [] graphqlDefaultResponseScalarDecoder
 
-teamResourcePath :: SelectionSet Scope__OrgRestoreMemberMembershipTeamAuditEntryData (Maybe Uri)
-teamResourcePath = selectionForField "teamResourcePath" [] graphqlDefaultResponseScalarDecoder
+teamResourcePath :: SelectionSet
+                    Scope__OrgRestoreMemberMembershipTeamAuditEntryData
+                    (Maybe
+                     Uri)
+teamResourcePath = selectionForField
+                   "teamResourcePath"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-teamUrl :: SelectionSet Scope__OrgRestoreMemberMembershipTeamAuditEntryData (Maybe Uri)
+teamUrl :: SelectionSet
+           Scope__OrgRestoreMemberMembershipTeamAuditEntryData
+           (Maybe
+            Uri)
 teamUrl = selectionForField "teamUrl" [] graphqlDefaultResponseScalarDecoder

@@ -1,12 +1,7 @@
 module Examples.Github.Enum.PackageType where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,23 +10,26 @@ import GraphqlClient
   )
 
 -- | original name - PackageType
-data PackageType
-  = Npm
-  | Rubygems
-  | Maven
-  | Docker
-  | Debian
-  | Nuget
-  | Pypi
+data PackageType = Npm | Rubygems | Maven | Docker | Debian | Nuget | Pypi
 
 derive instance eqPackageType :: Eq PackageType
 
 derive instance ordPackageType :: Ord PackageType
 
 fromToMap :: Array (Tuple String PackageType)
-fromToMap = [Tuple "NPM" Npm, Tuple "RUBYGEMS" Rubygems, Tuple "MAVEN" Maven, Tuple "DOCKER" Docker, Tuple "DEBIAN" Debian, Tuple "NUGET" Nuget, Tuple "PYPI" Pypi]
+fromToMap = [ Tuple
+              "NPM"
+              Npm
+            , Tuple "RUBYGEMS" Rubygems
+            , Tuple "MAVEN" Maven
+            , Tuple "DOCKER" Docker
+            , Tuple "DEBIAN" Debian
+            , Tuple "NUGET" Nuget
+            , Tuple "PYPI" Pypi
+            ]
 
-instance packageTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder PackageType where
+instance packageTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                           PackageType where
   graphqlDefaultResponseScalarDecoder = enumDecoder "PackageType" fromToMap
 
 instance packageTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue PackageType where

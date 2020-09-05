@@ -1,12 +1,7 @@
 module Examples.Github.Enum.DefaultRepositoryPermissionField where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,23 +10,29 @@ import GraphqlClient
   )
 
 -- | original name - DefaultRepositoryPermissionField
-data DefaultRepositoryPermissionField
-  = None
-  | Read
-  | Write
-  | Admin
+data DefaultRepositoryPermissionField = None | Read | Write | Admin
 
 derive instance eqDefaultRepositoryPermissionField :: Eq DefaultRepositoryPermissionField
 
 derive instance ordDefaultRepositoryPermissionField :: Ord DefaultRepositoryPermissionField
 
 fromToMap :: Array (Tuple String DefaultRepositoryPermissionField)
-fromToMap = [Tuple "NONE" None, Tuple "READ" Read, Tuple "WRITE" Write, Tuple "ADMIN" Admin]
+fromToMap = [ Tuple
+              "NONE"
+              None
+            , Tuple "READ" Read
+            , Tuple "WRITE" Write
+            , Tuple "ADMIN" Admin
+            ]
 
-instance defaultRepositoryPermissionFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder DefaultRepositoryPermissionField where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "DefaultRepositoryPermissionField" fromToMap
+instance defaultRepositoryPermissionFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                                DefaultRepositoryPermissionField where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "DefaultRepositoryPermissionField"
+                                        fromToMap
 
-instance defaultRepositoryPermissionFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue DefaultRepositoryPermissionField where
+instance defaultRepositoryPermissionFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                   DefaultRepositoryPermissionField where
   toGraphqlArgumentValue =
     case _ of
       None -> ArgumentValueEnum "NONE"

@@ -55,23 +55,36 @@ let additions =
           [ "console"
           , "effect"
           , "generics-rep"
-          , "heterogeneous"
-          , "ordered-collections"
           , "psci-support"
           , "record"
-          , "record-extra"
           , "strings"
-          , "strings-extra"
-          , "unicode"
-          , "boxes"
+          , "spec"
+          , "node-path"
+          , "node-fs-aff"
+          , "ansi"
+          , "dodo-printer"
           ]
-        , repo = "https://github.com/purescript-codegen/purescript-ps-cst.git"
-        , version = "a94ff4a6baadd35da0c42fcd8a5b8efd336d324e"
+        , repo = "https://github.com/srghma/purescript-ps-cst.git"
+        , version = "master"
         }
-      , boxes =
+      , dodo-printer =
         { dependencies =
-          [ "generics-rep", "prelude", "profunctor", "strings", "stringutils" ]
-        , repo = "https://github.com/srghma/purescript-boxes.git"
+          [ "aff"
+          , "ansi"
+          , "avar"
+          , "console"
+          , "effect"
+          , "foldable-traversable"
+          , "lists"
+          , "maybe"
+          , "minibench"
+          , "node-child-process"
+          , "node-fs-aff"
+          , "node-process"
+          , "psci-support"
+          , "strings"
+          ]
+        , repo = "https://github.com/natefaubion/purescript-dodo-printer.git"
         , version = "master"
         }
       , homogeneous-records =

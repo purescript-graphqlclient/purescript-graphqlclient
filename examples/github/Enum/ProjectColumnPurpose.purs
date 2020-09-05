@@ -1,12 +1,7 @@
 module Examples.Github.Enum.ProjectColumnPurpose where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,22 +10,28 @@ import GraphqlClient
   )
 
 -- | original name - ProjectColumnPurpose
-data ProjectColumnPurpose
-  = Todo
-  | InProgress
-  | Done
+data ProjectColumnPurpose = Todo | InProgress | Done
 
 derive instance eqProjectColumnPurpose :: Eq ProjectColumnPurpose
 
 derive instance ordProjectColumnPurpose :: Ord ProjectColumnPurpose
 
 fromToMap :: Array (Tuple String ProjectColumnPurpose)
-fromToMap = [Tuple "TODO" Todo, Tuple "IN_PROGRESS" InProgress, Tuple "DONE" Done]
+fromToMap = [ Tuple
+              "TODO"
+              Todo
+            , Tuple "IN_PROGRESS" InProgress
+            , Tuple "DONE" Done
+            ]
 
-instance projectColumnPurposeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder ProjectColumnPurpose where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "ProjectColumnPurpose" fromToMap
+instance projectColumnPurposeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                    ProjectColumnPurpose where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "ProjectColumnPurpose"
+                                        fromToMap
 
-instance projectColumnPurposeToGraphqlArgumentValue :: ToGraphqlArgumentValue ProjectColumnPurpose where
+instance projectColumnPurposeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                       ProjectColumnPurpose where
   toGraphqlArgumentValue =
     case _ of
       Todo -> ArgumentValueEnum "TODO"

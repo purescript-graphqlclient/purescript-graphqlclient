@@ -1,17 +1,9 @@
 module Examples.Github.Object.DeployKey where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__DeployKey
-  )
-import Examples.Github.Scalars
-  ( DateTime
-  , Id
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__DeployKey)
+import Examples.Github.Scalars (DateTime, Id)
 
 createdAt :: SelectionSet Scope__DeployKey DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

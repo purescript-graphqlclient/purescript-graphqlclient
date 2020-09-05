@@ -8,15 +8,25 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__CreateTeamDiscussionPayload
-  , Scope__TeamDiscussion
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (Scope__CreateTeamDiscussionPayload, Scope__TeamDiscussion)
+import Data.Maybe (Maybe)
 
-clientMutationId :: SelectionSet Scope__CreateTeamDiscussionPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId :: SelectionSet
+                    Scope__CreateTeamDiscussionPayload
+                    (Maybe
+                     String)
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-teamDiscussion :: forall r . SelectionSet Scope__TeamDiscussion r -> SelectionSet Scope__CreateTeamDiscussionPayload (Maybe r)
-teamDiscussion = selectionForCompositeField "teamDiscussion" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+teamDiscussion :: forall r . SelectionSet
+                             Scope__TeamDiscussion
+                             r -> SelectionSet
+                                  Scope__CreateTeamDiscussionPayload
+                                  (Maybe
+                                   r)
+teamDiscussion = selectionForCompositeField
+                 "teamDiscussion"
+                 []
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer

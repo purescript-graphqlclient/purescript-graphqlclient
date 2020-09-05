@@ -8,15 +8,22 @@ import GraphqlClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__ChangeUserStatusPayload
-  , Scope__UserStatus
-  )
-import Data.Maybe
-  ( Maybe
-  )
+  (Scope__ChangeUserStatusPayload, Scope__UserStatus)
+import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__ChangeUserStatusPayload (Maybe String)
-clientMutationId = selectionForField "clientMutationId" [] graphqlDefaultResponseScalarDecoder
+clientMutationId = selectionForField
+                   "clientMutationId"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
-status :: forall r . SelectionSet Scope__UserStatus r -> SelectionSet Scope__ChangeUserStatusPayload (Maybe r)
-status = selectionForCompositeField "status" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+status :: forall r . SelectionSet
+                     Scope__UserStatus
+                     r -> SelectionSet
+                          Scope__ChangeUserStatusPayload
+                          (Maybe
+                           r)
+status = selectionForCompositeField
+         "status"
+         []
+         graphqlDefaultResponseFunctorOrScalarDecoderTransformer

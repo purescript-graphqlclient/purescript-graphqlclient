@@ -1,12 +1,7 @@
 module Examples.Github.Enum.RepoAccessAuditEntryVisibility where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,22 +10,28 @@ import GraphqlClient
   )
 
 -- | original name - RepoAccessAuditEntryVisibility
-data RepoAccessAuditEntryVisibility
-  = Internal
-  | Private
-  | Public
+data RepoAccessAuditEntryVisibility = Internal | Private | Public
 
 derive instance eqRepoAccessAuditEntryVisibility :: Eq RepoAccessAuditEntryVisibility
 
 derive instance ordRepoAccessAuditEntryVisibility :: Ord RepoAccessAuditEntryVisibility
 
 fromToMap :: Array (Tuple String RepoAccessAuditEntryVisibility)
-fromToMap = [Tuple "INTERNAL" Internal, Tuple "PRIVATE" Private, Tuple "PUBLIC" Public]
+fromToMap = [ Tuple
+              "INTERNAL"
+              Internal
+            , Tuple "PRIVATE" Private
+            , Tuple "PUBLIC" Public
+            ]
 
-instance repoAccessAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder RepoAccessAuditEntryVisibility where
-  graphqlDefaultResponseScalarDecoder = enumDecoder "RepoAccessAuditEntryVisibility" fromToMap
+instance repoAccessAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                                              RepoAccessAuditEntryVisibility where
+  graphqlDefaultResponseScalarDecoder = enumDecoder
+                                        "RepoAccessAuditEntryVisibility"
+                                        fromToMap
 
-instance repoAccessAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue RepoAccessAuditEntryVisibility where
+instance repoAccessAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue
+                                                                 RepoAccessAuditEntryVisibility where
   toGraphqlArgumentValue =
     case _ of
       Internal -> ArgumentValueEnum "INTERNAL"

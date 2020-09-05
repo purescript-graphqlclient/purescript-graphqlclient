@@ -1,12 +1,7 @@
 module Examples.Swapi.Enum.Language where
 
-import Prelude
-  ( class Eq
-  , class Ord
-  )
-import Data.Tuple
-  ( Tuple(..)
-  )
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder
   , enumDecoder
@@ -15,19 +10,17 @@ import GraphqlClient
   )
 
 -- | original name - Language
-data Language
-  = En
-  | Es
-  | No
+data Language = En | Es | No
 
 derive instance eqLanguage :: Eq Language
 
 derive instance ordLanguage :: Ord Language
 
 fromToMap :: Array (Tuple String Language)
-fromToMap = [Tuple "EN" En, Tuple "ES" Es, Tuple "NO" No]
+fromToMap = [ Tuple "EN" En, Tuple "ES" Es, Tuple "NO" No ]
 
-instance languageGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder Language where
+instance languageGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+                                                        Language where
   graphqlDefaultResponseScalarDecoder = enumDecoder "Language" fromToMap
 
 instance languageToGraphqlArgumentValue :: ToGraphqlArgumentValue Language where

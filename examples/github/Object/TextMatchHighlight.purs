@@ -1,16 +1,14 @@
 module Examples.Github.Object.TextMatchHighlight where
 
 import GraphqlClient
-  ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
-  )
-import Examples.Github.Scopes
-  ( Scope__TextMatchHighlight
-  )
+  (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
+import Examples.Github.Scopes (Scope__TextMatchHighlight)
 
 beginIndice :: SelectionSet Scope__TextMatchHighlight Int
-beginIndice = selectionForField "beginIndice" [] graphqlDefaultResponseScalarDecoder
+beginIndice = selectionForField
+              "beginIndice"
+              []
+              graphqlDefaultResponseScalarDecoder
 
 endIndice :: SelectionSet Scope__TextMatchHighlight Int
 endIndice = selectionForField "endIndice" [] graphqlDefaultResponseScalarDecoder
