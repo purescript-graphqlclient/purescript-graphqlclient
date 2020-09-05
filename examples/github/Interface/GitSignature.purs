@@ -68,9 +68,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__GitSignature
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "GpgSignature"
-                         selections.onGpgSignature
+                       [ buildFragment "GpgSignature" selections.onGpgSignature
                        , buildFragment
                          "SmimeSignature"
                          selections.onSmimeSignature

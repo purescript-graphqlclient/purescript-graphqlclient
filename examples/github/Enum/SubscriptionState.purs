@@ -17,9 +17,7 @@ derive instance eqSubscriptionState :: Eq SubscriptionState
 derive instance ordSubscriptionState :: Ord SubscriptionState
 
 fromToMap :: Array (Tuple String SubscriptionState)
-fromToMap = [ Tuple
-              "UNSUBSCRIBED"
-              Unsubscribed
+fromToMap = [ Tuple "UNSUBSCRIBED" Unsubscribed
             , Tuple "SUBSCRIBED" Subscribed
             , Tuple "IGNORED" Ignored
             ]

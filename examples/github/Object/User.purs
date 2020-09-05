@@ -63,8 +63,7 @@ import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 import Examples.Github.Enum.RepositoryContributionType
   (RepositoryContributionType)
 
-type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional
-                                                      PinnableItemType
+type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r
                                           )
 
@@ -94,8 +93,7 @@ bio = selectionForField "bio" [] graphqlDefaultResponseScalarDecoder
 bioHTML :: SelectionSet Scope__User Html
 bioHTML = selectionForField "bioHTML" [] graphqlDefaultResponseScalarDecoder
 
-type CommitCommentsInputRowOptional r = ( after :: Optional
-                                                   String
+type CommitCommentsInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -124,8 +122,7 @@ companyHTML = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
-type ContributionsCollectionInputRowOptional r = ( organizationID :: Optional
-                                                                     Id
+type ContributionsCollectionInputRowOptional r = ( organizationID :: Optional Id
                                                  , from :: Optional DateTime
                                                  , to :: Optional DateTime
                                                  | r
@@ -158,8 +155,7 @@ databaseId = selectionForField
 email :: SelectionSet Scope__User String
 email = selectionForField "email" [] graphqlDefaultResponseScalarDecoder
 
-type FollowersInputRowOptional r = ( after :: Optional
-                                              String
+type FollowersInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -179,8 +175,7 @@ followers input = selectionForCompositeField
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type FollowingInputRowOptional r = ( after :: Optional
-                                              String
+type FollowingInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -216,8 +211,7 @@ gist input = selectionForCompositeField
               input)
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type GistCommentsInputRowOptional r = ( after :: Optional
-                                                 String
+type GistCommentsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
@@ -237,8 +231,7 @@ gistComments input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type GistsInputRowOptional r = ( privacy :: Optional
-                                            GistPrivacy
+type GistsInputRowOptional r = ( privacy :: Optional GistPrivacy
                                , orderBy :: Optional
                                             Examples.Github.InputObject.GistOrder
                                , after :: Optional String
@@ -318,8 +311,7 @@ isSiteAdmin = selectionForField
 isViewer :: SelectionSet Scope__User Boolean
 isViewer = selectionForField "isViewer" [] graphqlDefaultResponseScalarDecoder
 
-type IssueCommentsInputRowOptional r = ( after :: Optional
-                                                  String
+type IssueCommentsInputRowOptional r = ( after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
                                        , last :: Optional Int
@@ -418,8 +410,7 @@ organizationVerifiedDomainEmails input = selectionForField
                                           input)
                                          graphqlDefaultResponseScalarDecoder
 
-type OrganizationsInputRowOptional r = ( after :: Optional
-                                                  String
+type OrganizationsInputRowOptional r = ( after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
                                        , last :: Optional Int
@@ -439,8 +430,7 @@ organizations input = selectionForCompositeField
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PackagesInputRowOptional r = ( after :: Optional
-                                             String
+type PackagesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -569,8 +559,7 @@ projectsUrl = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
-type PublicKeysInputRowOptional r = ( after :: Optional
-                                               String
+type PublicKeysInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int
@@ -618,8 +607,7 @@ pullRequests input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoriesInputRowOptional r = ( privacy :: Optional
-                                                   RepositoryPrivacy
+type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                       , orderBy :: Optional
                                                    Examples.Github.InputObject.RepositoryOrder
                                       , affiliations :: Optional
@@ -708,8 +696,7 @@ resourcePath = selectionForField
                []
                graphqlDefaultResponseScalarDecoder
 
-type SavedRepliesInputRowOptional r = ( after :: Optional
-                                                 String
+type SavedRepliesInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
@@ -743,8 +730,7 @@ sponsorsListing = selectionForCompositeField
                   []
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional
-                                                             String
+type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional String
                                                   , before :: Optional String
                                                   , first :: Optional Int
                                                   , last :: Optional Int
@@ -770,8 +756,7 @@ sponsorshipsAsMaintainer input = selectionForCompositeField
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional
-                                                          String
+type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional String
                                                , before :: Optional String
                                                , first :: Optional Int
                                                , last :: Optional Int
@@ -795,8 +780,7 @@ sponsorshipsAsSponsor input = selectionForCompositeField
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type StarredRepositoriesInputRowOptional r = ( after :: Optional
-                                                        String
+type StarredRepositoriesInputRowOptional r = ( after :: Optional String
                                              , before :: Optional String
                                              , first :: Optional Int
                                              , last :: Optional Int
@@ -830,8 +814,7 @@ status = selectionForCompositeField
          []
          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type TopRepositoriesInputRowOptional r = ( after :: Optional
-                                                    String
+type TopRepositoriesInputRowOptional r = ( after :: Optional String
                                          , before :: Optional String
                                          , first :: Optional Int
                                          , last :: Optional Int
@@ -894,8 +877,7 @@ viewerIsFollowing = selectionForField
                     []
                     graphqlDefaultResponseScalarDecoder
 
-type WatchingInputRowOptional r = ( privacy :: Optional
-                                               RepositoryPrivacy
+type WatchingInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                   , orderBy :: Optional
                                                Examples.Github.InputObject.RepositoryOrder
                                   , affiliations :: Optional

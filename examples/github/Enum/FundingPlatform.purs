@@ -27,9 +27,7 @@ derive instance eqFundingPlatform :: Eq FundingPlatform
 derive instance ordFundingPlatform :: Ord FundingPlatform
 
 fromToMap :: Array (Tuple String FundingPlatform)
-fromToMap = [ Tuple
-              "GITHUB"
-              Github
+fromToMap = [ Tuple "GITHUB" Github
             , Tuple "PATREON" Patreon
             , Tuple "OPEN_COLLECTIVE" OpenCollective
             , Tuple "KO_FI" KoFi

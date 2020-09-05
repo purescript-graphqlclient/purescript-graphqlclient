@@ -18,9 +18,7 @@ derive instance eqPullRequestReviewState :: Eq PullRequestReviewState
 derive instance ordPullRequestReviewState :: Ord PullRequestReviewState
 
 fromToMap :: Array (Tuple String PullRequestReviewState)
-fromToMap = [ Tuple
-              "PENDING"
-              Pending
+fromToMap = [ Tuple "PENDING" Pending
             , Tuple "COMMENTED" Commented
             , Tuple "APPROVED" Approved
             , Tuple "CHANGES_REQUESTED" ChangesRequested

@@ -17,9 +17,7 @@ derive instance eqEnterpriseEnabledDisabledSettingValue :: Eq EnterpriseEnabledD
 derive instance ordEnterpriseEnabledDisabledSettingValue :: Ord EnterpriseEnabledDisabledSettingValue
 
 fromToMap :: Array (Tuple String EnterpriseEnabledDisabledSettingValue)
-fromToMap = [ Tuple
-              "ENABLED"
-              Enabled
+fromToMap = [ Tuple "ENABLED" Enabled
             , Tuple "DISABLED" Disabled
             , Tuple "NO_POLICY" NoPolicy
             ]

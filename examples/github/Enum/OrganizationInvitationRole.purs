@@ -18,9 +18,7 @@ derive instance eqOrganizationInvitationRole :: Eq OrganizationInvitationRole
 derive instance ordOrganizationInvitationRole :: Ord OrganizationInvitationRole
 
 fromToMap :: Array (Tuple String OrganizationInvitationRole)
-fromToMap = [ Tuple
-              "DIRECT_MEMBER"
-              DirectMember
+fromToMap = [ Tuple "DIRECT_MEMBER" DirectMember
             , Tuple "ADMIN" Admin
             , Tuple "BILLING_MANAGER" BillingManager
             , Tuple "REINSTATE" Reinstate

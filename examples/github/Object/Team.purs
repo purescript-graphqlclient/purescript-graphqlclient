@@ -35,8 +35,7 @@ import Examples.Github.Enum.TeamMemberRole (TeamMemberRole)
 import Examples.Github.Enum.TeamPrivacy (TeamPrivacy)
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
 
-type AncestorsInputRowOptional r = ( after :: Optional
-                                              String
+type AncestorsInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -128,8 +127,7 @@ discussion input = selectionForCompositeField
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type DiscussionsInputRowOptional r = ( after :: Optional
-                                                String
+type DiscussionsInputRowOptional r = ( after :: Optional String
                                      , before :: Optional String
                                      , first :: Optional Int
                                      , last :: Optional Int
@@ -179,8 +177,7 @@ editTeamUrl = selectionForField
 id :: SelectionSet Scope__Team Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-type InvitationsInputRowOptional r = ( after :: Optional
-                                                String
+type InvitationsInputRowOptional r = ( after :: Optional String
                                      , before :: Optional String
                                      , first :: Optional Int
                                      , last :: Optional Int
@@ -201,8 +198,7 @@ invitations input = selectionForCompositeField
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MemberStatusesInputRowOptional r = ( after :: Optional
-                                                   String
+type MemberStatusesInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -224,8 +220,7 @@ memberStatuses input = selectionForCompositeField
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MembersInputRowOptional r = ( after :: Optional
-                                            String
+type MembersInputRowOptional r = ( after :: Optional String
                                  , before :: Optional String
                                  , first :: Optional Int
                                  , last :: Optional Int
@@ -301,8 +296,7 @@ parentTeam = selectionForCompositeField
 privacy :: SelectionSet Scope__Team TeamPrivacy
 privacy = selectionForField "privacy" [] graphqlDefaultResponseScalarDecoder
 
-type RepositoriesInputRowOptional r = ( after :: Optional
-                                                 String
+type RepositoriesInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int

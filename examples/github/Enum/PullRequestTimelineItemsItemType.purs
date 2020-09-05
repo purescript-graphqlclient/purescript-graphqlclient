@@ -67,9 +67,7 @@ derive instance eqPullRequestTimelineItemsItemType :: Eq PullRequestTimelineItem
 derive instance ordPullRequestTimelineItemsItemType :: Ord PullRequestTimelineItemsItemType
 
 fromToMap :: Array (Tuple String PullRequestTimelineItemsItemType)
-fromToMap = [ Tuple
-              "PULL_REQUEST_COMMIT"
-              PullRequestCommit
+fromToMap = [ Tuple "PULL_REQUEST_COMMIT" PullRequestCommit
             , Tuple
               "PULL_REQUEST_COMMIT_COMMENT_THREAD"
               PullRequestCommitCommentThread

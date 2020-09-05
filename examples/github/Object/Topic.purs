@@ -36,8 +36,7 @@ relatedTopics input = selectionForCompositeField
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type StargazersInputRowOptional r = ( after :: Optional
-                                               String
+type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int

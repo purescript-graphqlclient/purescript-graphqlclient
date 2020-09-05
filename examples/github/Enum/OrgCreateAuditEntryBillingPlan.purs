@@ -18,9 +18,7 @@ derive instance eqOrgCreateAuditEntryBillingPlan :: Eq OrgCreateAuditEntryBillin
 derive instance ordOrgCreateAuditEntryBillingPlan :: Ord OrgCreateAuditEntryBillingPlan
 
 fromToMap :: Array (Tuple String OrgCreateAuditEntryBillingPlan)
-fromToMap = [ Tuple
-              "FREE"
-              Free
+fromToMap = [ Tuple "FREE" Free
             , Tuple "BUSINESS" Business
             , Tuple "BUSINESS_PLUS" BusinessPlus
             , Tuple "UNLIMITED" Unlimited

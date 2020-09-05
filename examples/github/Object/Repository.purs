@@ -78,8 +78,7 @@ import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
 import Examples.Github.Enum.RepositoryPermission (RepositoryPermission)
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
 
-type AssignableUsersInputRowOptional r = ( query :: Optional
-                                                    String
+type AssignableUsersInputRowOptional r = ( query :: Optional String
                                          , after :: Optional String
                                          , before :: Optional String
                                          , first :: Optional Int
@@ -100,8 +99,7 @@ assignableUsers input = selectionForCompositeField
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type BranchProtectionRulesInputRowOptional r = ( after :: Optional
-                                                          String
+type BranchProtectionRulesInputRowOptional r = ( after :: Optional String
                                                , before :: Optional String
                                                , first :: Optional Int
                                                , last :: Optional Int
@@ -158,8 +156,7 @@ collaborators input = selectionForCompositeField
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type CommitCommentsInputRowOptional r = ( after :: Optional
-                                                   String
+type CommitCommentsInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -205,8 +202,7 @@ deleteBranchOnMerge = selectionForField
                       []
                       graphqlDefaultResponseScalarDecoder
 
-type DeployKeysInputRowOptional r = ( after :: Optional
-                                               String
+type DeployKeysInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int
@@ -226,9 +222,7 @@ deployKeys input = selectionForCompositeField
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type DeploymentsInputRowOptional r = ( environments :: Optional
-                                                       (Array
-                                                        String)
+type DeploymentsInputRowOptional r = ( environments :: Optional (Array String)
                                      , orderBy :: Optional
                                                   Examples.Github.InputObject.DeploymentOrder
                                      , after :: Optional String
@@ -269,8 +263,7 @@ diskUsage = selectionForField "diskUsage" [] graphqlDefaultResponseScalarDecoder
 forkCount :: SelectionSet Scope__Repository Int
 forkCount = selectionForField "forkCount" [] graphqlDefaultResponseScalarDecoder
 
-type ForksInputRowOptional r = ( privacy :: Optional
-                                            RepositoryPrivacy
+type ForksInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                , orderBy :: Optional
                                             Examples.Github.InputObject.RepositoryOrder
                                , affiliations :: Optional
@@ -471,8 +464,7 @@ labels input = selectionForCompositeField
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type LanguagesInputRowOptional r = ( after :: Optional
-                                              String
+type LanguagesInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -512,8 +504,7 @@ lockReason = selectionForField
              []
              graphqlDefaultResponseScalarDecoder
 
-type MentionableUsersInputRowOptional r = ( query :: Optional
-                                                     String
+type MentionableUsersInputRowOptional r = ( query :: Optional String
                                           , after :: Optional String
                                           , before :: Optional String
                                           , first :: Optional Int
@@ -556,8 +547,7 @@ milestone input = selectionForCompositeField
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MilestonesInputRowOptional r = ( after :: Optional
-                                               String
+type MilestonesInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int
@@ -594,8 +584,7 @@ nameWithOwner = selectionForField
                 []
                 graphqlDefaultResponseScalarDecoder
 
-type ObjectInputRowOptional r = ( oid :: Optional
-                                         GitObjectId
+type ObjectInputRowOptional r = ( oid :: Optional GitObjectId
                                 , expression :: Optional String
                                 | r
                                 )
@@ -630,8 +619,7 @@ owner = selectionForCompositeField
         []
         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PackagesInputRowOptional r = ( after :: Optional
-                                             String
+type PackagesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -799,8 +787,7 @@ ref input = selectionForCompositeField
              input)
             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RefsInputRowOptional r = ( query :: Optional
-                                         String
+type RefsInputRowOptional r = ( query :: Optional String
                               , after :: Optional String
                               , before :: Optional String
                               , first :: Optional Int
@@ -843,8 +830,7 @@ release input = selectionForCompositeField
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReleasesInputRowOptional r = ( after :: Optional
-                                             String
+type ReleasesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -866,8 +852,7 @@ releases input = selectionForCompositeField
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryTopicsInputRowOptional r = ( after :: Optional
-                                                     String
+type RepositoryTopicsInputRowOptional r = ( after :: Optional String
                                           , before :: Optional String
                                           , first :: Optional Int
                                           , last :: Optional Int
@@ -915,8 +900,7 @@ squashMergeAllowed = selectionForField
 sshUrl :: SelectionSet Scope__Repository GitSshRemote
 sshUrl = selectionForField "sshUrl" [] graphqlDefaultResponseScalarDecoder
 
-type StargazersInputRowOptional r = ( after :: Optional
-                                               String
+type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int
@@ -938,8 +922,7 @@ stargazers input = selectionForCompositeField
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SubmodulesInputRowOptional r = ( after :: Optional
-                                               String
+type SubmodulesInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int
@@ -1054,8 +1037,7 @@ viewerSubscription = selectionForField
                      []
                      graphqlDefaultResponseScalarDecoder
 
-type VulnerabilityAlertsInputRowOptional r = ( after :: Optional
-                                                        String
+type VulnerabilityAlertsInputRowOptional r = ( after :: Optional String
                                              , before :: Optional String
                                              , first :: Optional Int
                                              , last :: Optional Int
@@ -1076,8 +1058,7 @@ vulnerabilityAlerts input = selectionForCompositeField
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type WatchersInputRowOptional r = ( after :: Optional
-                                             String
+type WatchersInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int

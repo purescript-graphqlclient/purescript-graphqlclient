@@ -40,8 +40,7 @@ enterprise = selectionForCompositeField
              []
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ExternalIdentitiesInputRowOptional r = ( after :: Optional
-                                                       String
+type ExternalIdentitiesInputRowOptional r = ( after :: Optional String
                                             , before :: Optional String
                                             , first :: Optional Int
                                             , last :: Optional Int

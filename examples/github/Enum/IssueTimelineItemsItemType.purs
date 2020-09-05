@@ -47,9 +47,7 @@ derive instance eqIssueTimelineItemsItemType :: Eq IssueTimelineItemsItemType
 derive instance ordIssueTimelineItemsItemType :: Ord IssueTimelineItemsItemType
 
 fromToMap :: Array (Tuple String IssueTimelineItemsItemType)
-fromToMap = [ Tuple
-              "ISSUE_COMMENT"
-              IssueComment
+fromToMap = [ Tuple "ISSUE_COMMENT" IssueComment
             , Tuple "CROSS_REFERENCED_EVENT" CrossReferencedEvent
             , Tuple "ADDED_TO_PROJECT_EVENT" AddedToProjectEvent
             , Tuple "ASSIGNED_EVENT" AssignedEvent

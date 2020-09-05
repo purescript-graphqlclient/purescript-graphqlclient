@@ -28,8 +28,7 @@ import Prelude (pure)
 id :: SelectionSet Scope__PackageOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-type PackagesInputRowOptional r = ( after :: Optional
-                                             String
+type PackagesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -68,9 +67,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__PackageOwner
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "Repository" selections.onRepository
                        , buildFragment "User" selections.onUser
                        ]

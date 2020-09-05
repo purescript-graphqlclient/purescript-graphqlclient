@@ -43,8 +43,7 @@ abbreviatedOid = selectionForField
 additions :: SelectionSet Scope__Commit Int
 additions = selectionForField "additions" [] graphqlDefaultResponseScalarDecoder
 
-type AssociatedPullRequestsInputRowOptional r = ( after :: Optional
-                                                           String
+type AssociatedPullRequestsInputRowOptional r = ( after :: Optional String
                                                 , before :: Optional String
                                                 , first :: Optional Int
                                                 , last :: Optional Int
@@ -113,8 +112,7 @@ changedFiles = selectionForField
                []
                graphqlDefaultResponseScalarDecoder
 
-type CommentsInputRowOptional r = ( after :: Optional
-                                             String
+type CommentsInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -169,9 +167,7 @@ committer = selectionForCompositeField
 deletions :: SelectionSet Scope__Commit Int
 deletions = selectionForField "deletions" [] graphqlDefaultResponseScalarDecoder
 
-type DeploymentsInputRowOptional r = ( environments :: Optional
-                                                       (Array
-                                                        String)
+type DeploymentsInputRowOptional r = ( environments :: Optional (Array String)
                                      , orderBy :: Optional
                                                   Examples.Github.InputObject.DeploymentOrder
                                      , after :: Optional String
@@ -195,8 +191,7 @@ deployments input = selectionForCompositeField
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type HistoryInputRowOptional r = ( after :: Optional
-                                            String
+type HistoryInputRowOptional r = ( after :: Optional String
                                  , before :: Optional String
                                  , first :: Optional Int
                                  , last :: Optional Int
@@ -265,8 +260,7 @@ onBehalfOf = selectionForCompositeField
              []
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ParentsInputRowOptional r = ( after :: Optional
-                                            String
+type ParentsInputRowOptional r = ( after :: Optional String
                                  , before :: Optional String
                                  , first :: Optional Int
                                  , last :: Optional Int
@@ -341,8 +335,7 @@ statusCheckRollup = selectionForCompositeField
                     []
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SubmodulesInputRowOptional r = ( after :: Optional
-                                               String
+type SubmodulesInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int

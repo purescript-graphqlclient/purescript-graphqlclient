@@ -17,9 +17,7 @@ derive instance eqGistOrderField :: Eq GistOrderField
 derive instance ordGistOrderField :: Ord GistOrderField
 
 fromToMap :: Array (Tuple String GistOrderField)
-fromToMap = [ Tuple
-              "CREATED_AT"
-              CreatedAt
+fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "UPDATED_AT" UpdatedAt
             , Tuple "PUSHED_AT" PushedAt
             ]

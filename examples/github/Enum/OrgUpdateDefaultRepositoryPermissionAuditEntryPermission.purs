@@ -21,9 +21,7 @@ fromToMap :: Array
              (Tuple
               String
               OrgUpdateDefaultRepositoryPermissionAuditEntryPermission)
-fromToMap = [ Tuple
-              "READ"
-              Read
+fromToMap = [ Tuple "READ" Read
             , Tuple "WRITE" Write
             , Tuple "ADMIN" Admin
             , Tuple "NONE" None

@@ -15,8 +15,7 @@ import Examples.Github.Scopes
   , Scope__Repository
   )
 
-type ContributionsInputRowOptional r = ( after :: Optional
-                                                  String
+type ContributionsInputRowOptional r = ( after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
                                        , last :: Optional Int

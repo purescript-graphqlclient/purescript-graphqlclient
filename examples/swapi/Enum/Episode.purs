@@ -17,9 +17,7 @@ derive instance eqEpisode :: Eq Episode
 derive instance ordEpisode :: Ord Episode
 
 fromToMap :: Array (Tuple String Episode)
-fromToMap = [ Tuple
-              "EMPIRE"
-              Empire
+fromToMap = [ Tuple "EMPIRE" Empire
             , Tuple "JEDI" Jedi
             , Tuple "NEWHOPE" Newhope
             ]

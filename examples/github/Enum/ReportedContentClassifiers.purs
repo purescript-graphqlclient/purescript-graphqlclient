@@ -18,9 +18,7 @@ derive instance eqReportedContentClassifiers :: Eq ReportedContentClassifiers
 derive instance ordReportedContentClassifiers :: Ord ReportedContentClassifiers
 
 fromToMap :: Array (Tuple String ReportedContentClassifiers)
-fromToMap = [ Tuple
-              "SPAM"
-              Spam
+fromToMap = [ Tuple "SPAM" Spam
             , Tuple "ABUSE" Abuse
             , Tuple "OFF_TOPIC" OffTopic
             , Tuple "OUTDATED" Outdated

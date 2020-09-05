@@ -4,8 +4,7 @@ import GraphqlClient (Optional)
 import Examples.Swapi.Enum.Language (Language)
 
 -- | original name - Greeting
-type Greeting = { language :: Optional
-                              Language
+type Greeting = { language :: Optional Language
                 , name :: String
                 , options :: Optional GreetingOptions
                 }

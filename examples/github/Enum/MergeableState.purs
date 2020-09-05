@@ -17,9 +17,7 @@ derive instance eqMergeableState :: Eq MergeableState
 derive instance ordMergeableState :: Ord MergeableState
 
 fromToMap :: Array (Tuple String MergeableState)
-fromToMap = [ Tuple
-              "MERGEABLE"
-              Mergeable
+fromToMap = [ Tuple "MERGEABLE" Mergeable
             , Tuple "CONFLICTING" Conflicting
             , Tuple "UNKNOWN" Unknown
             ]

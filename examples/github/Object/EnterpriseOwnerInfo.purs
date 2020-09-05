@@ -83,8 +83,7 @@ actionExecutionCapabilitySettingOrganizations input = selectionForCompositeField
                                                        input)
                                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type AdminsInputRowOptional r = ( query :: Optional
-                                           String
+type AdminsInputRowOptional r = ( query :: Optional String
                                 , role :: Optional EnterpriseAdministratorRole
                                 , orderBy :: Optional
                                              Examples.Github.InputObject.EnterpriseMemberOrder
@@ -258,8 +257,7 @@ ipAllowListEnabledSetting = selectionForField
                             []
                             graphqlDefaultResponseScalarDecoder
 
-type IpAllowListEntriesInputRowOptional r = ( after :: Optional
-                                                       String
+type IpAllowListEntriesInputRowOptional r = ( after :: Optional String
                                             , before :: Optional String
                                             , first :: Optional Int
                                             , last :: Optional Int
@@ -653,8 +651,7 @@ organizationProjectsSettingOrganizations input = selectionForCompositeField
                                                   input)
                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type OutsideCollaboratorsInputRowOptional r = ( login :: Optional
-                                                         String
+type OutsideCollaboratorsInputRowOptional r = ( login :: Optional String
                                               , query :: Optional String
                                               , orderBy :: Optional
                                                            Examples.Github.InputObject.EnterpriseMemberOrder
@@ -680,8 +677,7 @@ outsideCollaborators input = selectionForCompositeField
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PendingAdminInvitationsInputRowOptional r = ( query :: Optional
-                                                            String
+type PendingAdminInvitationsInputRowOptional r = ( query :: Optional String
                                                  , orderBy :: Optional
                                                               Examples.Github.InputObject.EnterpriseAdministratorInvitationOrder
                                                  , role :: Optional
@@ -736,8 +732,7 @@ pendingCollaboratorInvitations input = selectionForCompositeField
                                         input)
                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PendingCollaboratorsInputRowOptional r = ( query :: Optional
-                                                         String
+type PendingCollaboratorsInputRowOptional r = ( query :: Optional String
                                               , orderBy :: Optional
                                                            Examples.Github.InputObject.RepositoryInvitationOrder
                                               , after :: Optional String
@@ -760,8 +755,7 @@ pendingCollaborators input = selectionForCompositeField
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PendingMemberInvitationsInputRowOptional r = ( query :: Optional
-                                                             String
+type PendingMemberInvitationsInputRowOptional r = ( query :: Optional String
                                                   , after :: Optional String
                                                   , before :: Optional String
                                                   , first :: Optional Int

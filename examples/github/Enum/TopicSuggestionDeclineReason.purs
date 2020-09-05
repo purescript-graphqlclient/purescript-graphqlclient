@@ -18,9 +18,7 @@ derive instance eqTopicSuggestionDeclineReason :: Eq TopicSuggestionDeclineReaso
 derive instance ordTopicSuggestionDeclineReason :: Ord TopicSuggestionDeclineReason
 
 fromToMap :: Array (Tuple String TopicSuggestionDeclineReason)
-fromToMap = [ Tuple
-              "NOT_RELEVANT"
-              NotRelevant
+fromToMap = [ Tuple "NOT_RELEVANT" NotRelevant
             , Tuple "TOO_SPECIFIC" TooSpecific
             , Tuple "PERSONAL_PREFERENCE" PersonalPreference
             , Tuple "TOO_GENERAL" TooGeneral

@@ -18,9 +18,7 @@ derive instance eqProjectTemplate :: Eq ProjectTemplate
 derive instance ordProjectTemplate :: Ord ProjectTemplate
 
 fromToMap :: Array (Tuple String ProjectTemplate)
-fromToMap = [ Tuple
-              "BASIC_KANBAN"
-              BasicKanban
+fromToMap = [ Tuple "BASIC_KANBAN" BasicKanban
             , Tuple "AUTOMATED_KANBAN_V2" AutomatedKanbanV2
             , Tuple "AUTOMATED_REVIEWS_KANBAN" AutomatedReviewsKanban
             , Tuple "BUG_TRIAGE" BugTriage

@@ -19,8 +19,7 @@ message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder
 octicon :: SelectionSet Scope__OrganizationsHovercardContext String
 octicon = selectionForField "octicon" [] graphqlDefaultResponseScalarDecoder
 
-type RelevantOrganizationsInputRowOptional r = ( after :: Optional
-                                                          String
+type RelevantOrganizationsInputRowOptional r = ( after :: Optional String
                                                , before :: Optional String
                                                , first :: Optional Int
                                                , last :: Optional Int

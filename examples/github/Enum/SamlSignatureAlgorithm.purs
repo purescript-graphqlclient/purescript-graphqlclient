@@ -17,9 +17,7 @@ derive instance eqSamlSignatureAlgorithm :: Eq SamlSignatureAlgorithm
 derive instance ordSamlSignatureAlgorithm :: Ord SamlSignatureAlgorithm
 
 fromToMap :: Array (Tuple String SamlSignatureAlgorithm)
-fromToMap = [ Tuple
-              "RSA_SHA1"
-              RsaSha1
+fromToMap = [ Tuple "RSA_SHA1" RsaSha1
             , Tuple "RSA_SHA256" RsaSha256
             , Tuple "RSA_SHA384" RsaSha384
             , Tuple "RSA_SHA512" RsaSha512

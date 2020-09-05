@@ -39,9 +39,7 @@ labels input = selectionForCompositeField
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type Fragments decodesTo = { onIssue :: SelectionSet
-                                        Scope__Issue
-                                        decodesTo
+type Fragments decodesTo = { onIssue :: SelectionSet Scope__Issue decodesTo
                            , onPullRequest :: SelectionSet
                                               Scope__PullRequest
                                               decodesTo
@@ -52,9 +50,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Labelable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Issue"
-                         selections.onIssue
+                       [ buildFragment "Issue" selections.onIssue
                        , buildFragment "PullRequest" selections.onPullRequest
                        ]
 

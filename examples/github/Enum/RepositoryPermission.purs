@@ -17,9 +17,7 @@ derive instance eqRepositoryPermission :: Eq RepositoryPermission
 derive instance ordRepositoryPermission :: Ord RepositoryPermission
 
 fromToMap :: Array (Tuple String RepositoryPermission)
-fromToMap = [ Tuple
-              "ADMIN"
-              Admin
+fromToMap = [ Tuple "ADMIN" Admin
             , Tuple "MAINTAIN" Maintain
             , Tuple "WRITE" Write
             , Tuple "TRIAGE" Triage

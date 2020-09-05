@@ -46,8 +46,7 @@ activeLockReason = selectionForField
                    []
                    graphqlDefaultResponseScalarDecoder
 
-type AssigneesInputRowOptional r = ( after :: Optional
-                                              String
+type AssigneesInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -99,8 +98,7 @@ closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
 closedAt :: SelectionSet Scope__Issue (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
-type CommentsInputRowOptional r = ( after :: Optional
-                                             String
+type CommentsInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -219,8 +217,7 @@ milestone = selectionForCompositeField
 number :: SelectionSet Scope__Issue Int
 number = selectionForField "number" [] graphqlDefaultResponseScalarDecoder
 
-type ParticipantsInputRowOptional r = ( after :: Optional
-                                                 String
+type ParticipantsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
@@ -240,8 +237,7 @@ participants input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ProjectCardsInputRowOptional r = ( after :: Optional
-                                                 String
+type ProjectCardsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
@@ -283,8 +279,7 @@ reactionGroups = selectionForCompositeField
                  []
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReactionsInputRowOptional r = ( after :: Optional
-                                              String
+type ReactionsInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -326,8 +321,7 @@ resourcePath = selectionForField
 state :: SelectionSet Scope__Issue IssueState
 state = selectionForField "state" [] graphqlDefaultResponseScalarDecoder
 
-type TimelineInputRowOptional r = ( since :: Optional
-                                             DateTime
+type TimelineInputRowOptional r = ( since :: Optional DateTime
                                   , after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
@@ -348,8 +342,7 @@ timeline input = selectionForCompositeField
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type TimelineItemsInputRowOptional r = ( since :: Optional
-                                                  DateTime
+type TimelineItemsInputRowOptional r = ( since :: Optional DateTime
                                        , skip :: Optional Int
                                        , itemTypes :: Optional
                                                       (Array
@@ -383,8 +376,7 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 url :: SelectionSet Scope__Issue Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type UserContentEditsInputRowOptional r = ( after :: Optional
-                                                     String
+type UserContentEditsInputRowOptional r = ( after :: Optional String
                                           , before :: Optional String
                                           , first :: Optional Int
                                           , last :: Optional Int

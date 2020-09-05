@@ -17,9 +17,7 @@ derive instance eqStatusState :: Eq StatusState
 derive instance ordStatusState :: Ord StatusState
 
 fromToMap :: Array (Tuple String StatusState)
-fromToMap = [ Tuple
-              "EXPECTED"
-              Expected
+fromToMap = [ Tuple "EXPECTED" Expected
             , Tuple "ERROR" Error
             , Tuple "FAILURE" Failure
             , Tuple "PENDING" Pending

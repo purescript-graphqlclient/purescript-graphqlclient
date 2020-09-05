@@ -17,9 +17,7 @@ derive instance eqIssueOrderField :: Eq IssueOrderField
 derive instance ordIssueOrderField :: Ord IssueOrderField
 
 fromToMap :: Array (Tuple String IssueOrderField)
-fromToMap = [ Tuple
-              "CREATED_AT"
-              CreatedAt
+fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "UPDATED_AT" UpdatedAt
             , Tuple "COMMENTS" Comments
             ]

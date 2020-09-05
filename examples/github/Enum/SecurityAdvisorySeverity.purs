@@ -17,9 +17,7 @@ derive instance eqSecurityAdvisorySeverity :: Eq SecurityAdvisorySeverity
 derive instance ordSecurityAdvisorySeverity :: Ord SecurityAdvisorySeverity
 
 fromToMap :: Array (Tuple String SecurityAdvisorySeverity)
-fromToMap = [ Tuple
-              "LOW"
-              Low
+fromToMap = [ Tuple "LOW" Low
             , Tuple "MODERATE" Moderate
             , Tuple "HIGH" High
             , Tuple "CRITICAL" Critical

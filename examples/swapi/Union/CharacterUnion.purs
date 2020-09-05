@@ -5,9 +5,7 @@ import Examples.Swapi.Scopes (Scope__Droid, Scope__Human, Scope__CharacterUnion)
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onDroid :: SelectionSet
-                                        Scope__Droid
-                                        decodesTo
+type Fragments decodesTo = { onDroid :: SelectionSet Scope__Droid decodesTo
                            , onHuman :: SelectionSet Scope__Human decodesTo
                            }
 
@@ -16,9 +14,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__CharacterUnion
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Droid"
-                         selections.onDroid
+                       [ buildFragment "Droid" selections.onDroid
                        , buildFragment "Human" selections.onHuman
                        ]
 

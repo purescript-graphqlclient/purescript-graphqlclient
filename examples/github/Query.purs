@@ -230,8 +230,7 @@ marketplaceListing input = selectionForCompositeField
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MarketplaceListingsInputRowOptional r = ( after :: Optional
-                                                        String
+type MarketplaceListingsInputRowOptional r = ( after :: Optional String
                                              , before :: Optional String
                                              , first :: Optional Int
                                              , last :: Optional Int
@@ -400,8 +399,7 @@ resource input = selectionForCompositeField
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SearchInputRowOptional r = ( after :: Optional
-                                           String
+type SearchInputRowOptional r = ( after :: Optional String
                                 , before :: Optional String
                                 , first :: Optional Int
                                 , last :: Optional Int

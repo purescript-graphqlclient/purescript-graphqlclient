@@ -18,9 +18,7 @@ derive instance eqActionExecutionCapabilitySetting :: Eq ActionExecutionCapabili
 derive instance ordActionExecutionCapabilitySetting :: Ord ActionExecutionCapabilitySetting
 
 fromToMap :: Array (Tuple String ActionExecutionCapabilitySetting)
-fromToMap = [ Tuple
-              "DISABLED"
-              Disabled
+fromToMap = [ Tuple "DISABLED" Disabled
             , Tuple "ALL_ACTIONS" AllActions
             , Tuple "LOCAL_ACTIONS_ONLY" LocalActionsOnly
             , Tuple "NO_POLICY" NoPolicy

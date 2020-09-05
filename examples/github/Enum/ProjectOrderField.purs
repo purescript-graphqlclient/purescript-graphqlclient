@@ -17,9 +17,7 @@ derive instance eqProjectOrderField :: Eq ProjectOrderField
 derive instance ordProjectOrderField :: Ord ProjectOrderField
 
 fromToMap :: Array (Tuple String ProjectOrderField)
-fromToMap = [ Tuple
-              "CREATED_AT"
-              CreatedAt
+fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "UPDATED_AT" UpdatedAt
             , Tuple "NAME" Name
             ]

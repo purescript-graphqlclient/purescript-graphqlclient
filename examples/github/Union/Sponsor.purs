@@ -16,9 +16,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Sponsor
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "User" selections.onUser
                        ]
 

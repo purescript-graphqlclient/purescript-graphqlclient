@@ -18,9 +18,7 @@ derive instance eqOrgRemoveMemberAuditEntryMembershipType :: Eq OrgRemoveMemberA
 derive instance ordOrgRemoveMemberAuditEntryMembershipType :: Ord OrgRemoveMemberAuditEntryMembershipType
 
 fromToMap :: Array (Tuple String OrgRemoveMemberAuditEntryMembershipType)
-fromToMap = [ Tuple
-              "DIRECT_MEMBER"
-              DirectMember
+fromToMap = [ Tuple "DIRECT_MEMBER" DirectMember
             , Tuple "ADMIN" Admin
             , Tuple "BILLING_MANAGER" BillingManager
             , Tuple "UNAFFILIATED" Unaffiliated

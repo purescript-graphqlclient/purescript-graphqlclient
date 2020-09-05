@@ -17,9 +17,7 @@ derive instance eqUserBlockDuration :: Eq UserBlockDuration
 derive instance ordUserBlockDuration :: Ord UserBlockDuration
 
 fromToMap :: Array (Tuple String UserBlockDuration)
-fromToMap = [ Tuple
-              "ONE_DAY"
-              OneDay
+fromToMap = [ Tuple "ONE_DAY" OneDay
             , Tuple "THREE_DAYS" ThreeDays
             , Tuple "ONE_WEEK" OneWeek
             , Tuple "ONE_MONTH" OneMonth

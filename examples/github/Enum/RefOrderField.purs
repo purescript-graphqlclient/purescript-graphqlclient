@@ -17,9 +17,7 @@ derive instance eqRefOrderField :: Eq RefOrderField
 derive instance ordRefOrderField :: Ord RefOrderField
 
 fromToMap :: Array (Tuple String RefOrderField)
-fromToMap = [ Tuple
-              "TAG_COMMIT_DATE"
-              TagCommitDate
+fromToMap = [ Tuple "TAG_COMMIT_DATE" TagCommitDate
             , Tuple "ALPHABETICAL" Alphabetical
             ]
 

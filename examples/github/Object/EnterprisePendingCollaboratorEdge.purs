@@ -38,8 +38,7 @@ node = selectionForCompositeField
        []
        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoriesInputRowOptional r = ( after :: Optional
-                                                 String
+type RepositoriesInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int

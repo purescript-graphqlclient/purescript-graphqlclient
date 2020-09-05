@@ -12,8 +12,7 @@ import Type.Row (type (+))
 import Examples.Github.Scopes
   (Scope__SponsorshipConnection, Scope__SponsorsTierAdminInfo)
 
-type SponsorshipsInputRowOptional r = ( after :: Optional
-                                                 String
+type SponsorshipsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int

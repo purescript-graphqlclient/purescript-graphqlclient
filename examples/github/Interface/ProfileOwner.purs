@@ -24,8 +24,7 @@ import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Id, Uri)
 import Prelude (pure)
 
-type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional
-                                                      PinnableItemType
+type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r
                                           )
 
@@ -140,9 +139,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__ProfileOwner
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "User" selections.onUser
                        ]
 

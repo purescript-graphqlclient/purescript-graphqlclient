@@ -17,9 +17,7 @@ derive instance eqProjectColumnPurpose :: Eq ProjectColumnPurpose
 derive instance ordProjectColumnPurpose :: Ord ProjectColumnPurpose
 
 fromToMap :: Array (Tuple String ProjectColumnPurpose)
-fromToMap = [ Tuple
-              "TODO"
-              Todo
+fromToMap = [ Tuple "TODO" Todo
             , Tuple "IN_PROGRESS" InProgress
             , Tuple "DONE" Done
             ]

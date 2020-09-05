@@ -32,8 +32,7 @@ subject = selectionForCompositeField
           []
           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type UsersInputRowOptional r = ( after :: Optional
-                                          String
+type UsersInputRowOptional r = ( after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int

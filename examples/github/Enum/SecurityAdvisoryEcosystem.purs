@@ -17,9 +17,7 @@ derive instance eqSecurityAdvisoryEcosystem :: Eq SecurityAdvisoryEcosystem
 derive instance ordSecurityAdvisoryEcosystem :: Ord SecurityAdvisoryEcosystem
 
 fromToMap :: Array (Tuple String SecurityAdvisoryEcosystem)
-fromToMap = [ Tuple
-              "RUBYGEMS"
-              Rubygems
+fromToMap = [ Tuple "RUBYGEMS" Rubygems
             , Tuple "NPM" Npm
             , Tuple "PIP" Pip
             , Tuple "MAVEN" Maven

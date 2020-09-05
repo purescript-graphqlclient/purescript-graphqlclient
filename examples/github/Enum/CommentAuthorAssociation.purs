@@ -24,9 +24,7 @@ derive instance eqCommentAuthorAssociation :: Eq CommentAuthorAssociation
 derive instance ordCommentAuthorAssociation :: Ord CommentAuthorAssociation
 
 fromToMap :: Array (Tuple String CommentAuthorAssociation)
-fromToMap = [ Tuple
-              "MEMBER"
-              Member
+fromToMap = [ Tuple "MEMBER" Member
             , Tuple "OWNER" Owner
             , Tuple "COLLABORATOR" Collaborator
             , Tuple "CONTRIBUTOR" Contributor

@@ -25,9 +25,7 @@ derive instance eqPinnableItemType :: Eq PinnableItemType
 derive instance ordPinnableItemType :: Ord PinnableItemType
 
 fromToMap :: Array (Tuple String PinnableItemType)
-fromToMap = [ Tuple
-              "REPOSITORY"
-              Repository
+fromToMap = [ Tuple "REPOSITORY" Repository
             , Tuple "GIST" Gist
             , Tuple "ISSUE" Issue
             , Tuple "PROJECT" Project

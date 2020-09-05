@@ -36,9 +36,7 @@ viewerSubscription = selectionForField
                      []
                      graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onCommit :: SelectionSet
-                                         Scope__Commit
-                                         decodesTo
+type Fragments decodesTo = { onCommit :: SelectionSet Scope__Commit decodesTo
                            , onIssue :: SelectionSet Scope__Issue decodesTo
                            , onPullRequest :: SelectionSet
                                               Scope__PullRequest
@@ -57,9 +55,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Subscribable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Commit"
-                         selections.onCommit
+                       [ buildFragment "Commit" selections.onCommit
                        , buildFragment "Issue" selections.onIssue
                        , buildFragment "PullRequest" selections.onPullRequest
                        , buildFragment "Repository" selections.onRepository

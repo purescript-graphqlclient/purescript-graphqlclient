@@ -27,8 +27,7 @@ import Prelude (pure)
 id :: SelectionSet Scope__Starrable Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-type StargazersInputRowOptional r = ( after :: Optional
-                                               String
+type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int
@@ -56,9 +55,7 @@ viewerHasStarred = selectionForField
                    []
                    graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onGist :: SelectionSet
-                                       Scope__Gist
-                                       decodesTo
+type Fragments decodesTo = { onGist :: SelectionSet Scope__Gist decodesTo
                            , onRepository :: SelectionSet
                                              Scope__Repository
                                              decodesTo
@@ -70,9 +67,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Starrable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Gist"
-                         selections.onGist
+                       [ buildFragment "Gist" selections.onGist
                        , buildFragment "Repository" selections.onRepository
                        , buildFragment "Topic" selections.onTopic
                        ]

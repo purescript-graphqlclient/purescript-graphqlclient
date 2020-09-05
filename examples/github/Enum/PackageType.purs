@@ -17,9 +17,7 @@ derive instance eqPackageType :: Eq PackageType
 derive instance ordPackageType :: Ord PackageType
 
 fromToMap :: Array (Tuple String PackageType)
-fromToMap = [ Tuple
-              "NPM"
-              Npm
+fromToMap = [ Tuple "NPM" Npm
             , Tuple "RUBYGEMS" Rubygems
             , Tuple "MAVEN" Maven
             , Tuple "DOCKER" Docker

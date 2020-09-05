@@ -24,9 +24,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__PermissionGranter
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "Repository" selections.onRepository
                        , buildFragment "Team" selections.onTeam
                        ]

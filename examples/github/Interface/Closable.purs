@@ -24,9 +24,7 @@ closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
 closedAt :: SelectionSet Scope__Closable (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onIssue :: SelectionSet
-                                        Scope__Issue
-                                        decodesTo
+type Fragments decodesTo = { onIssue :: SelectionSet Scope__Issue decodesTo
                            , onMilestone :: SelectionSet
                                             Scope__Milestone
                                             decodesTo
@@ -41,9 +39,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Closable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Issue"
-                         selections.onIssue
+                       [ buildFragment "Issue" selections.onIssue
                        , buildFragment "Milestone" selections.onMilestone
                        , buildFragment "Project" selections.onProject
                        , buildFragment "PullRequest" selections.onPullRequest

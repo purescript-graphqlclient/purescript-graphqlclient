@@ -17,9 +17,7 @@ derive instance eqRepositoryVisibility :: Eq RepositoryVisibility
 derive instance ordRepositoryVisibility :: Ord RepositoryVisibility
 
 fromToMap :: Array (Tuple String RepositoryVisibility)
-fromToMap = [ Tuple
-              "PRIVATE"
-              Private
+fromToMap = [ Tuple "PRIVATE" Private
             , Tuple "PUBLIC" Public
             , Tuple "INTERNAL" Internal
             ]

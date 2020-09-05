@@ -28,9 +28,7 @@ fromToMap :: Array
              (Tuple
               String
               OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility)
-fromToMap = [ Tuple
-              "ALL"
-              All
+fromToMap = [ Tuple "ALL" All
             , Tuple "PUBLIC" Public
             , Tuple "NONE" None
             , Tuple "PRIVATE" Private

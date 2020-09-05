@@ -17,8 +17,7 @@ import Examples.Github.Scopes
 import Examples.Github.Scalars (DateTime, Id, Uri)
 import Examples.Github.Enum.ProjectColumnPurpose (ProjectColumnPurpose)
 
-type CardsInputRowOptional r = ( after :: Optional
-                                          String
+type CardsInputRowOptional r = ( after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int

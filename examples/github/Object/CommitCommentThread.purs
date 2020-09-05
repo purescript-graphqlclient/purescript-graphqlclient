@@ -19,8 +19,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Id)
 
-type CommentsInputRowOptional r = ( after :: Optional
-                                             String
+type CommentsInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int

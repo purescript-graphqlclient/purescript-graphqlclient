@@ -18,9 +18,7 @@ derive instance eqDeploymentStatusState :: Eq DeploymentStatusState
 derive instance ordDeploymentStatusState :: Ord DeploymentStatusState
 
 fromToMap :: Array (Tuple String DeploymentStatusState)
-fromToMap = [ Tuple
-              "PENDING"
-              Pending
+fromToMap = [ Tuple "PENDING" Pending
             , Tuple "SUCCESS" Success
             , Tuple "FAILURE" Failure
             , Tuple "INACTIVE" Inactive

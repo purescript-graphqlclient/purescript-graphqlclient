@@ -132,8 +132,7 @@ reactionGroups = selectionForCompositeField
                  []
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReactionsInputRowOptional r = ( after :: Optional
-                                              String
+type ReactionsInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -168,8 +167,7 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 url :: SelectionSet Scope__TeamDiscussionComment Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type UserContentEditsInputRowOptional r = ( after :: Optional
-                                                     String
+type UserContentEditsInputRowOptional r = ( after :: Optional String
                                           , before :: Optional String
                                           , first :: Optional Int
                                           , last :: Optional Int

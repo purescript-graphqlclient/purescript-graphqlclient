@@ -55,8 +55,7 @@ login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__EnterpriseUserAccount (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type OrganizationsInputRowOptional r = ( query :: Optional
-                                                  String
+type OrganizationsInputRowOptional r = ( query :: Optional String
                                        , orderBy :: Optional
                                                     Examples.Github.InputObject.OrganizationOrder
                                        , role :: Optional

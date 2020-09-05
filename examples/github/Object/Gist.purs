@@ -22,8 +22,7 @@ import Examples.Github.Scalars (DateTime, GitObjectId, Id, Uri)
 import Data.Maybe (Maybe)
 import Examples.Github.InputObject (GistOrder, StarOrder) as Examples.Github.InputObject
 
-type CommentsInputRowOptional r = ( after :: Optional
-                                             String
+type CommentsInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -52,8 +51,7 @@ description = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
-type FilesInputRowOptional r = ( limit :: Optional
-                                          Int
+type FilesInputRowOptional r = ( limit :: Optional Int
                                , oid :: Optional GitObjectId
                                | r
                                )
@@ -74,8 +72,7 @@ files input = selectionForCompositeField
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ForksInputRowOptional r = ( after :: Optional
-                                          String
+type ForksInputRowOptional r = ( after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int
@@ -129,8 +126,7 @@ resourcePath = selectionForField
                []
                graphqlDefaultResponseScalarDecoder
 
-type StargazersInputRowOptional r = ( after :: Optional
-                                               String
+type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int
                                     , last :: Optional Int

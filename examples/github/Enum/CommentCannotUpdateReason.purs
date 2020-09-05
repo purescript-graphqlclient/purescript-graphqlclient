@@ -24,9 +24,7 @@ derive instance eqCommentCannotUpdateReason :: Eq CommentCannotUpdateReason
 derive instance ordCommentCannotUpdateReason :: Ord CommentCannotUpdateReason
 
 fromToMap :: Array (Tuple String CommentCannotUpdateReason)
-fromToMap = [ Tuple
-              "ARCHIVED"
-              Archived
+fromToMap = [ Tuple "ARCHIVED" Archived
             , Tuple "INSUFFICIENT_ACCESS" InsufficientAccess
             , Tuple "LOCKED" Locked
             , Tuple "LOGIN_REQUIRED" LoginRequired

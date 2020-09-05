@@ -101,9 +101,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__ProjectOwner
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "Repository" selections.onRepository
                        , buildFragment "User" selections.onUser
                        ]

@@ -6,9 +6,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onApp :: SelectionSet
-                                      Scope__App
-                                      decodesTo
+type Fragments decodesTo = { onApp :: SelectionSet Scope__App decodesTo
                            , onTeam :: SelectionSet Scope__Team decodesTo
                            , onUser :: SelectionSet Scope__User decodesTo
                            }
@@ -18,9 +16,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__PushAllowanceActor
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "App"
-                         selections.onApp
+                       [ buildFragment "App" selections.onApp
                        , buildFragment "Team" selections.onTeam
                        , buildFragment "User" selections.onUser
                        ]

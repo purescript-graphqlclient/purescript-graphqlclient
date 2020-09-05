@@ -17,9 +17,7 @@ derive instance eqIpAllowListEntryOrderField :: Eq IpAllowListEntryOrderField
 derive instance ordIpAllowListEntryOrderField :: Ord IpAllowListEntryOrderField
 
 fromToMap :: Array (Tuple String IpAllowListEntryOrderField)
-fromToMap = [ Tuple
-              "CREATED_AT"
-              CreatedAt
+fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "ALLOW_LIST_VALUE" AllowListValue
             ]
 

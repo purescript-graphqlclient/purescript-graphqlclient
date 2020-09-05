@@ -26,9 +26,7 @@ derive instance eqPhrase :: Eq Phrase
 derive instance ordPhrase :: Ord Phrase
 
 fromToMap :: Array (Tuple String Phrase)
-fromToMap = [ Tuple
-              "BAD_FEELING"
-              BadFeeling
+fromToMap = [ Tuple "BAD_FEELING" BadFeeling
             , Tuple "DROIDS" Droids
             , Tuple "FAITH" Faith
             , Tuple "FATHER" Father

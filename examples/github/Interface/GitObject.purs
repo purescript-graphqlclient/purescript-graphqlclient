@@ -52,9 +52,7 @@ repository = selectionForCompositeField
              []
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type Fragments decodesTo = { onBlob :: SelectionSet
-                                       Scope__Blob
-                                       decodesTo
+type Fragments decodesTo = { onBlob :: SelectionSet Scope__Blob decodesTo
                            , onCommit :: SelectionSet Scope__Commit decodesTo
                            , onTag :: SelectionSet Scope__Tag decodesTo
                            , onTree :: SelectionSet Scope__Tree decodesTo
@@ -65,9 +63,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__GitObject
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Blob"
-                         selections.onBlob
+                       [ buildFragment "Blob" selections.onBlob
                        , buildFragment "Commit" selections.onCommit
                        , buildFragment "Tag" selections.onTag
                        , buildFragment "Tree" selections.onTree

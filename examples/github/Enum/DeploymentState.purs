@@ -26,9 +26,7 @@ derive instance eqDeploymentState :: Eq DeploymentState
 derive instance ordDeploymentState :: Ord DeploymentState
 
 fromToMap :: Array (Tuple String DeploymentState)
-fromToMap = [ Tuple
-              "ABANDONED"
-              Abandoned
+fromToMap = [ Tuple "ABANDONED" Abandoned
             , Tuple "ACTIVE" Active
             , Tuple "DESTROYED" Destroyed
             , Tuple "ERROR" Error

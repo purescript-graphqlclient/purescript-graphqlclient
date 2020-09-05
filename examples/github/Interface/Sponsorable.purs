@@ -32,8 +32,7 @@ sponsorsListing = selectionForCompositeField
                   []
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional
-                                                             String
+type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional String
                                                   , before :: Optional String
                                                   , first :: Optional Int
                                                   , last :: Optional Int
@@ -59,8 +58,7 @@ sponsorshipsAsMaintainer input = selectionForCompositeField
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional
-                                                          String
+type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional String
                                                , before :: Optional String
                                                , first :: Optional Int
                                                , last :: Optional Int
@@ -95,9 +93,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Sponsorable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "User" selections.onUser
                        ]
 

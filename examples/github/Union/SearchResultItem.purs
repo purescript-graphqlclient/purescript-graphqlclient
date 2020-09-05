@@ -14,9 +14,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onApp :: SelectionSet
-                                      Scope__App
-                                      decodesTo
+type Fragments decodesTo = { onApp :: SelectionSet Scope__App decodesTo
                            , onIssue :: SelectionSet Scope__Issue decodesTo
                            , onMarketplaceListing :: SelectionSet
                                                      Scope__MarketplaceListing
@@ -38,9 +36,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__SearchResultItem
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "App"
-                         selections.onApp
+                       [ buildFragment "App" selections.onApp
                        , buildFragment "Issue" selections.onIssue
                        , buildFragment
                          "MarketplaceListing"

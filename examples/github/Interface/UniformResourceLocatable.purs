@@ -44,9 +44,7 @@ resourcePath = selectionForField
 url :: SelectionSet Scope__UniformResourceLocatable Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onBot :: SelectionSet
-                                      Scope__Bot
-                                      decodesTo
+type Fragments decodesTo = { onBot :: SelectionSet Scope__Bot decodesTo
                            , onClosedEvent :: SelectionSet
                                               Scope__ClosedEvent
                                               decodesTo
@@ -104,9 +102,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__UniformResourceLocatable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Bot"
-                         selections.onBot
+                       [ buildFragment "Bot" selections.onBot
                        , buildFragment "ClosedEvent" selections.onClosedEvent
                        , buildFragment "Commit" selections.onCommit
                        , buildFragment

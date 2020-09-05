@@ -20,8 +20,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type MemberStatusesInputRowOptional r = ( after :: Optional
-                                                   String
+type MemberStatusesInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -54,9 +53,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__MemberStatusable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "Team" selections.onTeam
                        ]
 

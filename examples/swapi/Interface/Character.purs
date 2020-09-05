@@ -38,9 +38,7 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__Character String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onDroid :: SelectionSet
-                                        Scope__Droid
-                                        decodesTo
+type Fragments decodesTo = { onDroid :: SelectionSet Scope__Droid decodesTo
                            , onHuman :: SelectionSet Scope__Human decodesTo
                            }
 
@@ -49,9 +47,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Character
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Droid"
-                         selections.onDroid
+                       [ buildFragment "Droid" selections.onDroid
                        , buildFragment "Human" selections.onHuman
                        ]
 

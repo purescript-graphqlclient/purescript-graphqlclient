@@ -19,8 +19,7 @@ hasPinnedItems = selectionForField
                  []
                  graphqlDefaultResponseScalarDecoder
 
-type ItemsInputRowOptional r = ( after :: Optional
-                                          String
+type ItemsInputRowOptional r = ( after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int

@@ -17,9 +17,7 @@ derive instance eqEnterpriseServerUserAccountsUploadSyncState :: Eq EnterpriseSe
 derive instance ordEnterpriseServerUserAccountsUploadSyncState :: Ord EnterpriseServerUserAccountsUploadSyncState
 
 fromToMap :: Array (Tuple String EnterpriseServerUserAccountsUploadSyncState)
-fromToMap = [ Tuple
-              "PENDING"
-              Pending
+fromToMap = [ Tuple "PENDING" Pending
             , Tuple "SUCCESS" Success
             , Tuple "FAILURE" Failure
             ]

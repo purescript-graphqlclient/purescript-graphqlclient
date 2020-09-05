@@ -17,9 +17,7 @@ derive instance eqRepositoryOrderField :: Eq RepositoryOrderField
 derive instance ordRepositoryOrderField :: Ord RepositoryOrderField
 
 fromToMap :: Array (Tuple String RepositoryOrderField)
-fromToMap = [ Tuple
-              "CREATED_AT"
-              CreatedAt
+fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "UPDATED_AT" UpdatedAt
             , Tuple "PUSHED_AT" PushedAt
             , Tuple "NAME" Name

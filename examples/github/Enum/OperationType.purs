@@ -18,9 +18,7 @@ derive instance eqOperationType :: Eq OperationType
 derive instance ordOperationType :: Ord OperationType
 
 fromToMap :: Array (Tuple String OperationType)
-fromToMap = [ Tuple
-              "ACCESS"
-              Access
+fromToMap = [ Tuple "ACCESS" Access
             , Tuple "AUTHENTICATION" Authentication
             , Tuple "CREATE" Create
             , Tuple "MODIFY" Modify

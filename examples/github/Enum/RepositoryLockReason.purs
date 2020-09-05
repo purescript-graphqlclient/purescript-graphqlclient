@@ -17,9 +17,7 @@ derive instance eqRepositoryLockReason :: Eq RepositoryLockReason
 derive instance ordRepositoryLockReason :: Ord RepositoryLockReason
 
 fromToMap :: Array (Tuple String RepositoryLockReason)
-fromToMap = [ Tuple
-              "MOVING"
-              Moving
+fromToMap = [ Tuple "MOVING" Moving
             , Tuple "BILLING" Billing
             , Tuple "RENAME" Rename
             , Tuple "MIGRATING" Migrating

@@ -6,9 +6,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onBot :: SelectionSet
-                                      Scope__Bot
-                                      decodesTo
+type Fragments decodesTo = { onBot :: SelectionSet Scope__Bot decodesTo
                            , onOrganization :: SelectionSet
                                                Scope__Organization
                                                decodesTo
@@ -20,9 +18,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__AuditEntryActor
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Bot"
-                         selections.onBot
+                       [ buildFragment "Bot" selections.onBot
                        , buildFragment "Organization" selections.onOrganization
                        , buildFragment "User" selections.onUser
                        ]

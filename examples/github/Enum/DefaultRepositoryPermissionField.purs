@@ -17,9 +17,7 @@ derive instance eqDefaultRepositoryPermissionField :: Eq DefaultRepositoryPermis
 derive instance ordDefaultRepositoryPermissionField :: Ord DefaultRepositoryPermissionField
 
 fromToMap :: Array (Tuple String DefaultRepositoryPermissionField)
-fromToMap = [ Tuple
-              "NONE"
-              None
+fromToMap = [ Tuple "NONE" None
             , Tuple "READ" Read
             , Tuple "WRITE" Write
             , Tuple "ADMIN" Admin

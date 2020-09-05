@@ -18,9 +18,7 @@ derive instance eqRepositoryContributionType :: Eq RepositoryContributionType
 derive instance ordRepositoryContributionType :: Ord RepositoryContributionType
 
 fromToMap :: Array (Tuple String RepositoryContributionType)
-fromToMap = [ Tuple
-              "COMMIT"
-              Commit
+fromToMap = [ Tuple "COMMIT" Commit
             , Tuple "ISSUE" Issue
             , Tuple "PULL_REQUEST" PullRequest
             , Tuple "REPOSITORY" Repository

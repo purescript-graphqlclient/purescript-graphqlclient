@@ -18,9 +18,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__RequestedReviewer
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Mannequin"
-                         selections.onMannequin
+                       [ buildFragment "Mannequin" selections.onMannequin
                        , buildFragment "Team" selections.onTeam
                        , buildFragment "User" selections.onUser
                        ]

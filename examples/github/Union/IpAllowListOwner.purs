@@ -19,9 +19,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__IpAllowListOwner
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Enterprise"
-                         selections.onEnterprise
+                       [ buildFragment "Enterprise" selections.onEnterprise
                        , buildFragment "Organization" selections.onOrganization
                        ]
 

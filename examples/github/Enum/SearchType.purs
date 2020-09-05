@@ -17,9 +17,7 @@ derive instance eqSearchType :: Eq SearchType
 derive instance ordSearchType :: Ord SearchType
 
 fromToMap :: Array (Tuple String SearchType)
-fromToMap = [ Tuple
-              "ISSUE"
-              Issue
+fromToMap = [ Tuple "ISSUE" Issue
             , Tuple "REPOSITORY" Repository
             , Tuple "USER" User
             ]

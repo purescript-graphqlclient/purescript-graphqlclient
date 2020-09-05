@@ -34,9 +34,7 @@ derive instance eqGitSignatureState :: Eq GitSignatureState
 derive instance ordGitSignatureState :: Ord GitSignatureState
 
 fromToMap :: Array (Tuple String GitSignatureState)
-fromToMap = [ Tuple
-              "VALID"
-              Valid
+fromToMap = [ Tuple "VALID" Valid
             , Tuple "INVALID" Invalid
             , Tuple "MALFORMED_SIG" MalformedSig
             , Tuple "UNKNOWN_KEY" UnknownKey

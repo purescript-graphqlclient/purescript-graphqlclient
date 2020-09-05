@@ -46,8 +46,7 @@ shortDescription = selectionForField
 slug :: SelectionSet Scope__SponsorsListing String
 slug = selectionForField "slug" [] graphqlDefaultResponseScalarDecoder
 
-type TiersInputRowOptional r = ( after :: Optional
-                                          String
+type TiersInputRowOptional r = ( after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int

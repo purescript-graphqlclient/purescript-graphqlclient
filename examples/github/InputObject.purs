@@ -134,8 +134,7 @@ type AddProjectColumnInput = { projectId :: Id
                              }
 
 -- | original name - AddPullRequestReviewCommentInput
-type AddPullRequestReviewCommentInput = { pullRequestId :: Optional
-                                                           Id
+type AddPullRequestReviewCommentInput = { pullRequestId :: Optional Id
                                         , pullRequestReviewId :: Optional Id
                                         , commitOID :: Optional GitObjectId
                                         , body :: String
@@ -188,8 +187,7 @@ type ArchiveRepositoryInput = { repositoryId :: Id
                               }
 
 -- | original name - AuditLogOrder
-type AuditLogOrder = { field :: Optional
-                                AuditLogOrderField
+type AuditLogOrder = { field :: Optional AuditLogOrderField
                      , direction :: Optional OrderDirection
                      }
 
@@ -200,8 +198,7 @@ type CancelEnterpriseAdminInvitationInput = { invitationId :: Id
                                             }
 
 -- | original name - ChangeUserStatusInput
-type ChangeUserStatusInput = { emoji :: Optional
-                                        String
+type ChangeUserStatusInput = { emoji :: Optional String
                              , message :: Optional String
                              , organizationId :: Optional Id
                              , limitedAvailability :: Optional Boolean
@@ -514,8 +511,7 @@ type IpAllowListEntryOrder = { field :: IpAllowListEntryOrderField
                              }
 
 -- | original name - IssueFilters
-type IssueFilters = { assignee :: Optional
-                                  String
+type IssueFilters = { assignee :: Optional String
                     , createdBy :: Optional String
                     , labels :: Optional (Array String)
                     , mentioned :: Optional String
@@ -602,20 +598,17 @@ type OrganizationOrder = { field :: OrganizationOrderField
                          }
 
 -- | original name - PackageFileOrder
-type PackageFileOrder = { field :: Optional
-                                   PackageFileOrderField
+type PackageFileOrder = { field :: Optional PackageFileOrderField
                         , direction :: Optional OrderDirection
                         }
 
 -- | original name - PackageOrder
-type PackageOrder = { field :: Optional
-                               PackageOrderField
+type PackageOrder = { field :: Optional PackageOrderField
                     , direction :: Optional OrderDirection
                     }
 
 -- | original name - PackageVersionOrder
-type PackageVersionOrder = { field :: Optional
-                                      PackageVersionOrderField
+type PackageVersionOrder = { field :: Optional PackageVersionOrderField
                            , direction :: Optional OrderDirection
                            }
 
@@ -766,8 +759,7 @@ type SponsorshipOrder = { field :: SponsorshipOrderField
 type StarOrder = { field :: StarOrderField, direction :: OrderDirection }
 
 -- | original name - SubmitPullRequestReviewInput
-type SubmitPullRequestReviewInput = { pullRequestId :: Optional
-                                                       Id
+type SubmitPullRequestReviewInput = { pullRequestId :: Optional Id
                                     , pullRequestReviewId :: Optional Id
                                     , event :: PullRequestReviewEvent
                                     , body :: Optional String

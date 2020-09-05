@@ -17,9 +17,7 @@ derive instance eqPullRequestReviewEvent :: Eq PullRequestReviewEvent
 derive instance ordPullRequestReviewEvent :: Ord PullRequestReviewEvent
 
 fromToMap :: Array (Tuple String PullRequestReviewEvent)
-fromToMap = [ Tuple
-              "COMMENT"
-              Comment
+fromToMap = [ Tuple "COMMENT" Comment
             , Tuple "APPROVE" Approve
             , Tuple "REQUEST_CHANGES" RequestChanges
             , Tuple "DISMISS" Dismiss

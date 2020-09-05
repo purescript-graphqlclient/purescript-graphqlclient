@@ -17,9 +17,7 @@ derive instance eqRepoChangeMergeSettingAuditEntryMergeType :: Eq RepoChangeMerg
 derive instance ordRepoChangeMergeSettingAuditEntryMergeType :: Ord RepoChangeMergeSettingAuditEntryMergeType
 
 fromToMap :: Array (Tuple String RepoChangeMergeSettingAuditEntryMergeType)
-fromToMap = [ Tuple
-              "MERGE"
-              Merge
+fromToMap = [ Tuple "MERGE" Merge
             , Tuple "REBASE" Rebase
             , Tuple "SQUASH" Squash
             ]

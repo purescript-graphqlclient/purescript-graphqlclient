@@ -15,8 +15,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type AssigneesInputRowOptional r = ( after :: Optional
-                                              String
+type AssigneesInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -36,9 +35,7 @@ assignees input = selectionForCompositeField
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type Fragments decodesTo = { onIssue :: SelectionSet
-                                        Scope__Issue
-                                        decodesTo
+type Fragments decodesTo = { onIssue :: SelectionSet Scope__Issue decodesTo
                            , onPullRequest :: SelectionSet
                                               Scope__PullRequest
                                               decodesTo
@@ -49,9 +46,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Assignable
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Issue"
-                         selections.onIssue
+                       [ buildFragment "Issue" selections.onIssue
                        , buildFragment "PullRequest" selections.onPullRequest
                        ]
 

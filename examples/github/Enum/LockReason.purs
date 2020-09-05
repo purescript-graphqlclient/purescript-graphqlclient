@@ -17,9 +17,7 @@ derive instance eqLockReason :: Eq LockReason
 derive instance ordLockReason :: Ord LockReason
 
 fromToMap :: Array (Tuple String LockReason)
-fromToMap = [ Tuple
-              "OFF_TOPIC"
-              OffTopic
+fromToMap = [ Tuple "OFF_TOPIC" OffTopic
             , Tuple "TOO_HEATED" TooHeated
             , Tuple "RESOLVED" Resolved
             , Tuple "SPAM" Spam

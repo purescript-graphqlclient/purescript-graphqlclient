@@ -17,9 +17,7 @@ derive instance eqRepositoryAffiliation :: Eq RepositoryAffiliation
 derive instance ordRepositoryAffiliation :: Ord RepositoryAffiliation
 
 fromToMap :: Array (Tuple String RepositoryAffiliation)
-fromToMap = [ Tuple
-              "OWNER"
-              Owner
+fromToMap = [ Tuple "OWNER" Owner
             , Tuple "COLLABORATOR" Collaborator
             , Tuple "ORGANIZATION_MEMBER" OrganizationMember
             ]

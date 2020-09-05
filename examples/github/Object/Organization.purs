@@ -52,8 +52,7 @@ import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 import Examples.Github.Enum.TeamPrivacy (TeamPrivacy)
 import Examples.Github.Enum.TeamRole (TeamRole)
 
-type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional
-                                                      PinnableItemType
+type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r
                                           )
 
@@ -68,8 +67,7 @@ anyPinnableItems input = selectionForField
                           input)
                          graphqlDefaultResponseScalarDecoder
 
-type AuditLogInputRowOptional r = ( after :: Optional
-                                             String
+type AuditLogInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -138,8 +136,7 @@ ipAllowListEnabledSetting = selectionForField
                             []
                             graphqlDefaultResponseScalarDecoder
 
-type IpAllowListEntriesInputRowOptional r = ( after :: Optional
-                                                       String
+type IpAllowListEntriesInputRowOptional r = ( after :: Optional String
                                             , before :: Optional String
                                             , first :: Optional Int
                                             , last :: Optional Int
@@ -183,8 +180,7 @@ location = selectionForField "location" [] graphqlDefaultResponseScalarDecoder
 login :: SelectionSet Scope__Organization String
 login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 
-type MemberStatusesInputRowOptional r = ( after :: Optional
-                                                   String
+type MemberStatusesInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -206,8 +202,7 @@ memberStatuses input = selectionForCompositeField
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type MembersWithRoleInputRowOptional r = ( after :: Optional
-                                                    String
+type MembersWithRoleInputRowOptional r = ( after :: Optional String
                                          , before :: Optional String
                                          , first :: Optional Int
                                          , last :: Optional Int
@@ -248,8 +243,7 @@ organizationBillingEmail = selectionForField
                            []
                            graphqlDefaultResponseScalarDecoder
 
-type PackagesInputRowOptional r = ( after :: Optional
-                                             String
+type PackagesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -274,8 +268,7 @@ packages input = selectionForCompositeField
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PendingMembersInputRowOptional r = ( after :: Optional
-                                                   String
+type PendingMembersInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -399,8 +392,7 @@ projectsUrl = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
-type RepositoriesInputRowOptional r = ( privacy :: Optional
-                                                   RepositoryPrivacy
+type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                       , orderBy :: Optional
                                                    Examples.Github.InputObject.RepositoryOrder
                                       , affiliations :: Optional
@@ -486,8 +478,7 @@ sponsorsListing = selectionForCompositeField
                   []
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional
-                                                             String
+type SponsorshipsAsMaintainerInputRowOptional r = ( after :: Optional String
                                                   , before :: Optional String
                                                   , first :: Optional Int
                                                   , last :: Optional Int
@@ -513,8 +504,7 @@ sponsorshipsAsMaintainer input = selectionForCompositeField
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional
-                                                          String
+type SponsorshipsAsSponsorInputRowOptional r = ( after :: Optional String
                                                , before :: Optional String
                                                , first :: Optional Int
                                                , last :: Optional Int
@@ -554,8 +544,7 @@ team input = selectionForCompositeField
               input)
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type TeamsInputRowOptional r = ( privacy :: Optional
-                                            TeamPrivacy
+type TeamsInputRowOptional r = ( privacy :: Optional TeamPrivacy
                                , role :: Optional TeamRole
                                , query :: Optional String
                                , userLogins :: Optional (Array String)

@@ -5,9 +5,7 @@ import Examples.Github.Scopes (Scope__Commit, Scope__PullRequest, Scope__Closer)
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onCommit :: SelectionSet
-                                         Scope__Commit
-                                         decodesTo
+type Fragments decodesTo = { onCommit :: SelectionSet Scope__Commit decodesTo
                            , onPullRequest :: SelectionSet
                                               Scope__PullRequest
                                               decodesTo
@@ -18,9 +16,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Closer
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Commit"
-                         selections.onCommit
+                       [ buildFragment "Commit" selections.onCommit
                        , buildFragment "PullRequest" selections.onPullRequest
                        ]
 

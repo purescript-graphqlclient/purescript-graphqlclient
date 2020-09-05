@@ -17,9 +17,7 @@ derive instance eqSponsorsTierOrderField :: Eq SponsorsTierOrderField
 derive instance ordSponsorsTierOrderField :: Ord SponsorsTierOrderField
 
 fromToMap :: Array (Tuple String SponsorsTierOrderField)
-fromToMap = [ Tuple
-              "CREATED_AT"
-              CreatedAt
+fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "MONTHLY_PRICE_IN_CENTS" MonthlyPriceInCents
             ]
 

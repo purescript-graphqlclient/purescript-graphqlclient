@@ -17,9 +17,7 @@ derive instance eqRepoCreateAuditEntryVisibility :: Eq RepoCreateAuditEntryVisib
 derive instance ordRepoCreateAuditEntryVisibility :: Ord RepoCreateAuditEntryVisibility
 
 fromToMap :: Array (Tuple String RepoCreateAuditEntryVisibility)
-fromToMap = [ Tuple
-              "INTERNAL"
-              Internal
+fromToMap = [ Tuple "INTERNAL" Internal
             , Tuple "PRIVATE" Private
             , Tuple "PUBLIC" Public
             ]

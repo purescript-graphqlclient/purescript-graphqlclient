@@ -78,8 +78,7 @@ isAdminEnforced = selectionForField
                   []
                   graphqlDefaultResponseScalarDecoder
 
-type MatchingRefsInputRowOptional r = ( query :: Optional
-                                                 String
+type MatchingRefsInputRowOptional r = ( query :: Optional String
                                       , after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
@@ -103,8 +102,7 @@ matchingRefs input = selectionForCompositeField
 pattern :: SelectionSet Scope__BranchProtectionRule String
 pattern = selectionForField "pattern" [] graphqlDefaultResponseScalarDecoder
 
-type PushAllowancesInputRowOptional r = ( after :: Optional
-                                                   String
+type PushAllowancesInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -197,8 +195,7 @@ restrictsReviewDismissals = selectionForField
                             []
                             graphqlDefaultResponseScalarDecoder
 
-type ReviewDismissalAllowancesInputRowOptional r = ( after :: Optional
-                                                              String
+type ReviewDismissalAllowancesInputRowOptional r = ( after :: Optional String
                                                    , before :: Optional String
                                                    , first :: Optional Int
                                                    , last :: Optional Int

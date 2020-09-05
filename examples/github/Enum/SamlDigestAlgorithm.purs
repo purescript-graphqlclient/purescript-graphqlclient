@@ -17,9 +17,7 @@ derive instance eqSamlDigestAlgorithm :: Eq SamlDigestAlgorithm
 derive instance ordSamlDigestAlgorithm :: Ord SamlDigestAlgorithm
 
 fromToMap :: Array (Tuple String SamlDigestAlgorithm)
-fromToMap = [ Tuple
-              "SHA1"
-              Sha1
+fromToMap = [ Tuple "SHA1" Sha1
             , Tuple "SHA256" Sha256
             , Tuple "SHA384" Sha384
             , Tuple "SHA512" Sha512

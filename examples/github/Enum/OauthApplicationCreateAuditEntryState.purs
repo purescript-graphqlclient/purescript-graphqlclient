@@ -18,9 +18,7 @@ derive instance eqOauthApplicationCreateAuditEntryState :: Eq OauthApplicationCr
 derive instance ordOauthApplicationCreateAuditEntryState :: Ord OauthApplicationCreateAuditEntryState
 
 fromToMap :: Array (Tuple String OauthApplicationCreateAuditEntryState)
-fromToMap = [ Tuple
-              "ACTIVE"
-              Active
+fromToMap = [ Tuple "ACTIVE" Active
             , Tuple "SUSPENDED" Suspended
             , Tuple "PENDING_DELETION" PendingDeletion
             ]

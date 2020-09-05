@@ -34,8 +34,7 @@ closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
 closedAt :: SelectionSet Scope__Project (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
-type ColumnsInputRowOptional r = ( after :: Optional
-                                            String
+type ColumnsInputRowOptional r = ( after :: Optional String
                                  , before :: Optional String
                                  , first :: Optional Int
                                  , last :: Optional Int
@@ -94,8 +93,7 @@ owner = selectionForCompositeField
         []
         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PendingCardsInputRowOptional r = ( after :: Optional
-                                                 String
+type PendingCardsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int

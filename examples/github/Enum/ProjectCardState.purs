@@ -17,9 +17,7 @@ derive instance eqProjectCardState :: Eq ProjectCardState
 derive instance ordProjectCardState :: Ord ProjectCardState
 
 fromToMap :: Array (Tuple String ProjectCardState)
-fromToMap = [ Tuple
-              "CONTENT_ONLY"
-              ContentOnly
+fromToMap = [ Tuple "CONTENT_ONLY" ContentOnly
             , Tuple "NOTE_ONLY" NoteOnly
             , Tuple "REDACTED" Redacted
             ]

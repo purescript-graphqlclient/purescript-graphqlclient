@@ -6,9 +6,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onGist :: SelectionSet
-                                       Scope__Gist
-                                       decodesTo
+type Fragments decodesTo = { onGist :: SelectionSet Scope__Gist decodesTo
                            , onRepository :: SelectionSet
                                              Scope__Repository
                                              decodesTo
@@ -19,9 +17,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__PinnableItem
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Gist"
-                         selections.onGist
+                       [ buildFragment "Gist" selections.onGist
                        , buildFragment "Repository" selections.onRepository
                        ]
 

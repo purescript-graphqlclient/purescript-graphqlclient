@@ -17,9 +17,7 @@ derive instance eqIdentityProviderConfigurationState :: Eq IdentityProviderConfi
 derive instance ordIdentityProviderConfigurationState :: Ord IdentityProviderConfigurationState
 
 fromToMap :: Array (Tuple String IdentityProviderConfigurationState)
-fromToMap = [ Tuple
-              "ENFORCED"
-              Enforced
+fromToMap = [ Tuple "ENFORCED" Enforced
             , Tuple "CONFIGURED" Configured
             , Tuple "UNCONFIGURED" Unconfigured
             ]

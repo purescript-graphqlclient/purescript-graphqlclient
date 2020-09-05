@@ -17,9 +17,7 @@ derive instance eqPullRequestReviewDecision :: Eq PullRequestReviewDecision
 derive instance ordPullRequestReviewDecision :: Ord PullRequestReviewDecision
 
 fromToMap :: Array (Tuple String PullRequestReviewDecision)
-fromToMap = [ Tuple
-              "CHANGES_REQUESTED"
-              ChangesRequested
+fromToMap = [ Tuple "CHANGES_REQUESTED" ChangesRequested
             , Tuple "APPROVED" Approved
             , Tuple "REVIEW_REQUIRED" ReviewRequired
             ]

@@ -62,8 +62,7 @@ publishedAt = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
-type ReleaseAssetsInputRowOptional r = ( after :: Optional
-                                                  String
+type ReleaseAssetsInputRowOptional r = ( after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
                                        , last :: Optional Int

@@ -21,9 +21,7 @@ fromToMap :: Array
              (Tuple
               String
               EnterpriseMembersCanCreateRepositoriesSettingValue)
-fromToMap = [ Tuple
-              "NO_POLICY"
-              NoPolicy
+fromToMap = [ Tuple "NO_POLICY" NoPolicy
             , Tuple "ALL" All
             , Tuple "PUBLIC" Public
             , Tuple "PRIVATE" Private

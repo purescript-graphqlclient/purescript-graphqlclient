@@ -18,9 +18,7 @@ derive instance eqEnterpriseServerInstallationOrderField :: Eq EnterpriseServerI
 derive instance ordEnterpriseServerInstallationOrderField :: Ord EnterpriseServerInstallationOrderField
 
 fromToMap :: Array (Tuple String EnterpriseServerInstallationOrderField)
-fromToMap = [ Tuple
-              "HOST_NAME"
-              HostName
+fromToMap = [ Tuple "HOST_NAME" HostName
             , Tuple "CUSTOMER_NAME" CustomerName
             , Tuple "CREATED_AT" CreatedAt
             ]

@@ -45,9 +45,7 @@ resourcePath = selectionForField
 url :: SelectionSet Scope__Actor Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onBot :: SelectionSet
-                                      Scope__Bot
-                                      decodesTo
+type Fragments decodesTo = { onBot :: SelectionSet Scope__Bot decodesTo
                            , onEnterpriseUserAccount :: SelectionSet
                                                         Scope__EnterpriseUserAccount
                                                         decodesTo
@@ -65,9 +63,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__Actor
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Bot"
-                         selections.onBot
+                       [ buildFragment "Bot" selections.onBot
                        , buildFragment
                          "EnterpriseUserAccount"
                          selections.onEnterpriseUserAccount

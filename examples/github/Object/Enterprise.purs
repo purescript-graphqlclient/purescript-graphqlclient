@@ -74,9 +74,7 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 location :: SelectionSet Scope__Enterprise (Maybe String)
 location = selectionForField "location" [] graphqlDefaultResponseScalarDecoder
 
-type MembersInputRowOptional r = ( organizationLogins :: Optional
-                                                         (Array
-                                                          String)
+type MembersInputRowOptional r = ( organizationLogins :: Optional (Array String)
                                  , query :: Optional String
                                  , orderBy :: Optional
                                               Examples.Github.InputObject.EnterpriseMemberOrder
@@ -107,8 +105,7 @@ members input = selectionForCompositeField
 name :: SelectionSet Scope__Enterprise String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type OrganizationsInputRowOptional r = ( query :: Optional
-                                                  String
+type OrganizationsInputRowOptional r = ( query :: Optional String
                                        , orderBy :: Optional
                                                     Examples.Github.InputObject.OrganizationOrder
                                        , after :: Optional String
@@ -154,8 +151,7 @@ slug = selectionForField "slug" [] graphqlDefaultResponseScalarDecoder
 url :: SelectionSet Scope__Enterprise Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type UserAccountsInputRowOptional r = ( after :: Optional
-                                                 String
+type UserAccountsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int

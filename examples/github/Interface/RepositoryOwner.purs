@@ -43,8 +43,7 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 login :: SelectionSet Scope__RepositoryOwner String
 login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 
-type RepositoriesInputRowOptional r = ( privacy :: Optional
-                                                   RepositoryPrivacy
+type RepositoriesInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                       , orderBy :: Optional
                                                    Examples.Github.InputObject.RepositoryOrder
                                       , affiliations :: Optional
@@ -113,9 +112,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__RepositoryOwner
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Organization"
-                         selections.onOrganization
+                       [ buildFragment "Organization" selections.onOrganization
                        , buildFragment "User" selections.onUser
                        ]
 

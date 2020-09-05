@@ -121,8 +121,7 @@ repository = selectionForCompositeField
 state :: SelectionSet Scope__Deployment (Maybe DeploymentState)
 state = selectionForField "state" [] graphqlDefaultResponseScalarDecoder
 
-type StatusesInputRowOptional r = ( after :: Optional
-                                             String
+type StatusesInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int

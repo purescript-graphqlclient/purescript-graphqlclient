@@ -6,9 +6,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onIssue :: SelectionSet
-                                        Scope__Issue
-                                        decodesTo
+type Fragments decodesTo = { onIssue :: SelectionSet Scope__Issue decodesTo
                            , onPullRequest :: SelectionSet
                                               Scope__PullRequest
                                               decodesTo
@@ -19,9 +17,7 @@ fragments :: forall decodesTo . Fragments
                                              Scope__MilestoneItem
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
-                         "Issue"
-                         selections.onIssue
+                       [ buildFragment "Issue" selections.onIssue
                        , buildFragment "PullRequest" selections.onPullRequest
                        ]
 

@@ -17,9 +17,7 @@ derive instance eqPullRequestMergeMethod :: Eq PullRequestMergeMethod
 derive instance ordPullRequestMergeMethod :: Ord PullRequestMergeMethod
 
 fromToMap :: Array (Tuple String PullRequestMergeMethod)
-fromToMap = [ Tuple
-              "MERGE"
-              Merge
+fromToMap = [ Tuple "MERGE" Merge
             , Tuple "SQUASH" Squash
             , Tuple "REBASE" Rebase
             ]

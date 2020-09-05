@@ -101,8 +101,7 @@ publishedAt = selectionForField
 updatedAt :: SelectionSet Scope__Comment DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
-type UserContentEditsInputRowOptional r = ( after :: Optional
-                                                     String
+type UserContentEditsInputRowOptional r = ( after :: Optional String
                                           , before :: Optional String
                                           , first :: Optional Int
                                           , last :: Optional Int

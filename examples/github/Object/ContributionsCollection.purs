@@ -147,8 +147,7 @@ isSingleDay = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
-type IssueContributionsInputRowOptional r = ( after :: Optional
-                                                       String
+type IssueContributionsInputRowOptional r = ( after :: Optional String
                                             , before :: Optional String
                                             , first :: Optional Int
                                             , last :: Optional Int
@@ -261,8 +260,7 @@ popularPullRequestContribution = selectionForCompositeField
                                  []
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type PullRequestContributionsInputRowOptional r = ( after :: Optional
-                                                             String
+type PullRequestContributionsInputRowOptional r = ( after :: Optional String
                                                   , before :: Optional String
                                                   , first :: Optional Int
                                                   , last :: Optional Int
@@ -362,8 +360,7 @@ pullRequestReviewContributionsByRepository input = selectionForCompositeField
                                                     input)
                                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type RepositoryContributionsInputRowOptional r = ( after :: Optional
-                                                            String
+type RepositoryContributionsInputRowOptional r = ( after :: Optional String
                                                  , before :: Optional String
                                                  , first :: Optional Int
                                                  , last :: Optional Int

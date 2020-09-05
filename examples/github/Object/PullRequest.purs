@@ -62,8 +62,7 @@ activeLockReason = selectionForField
 additions :: SelectionSet Scope__PullRequest Int
 additions = selectionForField "additions" [] graphqlDefaultResponseScalarDecoder
 
-type AssigneesInputRowOptional r = ( after :: Optional
-                                              String
+type AssigneesInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -164,8 +163,7 @@ closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
 closedAt :: SelectionSet Scope__PullRequest (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
-type CommentsInputRowOptional r = ( after :: Optional
-                                             String
+type CommentsInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int
@@ -185,8 +183,7 @@ comments input = selectionForCompositeField
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type CommitsInputRowOptional r = ( after :: Optional
-                                            String
+type CommitsInputRowOptional r = ( after :: Optional String
                                  , before :: Optional String
                                  , first :: Optional Int
                                  , last :: Optional Int
@@ -235,8 +232,7 @@ editor = selectionForCompositeField
          []
          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type FilesInputRowOptional r = ( after :: Optional
-                                          String
+type FilesInputRowOptional r = ( after :: Optional String
                                , before :: Optional String
                                , first :: Optional Int
                                , last :: Optional Int
@@ -421,8 +417,7 @@ milestone = selectionForCompositeField
 number :: SelectionSet Scope__PullRequest Int
 number = selectionForField "number" [] graphqlDefaultResponseScalarDecoder
 
-type ParticipantsInputRowOptional r = ( after :: Optional
-                                                 String
+type ParticipantsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
@@ -456,8 +451,7 @@ potentialMergeCommit = selectionForCompositeField
                        []
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ProjectCardsInputRowOptional r = ( after :: Optional
-                                                 String
+type ProjectCardsInputRowOptional r = ( after :: Optional String
                                       , before :: Optional String
                                       , first :: Optional Int
                                       , last :: Optional Int
@@ -499,8 +493,7 @@ reactionGroups = selectionForCompositeField
                  []
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReactionsInputRowOptional r = ( after :: Optional
-                                              String
+type ReactionsInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
                                    , first :: Optional Int
                                    , last :: Optional Int
@@ -557,8 +550,7 @@ reviewDecision = selectionForField
                  []
                  graphqlDefaultResponseScalarDecoder
 
-type ReviewRequestsInputRowOptional r = ( after :: Optional
-                                                   String
+type ReviewRequestsInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
                                         , first :: Optional Int
                                         , last :: Optional Int
@@ -579,8 +571,7 @@ reviewRequests input = selectionForCompositeField
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReviewThreadsInputRowOptional r = ( after :: Optional
-                                                  String
+type ReviewThreadsInputRowOptional r = ( after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
                                        , last :: Optional Int
@@ -600,8 +591,7 @@ reviewThreads input = selectionForCompositeField
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type ReviewsInputRowOptional r = ( after :: Optional
-                                            String
+type ReviewsInputRowOptional r = ( after :: Optional String
                                  , before :: Optional String
                                  , first :: Optional Int
                                  , last :: Optional Int
@@ -641,8 +631,7 @@ suggestedReviewers = selectionForCompositeField
                      []
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type TimelineInputRowOptional r = ( since :: Optional
-                                             DateTime
+type TimelineInputRowOptional r = ( since :: Optional DateTime
                                   , after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
@@ -663,8 +652,7 @@ timeline input = selectionForCompositeField
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-type TimelineItemsInputRowOptional r = ( since :: Optional
-                                                  DateTime
+type TimelineItemsInputRowOptional r = ( since :: Optional DateTime
                                        , skip :: Optional Int
                                        , itemTypes :: Optional
                                                       (Array
@@ -698,8 +686,7 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 url :: SelectionSet Scope__PullRequest Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
-type UserContentEditsInputRowOptional r = ( after :: Optional
-                                                     String
+type UserContentEditsInputRowOptional r = ( after :: Optional String
                                           , before :: Optional String
                                           , first :: Optional Int
                                           , last :: Optional Int

@@ -21,9 +21,7 @@ fromToMap :: Array
              (Tuple
               String
               OrgRemoveOutsideCollaboratorAuditEntryMembershipType)
-fromToMap = [ Tuple
-              "OUTSIDE_COLLABORATOR"
-              OutsideCollaborator
+fromToMap = [ Tuple "OUTSIDE_COLLABORATOR" OutsideCollaborator
             , Tuple "UNAFFILIATED" Unaffiliated
             , Tuple "BILLING_MANAGER" BillingManager
             ]
