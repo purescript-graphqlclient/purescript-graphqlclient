@@ -34,8 +34,8 @@
     "purescript-graphql-client-generator": "bin/purescript-graphql-client-generator"
   },
   "dependencies": {
-    "graphql": "^15.0.0",
-    "graphql-request": "^1.8.2",
+    "graphql": "^15.3.0",
+    "graphql-request": "^3.1.0",
     "url-regex": "^5.0.0",
     "xhr2": "^0.2.0"
   },
