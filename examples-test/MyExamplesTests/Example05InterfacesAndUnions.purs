@@ -37,8 +37,8 @@ instance showHumanOrDroidDetails :: Show HumanOrDroidDetails where show = generi
 heroUnionSelection :: SelectionSet Scope__CharacterUnion HumanOrDroidDetails
 heroUnionSelection =
   Examples.Swapi.Union.CharacterUnion.fragments
-    { onHuman: Examples.Swapi.Object.Human.homePlanet <#> HumanDetails
-    , onDroid: Examples.Swapi.Object.Droid.primaryFunction <#> DroidDetails
+    { onDroid: Examples.Swapi.Object.Droid.primaryFunction <#> DroidDetails
+    , onHuman: Examples.Swapi.Object.Human.homePlanet <#> HumanDetails
     }
 
 heroSelection :: SelectionSet Scope__Character HumanOrDroidWithName
@@ -46,8 +46,8 @@ heroSelection =
   { name: _, details: _ }
     <$> Examples.Swapi.Interface.Character.name
     <*> (Examples.Swapi.Interface.Character.fragments
-      { onHuman: Examples.Swapi.Object.Human.homePlanet <#> HumanDetails
-      , onDroid: Examples.Swapi.Object.Droid.primaryFunction <#> DroidDetails
+      { onDroid: Examples.Swapi.Object.Droid.primaryFunction <#> DroidDetails
+      , onHuman: Examples.Swapi.Object.Human.homePlanet <#> HumanDetails
       }
     )
 
@@ -71,21 +71,21 @@ expectedQuery = inlineAndTrim """
 query {
   heroUnion {
     __typename
-    ...on Human {
-      homePlanet
-    }
     ...on Droid {
       primaryFunction
+    }
+    ...on Human {
+      homePlanet
     }
   }
   hero {
     __typename
     name
-    ...on Human {
-      homePlanet
-    }
     ...on Droid {
       primaryFunction
+    }
+    ...on Human {
+      homePlanet
     }
   }
   heroUnion {
