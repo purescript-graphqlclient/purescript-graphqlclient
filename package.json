@@ -36,6 +36,7 @@
   "dependencies": {
     "graphql": "^15.0.0",
     "graphql-request": "^1.8.2",
+    "url-regex": "^5.0.0",
     "xhr2": "^0.2.0"
   },
   "devDependencies": {
