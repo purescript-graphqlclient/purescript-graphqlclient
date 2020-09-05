@@ -19,9 +19,9 @@ filterAbsent = Array.mapMaybe go
     OptionalArgument n (Present v) -> Just (n /\ v)
     OptionalArgument _ Absent -> Nothing
 
-type Cache = Maybe { argsWritten :: String, hash :: String }
+type Cache = { argsWritten :: String, hash :: String }
 
-argsHash :: Array Argument -> Cache
+argsHash :: Array Argument -> Maybe Cache
 argsHash args =
   case filterAbsent args of
        [] -> Nothing

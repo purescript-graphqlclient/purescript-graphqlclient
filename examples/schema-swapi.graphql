@@ -1,0 +1,178 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+  subscription: RootSubscriptionType
+}
+
+"""A character in the Star Wars Trilogy"""
+interface Character {
+  """Which movies they appear in."""
+  appearsIn: [Episode!]!
+
+  """Url to a profile picture for the character."""
+  avatarUrl: String!
+
+  """The friends of the character, or an empty list if they have none."""
+  friends: [Character!]!
+
+  """The ID of the character."""
+  id: ID!
+
+  """The name of the character."""
+  name: String!
+}
+
+"""A union alternative to the character interface for learning purposes."""
+union CharacterUnion = Human | Droid
+
+type ChatMessage {
+  character: Character
+  phrase: Phrase!
+}
+
+"""A mechanical creature in the Star Wars universe."""
+type Droid implements Character {
+  """Which movies they appear in."""
+  appearsIn: [Episode!]!
+
+  """Url to a profile picture for the character."""
+  avatarUrl: String!
+
+  """The friends of the droid, or an empty list if they have none."""
+  friends: [Character!]!
+
+  """The ID of the droid."""
+  id: ID!
+
+  """The name of the droid."""
+  name: String!
+
+  """The primary function of the droid."""
+  primaryFunction: String
+}
+
+"""One of the films in the Star Wars Trilogy"""
+enum Episode {
+  """Released in 1980."""
+  EMPIRE
+
+  """Released in 1983."""
+  JEDI
+
+  """Released in 1977."""
+  NEWHOPE
+}
+
+input Greeting {
+  language: Language
+  name: String!
+  options: GreetingOptions
+}
+
+input GreetingOptions {
+  prefix: String
+}
+
+"""A humanoid creature in the Star Wars universe."""
+type Human implements Character {
+  """Which movies they appear in."""
+  appearsIn: [Episode!]!
+
+  """Url to a profile picture for the character."""
+  avatarUrl: String!
+
+  """The friends of the human, or an empty list if they have none."""
+  friends: [Character!]!
+
+  """The home planet of the human, or null if unknown."""
+  homePlanet: String
+
+  """The ID of the human."""
+  id: ID!
+
+  """The name of the human."""
+  name: String!
+}
+
+enum Language {
+  """English"""
+  EN
+
+  """Spanish"""
+  ES
+
+  """Norwegian"""
+  NO
+}
+
+"""Phrases for StarChat"""
+enum Phrase {
+  """Originally said by Han Solo"""
+  BAD_FEELING
+
+  """Originally said by Obi-Wan"""
+  DROIDS
+
+  """Originally said by Vader."""
+  FAITH
+
+  """Originally said by Vader."""
+  FATHER
+
+  """Originally said by Leia."""
+  HELP
+
+  """Originally said by Obi-Wan."""
+  THE_FORCE
+
+  """Originally said by Vader"""
+  TRAITOR
+
+  """Originally said by Admiral Ackbar"""
+  TRAP
+
+  """Originally said by Yoda."""
+  TRY
+}
+
+"""Represents posix milliseconds (milliseconds since Jan. 1, 1970)."""
+scalar PosixTime
+
+type RootMutationType {
+  increment: Int!
+  sendMessage(characterId: ID!, phrase: Phrase!): ChatMessage
+}
+
+type RootQueryType {
+  droid(
+    """ID of the droid."""
+    id: ID!
+  ): Droid
+
+  """Getting this field will result in an error."""
+  forcedError: String
+  greet(input: Greeting!): String!
+  hello: String!
+  hero(
+    """
+    If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
+    """
+    episode: Episode
+  ): Character!
+  heroUnion(
+    """
+    If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
+    """
+    episode: Episode
+  ): CharacterUnion!
+  human(
+    """ID of the human."""
+    id: ID!
+  ): Human
+  now: PosixTime!
+  today: String!
+}
+
+type RootSubscriptionType {
+  newMessage: ChatMessage!
+}

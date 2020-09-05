@@ -37,6 +37,7 @@ instance functorGraphqlDefaultResponseScalarDecoder :: (GraphqlDefaultResponseFu
 
 ------------------------------------------------------
 
+-- Internal to this lib, you should use GraphqlDefaultResponseFunctorOrScalarDecoderTransformer instead usually
 class GraphqlDefaultResponseFunctorDecoder f where
   graphqlDefaultResponseFunctorDecoder :: ∀ a. (Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError (f a)
 
@@ -74,14 +75,14 @@ data RawField
   = Composite
     String -- field name, e.g. `hero {...}`
     (Array RawField)
-    Cache
+    (Maybe Cache)
   | OnSpread
     String -- e.g. `... on Human`
     (Array RawField)
   | Leaf
-    -- TODO: add typeString https://github.com/dillonkearns/elm-graphql/blob/9aab5ae867a9d0036526deafa0375de90b377b28/src/Graphql/Document/Field.elm#L29 ?
+    -- TODO: should I add `typeString` https://github.com/dillonkearns/elm-graphql/blob/9aab5ae867a9d0036526deafa0375de90b377b28/src/Graphql/Document/Field.elm#L29 ?
     String -- field name
-    Cache
+    (Maybe Cache)
 
 data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Json -> Either JsonDecodeError a)
 
@@ -110,13 +111,13 @@ data FragmentSelectionSet parentTypeLock a = FragmentSelectionSet String (Array 
 selectionForField :: forall parentTypeLock a . String -> Array Argument -> (Json -> Either JsonDecodeError a) -> SelectionSet parentTypeLock a
 selectionForField fieldName args decoder =
   let
-    cache :: Cache
+    cache :: Maybe Cache
     cache = argsHash args
 
     fieldName' :: String
     fieldName' = case cache of
-                      Nothing -> fieldName
                       Just cache' -> fieldName <> cache'.hash
+                      _ -> fieldName
   in SelectionSet [Leaf fieldName cache] (\json -> do
     object <- ArgonautDecoders.Decoder.decodeJObject json
     ArgonautDecoders.Decoder.getField decoder object fieldName'
@@ -131,13 +132,13 @@ selectionForCompositeField
   -> SelectionSet lockedTo b
 selectionForCompositeField fieldName args jsonDecoderTransformer (SelectionSet fields childDecoder) =
   let
-    cache :: Cache
+    cache :: Maybe Cache
     cache = argsHash args
 
     fieldName' :: String
     fieldName' = case cache of
-                      Nothing -> fieldName
                       Just cache' -> fieldName <> cache'.hash
+                      _ -> fieldName
   in SelectionSet
     [ Composite fieldName fields cache ]
     (\json -> do
