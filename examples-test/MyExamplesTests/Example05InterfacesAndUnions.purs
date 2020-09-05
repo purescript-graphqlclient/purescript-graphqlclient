@@ -1,6 +1,6 @@
-module Examples.MyTests.Example05InterfacesAndUnions where
+module MyExamplesTests.Example05InterfacesAndUnions where
 
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
 import Protolude (class Eq, class Generic, class Show, Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<#>), (<$>), (<*>), (<<<), (\/))
 

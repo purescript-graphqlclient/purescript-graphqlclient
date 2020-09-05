@@ -1,7 +1,7 @@
-module Examples.MyTests.Example10Github where
+module MyExamplesTests.Example10Github where
 
 import Examples.Github.Scopes (Scope__Release, Scope__ReleaseConnection, Scope__Repository)
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 import GraphqlClient (GraphqlError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullElementsOrFail, nonNullOrFail, printGraphqlError, writeGraphql)
 import Protolude (Either, Maybe(..), Unit, bind, discard, error, fromMaybe, pure, throwError, (#), ($), (<#>), (<$>), (<*>), (<<<), (\/))
 

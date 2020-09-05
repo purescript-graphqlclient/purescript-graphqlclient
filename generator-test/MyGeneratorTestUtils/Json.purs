@@ -1,4 +1,4 @@
-module Test.Json where
+module MyGeneratorTestUtils.Json where
 
 import Protolude
 

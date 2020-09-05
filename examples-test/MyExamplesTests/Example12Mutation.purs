@@ -1,6 +1,6 @@
-module Examples.MyTests.Example12Mutation where
+module MyExamplesTests.Example12Mutation where
 
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 
 import Examples.Swapi.Mutation as Mutation
 import GraphqlClient (GraphqlError, Scope__RootMutation, SelectionSet, graphqlMutationRequest, printGraphqlError, writeGraphql)

@@ -1,4 +1,4 @@
-module Examples.MyTests.Example01BasicQuery where
+module MyExamplesTests.Example01BasicQuery where
 
 import Protolude (Either, Unit, bind, discard, error, pure, throwError, ($), (<$>), (<*>), (<<<), (\/))
 
@@ -9,7 +9,7 @@ import Examples.SwapiCustomScalars (Id(..))
 import Examples.Swapi.Query as Query
 import Examples.Swapi.Interface.Character as Character
 import Examples.Swapi.Scopes (Scope__Character)
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 
 type Response = CharacterResponse
 

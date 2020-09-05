@@ -1,4 +1,4 @@
-module Test.GraphqlRequest where
+module MyGeneratorTestUtils.GraphqlRequest where
 
 import Protolude
 

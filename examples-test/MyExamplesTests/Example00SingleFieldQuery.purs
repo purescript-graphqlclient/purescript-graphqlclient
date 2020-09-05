@@ -1,4 +1,4 @@
-module Examples.MyTests.Example00SingleFieldQuery where
+module MyExamplesTests.Example00SingleFieldQuery where
 
 import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<<<), (\/))
 
@@ -8,7 +8,7 @@ import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, graphqlQuery
 import Examples.SwapiCustomScalars (Id(..))
 import Examples.Swapi.Object.Human (id)
 import Examples.Swapi.Query (human)
-import Examples.MyTests.Util
+import MyExamplesTests.Util
 
 type Response = Maybe Id
 

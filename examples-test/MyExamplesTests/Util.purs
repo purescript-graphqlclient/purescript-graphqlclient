@@ -1,4 +1,4 @@
-module Examples.MyTests.Util where
+module MyExamplesTests.Util where
 
 import Data.String.Regex (replace)
 import Data.String.Regex.Flags (global)

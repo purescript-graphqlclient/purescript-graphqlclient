@@ -1,4 +1,4 @@
-module MyTest.Main where
+module MyTests.Main where
 
 import Protolude
 

@@ -10,5 +10,5 @@
   , "stringutils"
   ]
 , packages = (./spago.dhall).packages
-, sources = (./spago.dhall).sources # [ "generator/**/*.purs" ]
+, sources = (./spago.dhall).sources # [ "generator/**/*.purs", "generator-test/**/*.purs" ]
 }

@@ -1,7 +1,7 @@
-module Examples.MyTests.Example11GithubPagination where
+module MyExamplesTests.Example11GithubPagination where
 
 import Examples.Github.Scopes (Scope__PageInfo, Scope__Repository, Scope__SearchResultItem, Scope__SearchResultItemConnection)
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 import GraphqlClient (GraphqlError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
 import Protolude (Either, Maybe(..), Unit, apply, bind, discard, error, isJust, map, pure, throwError, (#), ($), (<#>), (<<<), (\/))
 

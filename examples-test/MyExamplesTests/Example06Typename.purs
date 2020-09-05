@@ -1,6 +1,6 @@
-module Examples.MyTests.Example06Typename where
+module MyExamplesTests.Example06Typename where
 
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
 import Protolude (class Eq, class Generic, class Show, Either, Unit, bind, discard, error, pure, throwError, ($), (<$>), (<*>), (<<<), (\/))
 

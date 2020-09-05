@@ -1,4 +1,4 @@
-module Examples.MyTests.Example03Variables where
+module MyExamplesTests.Example03Variables where
 
 import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, graphqlQueryRequest, printGraphqlError, writeGraphql)
 import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<$>), (<*>), (<<<), (\/))
@@ -9,7 +9,7 @@ import Examples.Swapi.Scopes (Scope__Human)
 import Examples.Swapi.Query as Query
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 
 type Response = Maybe HumanResponse
 

@@ -18,7 +18,7 @@ exports.introspectionQuery = `query IntrospectionQuery {
     kind
     name
     description
-    fields987878495: fields(includeDeprecated: false) {
+    fields: fields(includeDeprecated: false) {
       name
       description
       args {
@@ -36,7 +36,7 @@ exports.introspectionQuery = `query IntrospectionQuery {
     interfaces {
       ...TypeRef
     }
-    enumValues987878495: enumValues(includeDeprecated: false) {
+    enumValues: enumValues(includeDeprecated: false) {
       name
       description
       isDeprecated

@@ -1,7 +1,7 @@
-module Examples.MyTests.Example08Foldr where
+module MyExamplesTests.Example08Foldr where
 
 import Examples.Github.Scopes (Scope__Repository)
-import Examples.MyTests.Util (inlineAndTrim)
+import MyExamplesTests.Util (inlineAndTrim)
 import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullOrFail, printGraphqlError, writeGraphql)
 import Protolude (Either, Unit, bind, discard, error, pure, throwError, (#), ($), (+), (<#>), (<<<), (\/))
 

@@ -9,7 +9,7 @@ import GraphqlClient
   , exhaustiveFragmentSelection
   , buildFragment
   )
-import Examples.Swapi.Scopes (Scope__Character, Scope__Human, Scope__Droid)
+import Examples.Swapi.Scopes (Scope__Character, Scope__Droid, Scope__Human)
 import Examples.Swapi.Enum.Episode (Episode)
 import Examples.SwapiCustomScalars (Id)
 import Data.Maybe (Maybe(..))
@@ -38,10 +38,10 @@ id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 name :: SelectionSet Scope__Character String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
-type Fragments decodesTo = { onHuman :: SelectionSet
-                                        Scope__Human
+type Fragments decodesTo = { onDroid :: SelectionSet
+                                        Scope__Droid
                                         decodesTo
-                           , onDroid :: SelectionSet Scope__Droid decodesTo
+                           , onHuman :: SelectionSet Scope__Human decodesTo
                            }
 
 fragments :: forall decodesTo . Fragments
@@ -50,10 +50,10 @@ fragments :: forall decodesTo . Fragments
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
                        [ buildFragment
-                         "Human"
-                         selections.onHuman
-                       , buildFragment "Droid" selections.onDroid
+                         "Droid"
+                         selections.onDroid
+                       , buildFragment "Human" selections.onHuman
                        ]
 
 maybeFragments :: forall decodesTo . Fragments (Maybe decodesTo)
-maybeFragments = { onHuman: pure Nothing, onDroid: pure Nothing }
+maybeFragments = { onDroid: pure Nothing, onHuman: pure Nothing }
