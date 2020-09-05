@@ -1,8 +1,8 @@
 module GraphqlClientGenerator.IntrospectionSchema.Fields where
 
-import GraphqlClient.Implementation
-import GraphqlClient.WriteGraphqlHash
-import GraphqlClient.Argument
+import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet, graphqlDefaultResponseFunctorOrScalarDecoderTransformer, graphqlDefaultResponseScalarDecoder, selectionForCompositeFieldImplementation, selectionForFieldImplementation)
+import GraphqlClient.WriteGraphqlHash (Cache)
+import GraphqlClient.Argument (toGraphqlArguments)
 
 import Protolude (type ($), type (<<<), Maybe)
 

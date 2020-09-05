@@ -1,7 +1,7 @@
 module GraphqlClientGenerator.IntrospectionSchema where
 
-import GraphqlClient.Implementation
-import GraphqlClient.WriteGraphqlHash
+import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet, bindSelectionSet)
+import GraphqlClient.WriteGraphqlHash (Cache)
 
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (InstorpectionQueryResult__TypeRef, InstorpectionQueryResult__TypeRef_shared, TypeKindWithNull, collectTypeRefInfo)
 import Protolude (type ($), type (<<<), Maybe, apply, map, note, (#), ($), (<$>), (<*>))
