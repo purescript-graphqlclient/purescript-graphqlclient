@@ -95,7 +95,7 @@ appOptions = ado
     )
   headers <- many ( option requestHeader
        (  long "header"
-       <> help "Header value in form of “key: val”"
+       <> help "Header value in form of “key: val”. This option can be repeated many times."
        )
      ) <#> Array.fromFoldable
   customScalarsModule <- Maybe.optional
