@@ -97,10 +97,10 @@ instance applySelectionSet :: Apply (SelectionSet parentTypeLock) where
   apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
 
 map2 :: forall parentTypeLock a b c. (a -> b -> c) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b -> SelectionSet parentTypeLock c
-map2 f (SelectionSet fieldsA decoderA) (SelectionSet fieldsB decoderB) = SelectionSet (fieldsA <> fieldsB) \json -> do
+map2 f (SelectionSet fieldsA decoderA) (SelectionSet fieldsB decoderB) = SelectionSet (fieldsA <> fieldsB) \json -> ado
   a <- decoderA json
   b <- decoderB json
-  pure $ f a b
+  in f a b
 
 foldl :: forall a b parentTypeLock . (b -> a -> b) -> b -> Array (SelectionSet parentTypeLock a) -> SelectionSet parentTypeLock b
 foldl f accum = Array.foldl (map2 f) (pure accum)
