@@ -1,8 +1,9 @@
 module GraphqlClient.HTTP where
 
+
 import Protolude
 
-import Affjax (Error, Response, URL, defaultRequest, printError, request) as Affjax
+import Affjax (Error, Response, Request, URL, defaultRequest, printError, request) as Affjax
 import Affjax.RequestBody as Affjax.RequestBody
 import Affjax.RequestHeader (RequestHeader) as Affjax
 import Affjax.ResponseFormat as Affjax.ResponseFormat
@@ -18,10 +19,12 @@ import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty (toArray) as NonEmptyArray
 import Data.HTTP.Method (Method(..))
+--import Data.Time.Duration (Milliseconds)
 import Foreign.Object (Object)
 import Foreign.Object as Foreign.Object
 import GraphqlClient.Implementation (Scope__RootMutation, Scope__RootQuery, SelectionSet(..))
 import GraphqlClient.WriteGraphql (writeGraphql)
+import Record as Record
 
 {-
   TODO
@@ -133,25 +136,45 @@ tryDecodeGraphqlResponse decoderForData jsonBody = graphqlResponseOrError # (\er
           (possiblyParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # (\error -> Right $ UnparsedData error dataJson) \/ (Right <<< ParsedData)
           Right $ Left $ GraphqlUserError errors possiblyParsedData
 
-post :: Affjax.URL -> Array Affjax.RequestHeader -> ArgonautCore.Json -> Aff (Either Affjax.Error (Affjax.Response ArgonautCore.Json))
-post url headers body =
-  Affjax.request (Affjax.defaultRequest
-                 { method = Left POST
-                 , url = url
-                 , content = Just $ Affjax.RequestBody.json $ ArgonautCodecs.Encode.encodeJson body
-                 , responseFormat = Affjax.ResponseFormat.json
-                 , headers = headers
-                 })
+type RequestOptions =
+  { headers :: Array Affjax.RequestHeader
+  , username :: Maybe String
+  , password :: Maybe String
+  , withCredentials :: Boolean
+  --, timeout :: Maybe Milliseconds
+  }
+
+defaultRequestOptions :: RequestOptions
+defaultRequestOptions =
+  { headers: []
+  , username: Nothing
+  , password: Nothing
+  , withCredentials: false
+  --, timeout: Nothing
+  }
+
+post :: Affjax.URL -> RequestOptions -> ArgonautCore.Json -> Aff (Either Affjax.Error (Affjax.Response ArgonautCore.Json))
+post url opts body = Affjax.request request
+  where
+  request :: Affjax.Request ArgonautCore.Json
+  request =
+    Record.merge opts $
+      (Affjax.defaultRequest
+        { method = Left POST
+        , url = url
+        , content = Just $ Affjax.RequestBody.json $ ArgonautCodecs.Encode.encodeJson body
+        , responseFormat = Affjax.ResponseFormat.json
+        } :: Affjax.Request ArgonautCore.Json)
 
 graphqlRequestImpl
   :: forall a
    . Affjax.URL
-  -> Array Affjax.RequestHeader
+  -> RequestOptions
   -> String
   -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (Either (GraphqlError a) a)
-graphqlRequestImpl url headers query decoder = Transformers.runExceptT do
-  (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url headers $ ArgonautCodecs.Encode.encodeJson { query }
+graphqlRequestImpl url opts query decoder = Transformers.runExceptT do
+  (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url opts $ ArgonautCodecs.Encode.encodeJson { query }
   jsonBody <- case result of
     Left error -> Transformers.throwError $ GraphqlAffjaxError error
     Right response -> pure response.body
@@ -177,7 +200,7 @@ graphqlRequestImpl url headers query decoder = Transformers.runExceptT do
 graphqlQueryRequest
   :: forall a
    . Affjax.URL
-  -> Array Affjax.RequestHeader
+  -> RequestOptions
   -> SelectionSet Scope__RootQuery a
   -> Aff (Either (GraphqlError a) a)
 graphqlQueryRequest url headers selectionSet@(SelectionSet _fields decoder) = do
@@ -188,10 +211,10 @@ graphqlQueryRequest url headers selectionSet@(SelectionSet _fields decoder) = do
 graphqlMutationRequest
   :: forall a
    . Affjax.URL
-  -> Array Affjax.RequestHeader
+  -> RequestOptions
   -> SelectionSet Scope__RootMutation a
   -> Aff (Either (GraphqlError a) a)
-graphqlMutationRequest url headers selectionSet@(SelectionSet _fields decoder) = do
+graphqlMutationRequest url opts selectionSet@(SelectionSet _fields decoder) = do
   let query = writeGraphql selectionSet
-  result <- graphqlRequestImpl url headers query decoder
+  result <- graphqlRequestImpl url opts query decoder
   pure $ result

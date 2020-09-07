@@ -1,7 +1,7 @@
 module MyExamplesTests.Example05InterfacesAndUnions where
 
 import MyExamplesTests.Util (inlineAndTrim)
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultRequestOptions, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
 import Protolude
 
 import Data.Generic.Rep.Show (genericShow)
@@ -132,7 +132,7 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example05InterfacesAndUnions" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] query
+  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 

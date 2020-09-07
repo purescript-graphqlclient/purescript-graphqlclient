@@ -32,7 +32,7 @@ includeDeprecated :: Boolean
 includeDeprecated = true
 
 introspectionQueryString :: String
-introspectionQueryString = GraphqlClient.writeGraphql (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery (\_ _ -> unsafeThrow "I dont care about decoder") includeDeprecated)
+introspectionQueryString = GraphqlClient.writeGraphql (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery (\_ _ -> unsafeThrow "I don’t care about decoder") includeDeprecated)
 
 introspectionQueryDecoderForExternalJson :: ArgonautCore.Json -> Either JsonDecodeError GraphqlClientGenerator.IntrospectionSchema.InstorpectionQueryResult
 introspectionQueryDecoderForExternalJson = GraphqlClient.getSelectionSetDecoder (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery GraphqlClient.Implementation.fieldNameWithoutHash includeDeprecated)
@@ -50,8 +50,9 @@ main = do
         (GraphqlClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
           let
             urlString = unwrap url
+            opts = GraphqlClient.defaultRequestOptions { headers = appOptions.headers }
 
-          resp <- GraphqlClient.graphqlQueryRequest urlString appOptions.headers (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery GraphqlClient.Implementation.fieldNameWithHash includeDeprecated)
+          resp <- GraphqlClient.graphqlQueryRequest urlString opts (GraphqlClientGenerator.IntrospectionSchema.introspectionQuery GraphqlClient.Implementation.fieldNameWithHash includeDeprecated)
             >>= (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
           pure resp
@@ -67,7 +68,7 @@ main = do
 
           GraphqlClient.tryDecodeGraphqlResponse introspectionQueryDecoderForExternalJson json # (throwError <<< error <<< GraphqlClient.printGraphqlError) \/ pure
 
-    outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesnt throw errors
+    outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesn’t throw errors
 
     whenM (Node.FS.Aff.exists outputDirAbs) do
       isEmpty <- dirIsEmpty outputDirAbs

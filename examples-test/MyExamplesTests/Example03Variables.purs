@@ -1,6 +1,6 @@
 module MyExamplesTests.Example03Variables where
 
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultRequestOptions, graphqlQueryRequest, printGraphqlError, writeGraphql)
 import Protolude
 import Examples.SwapiCustomScalars (Id(..))
 
@@ -38,7 +38,7 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example03Variables" do
   writeGraphql (query (Id 1001)) `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] (query (Id 1001))
+  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions (query (Id 1001))
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 

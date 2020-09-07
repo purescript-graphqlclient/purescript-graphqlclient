@@ -2,7 +2,7 @@ module MyExamplesTests.Example08Foldr where
 
 import Examples.Github.Scopes (Scope__Repository)
 import MyExamplesTests.Util (inlineAndTrim)
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullOrFail, printGraphqlError, writeGraphql)
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, nonNullOrFail, printGraphqlError, writeGraphql)
 import Protolude
 
 import Affjax.RequestHeader (RequestHeader(..))
@@ -57,7 +57,9 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example08Foldr" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" [RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"] query
+  let opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59" ] }
+
+  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts query
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 

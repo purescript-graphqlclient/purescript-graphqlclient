@@ -4,7 +4,7 @@ import Protolude
 
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, printGraphqlError, writeGraphql)
 import Examples.SwapiCustomScalars (Id(..))
 import Examples.Swapi.Query as Query
 import Examples.Swapi.Interface.Character as Character
@@ -46,7 +46,7 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example02AdoSyntax" do
   writeGraphql query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] query
+  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
 
   (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
 
