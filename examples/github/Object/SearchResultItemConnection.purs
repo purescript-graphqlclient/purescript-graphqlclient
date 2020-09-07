@@ -1,6 +1,6 @@
 module Examples.Github.Object.SearchResultItemConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

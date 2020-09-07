@@ -2,10 +2,10 @@ module Examples.Github.Enum.ProjectCardArchivedState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordProjectCardArchivedState :: Ord ProjectCardArchivedState
 fromToMap :: Array (Tuple String ProjectCardArchivedState)
 fromToMap = [ Tuple "ARCHIVED" Archived, Tuple "NOT_ARCHIVED" NotArchived ]
 
-instance projectCardArchivedStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance projectCardArchivedStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                         ProjectCardArchivedState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "ProjectCardArchivedState"
                                         fromToMap
 
-instance projectCardArchivedStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance projectCardArchivedStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                            ProjectCardArchivedState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Archived -> ArgumentValueEnum "ARCHIVED"
       NotArchived -> ArgumentValueEnum "NOT_ARCHIVED"

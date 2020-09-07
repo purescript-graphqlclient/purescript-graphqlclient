@@ -1,10 +1,10 @@
 module Examples.Github.Object.Team where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -51,7 +51,7 @@ ancestors :: forall r . AncestorsInput -> SelectionSet
                                                r
 ancestors input = selectionForCompositeField
                   "ancestors"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -62,7 +62,7 @@ type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__Team (Maybe Uri)
 avatarUrl input = selectionForField
                   "avatarUrl"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
 
@@ -86,7 +86,7 @@ childTeams :: forall r . ChildTeamsInput -> SelectionSet
                                                  r
 childTeams input = selectionForCompositeField
                    "childTeams"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -123,7 +123,7 @@ discussion :: forall r . DiscussionInput -> SelectionSet
                                                   r)
 discussion input = selectionForCompositeField
                    "discussion"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -146,7 +146,7 @@ discussions :: forall r . DiscussionsInput -> SelectionSet
                                                    r
 discussions input = selectionForCompositeField
                     "discussions"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -194,7 +194,7 @@ invitations :: forall r . InvitationsInput -> SelectionSet
                                                     r)
 invitations input = selectionForCompositeField
                     "invitations"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -216,7 +216,7 @@ memberStatuses :: forall r . MemberStatusesInput -> SelectionSet
                                                          r
 memberStatuses input = selectionForCompositeField
                        "memberStatuses"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -241,7 +241,7 @@ members :: forall r . MembersInput -> SelectionSet
                                            r
 members input = selectionForCompositeField
                 "members"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -315,7 +315,7 @@ repositories :: forall r . RepositoriesInput -> SelectionSet
                                                      r
 repositories input = selectionForCompositeField
                      "repositories"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

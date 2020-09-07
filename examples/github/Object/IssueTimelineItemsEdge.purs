@@ -1,6 +1,6 @@
 module Examples.Github.Object.IssueTimelineItemsEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

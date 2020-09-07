@@ -2,10 +2,10 @@ module Examples.Github.Enum.SearchType where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,12 +22,12 @@ fromToMap = [ Tuple "ISSUE" Issue
             , Tuple "USER" User
             ]
 
-instance searchTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance searchTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                           SearchType where
   graphqlDefaultResponseScalarDecoder = enumDecoder "SearchType" fromToMap
 
-instance searchTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue SearchType where
-  toGraphqlArgumentValue =
+instance searchTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue SearchType where
+  toGraphQLArgumentValue =
     case _ of
       Issue -> ArgumentValueEnum "ISSUE"
       Repository -> ArgumentValueEnum "REPOSITORY"

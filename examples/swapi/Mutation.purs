@@ -1,12 +1,12 @@
 module Examples.Swapi.Mutation where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , Scope__RootMutation
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.SwapiCustomScalars (Id)
@@ -30,6 +30,6 @@ sendMessage :: forall r . SendMessageInput -> SelectionSet
                                                     r)
 sendMessage input = selectionForCompositeField
                     "sendMessage"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer

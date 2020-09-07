@@ -1,6 +1,6 @@
 module Examples.Github.Object.RepoConfigDisableSockpuppetDisallowedAuditEntry where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

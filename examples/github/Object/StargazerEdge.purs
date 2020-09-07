@@ -1,6 +1,6 @@
 module Examples.Github.Object.StargazerEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

@@ -1,6 +1,6 @@
 module Examples.Github.Object.PullRequestReviewEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

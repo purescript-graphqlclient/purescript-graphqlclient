@@ -1,7 +1,7 @@
 module MyExamplesTests.Example06Typename where
 
 import MyExamplesTests.Util (inlineAndTrim)
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, printGraphQLError, writeGraphQL)
 import Protolude
 
 import Data.Generic.Rep.Show (genericShow)
@@ -71,11 +71,11 @@ query {
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example06Typename" do
-  writeGraphql query `Test.Spec.shouldEqual` expectedQuery
+  writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] query
+  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] query
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
   response' `Test.Spec.shouldEqual`
     { heroUnion: Human

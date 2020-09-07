@@ -1,6 +1,6 @@
 module Examples.Github.Interface.TopicAuditEntryData where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

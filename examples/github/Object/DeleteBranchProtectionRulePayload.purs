@@ -1,6 +1,6 @@
 module Examples.Github.Object.DeleteBranchProtectionRulePayload where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__DeleteBranchProtectionRulePayload)
 import Data.Maybe (Maybe)

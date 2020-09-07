@@ -2,10 +2,10 @@ module Examples.Github.Enum.LabelOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,13 +19,13 @@ derive instance ordLabelOrderField :: Ord LabelOrderField
 fromToMap :: Array (Tuple String LabelOrderField)
 fromToMap = [ Tuple "NAME" Name, Tuple "CREATED_AT" CreatedAt ]
 
-instance labelOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance labelOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                LabelOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder "LabelOrderField" fromToMap
 
-instance labelOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance labelOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                   LabelOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Name -> ArgumentValueEnum "NAME"
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

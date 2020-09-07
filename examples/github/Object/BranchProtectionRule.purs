@@ -1,10 +1,10 @@
 module Examples.Github.Object.BranchProtectionRule where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -42,7 +42,7 @@ branchProtectionRuleConflicts :: forall r . BranchProtectionRuleConflictsInput -
                                                                                        r
 branchProtectionRuleConflicts input = selectionForCompositeField
                                       "branchProtectionRuleConflicts"
-                                      (toGraphqlArguments
+                                      (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -95,7 +95,7 @@ matchingRefs :: forall r . MatchingRefsInput -> SelectionSet
                                                      r
 matchingRefs input = selectionForCompositeField
                      "matchingRefs"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -118,7 +118,7 @@ pushAllowances :: forall r . PushAllowancesInput -> SelectionSet
                                                          r
 pushAllowances input = selectionForCompositeField
                        "pushAllowances"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -213,6 +213,6 @@ reviewDismissalAllowances :: forall r . ReviewDismissalAllowancesInput -> Select
                                                                                r
 reviewDismissalAllowances input = selectionForCompositeField
                                   "reviewDismissalAllowances"
-                                  (toGraphqlArguments
+                                  (toGraphQLArguments
                                    input)
                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer

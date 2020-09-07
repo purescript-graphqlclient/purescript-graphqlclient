@@ -1,6 +1,6 @@
 module Examples.Github.Object.EnterpriseServerUserAccountEmailEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

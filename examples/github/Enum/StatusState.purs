@@ -2,10 +2,10 @@ module Examples.Github.Enum.StatusState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -24,12 +24,12 @@ fromToMap = [ Tuple "EXPECTED" Expected
             , Tuple "SUCCESS" Success
             ]
 
-instance statusStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance statusStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                            StatusState where
   graphqlDefaultResponseScalarDecoder = enumDecoder "StatusState" fromToMap
 
-instance statusStateToGraphqlArgumentValue :: ToGraphqlArgumentValue StatusState where
-  toGraphqlArgumentValue =
+instance statusStateToGraphQLArgumentValue :: ToGraphQLArgumentValue StatusState where
+  toGraphQLArgumentValue =
     case _ of
       Expected -> ArgumentValueEnum "EXPECTED"
       Error -> ArgumentValueEnum "ERROR"

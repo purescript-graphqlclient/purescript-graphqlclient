@@ -1,13 +1,13 @@
 module Examples.Github.Interface.RepositoryInfo where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   , exhaustiveFragmentSelection
   , buildFragment
   )
@@ -152,7 +152,7 @@ shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet
                                                      Html
 shortDescriptionHTML input = selectionForField
                              "shortDescriptionHTML"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseScalarDecoder
 

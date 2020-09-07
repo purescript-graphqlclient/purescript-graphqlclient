@@ -1,6 +1,6 @@
 module Examples.Github.Object.ReviewStatusHovercardContext where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__ReviewStatusHovercardContext)
 import Data.Maybe (Maybe)

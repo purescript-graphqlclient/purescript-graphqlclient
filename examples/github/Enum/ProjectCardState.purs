@@ -2,10 +2,10 @@ module Examples.Github.Enum.ProjectCardState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,13 +22,13 @@ fromToMap = [ Tuple "CONTENT_ONLY" ContentOnly
             , Tuple "REDACTED" Redacted
             ]
 
-instance projectCardStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance projectCardStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                 ProjectCardState where
   graphqlDefaultResponseScalarDecoder = enumDecoder "ProjectCardState" fromToMap
 
-instance projectCardStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance projectCardStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                    ProjectCardState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       ContentOnly -> ArgumentValueEnum "CONTENT_ONLY"
       NoteOnly -> ArgumentValueEnum "NOTE_ONLY"

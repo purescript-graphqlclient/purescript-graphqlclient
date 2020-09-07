@@ -1,10 +1,10 @@
 module Examples.Github.Interface.Assignable where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , exhaustiveFragmentSelection
   , buildFragment
@@ -31,7 +31,7 @@ assignees :: forall r . AssigneesInput -> SelectionSet
                                                r
 assignees input = selectionForCompositeField
                   "assignees"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

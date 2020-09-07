@@ -2,10 +2,10 @@ module Examples.Github.Enum.RefOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -21,13 +21,13 @@ fromToMap = [ Tuple "TAG_COMMIT_DATE" TagCommitDate
             , Tuple "ALPHABETICAL" Alphabetical
             ]
 
-instance refOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance refOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                              RefOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder "RefOrderField" fromToMap
 
-instance refOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance refOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                 RefOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       TagCommitDate -> ArgumentValueEnum "TAG_COMMIT_DATE"
       Alphabetical -> ArgumentValueEnum "ALPHABETICAL"

@@ -1,6 +1,6 @@
 module Examples.Github.Object.MarketplaceCategory where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__MarketplaceCategory)
 import Data.Maybe (Maybe)

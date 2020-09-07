@@ -1,6 +1,6 @@
 module Examples.Swapi.Union.CharacterUnion where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Swapi.Scopes (Scope__Droid, Scope__Human, Scope__CharacterUnion)
 import Data.Maybe (Maybe(..))
 import Prelude (pure)

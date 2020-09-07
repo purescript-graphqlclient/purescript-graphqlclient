@@ -2,10 +2,10 @@ module Examples.Github.Enum.GitSignatureState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -53,15 +53,15 @@ fromToMap = [ Tuple "VALID" Valid
             , Tuple "OCSP_REVOKED" OcspRevoked
             ]
 
-instance gitSignatureStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance gitSignatureStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                  GitSignatureState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "GitSignatureState"
                                         fromToMap
 
-instance gitSignatureStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance gitSignatureStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                     GitSignatureState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Valid -> ArgumentValueEnum "VALID"
       Invalid -> ArgumentValueEnum "INVALID"

@@ -1,6 +1,6 @@
 module Examples.Github.Object.PageInfo where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__PageInfo)
 import Data.Maybe (Maybe)

@@ -1,6 +1,6 @@
 module Examples.Swapi.Object.ChatMessage where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

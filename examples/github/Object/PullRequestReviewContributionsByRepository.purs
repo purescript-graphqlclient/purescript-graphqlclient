@@ -1,10 +1,10 @@
 module Examples.Github.Object.PullRequestReviewContributionsByRepository where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.InputObject (ContributionOrder) as Examples.Github.InputObject
@@ -33,7 +33,7 @@ contributions :: forall r . ContributionsInput -> SelectionSet
                                                        r
 contributions input = selectionForCompositeField
                       "contributions"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

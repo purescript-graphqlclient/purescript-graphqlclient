@@ -1,6 +1,6 @@
 module Examples.Github.Interface.Deletable where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

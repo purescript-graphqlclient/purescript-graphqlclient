@@ -1,6 +1,6 @@
 module Examples.Github.Object.OrganizationEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

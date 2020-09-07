@@ -1,6 +1,6 @@
 module Examples.Github.Interface.OauthApplicationAuditEntryData where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

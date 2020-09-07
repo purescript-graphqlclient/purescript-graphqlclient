@@ -2,10 +2,10 @@ module Examples.Github.Enum.OrgRemoveBillingManagerAuditEntryReason where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -29,15 +29,15 @@ fromToMap = [ Tuple
               SamlSsoEnforcementRequiresExternalIdentity
             ]
 
-instance orgRemoveBillingManagerAuditEntryReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance orgRemoveBillingManagerAuditEntryReasonGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                        OrgRemoveBillingManagerAuditEntryReason where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OrgRemoveBillingManagerAuditEntryReason"
                                         fromToMap
 
-instance orgRemoveBillingManagerAuditEntryReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance orgRemoveBillingManagerAuditEntryReasonToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                           OrgRemoveBillingManagerAuditEntryReason where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       TwoFactorRequirementNonCompliance -> ArgumentValueEnum
                                            "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE"

@@ -1,13 +1,13 @@
 module Examples.Github.Object.Deployment where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   ( Scope__Commit
@@ -138,7 +138,7 @@ statuses :: forall r . StatusesInput -> SelectionSet
                                               r)
 statuses input = selectionForCompositeField
                  "statuses"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

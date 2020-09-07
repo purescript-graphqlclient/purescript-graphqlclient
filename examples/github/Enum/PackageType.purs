@@ -2,10 +2,10 @@ module Examples.Github.Enum.PackageType where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -26,12 +26,12 @@ fromToMap = [ Tuple "NPM" Npm
             , Tuple "PYPI" Pypi
             ]
 
-instance packageTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance packageTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                            PackageType where
   graphqlDefaultResponseScalarDecoder = enumDecoder "PackageType" fromToMap
 
-instance packageTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue PackageType where
-  toGraphqlArgumentValue =
+instance packageTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue PackageType where
+  toGraphQLArgumentValue =
     case _ of
       Npm -> ArgumentValueEnum "NPM"
       Rubygems -> ArgumentValueEnum "RUBYGEMS"

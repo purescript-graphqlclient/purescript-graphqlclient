@@ -1,6 +1,6 @@
 module Examples.Github.Object.CreatedPullRequestContribution where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

@@ -1,10 +1,10 @@
 module Examples.Github.Interface.Labelable where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , exhaustiveFragmentSelection
   , buildFragment
@@ -35,7 +35,7 @@ labels :: forall r . LabelsInput -> SelectionSet
                                           r)
 labels input = selectionForCompositeField
                "labels"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

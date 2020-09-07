@@ -1,12 +1,12 @@
 module Examples.Github.Object.ProfileItemShowcase where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -35,6 +35,6 @@ items :: forall r . ItemsInput -> SelectionSet
                                        r
 items input = selectionForCompositeField
               "items"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer

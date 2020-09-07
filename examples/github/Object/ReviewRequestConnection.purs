@@ -1,6 +1,6 @@
 module Examples.Github.Object.ReviewRequestConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

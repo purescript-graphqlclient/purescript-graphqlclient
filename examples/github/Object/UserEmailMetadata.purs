@@ -1,6 +1,6 @@
 module Examples.Github.Object.UserEmailMetadata where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__UserEmailMetadata)
 import Data.Maybe (Maybe)

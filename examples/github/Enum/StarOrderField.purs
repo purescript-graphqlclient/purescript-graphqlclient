@@ -2,10 +2,10 @@ module Examples.Github.Enum.StarOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,12 +19,12 @@ derive instance ordStarOrderField :: Ord StarOrderField
 fromToMap :: Array (Tuple String StarOrderField)
 fromToMap = [ Tuple "STARRED_AT" StarredAt ]
 
-instance starOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance starOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                               StarOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder "StarOrderField" fromToMap
 
-instance starOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance starOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                  StarOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       StarredAt -> ArgumentValueEnum "STARRED_AT"

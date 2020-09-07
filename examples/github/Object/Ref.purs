@@ -1,10 +1,10 @@
 module Examples.Github.Object.Ref where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -49,7 +49,7 @@ associatedPullRequests :: forall r . AssociatedPullRequestsInput -> SelectionSet
                                                                          r
 associatedPullRequests input = selectionForCompositeField
                                "associatedPullRequests"
-                               (toGraphqlArguments
+                               (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

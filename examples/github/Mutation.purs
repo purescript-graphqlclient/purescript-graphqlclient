@@ -116,11 +116,11 @@ import Examples.Github.InputObject
   , UpdateTopicsInput
   ) as Examples.Github.InputObject
 import Type.Row (type (+))
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , Scope__RootMutation
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -256,7 +256,7 @@ acceptEnterpriseAdministratorInvitation :: forall r . AcceptEnterpriseAdministra
                                                                                                             r)
 acceptEnterpriseAdministratorInvitation input = selectionForCompositeField
                                                 "acceptEnterpriseAdministratorInvitation"
-                                                (toGraphqlArguments
+                                                (toGraphQLArguments
                                                  input)
                                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -276,7 +276,7 @@ acceptTopicSuggestion :: forall r . AcceptTopicSuggestionInput -> SelectionSet
                                                                         r)
 acceptTopicSuggestion input = selectionForCompositeField
                               "acceptTopicSuggestion"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -296,7 +296,7 @@ addAssigneesToAssignable :: forall r . AddAssigneesToAssignableInput -> Selectio
                                                                               r)
 addAssigneesToAssignable input = selectionForCompositeField
                                  "addAssigneesToAssignable"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -314,7 +314,7 @@ addComment :: forall r . AddCommentInput -> SelectionSet
                                                   r)
 addComment input = selectionForCompositeField
                    "addComment"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -332,7 +332,7 @@ addLabelsToLabelable :: forall r . AddLabelsToLabelableInput -> SelectionSet
                                                                       r)
 addLabelsToLabelable input = selectionForCompositeField
                              "addLabelsToLabelable"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -350,7 +350,7 @@ addProjectCard :: forall r . AddProjectCardInput -> SelectionSet
                                                           r)
 addProjectCard input = selectionForCompositeField
                        "addProjectCard"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -368,7 +368,7 @@ addProjectColumn :: forall r . AddProjectColumnInput -> SelectionSet
                                                               r)
 addProjectColumn input = selectionForCompositeField
                          "addProjectColumn"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -386,7 +386,7 @@ addPullRequestReview :: forall r . AddPullRequestReviewInput -> SelectionSet
                                                                       r)
 addPullRequestReview input = selectionForCompositeField
                              "addPullRequestReview"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -406,7 +406,7 @@ addPullRequestReviewComment :: forall r . AddPullRequestReviewCommentInput -> Se
                                                                                     r)
 addPullRequestReviewComment input = selectionForCompositeField
                                     "addPullRequestReviewComment"
-                                    (toGraphqlArguments
+                                    (toGraphQLArguments
                                      input)
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -426,7 +426,7 @@ addPullRequestReviewThread :: forall r . AddPullRequestReviewThreadInput -> Sele
                                                                                   r)
 addPullRequestReviewThread input = selectionForCompositeField
                                    "addPullRequestReviewThread"
-                                   (toGraphqlArguments
+                                   (toGraphQLArguments
                                     input)
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -444,7 +444,7 @@ addReaction :: forall r . AddReactionInput -> SelectionSet
                                                     r)
 addReaction input = selectionForCompositeField
                     "addReaction"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -462,7 +462,7 @@ addStar :: forall r . AddStarInput -> SelectionSet
                                             r)
 addStar input = selectionForCompositeField
                 "addStar"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -480,7 +480,7 @@ archiveRepository :: forall r . ArchiveRepositoryInput -> SelectionSet
                                                                 r)
 archiveRepository input = selectionForCompositeField
                           "archiveRepository"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -500,7 +500,7 @@ cancelEnterpriseAdminInvitation :: forall r . CancelEnterpriseAdminInvitationInp
                                                                                             r)
 cancelEnterpriseAdminInvitation input = selectionForCompositeField
                                         "cancelEnterpriseAdminInvitation"
-                                        (toGraphqlArguments
+                                        (toGraphQLArguments
                                          input)
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -518,7 +518,7 @@ changeUserStatus :: forall r . ChangeUserStatusInput -> SelectionSet
                                                               r)
 changeUserStatus input = selectionForCompositeField
                          "changeUserStatus"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -538,7 +538,7 @@ clearLabelsFromLabelable :: forall r . ClearLabelsFromLabelableInput -> Selectio
                                                                               r)
 clearLabelsFromLabelable input = selectionForCompositeField
                                  "clearLabelsFromLabelable"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -556,7 +556,7 @@ cloneProject :: forall r . CloneProjectInput -> SelectionSet
                                                       r)
 cloneProject input = selectionForCompositeField
                      "cloneProject"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -576,7 +576,7 @@ cloneTemplateRepository :: forall r . CloneTemplateRepositoryInput -> SelectionS
                                                                             r)
 cloneTemplateRepository input = selectionForCompositeField
                                 "cloneTemplateRepository"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -594,7 +594,7 @@ closeIssue :: forall r . CloseIssueInput -> SelectionSet
                                                   r)
 closeIssue input = selectionForCompositeField
                    "closeIssue"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -612,7 +612,7 @@ closePullRequest :: forall r . ClosePullRequestInput -> SelectionSet
                                                               r)
 closePullRequest input = selectionForCompositeField
                          "closePullRequest"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -632,7 +632,7 @@ convertProjectCardNoteToIssue :: forall r . ConvertProjectCardNoteToIssueInput -
                                                                                         r)
 convertProjectCardNoteToIssue input = selectionForCompositeField
                                       "convertProjectCardNoteToIssue"
-                                      (toGraphqlArguments
+                                      (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -652,7 +652,7 @@ createBranchProtectionRule :: forall r . CreateBranchProtectionRuleInput -> Sele
                                                                                   r)
 createBranchProtectionRule input = selectionForCompositeField
                                    "createBranchProtectionRule"
-                                   (toGraphqlArguments
+                                   (toGraphQLArguments
                                     input)
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -672,7 +672,7 @@ createEnterpriseOrganization :: forall r . CreateEnterpriseOrganizationInput -> 
                                                                                       r)
 createEnterpriseOrganization input = selectionForCompositeField
                                      "createEnterpriseOrganization"
-                                     (toGraphqlArguments
+                                     (toGraphQLArguments
                                       input)
                                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -692,7 +692,7 @@ createIpAllowListEntry :: forall r . CreateIpAllowListEntryInput -> SelectionSet
                                                                           r)
 createIpAllowListEntry input = selectionForCompositeField
                                "createIpAllowListEntry"
-                               (toGraphqlArguments
+                               (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -710,7 +710,7 @@ createIssue :: forall r . CreateIssueInput -> SelectionSet
                                                     r)
 createIssue input = selectionForCompositeField
                     "createIssue"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -728,7 +728,7 @@ createProject :: forall r . CreateProjectInput -> SelectionSet
                                                         r)
 createProject input = selectionForCompositeField
                       "createProject"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -746,7 +746,7 @@ createPullRequest :: forall r . CreatePullRequestInput -> SelectionSet
                                                                 r)
 createPullRequest input = selectionForCompositeField
                           "createPullRequest"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -764,7 +764,7 @@ createRef :: forall r . CreateRefInput -> SelectionSet
                                                 r)
 createRef input = selectionForCompositeField
                   "createRef"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -782,7 +782,7 @@ createRepository :: forall r . CreateRepositoryInput -> SelectionSet
                                                               r)
 createRepository input = selectionForCompositeField
                          "createRepository"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -800,7 +800,7 @@ createTeamDiscussion :: forall r . CreateTeamDiscussionInput -> SelectionSet
                                                                       r)
 createTeamDiscussion input = selectionForCompositeField
                              "createTeamDiscussion"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -820,7 +820,7 @@ createTeamDiscussionComment :: forall r . CreateTeamDiscussionCommentInput -> Se
                                                                                     r)
 createTeamDiscussionComment input = selectionForCompositeField
                                     "createTeamDiscussionComment"
-                                    (toGraphqlArguments
+                                    (toGraphQLArguments
                                      input)
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -840,7 +840,7 @@ declineTopicSuggestion :: forall r . DeclineTopicSuggestionInput -> SelectionSet
                                                                           r)
 declineTopicSuggestion input = selectionForCompositeField
                                "declineTopicSuggestion"
-                               (toGraphqlArguments
+                               (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -860,7 +860,7 @@ deleteBranchProtectionRule :: forall r . DeleteBranchProtectionRuleInput -> Sele
                                                                                   r)
 deleteBranchProtectionRule input = selectionForCompositeField
                                    "deleteBranchProtectionRule"
-                                   (toGraphqlArguments
+                                   (toGraphQLArguments
                                     input)
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -878,7 +878,7 @@ deleteDeployment :: forall r . DeleteDeploymentInput -> SelectionSet
                                                               r)
 deleteDeployment input = selectionForCompositeField
                          "deleteDeployment"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -898,7 +898,7 @@ deleteIpAllowListEntry :: forall r . DeleteIpAllowListEntryInput -> SelectionSet
                                                                           r)
 deleteIpAllowListEntry input = selectionForCompositeField
                                "deleteIpAllowListEntry"
-                               (toGraphqlArguments
+                               (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -916,7 +916,7 @@ deleteIssue :: forall r . DeleteIssueInput -> SelectionSet
                                                     r)
 deleteIssue input = selectionForCompositeField
                     "deleteIssue"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -934,7 +934,7 @@ deleteIssueComment :: forall r . DeleteIssueCommentInput -> SelectionSet
                                                                   r)
 deleteIssueComment input = selectionForCompositeField
                            "deleteIssueComment"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -952,7 +952,7 @@ deleteProject :: forall r . DeleteProjectInput -> SelectionSet
                                                         r)
 deleteProject input = selectionForCompositeField
                       "deleteProject"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -970,7 +970,7 @@ deleteProjectCard :: forall r . DeleteProjectCardInput -> SelectionSet
                                                                 r)
 deleteProjectCard input = selectionForCompositeField
                           "deleteProjectCard"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -988,7 +988,7 @@ deleteProjectColumn :: forall r . DeleteProjectColumnInput -> SelectionSet
                                                                     r)
 deleteProjectColumn input = selectionForCompositeField
                             "deleteProjectColumn"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1008,7 +1008,7 @@ deletePullRequestReview :: forall r . DeletePullRequestReviewInput -> SelectionS
                                                                             r)
 deletePullRequestReview input = selectionForCompositeField
                                 "deletePullRequestReview"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1028,7 +1028,7 @@ deletePullRequestReviewComment :: forall r . DeletePullRequestReviewCommentInput
                                                                                           r)
 deletePullRequestReviewComment input = selectionForCompositeField
                                        "deletePullRequestReviewComment"
-                                       (toGraphqlArguments
+                                       (toGraphQLArguments
                                         input)
                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1046,7 +1046,7 @@ deleteRef :: forall r . DeleteRefInput -> SelectionSet
                                                 r)
 deleteRef input = selectionForCompositeField
                   "deleteRef"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1064,7 +1064,7 @@ deleteTeamDiscussion :: forall r . DeleteTeamDiscussionInput -> SelectionSet
                                                                       r)
 deleteTeamDiscussion input = selectionForCompositeField
                              "deleteTeamDiscussion"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1084,7 +1084,7 @@ deleteTeamDiscussionComment :: forall r . DeleteTeamDiscussionCommentInput -> Se
                                                                                     r)
 deleteTeamDiscussionComment input = selectionForCompositeField
                                     "deleteTeamDiscussionComment"
-                                    (toGraphqlArguments
+                                    (toGraphQLArguments
                                      input)
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1104,7 +1104,7 @@ dismissPullRequestReview :: forall r . DismissPullRequestReviewInput -> Selectio
                                                                               r)
 dismissPullRequestReview input = selectionForCompositeField
                                  "dismissPullRequestReview"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1122,7 +1122,7 @@ followUser :: forall r . FollowUserInput -> SelectionSet
                                                   r)
 followUser input = selectionForCompositeField
                    "followUser"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1142,7 +1142,7 @@ inviteEnterpriseAdmin :: forall r . InviteEnterpriseAdminInput -> SelectionSet
                                                                         r)
 inviteEnterpriseAdmin input = selectionForCompositeField
                               "inviteEnterpriseAdmin"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1162,7 +1162,7 @@ linkRepositoryToProject :: forall r . LinkRepositoryToProjectInput -> SelectionS
                                                                             r)
 linkRepositoryToProject input = selectionForCompositeField
                                 "linkRepositoryToProject"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1180,7 +1180,7 @@ lockLockable :: forall r . LockLockableInput -> SelectionSet
                                                       r)
 lockLockable input = selectionForCompositeField
                      "lockLockable"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1200,7 +1200,7 @@ markPullRequestReadyForReview :: forall r . MarkPullRequestReadyForReviewInput -
                                                                                         r)
 markPullRequestReadyForReview input = selectionForCompositeField
                                       "markPullRequestReadyForReview"
-                                      (toGraphqlArguments
+                                      (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1218,7 +1218,7 @@ mergeBranch :: forall r . MergeBranchInput -> SelectionSet
                                                     r)
 mergeBranch input = selectionForCompositeField
                     "mergeBranch"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1236,7 +1236,7 @@ mergePullRequest :: forall r . MergePullRequestInput -> SelectionSet
                                                               r)
 mergePullRequest input = selectionForCompositeField
                          "mergePullRequest"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1254,7 +1254,7 @@ minimizeComment :: forall r . MinimizeCommentInput -> SelectionSet
                                                             r)
 minimizeComment input = selectionForCompositeField
                         "minimizeComment"
-                        (toGraphqlArguments
+                        (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1272,7 +1272,7 @@ moveProjectCard :: forall r . MoveProjectCardInput -> SelectionSet
                                                             r)
 moveProjectCard input = selectionForCompositeField
                         "moveProjectCard"
-                        (toGraphqlArguments
+                        (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1290,7 +1290,7 @@ moveProjectColumn :: forall r . MoveProjectColumnInput -> SelectionSet
                                                                 r)
 moveProjectColumn input = selectionForCompositeField
                           "moveProjectColumn"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1310,7 +1310,7 @@ regenerateEnterpriseIdentityProviderRecoveryCodes :: forall r . RegenerateEnterp
                                                                                                                                 r)
 regenerateEnterpriseIdentityProviderRecoveryCodes input = selectionForCompositeField
                                                           "regenerateEnterpriseIdentityProviderRecoveryCodes"
-                                                          (toGraphqlArguments
+                                                          (toGraphQLArguments
                                                            input)
                                                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1330,7 +1330,7 @@ removeAssigneesFromAssignable :: forall r . RemoveAssigneesFromAssignableInput -
                                                                                         r)
 removeAssigneesFromAssignable input = selectionForCompositeField
                                       "removeAssigneesFromAssignable"
-                                      (toGraphqlArguments
+                                      (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1350,7 +1350,7 @@ removeEnterpriseAdmin :: forall r . RemoveEnterpriseAdminInput -> SelectionSet
                                                                         r)
 removeEnterpriseAdmin input = selectionForCompositeField
                               "removeEnterpriseAdmin"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1370,7 +1370,7 @@ removeEnterpriseIdentityProvider :: forall r . RemoveEnterpriseIdentityProviderI
                                                                                               r)
 removeEnterpriseIdentityProvider input = selectionForCompositeField
                                          "removeEnterpriseIdentityProvider"
-                                         (toGraphqlArguments
+                                         (toGraphQLArguments
                                           input)
                                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1390,7 +1390,7 @@ removeEnterpriseOrganization :: forall r . RemoveEnterpriseOrganizationInput -> 
                                                                                       r)
 removeEnterpriseOrganization input = selectionForCompositeField
                                      "removeEnterpriseOrganization"
-                                     (toGraphqlArguments
+                                     (toGraphQLArguments
                                       input)
                                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1410,7 +1410,7 @@ removeLabelsFromLabelable :: forall r . RemoveLabelsFromLabelableInput -> Select
                                                                                 r)
 removeLabelsFromLabelable input = selectionForCompositeField
                                   "removeLabelsFromLabelable"
-                                  (toGraphqlArguments
+                                  (toGraphQLArguments
                                    input)
                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1430,7 +1430,7 @@ removeOutsideCollaborator :: forall r . RemoveOutsideCollaboratorInput -> Select
                                                                                 r)
 removeOutsideCollaborator input = selectionForCompositeField
                                   "removeOutsideCollaborator"
-                                  (toGraphqlArguments
+                                  (toGraphQLArguments
                                    input)
                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1448,7 +1448,7 @@ removeReaction :: forall r . RemoveReactionInput -> SelectionSet
                                                           r)
 removeReaction input = selectionForCompositeField
                        "removeReaction"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1466,7 +1466,7 @@ removeStar :: forall r . RemoveStarInput -> SelectionSet
                                                   r)
 removeStar input = selectionForCompositeField
                    "removeStar"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1484,7 +1484,7 @@ reopenIssue :: forall r . ReopenIssueInput -> SelectionSet
                                                     r)
 reopenIssue input = selectionForCompositeField
                     "reopenIssue"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1502,7 +1502,7 @@ reopenPullRequest :: forall r . ReopenPullRequestInput -> SelectionSet
                                                                 r)
 reopenPullRequest input = selectionForCompositeField
                           "reopenPullRequest"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1520,7 +1520,7 @@ requestReviews :: forall r . RequestReviewsInput -> SelectionSet
                                                           r)
 requestReviews input = selectionForCompositeField
                        "requestReviews"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1538,7 +1538,7 @@ resolveReviewThread :: forall r . ResolveReviewThreadInput -> SelectionSet
                                                                     r)
 resolveReviewThread input = selectionForCompositeField
                             "resolveReviewThread"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1558,7 +1558,7 @@ setEnterpriseIdentityProvider :: forall r . SetEnterpriseIdentityProviderInput -
                                                                                         r)
 setEnterpriseIdentityProvider input = selectionForCompositeField
                                       "setEnterpriseIdentityProvider"
-                                      (toGraphqlArguments
+                                      (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1578,7 +1578,7 @@ submitPullRequestReview :: forall r . SubmitPullRequestReviewInput -> SelectionS
                                                                             r)
 submitPullRequestReview input = selectionForCompositeField
                                 "submitPullRequestReview"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1596,7 +1596,7 @@ transferIssue :: forall r . TransferIssueInput -> SelectionSet
                                                         r)
 transferIssue input = selectionForCompositeField
                       "transferIssue"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1614,7 +1614,7 @@ unarchiveRepository :: forall r . UnarchiveRepositoryInput -> SelectionSet
                                                                     r)
 unarchiveRepository input = selectionForCompositeField
                             "unarchiveRepository"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1632,7 +1632,7 @@ unfollowUser :: forall r . UnfollowUserInput -> SelectionSet
                                                       r)
 unfollowUser input = selectionForCompositeField
                      "unfollowUser"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1652,7 +1652,7 @@ unlinkRepositoryFromProject :: forall r . UnlinkRepositoryFromProjectInput -> Se
                                                                                     r)
 unlinkRepositoryFromProject input = selectionForCompositeField
                                     "unlinkRepositoryFromProject"
-                                    (toGraphqlArguments
+                                    (toGraphQLArguments
                                      input)
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1670,7 +1670,7 @@ unlockLockable :: forall r . UnlockLockableInput -> SelectionSet
                                                           r)
 unlockLockable input = selectionForCompositeField
                        "unlockLockable"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1690,7 +1690,7 @@ unmarkIssueAsDuplicate :: forall r . UnmarkIssueAsDuplicateInput -> SelectionSet
                                                                           r)
 unmarkIssueAsDuplicate input = selectionForCompositeField
                                "unmarkIssueAsDuplicate"
-                               (toGraphqlArguments
+                               (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1708,7 +1708,7 @@ unminimizeComment :: forall r . UnminimizeCommentInput -> SelectionSet
                                                                 r)
 unminimizeComment input = selectionForCompositeField
                           "unminimizeComment"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1728,7 +1728,7 @@ unresolveReviewThread :: forall r . UnresolveReviewThreadInput -> SelectionSet
                                                                         r)
 unresolveReviewThread input = selectionForCompositeField
                               "unresolveReviewThread"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1748,7 +1748,7 @@ updateBranchProtectionRule :: forall r . UpdateBranchProtectionRuleInput -> Sele
                                                                                   r)
 updateBranchProtectionRule input = selectionForCompositeField
                                    "updateBranchProtectionRule"
-                                   (toGraphqlArguments
+                                   (toGraphQLArguments
                                     input)
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1768,7 +1768,7 @@ updateEnterpriseActionExecutionCapabilitySetting :: forall r . UpdateEnterpriseA
                                                                                                                               r)
 updateEnterpriseActionExecutionCapabilitySetting input = selectionForCompositeField
                                                          "updateEnterpriseActionExecutionCapabilitySetting"
-                                                         (toGraphqlArguments
+                                                         (toGraphQLArguments
                                                           input)
                                                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1788,7 +1788,7 @@ updateEnterpriseAdministratorRole :: forall r . UpdateEnterpriseAdministratorRol
                                                                                                 r)
 updateEnterpriseAdministratorRole input = selectionForCompositeField
                                           "updateEnterpriseAdministratorRole"
-                                          (toGraphqlArguments
+                                          (toGraphQLArguments
                                            input)
                                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1808,7 +1808,7 @@ updateEnterpriseAllowPrivateRepositoryForkingSetting :: forall r . UpdateEnterpr
                                                                                                                                       r)
 updateEnterpriseAllowPrivateRepositoryForkingSetting input = selectionForCompositeField
                                                              "updateEnterpriseAllowPrivateRepositoryForkingSetting"
-                                                             (toGraphqlArguments
+                                                             (toGraphQLArguments
                                                               input)
                                                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1828,7 +1828,7 @@ updateEnterpriseDefaultRepositoryPermissionSetting :: forall r . UpdateEnterpris
                                                                                                                                   r)
 updateEnterpriseDefaultRepositoryPermissionSetting input = selectionForCompositeField
                                                            "updateEnterpriseDefaultRepositoryPermissionSetting"
-                                                           (toGraphqlArguments
+                                                           (toGraphQLArguments
                                                             input)
                                                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1848,7 +1848,7 @@ updateEnterpriseMembersCanChangeRepositoryVisibilitySetting :: forall r . Update
                                                                                                                                                     r)
 updateEnterpriseMembersCanChangeRepositoryVisibilitySetting input = selectionForCompositeField
                                                                     "updateEnterpriseMembersCanChangeRepositoryVisibilitySetting"
-                                                                    (toGraphqlArguments
+                                                                    (toGraphQLArguments
                                                                      input)
                                                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1868,7 +1868,7 @@ updateEnterpriseMembersCanCreateRepositoriesSetting :: forall r . UpdateEnterpri
                                                                                                                                     r)
 updateEnterpriseMembersCanCreateRepositoriesSetting input = selectionForCompositeField
                                                             "updateEnterpriseMembersCanCreateRepositoriesSetting"
-                                                            (toGraphqlArguments
+                                                            (toGraphQLArguments
                                                              input)
                                                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1888,7 +1888,7 @@ updateEnterpriseMembersCanDeleteIssuesSetting :: forall r . UpdateEnterpriseMemb
                                                                                                                         r)
 updateEnterpriseMembersCanDeleteIssuesSetting input = selectionForCompositeField
                                                       "updateEnterpriseMembersCanDeleteIssuesSetting"
-                                                      (toGraphqlArguments
+                                                      (toGraphQLArguments
                                                        input)
                                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1908,7 +1908,7 @@ updateEnterpriseMembersCanDeleteRepositoriesSetting :: forall r . UpdateEnterpri
                                                                                                                                     r)
 updateEnterpriseMembersCanDeleteRepositoriesSetting input = selectionForCompositeField
                                                             "updateEnterpriseMembersCanDeleteRepositoriesSetting"
-                                                            (toGraphqlArguments
+                                                            (toGraphQLArguments
                                                              input)
                                                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1928,7 +1928,7 @@ updateEnterpriseMembersCanInviteCollaboratorsSetting :: forall r . UpdateEnterpr
                                                                                                                                       r)
 updateEnterpriseMembersCanInviteCollaboratorsSetting input = selectionForCompositeField
                                                              "updateEnterpriseMembersCanInviteCollaboratorsSetting"
-                                                             (toGraphqlArguments
+                                                             (toGraphQLArguments
                                                               input)
                                                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1948,7 +1948,7 @@ updateEnterpriseMembersCanMakePurchasesSetting :: forall r . UpdateEnterpriseMem
                                                                                                                           r)
 updateEnterpriseMembersCanMakePurchasesSetting input = selectionForCompositeField
                                                        "updateEnterpriseMembersCanMakePurchasesSetting"
-                                                       (toGraphqlArguments
+                                                       (toGraphQLArguments
                                                         input)
                                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1968,7 +1968,7 @@ updateEnterpriseMembersCanUpdateProtectedBranchesSetting :: forall r . UpdateEnt
                                                                                                                                               r)
 updateEnterpriseMembersCanUpdateProtectedBranchesSetting input = selectionForCompositeField
                                                                  "updateEnterpriseMembersCanUpdateProtectedBranchesSetting"
-                                                                 (toGraphqlArguments
+                                                                 (toGraphQLArguments
                                                                   input)
                                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1988,7 +1988,7 @@ updateEnterpriseMembersCanViewDependencyInsightsSetting :: forall r . UpdateEnte
                                                                                                                                             r)
 updateEnterpriseMembersCanViewDependencyInsightsSetting input = selectionForCompositeField
                                                                 "updateEnterpriseMembersCanViewDependencyInsightsSetting"
-                                                                (toGraphqlArguments
+                                                                (toGraphQLArguments
                                                                  input)
                                                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2008,7 +2008,7 @@ updateEnterpriseOrganizationProjectsSetting :: forall r . UpdateEnterpriseOrgani
                                                                                                                     r)
 updateEnterpriseOrganizationProjectsSetting input = selectionForCompositeField
                                                     "updateEnterpriseOrganizationProjectsSetting"
-                                                    (toGraphqlArguments
+                                                    (toGraphQLArguments
                                                      input)
                                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2028,7 +2028,7 @@ updateEnterpriseProfile :: forall r . UpdateEnterpriseProfileInput -> SelectionS
                                                                             r)
 updateEnterpriseProfile input = selectionForCompositeField
                                 "updateEnterpriseProfile"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2048,7 +2048,7 @@ updateEnterpriseRepositoryProjectsSetting :: forall r . UpdateEnterpriseReposito
                                                                                                                 r)
 updateEnterpriseRepositoryProjectsSetting input = selectionForCompositeField
                                                   "updateEnterpriseRepositoryProjectsSetting"
-                                                  (toGraphqlArguments
+                                                  (toGraphQLArguments
                                                    input)
                                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2068,7 +2068,7 @@ updateEnterpriseTeamDiscussionsSetting :: forall r . UpdateEnterpriseTeamDiscuss
                                                                                                           r)
 updateEnterpriseTeamDiscussionsSetting input = selectionForCompositeField
                                                "updateEnterpriseTeamDiscussionsSetting"
-                                               (toGraphqlArguments
+                                               (toGraphQLArguments
                                                 input)
                                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2088,7 +2088,7 @@ updateEnterpriseTwoFactorAuthenticationRequiredSetting :: forall r . UpdateEnter
                                                                                                                                           r)
 updateEnterpriseTwoFactorAuthenticationRequiredSetting input = selectionForCompositeField
                                                                "updateEnterpriseTwoFactorAuthenticationRequiredSetting"
-                                                               (toGraphqlArguments
+                                                               (toGraphQLArguments
                                                                 input)
                                                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2108,7 +2108,7 @@ updateIpAllowListEnabledSetting :: forall r . UpdateIpAllowListEnabledSettingInp
                                                                                             r)
 updateIpAllowListEnabledSetting input = selectionForCompositeField
                                         "updateIpAllowListEnabledSetting"
-                                        (toGraphqlArguments
+                                        (toGraphQLArguments
                                          input)
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2128,7 +2128,7 @@ updateIpAllowListEntry :: forall r . UpdateIpAllowListEntryInput -> SelectionSet
                                                                           r)
 updateIpAllowListEntry input = selectionForCompositeField
                                "updateIpAllowListEntry"
-                               (toGraphqlArguments
+                               (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2146,7 +2146,7 @@ updateIssue :: forall r . UpdateIssueInput -> SelectionSet
                                                     r)
 updateIssue input = selectionForCompositeField
                     "updateIssue"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2164,7 +2164,7 @@ updateIssueComment :: forall r . UpdateIssueCommentInput -> SelectionSet
                                                                   r)
 updateIssueComment input = selectionForCompositeField
                            "updateIssueComment"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2182,7 +2182,7 @@ updateProject :: forall r . UpdateProjectInput -> SelectionSet
                                                         r)
 updateProject input = selectionForCompositeField
                       "updateProject"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2200,7 +2200,7 @@ updateProjectCard :: forall r . UpdateProjectCardInput -> SelectionSet
                                                                 r)
 updateProjectCard input = selectionForCompositeField
                           "updateProjectCard"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2218,7 +2218,7 @@ updateProjectColumn :: forall r . UpdateProjectColumnInput -> SelectionSet
                                                                     r)
 updateProjectColumn input = selectionForCompositeField
                             "updateProjectColumn"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2236,7 +2236,7 @@ updatePullRequest :: forall r . UpdatePullRequestInput -> SelectionSet
                                                                 r)
 updatePullRequest input = selectionForCompositeField
                           "updatePullRequest"
-                          (toGraphqlArguments
+                          (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2256,7 +2256,7 @@ updatePullRequestReview :: forall r . UpdatePullRequestReviewInput -> SelectionS
                                                                             r)
 updatePullRequestReview input = selectionForCompositeField
                                 "updatePullRequestReview"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2276,7 +2276,7 @@ updatePullRequestReviewComment :: forall r . UpdatePullRequestReviewCommentInput
                                                                                           r)
 updatePullRequestReviewComment input = selectionForCompositeField
                                        "updatePullRequestReviewComment"
-                                       (toGraphqlArguments
+                                       (toGraphQLArguments
                                         input)
                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2294,7 +2294,7 @@ updateRef :: forall r . UpdateRefInput -> SelectionSet
                                                 r)
 updateRef input = selectionForCompositeField
                   "updateRef"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2312,7 +2312,7 @@ updateRepository :: forall r . UpdateRepositoryInput -> SelectionSet
                                                               r)
 updateRepository input = selectionForCompositeField
                          "updateRepository"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2330,7 +2330,7 @@ updateSubscription :: forall r . UpdateSubscriptionInput -> SelectionSet
                                                                   r)
 updateSubscription input = selectionForCompositeField
                            "updateSubscription"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2348,7 +2348,7 @@ updateTeamDiscussion :: forall r . UpdateTeamDiscussionInput -> SelectionSet
                                                                       r)
 updateTeamDiscussion input = selectionForCompositeField
                              "updateTeamDiscussion"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2368,7 +2368,7 @@ updateTeamDiscussionComment :: forall r . UpdateTeamDiscussionCommentInput -> Se
                                                                                     r)
 updateTeamDiscussionComment input = selectionForCompositeField
                                     "updateTeamDiscussionComment"
-                                    (toGraphqlArguments
+                                    (toGraphQLArguments
                                      input)
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -2386,6 +2386,6 @@ updateTopics :: forall r . UpdateTopicsInput -> SelectionSet
                                                       r)
 updateTopics input = selectionForCompositeField
                      "updateTopics"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -1,11 +1,11 @@
 module Examples.Github.Interface.Sponsorable where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   , exhaustiveFragmentSelection
   , buildFragment
   )
@@ -54,7 +54,7 @@ sponsorshipsAsMaintainer :: forall r . SponsorshipsAsMaintainerInput -> Selectio
                                                                              r
 sponsorshipsAsMaintainer input = selectionForCompositeField
                                  "sponsorshipsAsMaintainer"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -78,7 +78,7 @@ sponsorshipsAsSponsor :: forall r . SponsorshipsAsSponsorInput -> SelectionSet
                                                                        r
 sponsorshipsAsSponsor input = selectionForCompositeField
                               "sponsorshipsAsSponsor"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

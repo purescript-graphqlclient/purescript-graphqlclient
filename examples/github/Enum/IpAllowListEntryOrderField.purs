@@ -2,10 +2,10 @@ module Examples.Github.Enum.IpAllowListEntryOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -21,15 +21,15 @@ fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "ALLOW_LIST_VALUE" AllowListValue
             ]
 
-instance ipAllowListEntryOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance ipAllowListEntryOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                           IpAllowListEntryOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "IpAllowListEntryOrderField"
                                         fromToMap
 
-instance ipAllowListEntryOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance ipAllowListEntryOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                              IpAllowListEntryOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"
       AllowListValue -> ArgumentValueEnum "ALLOW_LIST_VALUE"

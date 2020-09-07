@@ -2,10 +2,10 @@ module Examples.Github.Enum.EnterpriseServerUserAccountsUploadSyncState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,15 +22,15 @@ fromToMap = [ Tuple "PENDING" Pending
             , Tuple "FAILURE" Failure
             ]
 
-instance enterpriseServerUserAccountsUploadSyncStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseServerUserAccountsUploadSyncStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                            EnterpriseServerUserAccountsUploadSyncState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseServerUserAccountsUploadSyncState"
                                         fromToMap
 
-instance enterpriseServerUserAccountsUploadSyncStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseServerUserAccountsUploadSyncStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                               EnterpriseServerUserAccountsUploadSyncState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Pending -> ArgumentValueEnum "PENDING"
       Success -> ArgumentValueEnum "SUCCESS"

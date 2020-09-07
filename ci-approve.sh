@@ -47,7 +47,7 @@ retry "yarn run examples:test --no-install"
 rm -fdR examples/swapi
 
 spago --config generator-spago.dhall run --no-install \
-  --main GraphqlClientGenerator.Main \
+  --main GraphQLClientGenerator.Main \
   --node-args "--input-schema ./examples/schema-swapi.graphql --output examples/swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
 check_no_diff
@@ -58,7 +58,7 @@ check_no_diff
 rm -fdR examples/swapi
 
 spago --config generator-spago.dhall run --no-install \
-  --main GraphqlClientGenerator.Main \
+  --main GraphQLClientGenerator.Main \
   --node-args "--input-json ./examples/schema-swapi.json --output examples/swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
 check_no_diff

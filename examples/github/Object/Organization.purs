@@ -1,10 +1,10 @@
 module Examples.Github.Object.Organization where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -63,7 +63,7 @@ anyPinnableItems :: AnyPinnableItemsInput -> SelectionSet
                                              Boolean
 anyPinnableItems input = selectionForField
                          "anyPinnableItems"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseScalarDecoder
 
@@ -86,7 +86,7 @@ auditLog :: forall r . AuditLogInput -> SelectionSet
                                              r
 auditLog input = selectionForCompositeField
                  "auditLog"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -97,7 +97,7 @@ type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__Organization Uri
 avatarUrl input = selectionForField
                   "avatarUrl"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
 
@@ -154,7 +154,7 @@ ipAllowListEntries :: forall r . IpAllowListEntriesInput -> SelectionSet
                                                                  r
 ipAllowListEntries input = selectionForCompositeField
                            "ipAllowListEntries"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -198,7 +198,7 @@ memberStatuses :: forall r . MemberStatusesInput -> SelectionSet
                                                          r
 memberStatuses input = selectionForCompositeField
                        "memberStatuses"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -218,7 +218,7 @@ membersWithRole :: forall r . MembersWithRoleInput -> SelectionSet
                                                            r
 membersWithRole input = selectionForCompositeField
                         "membersWithRole"
-                        (toGraphqlArguments
+                        (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -264,7 +264,7 @@ packages :: forall r . PackagesInput -> SelectionSet
                                              r
 packages input = selectionForCompositeField
                  "packages"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -284,7 +284,7 @@ pendingMembers :: forall r . PendingMembersInput -> SelectionSet
                                                          r
 pendingMembers input = selectionForCompositeField
                        "pendingMembers"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -307,7 +307,7 @@ pinnableItems :: forall r . PinnableItemsInput -> SelectionSet
                                                        r
 pinnableItems input = selectionForCompositeField
                       "pinnableItems"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -330,7 +330,7 @@ pinnedItems :: forall r . PinnedItemsInput -> SelectionSet
                                                    r
 pinnedItems input = selectionForCompositeField
                     "pinnedItems"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -352,7 +352,7 @@ project :: forall r . ProjectInput -> SelectionSet
                                             r)
 project input = selectionForCompositeField
                 "project"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -376,7 +376,7 @@ projects :: forall r . ProjectsInput -> SelectionSet
                                              r
 projects input = selectionForCompositeField
                  "projects"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -421,7 +421,7 @@ repositories :: forall r . RepositoriesInput -> SelectionSet
                                                      r
 repositories input = selectionForCompositeField
                      "repositories"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -437,7 +437,7 @@ repository :: forall r . RepositoryInput -> SelectionSet
                                                   r)
 repository input = selectionForCompositeField
                    "repository"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -500,7 +500,7 @@ sponsorshipsAsMaintainer :: forall r . SponsorshipsAsMaintainerInput -> Selectio
                                                                              r
 sponsorshipsAsMaintainer input = selectionForCompositeField
                                  "sponsorshipsAsMaintainer"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -524,7 +524,7 @@ sponsorshipsAsSponsor :: forall r . SponsorshipsAsSponsorInput -> SelectionSet
                                                                        r
 sponsorshipsAsSponsor input = selectionForCompositeField
                               "sponsorshipsAsSponsor"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -540,7 +540,7 @@ team :: forall r . TeamInput -> SelectionSet
                                       r)
 team input = selectionForCompositeField
              "team"
-             (toGraphqlArguments
+             (toGraphQLArguments
               input)
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -568,7 +568,7 @@ teams :: forall r . TeamsInput -> SelectionSet
                                        r
 teams input = selectionForCompositeField
               "teams"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

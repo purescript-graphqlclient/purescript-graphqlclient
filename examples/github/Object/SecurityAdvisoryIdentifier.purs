@@ -1,6 +1,6 @@
 module Examples.Github.Object.SecurityAdvisoryIdentifier where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__SecurityAdvisoryIdentifier)
 

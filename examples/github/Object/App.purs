@@ -1,11 +1,11 @@
 module Examples.Github.Object.App where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes (Scope__App)
 import Examples.Github.Scalars (DateTime, Id, Uri)
@@ -43,7 +43,7 @@ type LogoUrlInput = { | LogoUrlInputRowOptional + () }
 logoUrl :: LogoUrlInput -> SelectionSet Scope__App Uri
 logoUrl input = selectionForField
                 "logoUrl"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseScalarDecoder
 

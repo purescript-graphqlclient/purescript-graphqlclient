@@ -1,6 +1,6 @@
 module Examples.Github.Interface.Contribution where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

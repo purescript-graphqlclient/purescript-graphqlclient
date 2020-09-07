@@ -1,6 +1,6 @@
 module Examples.Github.Object.CreateIssuePayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

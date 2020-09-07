@@ -2,10 +2,10 @@ module Examples.Github.Enum.SponsorshipPrivacy where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordSponsorshipPrivacy :: Ord SponsorshipPrivacy
 fromToMap :: Array (Tuple String SponsorshipPrivacy)
 fromToMap = [ Tuple "PUBLIC" Public, Tuple "PRIVATE" Private ]
 
-instance sponsorshipPrivacyGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance sponsorshipPrivacyGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                   SponsorshipPrivacy where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "SponsorshipPrivacy"
                                         fromToMap
 
-instance sponsorshipPrivacyToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance sponsorshipPrivacyToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                      SponsorshipPrivacy where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Public -> ArgumentValueEnum "PUBLIC"
       Private -> ArgumentValueEnum "PRIVATE"

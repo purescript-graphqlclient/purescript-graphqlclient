@@ -2,14 +2,14 @@ module MyExamplesTests.Example08Foldr where
 
 import Examples.Github.Scopes (Scope__Repository)
 import MyExamplesTests.Util (inlineAndTrim)
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullOrFail, printGraphqlError, writeGraphql)
+import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullOrFail, printGraphQLError, writeGraphQL)
 import Protolude
 
 import Affjax.RequestHeader (RequestHeader(..))
 import Examples.Github.Object.Repository as Examples.Github.Object.Repository
 import Examples.Github.Object.StargazerConnection as Examples.Github.Object.StargazerConnection
 import Examples.Github.Query as Examples.Github.Query
-import GraphqlClient as GraphqlClient
+import GraphQLClient as GraphQLClient
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -27,7 +27,7 @@ repos =
   ]
 
 query :: SelectionSet Scope__RootQuery Response
-query = GraphqlClient.foldl (+) 0 (repos <#> \input -> (Examples.Github.Query.repository input stargazerCount # nonNullOrFail))
+query = GraphQLClient.foldl (+) 0 (repos <#> \input -> (Examples.Github.Query.repository input stargazerCount # nonNullOrFail))
 
 stargazerCount :: SelectionSet Scope__Repository Int
 stargazerCount = Examples.Github.Object.Repository.stargazers defaultInput Examples.Github.Object.StargazerConnection.totalCount
@@ -55,10 +55,10 @@ query {
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example08Foldr" do
-  writeGraphql query `Test.Spec.shouldEqual` expectedQuery
+  writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" [RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"] query
+  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" [RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"] query
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
   response' `Test.Spec.shouldEqual` 0

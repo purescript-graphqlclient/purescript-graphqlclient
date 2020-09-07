@@ -1,10 +1,10 @@
 module Examples.Github.Object.PackageVersion where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -39,7 +39,7 @@ files :: forall r . FilesInput -> SelectionSet
                                        r
 files input = selectionForCompositeField
               "files"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

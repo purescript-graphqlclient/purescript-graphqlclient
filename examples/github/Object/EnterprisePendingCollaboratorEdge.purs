@@ -1,13 +1,13 @@
 module Examples.Github.Object.EnterprisePendingCollaboratorEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   ( Scope__EnterprisePendingCollaboratorEdge
@@ -56,6 +56,6 @@ repositories :: forall r . RepositoriesInput -> SelectionSet
                                                      r
 repositories input = selectionForCompositeField
                      "repositories"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer

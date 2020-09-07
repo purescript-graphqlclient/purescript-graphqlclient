@@ -2,10 +2,10 @@ module Examples.Github.Enum.CommentCannotUpdateReason where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -33,15 +33,15 @@ fromToMap = [ Tuple "ARCHIVED" Archived
             , Tuple "DENIED" Denied
             ]
 
-instance commentCannotUpdateReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance commentCannotUpdateReasonGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                          CommentCannotUpdateReason where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "CommentCannotUpdateReason"
                                         fromToMap
 
-instance commentCannotUpdateReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance commentCannotUpdateReasonToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                             CommentCannotUpdateReason where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Archived -> ArgumentValueEnum "ARCHIVED"
       InsufficientAccess -> ArgumentValueEnum "INSUFFICIENT_ACCESS"

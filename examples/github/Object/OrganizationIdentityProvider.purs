@@ -1,12 +1,12 @@
 module Examples.Github.Object.OrganizationIdentityProvider where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -40,7 +40,7 @@ externalIdentities :: forall r . ExternalIdentitiesInput -> SelectionSet
                                                                  r
 externalIdentities input = selectionForCompositeField
                            "externalIdentities"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

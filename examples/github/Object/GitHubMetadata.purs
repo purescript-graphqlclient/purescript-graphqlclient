@@ -1,6 +1,6 @@
 module Examples.Github.Object.GitHubMetadata where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__GitHubMetadata)
 import Examples.Github.Scalars (GitObjectId)

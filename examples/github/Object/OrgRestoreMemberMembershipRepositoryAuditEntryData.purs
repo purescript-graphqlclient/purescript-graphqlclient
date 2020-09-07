@@ -1,6 +1,6 @@
 module Examples.Github.Object.OrgRestoreMemberMembershipRepositoryAuditEntryData where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

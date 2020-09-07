@@ -2,10 +2,10 @@ module Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordEnterpriseMembersCanMakePurchasesSettingValue :: Ord Enterpri
 fromToMap :: Array (Tuple String EnterpriseMembersCanMakePurchasesSettingValue)
 fromToMap = [ Tuple "ENABLED" Enabled, Tuple "DISABLED" Disabled ]
 
-instance enterpriseMembersCanMakePurchasesSettingValueGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseMembersCanMakePurchasesSettingValueGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                              EnterpriseMembersCanMakePurchasesSettingValue where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseMembersCanMakePurchasesSettingValue"
                                         fromToMap
 
-instance enterpriseMembersCanMakePurchasesSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseMembersCanMakePurchasesSettingValueToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                                 EnterpriseMembersCanMakePurchasesSettingValue where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Enabled -> ArgumentValueEnum "ENABLED"
       Disabled -> ArgumentValueEnum "DISABLED"

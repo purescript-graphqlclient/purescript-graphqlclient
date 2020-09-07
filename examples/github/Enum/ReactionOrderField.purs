@@ -2,10 +2,10 @@ module Examples.Github.Enum.ReactionOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordReactionOrderField :: Ord ReactionOrderField
 fromToMap :: Array (Tuple String ReactionOrderField)
 fromToMap = [ Tuple "CREATED_AT" CreatedAt ]
 
-instance reactionOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance reactionOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                   ReactionOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "ReactionOrderField"
                                         fromToMap
 
-instance reactionOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance reactionOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                      ReactionOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

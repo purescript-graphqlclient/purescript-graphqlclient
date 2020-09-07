@@ -2,10 +2,10 @@ module Examples.Github.Enum.OrderDirection where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,13 +19,13 @@ derive instance ordOrderDirection :: Ord OrderDirection
 fromToMap :: Array (Tuple String OrderDirection)
 fromToMap = [ Tuple "ASC" Asc, Tuple "DESC" Desc ]
 
-instance orderDirectionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance orderDirectionGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                               OrderDirection where
   graphqlDefaultResponseScalarDecoder = enumDecoder "OrderDirection" fromToMap
 
-instance orderDirectionToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance orderDirectionToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                  OrderDirection where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Asc -> ArgumentValueEnum "ASC"
       Desc -> ArgumentValueEnum "DESC"

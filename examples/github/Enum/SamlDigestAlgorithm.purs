@@ -2,10 +2,10 @@ module Examples.Github.Enum.SamlDigestAlgorithm where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -23,15 +23,15 @@ fromToMap = [ Tuple "SHA1" Sha1
             , Tuple "SHA512" Sha512
             ]
 
-instance samlDigestAlgorithmGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance samlDigestAlgorithmGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                    SamlDigestAlgorithm where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "SamlDigestAlgorithm"
                                         fromToMap
 
-instance samlDigestAlgorithmToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance samlDigestAlgorithmToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                       SamlDigestAlgorithm where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Sha1 -> ArgumentValueEnum "SHA1"
       Sha256 -> ArgumentValueEnum "SHA256"

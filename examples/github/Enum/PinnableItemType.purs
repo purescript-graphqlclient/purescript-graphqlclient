@@ -2,10 +2,10 @@ module Examples.Github.Enum.PinnableItemType where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -35,13 +35,13 @@ fromToMap = [ Tuple "REPOSITORY" Repository
             , Tuple "TEAM" Team
             ]
 
-instance pinnableItemTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance pinnableItemTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                 PinnableItemType where
   graphqlDefaultResponseScalarDecoder = enumDecoder "PinnableItemType" fromToMap
 
-instance pinnableItemTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance pinnableItemTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                    PinnableItemType where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Repository -> ArgumentValueEnum "REPOSITORY"
       Gist -> ArgumentValueEnum "GIST"

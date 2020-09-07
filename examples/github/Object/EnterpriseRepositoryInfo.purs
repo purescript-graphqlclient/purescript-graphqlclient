@@ -1,6 +1,6 @@
 module Examples.Github.Object.EnterpriseRepositoryInfo where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__EnterpriseRepositoryInfo)
 import Examples.Github.Scalars (Id)

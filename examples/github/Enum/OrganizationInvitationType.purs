@@ -2,10 +2,10 @@ module Examples.Github.Enum.OrganizationInvitationType where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordOrganizationInvitationType :: Ord OrganizationInvitationType
 fromToMap :: Array (Tuple String OrganizationInvitationType)
 fromToMap = [ Tuple "USER" User, Tuple "EMAIL" Email ]
 
-instance organizationInvitationTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance organizationInvitationTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                           OrganizationInvitationType where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OrganizationInvitationType"
                                         fromToMap
 
-instance organizationInvitationTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance organizationInvitationTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                              OrganizationInvitationType where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       User -> ArgumentValueEnum "USER"
       Email -> ArgumentValueEnum "EMAIL"

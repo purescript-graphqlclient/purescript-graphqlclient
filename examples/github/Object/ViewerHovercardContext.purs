@@ -1,6 +1,6 @@
 module Examples.Github.Object.ViewerHovercardContext where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

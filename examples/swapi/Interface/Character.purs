@@ -1,6 +1,6 @@
 module Examples.Swapi.Interface.Character where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

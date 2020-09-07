@@ -1,6 +1,6 @@
 module Examples.Github.Union.IssueTimelineItem where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__AssignedEvent
   , Scope__ClosedEvent

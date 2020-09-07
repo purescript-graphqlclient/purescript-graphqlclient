@@ -2,10 +2,10 @@ module Examples.Swapi.Enum.Episode where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,12 +22,12 @@ fromToMap = [ Tuple "EMPIRE" Empire
             , Tuple "NEWHOPE" Newhope
             ]
 
-instance episodeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance episodeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                        Episode where
   graphqlDefaultResponseScalarDecoder = enumDecoder "Episode" fromToMap
 
-instance episodeToGraphqlArgumentValue :: ToGraphqlArgumentValue Episode where
-  toGraphqlArgumentValue =
+instance episodeToGraphQLArgumentValue :: ToGraphQLArgumentValue Episode where
+  toGraphQLArgumentValue =
     case _ of
       Empire -> ArgumentValueEnum "EMPIRE"
       Jedi -> ArgumentValueEnum "JEDI"

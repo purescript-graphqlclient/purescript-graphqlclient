@@ -2,10 +2,10 @@ module Examples.Github.Enum.CollaboratorAffiliation where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordCollaboratorAffiliation :: Ord CollaboratorAffiliation
 fromToMap :: Array (Tuple String CollaboratorAffiliation)
 fromToMap = [ Tuple "OUTSIDE" Outside, Tuple "DIRECT" Direct, Tuple "ALL" All ]
 
-instance collaboratorAffiliationGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance collaboratorAffiliationGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                        CollaboratorAffiliation where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "CollaboratorAffiliation"
                                         fromToMap
 
-instance collaboratorAffiliationToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance collaboratorAffiliationToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                           CollaboratorAffiliation where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Outside -> ArgumentValueEnum "OUTSIDE"
       Direct -> ArgumentValueEnum "DIRECT"

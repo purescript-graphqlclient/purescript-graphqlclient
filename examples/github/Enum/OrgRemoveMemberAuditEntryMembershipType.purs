@@ -2,10 +2,10 @@ module Examples.Github.Enum.OrgRemoveMemberAuditEntryMembershipType where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -25,15 +25,15 @@ fromToMap = [ Tuple "DIRECT_MEMBER" DirectMember
             , Tuple "OUTSIDE_COLLABORATOR" OutsideCollaborator
             ]
 
-instance orgRemoveMemberAuditEntryMembershipTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance orgRemoveMemberAuditEntryMembershipTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                        OrgRemoveMemberAuditEntryMembershipType where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OrgRemoveMemberAuditEntryMembershipType"
                                         fromToMap
 
-instance orgRemoveMemberAuditEntryMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance orgRemoveMemberAuditEntryMembershipTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                           OrgRemoveMemberAuditEntryMembershipType where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       DirectMember -> ArgumentValueEnum "DIRECT_MEMBER"
       Admin -> ArgumentValueEnum "ADMIN"

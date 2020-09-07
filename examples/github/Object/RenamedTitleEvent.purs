@@ -1,6 +1,6 @@
 module Examples.Github.Object.RenamedTitleEvent where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

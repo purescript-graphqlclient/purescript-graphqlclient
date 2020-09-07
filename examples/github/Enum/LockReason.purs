@@ -2,10 +2,10 @@ module Examples.Github.Enum.LockReason where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -23,12 +23,12 @@ fromToMap = [ Tuple "OFF_TOPIC" OffTopic
             , Tuple "SPAM" Spam
             ]
 
-instance lockReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance lockReasonGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                           LockReason where
   graphqlDefaultResponseScalarDecoder = enumDecoder "LockReason" fromToMap
 
-instance lockReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue LockReason where
-  toGraphqlArgumentValue =
+instance lockReasonToGraphQLArgumentValue :: ToGraphQLArgumentValue LockReason where
+  toGraphQLArgumentValue =
     case _ of
       OffTopic -> ArgumentValueEnum "OFF_TOPIC"
       TooHeated -> ArgumentValueEnum "TOO_HEATED"

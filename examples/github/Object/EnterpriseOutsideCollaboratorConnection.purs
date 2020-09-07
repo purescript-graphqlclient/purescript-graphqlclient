@@ -1,6 +1,6 @@
 module Examples.Github.Object.EnterpriseOutsideCollaboratorConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

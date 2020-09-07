@@ -4,7 +4,7 @@ import Protolude
 
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, graphqlQueryRequest, printGraphQLError, writeGraphQL)
 import Examples.SwapiCustomScalars (Id(..))
 import Examples.Swapi.Object.Human (id)
 import Examples.Swapi.Query (human)
@@ -26,10 +26,10 @@ query {
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example00SingleFieldQuery" do
-  writeGraphql query `Test.Spec.shouldEqual` expectedQuery
+  writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] query
+  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] query
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
   response' `Test.Spec.shouldEqual` Just (Id 1001)

@@ -1,6 +1,6 @@
 module Examples.Github.Object.RepoConfigDisableCollaboratorsOnlyAuditEntry where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

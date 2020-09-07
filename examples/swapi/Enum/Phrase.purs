@@ -2,10 +2,10 @@ module Examples.Swapi.Enum.Phrase where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -37,12 +37,12 @@ fromToMap = [ Tuple "BAD_FEELING" BadFeeling
             , Tuple "TRY" Try
             ]
 
-instance phraseGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance phraseGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                       Phrase where
   graphqlDefaultResponseScalarDecoder = enumDecoder "Phrase" fromToMap
 
-instance phraseToGraphqlArgumentValue :: ToGraphqlArgumentValue Phrase where
-  toGraphqlArgumentValue =
+instance phraseToGraphQLArgumentValue :: ToGraphQLArgumentValue Phrase where
+  toGraphQLArgumentValue =
     case _ of
       BadFeeling -> ArgumentValueEnum "BAD_FEELING"
       Droids -> ArgumentValueEnum "DROIDS"

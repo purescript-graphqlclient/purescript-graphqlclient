@@ -2,10 +2,10 @@ module Examples.Github.Enum.PullRequestReviewCommentState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordPullRequestReviewCommentState :: Ord PullRequestReviewComment
 fromToMap :: Array (Tuple String PullRequestReviewCommentState)
 fromToMap = [ Tuple "PENDING" Pending, Tuple "SUBMITTED" Submitted ]
 
-instance pullRequestReviewCommentStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance pullRequestReviewCommentStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                              PullRequestReviewCommentState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "PullRequestReviewCommentState"
                                         fromToMap
 
-instance pullRequestReviewCommentStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance pullRequestReviewCommentStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                 PullRequestReviewCommentState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Pending -> ArgumentValueEnum "PENDING"
       Submitted -> ArgumentValueEnum "SUBMITTED"

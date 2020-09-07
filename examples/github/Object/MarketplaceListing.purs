@@ -1,13 +1,13 @@
 module Examples.Github.Object.MarketplaceListing where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   (Scope__App, Scope__MarketplaceListing, Scope__MarketplaceCategory)
@@ -179,7 +179,7 @@ type LogoUrlInput = { | LogoUrlInputRowOptional + () }
 logoUrl :: LogoUrlInput -> SelectionSet Scope__MarketplaceListing (Maybe Uri)
 logoUrl input = selectionForField
                 "logoUrl"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseScalarDecoder
 

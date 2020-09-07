@@ -2,11 +2,11 @@ module Examples.Swapi.Query where
 
 import Examples.SwapiCustomScalars (Id, PosixTime)
 import Type.Row (type (+))
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , Scope__RootQuery
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -30,7 +30,7 @@ droid :: forall r . DroidInput -> SelectionSet
                                         r)
 droid input = selectionForCompositeField
               "droid"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -49,7 +49,7 @@ type GreetInput = { | GreetInputRowRequired + () }
 greet :: GreetInput -> SelectionSet Scope__RootQuery String
 greet input = selectionForField
               "greet"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseScalarDecoder
 
@@ -67,7 +67,7 @@ hero :: forall r . HeroInput -> SelectionSet
                                      r
 hero input = selectionForCompositeField
              "hero"
-             (toGraphqlArguments
+             (toGraphQLArguments
               input)
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -82,7 +82,7 @@ heroUnion :: forall r . HeroUnionInput -> SelectionSet
                                                r
 heroUnion input = selectionForCompositeField
                   "heroUnion"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -98,7 +98,7 @@ human :: forall r . HumanInput -> SelectionSet
                                         r)
 human input = selectionForCompositeField
               "human"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

@@ -1,6 +1,6 @@
 module Examples.Github.Object.SecurityAdvisoryReference where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__SecurityAdvisoryReference)
 import Examples.Github.Scalars (Uri)

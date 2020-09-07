@@ -1,12 +1,12 @@
 module Examples.Github.Object.Project where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -50,7 +50,7 @@ columns :: forall r . ColumnsInput -> SelectionSet
                                            r
 columns input = selectionForCompositeField
                 "columns"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -113,7 +113,7 @@ pendingCards :: forall r . PendingCardsInput -> SelectionSet
                                                      r
 pendingCards input = selectionForCompositeField
                      "pendingCards"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

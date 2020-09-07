@@ -1,6 +1,6 @@
 module Examples.Github.Object.TextMatch where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

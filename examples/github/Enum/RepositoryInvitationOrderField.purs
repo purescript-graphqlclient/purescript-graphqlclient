@@ -2,10 +2,10 @@ module Examples.Github.Enum.RepositoryInvitationOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordRepositoryInvitationOrderField :: Ord RepositoryInvitationOrd
 fromToMap :: Array (Tuple String RepositoryInvitationOrderField)
 fromToMap = [ Tuple "CREATED_AT" CreatedAt, Tuple "INVITEE_LOGIN" InviteeLogin ]
 
-instance repositoryInvitationOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance repositoryInvitationOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                               RepositoryInvitationOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "RepositoryInvitationOrderField"
                                         fromToMap
 
-instance repositoryInvitationOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance repositoryInvitationOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                  RepositoryInvitationOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"
       InviteeLogin -> ArgumentValueEnum "INVITEE_LOGIN"

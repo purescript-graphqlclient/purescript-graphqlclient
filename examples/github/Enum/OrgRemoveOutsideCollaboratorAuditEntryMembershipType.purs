@@ -2,10 +2,10 @@ module Examples.Github.Enum.OrgRemoveOutsideCollaboratorAuditEntryMembershipType
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -26,15 +26,15 @@ fromToMap = [ Tuple "OUTSIDE_COLLABORATOR" OutsideCollaborator
             , Tuple "BILLING_MANAGER" BillingManager
             ]
 
-instance orgRemoveOutsideCollaboratorAuditEntryMembershipTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance orgRemoveOutsideCollaboratorAuditEntryMembershipTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                                     OrgRemoveOutsideCollaboratorAuditEntryMembershipType where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OrgRemoveOutsideCollaboratorAuditEntryMembershipType"
                                         fromToMap
 
-instance orgRemoveOutsideCollaboratorAuditEntryMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance orgRemoveOutsideCollaboratorAuditEntryMembershipTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                                        OrgRemoveOutsideCollaboratorAuditEntryMembershipType where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       OutsideCollaborator -> ArgumentValueEnum "OUTSIDE_COLLABORATOR"
       Unaffiliated -> ArgumentValueEnum "UNAFFILIATED"

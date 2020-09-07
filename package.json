@@ -1,7 +1,7 @@
 {
   "name": "purescript-graphql-client",
   "version": "1.0.0",
-  "description": "Graphql client library",
+  "description": "GraphQL client library",
   "main": "index.js",
   "directories": {
     "example": "examples",
@@ -12,7 +12,7 @@
     "lib:build": "spago build",
     "generator:build": "spago --config generator-spago.dhall build",
     "generator:test": "spago --config generator-spago.dhall test --main MyGeneratorTests.Main",
-    "generator:bundle": "spago --config generator-spago.dhall bundle-app --main \"GraphqlClientGenerator.Main\" --to \"dist/purescript-graphql-client-generator.js\" && terser --compress --mangle --output \"dist/purescript-graphql-client-generator.min.js\" -- \"dist/purescript-graphql-client-generator.js\" && rm \"dist/purescript-graphql-client-generator.js\"",
+    "generator:bundle": "spago --config generator-spago.dhall bundle-app --main \"GraphQLClientGenerator.Main\" --to \"dist/purescript-graphql-client-generator.js\" && terser --compress --mangle --output \"dist/purescript-graphql-client-generator.min.js\" -- \"dist/purescript-graphql-client-generator.js\" && rm \"dist/purescript-graphql-client-generator.js\"",
     "examples:test": "spago --config examples-spago.dhall test --main MyExamplesTests.Main"
   },
   "repository": {

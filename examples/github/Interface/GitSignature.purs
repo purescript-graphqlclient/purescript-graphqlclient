@@ -1,6 +1,6 @@
 module Examples.Github.Interface.GitSignature where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

@@ -1,7 +1,7 @@
 module Examples.SwapiCustomScalars where
 
 import Data.Newtype (class Newtype)
-import GraphqlClient (class GraphqlDefaultResponseScalarDecoder, class ToGraphqlArgumentValue, ArgumentValue(..))
+import GraphQLClient (class GraphQLDefaultResponseScalarDecoder, class ToGraphQLArgumentValue, ArgumentValue(..))
 import Prelude
 
 import Data.Argonaut.Decode (JsonDecodeError(..))
@@ -25,11 +25,11 @@ derive newtype instance showId :: Show Id
 
 derive instance newtypeId :: Newtype Id _
 
-instance graphqlDefaultResponseScalarDecoderId :: GraphqlDefaultResponseScalarDecoder Id where
+instance graphqlDefaultResponseScalarDecoderId :: GraphQLDefaultResponseScalarDecoder Id where
   graphqlDefaultResponseScalarDecoder = (map $ map Id) (note (TypeMismatch "Integer") <<< Int.fromString <=< ArgonautDecoders.Decoder.decodeString)
 
-instance toGraphqlArgumentValueId :: ToGraphqlArgumentValue Id where
-  toGraphqlArgumentValue (Id i) = i # Int.toStringAs Int.decimal >>> ArgumentValueString
+instance toGraphQLArgumentValueId :: ToGraphQLArgumentValue Id where
+  toGraphQLArgumentValue (Id i) = i # Int.toStringAs Int.decimal >>> ArgumentValueString
 
 -- | original name - PosixTime
 newtype PosixTime = PosixTime String
@@ -42,6 +42,6 @@ derive newtype instance showPosixTime :: Show PosixTime
 
 derive instance newtypePosixTime :: Newtype PosixTime _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderPosixTime :: GraphqlDefaultResponseScalarDecoder PosixTime
+derive newtype instance graphqlDefaultResponseScalarDecoderPosixTime :: GraphQLDefaultResponseScalarDecoder PosixTime
 
-derive newtype instance toGraphqlArgumentValuePosixTime :: ToGraphqlArgumentValue PosixTime
+derive newtype instance toGraphQLArgumentValuePosixTime :: ToGraphQLArgumentValue PosixTime

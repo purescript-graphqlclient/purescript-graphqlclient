@@ -1,6 +1,6 @@
 module Examples.Github.Union.OrganizationAuditEntry where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__MembersCanDeleteReposClearAuditEntry
   , Scope__MembersCanDeleteReposDisableAuditEntry

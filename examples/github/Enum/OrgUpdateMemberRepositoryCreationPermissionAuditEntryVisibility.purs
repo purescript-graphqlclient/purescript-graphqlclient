@@ -2,10 +2,10 @@ module Examples.Github.Enum.OrgUpdateMemberRepositoryCreationPermissionAuditEntr
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -38,15 +38,15 @@ fromToMap = [ Tuple "ALL" All
             , Tuple "PUBLIC_PRIVATE" PublicPrivate
             ]
 
-instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                                                OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility"
                                         fromToMap
 
-instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance orgUpdateMemberRepositoryCreationPermissionAuditEntryVisibilityToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                                                   OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       All -> ArgumentValueEnum "ALL"
       Public -> ArgumentValueEnum "PUBLIC"

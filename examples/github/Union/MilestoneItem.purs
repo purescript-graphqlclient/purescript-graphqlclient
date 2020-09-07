@@ -1,6 +1,6 @@
 module Examples.Github.Union.MilestoneItem where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Issue, Scope__PullRequest, Scope__MilestoneItem)
 import Data.Maybe (Maybe(..))

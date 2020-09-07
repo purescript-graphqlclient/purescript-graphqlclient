@@ -1,12 +1,12 @@
 module Examples.Github.Object.EnterpriseServerUserAccount where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -40,7 +40,7 @@ emails :: forall r . EmailsInput -> SelectionSet
                                          r
 emails input = selectionForCompositeField
                "emails"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

@@ -1,6 +1,6 @@
 module Examples.Github.Object.CrossReferencedEvent where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

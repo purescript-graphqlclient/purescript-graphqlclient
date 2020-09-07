@@ -1,13 +1,13 @@
 module Examples.Github.Object.Release where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   (Scope__User, Scope__Release, Scope__ReleaseAssetConnection, Scope__Ref)
@@ -79,7 +79,7 @@ releaseAssets :: forall r . ReleaseAssetsInput -> SelectionSet
                                                        r
 releaseAssets input = selectionForCompositeField
                       "releaseAssets"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -99,7 +99,7 @@ shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet
                                                       Html)
 shortDescriptionHTML input = selectionForField
                              "shortDescriptionHTML"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseScalarDecoder
 

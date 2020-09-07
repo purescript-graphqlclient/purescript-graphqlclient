@@ -1,6 +1,6 @@
 module Examples.Github.Object.RestrictedContribution where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

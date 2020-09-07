@@ -1,6 +1,6 @@
 module MyExamplesTests.Example03Variables where
 
-import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, graphqlQueryRequest, printGraphQLError, writeGraphQL)
 import Protolude
 import Examples.SwapiCustomScalars (Id(..))
 
@@ -36,10 +36,10 @@ query {
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example03Variables" do
-  writeGraphql (query (Id 1001)) `Test.Spec.shouldEqual` expectedQuery
+  writeGraphQL (query (Id 1001)) `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] (query (Id 1001))
+  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] (query (Id 1001))
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
   response' `Test.Spec.shouldEqual` Just { homePlanet: Just "Tatooine", name: "Darth Vader" }

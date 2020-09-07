@@ -1,6 +1,6 @@
 module Examples.Github.Object.SponsorsTierConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

@@ -1,10 +1,10 @@
 module Examples.Github.Object.ProjectColumn where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -37,7 +37,7 @@ cards :: forall r . CardsInput -> SelectionSet
                                        r
 cards input = selectionForCompositeField
               "cards"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

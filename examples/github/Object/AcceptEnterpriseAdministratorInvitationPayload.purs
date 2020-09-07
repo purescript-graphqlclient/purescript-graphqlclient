@@ -1,6 +1,6 @@
 module Examples.Github.Object.AcceptEnterpriseAdministratorInvitationPayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

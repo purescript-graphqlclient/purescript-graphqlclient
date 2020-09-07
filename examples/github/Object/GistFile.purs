@@ -1,13 +1,13 @@
 module Examples.Github.Object.GistFile where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes (Scope__GistFile, Scope__Language)
 import Data.Maybe (Maybe)
@@ -58,6 +58,6 @@ type TextInput = { | TextInputRowOptional + () }
 text :: TextInput -> SelectionSet Scope__GistFile (Maybe String)
 text input = selectionForField
              "text"
-             (toGraphqlArguments
+             (toGraphQLArguments
               input)
              graphqlDefaultResponseScalarDecoder

@@ -2,10 +2,10 @@ module Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue w
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -28,15 +28,15 @@ fromToMap = [ Tuple "NO_POLICY" NoPolicy
             , Tuple "DISABLED" Disabled
             ]
 
-instance enterpriseMembersCanCreateRepositoriesSettingValueGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseMembersCanCreateRepositoriesSettingValueGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                                   EnterpriseMembersCanCreateRepositoriesSettingValue where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseMembersCanCreateRepositoriesSettingValue"
                                         fromToMap
 
-instance enterpriseMembersCanCreateRepositoriesSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseMembersCanCreateRepositoriesSettingValueToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                                      EnterpriseMembersCanCreateRepositoriesSettingValue where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       NoPolicy -> ArgumentValueEnum "NO_POLICY"
       All -> ArgumentValueEnum "ALL"

@@ -1,6 +1,6 @@
 module Examples.Github.Object.UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingPayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

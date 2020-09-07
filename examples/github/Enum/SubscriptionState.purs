@@ -2,10 +2,10 @@ module Examples.Github.Enum.SubscriptionState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,15 +22,15 @@ fromToMap = [ Tuple "UNSUBSCRIBED" Unsubscribed
             , Tuple "IGNORED" Ignored
             ]
 
-instance subscriptionStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance subscriptionStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                  SubscriptionState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "SubscriptionState"
                                         fromToMap
 
-instance subscriptionStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance subscriptionStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                     SubscriptionState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Unsubscribed -> ArgumentValueEnum "UNSUBSCRIBED"
       Subscribed -> ArgumentValueEnum "SUBSCRIBED"

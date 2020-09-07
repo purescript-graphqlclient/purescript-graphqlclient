@@ -2,10 +2,10 @@ module Examples.Github.Enum.TeamOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,12 +19,12 @@ derive instance ordTeamOrderField :: Ord TeamOrderField
 fromToMap :: Array (Tuple String TeamOrderField)
 fromToMap = [ Tuple "NAME" Name ]
 
-instance teamOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance teamOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                               TeamOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder "TeamOrderField" fromToMap
 
-instance teamOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance teamOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                  TeamOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Name -> ArgumentValueEnum "NAME"

@@ -2,10 +2,10 @@ module Examples.Github.Enum.DiffSide where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,12 +19,12 @@ derive instance ordDiffSide :: Ord DiffSide
 fromToMap :: Array (Tuple String DiffSide)
 fromToMap = [ Tuple "LEFT" Left, Tuple "RIGHT" Right ]
 
-instance diffSideGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance diffSideGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                         DiffSide where
   graphqlDefaultResponseScalarDecoder = enumDecoder "DiffSide" fromToMap
 
-instance diffSideToGraphqlArgumentValue :: ToGraphqlArgumentValue DiffSide where
-  toGraphqlArgumentValue =
+instance diffSideToGraphQLArgumentValue :: ToGraphQLArgumentValue DiffSide where
+  toGraphQLArgumentValue =
     case _ of
       Left -> ArgumentValueEnum "LEFT"
       Right -> ArgumentValueEnum "RIGHT"

@@ -2,10 +2,10 @@ module Examples.Github.Enum.EnterpriseServerUserAccountsUploadOrderField where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordEnterpriseServerUserAccountsUploadOrderField :: Ord Enterpris
 fromToMap :: Array (Tuple String EnterpriseServerUserAccountsUploadOrderField)
 fromToMap = [ Tuple "CREATED_AT" CreatedAt ]
 
-instance enterpriseServerUserAccountsUploadOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseServerUserAccountsUploadOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                             EnterpriseServerUserAccountsUploadOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseServerUserAccountsUploadOrderField"
                                         fromToMap
 
-instance enterpriseServerUserAccountsUploadOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseServerUserAccountsUploadOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                                EnterpriseServerUserAccountsUploadOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

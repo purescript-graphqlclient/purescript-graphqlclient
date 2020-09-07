@@ -1,6 +1,6 @@
 module Examples.Github.Object.ProjectEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

@@ -1,6 +1,6 @@
 module Examples.Github.Object.OrgAddBillingManagerAuditEntry where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

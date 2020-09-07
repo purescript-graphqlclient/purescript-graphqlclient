@@ -1,6 +1,6 @@
 module Examples.Github.Object.LockLockablePayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

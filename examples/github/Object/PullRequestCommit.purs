@@ -1,6 +1,6 @@
 module Examples.Github.Object.PullRequestCommit where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

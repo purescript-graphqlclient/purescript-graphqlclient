@@ -2,10 +2,10 @@ module Examples.Github.Enum.MilestoneState where
 
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,13 +19,13 @@ derive instance ordMilestoneState :: Ord MilestoneState
 fromToMap :: Array (Tuple String MilestoneState)
 fromToMap = [ Tuple "OPEN" Open, Tuple "CLOSED" Closed ]
 
-instance milestoneStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance milestoneStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                               MilestoneState where
   graphqlDefaultResponseScalarDecoder = enumDecoder "MilestoneState" fromToMap
 
-instance milestoneStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance milestoneStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                  MilestoneState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Open -> ArgumentValueEnum "OPEN"
       Closed -> ArgumentValueEnum "CLOSED"

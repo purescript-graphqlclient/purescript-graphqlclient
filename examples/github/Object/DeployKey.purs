@@ -1,6 +1,6 @@
 module Examples.Github.Object.DeployKey where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__DeployKey)
 import Examples.Github.Scalars (DateTime, Id)

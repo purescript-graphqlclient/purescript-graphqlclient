@@ -1,6 +1,6 @@
 module Examples.Github.Object.RequestReviewsPayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

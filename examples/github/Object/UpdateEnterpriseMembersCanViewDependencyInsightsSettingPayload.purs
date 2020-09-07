@@ -1,6 +1,6 @@
 module Examples.Github.Object.UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
