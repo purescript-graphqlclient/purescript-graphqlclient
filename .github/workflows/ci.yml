@@ -23,8 +23,11 @@ jobs:
           path: |
             .spago
             output
+
       - name: Install dependencies
-        run: spago install
+        run: |
+          spago install
+          spago install --config generator-spago.dhall
 
       - name: Build source
         run: spago build --no-install --purs-args '--censor-lib --strict'
