@@ -39,12 +39,12 @@ function check_no_diff()
 
 # tests
 
-yarn run lib:test
+yarn run lib:test --no-install
 
 ########
 
 # retry because external servers are served on heroku and it needs time to start
-retry 2 yarn run generator:test
+retry 2 yarn run generator:test --no-install
 
 ########
 
@@ -54,14 +54,14 @@ check_no_diff
 
 ########
 
-retry 2 yarn run examples:test
+retry 2 yarn run examples:test --no-install
 
 ########
 
 # or it cannot write if dir exists
 rm -fdR examples/swapi
 
-spago --config generator-spago.dhall run \
+spago --config generator-spago.dhall run --no-install \
   --main GraphqlClientGenerator.Main \
   --node-args "--input-schema ./examples/schema-swapi.graphql --output examples/swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
@@ -72,7 +72,7 @@ check_no_diff
 # or it cannot write if dir exists
 rm -fdR examples/swapi
 
-spago --config generator-spago.dhall run \
+spago --config generator-spago.dhall run --no-install \
   --main GraphqlClientGenerator.Main \
   --node-args "--input-json ./examples/schema-swapi.json --output examples/swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
