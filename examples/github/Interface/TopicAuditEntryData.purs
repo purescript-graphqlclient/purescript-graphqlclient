@@ -16,7 +16,7 @@ import Examples.Github.Scopes
   , Scope__RepoRemoveTopicAuditEntry
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 topic :: forall r . SelectionSet
                     Scope__Topic

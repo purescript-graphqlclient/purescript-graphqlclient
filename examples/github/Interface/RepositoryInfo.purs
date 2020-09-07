@@ -21,7 +21,7 @@ import Examples.Github.Scalars (DateTime, Html, Uri)
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.RepositoryLockReason (RepositoryLockReason)
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 createdAt :: SelectionSet Scope__RepositoryInfo DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

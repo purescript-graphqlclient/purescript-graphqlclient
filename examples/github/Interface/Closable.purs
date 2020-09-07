@@ -16,7 +16,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (DateTime)
-import Prelude
+import Prelude (pure)
 
 closed :: SelectionSet Scope__Closable Boolean
 closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder

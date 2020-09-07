@@ -7,7 +7,7 @@ import Examples.Github.Scopes
   , Scope__CreatedRepositoryOrRestrictedContribution
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onCreatedRepositoryContribution :: SelectionSet
                                                                 Scope__CreatedRepositoryContribution

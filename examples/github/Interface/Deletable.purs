@@ -18,7 +18,7 @@ import Examples.Github.Scopes
   , Scope__TeamDiscussionComment
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 viewerCanDelete :: SelectionSet Scope__Deletable Boolean
 viewerCanDelete = selectionForField

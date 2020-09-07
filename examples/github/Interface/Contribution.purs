@@ -22,7 +22,7 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (DateTime, Uri)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 isRestricted :: SelectionSet Scope__Contribution Boolean
 isRestricted = selectionForField

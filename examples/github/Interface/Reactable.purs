@@ -29,7 +29,7 @@ import Examples.Github.Scalars (Id)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.InputObject (ReactionOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 databaseId :: SelectionSet Scope__Reactable (Maybe Int)
 databaseId = selectionForField

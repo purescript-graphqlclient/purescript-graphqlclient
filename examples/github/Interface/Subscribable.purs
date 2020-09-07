@@ -19,7 +19,7 @@ import Examples.Github.Scopes
 import Examples.Github.Scalars (Id)
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
-import Prelude
+import Prelude (pure)
 
 id :: SelectionSet Scope__Subscribable Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder

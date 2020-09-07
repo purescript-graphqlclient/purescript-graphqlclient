@@ -16,7 +16,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Uri)
-import Prelude
+import Prelude (pure)
 
 oauthApplicationName :: SelectionSet
                         Scope__OauthApplicationAuditEntryData

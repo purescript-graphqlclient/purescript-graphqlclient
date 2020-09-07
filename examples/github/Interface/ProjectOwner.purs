@@ -24,7 +24,7 @@ import Type.Row (type (+))
 import Data.Maybe (Maybe(..))
 import Examples.Github.InputObject (ProjectOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.ProjectState (ProjectState)
-import Prelude
+import Prelude (pure)
 
 id :: SelectionSet Scope__ProjectOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder

@@ -23,7 +23,7 @@ import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.PackageType (PackageType)
 import Examples.Github.InputObject (PackageOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 id :: SelectionSet Scope__PackageOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder

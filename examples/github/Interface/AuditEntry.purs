@@ -76,7 +76,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Uri, PreciseDateTime)
 import Examples.Github.Enum.OperationType (OperationType)
-import Prelude
+import Prelude (pure)
 
 action :: SelectionSet Scope__AuditEntry String
 action = selectionForField "action" [] graphqlDefaultResponseScalarDecoder

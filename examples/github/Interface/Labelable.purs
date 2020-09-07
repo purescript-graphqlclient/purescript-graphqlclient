@@ -14,7 +14,7 @@ import Type.Row (type (+))
 import Examples.Github.Scopes
   (Scope__LabelConnection, Scope__Labelable, Scope__Issue, Scope__PullRequest)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type LabelsInputRowOptional r = ( orderBy :: Optional
                                              Examples.Github.InputObject.LabelOrder

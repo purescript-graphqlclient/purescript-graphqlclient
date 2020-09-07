@@ -20,7 +20,7 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (Uri)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type AvatarUrlInputRowOptional r = ( size :: Optional Int | r )
 

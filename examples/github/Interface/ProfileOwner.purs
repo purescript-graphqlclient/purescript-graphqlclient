@@ -22,7 +22,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Id, Uri)
-import Prelude
+import Prelude (pure)
 
 type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r

@@ -33,7 +33,7 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (Uri)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 resourcePath :: SelectionSet Scope__UniformResourceLocatable Uri
 resourcePath = selectionForField

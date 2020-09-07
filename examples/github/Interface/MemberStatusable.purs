@@ -18,7 +18,7 @@ import Examples.Github.Scopes
   , Scope__Team
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type MemberStatusesInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String

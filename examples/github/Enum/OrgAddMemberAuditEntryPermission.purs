@@ -1,6 +1,6 @@
 module Examples.Github.Enum.OrgAddMemberAuditEntryPermission where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder

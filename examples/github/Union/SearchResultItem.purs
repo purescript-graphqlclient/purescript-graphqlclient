@@ -12,7 +12,7 @@ import Examples.Github.Scopes
   , Scope__SearchResultItem
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onApp :: SelectionSet Scope__App decodesTo
                            , onIssue :: SelectionSet Scope__Issue decodesTo

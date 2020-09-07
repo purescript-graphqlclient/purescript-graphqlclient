@@ -11,7 +11,7 @@ import Examples.Github.Scopes
   (Scope__Lockable, Scope__Issue, Scope__PullRequest)
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.LockReason (LockReason)
-import Prelude
+import Prelude (pure)
 
 activeLockReason :: SelectionSet Scope__Lockable (Maybe LockReason)
 activeLockReason = selectionForField

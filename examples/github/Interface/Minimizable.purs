@@ -15,7 +15,7 @@ import Examples.Github.Scopes
   , Scope__PullRequestReviewComment
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 isMinimized :: SelectionSet Scope__Minimizable Boolean
 isMinimized = selectionForField

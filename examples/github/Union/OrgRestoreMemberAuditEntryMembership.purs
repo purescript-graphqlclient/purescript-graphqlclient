@@ -8,7 +8,7 @@ import Examples.Github.Scopes
   , Scope__OrgRestoreMemberAuditEntryMembership
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onOrgRestoreMemberMembershipOrganizationAuditEntryData :: SelectionSet
                                                                                        Scope__OrgRestoreMemberMembershipOrganizationAuditEntryData
