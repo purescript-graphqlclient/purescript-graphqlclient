@@ -18,7 +18,7 @@ urls :: Array String
 urls =
   [ "http://elm-graphql-normalize.herokuapp.com/"
   , "https://countries.trevorblades.com/"
-  , "https://swapi.graph.cool/"
+  -- | , "https://swapi.graph.cool/"
   , "https://swapi-graphql.netlify.app/.netlify/functions/index" -- https://graphql.org/swapi-graphql/
   ]
 

@@ -6,22 +6,7 @@ set -euxo pipefail
 
 function retry()
 {
-        local n=0
-        local try=$1
-        local cmd="${@: 2}"
-        [[ $# -le 1 ]] && {
-        echo "Usage $0 <retry_number> <Command>"; }
-
-        until [[ $n -ge $try ]]
-        do
-                $cmd && break || {
-                        echo "Command Fail.."
-                        ((n++))
-                        echo "retry $n ::"
-                        sleep 1;
-                        }
-
-        done
+  eval "$1" || eval "$1"
 }
 
 function check_no_diff()
@@ -44,7 +29,7 @@ yarn run lib:test --no-install
 ########
 
 # retry because external servers are served on heroku and it needs time to start
-retry 2 yarn run generator:test --no-install
+retry "yarn run generator:test --no-install"
 
 ########
 
@@ -54,7 +39,7 @@ check_no_diff
 
 ########
 
-retry 2 yarn run examples:test --no-install
+retry "yarn run examples:test --no-install"
 
 ########
 
