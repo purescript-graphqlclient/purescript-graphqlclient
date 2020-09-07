@@ -16,6 +16,14 @@ jobs:
       - name: Set up a PureScript toolchain
         uses: purescript-contrib/setup-purescript@main
 
+      - name: Cache NPM dependencies
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-lerna-${{ hashFiles('**/package.json', '**/yarn.lock') }}
+          path: |
+            node_modules
+            */*/node_modules
+
       - name: Cache PureScript dependencies
         uses: actions/cache@v2
         with:
@@ -26,6 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          yarn install --ignore-optional
           spago install
           spago install --config generator-spago.dhall
 
