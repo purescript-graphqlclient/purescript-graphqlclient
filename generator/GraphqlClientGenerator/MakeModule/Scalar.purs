@@ -1,12 +1,12 @@
 module GraphqlClientGenerator.MakeModule.Scalars where
 
-import Language.PS.SmartCST
+import Language.PS.SmartCST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), Type(..), mkModuleName, stringType)
 
 import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty
 import Data.String.Extra as StringsExtra
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
-import Protolude (Maybe(..), (#), ($), (<#>), (<>))
+import Protolude
 
 makeModule :: ModuleName -> Array InstorpectionQueryResult__FullType -> Module
 makeModule moduleName scalarTypes = Module

@@ -1,6 +1,6 @@
 module GraphqlClientGenerator.MakeModule.Union where
 
-import Protolude (fromMaybe, (<>))
+import Protolude
 
 import Data.Array.NonEmpty (NonEmptyArray)
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)

@@ -4,7 +4,7 @@ import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet, graphqlDefa
 import GraphqlClient.WriteGraphqlHash (Cache)
 import GraphqlClient.Argument (toGraphqlArguments)
 
-import Protolude (type ($), type (<<<), Maybe)
+import Protolude
 
 import GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue as GraphqlClientGenerator.IntrospectionSchema.Fields.InputValue
 import GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef as GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef

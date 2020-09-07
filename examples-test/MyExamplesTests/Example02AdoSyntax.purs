@@ -1,6 +1,6 @@
 module MyExamplesTests.Example02AdoSyntax where
 
-import Protolude (Either, Unit, apply, bind, discard, error, map, pure, throwError, ($), (<<<), (\/))
+import Protolude
 
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec

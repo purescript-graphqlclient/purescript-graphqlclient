@@ -24,7 +24,7 @@ import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
 import Examples.Github.InputObject (RepositoryOrder) as Examples.Github.InputObject
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
-import Prelude (pure)
+import Prelude
 
 type AvatarUrlInputRowOptional r = ( size :: Optional Int | r )
 

@@ -1,7 +1,7 @@
 module MyGeneratorTests.Main where
 
 import Effect.Aff (Milliseconds(..))
-import Protolude (Effect, Maybe(..), Unit, launchAff_, ($))
+import Protolude
 
 import MyGeneratorTests.AllTests as MyGeneratorTests.AllTests
 import Test.Spec.Reporter as Test.Spec.Reporter

@@ -1,6 +1,6 @@
 module Examples.Github.Enum.ProjectState where
 
-import Prelude (class Eq, class Ord)
+import Prelude
 import Data.Tuple (Tuple(..))
 import GraphqlClient
   ( class GraphqlDefaultResponseScalarDecoder

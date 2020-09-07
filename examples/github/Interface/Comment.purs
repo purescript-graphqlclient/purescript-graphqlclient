@@ -29,7 +29,7 @@ import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (Html, DateTime, Id)
 import Type.Row (type (+))
-import Prelude (pure)
+import Prelude
 
 author :: forall r . SelectionSet
                      Scope__Actor

@@ -3,7 +3,7 @@ module MyExamplesTests.Example10Github where
 import Examples.Github.Scopes (Scope__Release, Scope__ReleaseConnection, Scope__Repository)
 import MyExamplesTests.Util (inlineAndTrim)
 import GraphqlClient (GraphqlError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, graphqlQueryRequest, nonNullElementsOrFail, nonNullOrFail, printGraphqlError, writeGraphql)
-import Protolude (Either, Maybe(..), Unit, bind, discard, error, fromMaybe, pure, throwError, (#), ($), (<#>), (<$>), (<*>), (<<<), (\/))
+import Protolude
 
 import Affjax.RequestHeader (RequestHeader(..))
 import Examples.Github.Object.Repository as Examples.Github.Object.Repository

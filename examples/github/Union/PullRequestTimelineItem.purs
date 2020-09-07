@@ -37,7 +37,7 @@ import Examples.Github.Scopes
   , Scope__PullRequestTimelineItem
   )
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onAssignedEvent :: SelectionSet
                                                 Scope__AssignedEvent

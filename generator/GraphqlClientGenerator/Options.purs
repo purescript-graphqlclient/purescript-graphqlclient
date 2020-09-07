@@ -1,6 +1,6 @@
 module GraphqlClientGenerator.Options where
 
-import Protolude (class Generic, class Show, Either(..), Maybe(..), apply, map, show, (#), ($), (<#>), (<$>), (<>), (<|>))
+import Protolude
 
 import Affjax.RequestHeader as Affjax
 import Data.Array (fromFoldable) as Array

@@ -1,6 +1,6 @@
 module GraphqlClient.WriteGraphql where
 
-import Protolude (Maybe(..), not, ($), (<$>), (<<<), (<>))
+import Protolude
 
 import Data.Array as Array
 import Data.String as String

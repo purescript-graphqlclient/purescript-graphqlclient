@@ -4,7 +4,7 @@ import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__StatusContext, Scope__StatusCheckRollupContext)
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onStatusContext :: SelectionSet
                                                 Scope__StatusContext

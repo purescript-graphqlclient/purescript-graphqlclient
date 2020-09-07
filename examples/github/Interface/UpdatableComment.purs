@@ -22,7 +22,7 @@ import Examples.Github.Scopes
 import Examples.Github.Enum.CommentCannotUpdateReason
   (CommentCannotUpdateReason)
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 viewerCannotUpdateReasons :: SelectionSet
                              Scope__UpdatableComment

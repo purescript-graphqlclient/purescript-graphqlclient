@@ -19,7 +19,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Examples.Github.InputObject (SponsorshipOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Prelude (pure)
+import Prelude
 
 sponsorsListing :: forall r . SelectionSet
                               Scope__SponsorsListing

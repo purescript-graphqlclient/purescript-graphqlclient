@@ -10,7 +10,7 @@ import GraphqlClient.Implementation as GraphqlClient.Implementation
 import GraphqlClientGenerator.IntrospectionSchema as GraphqlClientGenerator.IntrospectionSchema
 import MyGeneratorTestUtils.GraphqlRequest (request)
 import MyGeneratorTestUtils.IntrospectionQuery as MyGeneratorTestUtils.IntrospectionQuery
-import Protolude (Either(..), Unit, bind, error, for_, pure, throwError, (#), ($), (<<<), (>>=), (>>>), (\/))
+import Protolude
 import Test.Spec as Test.Spec
 import Test.Spec.Assertions (shouldEqual)
 

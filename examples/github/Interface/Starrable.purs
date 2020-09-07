@@ -22,7 +22,7 @@ import Examples.Github.Scalars (Id)
 import Examples.Github.InputObject (StarOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 id :: SelectionSet Scope__Starrable Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder

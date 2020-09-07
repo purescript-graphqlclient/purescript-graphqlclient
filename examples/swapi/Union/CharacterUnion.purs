@@ -3,7 +3,7 @@ module Examples.Swapi.Union.CharacterUnion where
 import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Swapi.Scopes (Scope__Droid, Scope__Human, Scope__CharacterUnion)
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onDroid :: SelectionSet Scope__Droid decodesTo
                            , onHuman :: SelectionSet Scope__Human decodesTo

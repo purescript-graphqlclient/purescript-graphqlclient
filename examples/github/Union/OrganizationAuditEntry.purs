@@ -63,7 +63,7 @@ import Examples.Github.Scopes
   , Scope__OrganizationAuditEntry
   )
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onMembersCanDeleteReposClearAuditEntry :: SelectionSet
                                                                        Scope__MembersCanDeleteReposClearAuditEntry

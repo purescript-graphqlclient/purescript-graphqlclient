@@ -7,7 +7,7 @@ import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Ful
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import Language.PS.SmartCST (Comments(..), DataHead(..), Declaration(..), Label(..), Module(..), ModuleName, ProperName(..), Type(..))
-import Protolude (Maybe(..), fromMaybe, (#), ($), (<#>), (<>))
+import Protolude
 
 mkRow :: forall t.  { apiModuleName :: NonEmptyArray String, scalarModule :: ModuleName } -> { name :: String, type :: TypeKindWithNull | t } -> { label :: Label, type_ :: Type }
 mkRow context field =

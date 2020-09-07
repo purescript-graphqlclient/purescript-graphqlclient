@@ -1,6 +1,6 @@
 module GraphqlClient.WriteGraphqlHash where
 
-import Protolude (type (/\), Maybe(..), map, maybe, show, ($), (/\), (<$>), (<<<), (<>))
+import Protolude
 
 import Data.Array as Array
 import Data.Hashable as Hashable

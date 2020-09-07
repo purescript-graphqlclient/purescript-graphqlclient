@@ -1,6 +1,6 @@
 module MyExamplesTests.Example13SSubscription where
 
-import Protolude (Either, Maybe(..), Unit, apply, bind, discard, error, map, pure, throwError, (#), ($), (<<<), (==), (\/))
+import Protolude
 
 import MyExamplesTests.Util (inlineAndTrim)
 import Examples.Swapi.Scopes (Scope__ChatMessage)

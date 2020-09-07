@@ -1,7 +1,7 @@
 module MyExamplesTests.Example03Variables where
 
 import GraphqlClient (GraphqlError, Scope__RootQuery, SelectionSet, graphqlQueryRequest, printGraphqlError, writeGraphql)
-import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<$>), (<*>), (<<<), (\/))
+import Protolude
 import Examples.SwapiCustomScalars (Id(..))
 
 import Examples.Swapi.Object.Human as Human

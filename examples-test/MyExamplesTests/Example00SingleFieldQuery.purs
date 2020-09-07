@@ -1,6 +1,6 @@
 module MyExamplesTests.Example00SingleFieldQuery where
 
-import Protolude (Either, Maybe(..), Unit, bind, discard, error, pure, throwError, ($), (<<<), (\/))
+import Protolude
 
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec

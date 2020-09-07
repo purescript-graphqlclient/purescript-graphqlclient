@@ -4,7 +4,7 @@ import MyExamplesTests.Util (inlineAndTrim)
 
 import Examples.Swapi.Mutation as Mutation
 import GraphqlClient (GraphqlError, Scope__RootMutation, SelectionSet, graphqlMutationRequest, printGraphqlError, writeGraphql)
-import Protolude (Either, Unit, bind, discard, error, pure, throwError, void, ($), (<<<), (\/))
+import Protolude
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 

@@ -21,7 +21,7 @@ import Examples.Github.Scopes
   , Scope__TeamDiscussionComment
   )
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 viewerCanUpdate :: SelectionSet Scope__Updatable Boolean
 viewerCanUpdate = selectionForField

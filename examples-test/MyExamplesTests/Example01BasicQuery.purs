@@ -1,6 +1,6 @@
 module MyExamplesTests.Example01BasicQuery where
 
-import Protolude (Either, Unit, bind, discard, error, pure, throwError, ($), (<$>), (<*>), (<<<), (\/))
+import Protolude
 
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec

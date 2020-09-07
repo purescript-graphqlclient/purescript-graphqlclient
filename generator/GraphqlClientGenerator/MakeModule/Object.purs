@@ -4,8 +4,8 @@ import Data.Array.NonEmpty (NonEmptyArray)
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import GraphqlClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 
-import Language.PS.SmartCST
-import Protolude (fromMaybe)
+import Language.PS.SmartCST (Module(..), ModuleName)
+import Protolude
 
 makeModule
   :: (String -> String)

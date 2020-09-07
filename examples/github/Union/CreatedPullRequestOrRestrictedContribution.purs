@@ -7,7 +7,7 @@ import Examples.Github.Scopes
   , Scope__CreatedPullRequestOrRestrictedContribution
   )
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onCreatedPullRequestContribution :: SelectionSet
                                                                  Scope__CreatedPullRequestContribution

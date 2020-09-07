@@ -3,8 +3,8 @@ module GraphqlClientGenerator.MakeModule.Scopes where
 import Data.Array.NonEmpty (NonEmptyArray)
 
 import GraphqlClientGenerator.MakeModule.Lib.Utils (declDataWithoutConstructors)
-import Language.PS.SmartCST
-import Protolude ((<#>), (<>))
+import Language.PS.SmartCST (Module(..), ModuleName)
+import Protolude
 
 makeModule :: (String -> String) -> NonEmptyArray String -> Array String -> Array String -> Array String -> ModuleName -> Module
 makeModule

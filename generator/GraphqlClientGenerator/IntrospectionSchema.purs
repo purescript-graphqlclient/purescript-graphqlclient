@@ -4,7 +4,7 @@ import GraphqlClient.Implementation (Scope__RootQuery, SelectionSet, bindSelecti
 import GraphqlClient.WriteGraphqlHash (Cache)
 
 import GraphqlClientGenerator.IntrospectionSchema.TypeKindWithNull (InstorpectionQueryResult__TypeRef, InstorpectionQueryResult__TypeRef_shared, TypeKindWithNull, collectTypeRefInfo)
-import Protolude (type ($), type (<<<), Maybe, apply, map, note, (#), ($), (<$>), (<*>))
+import Protolude
 
 import Data.Argonaut.Decode (JsonDecodeError(..))
 import GraphqlClientGenerator.IntrospectionSchema.Fields (__schema, mutationType, mutationType_name, queryType, queryType_name, subscriptionType, subscriptionType_name, types, types_description, types_enumValues, types_enumValues_deprecationReason, types_enumValues_description, types_enumValues_isDeprecated, types_enumValues_name, types_fields, types_fields_args, types_fields_deprecationReason, types_fields_description, types_fields_isDeprecated, types_fields_name, types_fields_type, types_inputFields, types_interfaces, types_kind, types_name, types_possibleTypes)

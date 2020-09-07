@@ -21,7 +21,7 @@ import Examples.Github.Scopes
   , Scope__RepositoryVulnerabilityAlert
   )
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 repository :: forall r . SelectionSet
                          Scope__Repository

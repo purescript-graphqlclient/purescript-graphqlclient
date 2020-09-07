@@ -3,7 +3,7 @@ module Examples.Github.Union.Sponsor where
 import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes (Scope__Organization, Scope__User, Scope__Sponsor)
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onOrganization :: SelectionSet
                                                Scope__Organization

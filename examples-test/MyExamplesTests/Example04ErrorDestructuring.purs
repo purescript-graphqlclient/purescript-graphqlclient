@@ -1,7 +1,7 @@
 module MyExamplesTests.Example04ErrorDestructuring where
 
 import GraphqlClient (GraphqlError(..), GraphqlUserErrorDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, graphqlQueryRequest, writeGraphql)
-import Protolude (Either(..), Maybe(..), Unit, bind, discard)
+import Protolude
 import Data.Array.NonEmpty as NonEmptyArray
 
 import Examples.Swapi.Query as Query

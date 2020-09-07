@@ -8,7 +8,7 @@ import Examples.Github.Scopes
   , Scope__PermissionGranter
   )
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onOrganization :: SelectionSet
                                                Scope__Organization

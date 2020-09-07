@@ -1,6 +1,6 @@
 module GraphqlClientGenerator.IntrospectionSchema.Fields.TypeRef where
 
-import Protolude (Maybe)
+import Protolude
 import GraphqlClient.Implementation (SelectionSet, graphqlDefaultResponseFunctorOrScalarDecoderTransformer, graphqlDefaultResponseScalarDecoder, selectionForCompositeFieldImplementation, selectionForFieldImplementation)
 import GraphqlClient.WriteGraphqlHash (Cache)
 import GraphqlClientGenerator.IntrospectionSchema.TypeKind (TypeKind)

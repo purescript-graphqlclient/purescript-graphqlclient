@@ -2,8 +2,8 @@ module GraphqlClientGenerator.MakeModule.Enum where
 
 import GraphqlClientGenerator.IntrospectionSchema (InstorpectionQueryResult__EnumValue, InstorpectionQueryResult__FullType)
 import GraphqlClientGenerator.MakeModule.Lib.Utils (tupleDecl, tupleExpr)
-import Language.PS.SmartCST
-import Protolude (type ($), Maybe(..), flip, fromMaybe, join, maybe, (#), ($), (<#>), (<>))
+import Language.PS.SmartCST (Binder(..), Comments(..), DataCtor(..), DataHead(..), DeclDeriveType(..), Declaration(..), Expr(..), Guarded(..), Ident(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), SmartQualifiedNameConstructor(..), Type(..), arrayType, mkModuleName)
+import Protolude
 
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty

@@ -1,7 +1,7 @@
 module MyExamplesTests.Main where
 
 import Effect.Aff (Milliseconds(..))
-import Protolude (Effect, Maybe(..), Unit, launchAff_, ($))
+import Protolude
 
 import MyExamplesTests.AllTests as MyExamplesTests.AllTests
 import Test.Spec.Reporter as Test.Spec.Reporter

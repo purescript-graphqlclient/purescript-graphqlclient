@@ -4,7 +4,7 @@ import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__EnterpriseUserAccount, Scope__User, Scope__EnterpriseMember)
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onEnterpriseUserAccount :: SelectionSet
                                                         Scope__EnterpriseUserAccount

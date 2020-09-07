@@ -3,7 +3,7 @@ module MyExamplesTests.Util where
 import Data.String.Regex (replace)
 import Data.String.Regex.Flags (global)
 import Data.String.Regex.Unsafe (unsafeRegex)
-import Protolude ((<<<))
+import Protolude
 
 import Data.String (trim)
 

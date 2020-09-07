@@ -1,6 +1,6 @@
 module Examples.Github.Scalars where
 
-import Prelude (class Eq, class Ord, class Show)
+import Prelude
 import Data.Newtype (class Newtype)
 import GraphqlClient
   (class GraphqlDefaultResponseScalarDecoder, class ToGraphqlArgumentValue)

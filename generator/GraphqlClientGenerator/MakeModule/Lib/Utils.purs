@@ -1,7 +1,7 @@
 module GraphqlClientGenerator.MakeModule.Lib.Utils where
 
 import Language.PS.SmartCST (SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), ModuleName(..), ProperName(..), ProperNameType_TypeName, SmartQualifiedName(..), Type(..), mkModuleName)
-import Protolude (Maybe(..), map, ($), (<<<), (<>))
+import Protolude
 
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty

@@ -16,7 +16,7 @@ import Examples.Github.Scopes
   , Scope__ViewerHovercardContext
   )
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 message :: SelectionSet Scope__HovercardContext String
 message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder

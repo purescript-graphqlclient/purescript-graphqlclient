@@ -18,7 +18,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.GitSignatureState (GitSignatureState)
-import Prelude (pure)
+import Prelude
 
 email :: SelectionSet Scope__GitSignature String
 email = selectionForField "email" [] graphqlDefaultResponseScalarDecoder

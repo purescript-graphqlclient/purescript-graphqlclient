@@ -20,7 +20,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Uri)
-import Prelude (pure)
+import Prelude
 
 enterpriseResourcePath :: SelectionSet
                           Scope__EnterpriseAuditEntryData

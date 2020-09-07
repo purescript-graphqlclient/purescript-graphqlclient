@@ -3,7 +3,7 @@ module Examples.Github.Union.Closer where
 import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes (Scope__Commit, Scope__PullRequest, Scope__Closer)
 import Data.Maybe (Maybe(..))
-import Prelude (pure)
+import Prelude
 
 type Fragments decodesTo = { onCommit :: SelectionSet Scope__Commit decodesTo
                            , onPullRequest :: SelectionSet

@@ -1,6 +1,6 @@
 module GraphqlClient.Implementation where
 
-import Protolude (class Applicative, class Apply, class Functor, type (/\), Either(..), List(..), Maybe(..), bind, const, identity, lmap, note, pure, sequence, (#), ($), (/\), (<#>), (<*>), (<>), (==), (>>=), (>>>))
+import Protolude
 
 import Data.Argonaut.Core (Json, fromString)
 import Data.Argonaut.Decode (JsonDecodeError(..))

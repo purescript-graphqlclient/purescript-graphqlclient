@@ -1,7 +1,7 @@
 module GraphqlClientGenerator.PsCst where
 
 import Language.PS.SmartCST (Module, ModuleName, mkModuleName, printModule)
-import Protolude (Maybe(..), Tuple, bind, fromMaybe, maybe, not, (#), ($), (/\), (<#>), (<>), (==), (>>=), (>>>))
+import Protolude
 
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
