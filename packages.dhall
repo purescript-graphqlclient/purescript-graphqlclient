@@ -5,7 +5,7 @@ let overrides =
       { argonaut-core =
               upstream.argonaut-core
           //  { repo = "https://github.com/srghma/purescript-argonaut-core.git"
-              , version = "master"
+              , version = "83a16f6aaf2ca62b9aa07eb155dbdeb561ba0d55"
               }
       , either =
               upstream.either
