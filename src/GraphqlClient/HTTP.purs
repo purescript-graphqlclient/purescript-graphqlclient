@@ -84,7 +84,7 @@ printGraphqlError = case _ of
   GraphqlUnexpectedPayloadError error jsonBody -> intercalate "\n"
     [ "Unexpected payload:"
     , "  error = " <> printJsonDecodeError error
-    , "  body = " <> ArgonautCore.stringifyWithSpace 2 jsonBody
+    , "  body = " <> ArgonautCore.stringifyWithIndent 2 jsonBody
     ]
   GraphqlUserError errorsArray possiblyParsedData ->
     let errorsArray' = errorsArray <#> unwrap <#> _.message <#> ("  " <> _)
@@ -155,7 +155,7 @@ graphqlRequestImpl url headers query decoder = Transformers.runExceptT do
   jsonBody <- case result of
     Left error -> Transformers.throwError $ GraphqlAffjaxError error
     Right response -> pure response.body
-  -- | traceWithoutInspectM $ "[graphqlRequestImpl] jsonBody " <> ArgonautCore.stringifyWithSpace 2 jsonBody -- TODO: move outside
+  -- | traceWithoutInspectM $ "[graphqlRequestImpl] jsonBody " <> ArgonautCore.stringifyWithIndent 2 jsonBody -- TODO: move outside
   except $ tryDecodeGraphqlResponse decoder jsonBody
 
 -- graphqlRequestImplWithTrace
