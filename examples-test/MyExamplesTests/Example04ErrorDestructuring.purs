@@ -1,6 +1,6 @@
 module MyExamplesTests.Example04ErrorDestructuring where
 
-import GraphQLClient (GraphQLError(..), GraphQLUserErrorDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, graphqlQueryRequest, writeGraphQL)
+import GraphQLClient (GraphQLError(..), GraphQLUserErrorDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, graphqlQueryRequest, writeGraphQL)
 import Protolude
 import Data.Array.NonEmpty as NonEmptyArray
 
@@ -25,7 +25,7 @@ spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example04ErrorDestructuring" do
   writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
 
-  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" [] query
+  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
 
   case response of
        Left (GraphQLUserError detail (ParsedData Nothing)) ->

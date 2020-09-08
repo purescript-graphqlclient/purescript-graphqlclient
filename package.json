@@ -25,6 +25,9 @@
     "client"
   ],
   "author": "Serhii Khoma <srghma@gmail.com>",
+  "contributors": [
+    "toastal <toastal@protonmail.com> (https://toast.al)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/purescript-graphql-client/purescript-graphql-client/issues"

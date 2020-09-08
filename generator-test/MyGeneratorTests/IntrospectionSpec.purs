@@ -25,8 +25,7 @@ urls =
 includeDeprecated :: Boolean
 includeDeprecated = false
 
-introspectionQueryString :: String
-introspectionQueryString = GraphQLClient.writeGraphQL (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery (\_ _ -> unsafeThrow "I dont care about decoder") includeDeprecated)
+introspectionQueryString = GraphQLClient.writeGraphQL (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery (\_ _ -> unsafeThrow "I don’t care about decoder") includeDeprecated)
 
 introspectionQueryDecoderForExternalJson :: Json -> Either JsonDecodeError GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult
 introspectionQueryDecoderForExternalJson = GraphQLClient.getSelectionSetDecoder (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery GraphQLClient.Implementation.fieldNameWithoutHash includeDeprecated)
@@ -39,7 +38,7 @@ spec = Test.Spec.describe "Introspection spec" $ Test.Spec.parallel $ for_ urls 
   (expectedJson :: Json) <- request MyGeneratorTestUtils.IntrospectionQuery.introspectionQuery url { }
   (expectedParsed :: GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoderForExternalJson expectedJson # (throwError <<< error <<< printJsonDecodeError) \/ pure
 
-  (actualJson :: Json) <- GraphQLClient.post url [] (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
+  (actualJson :: Json) <- GraphQLClient.post url GraphQLClient.defaultRequestOptions (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
     >>= (throwError <<< error <<< Affjax.printError) \/ (\response -> pure response.body)
     >>= (GraphQLClient.tryDecodeGraphQLResponse Right >>> pure)
     >>= (throwError <<< error <<< GraphQLClient.printGraphQLError) \/ pure

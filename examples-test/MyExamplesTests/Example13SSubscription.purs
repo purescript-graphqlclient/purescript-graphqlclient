@@ -11,7 +11,7 @@ import Examples.Swapi.Mutation as Mutation
 import Examples.Swapi.Subscription as Subscription
 import Examples.SwapiCustomScalars (Id(..))
 import Examples.Swapi.Enum.Phrase (Phrase(..))
-import GraphQLClient (GraphQLError, Scope__RootMutation, Scope__RootSubscription, SelectionSet, graphqlMutationRequest, printGraphQLError, writeGraphQL)
+import GraphQLClient (GraphQLError, Scope__RootMutation, Scope__RootSubscription, SelectionSet, defaultRequestOptions, graphqlMutationRequest, printGraphQLError, writeGraphQL)
 import GraphQLClient as GraphQLClient
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
@@ -74,7 +74,7 @@ spec = Test.Spec.it "Example13SSubscription" do
 
   ----------------
 
-  (response :: Either (GraphQLError MutationResponse) MutationResponse) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" [] mutation
+  (response :: Either (GraphQLError MutationResponse) MutationResponse) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
 
   response' <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
