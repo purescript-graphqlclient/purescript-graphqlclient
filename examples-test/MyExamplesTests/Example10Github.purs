@@ -100,7 +100,7 @@ spec = Test.Spec.it "Example10Github" do
 
   let opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59" ] }
 
-  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" defaultRequestOptions query
+  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts query
 
   (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
