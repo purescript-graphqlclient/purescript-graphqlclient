@@ -1,11 +1,11 @@
 module Examples.Github.Enum.IssueTimelineItemsItemType where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -79,15 +79,15 @@ fromToMap = [ Tuple "ISSUE_COMMENT" IssueComment
             , Tuple "UNSUBSCRIBED_EVENT" UnsubscribedEvent
             ]
 
-instance issueTimelineItemsItemTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance issueTimelineItemsItemTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                           IssueTimelineItemsItemType where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "IssueTimelineItemsItemType"
                                         fromToMap
 
-instance issueTimelineItemsItemTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance issueTimelineItemsItemTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                              IssueTimelineItemsItemType where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       IssueComment -> ArgumentValueEnum "ISSUE_COMMENT"
       CrossReferencedEvent -> ArgumentValueEnum "CROSS_REFERENCED_EVENT"

@@ -1,11 +1,11 @@
 module Examples.Github.Enum.PullRequestReviewState where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -25,15 +25,15 @@ fromToMap = [ Tuple "PENDING" Pending
             , Tuple "DISMISSED" Dismissed
             ]
 
-instance pullRequestReviewStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance pullRequestReviewStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                       PullRequestReviewState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "PullRequestReviewState"
                                         fromToMap
 
-instance pullRequestReviewStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance pullRequestReviewStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                          PullRequestReviewState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Pending -> ArgumentValueEnum "PENDING"
       Commented -> ArgumentValueEnum "COMMENTED"

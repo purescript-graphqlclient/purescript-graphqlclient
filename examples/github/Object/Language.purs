@@ -1,6 +1,6 @@
 module Examples.Github.Object.Language where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__Language)
 import Data.Maybe (Maybe)

@@ -1,10 +1,10 @@
 module Examples.Github.Union.RequestedReviewer where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Mannequin, Scope__Team, Scope__User, Scope__RequestedReviewer)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onMannequin :: SelectionSet
                                             Scope__Mannequin

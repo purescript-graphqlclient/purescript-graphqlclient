@@ -1,10 +1,10 @@
 module Examples.Github.Object.ContributionsCollection where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -50,7 +50,7 @@ commitContributionsByRepository :: forall r . CommitContributionsByRepositoryInp
                                                                                             r)
 commitContributionsByRepository input = selectionForCompositeField
                                         "commitContributionsByRepository"
-                                        (toGraphqlArguments
+                                        (toGraphQLArguments
                                          input)
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -167,7 +167,7 @@ issueContributions :: forall r . IssueContributionsInput -> SelectionSet
                                                                  r
 issueContributions input = selectionForCompositeField
                            "issueContributions"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -192,7 +192,7 @@ issueContributionsByRepository :: forall r . IssueContributionsByRepositoryInput
                                                                                           r)
 issueContributionsByRepository input = selectionForCompositeField
                                        "issueContributionsByRepository"
-                                       (toGraphqlArguments
+                                       (toGraphQLArguments
                                         input)
                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -284,7 +284,7 @@ pullRequestContributions :: forall r . PullRequestContributionsInput -> Selectio
                                                                              r
 pullRequestContributions input = selectionForCompositeField
                                  "pullRequestContributions"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -309,7 +309,7 @@ pullRequestContributionsByRepository :: forall r . PullRequestContributionsByRep
                                                                                                       r)
 pullRequestContributionsByRepository input = selectionForCompositeField
                                              "pullRequestContributionsByRepository"
-                                             (toGraphqlArguments
+                                             (toGraphQLArguments
                                               input)
                                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -335,7 +335,7 @@ pullRequestReviewContributions :: forall r . PullRequestReviewContributionsInput
                                                                                          r
 pullRequestReviewContributions input = selectionForCompositeField
                                        "pullRequestReviewContributions"
-                                       (toGraphqlArguments
+                                       (toGraphQLArguments
                                         input)
                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -356,7 +356,7 @@ pullRequestReviewContributionsByRepository :: forall r . PullRequestReviewContri
                                                                                                                   r)
 pullRequestReviewContributionsByRepository input = selectionForCompositeField
                                                    "pullRequestReviewContributionsByRepository"
-                                                   (toGraphqlArguments
+                                                   (toGraphQLArguments
                                                     input)
                                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -382,7 +382,7 @@ repositoryContributions :: forall r . RepositoryContributionsInput -> SelectionS
                                                                            r
 repositoryContributions input = selectionForCompositeField
                                 "repositoryContributions"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -417,7 +417,7 @@ totalIssueContributions :: TotalIssueContributionsInput -> SelectionSet
                                                            Int
 totalIssueContributions input = selectionForField
                                 "totalIssueContributions"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseScalarDecoder
 
@@ -437,7 +437,7 @@ totalPullRequestContributions :: TotalPullRequestContributionsInput -> Selection
                                                                        Int
 totalPullRequestContributions input = selectionForField
                                       "totalPullRequestContributions"
-                                      (toGraphqlArguments
+                                      (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseScalarDecoder
 
@@ -473,7 +473,7 @@ totalRepositoriesWithContributedIssues :: TotalRepositoriesWithContributedIssues
                                                                                          Int
 totalRepositoriesWithContributedIssues input = selectionForField
                                                "totalRepositoriesWithContributedIssues"
-                                               (toGraphqlArguments
+                                               (toGraphQLArguments
                                                 input)
                                                graphqlDefaultResponseScalarDecoder
 
@@ -501,7 +501,7 @@ totalRepositoriesWithContributedPullRequests :: TotalRepositoriesWithContributed
                                                                                                      Int
 totalRepositoriesWithContributedPullRequests input = selectionForField
                                                      "totalRepositoriesWithContributedPullRequests"
-                                                     (toGraphqlArguments
+                                                     (toGraphQLArguments
                                                       input)
                                                      graphqlDefaultResponseScalarDecoder
 
@@ -519,7 +519,7 @@ totalRepositoryContributions :: TotalRepositoryContributionsInput -> SelectionSe
                                                                      Int
 totalRepositoryContributions input = selectionForField
                                      "totalRepositoryContributions"
-                                     (toGraphqlArguments
+                                     (toGraphQLArguments
                                       input)
                                      graphqlDefaultResponseScalarDecoder
 

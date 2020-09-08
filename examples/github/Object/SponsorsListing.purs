@@ -1,12 +1,12 @@
 module Examples.Github.Object.SponsorsListing where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -65,6 +65,6 @@ tiers :: forall r . TiersInput -> SelectionSet
                                         r)
 tiers input = selectionForCompositeField
               "tiers"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer

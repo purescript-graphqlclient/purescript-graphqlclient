@@ -1,10 +1,10 @@
 module Examples.Github.Object.GitActor where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -21,7 +21,7 @@ type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__GitActor Uri
 avatarUrl input = selectionForField
                   "avatarUrl"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
 

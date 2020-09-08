@@ -1,13 +1,13 @@
 module Examples.Github.Interface.Reactable where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   , exhaustiveFragmentSelection
   , buildFragment
   )
@@ -29,7 +29,7 @@ import Examples.Github.Scalars (Id)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.InputObject (ReactionOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 databaseId :: SelectionSet Scope__Reactable (Maybe Int)
 databaseId = selectionForField
@@ -71,7 +71,7 @@ reactions :: forall r . ReactionsInput -> SelectionSet
                                                r
 reactions input = selectionForCompositeField
                   "reactions"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

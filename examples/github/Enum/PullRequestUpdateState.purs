@@ -1,11 +1,11 @@
 module Examples.Github.Enum.PullRequestUpdateState where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordPullRequestUpdateState :: Ord PullRequestUpdateState
 fromToMap :: Array (Tuple String PullRequestUpdateState)
 fromToMap = [ Tuple "OPEN" Open, Tuple "CLOSED" Closed ]
 
-instance pullRequestUpdateStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance pullRequestUpdateStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                       PullRequestUpdateState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "PullRequestUpdateState"
                                         fromToMap
 
-instance pullRequestUpdateStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance pullRequestUpdateStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                          PullRequestUpdateState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Open -> ArgumentValueEnum "OPEN"
       Closed -> ArgumentValueEnum "CLOSED"

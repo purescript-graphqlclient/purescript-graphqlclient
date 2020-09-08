@@ -1,11 +1,11 @@
 module Examples.Github.Enum.TeamMembershipType where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,15 +22,15 @@ fromToMap = [ Tuple "IMMEDIATE" Immediate
             , Tuple "ALL" All
             ]
 
-instance teamMembershipTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance teamMembershipTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                   TeamMembershipType where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "TeamMembershipType"
                                         fromToMap
 
-instance teamMembershipTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance teamMembershipTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                      TeamMembershipType where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Immediate -> ArgumentValueEnum "IMMEDIATE"
       ChildTeam -> ArgumentValueEnum "CHILD_TEAM"

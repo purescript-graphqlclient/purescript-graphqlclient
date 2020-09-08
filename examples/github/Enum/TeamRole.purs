@@ -1,11 +1,11 @@
 module Examples.Github.Enum.TeamRole where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,12 +19,12 @@ derive instance ordTeamRole :: Ord TeamRole
 fromToMap :: Array (Tuple String TeamRole)
 fromToMap = [ Tuple "ADMIN" Admin, Tuple "MEMBER" Member ]
 
-instance teamRoleGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance teamRoleGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                         TeamRole where
   graphqlDefaultResponseScalarDecoder = enumDecoder "TeamRole" fromToMap
 
-instance teamRoleToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamRole where
-  toGraphqlArgumentValue =
+instance teamRoleToGraphQLArgumentValue :: ToGraphQLArgumentValue TeamRole where
+  toGraphQLArgumentValue =
     case _ of
       Admin -> ArgumentValueEnum "ADMIN"
       Member -> ArgumentValueEnum "MEMBER"

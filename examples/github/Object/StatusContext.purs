@@ -1,10 +1,10 @@
 module Examples.Github.Object.StatusContext where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -23,7 +23,7 @@ type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__StatusContext (Maybe Uri)
 avatarUrl input = selectionForField
                   "avatarUrl"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
 

@@ -1,6 +1,6 @@
 module Examples.Github.Interface.EnterpriseAuditEntryData where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -20,7 +20,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Uri)
-import Prelude
+import Prelude (pure)
 
 enterpriseResourcePath :: SelectionSet
                           Scope__EnterpriseAuditEntryData

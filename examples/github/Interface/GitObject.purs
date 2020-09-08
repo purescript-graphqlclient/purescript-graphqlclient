@@ -1,6 +1,6 @@
 module Examples.Github.Interface.GitObject where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -19,7 +19,7 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (Uri, Id, GitObjectId)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 abbreviatedOid :: SelectionSet Scope__GitObject String
 abbreviatedOid = selectionForField

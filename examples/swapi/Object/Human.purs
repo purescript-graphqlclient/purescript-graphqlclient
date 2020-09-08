@@ -1,6 +1,6 @@
 module Examples.Swapi.Object.Human where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

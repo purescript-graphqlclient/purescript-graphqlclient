@@ -1,12 +1,12 @@
 module Examples.Github.Object.Label where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -62,7 +62,7 @@ issues :: forall r . IssuesInput -> SelectionSet
                                          r
 issues input = selectionForCompositeField
                "issues"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -93,7 +93,7 @@ pullRequests :: forall r . PullRequestsInput -> SelectionSet
                                                      r
 pullRequests input = selectionForCompositeField
                      "pullRequests"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

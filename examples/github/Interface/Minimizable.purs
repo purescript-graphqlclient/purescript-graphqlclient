@@ -1,6 +1,6 @@
 module Examples.Github.Interface.Minimizable where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -15,7 +15,7 @@ import Examples.Github.Scopes
   , Scope__PullRequestReviewComment
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 isMinimized :: SelectionSet Scope__Minimizable Boolean
 isMinimized = selectionForField

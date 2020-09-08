@@ -1,7 +1,7 @@
 module Examples.Github.InputObject where
 
 import Examples.Github.Scalars (Id, GitObjectId, DateTime, Uri)
-import GraphqlClient (Optional)
+import GraphQLClient (Optional)
 import Examples.Github.Enum.PullRequestReviewEvent (PullRequestReviewEvent)
 import Data.Maybe (Maybe)
 import Examples.Github.Enum.DiffSide (DiffSide)

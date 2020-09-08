@@ -1,11 +1,11 @@
 module Examples.Github.Enum.ProjectTemplate where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -24,13 +24,13 @@ fromToMap = [ Tuple "BASIC_KANBAN" BasicKanban
             , Tuple "BUG_TRIAGE" BugTriage
             ]
 
-instance projectTemplateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance projectTemplateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                ProjectTemplate where
   graphqlDefaultResponseScalarDecoder = enumDecoder "ProjectTemplate" fromToMap
 
-instance projectTemplateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance projectTemplateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                   ProjectTemplate where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       BasicKanban -> ArgumentValueEnum "BASIC_KANBAN"
       AutomatedKanbanV2 -> ArgumentValueEnum "AUTOMATED_KANBAN_V2"

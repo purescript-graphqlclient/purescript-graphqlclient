@@ -1,11 +1,11 @@
 module Examples.Github.Enum.UserBlockDuration where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -24,15 +24,15 @@ fromToMap = [ Tuple "ONE_DAY" OneDay
             , Tuple "PERMANENT" Permanent
             ]
 
-instance userBlockDurationGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance userBlockDurationGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                  UserBlockDuration where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "UserBlockDuration"
                                         fromToMap
 
-instance userBlockDurationToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance userBlockDurationToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                     UserBlockDuration where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       OneDay -> ArgumentValueEnum "ONE_DAY"
       ThreeDays -> ArgumentValueEnum "THREE_DAYS"

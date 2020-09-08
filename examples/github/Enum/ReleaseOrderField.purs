@@ -1,11 +1,11 @@
 module Examples.Github.Enum.ReleaseOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordReleaseOrderField :: Ord ReleaseOrderField
 fromToMap :: Array (Tuple String ReleaseOrderField)
 fromToMap = [ Tuple "CREATED_AT" CreatedAt, Tuple "NAME" Name ]
 
-instance releaseOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance releaseOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                  ReleaseOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "ReleaseOrderField"
                                         fromToMap
 
-instance releaseOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance releaseOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                     ReleaseOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"
       Name -> ArgumentValueEnum "NAME"

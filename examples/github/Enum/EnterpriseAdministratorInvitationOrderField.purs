@@ -1,11 +1,11 @@
 module Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordEnterpriseAdministratorInvitationOrderField :: Ord Enterprise
 fromToMap :: Array (Tuple String EnterpriseAdministratorInvitationOrderField)
 fromToMap = [ Tuple "CREATED_AT" CreatedAt ]
 
-instance enterpriseAdministratorInvitationOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseAdministratorInvitationOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                            EnterpriseAdministratorInvitationOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseAdministratorInvitationOrderField"
                                         fromToMap
 
-instance enterpriseAdministratorInvitationOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseAdministratorInvitationOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                               EnterpriseAdministratorInvitationOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

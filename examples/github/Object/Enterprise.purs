@@ -1,10 +1,10 @@
 module Examples.Github.Object.Enterprise where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -32,7 +32,7 @@ type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__Enterprise Uri
 avatarUrl input = selectionForField
                   "avatarUrl"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
 
@@ -98,7 +98,7 @@ members :: forall r . MembersInput -> SelectionSet
                                            r
 members input = selectionForCompositeField
                 "members"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -124,7 +124,7 @@ organizations :: forall r . OrganizationsInput -> SelectionSet
                                                        r
 organizations input = selectionForCompositeField
                       "organizations"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -167,7 +167,7 @@ userAccounts :: forall r . UserAccountsInput -> SelectionSet
                                                      r
 userAccounts input = selectionForCompositeField
                      "userAccounts"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

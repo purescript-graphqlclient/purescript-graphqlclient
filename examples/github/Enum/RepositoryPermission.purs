@@ -1,11 +1,11 @@
 module Examples.Github.Enum.RepositoryPermission where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -24,15 +24,15 @@ fromToMap = [ Tuple "ADMIN" Admin
             , Tuple "READ" Read
             ]
 
-instance repositoryPermissionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance repositoryPermissionGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                     RepositoryPermission where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "RepositoryPermission"
                                         fromToMap
 
-instance repositoryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance repositoryPermissionToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                        RepositoryPermission where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Admin -> ArgumentValueEnum "ADMIN"
       Maintain -> ArgumentValueEnum "MAINTAIN"

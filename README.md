@@ -50,6 +50,6 @@ yarn install --ignore-optional
 
 # check ./regenerate-examples.sh file
 spago --config generator-spago.dhall run \
-  --main GraphqlClientGenerator.Main \
+  --main GraphQLClientGenerator.Main \
   --node-args "--help"
 ```

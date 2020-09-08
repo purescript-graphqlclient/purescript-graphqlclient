@@ -1,6 +1,6 @@
 module Examples.Github.Object.FundingLink where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__FundingLink)
 import Examples.Github.Enum.FundingPlatform (FundingPlatform)

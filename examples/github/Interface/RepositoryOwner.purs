@@ -1,10 +1,10 @@
 module Examples.Github.Interface.RepositoryOwner where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -24,7 +24,7 @@ import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
 import Examples.Github.InputObject (RepositoryOrder) as Examples.Github.InputObject
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
-import Prelude
+import Prelude (pure)
 
 type AvatarUrlInputRowOptional r = ( size :: Optional Int | r )
 
@@ -33,7 +33,7 @@ type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__RepositoryOwner Uri
 avatarUrl input = selectionForField
                   "avatarUrl"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
 
@@ -72,7 +72,7 @@ repositories :: forall r . RepositoriesInput -> SelectionSet
                                                      r
 repositories input = selectionForCompositeField
                      "repositories"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -88,7 +88,7 @@ repository :: forall r . RepositoryInput -> SelectionSet
                                                   r)
 repository input = selectionForCompositeField
                    "repository"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

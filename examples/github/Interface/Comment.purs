@@ -1,13 +1,13 @@
 module Examples.Github.Interface.Comment where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   , exhaustiveFragmentSelection
   , buildFragment
   )
@@ -29,7 +29,7 @@ import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (Html, DateTime, Id)
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 author :: forall r . SelectionSet
                      Scope__Actor
@@ -118,7 +118,7 @@ userContentEdits :: forall r . UserContentEditsInput -> SelectionSet
                                                               r)
 userContentEdits input = selectionForCompositeField
                          "userContentEdits"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

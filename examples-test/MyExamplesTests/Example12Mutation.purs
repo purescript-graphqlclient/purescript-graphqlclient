@@ -3,7 +3,7 @@ module MyExamplesTests.Example12Mutation where
 import MyExamplesTests.Util (inlineAndTrim)
 
 import Examples.Swapi.Mutation as Mutation
-import GraphqlClient (GraphqlError, Scope__RootMutation, SelectionSet, defaultRequestOptions, graphqlMutationRequest, printGraphqlError, writeGraphql)
+import GraphQLClient (GraphQLError, Scope__RootMutation, SelectionSet, defaultRequestOptions, graphqlMutationRequest, printGraphQLError, writeGraphQL)
 import Protolude
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
@@ -22,8 +22,8 @@ mutation {
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example12Mutation" do
-  writeGraphql mutation `Test.Spec.shouldEqual` expectedMutation
+  writeGraphQL mutation `Test.Spec.shouldEqual` expectedMutation
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
+  (response :: Either (GraphQLError Response) Response) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
 
-  void $ (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  void $ (throwError <<< error <<< printGraphQLError) \/ pure $ response

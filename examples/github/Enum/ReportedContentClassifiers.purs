@@ -1,11 +1,11 @@
 module Examples.Github.Enum.ReportedContentClassifiers where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -26,15 +26,15 @@ fromToMap = [ Tuple "SPAM" Spam
             , Tuple "RESOLVED" Resolved
             ]
 
-instance reportedContentClassifiersGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance reportedContentClassifiersGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                           ReportedContentClassifiers where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "ReportedContentClassifiers"
                                         fromToMap
 
-instance reportedContentClassifiersToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance reportedContentClassifiersToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                              ReportedContentClassifiers where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Spam -> ArgumentValueEnum "SPAM"
       Abuse -> ArgumentValueEnum "ABUSE"

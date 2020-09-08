@@ -1,11 +1,11 @@
 module Examples.Github.Enum.EnterpriseServerUserAccountEmailOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordEnterpriseServerUserAccountEmailOrderField :: Ord EnterpriseS
 fromToMap :: Array (Tuple String EnterpriseServerUserAccountEmailOrderField)
 fromToMap = [ Tuple "EMAIL" Email ]
 
-instance enterpriseServerUserAccountEmailOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseServerUserAccountEmailOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                           EnterpriseServerUserAccountEmailOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseServerUserAccountEmailOrderField"
                                         fromToMap
 
-instance enterpriseServerUserAccountEmailOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseServerUserAccountEmailOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                              EnterpriseServerUserAccountEmailOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Email -> ArgumentValueEnum "EMAIL"

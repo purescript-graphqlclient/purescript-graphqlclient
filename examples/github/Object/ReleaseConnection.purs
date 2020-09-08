@@ -1,6 +1,6 @@
 module Examples.Github.Object.ReleaseConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

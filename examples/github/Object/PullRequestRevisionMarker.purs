@@ -1,6 +1,6 @@
 module Examples.Github.Object.PullRequestRevisionMarker where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

@@ -1,10 +1,10 @@
 module Examples.Github.Interface.Actor where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
   , exhaustiveFragmentSelection
   , buildFragment
@@ -20,7 +20,7 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (Uri)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type AvatarUrlInputRowOptional r = ( size :: Optional Int | r )
 
@@ -29,7 +29,7 @@ type AvatarUrlInput = { | AvatarUrlInputRowOptional + () }
 avatarUrl :: AvatarUrlInput -> SelectionSet Scope__Actor Uri
 avatarUrl input = selectionForField
                   "avatarUrl"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
 

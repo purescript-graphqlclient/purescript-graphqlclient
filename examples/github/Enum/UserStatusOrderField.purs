@@ -1,11 +1,11 @@
 module Examples.Github.Enum.UserStatusOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordUserStatusOrderField :: Ord UserStatusOrderField
 fromToMap :: Array (Tuple String UserStatusOrderField)
 fromToMap = [ Tuple "UPDATED_AT" UpdatedAt ]
 
-instance userStatusOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance userStatusOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                     UserStatusOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "UserStatusOrderField"
                                         fromToMap
 
-instance userStatusOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance userStatusOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                        UserStatusOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       UpdatedAt -> ArgumentValueEnum "UPDATED_AT"

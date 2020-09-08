@@ -1,11 +1,11 @@
 module Examples.Github.Enum.MilestoneOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -23,15 +23,15 @@ fromToMap = [ Tuple "DUE_DATE" DueDate
             , Tuple "NUMBER" Number
             ]
 
-instance milestoneOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance milestoneOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                    MilestoneOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "MilestoneOrderField"
                                         fromToMap
 
-instance milestoneOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance milestoneOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                       MilestoneOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       DueDate -> ArgumentValueEnum "DUE_DATE"
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

@@ -1,10 +1,10 @@
 module Examples.Github.Interface.MemberStatusable where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , exhaustiveFragmentSelection
   , buildFragment
@@ -18,7 +18,7 @@ import Examples.Github.Scopes
   , Scope__Team
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type MemberStatusesInputRowOptional r = ( after :: Optional String
                                         , before :: Optional String
@@ -38,7 +38,7 @@ memberStatuses :: forall r . MemberStatusesInput -> SelectionSet
                                                          r
 memberStatuses input = selectionForCompositeField
                        "memberStatuses"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

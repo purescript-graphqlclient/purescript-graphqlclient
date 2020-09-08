@@ -1,13 +1,13 @@
 module Examples.Github.Interface.RepositoryInfo where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   , exhaustiveFragmentSelection
   , buildFragment
   )
@@ -21,7 +21,7 @@ import Examples.Github.Scalars (DateTime, Html, Uri)
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.RepositoryLockReason (RepositoryLockReason)
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 createdAt :: SelectionSet Scope__RepositoryInfo DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
@@ -152,7 +152,7 @@ shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet
                                                      Html
 shortDescriptionHTML input = selectionForField
                              "shortDescriptionHTML"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseScalarDecoder
 

@@ -1,6 +1,6 @@
 module Examples.Github.Union.PermissionGranter where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__Organization
   , Scope__Repository
@@ -8,7 +8,7 @@ import Examples.Github.Scopes
   , Scope__PermissionGranter
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onOrganization :: SelectionSet
                                                Scope__Organization

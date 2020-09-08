@@ -11,8 +11,8 @@ import Examples.Swapi.Mutation as Mutation
 import Examples.Swapi.Subscription as Subscription
 import Examples.SwapiCustomScalars (Id(..))
 import Examples.Swapi.Enum.Phrase (Phrase(..))
-import GraphqlClient (GraphqlError, Scope__RootMutation, Scope__RootSubscription, SelectionSet, defaultRequestOptions, graphqlMutationRequest, printGraphqlError, writeGraphql)
-import GraphqlClient as GraphqlClient
+import GraphQLClient (GraphQLError, Scope__RootMutation, Scope__RootSubscription, SelectionSet, defaultRequestOptions, graphqlMutationRequest, printGraphQLError, writeGraphQL)
+import GraphQLClient as GraphQLClient
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -31,7 +31,7 @@ type MutationResponse =
 
 mutation :: SelectionSet Scope__RootMutation MutationResponse
 mutation = Mutation.sendMessage { characterId: Id 1, phrase: Father } chatMessage
-  # GraphqlClient.nonNullOrFail
+  # GraphQLClient.nonNullOrFail
 
 expectedMutation :: String
 expectedMutation = inlineAndTrim """
@@ -69,14 +69,14 @@ subscription {
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example13SSubscription" do
-  writeGraphql mutation `Test.Spec.shouldEqual` expectedMutation
-  writeGraphql subscription `Test.Spec.shouldEqual` expectedSubscription
+  writeGraphQL mutation `Test.Spec.shouldEqual` expectedMutation
+  writeGraphQL subscription `Test.Spec.shouldEqual` expectedSubscription
 
   ----------------
 
-  (response :: Either (GraphqlError MutationResponse) MutationResponse) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
+  (response :: Either (GraphQLError MutationResponse) MutationResponse) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
 
-  response' <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  response' <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
   response'.character `Test.Spec.shouldEqual` Nothing
 

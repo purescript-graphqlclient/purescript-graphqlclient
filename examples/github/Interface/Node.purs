@@ -1,6 +1,6 @@
 module Examples.Github.Interface.Node where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -192,7 +192,7 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (Id)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 id :: SelectionSet Scope__Node Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder

@@ -1,6 +1,6 @@
 module Examples.Github.Object.AcceptTopicSuggestionPayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

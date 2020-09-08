@@ -1,12 +1,12 @@
 module Examples.Github.Object.Topic where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes (Scope__Topic, Scope__StargazerConnection)
@@ -32,7 +32,7 @@ relatedTopics :: forall r . RelatedTopicsInput -> SelectionSet
                                                         r)
 relatedTopics input = selectionForCompositeField
                       "relatedTopics"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -54,7 +54,7 @@ stargazers :: forall r . StargazersInput -> SelectionSet
                                                  r
 stargazers input = selectionForCompositeField
                    "stargazers"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

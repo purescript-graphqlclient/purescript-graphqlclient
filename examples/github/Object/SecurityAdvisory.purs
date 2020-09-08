@@ -1,13 +1,13 @@
 module Examples.Github.Object.SecurityAdvisory where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   ( Scope__SecurityAdvisory
@@ -108,7 +108,7 @@ vulnerabilities :: forall r . VulnerabilitiesInput -> SelectionSet
                                                            r
 vulnerabilities input = selectionForCompositeField
                         "vulnerabilities"
-                        (toGraphqlArguments
+                        (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

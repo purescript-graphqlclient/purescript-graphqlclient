@@ -1,11 +1,11 @@
 module Examples.Github.Enum.SavedReplyOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordSavedReplyOrderField :: Ord SavedReplyOrderField
 fromToMap :: Array (Tuple String SavedReplyOrderField)
 fromToMap = [ Tuple "UPDATED_AT" UpdatedAt ]
 
-instance savedReplyOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance savedReplyOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                     SavedReplyOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "SavedReplyOrderField"
                                         fromToMap
 
-instance savedReplyOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance savedReplyOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                        SavedReplyOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       UpdatedAt -> ArgumentValueEnum "UPDATED_AT"

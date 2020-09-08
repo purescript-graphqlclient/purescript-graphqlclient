@@ -1,10 +1,10 @@
 module Examples.Github.Object.CommitContributionsByRepository where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -36,7 +36,7 @@ contributions :: forall r . ContributionsInput -> SelectionSet
                                                        r
 contributions input = selectionForCompositeField
                       "contributions"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

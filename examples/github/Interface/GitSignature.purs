@@ -1,6 +1,6 @@
 module Examples.Github.Interface.GitSignature where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -18,7 +18,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.GitSignatureState (GitSignatureState)
-import Prelude
+import Prelude (pure)
 
 email :: SelectionSet Scope__GitSignature String
 email = selectionForField "email" [] graphqlDefaultResponseScalarDecoder

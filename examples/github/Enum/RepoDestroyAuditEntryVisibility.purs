@@ -1,11 +1,11 @@
 module Examples.Github.Enum.RepoDestroyAuditEntryVisibility where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,15 +22,15 @@ fromToMap = [ Tuple "INTERNAL" Internal
             , Tuple "PUBLIC" Public
             ]
 
-instance repoDestroyAuditEntryVisibilityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance repoDestroyAuditEntryVisibilityGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                RepoDestroyAuditEntryVisibility where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "RepoDestroyAuditEntryVisibility"
                                         fromToMap
 
-instance repoDestroyAuditEntryVisibilityToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance repoDestroyAuditEntryVisibilityToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                   RepoDestroyAuditEntryVisibility where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Internal -> ArgumentValueEnum "INTERNAL"
       Private -> ArgumentValueEnum "PRIVATE"

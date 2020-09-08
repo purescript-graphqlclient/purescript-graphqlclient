@@ -1,11 +1,11 @@
 module Examples.Github.Enum.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -27,15 +27,15 @@ fromToMap = [ Tuple "READ" Read
             , Tuple "NONE" None
             ]
 
-instance orgUpdateDefaultRepositoryPermissionAuditEntryPermissionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance orgUpdateDefaultRepositoryPermissionAuditEntryPermissionGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                                         OrgUpdateDefaultRepositoryPermissionAuditEntryPermission where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OrgUpdateDefaultRepositoryPermissionAuditEntryPermission"
                                         fromToMap
 
-instance orgUpdateDefaultRepositoryPermissionAuditEntryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance orgUpdateDefaultRepositoryPermissionAuditEntryPermissionToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                                            OrgUpdateDefaultRepositoryPermissionAuditEntryPermission where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Read -> ArgumentValueEnum "READ"
       Write -> ArgumentValueEnum "WRITE"

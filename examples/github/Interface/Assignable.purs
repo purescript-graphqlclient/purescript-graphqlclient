@@ -1,10 +1,10 @@
 module Examples.Github.Interface.Assignable where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , exhaustiveFragmentSelection
   , buildFragment
@@ -13,7 +13,7 @@ import Type.Row (type (+))
 import Examples.Github.Scopes
   (Scope__UserConnection, Scope__Assignable, Scope__Issue, Scope__PullRequest)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type AssigneesInputRowOptional r = ( after :: Optional String
                                    , before :: Optional String
@@ -31,7 +31,7 @@ assignees :: forall r . AssigneesInput -> SelectionSet
                                                r
 assignees input = selectionForCompositeField
                   "assignees"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

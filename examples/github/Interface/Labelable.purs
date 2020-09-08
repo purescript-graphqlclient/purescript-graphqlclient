@@ -1,10 +1,10 @@
 module Examples.Github.Interface.Labelable where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , exhaustiveFragmentSelection
   , buildFragment
@@ -14,7 +14,7 @@ import Type.Row (type (+))
 import Examples.Github.Scopes
   (Scope__LabelConnection, Scope__Labelable, Scope__Issue, Scope__PullRequest)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type LabelsInputRowOptional r = ( orderBy :: Optional
                                              Examples.Github.InputObject.LabelOrder
@@ -35,7 +35,7 @@ labels :: forall r . LabelsInput -> SelectionSet
                                           r)
 labels input = selectionForCompositeField
                "labels"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

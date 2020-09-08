@@ -1,6 +1,6 @@
 module Examples.Github.Object.OrgEnableTwoFactorRequirementAuditEntry where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

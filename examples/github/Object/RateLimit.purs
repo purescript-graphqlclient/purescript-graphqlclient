@@ -1,6 +1,6 @@
 module Examples.Github.Object.RateLimit where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__RateLimit)
 import Examples.Github.Scalars (DateTime)

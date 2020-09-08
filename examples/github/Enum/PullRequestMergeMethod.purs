@@ -1,11 +1,11 @@
 module Examples.Github.Enum.PullRequestMergeMethod where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,15 +22,15 @@ fromToMap = [ Tuple "MERGE" Merge
             , Tuple "REBASE" Rebase
             ]
 
-instance pullRequestMergeMethodGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance pullRequestMergeMethodGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                       PullRequestMergeMethod where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "PullRequestMergeMethod"
                                         fromToMap
 
-instance pullRequestMergeMethodToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance pullRequestMergeMethodToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                          PullRequestMergeMethod where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Merge -> ArgumentValueEnum "MERGE"
       Squash -> ArgumentValueEnum "SQUASH"

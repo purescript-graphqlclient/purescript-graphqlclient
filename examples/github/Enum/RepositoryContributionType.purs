@@ -1,11 +1,11 @@
 module Examples.Github.Enum.RepositoryContributionType where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -25,15 +25,15 @@ fromToMap = [ Tuple "COMMIT" Commit
             , Tuple "PULL_REQUEST_REVIEW" PullRequestReview
             ]
 
-instance repositoryContributionTypeGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance repositoryContributionTypeGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                           RepositoryContributionType where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "RepositoryContributionType"
                                         fromToMap
 
-instance repositoryContributionTypeToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance repositoryContributionTypeToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                              RepositoryContributionType where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Commit -> ArgumentValueEnum "COMMIT"
       Issue -> ArgumentValueEnum "ISSUE"

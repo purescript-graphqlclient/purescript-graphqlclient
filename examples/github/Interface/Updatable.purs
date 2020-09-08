@@ -1,6 +1,6 @@
 module Examples.Github.Interface.Updatable where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -21,7 +21,7 @@ import Examples.Github.Scopes
   , Scope__TeamDiscussionComment
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 viewerCanUpdate :: SelectionSet Scope__Updatable Boolean
 viewerCanUpdate = selectionForField

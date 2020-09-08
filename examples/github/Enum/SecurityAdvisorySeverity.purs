@@ -1,11 +1,11 @@
 module Examples.Github.Enum.SecurityAdvisorySeverity where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -23,15 +23,15 @@ fromToMap = [ Tuple "LOW" Low
             , Tuple "CRITICAL" Critical
             ]
 
-instance securityAdvisorySeverityGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance securityAdvisorySeverityGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                         SecurityAdvisorySeverity where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "SecurityAdvisorySeverity"
                                         fromToMap
 
-instance securityAdvisorySeverityToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance securityAdvisorySeverityToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                            SecurityAdvisorySeverity where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Low -> ArgumentValueEnum "LOW"
       Moderate -> ArgumentValueEnum "MODERATE"

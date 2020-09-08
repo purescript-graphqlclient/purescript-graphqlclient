@@ -1,6 +1,6 @@
 module Examples.Github.Object.MarketplaceListingConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

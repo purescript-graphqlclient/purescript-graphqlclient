@@ -1,10 +1,10 @@
 module Examples.Github.Object.EnterpriseOwnerInfo where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -79,7 +79,7 @@ actionExecutionCapabilitySettingOrganizations :: forall r . ActionExecutionCapab
                                                                                                                        r
 actionExecutionCapabilitySettingOrganizations input = selectionForCompositeField
                                                       "actionExecutionCapabilitySettingOrganizations"
-                                                      (toGraphqlArguments
+                                                      (toGraphQLArguments
                                                        input)
                                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -103,7 +103,7 @@ admins :: forall r . AdminsInput -> SelectionSet
                                          r
 admins input = selectionForCompositeField
                "admins"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -129,7 +129,7 @@ affiliatedUsersWithTwoFactorDisabled :: forall r . AffiliatedUsersWithTwoFactorD
                                                                                                      r
 affiliatedUsersWithTwoFactorDisabled input = selectionForCompositeField
                                              "affiliatedUsersWithTwoFactorDisabled"
-                                             (toGraphqlArguments
+                                             (toGraphQLArguments
                                               input)
                                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -177,7 +177,7 @@ allowPrivateRepositoryForkingSettingOrganizations :: forall r . AllowPrivateRepo
                                                                                                                                r
 allowPrivateRepositoryForkingSettingOrganizations input = selectionForCompositeField
                                                           "allowPrivateRepositoryForkingSettingOrganizations"
-                                                          (toGraphqlArguments
+                                                          (toGraphQLArguments
                                                            input)
                                                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -217,7 +217,7 @@ defaultRepositoryPermissionSettingOrganizations :: forall r . DefaultRepositoryP
                                                                                                                            r
 defaultRepositoryPermissionSettingOrganizations input = selectionForCompositeField
                                                         "defaultRepositoryPermissionSettingOrganizations"
-                                                        (toGraphqlArguments
+                                                        (toGraphQLArguments
                                                          input)
                                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -245,7 +245,7 @@ enterpriseServerInstallations :: forall r . EnterpriseServerInstallationsInput -
                                                                                        r
 enterpriseServerInstallations input = selectionForCompositeField
                                       "enterpriseServerInstallations"
-                                      (toGraphqlArguments
+                                      (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -275,7 +275,7 @@ ipAllowListEntries :: forall r . IpAllowListEntriesInput -> SelectionSet
                                                                  r
 ipAllowListEntries input = selectionForCompositeField
                            "ipAllowListEntries"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -331,7 +331,7 @@ membersCanChangeRepositoryVisibilitySettingOrganizations :: forall r . MembersCa
                                                                                                                                              r
 membersCanChangeRepositoryVisibilitySettingOrganizations input = selectionForCompositeField
                                                                  "membersCanChangeRepositoryVisibilitySettingOrganizations"
-                                                                 (toGraphqlArguments
+                                                                 (toGraphQLArguments
                                                                   input)
                                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -399,7 +399,7 @@ membersCanCreateRepositoriesSettingOrganizations :: forall r . MembersCanCreateR
                                                                                                                              r
 membersCanCreateRepositoriesSettingOrganizations input = selectionForCompositeField
                                                          "membersCanCreateRepositoriesSettingOrganizations"
-                                                         (toGraphqlArguments
+                                                         (toGraphQLArguments
                                                           input)
                                                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -439,7 +439,7 @@ membersCanDeleteIssuesSettingOrganizations :: forall r . MembersCanDeleteIssuesS
                                                                                                                  r
 membersCanDeleteIssuesSettingOrganizations input = selectionForCompositeField
                                                    "membersCanDeleteIssuesSettingOrganizations"
-                                                   (toGraphqlArguments
+                                                   (toGraphQLArguments
                                                     input)
                                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -479,7 +479,7 @@ membersCanDeleteRepositoriesSettingOrganizations :: forall r . MembersCanDeleteR
                                                                                                                              r
 membersCanDeleteRepositoriesSettingOrganizations input = selectionForCompositeField
                                                          "membersCanDeleteRepositoriesSettingOrganizations"
-                                                         (toGraphqlArguments
+                                                         (toGraphQLArguments
                                                           input)
                                                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -519,7 +519,7 @@ membersCanInviteCollaboratorsSettingOrganizations :: forall r . MembersCanInvite
                                                                                                                                r
 membersCanInviteCollaboratorsSettingOrganizations input = selectionForCompositeField
                                                           "membersCanInviteCollaboratorsSettingOrganizations"
-                                                          (toGraphqlArguments
+                                                          (toGraphQLArguments
                                                            input)
                                                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -567,7 +567,7 @@ membersCanUpdateProtectedBranchesSettingOrganizations :: forall r . MembersCanUp
                                                                                                                                        r
 membersCanUpdateProtectedBranchesSettingOrganizations input = selectionForCompositeField
                                                               "membersCanUpdateProtectedBranchesSettingOrganizations"
-                                                              (toGraphqlArguments
+                                                              (toGraphQLArguments
                                                                input)
                                                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -607,7 +607,7 @@ membersCanViewDependencyInsightsSettingOrganizations :: forall r . MembersCanVie
                                                                                                                                      r
 membersCanViewDependencyInsightsSettingOrganizations input = selectionForCompositeField
                                                              "membersCanViewDependencyInsightsSettingOrganizations"
-                                                             (toGraphqlArguments
+                                                             (toGraphQLArguments
                                                               input)
                                                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -647,7 +647,7 @@ organizationProjectsSettingOrganizations :: forall r . OrganizationProjectsSetti
                                                                                                              r
 organizationProjectsSettingOrganizations input = selectionForCompositeField
                                                  "organizationProjectsSettingOrganizations"
-                                                 (toGraphqlArguments
+                                                 (toGraphQLArguments
                                                   input)
                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -673,7 +673,7 @@ outsideCollaborators :: forall r . OutsideCollaboratorsInput -> SelectionSet
                                                                      r
 outsideCollaborators input = selectionForCompositeField
                              "outsideCollaborators"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -700,7 +700,7 @@ pendingAdminInvitations :: forall r . PendingAdminInvitationsInput -> SelectionS
                                                                            r
 pendingAdminInvitations input = selectionForCompositeField
                                 "pendingAdminInvitations"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -728,7 +728,7 @@ pendingCollaboratorInvitations :: forall r . PendingCollaboratorInvitationsInput
                                                                                          r
 pendingCollaboratorInvitations input = selectionForCompositeField
                                        "pendingCollaboratorInvitations"
-                                       (toGraphqlArguments
+                                       (toGraphQLArguments
                                         input)
                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -751,7 +751,7 @@ pendingCollaborators :: forall r . PendingCollaboratorsInput -> SelectionSet
                                                                      r
 pendingCollaborators input = selectionForCompositeField
                              "pendingCollaborators"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -774,7 +774,7 @@ pendingMemberInvitations :: forall r . PendingMemberInvitationsInput -> Selectio
                                                                              r
 pendingMemberInvitations input = selectionForCompositeField
                                  "pendingMemberInvitations"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -814,7 +814,7 @@ repositoryProjectsSettingOrganizations :: forall r . RepositoryProjectsSettingOr
                                                                                                          r
 repositoryProjectsSettingOrganizations input = selectionForCompositeField
                                                "repositoryProjectsSettingOrganizations"
-                                               (toGraphqlArguments
+                                               (toGraphQLArguments
                                                 input)
                                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -857,7 +857,7 @@ samlIdentityProviderSettingOrganizations :: forall r . SamlIdentityProviderSetti
                                                                                                              r
 samlIdentityProviderSettingOrganizations input = selectionForCompositeField
                                                  "samlIdentityProviderSettingOrganizations"
-                                                 (toGraphqlArguments
+                                                 (toGraphQLArguments
                                                   input)
                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -897,7 +897,7 @@ teamDiscussionsSettingOrganizations :: forall r . TeamDiscussionsSettingOrganiza
                                                                                                    r
 teamDiscussionsSettingOrganizations input = selectionForCompositeField
                                             "teamDiscussionsSettingOrganizations"
-                                            (toGraphqlArguments
+                                            (toGraphQLArguments
                                              input)
                                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -937,6 +937,6 @@ twoFactorRequiredSettingOrganizations :: forall r . TwoFactorRequiredSettingOrga
                                                                                                        r
 twoFactorRequiredSettingOrganizations input = selectionForCompositeField
                                               "twoFactorRequiredSettingOrganizations"
-                                              (toGraphqlArguments
+                                              (toGraphQLArguments
                                                input)
                                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer

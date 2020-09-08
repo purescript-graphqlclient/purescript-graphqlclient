@@ -1,11 +1,11 @@
 module Examples.Github.Enum.ProjectState where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,13 +19,13 @@ derive instance ordProjectState :: Ord ProjectState
 fromToMap :: Array (Tuple String ProjectState)
 fromToMap = [ Tuple "OPEN" Open, Tuple "CLOSED" Closed ]
 
-instance projectStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance projectStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                             ProjectState where
   graphqlDefaultResponseScalarDecoder = enumDecoder "ProjectState" fromToMap
 
-instance projectStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance projectStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                ProjectState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Open -> ArgumentValueEnum "OPEN"
       Closed -> ArgumentValueEnum "CLOSED"

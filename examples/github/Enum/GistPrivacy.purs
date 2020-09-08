@@ -1,11 +1,11 @@
 module Examples.Github.Enum.GistPrivacy where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,12 +19,12 @@ derive instance ordGistPrivacy :: Ord GistPrivacy
 fromToMap :: Array (Tuple String GistPrivacy)
 fromToMap = [ Tuple "PUBLIC" Public, Tuple "SECRET" Secret, Tuple "ALL" All ]
 
-instance gistPrivacyGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance gistPrivacyGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                            GistPrivacy where
   graphqlDefaultResponseScalarDecoder = enumDecoder "GistPrivacy" fromToMap
 
-instance gistPrivacyToGraphqlArgumentValue :: ToGraphqlArgumentValue GistPrivacy where
-  toGraphqlArgumentValue =
+instance gistPrivacyToGraphQLArgumentValue :: ToGraphQLArgumentValue GistPrivacy where
+  toGraphQLArgumentValue =
     case _ of
       Public -> ArgumentValueEnum "PUBLIC"
       Secret -> ArgumentValueEnum "SECRET"

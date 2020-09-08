@@ -1,13 +1,13 @@
 module Examples.Github.Object.ReactionGroup where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   (Scope__ReactionGroup, Scope__Reactable, Scope__ReactingUserConnection)
@@ -48,7 +48,7 @@ users :: forall r . UsersInput -> SelectionSet
                                        r
 users input = selectionForCompositeField
               "users"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

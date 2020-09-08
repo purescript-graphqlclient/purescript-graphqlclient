@@ -1,6 +1,6 @@
 module Examples.Github.Union.PullRequestTimelineItem where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__AssignedEvent
   , Scope__BaseRefForcePushedEvent
@@ -37,7 +37,7 @@ import Examples.Github.Scopes
   , Scope__PullRequestTimelineItem
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onAssignedEvent :: SelectionSet
                                                 Scope__AssignedEvent

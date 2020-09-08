@@ -1,11 +1,11 @@
 module Examples.Github.Enum.TopicSuggestionDeclineReason where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -24,15 +24,15 @@ fromToMap = [ Tuple "NOT_RELEVANT" NotRelevant
             , Tuple "TOO_GENERAL" TooGeneral
             ]
 
-instance topicSuggestionDeclineReasonGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance topicSuggestionDeclineReasonGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                             TopicSuggestionDeclineReason where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "TopicSuggestionDeclineReason"
                                         fromToMap
 
-instance topicSuggestionDeclineReasonToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance topicSuggestionDeclineReasonToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                TopicSuggestionDeclineReason where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       NotRelevant -> ArgumentValueEnum "NOT_RELEVANT"
       TooSpecific -> ArgumentValueEnum "TOO_SPECIFIC"

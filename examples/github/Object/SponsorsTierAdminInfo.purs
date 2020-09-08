@@ -1,10 +1,10 @@
 module Examples.Github.Object.SponsorsTierAdminInfo where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.InputObject (SponsorshipOrder) as Examples.Github.InputObject
@@ -31,6 +31,6 @@ sponsorships :: forall r . SponsorshipsInput -> SelectionSet
                                                      r
 sponsorships input = selectionForCompositeField
                      "sponsorships"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer

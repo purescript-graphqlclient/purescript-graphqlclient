@@ -1,6 +1,6 @@
 module Examples.Github.Interface.HovercardContext where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -16,7 +16,7 @@ import Examples.Github.Scopes
   , Scope__ViewerHovercardContext
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 message :: SelectionSet Scope__HovercardContext String
 message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder

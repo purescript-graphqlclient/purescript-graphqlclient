@@ -1,13 +1,13 @@
 module Examples.Github.Object.GistComment where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   ( Scope__Actor
@@ -137,7 +137,7 @@ userContentEdits :: forall r . UserContentEditsInput -> SelectionSet
                                                               r)
 userContentEdits input = selectionForCompositeField
                          "userContentEdits"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

@@ -1,6 +1,6 @@
 module Examples.Github.Interface.RepositoryAuditEntryData where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -39,7 +39,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Uri)
-import Prelude
+import Prelude (pure)
 
 repository :: forall r . SelectionSet
                          Scope__Repository

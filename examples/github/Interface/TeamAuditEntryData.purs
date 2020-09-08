@@ -1,6 +1,6 @@
 module Examples.Github.Interface.TeamAuditEntryData where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -21,7 +21,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Uri)
-import Prelude
+import Prelude (pure)
 
 team :: forall r . SelectionSet
                    Scope__Team

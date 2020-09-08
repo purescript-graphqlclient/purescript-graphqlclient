@@ -1,11 +1,11 @@
 module Examples.Github.Enum.SamlSignatureAlgorithm where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -23,15 +23,15 @@ fromToMap = [ Tuple "RSA_SHA1" RsaSha1
             , Tuple "RSA_SHA512" RsaSha512
             ]
 
-instance samlSignatureAlgorithmGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance samlSignatureAlgorithmGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                       SamlSignatureAlgorithm where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "SamlSignatureAlgorithm"
                                         fromToMap
 
-instance samlSignatureAlgorithmToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance samlSignatureAlgorithmToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                          SamlSignatureAlgorithm where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       RsaSha1 -> ArgumentValueEnum "RSA_SHA1"
       RsaSha256 -> ArgumentValueEnum "RSA_SHA256"

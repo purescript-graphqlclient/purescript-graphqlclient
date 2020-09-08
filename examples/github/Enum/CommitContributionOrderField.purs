@@ -1,11 +1,11 @@
 module Examples.Github.Enum.CommitContributionOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordCommitContributionOrderField :: Ord CommitContributionOrderFi
 fromToMap :: Array (Tuple String CommitContributionOrderField)
 fromToMap = [ Tuple "OCCURRED_AT" OccurredAt, Tuple "COMMIT_COUNT" CommitCount ]
 
-instance commitContributionOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance commitContributionOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                             CommitContributionOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "CommitContributionOrderField"
                                         fromToMap
 
-instance commitContributionOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance commitContributionOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                CommitContributionOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       OccurredAt -> ArgumentValueEnum "OCCURRED_AT"
       CommitCount -> ArgumentValueEnum "COMMIT_COUNT"

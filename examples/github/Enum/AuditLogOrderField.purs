@@ -1,11 +1,11 @@
 module Examples.Github.Enum.AuditLogOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordAuditLogOrderField :: Ord AuditLogOrderField
 fromToMap :: Array (Tuple String AuditLogOrderField)
 fromToMap = [ Tuple "CREATED_AT" CreatedAt ]
 
-instance auditLogOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance auditLogOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                   AuditLogOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "AuditLogOrderField"
                                         fromToMap
 
-instance auditLogOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance auditLogOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                      AuditLogOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

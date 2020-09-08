@@ -1,12 +1,12 @@
 module Examples.Github.Object.EnterpriseServerInstallation where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -61,7 +61,7 @@ userAccounts :: forall r . UserAccountsInput -> SelectionSet
                                                      r
 userAccounts input = selectionForCompositeField
                      "userAccounts"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -83,6 +83,6 @@ userAccountsUploads :: forall r . UserAccountsUploadsInput -> SelectionSet
                                                                    r
 userAccountsUploads input = selectionForCompositeField
                             "userAccountsUploads"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer

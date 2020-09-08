@@ -1,6 +1,6 @@
 module Examples.Github.Object.TeamDiscussionConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

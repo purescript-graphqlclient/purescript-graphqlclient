@@ -1,11 +1,11 @@
 module Examples.Github.Interface.Sponsorable where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   , exhaustiveFragmentSelection
   , buildFragment
   )
@@ -19,7 +19,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe(..))
 import Examples.Github.InputObject (SponsorshipOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 sponsorsListing :: forall r . SelectionSet
                               Scope__SponsorsListing
@@ -54,7 +54,7 @@ sponsorshipsAsMaintainer :: forall r . SponsorshipsAsMaintainerInput -> Selectio
                                                                              r
 sponsorshipsAsMaintainer input = selectionForCompositeField
                                  "sponsorshipsAsMaintainer"
-                                 (toGraphqlArguments
+                                 (toGraphQLArguments
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -78,7 +78,7 @@ sponsorshipsAsSponsor :: forall r . SponsorshipsAsSponsorInput -> SelectionSet
                                                                        r
 sponsorshipsAsSponsor input = selectionForCompositeField
                               "sponsorshipsAsSponsor"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

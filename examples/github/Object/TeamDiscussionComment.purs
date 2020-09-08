@@ -1,13 +1,13 @@
 module Examples.Github.Object.TeamDiscussionComment where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   ( Scope__Actor
@@ -151,7 +151,7 @@ reactions :: forall r . ReactionsInput -> SelectionSet
                                                r
 reactions input = selectionForCompositeField
                   "reactions"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -184,7 +184,7 @@ userContentEdits :: forall r . UserContentEditsInput -> SelectionSet
                                                               r)
 userContentEdits input = selectionForCompositeField
                          "userContentEdits"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

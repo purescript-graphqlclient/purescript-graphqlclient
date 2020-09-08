@@ -1,13 +1,13 @@
 module Examples.Github.Object.Milestone where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   )
 import Examples.Github.Scopes
   ( Scope__Milestone
@@ -84,7 +84,7 @@ issues :: forall r . IssuesInput -> SelectionSet
                                          r
 issues input = selectionForCompositeField
                "issues"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -115,7 +115,7 @@ pullRequests :: forall r . PullRequestsInput -> SelectionSet
                                                      r
 pullRequests input = selectionForCompositeField
                      "pullRequests"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

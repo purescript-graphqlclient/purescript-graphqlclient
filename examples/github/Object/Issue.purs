@@ -1,12 +1,12 @@
 module Examples.Github.Object.Issue where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -62,7 +62,7 @@ assignees :: forall r . AssigneesInput -> SelectionSet
                                                r
 assignees input = selectionForCompositeField
                   "assignees"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -114,7 +114,7 @@ comments :: forall r . CommentsInput -> SelectionSet
                                              r
 comments input = selectionForCompositeField
                  "comments"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -158,7 +158,7 @@ hovercard :: forall r . HovercardInput -> SelectionSet
                                                r
 hovercard input = selectionForCompositeField
                   "hovercard"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -190,7 +190,7 @@ labels :: forall r . LabelsInput -> SelectionSet
                                           r)
 labels input = selectionForCompositeField
                "labels"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -233,7 +233,7 @@ participants :: forall r . ParticipantsInput -> SelectionSet
                                                      r
 participants input = selectionForCompositeField
                      "participants"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -257,7 +257,7 @@ projectCards :: forall r . ProjectCardsInput -> SelectionSet
                                                      r
 projectCards input = selectionForCompositeField
                      "projectCards"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -298,7 +298,7 @@ reactions :: forall r . ReactionsInput -> SelectionSet
                                                r
 reactions input = selectionForCompositeField
                   "reactions"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -338,7 +338,7 @@ timeline :: forall r . TimelineInput -> SelectionSet
                                              r
 timeline input = selectionForCompositeField
                  "timeline"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -363,7 +363,7 @@ timelineItems :: forall r . TimelineItemsInput -> SelectionSet
                                                        r
 timelineItems input = selectionForCompositeField
                       "timelineItems"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -393,7 +393,7 @@ userContentEdits :: forall r . UserContentEditsInput -> SelectionSet
                                                               r)
 userContentEdits input = selectionForCompositeField
                          "userContentEdits"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

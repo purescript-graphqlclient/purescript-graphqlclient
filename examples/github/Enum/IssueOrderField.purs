@@ -1,11 +1,11 @@
 module Examples.Github.Enum.IssueOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,13 +22,13 @@ fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "COMMENTS" Comments
             ]
 
-instance issueOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance issueOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                IssueOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder "IssueOrderField" fromToMap
 
-instance issueOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance issueOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                   IssueOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"
       UpdatedAt -> ArgumentValueEnum "UPDATED_AT"

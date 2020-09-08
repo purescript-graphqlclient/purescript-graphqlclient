@@ -1,6 +1,6 @@
 module Examples.Github.Object.CreateBranchProtectionRulePayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

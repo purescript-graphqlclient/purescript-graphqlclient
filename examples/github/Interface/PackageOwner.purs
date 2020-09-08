@@ -1,12 +1,12 @@
 module Examples.Github.Interface.PackageOwner where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , exhaustiveFragmentSelection
   , buildFragment
@@ -23,7 +23,7 @@ import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.PackageType (PackageType)
 import Examples.Github.InputObject (PackageOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Prelude
+import Prelude (pure)
 
 id :: SelectionSet Scope__PackageOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
@@ -49,7 +49,7 @@ packages :: forall r . PackagesInput -> SelectionSet
                                              r
 packages input = selectionForCompositeField
                  "packages"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

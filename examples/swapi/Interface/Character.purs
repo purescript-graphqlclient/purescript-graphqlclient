@@ -1,6 +1,6 @@
 module Examples.Swapi.Interface.Character where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -13,7 +13,7 @@ import Examples.Swapi.Scopes (Scope__Character, Scope__Droid, Scope__Human)
 import Examples.Swapi.Enum.Episode (Episode)
 import Examples.SwapiCustomScalars (Id)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 appearsIn :: SelectionSet Scope__Character (Array Episode)
 appearsIn = selectionForField "appearsIn" [] graphqlDefaultResponseScalarDecoder

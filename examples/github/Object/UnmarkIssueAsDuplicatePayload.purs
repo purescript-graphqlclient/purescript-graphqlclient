@@ -1,6 +1,6 @@
 module Examples.Github.Object.UnmarkIssueAsDuplicatePayload where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

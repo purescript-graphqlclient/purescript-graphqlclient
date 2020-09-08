@@ -1,11 +1,11 @@
 module Examples.Github.Enum.ReactionContent where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -28,13 +28,13 @@ fromToMap = [ Tuple "THUMBS_UP" ThumbsUp
             , Tuple "EYES" Eyes
             ]
 
-instance reactionContentGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance reactionContentGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                ReactionContent where
   graphqlDefaultResponseScalarDecoder = enumDecoder "ReactionContent" fromToMap
 
-instance reactionContentToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance reactionContentToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                   ReactionContent where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       ThumbsUp -> ArgumentValueEnum "THUMBS_UP"
       ThumbsDown -> ArgumentValueEnum "THUMBS_DOWN"

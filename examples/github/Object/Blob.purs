@@ -1,6 +1,6 @@
 module Examples.Github.Object.Blob where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

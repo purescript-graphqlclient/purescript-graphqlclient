@@ -1,13 +1,13 @@
 module Examples.Github.Union.CreatedIssueOrRestrictedContribution where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__CreatedIssueContribution
   , Scope__RestrictedContribution
   , Scope__CreatedIssueOrRestrictedContribution
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onCreatedIssueContribution :: SelectionSet
                                                            Scope__CreatedIssueContribution

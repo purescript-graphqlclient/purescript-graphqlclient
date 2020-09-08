@@ -1,6 +1,6 @@
 module Examples.Github.Union.SearchResultItem where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__App
   , Scope__Issue
@@ -12,7 +12,7 @@ import Examples.Github.Scopes
   , Scope__SearchResultItem
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onApp :: SelectionSet Scope__App decodesTo
                            , onIssue :: SelectionSet Scope__Issue decodesTo

@@ -1,11 +1,11 @@
 module Examples.Github.Object.StatusCheckRollup where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
-  , toGraphqlArguments
+  , toGraphQLArguments
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
@@ -46,7 +46,7 @@ contexts :: forall r . ContextsInput -> SelectionSet
                                              r
 contexts input = selectionForCompositeField
                  "contexts"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

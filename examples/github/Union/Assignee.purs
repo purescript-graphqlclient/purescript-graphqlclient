@@ -1,6 +1,6 @@
 module Examples.Github.Union.Assignee where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__Bot
   , Scope__Mannequin
@@ -9,7 +9,7 @@ import Examples.Github.Scopes
   , Scope__Assignee
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onBot :: SelectionSet Scope__Bot decodesTo
                            , onMannequin :: SelectionSet

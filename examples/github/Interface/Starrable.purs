@@ -1,12 +1,12 @@
 module Examples.Github.Interface.Starrable where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , exhaustiveFragmentSelection
   , buildFragment
@@ -22,7 +22,7 @@ import Examples.Github.Scalars (Id)
 import Examples.Github.InputObject (StarOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 id :: SelectionSet Scope__Starrable Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
@@ -45,7 +45,7 @@ stargazers :: forall r . StargazersInput -> SelectionSet
                                                  r
 stargazers input = selectionForCompositeField
                    "stargazers"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

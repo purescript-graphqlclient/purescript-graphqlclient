@@ -1,10 +1,10 @@
 module Examples.Github.Interface.ProfileOwner where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -22,7 +22,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe(..))
 import Examples.Github.Scalars (Id, Uri)
-import Prelude
+import Prelude (pure)
 
 type AnyPinnableItemsInputRowOptional r = ( "type" :: Optional PinnableItemType
                                           | r
@@ -35,7 +35,7 @@ anyPinnableItems :: AnyPinnableItemsInput -> SelectionSet
                                              Boolean
 anyPinnableItems input = selectionForField
                          "anyPinnableItems"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseScalarDecoder
 
@@ -83,7 +83,7 @@ pinnableItems :: forall r . PinnableItemsInput -> SelectionSet
                                                        r
 pinnableItems input = selectionForCompositeField
                       "pinnableItems"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -106,7 +106,7 @@ pinnedItems :: forall r . PinnedItemsInput -> SelectionSet
                                                    r
 pinnedItems input = selectionForCompositeField
                     "pinnedItems"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

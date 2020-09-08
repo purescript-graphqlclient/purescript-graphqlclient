@@ -1,10 +1,10 @@
 module Examples.Github.Union.AuditEntryActor where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Bot, Scope__Organization, Scope__User, Scope__AuditEntryActor)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onBot :: SelectionSet Scope__Bot decodesTo
                            , onOrganization :: SelectionSet

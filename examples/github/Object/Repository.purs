@@ -1,10 +1,10 @@
 module Examples.Github.Object.Repository where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -95,7 +95,7 @@ assignableUsers :: forall r . AssignableUsersInput -> SelectionSet
                                                            r
 assignableUsers input = selectionForCompositeField
                         "assignableUsers"
-                        (toGraphqlArguments
+                        (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -117,7 +117,7 @@ branchProtectionRules :: forall r . BranchProtectionRulesInput -> SelectionSet
                                                                        r
 branchProtectionRules input = selectionForCompositeField
                               "branchProtectionRules"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -152,7 +152,7 @@ collaborators :: forall r . CollaboratorsInput -> SelectionSet
                                                         r)
 collaborators input = selectionForCompositeField
                       "collaborators"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -172,7 +172,7 @@ commitComments :: forall r . CommitCommentsInput -> SelectionSet
                                                          r
 commitComments input = selectionForCompositeField
                        "commitComments"
-                       (toGraphqlArguments
+                       (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -218,7 +218,7 @@ deployKeys :: forall r . DeployKeysInput -> SelectionSet
                                                  r
 deployKeys input = selectionForCompositeField
                    "deployKeys"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -241,7 +241,7 @@ deployments :: forall r . DeploymentsInput -> SelectionSet
                                                    r
 deployments input = selectionForCompositeField
                     "deployments"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -291,7 +291,7 @@ forks :: forall r . ForksInput -> SelectionSet
                                        r
 forks input = selectionForCompositeField
               "forks"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -378,7 +378,7 @@ issue :: forall r . IssueInput -> SelectionSet
                                         r)
 issue input = selectionForCompositeField
               "issue"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -394,7 +394,7 @@ issueOrPullRequest :: forall r . IssueOrPullRequestInput -> SelectionSet
                                                                   r)
 issueOrPullRequest input = selectionForCompositeField
                            "issueOrPullRequest"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -420,7 +420,7 @@ issues :: forall r . IssuesInput -> SelectionSet
                                          r
 issues input = selectionForCompositeField
                "issues"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -436,7 +436,7 @@ label :: forall r . LabelInput -> SelectionSet
                                         r)
 label input = selectionForCompositeField
               "label"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -460,7 +460,7 @@ labels :: forall r . LabelsInput -> SelectionSet
                                           r)
 labels input = selectionForCompositeField
                "labels"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -483,7 +483,7 @@ languages :: forall r . LanguagesInput -> SelectionSet
                                                 r)
 languages input = selectionForCompositeField
                   "languages"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -521,7 +521,7 @@ mentionableUsers :: forall r . MentionableUsersInput -> SelectionSet
                                                              r
 mentionableUsers input = selectionForCompositeField
                          "mentionableUsers"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -543,7 +543,7 @@ milestone :: forall r . MilestoneInput -> SelectionSet
                                                 r)
 milestone input = selectionForCompositeField
                   "milestone"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -568,7 +568,7 @@ milestones :: forall r . MilestonesInput -> SelectionSet
                                                   r)
 milestones input = selectionForCompositeField
                    "milestones"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -599,7 +599,7 @@ object :: forall r . ObjectInput -> SelectionSet
                                           r)
 object input = selectionForCompositeField
                "object"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -640,7 +640,7 @@ packages :: forall r . PackagesInput -> SelectionSet
                                              r
 packages input = selectionForCompositeField
                  "packages"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -678,7 +678,7 @@ project :: forall r . ProjectInput -> SelectionSet
                                             r)
 project input = selectionForCompositeField
                 "project"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -702,7 +702,7 @@ projects :: forall r . ProjectsInput -> SelectionSet
                                              r
 projects input = selectionForCompositeField
                  "projects"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -730,7 +730,7 @@ pullRequest :: forall r . PullRequestInput -> SelectionSet
                                                     r)
 pullRequest input = selectionForCompositeField
                     "pullRequest"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -758,7 +758,7 @@ pullRequests :: forall r . PullRequestsInput -> SelectionSet
                                                      r
 pullRequests input = selectionForCompositeField
                      "pullRequests"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -783,7 +783,7 @@ ref :: forall r . RefInput -> SelectionSet
                                     r)
 ref input = selectionForCompositeField
             "ref"
-            (toGraphqlArguments
+            (toGraphQLArguments
              input)
             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -810,7 +810,7 @@ refs :: forall r . RefsInput -> SelectionSet
                                       r)
 refs input = selectionForCompositeField
              "refs"
-             (toGraphqlArguments
+             (toGraphQLArguments
               input)
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -826,7 +826,7 @@ release :: forall r . ReleaseInput -> SelectionSet
                                             r)
 release input = selectionForCompositeField
                 "release"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -848,7 +848,7 @@ releases :: forall r . ReleasesInput -> SelectionSet
                                              r
 releases input = selectionForCompositeField
                  "releases"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -868,7 +868,7 @@ repositoryTopics :: forall r . RepositoryTopicsInput -> SelectionSet
                                                              r
 repositoryTopics input = selectionForCompositeField
                          "repositoryTopics"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -887,7 +887,7 @@ shortDescriptionHTML :: ShortDescriptionHtmlInput -> SelectionSet
                                                      Html
 shortDescriptionHTML input = selectionForField
                              "shortDescriptionHTML"
-                             (toGraphqlArguments
+                             (toGraphQLArguments
                               input)
                              graphqlDefaultResponseScalarDecoder
 
@@ -918,7 +918,7 @@ stargazers :: forall r . StargazersInput -> SelectionSet
                                                  r
 stargazers input = selectionForCompositeField
                    "stargazers"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -938,7 +938,7 @@ submodules :: forall r . SubmodulesInput -> SelectionSet
                                                  r
 submodules input = selectionForCompositeField
                    "submodules"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1054,7 +1054,7 @@ vulnerabilityAlerts :: forall r . VulnerabilityAlertsInput -> SelectionSet
                                                                     r)
 vulnerabilityAlerts input = selectionForCompositeField
                             "vulnerabilityAlerts"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -1074,6 +1074,6 @@ watchers :: forall r . WatchersInput -> SelectionSet
                                              r
 watchers input = selectionForCompositeField
                  "watchers"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer

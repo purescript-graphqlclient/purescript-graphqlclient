@@ -1,6 +1,6 @@
 module Examples.Github.Object.DeleteRefPayload where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__DeleteRefPayload)
 import Data.Maybe (Maybe)

@@ -1,10 +1,10 @@
 module Examples.Github.Object.CommitCommentThread where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -35,7 +35,7 @@ comments :: forall r . CommentsInput -> SelectionSet
                                              r
 comments input = selectionForCompositeField
                  "comments"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

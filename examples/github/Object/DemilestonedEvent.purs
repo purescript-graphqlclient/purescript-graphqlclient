@@ -1,6 +1,6 @@
 module Examples.Github.Object.DemilestonedEvent where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

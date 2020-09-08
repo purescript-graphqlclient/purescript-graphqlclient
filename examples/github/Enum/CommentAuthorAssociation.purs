@@ -1,11 +1,11 @@
 module Examples.Github.Enum.CommentAuthorAssociation where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -33,15 +33,15 @@ fromToMap = [ Tuple "MEMBER" Member
             , Tuple "NONE" None
             ]
 
-instance commentAuthorAssociationGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance commentAuthorAssociationGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                         CommentAuthorAssociation where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "CommentAuthorAssociation"
                                         fromToMap
 
-instance commentAuthorAssociationToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance commentAuthorAssociationToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                            CommentAuthorAssociation where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Member -> ArgumentValueEnum "MEMBER"
       Owner -> ArgumentValueEnum "OWNER"

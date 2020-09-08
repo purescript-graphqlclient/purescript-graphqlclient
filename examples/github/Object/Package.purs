@@ -1,12 +1,12 @@
 module Examples.Github.Object.Package where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-  , toGraphqlArguments
+  , toGraphQLArguments
   , Optional
   )
 import Examples.Github.Scopes
@@ -79,7 +79,7 @@ version :: forall r . VersionInput -> SelectionSet
                                             r)
 version input = selectionForCompositeField
                 "version"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -101,6 +101,6 @@ versions :: forall r . VersionsInput -> SelectionSet
                                              r
 versions input = selectionForCompositeField
                  "versions"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer

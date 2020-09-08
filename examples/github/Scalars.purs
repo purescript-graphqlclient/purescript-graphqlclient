@@ -1,9 +1,9 @@
 module Examples.Github.Scalars where
 
-import Prelude
+import Prelude (class Eq, class Ord, class Show)
 import Data.Newtype (class Newtype)
-import GraphqlClient
-  (class GraphqlDefaultResponseScalarDecoder, class ToGraphqlArgumentValue)
+import GraphQLClient
+  (class GraphQLDefaultResponseScalarDecoder, class ToGraphQLArgumentValue)
 
 -- | original name - Date
 newtype Date = Date String
@@ -16,9 +16,9 @@ derive newtype instance showDate :: Show Date
 
 derive instance newtypeDate :: Newtype Date _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderDate :: GraphqlDefaultResponseScalarDecoder Date
+derive newtype instance graphQlDefaultResponseScalarDecoderDate :: GraphQLDefaultResponseScalarDecoder Date
 
-derive newtype instance toGraphqlArgumentValueDate :: ToGraphqlArgumentValue Date
+derive newtype instance toGraphQlArgumentValueDate :: ToGraphQLArgumentValue Date
 
 -- | original name - DateTime
 newtype DateTime = DateTime String
@@ -31,9 +31,9 @@ derive newtype instance showDateTime :: Show DateTime
 
 derive instance newtypeDateTime :: Newtype DateTime _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderDateTime :: GraphqlDefaultResponseScalarDecoder DateTime
+derive newtype instance graphQlDefaultResponseScalarDecoderDateTime :: GraphQLDefaultResponseScalarDecoder DateTime
 
-derive newtype instance toGraphqlArgumentValueDateTime :: ToGraphqlArgumentValue DateTime
+derive newtype instance toGraphQlArgumentValueDateTime :: ToGraphQLArgumentValue DateTime
 
 -- | original name - GitObjectID
 newtype GitObjectId = GitObjectId String
@@ -46,9 +46,9 @@ derive newtype instance showGitObjectId :: Show GitObjectId
 
 derive instance newtypeGitObjectId :: Newtype GitObjectId _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderGitObjectId :: GraphqlDefaultResponseScalarDecoder GitObjectId
+derive newtype instance graphQlDefaultResponseScalarDecoderGitObjectId :: GraphQLDefaultResponseScalarDecoder GitObjectId
 
-derive newtype instance toGraphqlArgumentValueGitObjectId :: ToGraphqlArgumentValue GitObjectId
+derive newtype instance toGraphQlArgumentValueGitObjectId :: ToGraphQLArgumentValue GitObjectId
 
 -- | original name - GitSSHRemote
 newtype GitSshRemote = GitSshRemote String
@@ -61,9 +61,9 @@ derive newtype instance showGitSshRemote :: Show GitSshRemote
 
 derive instance newtypeGitSshRemote :: Newtype GitSshRemote _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderGitSshRemote :: GraphqlDefaultResponseScalarDecoder GitSshRemote
+derive newtype instance graphQlDefaultResponseScalarDecoderGitSshRemote :: GraphQLDefaultResponseScalarDecoder GitSshRemote
 
-derive newtype instance toGraphqlArgumentValueGitSshRemote :: ToGraphqlArgumentValue GitSshRemote
+derive newtype instance toGraphQlArgumentValueGitSshRemote :: ToGraphQLArgumentValue GitSshRemote
 
 -- | original name - GitTimestamp
 newtype GitTimestamp = GitTimestamp String
@@ -76,9 +76,9 @@ derive newtype instance showGitTimestamp :: Show GitTimestamp
 
 derive instance newtypeGitTimestamp :: Newtype GitTimestamp _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderGitTimestamp :: GraphqlDefaultResponseScalarDecoder GitTimestamp
+derive newtype instance graphQlDefaultResponseScalarDecoderGitTimestamp :: GraphQLDefaultResponseScalarDecoder GitTimestamp
 
-derive newtype instance toGraphqlArgumentValueGitTimestamp :: ToGraphqlArgumentValue GitTimestamp
+derive newtype instance toGraphQlArgumentValueGitTimestamp :: ToGraphQLArgumentValue GitTimestamp
 
 -- | original name - HTML
 newtype Html = Html String
@@ -91,9 +91,9 @@ derive newtype instance showHtml :: Show Html
 
 derive instance newtypeHtml :: Newtype Html _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderHtml :: GraphqlDefaultResponseScalarDecoder Html
+derive newtype instance graphQlDefaultResponseScalarDecoderHtml :: GraphQLDefaultResponseScalarDecoder Html
 
-derive newtype instance toGraphqlArgumentValueHtml :: ToGraphqlArgumentValue Html
+derive newtype instance toGraphQlArgumentValueHtml :: ToGraphQLArgumentValue Html
 
 -- | original name - ID
 newtype Id = Id String
@@ -106,9 +106,9 @@ derive newtype instance showId :: Show Id
 
 derive instance newtypeId :: Newtype Id _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderId :: GraphqlDefaultResponseScalarDecoder Id
+derive newtype instance graphQlDefaultResponseScalarDecoderId :: GraphQLDefaultResponseScalarDecoder Id
 
-derive newtype instance toGraphqlArgumentValueId :: ToGraphqlArgumentValue Id
+derive newtype instance toGraphQlArgumentValueId :: ToGraphQLArgumentValue Id
 
 -- | original name - PreciseDateTime
 newtype PreciseDateTime = PreciseDateTime String
@@ -121,9 +121,9 @@ derive newtype instance showPreciseDateTime :: Show PreciseDateTime
 
 derive instance newtypePreciseDateTime :: Newtype PreciseDateTime _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderPreciseDateTime :: GraphqlDefaultResponseScalarDecoder PreciseDateTime
+derive newtype instance graphQlDefaultResponseScalarDecoderPreciseDateTime :: GraphQLDefaultResponseScalarDecoder PreciseDateTime
 
-derive newtype instance toGraphqlArgumentValuePreciseDateTime :: ToGraphqlArgumentValue PreciseDateTime
+derive newtype instance toGraphQlArgumentValuePreciseDateTime :: ToGraphQLArgumentValue PreciseDateTime
 
 -- | original name - URI
 newtype Uri = Uri String
@@ -136,9 +136,9 @@ derive newtype instance showUri :: Show Uri
 
 derive instance newtypeUri :: Newtype Uri _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderUri :: GraphqlDefaultResponseScalarDecoder Uri
+derive newtype instance graphQlDefaultResponseScalarDecoderUri :: GraphQLDefaultResponseScalarDecoder Uri
 
-derive newtype instance toGraphqlArgumentValueUri :: ToGraphqlArgumentValue Uri
+derive newtype instance toGraphQlArgumentValueUri :: ToGraphQLArgumentValue Uri
 
 -- | original name - X509Certificate
 newtype X509Certificate = X509Certificate String
@@ -151,6 +151,6 @@ derive newtype instance showX509Certificate :: Show X509Certificate
 
 derive instance newtypeX509Certificate :: Newtype X509Certificate _
 
-derive newtype instance graphqlDefaultResponseScalarDecoderX509Certificate :: GraphqlDefaultResponseScalarDecoder X509Certificate
+derive newtype instance graphQlDefaultResponseScalarDecoderX509Certificate :: GraphQLDefaultResponseScalarDecoder X509Certificate
 
-derive newtype instance toGraphqlArgumentValueX509Certificate :: ToGraphqlArgumentValue X509Certificate
+derive newtype instance toGraphQlArgumentValueX509Certificate :: ToGraphQLArgumentValue X509Certificate

@@ -1,11 +1,11 @@
 module Examples.Github.Enum.IpAllowListEnabledSettingValue where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordIpAllowListEnabledSettingValue :: Ord IpAllowListEnabledSetti
 fromToMap :: Array (Tuple String IpAllowListEnabledSettingValue)
 fromToMap = [ Tuple "ENABLED" Enabled, Tuple "DISABLED" Disabled ]
 
-instance ipAllowListEnabledSettingValueGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance ipAllowListEnabledSettingValueGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                               IpAllowListEnabledSettingValue where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "IpAllowListEnabledSettingValue"
                                         fromToMap
 
-instance ipAllowListEnabledSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance ipAllowListEnabledSettingValueToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                  IpAllowListEnabledSettingValue where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Enabled -> ArgumentValueEnum "ENABLED"
       Disabled -> ArgumentValueEnum "DISABLED"

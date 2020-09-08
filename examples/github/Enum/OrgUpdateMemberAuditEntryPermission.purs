@@ -1,11 +1,11 @@
 module Examples.Github.Enum.OrgUpdateMemberAuditEntryPermission where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordOrgUpdateMemberAuditEntryPermission :: Ord OrgUpdateMemberAud
 fromToMap :: Array (Tuple String OrgUpdateMemberAuditEntryPermission)
 fromToMap = [ Tuple "READ" Read, Tuple "ADMIN" Admin ]
 
-instance orgUpdateMemberAuditEntryPermissionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance orgUpdateMemberAuditEntryPermissionGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                    OrgUpdateMemberAuditEntryPermission where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OrgUpdateMemberAuditEntryPermission"
                                         fromToMap
 
-instance orgUpdateMemberAuditEntryPermissionToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance orgUpdateMemberAuditEntryPermissionToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                       OrgUpdateMemberAuditEntryPermission where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Read -> ArgumentValueEnum "READ"
       Admin -> ArgumentValueEnum "ADMIN"

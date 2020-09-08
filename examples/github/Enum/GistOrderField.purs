@@ -1,11 +1,11 @@
 module Examples.Github.Enum.GistOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,13 +22,13 @@ fromToMap = [ Tuple "CREATED_AT" CreatedAt
             , Tuple "PUSHED_AT" PushedAt
             ]
 
-instance gistOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance gistOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                               GistOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder "GistOrderField" fromToMap
 
-instance gistOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance gistOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                  GistOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"
       UpdatedAt -> ArgumentValueEnum "UPDATED_AT"

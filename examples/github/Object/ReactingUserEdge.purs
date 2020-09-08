@@ -1,6 +1,6 @@
 module Examples.Github.Object.ReactingUserEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

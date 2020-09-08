@@ -1,12 +1,12 @@
 module Examples.Github.Object.OrganizationsHovercardContext where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -37,7 +37,7 @@ relevantOrganizations :: forall r . RelevantOrganizationsInput -> SelectionSet
                                                                        r
 relevantOrganizations input = selectionForCompositeField
                               "relevantOrganizations"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

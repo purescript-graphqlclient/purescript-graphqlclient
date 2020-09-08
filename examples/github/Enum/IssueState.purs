@@ -1,11 +1,11 @@
 module Examples.Github.Enum.IssueState where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,12 +19,12 @@ derive instance ordIssueState :: Ord IssueState
 fromToMap :: Array (Tuple String IssueState)
 fromToMap = [ Tuple "OPEN" Open, Tuple "CLOSED" Closed ]
 
-instance issueStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance issueStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                           IssueState where
   graphqlDefaultResponseScalarDecoder = enumDecoder "IssueState" fromToMap
 
-instance issueStateToGraphqlArgumentValue :: ToGraphqlArgumentValue IssueState where
-  toGraphqlArgumentValue =
+instance issueStateToGraphQLArgumentValue :: ToGraphQLArgumentValue IssueState where
+  toGraphQLArgumentValue =
     case _ of
       Open -> ArgumentValueEnum "OPEN"
       Closed -> ArgumentValueEnum "CLOSED"

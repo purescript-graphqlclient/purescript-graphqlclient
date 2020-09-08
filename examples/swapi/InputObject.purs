@@ -1,6 +1,6 @@
 module Examples.Swapi.InputObject where
 
-import GraphqlClient (Optional)
+import GraphQLClient (Optional)
 import Examples.Swapi.Enum.Language (Language)
 
 -- | original name - Greeting

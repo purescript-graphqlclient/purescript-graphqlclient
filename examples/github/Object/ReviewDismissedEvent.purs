@@ -1,6 +1,6 @@
 module Examples.Github.Object.ReviewDismissedEvent where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

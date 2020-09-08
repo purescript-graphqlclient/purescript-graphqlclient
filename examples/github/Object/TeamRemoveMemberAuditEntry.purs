@@ -1,6 +1,6 @@
 module Examples.Github.Object.TeamRemoveMemberAuditEntry where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

@@ -1,6 +1,6 @@
 module Examples.Github.Interface.UpdatableComment where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -22,7 +22,7 @@ import Examples.Github.Scopes
 import Examples.Github.Enum.CommentCannotUpdateReason
   (CommentCannotUpdateReason)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 viewerCannotUpdateReasons :: SelectionSet
                              Scope__UpdatableComment

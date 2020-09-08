@@ -1,12 +1,12 @@
 module Examples.Github.Object.Commit where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -64,7 +64,7 @@ associatedPullRequests :: forall r . AssociatedPullRequestsInput -> SelectionSet
                                                                           r)
 associatedPullRequests input = selectionForCompositeField
                                "associatedPullRequests"
-                               (toGraphqlArguments
+                               (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -102,7 +102,7 @@ blame :: forall r . BlameInput -> SelectionSet
                                        r
 blame input = selectionForCompositeField
               "blame"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -128,7 +128,7 @@ comments :: forall r . CommentsInput -> SelectionSet
                                              r
 comments input = selectionForCompositeField
                  "comments"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -187,7 +187,7 @@ deployments :: forall r . DeploymentsInput -> SelectionSet
                                                     r)
 deployments input = selectionForCompositeField
                     "deployments"
-                    (toGraphqlArguments
+                    (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -212,7 +212,7 @@ history :: forall r . HistoryInput -> SelectionSet
                                            r
 history input = selectionForCompositeField
                 "history"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -276,7 +276,7 @@ parents :: forall r . ParentsInput -> SelectionSet
                                            r
 parents input = selectionForCompositeField
                 "parents"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -351,7 +351,7 @@ submodules :: forall r . SubmodulesInput -> SelectionSet
                                                  r
 submodules input = selectionForCompositeField
                    "submodules"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

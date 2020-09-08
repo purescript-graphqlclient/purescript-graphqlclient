@@ -1,10 +1,10 @@
 module Examples.Github.Object.Status where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-  , toGraphqlArguments
+  , toGraphQLArguments
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
@@ -38,7 +38,7 @@ context :: forall r . ContextInput -> SelectionSet
                                             r)
 context input = selectionForCompositeField
                 "context"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

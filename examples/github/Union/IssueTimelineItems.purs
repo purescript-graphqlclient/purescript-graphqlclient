@@ -1,6 +1,6 @@
 module Examples.Github.Union.IssueTimelineItems where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__AddedToProjectEvent
   , Scope__AssignedEvent
@@ -35,7 +35,7 @@ import Examples.Github.Scopes
   , Scope__IssueTimelineItems
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onAddedToProjectEvent :: SelectionSet
                                                       Scope__AddedToProjectEvent

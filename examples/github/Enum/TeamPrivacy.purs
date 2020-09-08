@@ -1,11 +1,11 @@
 module Examples.Github.Enum.TeamPrivacy where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,12 +19,12 @@ derive instance ordTeamPrivacy :: Ord TeamPrivacy
 fromToMap :: Array (Tuple String TeamPrivacy)
 fromToMap = [ Tuple "SECRET" Secret, Tuple "VISIBLE" Visible ]
 
-instance teamPrivacyGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance teamPrivacyGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                            TeamPrivacy where
   graphqlDefaultResponseScalarDecoder = enumDecoder "TeamPrivacy" fromToMap
 
-instance teamPrivacyToGraphqlArgumentValue :: ToGraphqlArgumentValue TeamPrivacy where
-  toGraphqlArgumentValue =
+instance teamPrivacyToGraphQLArgumentValue :: ToGraphQLArgumentValue TeamPrivacy where
+  toGraphQLArgumentValue =
     case _ of
       Secret -> ArgumentValueEnum "SECRET"
       Visible -> ArgumentValueEnum "VISIBLE"

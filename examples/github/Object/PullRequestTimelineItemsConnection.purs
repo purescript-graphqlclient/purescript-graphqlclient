@@ -1,6 +1,6 @@
 module Examples.Github.Object.PullRequestTimelineItemsConnection where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

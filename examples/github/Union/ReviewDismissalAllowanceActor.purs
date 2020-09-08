@@ -1,10 +1,10 @@
 module Examples.Github.Union.ReviewDismissalAllowanceActor where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Team, Scope__User, Scope__ReviewDismissalAllowanceActor)
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onTeam :: SelectionSet Scope__Team decodesTo
                            , onUser :: SelectionSet Scope__User decodesTo

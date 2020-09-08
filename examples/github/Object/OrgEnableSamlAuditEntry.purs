@@ -1,6 +1,6 @@
 module Examples.Github.Object.OrgEnableSamlAuditEntry where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

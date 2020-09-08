@@ -1,11 +1,11 @@
 module Examples.Github.Enum.PackageFileOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordPackageFileOrderField :: Ord PackageFileOrderField
 fromToMap :: Array (Tuple String PackageFileOrderField)
 fromToMap = [ Tuple "CREATED_AT" CreatedAt ]
 
-instance packageFileOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance packageFileOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                      PackageFileOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "PackageFileOrderField"
                                         fromToMap
 
-instance packageFileOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance packageFileOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                         PackageFileOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       CreatedAt -> ArgumentValueEnum "CREATED_AT"

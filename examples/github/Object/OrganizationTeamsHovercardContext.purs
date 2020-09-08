@@ -1,12 +1,12 @@
 module Examples.Github.Object.OrganizationTeamsHovercardContext where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
@@ -36,7 +36,7 @@ relevantTeams :: forall r . RelevantTeamsInput -> SelectionSet
                                                        r
 relevantTeams input = selectionForCompositeField
                       "relevantTeams"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

@@ -1,11 +1,11 @@
 module Examples.Github.Enum.EnterpriseEnabledSettingValue where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,15 +19,15 @@ derive instance ordEnterpriseEnabledSettingValue :: Ord EnterpriseEnabledSetting
 fromToMap :: Array (Tuple String EnterpriseEnabledSettingValue)
 fromToMap = [ Tuple "ENABLED" Enabled, Tuple "NO_POLICY" NoPolicy ]
 
-instance enterpriseEnabledSettingValueGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseEnabledSettingValueGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                              EnterpriseEnabledSettingValue where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseEnabledSettingValue"
                                         fromToMap
 
-instance enterpriseEnabledSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseEnabledSettingValueToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                 EnterpriseEnabledSettingValue where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Enabled -> ArgumentValueEnum "ENABLED"
       NoPolicy -> ArgumentValueEnum "NO_POLICY"

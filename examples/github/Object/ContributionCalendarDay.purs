@@ -1,6 +1,6 @@
 module Examples.Github.Object.ContributionCalendarDay where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__ContributionCalendarDay)
 import Examples.Github.Scalars (Date)

@@ -1,6 +1,6 @@
 module Examples.Github.Union.IssueTimelineItem where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__AssignedEvent
   , Scope__ClosedEvent
@@ -24,7 +24,7 @@ import Examples.Github.Scopes
   , Scope__IssueTimelineItem
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onAssignedEvent :: SelectionSet
                                                 Scope__AssignedEvent

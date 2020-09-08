@@ -1,6 +1,6 @@
 module Examples.Github.Union.PullRequestTimelineItems where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__AddedToProjectEvent
   , Scope__AssignedEvent
@@ -55,7 +55,7 @@ import Examples.Github.Scopes
   , Scope__PullRequestTimelineItems
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onAddedToProjectEvent :: SelectionSet
                                                       Scope__AddedToProjectEvent

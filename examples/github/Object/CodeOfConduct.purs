@@ -1,6 +1,6 @@
 module Examples.Github.Object.CodeOfConduct where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__CodeOfConduct)
 import Data.Maybe (Maybe)

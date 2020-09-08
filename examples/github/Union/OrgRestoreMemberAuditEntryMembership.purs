@@ -1,6 +1,6 @@
 module Examples.Github.Union.OrgRestoreMemberAuditEntryMembership where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__OrgRestoreMemberMembershipOrganizationAuditEntryData
   , Scope__OrgRestoreMemberMembershipRepositoryAuditEntryData
@@ -8,7 +8,7 @@ import Examples.Github.Scopes
   , Scope__OrgRestoreMemberAuditEntryMembership
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onOrgRestoreMemberMembershipOrganizationAuditEntryData :: SelectionSet
                                                                                        Scope__OrgRestoreMemberMembershipOrganizationAuditEntryData

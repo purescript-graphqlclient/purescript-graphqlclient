@@ -1,11 +1,11 @@
 module Examples.Github.Enum.TeamDiscussionCommentOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordTeamDiscussionCommentOrderField :: Ord TeamDiscussionCommentO
 fromToMap :: Array (Tuple String TeamDiscussionCommentOrderField)
 fromToMap = [ Tuple "NUMBER" Number ]
 
-instance teamDiscussionCommentOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance teamDiscussionCommentOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                TeamDiscussionCommentOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "TeamDiscussionCommentOrderField"
                                         fromToMap
 
-instance teamDiscussionCommentOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance teamDiscussionCommentOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                   TeamDiscussionCommentOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Number -> ArgumentValueEnum "NUMBER"

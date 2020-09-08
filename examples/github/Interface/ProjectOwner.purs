@@ -1,11 +1,11 @@
 module Examples.Github.Interface.ProjectOwner where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
   , exhaustiveFragmentSelection
@@ -24,7 +24,7 @@ import Type.Row (type (+))
 import Data.Maybe (Maybe(..))
 import Examples.Github.InputObject (ProjectOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.ProjectState (ProjectState)
-import Prelude
+import Prelude (pure)
 
 id :: SelectionSet Scope__ProjectOwner Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
@@ -41,7 +41,7 @@ project :: forall r . ProjectInput -> SelectionSet
                                             r)
 project input = selectionForCompositeField
                 "project"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -65,7 +65,7 @@ projects :: forall r . ProjectsInput -> SelectionSet
                                              r
 projects input = selectionForCompositeField
                  "projects"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

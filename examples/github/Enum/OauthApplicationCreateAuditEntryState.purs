@@ -1,11 +1,11 @@
 module Examples.Github.Enum.OauthApplicationCreateAuditEntryState where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -23,15 +23,15 @@ fromToMap = [ Tuple "ACTIVE" Active
             , Tuple "PENDING_DELETION" PendingDeletion
             ]
 
-instance oauthApplicationCreateAuditEntryStateGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance oauthApplicationCreateAuditEntryStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                      OauthApplicationCreateAuditEntryState where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "OauthApplicationCreateAuditEntryState"
                                         fromToMap
 
-instance oauthApplicationCreateAuditEntryStateToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance oauthApplicationCreateAuditEntryStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                         OauthApplicationCreateAuditEntryState where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Active -> ArgumentValueEnum "ACTIVE"
       Suspended -> ArgumentValueEnum "SUSPENDED"

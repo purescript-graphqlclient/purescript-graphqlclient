@@ -1,11 +1,11 @@
 module Examples.Github.Enum.LanguageOrderField where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -19,14 +19,14 @@ derive instance ordLanguageOrderField :: Ord LanguageOrderField
 fromToMap :: Array (Tuple String LanguageOrderField)
 fromToMap = [ Tuple "SIZE" Size ]
 
-instance languageOrderFieldGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance languageOrderFieldGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                   LanguageOrderField where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "LanguageOrderField"
                                         fromToMap
 
-instance languageOrderFieldToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance languageOrderFieldToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                      LanguageOrderField where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       Size -> ArgumentValueEnum "SIZE"

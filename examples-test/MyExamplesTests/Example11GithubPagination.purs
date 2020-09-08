@@ -2,7 +2,7 @@ module MyExamplesTests.Example11GithubPagination where
 
 import Examples.Github.Scopes (Scope__PageInfo, Scope__Repository, Scope__SearchResultItem, Scope__SearchResultItemConnection)
 import MyExamplesTests.Util (inlineAndTrim)
-import GraphqlClient (GraphqlError, Optional(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, defaultInput, graphqlQueryRequest, printGraphqlError, writeGraphql)
+import GraphQLClient (GraphQLError, Optional(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, defaultInput, graphqlQueryRequest, printGraphQLError, writeGraphQL)
 import Protolude
 
 import Affjax.RequestHeader (RequestHeader(..))
@@ -16,7 +16,7 @@ import Examples.Github.Object.StargazerConnection as Examples.Github.Object.Star
 import Examples.Github.Query as Examples.Github.Query
 import Examples.Github.Scalars as Examples.Github.Scalars
 import Examples.Github.Union.SearchResultItem as Examples.Github.Union.SearchResultItem
-import GraphqlClient as GraphqlClient
+import GraphQLClient as GraphQLClient
 import Record as Record
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
@@ -63,10 +63,10 @@ searchSelection = ado
 searchResultFieldEdges :: SelectionSet Scope__SearchResultItemConnection (Array Repo)
 searchResultFieldEdges =
     Examples.Github.Object.SearchResultItemConnection.edges
-        (Examples.Github.Object.SearchResultItemEdge.node searchResultSelection # GraphqlClient.nonNullOrFail)
-        # GraphqlClient.nonNullOrFail
-        # GraphqlClient.nonNullElementsOrFail
-        # GraphqlClient.nonNullElementsOrFail
+        (Examples.Github.Object.SearchResultItemEdge.node searchResultSelection # GraphQLClient.nonNullOrFail)
+        # GraphQLClient.nonNullOrFail
+        # GraphQLClient.nonNullElementsOrFail
+        # GraphQLClient.nonNullElementsOrFail
 
 searchPageInfoSelection :: SelectionSet Scope__PageInfo (PaginationData String)
 searchPageInfoSelection = ado
@@ -78,9 +78,9 @@ searchPageInfoSelection = ado
 searchResultFieldNodes :: SelectionSet Scope__SearchResultItemConnection (Array Repo)
 searchResultFieldNodes =
     Examples.Github.Object.SearchResultItemConnection.nodes searchResultSelection
-        # GraphqlClient.nonNullOrFail
-        # GraphqlClient.nonNullElementsOrFail
-        # GraphqlClient.nonNullElementsOrFail
+        # GraphQLClient.nonNullOrFail
+        # GraphQLClient.nonNullElementsOrFail
+        # GraphQLClient.nonNullElementsOrFail
 
 searchResultSelection :: SelectionSet Scope__SearchResultItem (Maybe Repo)
 searchResultSelection =
@@ -125,13 +125,13 @@ query {
 
 spec :: Test.Spec.Spec Unit
 spec = Test.Spec.it "Example11GithubPagination" do
-  writeGraphql (query Nothing) `Test.Spec.shouldEqual` expectedQuery
+  writeGraphQL (query Nothing) `Test.Spec.shouldEqual` expectedQuery
 
   let opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59" ] }
 
-  (response :: Either (GraphqlError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts (query Nothing)
+  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts (query Nothing)
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphqlError) \/ pure $ response
+  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
 
   Array.length response'.data `Test.Spec.shouldEqual` 10
   isJust response'.paginationData.cursor `Test.Spec.shouldEqual` true

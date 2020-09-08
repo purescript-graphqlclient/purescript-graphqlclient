@@ -1,6 +1,6 @@
 module Examples.Github.Object.IpAllowListEntryEdge where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder

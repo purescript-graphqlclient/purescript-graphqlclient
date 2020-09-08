@@ -1,11 +1,11 @@
 module Examples.Github.Query where
 
 import Type.Row (type (+))
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , Scope__RootQuery
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
   )
@@ -58,7 +58,7 @@ codeOfConduct :: forall r . CodeOfConductInput -> SelectionSet
                                                         r)
 codeOfConduct input = selectionForCompositeField
                       "codeOfConduct"
-                      (toGraphqlArguments
+                      (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -91,7 +91,7 @@ enterprise :: forall r . EnterpriseInput -> SelectionSet
                                                   r)
 enterprise input = selectionForCompositeField
                    "enterprise"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -113,7 +113,7 @@ enterpriseAdministratorInvitation :: forall r . EnterpriseAdministratorInvitatio
                                                                                                 r)
 enterpriseAdministratorInvitation input = selectionForCompositeField
                                           "enterpriseAdministratorInvitation"
-                                          (toGraphqlArguments
+                                          (toGraphQLArguments
                                            input)
                                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -133,7 +133,7 @@ enterpriseAdministratorInvitationByToken :: forall r . EnterpriseAdministratorIn
                                                                                                               r)
 enterpriseAdministratorInvitationByToken input = selectionForCompositeField
                                                  "enterpriseAdministratorInvitationByToken"
-                                                 (toGraphqlArguments
+                                                 (toGraphQLArguments
                                                   input)
                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -149,7 +149,7 @@ license :: forall r . LicenseInput -> SelectionSet
                                             r)
 license input = selectionForCompositeField
                 "license"
-                (toGraphqlArguments
+                (toGraphQLArguments
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -187,7 +187,7 @@ marketplaceCategories :: forall r . MarketplaceCategoriesInput -> SelectionSet
                                                                         r)
 marketplaceCategories input = selectionForCompositeField
                               "marketplaceCategories"
-                              (toGraphqlArguments
+                              (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -210,7 +210,7 @@ marketplaceCategory :: forall r . MarketplaceCategoryInput -> SelectionSet
                                                                     r)
 marketplaceCategory input = selectionForCompositeField
                             "marketplaceCategory"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -226,7 +226,7 @@ marketplaceListing :: forall r . MarketplaceListingInput -> SelectionSet
                                                                   r)
 marketplaceListing input = selectionForCompositeField
                            "marketplaceListing"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -262,7 +262,7 @@ marketplaceListings :: forall r . MarketplaceListingsInput -> SelectionSet
                                                                    r
 marketplaceListings input = selectionForCompositeField
                             "marketplaceListings"
-                            (toGraphqlArguments
+                            (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -288,7 +288,7 @@ node :: forall r . NodeInput -> SelectionSet
                                       r)
 node input = selectionForCompositeField
              "node"
-             (toGraphqlArguments
+             (toGraphQLArguments
               input)
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -305,7 +305,7 @@ nodes :: forall r . NodesInput -> SelectionSet
                                          r))
 nodes input = selectionForCompositeField
               "nodes"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -321,7 +321,7 @@ organization :: forall r . OrganizationInput -> SelectionSet
                                                       r)
 organization input = selectionForCompositeField
                      "organization"
-                     (toGraphqlArguments
+                     (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -337,7 +337,7 @@ rateLimit :: forall r . RateLimitInput -> SelectionSet
                                                 r)
 rateLimit input = selectionForCompositeField
                   "rateLimit"
-                  (toGraphqlArguments
+                  (toGraphQLArguments
                    input)
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -363,7 +363,7 @@ repository :: forall r . RepositoryInput -> SelectionSet
                                                   r)
 repository input = selectionForCompositeField
                    "repository"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -379,7 +379,7 @@ repositoryOwner :: forall r . RepositoryOwnerInput -> SelectionSet
                                                             r)
 repositoryOwner input = selectionForCompositeField
                         "repositoryOwner"
-                        (toGraphqlArguments
+                        (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -395,7 +395,7 @@ resource :: forall r . ResourceInput -> SelectionSet
                                               r)
 resource input = selectionForCompositeField
                  "resource"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -417,7 +417,7 @@ search :: forall r . SearchInput -> SelectionSet
                                          r
 search input = selectionForCompositeField
                "search"
-               (toGraphqlArguments
+               (toGraphQLArguments
                 input)
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -444,7 +444,7 @@ securityAdvisories :: forall r . SecurityAdvisoriesInput -> SelectionSet
                                                                  r
 securityAdvisories input = selectionForCompositeField
                            "securityAdvisories"
-                           (toGraphqlArguments
+                           (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -460,7 +460,7 @@ securityAdvisory :: forall r . SecurityAdvisoryInput -> SelectionSet
                                                               r)
 securityAdvisory input = selectionForCompositeField
                          "securityAdvisory"
-                         (toGraphqlArguments
+                         (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -490,7 +490,7 @@ securityVulnerabilities :: forall r . SecurityVulnerabilitiesInput -> SelectionS
                                                                            r
 securityVulnerabilities input = selectionForCompositeField
                                 "securityVulnerabilities"
-                                (toGraphqlArguments
+                                (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -506,7 +506,7 @@ sponsorsListing :: forall r . SponsorsListingInput -> SelectionSet
                                                             r)
 sponsorsListing input = selectionForCompositeField
                         "sponsorsListing"
-                        (toGraphqlArguments
+                        (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -522,7 +522,7 @@ topic :: forall r . TopicInput -> SelectionSet
                                         r)
 topic input = selectionForCompositeField
               "topic"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -538,7 +538,7 @@ user :: forall r . UserInput -> SelectionSet
                                       r)
 user input = selectionForCompositeField
              "user"
-             (toGraphqlArguments
+             (toGraphQLArguments
               input)
              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

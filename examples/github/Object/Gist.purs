@@ -1,10 +1,10 @@
 module Examples.Github.Object.Gist where
 
-import GraphqlClient
+import GraphQLClient
   ( Optional
   , SelectionSet
   , selectionForCompositeField
-  , toGraphqlArguments
+  , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
@@ -38,7 +38,7 @@ comments :: forall r . CommentsInput -> SelectionSet
                                              r
 comments input = selectionForCompositeField
                  "comments"
-                 (toGraphqlArguments
+                 (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -68,7 +68,7 @@ files :: forall r . FilesInput -> SelectionSet
                                           r)))
 files input = selectionForCompositeField
               "files"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -90,7 +90,7 @@ forks :: forall r . ForksInput -> SelectionSet
                                        r
 forks input = selectionForCompositeField
               "forks"
-              (toGraphqlArguments
+              (toGraphQLArguments
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
@@ -144,7 +144,7 @@ stargazers :: forall r . StargazersInput -> SelectionSet
                                                  r
 stargazers input = selectionForCompositeField
                    "stargazers"
-                   (toGraphqlArguments
+                   (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 

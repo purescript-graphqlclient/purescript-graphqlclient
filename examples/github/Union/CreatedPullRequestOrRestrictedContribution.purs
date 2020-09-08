@@ -1,13 +1,13 @@
 module Examples.Github.Union.CreatedPullRequestOrRestrictedContribution where
 
-import GraphqlClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__CreatedPullRequestContribution
   , Scope__RestrictedContribution
   , Scope__CreatedPullRequestOrRestrictedContribution
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 type Fragments decodesTo = { onCreatedPullRequestContribution :: SelectionSet
                                                                  Scope__CreatedPullRequestContribution

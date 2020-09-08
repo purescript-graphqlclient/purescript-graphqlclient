@@ -1,6 +1,6 @@
 module Examples.Swapi.Subscription where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , Scope__RootSubscription
   , selectionForCompositeField

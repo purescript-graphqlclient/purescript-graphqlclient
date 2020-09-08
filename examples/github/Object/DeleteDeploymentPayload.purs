@@ -1,6 +1,6 @@
 module Examples.Github.Object.DeleteDeploymentPayload where
 
-import GraphqlClient
+import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
 import Examples.Github.Scopes (Scope__DeleteDeploymentPayload)
 import Data.Maybe (Maybe)

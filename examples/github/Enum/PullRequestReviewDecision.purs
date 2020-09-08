@@ -1,11 +1,11 @@
 module Examples.Github.Enum.PullRequestReviewDecision where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -22,15 +22,15 @@ fromToMap = [ Tuple "CHANGES_REQUESTED" ChangesRequested
             , Tuple "REVIEW_REQUIRED" ReviewRequired
             ]
 
-instance pullRequestReviewDecisionGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance pullRequestReviewDecisionGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                          PullRequestReviewDecision where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "PullRequestReviewDecision"
                                         fromToMap
 
-instance pullRequestReviewDecisionToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance pullRequestReviewDecisionToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                             PullRequestReviewDecision where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       ChangesRequested -> ArgumentValueEnum "CHANGES_REQUESTED"
       Approved -> ArgumentValueEnum "APPROVED"

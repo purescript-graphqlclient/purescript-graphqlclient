@@ -1,6 +1,6 @@
 module Examples.Github.Interface.RepositoryNode where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
@@ -21,7 +21,7 @@ import Examples.Github.Scopes
   , Scope__RepositoryVulnerabilityAlert
   )
 import Data.Maybe (Maybe(..))
-import Prelude
+import Prelude (pure)
 
 repository :: forall r . SelectionSet
                          Scope__Repository

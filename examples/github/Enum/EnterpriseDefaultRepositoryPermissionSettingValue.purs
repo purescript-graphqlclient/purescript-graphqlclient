@@ -1,11 +1,11 @@
 module Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue where
 
-import Prelude
+import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
-import GraphqlClient
-  ( class GraphqlDefaultResponseScalarDecoder
+import GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
   , enumDecoder
-  , class ToGraphqlArgumentValue
+  , class ToGraphQLArgumentValue
   , ArgumentValue(..)
   )
 
@@ -28,15 +28,15 @@ fromToMap = [ Tuple "NO_POLICY" NoPolicy
             , Tuple "NONE" None
             ]
 
-instance enterpriseDefaultRepositoryPermissionSettingValueGraphqlDefaultResponseScalarDecoder :: GraphqlDefaultResponseScalarDecoder
+instance enterpriseDefaultRepositoryPermissionSettingValueGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
                                                                                                  EnterpriseDefaultRepositoryPermissionSettingValue where
   graphqlDefaultResponseScalarDecoder = enumDecoder
                                         "EnterpriseDefaultRepositoryPermissionSettingValue"
                                         fromToMap
 
-instance enterpriseDefaultRepositoryPermissionSettingValueToGraphqlArgumentValue :: ToGraphqlArgumentValue
+instance enterpriseDefaultRepositoryPermissionSettingValueToGraphQLArgumentValue :: ToGraphQLArgumentValue
                                                                                     EnterpriseDefaultRepositoryPermissionSettingValue where
-  toGraphqlArgumentValue =
+  toGraphQLArgumentValue =
     case _ of
       NoPolicy -> ArgumentValueEnum "NO_POLICY"
       Admin -> ArgumentValueEnum "ADMIN"

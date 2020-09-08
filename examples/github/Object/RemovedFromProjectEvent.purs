@@ -1,6 +1,6 @@
 module Examples.Github.Object.RemovedFromProjectEvent where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer

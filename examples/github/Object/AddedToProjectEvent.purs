@@ -1,6 +1,6 @@
 module Examples.Github.Object.AddedToProjectEvent where
 
-import GraphqlClient
+import GraphQLClient
   ( SelectionSet
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
