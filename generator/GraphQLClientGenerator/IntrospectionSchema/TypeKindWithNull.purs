@@ -9,6 +9,7 @@ import GraphQLClientGenerator.IntrospectionSchema.TypeKind (TypeKind(..))
 
 type InstorpectionQueryResult__TypeRef_shared r = ( kind :: TypeKind, name :: Maybe String | r )
 
+-- this is what we get from introspection query
 -- 7 ofType's
 type InstorpectionQueryResult__TypeRef
   = Record
@@ -41,7 +42,8 @@ type InstorpectionQueryResult__TypeRef
       )
     )
 
--- for internal use only
+-- for internal use only, intermediate results, converted to TypeKindWithNull
+-- it's just easier to convert input to this first
 data TypeKindWithNameWithNonNull
   = TypeKindWithNameWithNonNull__NonNull     TypeKindWithNameWithNonNull
   | TypeKindWithNameWithNonNull__List        TypeKindWithNameWithNonNull
@@ -52,6 +54,7 @@ data TypeKindWithNameWithNonNull
   | TypeKindWithNameWithNonNull__Interface   String
   | TypeKindWithNameWithNonNull__Union       String
 
+-- the output, validated and sane
 data TypeKindWithNull
   = TypeKindWithNull__Null        TypeKindWithNull
   | TypeKindWithNull__List        TypeKindWithNull
@@ -80,24 +83,25 @@ instance showTypeKindWithNull :: Show TypeKindWithNull where
             TypeKindWithNull__Interface   string           -> "(TypeKindWithNull__Interface " <> show string <> ")"
             TypeKindWithNull__Union       string           -> "(TypeKindWithNull__Union " <> show string <> ")"
 
-convertTypeKindWithNonNullToNull :: TypeKindWithNameWithNonNull -> TypeKindWithNull
-convertTypeKindWithNonNullToNull =
-  case _ of
-    TypeKindWithNameWithNonNull__NonNull     type_ ->
-      case convertTypeKindWithNonNullToNull type_ of
-           TypeKindWithNull__Null type__ -> type__
-           other -> other
-    TypeKindWithNameWithNonNull__List        type_ -> TypeKindWithNull__Null $ TypeKindWithNull__List (convertTypeKindWithNonNullToNull type_)
-    TypeKindWithNameWithNonNull__Scalar      name  -> TypeKindWithNull__Null $ TypeKindWithNull__Scalar name
-    TypeKindWithNameWithNonNull__Enum        name  -> TypeKindWithNull__Null $ TypeKindWithNull__Enum name
-    TypeKindWithNameWithNonNull__InputObject name  -> TypeKindWithNull__Null $ TypeKindWithNull__InputObject name
-    TypeKindWithNameWithNonNull__Object      name  -> TypeKindWithNull__Null $ TypeKindWithNull__Object name
-    TypeKindWithNameWithNonNull__Interface   name  -> TypeKindWithNull__Null $ TypeKindWithNull__Interface name
-    TypeKindWithNameWithNonNull__Union       name  -> TypeKindWithNull__Null $ TypeKindWithNull__Union name
-
+-- main function
 collectTypeRefInfo :: InstorpectionQueryResult__TypeRef -> Maybe TypeKindWithNull
 collectTypeRefInfo = map convertTypeKindWithNonNullToNull <<< convToWithNonNull
   where
+    convertTypeKindWithNonNullToNull :: TypeKindWithNameWithNonNull -> TypeKindWithNull
+    convertTypeKindWithNonNullToNull =
+      case _ of
+      TypeKindWithNameWithNonNull__NonNull type_ ->
+        case convertTypeKindWithNonNullToNull type_ of
+             TypeKindWithNull__Null type__ -> type__
+             other -> other
+      TypeKindWithNameWithNonNull__List        type_ -> TypeKindWithNull__Null $ TypeKindWithNull__List (convertTypeKindWithNonNullToNull type_)
+      TypeKindWithNameWithNonNull__Scalar      name  -> TypeKindWithNull__Null $ TypeKindWithNull__Scalar name
+      TypeKindWithNameWithNonNull__Enum        name  -> TypeKindWithNull__Null $ TypeKindWithNull__Enum name
+      TypeKindWithNameWithNonNull__InputObject name  -> TypeKindWithNull__Null $ TypeKindWithNull__InputObject name
+      TypeKindWithNameWithNonNull__Object      name  -> TypeKindWithNull__Null $ TypeKindWithNull__Object name
+      TypeKindWithNameWithNonNull__Interface   name  -> TypeKindWithNull__Null $ TypeKindWithNull__Interface name
+      TypeKindWithNameWithNonNull__Union       name  -> TypeKindWithNull__Null $ TypeKindWithNull__Union name
+
     convToWithNonNull :: InstorpectionQueryResult__TypeRef -> Maybe TypeKindWithNameWithNonNull
     convToWithNonNull =
       with
