@@ -16,6 +16,7 @@ import Examples.Github.Scopes
   , Scope__Blame
   , Scope__CommitCommentConnection
   , Scope__DeploymentConnection
+  , Scope__TreeEntry
   , Scope__CommitHistoryConnection
   , Scope__Organization
   , Scope__CommitConnection
@@ -190,6 +191,22 @@ deployments input = selectionForCompositeField
                     (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type FileInputRowRequired r = ( path :: String | r )
+
+type FileInput = { | FileInputRowRequired + () }
+
+file :: forall r . FileInput -> SelectionSet
+                                Scope__TreeEntry
+                                r -> SelectionSet
+                                     Scope__Commit
+                                     (Maybe
+                                      r)
+file input = selectionForCompositeField
+             "file"
+             (toGraphQLArguments
+              input)
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type HistoryInputRowOptional r = ( after :: Optional String
                                  , before :: Optional String

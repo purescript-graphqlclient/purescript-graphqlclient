@@ -25,6 +25,7 @@ urls =
 includeDeprecated :: Boolean
 includeDeprecated = false
 
+introspectionQueryString :: String
 introspectionQueryString = GraphQLClient.writeGraphQL (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery (\_ _ -> unsafeThrow "I don’t care about decoder") includeDeprecated)
 
 introspectionQueryDecoderForExternalJson :: Json -> Either JsonDecodeError GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult

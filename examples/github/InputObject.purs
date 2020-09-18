@@ -314,6 +314,7 @@ type CreateIssueInput = { repositoryId :: Id
                         , milestoneId :: Optional Id
                         , labelIds :: Optional (Array Id)
                         , projectIds :: Optional (Array Id)
+                        , issueTemplate :: Optional String
                         , clientMutationId :: Optional String
                         }
 
@@ -543,6 +544,12 @@ type LockLockableInput = { lockableId :: Id
                          , lockReason :: Optional LockReason
                          , clientMutationId :: Optional String
                          }
+
+-- | original name - MarkFileAsViewedInput
+type MarkFileAsViewedInput = { pullRequestId :: Id
+                             , path :: String
+                             , clientMutationId :: Optional String
+                             }
 
 -- | original name - MarkPullRequestReadyForReviewInput
 type MarkPullRequestReadyForReviewInput = { pullRequestId :: Id
@@ -813,6 +820,12 @@ type UnlinkRepositoryFromProjectInput = { projectId :: Id
 type UnlockLockableInput = { lockableId :: Id
                            , clientMutationId :: Optional String
                            }
+
+-- | original name - UnmarkFileAsViewedInput
+type UnmarkFileAsViewedInput = { pullRequestId :: Id
+                               , path :: String
+                               , clientMutationId :: Optional String
+                               }
 
 -- | original name - UnmarkIssueAsDuplicateInput
 type UnmarkIssueAsDuplicateInput = { duplicateId :: Id

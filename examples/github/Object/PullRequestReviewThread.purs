@@ -48,6 +48,18 @@ diffSide = selectionForField "diffSide" [] graphqlDefaultResponseScalarDecoder
 id :: SelectionSet Scope__PullRequestReviewThread Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
+isCollapsed :: SelectionSet Scope__PullRequestReviewThread Boolean
+isCollapsed = selectionForField
+              "isCollapsed"
+              []
+              graphqlDefaultResponseScalarDecoder
+
+isOutdated :: SelectionSet Scope__PullRequestReviewThread Boolean
+isOutdated = selectionForField
+             "isOutdated"
+             []
+             graphqlDefaultResponseScalarDecoder
+
 isResolved :: SelectionSet Scope__PullRequestReviewThread Boolean
 isResolved = selectionForField
              "isResolved"
@@ -68,6 +80,9 @@ originalStartLine = selectionForField
                     "originalStartLine"
                     []
                     graphqlDefaultResponseScalarDecoder
+
+path :: SelectionSet Scope__PullRequestReviewThread String
+path = selectionForField "path" [] graphqlDefaultResponseScalarDecoder
 
 pullRequest :: forall r . SelectionSet
                           Scope__PullRequest
@@ -108,6 +123,12 @@ startDiffSide = selectionForField
 
 startLine :: SelectionSet Scope__PullRequestReviewThread (Maybe Int)
 startLine = selectionForField "startLine" [] graphqlDefaultResponseScalarDecoder
+
+viewerCanReply :: SelectionSet Scope__PullRequestReviewThread Boolean
+viewerCanReply = selectionForField
+                 "viewerCanReply"
+                 []
+                 graphqlDefaultResponseScalarDecoder
 
 viewerCanResolve :: SelectionSet Scope__PullRequestReviewThread Boolean
 viewerCanResolve = selectionForField

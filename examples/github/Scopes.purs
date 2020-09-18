@@ -40,6 +40,8 @@ data Scope__AutomaticBaseChangeSucceededEvent
 
 data Scope__BaseRefChangedEvent
 
+data Scope__BaseRefDeletedEvent
+
 data Scope__BaseRefForcePushedEvent
 
 data Scope__Blame
@@ -370,6 +372,8 @@ data Scope__IssueContributionsByRepository
 
 data Scope__IssueEdge
 
+data Scope__IssueTemplate
+
 data Scope__IssueTimelineConnection
 
 data Scope__IssueTimelineItemEdge
@@ -405,6 +409,8 @@ data Scope__LockLockablePayload
 data Scope__LockedEvent
 
 data Scope__Mannequin
+
+data Scope__MarkFileAsViewedPayload
 
 data Scope__MarkPullRequestReadyForReviewPayload
 
@@ -766,6 +772,8 @@ data Scope__RepositoryCollaboratorEdge
 
 data Scope__RepositoryConnection
 
+data Scope__RepositoryContactLink
+
 data Scope__RepositoryEdge
 
 data Scope__RepositoryInvitation
@@ -963,6 +971,8 @@ data Scope__UnlinkRepositoryFromProjectPayload
 data Scope__UnlockLockablePayload
 
 data Scope__UnlockedEvent
+
+data Scope__UnmarkFileAsViewedPayload
 
 data Scope__UnmarkIssueAsDuplicatePayload
 

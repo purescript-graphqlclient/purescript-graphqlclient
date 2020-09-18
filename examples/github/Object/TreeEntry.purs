@@ -12,6 +12,15 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (GitObjectId)
 
+extension :: SelectionSet Scope__TreeEntry (Maybe String)
+extension = selectionForField "extension" [] graphqlDefaultResponseScalarDecoder
+
+isGenerated :: SelectionSet Scope__TreeEntry Boolean
+isGenerated = selectionForField
+              "isGenerated"
+              []
+              graphqlDefaultResponseScalarDecoder
+
 mode :: SelectionSet Scope__TreeEntry Int
 mode = selectionForField "mode" [] graphqlDefaultResponseScalarDecoder
 
@@ -31,6 +40,9 @@ object = selectionForCompositeField
 
 oid :: SelectionSet Scope__TreeEntry GitObjectId
 oid = selectionForField "oid" [] graphqlDefaultResponseScalarDecoder
+
+path :: SelectionSet Scope__TreeEntry (Maybe String)
+path = selectionForField "path" [] graphqlDefaultResponseScalarDecoder
 
 repository :: forall r . SelectionSet
                          Scope__Repository

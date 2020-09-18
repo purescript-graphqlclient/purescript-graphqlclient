@@ -20,6 +20,7 @@ data PullRequestTimelineItemsItemType
   | AutomaticBaseChangeSucceededEvent
   | BaseRefChangedEvent
   | BaseRefForcePushedEvent
+  | BaseRefDeletedEvent
   | DeployedEvent
   | DeploymentEnvironmentChangedEvent
   | HeadRefDeletedEvent
@@ -82,6 +83,7 @@ fromToMap = [ Tuple "PULL_REQUEST_COMMIT" PullRequestCommit
               AutomaticBaseChangeSucceededEvent
             , Tuple "BASE_REF_CHANGED_EVENT" BaseRefChangedEvent
             , Tuple "BASE_REF_FORCE_PUSHED_EVENT" BaseRefForcePushedEvent
+            , Tuple "BASE_REF_DELETED_EVENT" BaseRefDeletedEvent
             , Tuple "DEPLOYED_EVENT" DeployedEvent
             , Tuple
               "DEPLOYMENT_ENVIRONMENT_CHANGED_EVENT"
@@ -150,6 +152,7 @@ instance pullRequestTimelineItemsItemTypeToGraphQLArgumentValue :: ToGraphQLArgu
                                            "AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT"
       BaseRefChangedEvent -> ArgumentValueEnum "BASE_REF_CHANGED_EVENT"
       BaseRefForcePushedEvent -> ArgumentValueEnum "BASE_REF_FORCE_PUSHED_EVENT"
+      BaseRefDeletedEvent -> ArgumentValueEnum "BASE_REF_DELETED_EVENT"
       DeployedEvent -> ArgumentValueEnum "DEPLOYED_EVENT"
       DeploymentEnvironmentChangedEvent -> ArgumentValueEnum
                                            "DEPLOYMENT_ENVIRONMENT_CHANGED_EVENT"

@@ -21,6 +21,7 @@ import Examples.Github.Scopes
   , Scope__RepositoryOwner
   , Scope__Hovercard
   , Scope__LabelConnection
+  , Scope__PullRequestReviewConnection
   , Scope__Commit
   , Scope__Milestone
   , Scope__ProjectCardConnection
@@ -28,7 +29,6 @@ import Examples.Github.Scopes
   , Scope__ReactionConnection
   , Scope__ReviewRequestConnection
   , Scope__PullRequestReviewThreadConnection
-  , Scope__PullRequestReviewConnection
   , Scope__SuggestedReviewer
   , Scope__PullRequestTimelineConnection
   , Scope__PullRequestTimelineItemsConnection
@@ -51,6 +51,7 @@ import Examples.Github.Enum.PullRequestTimelineItemsItemType
   (PullRequestTimelineItemsItemType)
 import Examples.Github.Enum.CommentCannotUpdateReason
   (CommentCannotUpdateReason)
+import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
 
 activeLockReason :: SelectionSet Scope__PullRequest (Maybe LockReason)
@@ -362,6 +363,52 @@ lastEditedAt = selectionForField
                "lastEditedAt"
                []
                graphqlDefaultResponseScalarDecoder
+
+type LatestOpinionatedReviewsInputRowOptional r = ( after :: Optional String
+                                                  , before :: Optional String
+                                                  , first :: Optional Int
+                                                  , last :: Optional Int
+                                                  , writersOnly :: Optional
+                                                                   Boolean
+                                                  | r
+                                                  )
+
+type LatestOpinionatedReviewsInput = {
+| LatestOpinionatedReviewsInputRowOptional + ()
+}
+
+latestOpinionatedReviews :: forall r . LatestOpinionatedReviewsInput -> SelectionSet
+                                                                        Scope__PullRequestReviewConnection
+                                                                        r -> SelectionSet
+                                                                             Scope__PullRequest
+                                                                             (Maybe
+                                                                              r)
+latestOpinionatedReviews input = selectionForCompositeField
+                                 "latestOpinionatedReviews"
+                                 (toGraphQLArguments
+                                  input)
+                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type LatestReviewsInputRowOptional r = ( after :: Optional String
+                                       , before :: Optional String
+                                       , first :: Optional Int
+                                       , last :: Optional Int
+                                       | r
+                                       )
+
+type LatestReviewsInput = { | LatestReviewsInputRowOptional + () }
+
+latestReviews :: forall r . LatestReviewsInput -> SelectionSet
+                                                  Scope__PullRequestReviewConnection
+                                                  r -> SelectionSet
+                                                       Scope__PullRequest
+                                                       (Maybe
+                                                        r)
+latestReviews input = selectionForCompositeField
+                      "latestReviews"
+                      (toGraphQLArguments
+                       input)
+                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 locked :: SelectionSet Scope__PullRequest Boolean
 locked = selectionForField "locked" [] graphqlDefaultResponseScalarDecoder
@@ -713,6 +760,12 @@ viewerCanApplySuggestion = selectionForField
                            []
                            graphqlDefaultResponseScalarDecoder
 
+viewerCanDeleteHeadRef :: SelectionSet Scope__PullRequest Boolean
+viewerCanDeleteHeadRef = selectionForField
+                         "viewerCanDeleteHeadRef"
+                         []
+                         graphqlDefaultResponseScalarDecoder
+
 viewerCanReact :: SelectionSet Scope__PullRequest Boolean
 viewerCanReact = selectionForField
                  "viewerCanReact"
@@ -745,6 +798,40 @@ viewerDidAuthor = selectionForField
                   "viewerDidAuthor"
                   []
                   graphqlDefaultResponseScalarDecoder
+
+type ViewerMergeBodyTextInputRowOptional r = ( mergeType :: Optional
+                                                            PullRequestMergeMethod
+                                             | r
+                                             )
+
+type ViewerMergeBodyTextInput = { | ViewerMergeBodyTextInputRowOptional + () }
+
+viewerMergeBodyText :: ViewerMergeBodyTextInput -> SelectionSet
+                                                   Scope__PullRequest
+                                                   String
+viewerMergeBodyText input = selectionForField
+                            "viewerMergeBodyText"
+                            (toGraphQLArguments
+                             input)
+                            graphqlDefaultResponseScalarDecoder
+
+type ViewerMergeHeadlineTextInputRowOptional r = ( mergeType :: Optional
+                                                                PullRequestMergeMethod
+                                                 | r
+                                                 )
+
+type ViewerMergeHeadlineTextInput = {
+| ViewerMergeHeadlineTextInputRowOptional + ()
+}
+
+viewerMergeHeadlineText :: ViewerMergeHeadlineTextInput -> SelectionSet
+                                                           Scope__PullRequest
+                                                           String
+viewerMergeHeadlineText input = selectionForField
+                                "viewerMergeHeadlineText"
+                                (toGraphQLArguments
+                                 input)
+                                graphqlDefaultResponseScalarDecoder
 
 viewerSubscription :: SelectionSet Scope__PullRequest (Maybe SubscriptionState)
 viewerSubscription = selectionForField

@@ -51,6 +51,7 @@ import Examples.Github.InputObject
   , InviteEnterpriseAdminInput
   , LinkRepositoryToProjectInput
   , LockLockableInput
+  , MarkFileAsViewedInput
   , MarkPullRequestReadyForReviewInput
   , MergeBranchInput
   , MergePullRequestInput
@@ -77,6 +78,7 @@ import Examples.Github.InputObject
   , UnfollowUserInput
   , UnlinkRepositoryFromProjectInput
   , UnlockLockableInput
+  , UnmarkFileAsViewedInput
   , UnmarkIssueAsDuplicateInput
   , UnminimizeCommentInput
   , UnresolveReviewThreadInput
@@ -174,6 +176,7 @@ import Examples.Github.Scopes
   , Scope__InviteEnterpriseAdminPayload
   , Scope__LinkRepositoryToProjectPayload
   , Scope__LockLockablePayload
+  , Scope__MarkFileAsViewedPayload
   , Scope__MarkPullRequestReadyForReviewPayload
   , Scope__MergeBranchPayload
   , Scope__MergePullRequestPayload
@@ -200,6 +203,7 @@ import Examples.Github.Scopes
   , Scope__UnfollowUserPayload
   , Scope__UnlinkRepositoryFromProjectPayload
   , Scope__UnlockLockablePayload
+  , Scope__UnmarkFileAsViewedPayload
   , Scope__UnmarkIssueAsDuplicatePayload
   , Scope__UnminimizeCommentPayload
   , Scope__UnresolveReviewThreadPayload
@@ -1184,6 +1188,24 @@ lockLockable input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type MarkFileAsViewedInputRowRequired r = ( input :: Examples.Github.InputObject.MarkFileAsViewedInput
+                                          | r
+                                          )
+
+type MarkFileAsViewedInput = { | MarkFileAsViewedInputRowRequired + () }
+
+markFileAsViewed :: forall r . MarkFileAsViewedInput -> SelectionSet
+                                                        Scope__MarkFileAsViewedPayload
+                                                        r -> SelectionSet
+                                                             Scope__RootMutation
+                                                             (Maybe
+                                                              r)
+markFileAsViewed input = selectionForCompositeField
+                         "markFileAsViewed"
+                         (toGraphQLArguments
+                          input)
+                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type MarkPullRequestReadyForReviewInputRowRequired r = ( input :: Examples.Github.InputObject.MarkPullRequestReadyForReviewInput
                                                        | r
                                                        )
@@ -1673,6 +1695,24 @@ unlockLockable input = selectionForCompositeField
                        (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UnmarkFileAsViewedInputRowRequired r = ( input :: Examples.Github.InputObject.UnmarkFileAsViewedInput
+                                            | r
+                                            )
+
+type UnmarkFileAsViewedInput = { | UnmarkFileAsViewedInputRowRequired + () }
+
+unmarkFileAsViewed :: forall r . UnmarkFileAsViewedInput -> SelectionSet
+                                                            Scope__UnmarkFileAsViewedPayload
+                                                            r -> SelectionSet
+                                                                 Scope__RootMutation
+                                                                 (Maybe
+                                                                  r)
+unmarkFileAsViewed input = selectionForCompositeField
+                           "unmarkFileAsViewed"
+                           (toGraphQLArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnmarkIssueAsDuplicateInputRowRequired r = ( input :: Examples.Github.InputObject.UnmarkIssueAsDuplicateInput
                                                 | r

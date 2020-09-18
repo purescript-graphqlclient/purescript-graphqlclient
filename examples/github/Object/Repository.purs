@@ -17,6 +17,7 @@ import Examples.Github.Scopes
   , Scope__CodeOfConduct
   , Scope__RepositoryCollaboratorConnection
   , Scope__CommitCommentConnection
+  , Scope__RepositoryContactLink
   , Scope__Ref
   , Scope__DeployKeyConnection
   , Scope__DeploymentConnection
@@ -24,6 +25,7 @@ import Examples.Github.Scopes
   , Scope__FundingLink
   , Scope__Issue
   , Scope__IssueOrPullRequest
+  , Scope__IssueTemplate
   , Scope__IssueConnection
   , Scope__Label
   , Scope__LabelConnection
@@ -175,6 +177,18 @@ commitComments input = selectionForCompositeField
                        (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+contactLinks :: forall r . SelectionSet
+                           Scope__RepositoryContactLink
+                           r -> SelectionSet
+                                Scope__Repository
+                                (Maybe
+                                 (Array
+                                  r))
+contactLinks = selectionForCompositeField
+               "contactLinks"
+               []
+               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 createdAt :: SelectionSet Scope__Repository DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
@@ -339,6 +353,12 @@ isArchived = selectionForField
              []
              graphqlDefaultResponseScalarDecoder
 
+isBlankIssuesEnabled :: SelectionSet Scope__Repository Boolean
+isBlankIssuesEnabled = selectionForField
+                       "isBlankIssuesEnabled"
+                       []
+                       graphqlDefaultResponseScalarDecoder
+
 isDisabled :: SelectionSet Scope__Repository Boolean
 isDisabled = selectionForField
              "isDisabled"
@@ -359,6 +379,12 @@ isMirror = selectionForField "isMirror" [] graphqlDefaultResponseScalarDecoder
 
 isPrivate :: SelectionSet Scope__Repository Boolean
 isPrivate = selectionForField "isPrivate" [] graphqlDefaultResponseScalarDecoder
+
+isSecurityPolicyEnabled :: SelectionSet Scope__Repository (Maybe Boolean)
+isSecurityPolicyEnabled = selectionForField
+                          "isSecurityPolicyEnabled"
+                          []
+                          graphqlDefaultResponseScalarDecoder
 
 isTemplate :: SelectionSet Scope__Repository Boolean
 isTemplate = selectionForField
@@ -397,6 +423,18 @@ issueOrPullRequest input = selectionForCompositeField
                            (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+issueTemplates :: forall r . SelectionSet
+                             Scope__IssueTemplate
+                             r -> SelectionSet
+                                  Scope__Repository
+                                  (Maybe
+                                   (Array
+                                    r))
+issueTemplates = selectionForCompositeField
+                 "issueTemplates"
+                 []
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type IssuesInputRowOptional r = ( orderBy :: Optional
                                              Examples.Github.InputObject.IssueOrder
@@ -877,6 +915,12 @@ resourcePath = selectionForField
                "resourcePath"
                []
                graphqlDefaultResponseScalarDecoder
+
+securityPolicyUrl :: SelectionSet Scope__Repository (Maybe Uri)
+securityPolicyUrl = selectionForField
+                    "securityPolicyUrl"
+                    []
+                    graphqlDefaultResponseScalarDecoder
 
 type ShortDescriptionHtmlInputRowOptional r = ( limit :: Optional Int | r )
 

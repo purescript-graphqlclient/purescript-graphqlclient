@@ -7,6 +7,7 @@ import Examples.Github.Scopes
   , Scope__AutomaticBaseChangeFailedEvent
   , Scope__AutomaticBaseChangeSucceededEvent
   , Scope__BaseRefChangedEvent
+  , Scope__BaseRefDeletedEvent
   , Scope__BaseRefForcePushedEvent
   , Scope__ClosedEvent
   , Scope__CommentDeletedEvent
@@ -71,6 +72,9 @@ type Fragments decodesTo = { onAddedToProjectEvent :: SelectionSet
                                                                     decodesTo
                            , onBaseRefChangedEvent :: SelectionSet
                                                       Scope__BaseRefChangedEvent
+                                                      decodesTo
+                           , onBaseRefDeletedEvent :: SelectionSet
+                                                      Scope__BaseRefDeletedEvent
                                                       decodesTo
                            , onBaseRefForcePushedEvent :: SelectionSet
                                                           Scope__BaseRefForcePushedEvent
@@ -230,6 +234,9 @@ fragments selections = exhaustiveFragmentSelection
                          "BaseRefChangedEvent"
                          selections.onBaseRefChangedEvent
                        , buildFragment
+                         "BaseRefDeletedEvent"
+                         selections.onBaseRefDeletedEvent
+                       , buildFragment
                          "BaseRefForcePushedEvent"
                          selections.onBaseRefForcePushedEvent
                        , buildFragment "ClosedEvent" selections.onClosedEvent
@@ -364,6 +371,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                  , onAutomaticBaseChangeSucceededEvent: pure
                                                         Nothing
                  , onBaseRefChangedEvent: pure
+                                          Nothing
+                 , onBaseRefDeletedEvent: pure
                                           Nothing
                  , onBaseRefForcePushedEvent: pure
                                               Nothing

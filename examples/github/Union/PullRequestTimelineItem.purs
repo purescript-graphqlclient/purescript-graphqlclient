@@ -3,6 +3,7 @@ module Examples.Github.Union.PullRequestTimelineItem where
 import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__AssignedEvent
+  , Scope__BaseRefDeletedEvent
   , Scope__BaseRefForcePushedEvent
   , Scope__ClosedEvent
   , Scope__Commit
@@ -42,6 +43,9 @@ import Prelude (pure)
 type Fragments decodesTo = { onAssignedEvent :: SelectionSet
                                                 Scope__AssignedEvent
                                                 decodesTo
+                           , onBaseRefDeletedEvent :: SelectionSet
+                                                      Scope__BaseRefDeletedEvent
+                                                      decodesTo
                            , onBaseRefForcePushedEvent :: SelectionSet
                                                           Scope__BaseRefForcePushedEvent
                                                           decodesTo
@@ -144,6 +148,9 @@ fragments selections = exhaustiveFragmentSelection
                          "AssignedEvent"
                          selections.onAssignedEvent
                        , buildFragment
+                         "BaseRefDeletedEvent"
+                         selections.onBaseRefDeletedEvent
+                       , buildFragment
                          "BaseRefForcePushedEvent"
                          selections.onBaseRefForcePushedEvent
                        , buildFragment "ClosedEvent" selections.onClosedEvent
@@ -229,6 +236,8 @@ fragments selections = exhaustiveFragmentSelection
 maybeFragments :: forall decodesTo . Fragments (Maybe decodesTo)
 maybeFragments = { onAssignedEvent: pure
                                     Nothing
+                 , onBaseRefDeletedEvent: pure
+                                          Nothing
                  , onBaseRefForcePushedEvent: pure
                                               Nothing
                  , onClosedEvent: pure
