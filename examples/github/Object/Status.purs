@@ -1,19 +1,44 @@
 module Examples.Github.Object.Status where
 
 import GraphQLClient
-  ( SelectionSet
+  ( Optional
+  , SelectionSet
   , selectionForCompositeField
-  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , toGraphQLArguments
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
-import Examples.Github.Scopes
-  (Scope__Commit, Scope__Status, Scope__StatusContext)
-import Data.Maybe (Maybe)
 import Type.Row (type (+))
+import Examples.Github.Scopes
+  ( Scope__StatusCheckRollupContextConnection
+  , Scope__Status
+  , Scope__Commit
+  , Scope__StatusContext
+  )
+import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Id)
 import Examples.Github.Enum.StatusState (StatusState)
+
+type CombinedContextsInputRowOptional r = ( after :: Optional String
+                                          , before :: Optional String
+                                          , first :: Optional Int
+                                          , last :: Optional Int
+                                          | r
+                                          )
+
+type CombinedContextsInput = { | CombinedContextsInputRowOptional + () }
+
+combinedContexts :: forall r . CombinedContextsInput -> SelectionSet
+                                                        Scope__StatusCheckRollupContextConnection
+                                                        r -> SelectionSet
+                                                             Scope__Status
+                                                             r
+combinedContexts input = selectionForCompositeField
+                         "combinedContexts"
+                         (toGraphQLArguments
+                          input)
+                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 commit :: forall r . SelectionSet
                      Scope__Commit

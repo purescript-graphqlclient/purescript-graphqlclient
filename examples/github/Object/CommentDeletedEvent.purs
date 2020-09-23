@@ -31,5 +31,16 @@ databaseId = selectionForField
              []
              graphqlDefaultResponseScalarDecoder
 
+deletedCommentAuthor :: forall r . SelectionSet
+                                   Scope__Actor
+                                   r -> SelectionSet
+                                        Scope__CommentDeletedEvent
+                                        (Maybe
+                                         r)
+deletedCommentAuthor = selectionForCompositeField
+                       "deletedCommentAuthor"
+                       []
+                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 id :: SelectionSet Scope__CommentDeletedEvent Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder

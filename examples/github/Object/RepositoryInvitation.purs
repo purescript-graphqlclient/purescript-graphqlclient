@@ -10,7 +10,7 @@ import GraphQLClient
 import Examples.Github.Scopes
   (Scope__RepositoryInvitation, Scope__User, Scope__RepositoryInfo)
 import Data.Maybe (Maybe)
-import Examples.Github.Scalars (Id)
+import Examples.Github.Scalars (Id, Uri)
 import Examples.Github.Enum.RepositoryPermission (RepositoryPermission)
 
 email :: SelectionSet Scope__RepositoryInvitation (Maybe String)
@@ -39,6 +39,9 @@ inviter = selectionForCompositeField
           "inviter"
           []
           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+permalink :: SelectionSet Scope__RepositoryInvitation Uri
+permalink = selectionForField "permalink" [] graphqlDefaultResponseScalarDecoder
 
 permission :: SelectionSet Scope__RepositoryInvitation RepositoryPermission
 permission = selectionForField

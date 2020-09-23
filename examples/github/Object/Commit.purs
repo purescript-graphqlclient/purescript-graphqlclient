@@ -13,6 +13,7 @@ import Examples.Github.Scopes
   ( Scope__Commit
   , Scope__PullRequestConnection
   , Scope__GitActor
+  , Scope__GitActorConnection
   , Scope__Blame
   , Scope__CommitCommentConnection
   , Scope__DeploymentConnection
@@ -91,6 +92,26 @@ authoredDate = selectionForField
                "authoredDate"
                []
                graphqlDefaultResponseScalarDecoder
+
+type AuthorsInputRowOptional r = ( after :: Optional String
+                                 , before :: Optional String
+                                 , first :: Optional Int
+                                 , last :: Optional Int
+                                 | r
+                                 )
+
+type AuthorsInput = { | AuthorsInputRowOptional + () }
+
+authors :: forall r . AuthorsInput -> SelectionSet
+                                      Scope__GitActorConnection
+                                      r -> SelectionSet
+                                           Scope__Commit
+                                           r
+authors input = selectionForCompositeField
+                "authors"
+                (toGraphQLArguments
+                 input)
+                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type BlameInputRowRequired r = ( path :: String | r )
 

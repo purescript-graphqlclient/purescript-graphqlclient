@@ -74,6 +74,12 @@ isArchived = selectionForField
 isFork :: SelectionSet Scope__RepositoryInfo Boolean
 isFork = selectionForField "isFork" [] graphqlDefaultResponseScalarDecoder
 
+isInOrganization :: SelectionSet Scope__RepositoryInfo Boolean
+isInOrganization = selectionForField
+                   "isInOrganization"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
 isLocked :: SelectionSet Scope__RepositoryInfo Boolean
 isLocked = selectionForField "isLocked" [] graphqlDefaultResponseScalarDecoder
 

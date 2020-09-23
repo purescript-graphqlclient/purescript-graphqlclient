@@ -12,6 +12,12 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Id)
 
+asCodeOwner :: SelectionSet Scope__ReviewRequest Boolean
+asCodeOwner = selectionForField
+              "asCodeOwner"
+              []
+              graphqlDefaultResponseScalarDecoder
+
 databaseId :: SelectionSet Scope__ReviewRequest (Maybe Int)
 databaseId = selectionForField
              "databaseId"

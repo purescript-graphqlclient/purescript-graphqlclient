@@ -91,6 +91,12 @@ issues input = selectionForCompositeField
 number :: SelectionSet Scope__Milestone Int
 number = selectionForField "number" [] graphqlDefaultResponseScalarDecoder
 
+progressPercentage :: SelectionSet Scope__Milestone Number
+progressPercentage = selectionForField
+                     "progressPercentage"
+                     []
+                     graphqlDefaultResponseScalarDecoder
+
 type PullRequestsInputRowOptional r = ( states :: Optional
                                                   (Array
                                                    PullRequestState)

@@ -27,6 +27,12 @@ import Prelude (pure)
 id :: SelectionSet Scope__Starrable Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
+stargazerCount :: SelectionSet Scope__Starrable Int
+stargazerCount = selectionForField
+                 "stargazerCount"
+                 []
+                 graphqlDefaultResponseScalarDecoder
+
 type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int

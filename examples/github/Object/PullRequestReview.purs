@@ -50,6 +50,12 @@ authorAssociation = selectionForField
                     []
                     graphqlDefaultResponseScalarDecoder
 
+authorCanPushToRepository :: SelectionSet Scope__PullRequestReview Boolean
+authorCanPushToRepository = selectionForField
+                            "authorCanPushToRepository"
+                            []
+                            graphqlDefaultResponseScalarDecoder
+
 body :: SelectionSet Scope__PullRequestReview String
 body = selectionForField "body" [] graphqlDefaultResponseScalarDecoder
 

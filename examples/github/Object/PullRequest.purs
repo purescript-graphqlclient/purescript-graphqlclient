@@ -335,6 +335,12 @@ isCrossRepository = selectionForField
 isDraft :: SelectionSet Scope__PullRequest Boolean
 isDraft = selectionForField "isDraft" [] graphqlDefaultResponseScalarDecoder
 
+isReadByViewer :: SelectionSet Scope__PullRequest (Maybe Boolean)
+isReadByViewer = selectionForField
+                 "isReadByViewer"
+                 []
+                 graphqlDefaultResponseScalarDecoder
+
 type LabelsInputRowOptional r = ( orderBy :: Optional
                                              Examples.Github.InputObject.LabelOrder
                                 , after :: Optional String

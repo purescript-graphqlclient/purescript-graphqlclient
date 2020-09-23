@@ -15,6 +15,7 @@ import Examples.Github.Scopes
   , Scope__Actor
   , Scope__ProjectOwner
   , Scope__ProjectCardConnection
+  , Scope__ProjectProgress
   )
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Html, DateTime, Id, Uri)
@@ -116,6 +117,16 @@ pendingCards input = selectionForCompositeField
                      (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+progress :: forall r . SelectionSet
+                       Scope__ProjectProgress
+                       r -> SelectionSet
+                            Scope__Project
+                            r
+progress = selectionForCompositeField
+           "progress"
+           []
+           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 resourcePath :: SelectionSet Scope__Project Uri
 resourcePath = selectionForField

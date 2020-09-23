@@ -29,7 +29,7 @@ import Data.Maybe (Maybe)
 import Examples.Github.Enum.LockReason (LockReason)
 import Type.Row (type (+))
 import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
-import Examples.Github.Scalars (Html, DateTime, Id, Uri)
+import Examples.Github.Scalars (Html, Uri, DateTime, Id)
 import Examples.Github.InputObject (LabelOrder, ReactionOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
@@ -89,8 +89,17 @@ body = selectionForField "body" [] graphqlDefaultResponseScalarDecoder
 bodyHTML :: SelectionSet Scope__Issue Html
 bodyHTML = selectionForField "bodyHTML" [] graphqlDefaultResponseScalarDecoder
 
+bodyResourcePath :: SelectionSet Scope__Issue Uri
+bodyResourcePath = selectionForField
+                   "bodyResourcePath"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
 bodyText :: SelectionSet Scope__Issue String
 bodyText = selectionForField "bodyText" [] graphqlDefaultResponseScalarDecoder
+
+bodyUrl :: SelectionSet Scope__Issue Uri
+bodyUrl = selectionForField "bodyUrl" [] graphqlDefaultResponseScalarDecoder
 
 closed :: SelectionSet Scope__Issue Boolean
 closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
@@ -170,6 +179,12 @@ includesCreatedEdit = selectionForField
                       "includesCreatedEdit"
                       []
                       graphqlDefaultResponseScalarDecoder
+
+isReadByViewer :: SelectionSet Scope__Issue (Maybe Boolean)
+isReadByViewer = selectionForField
+                 "isReadByViewer"
+                 []
+                 graphqlDefaultResponseScalarDecoder
 
 type LabelsInputRowOptional r = ( orderBy :: Optional
                                              Examples.Github.InputObject.LabelOrder

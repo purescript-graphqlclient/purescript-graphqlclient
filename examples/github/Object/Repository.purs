@@ -371,6 +371,12 @@ isEmpty = selectionForField "isEmpty" [] graphqlDefaultResponseScalarDecoder
 isFork :: SelectionSet Scope__Repository Boolean
 isFork = selectionForField "isFork" [] graphqlDefaultResponseScalarDecoder
 
+isInOrganization :: SelectionSet Scope__Repository Boolean
+isInOrganization = selectionForField
+                   "isInOrganization"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
 isLocked :: SelectionSet Scope__Repository Boolean
 isLocked = selectionForField "isLocked" [] graphqlDefaultResponseScalarDecoder
 
@@ -391,6 +397,12 @@ isTemplate = selectionForField
              "isTemplate"
              []
              graphqlDefaultResponseScalarDecoder
+
+isUserConfigurationRepository :: SelectionSet Scope__Repository Boolean
+isUserConfigurationRepository = selectionForField
+                                "isUserConfigurationRepository"
+                                []
+                                graphqlDefaultResponseScalarDecoder
 
 type IssueInputRowRequired r = ( number :: Int | r )
 
@@ -943,6 +955,12 @@ squashMergeAllowed = selectionForField
 
 sshUrl :: SelectionSet Scope__Repository GitSshRemote
 sshUrl = selectionForField "sshUrl" [] graphqlDefaultResponseScalarDecoder
+
+stargazerCount :: SelectionSet Scope__Repository Int
+stargazerCount = selectionForField
+                 "stargazerCount"
+                 []
+                 graphqlDefaultResponseScalarDecoder
 
 type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String

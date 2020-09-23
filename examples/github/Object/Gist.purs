@@ -126,6 +126,12 @@ resourcePath = selectionForField
                []
                graphqlDefaultResponseScalarDecoder
 
+stargazerCount :: SelectionSet Scope__Gist Int
+stargazerCount = selectionForField
+                 "stargazerCount"
+                 []
+                 graphqlDefaultResponseScalarDecoder
+
 type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int

@@ -338,6 +338,10 @@ data Scope__GistFile
 
 data Scope__GitActor
 
+data Scope__GitActorConnection
+
+data Scope__GitActorEdge
+
 data Scope__GitHubMetadata
 
 data Scope__GpgSignature
@@ -598,6 +602,8 @@ data Scope__ProjectConnection
 
 data Scope__ProjectEdge
 
+data Scope__ProjectProgress
+
 data Scope__PublicKey
 
 data Scope__PublicKeyConnection
@@ -683,6 +689,8 @@ data Scope__Ref
 data Scope__RefConnection
 
 data Scope__RefEdge
+
+data Scope__RefUpdateRule
 
 data Scope__ReferencedEvent
 

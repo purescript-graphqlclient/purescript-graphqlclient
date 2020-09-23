@@ -15,11 +15,13 @@ import Type.Row (type (+))
 import Examples.Github.Scopes
   ( Scope__PullRequestConnection
   , Scope__Ref
+  , Scope__BranchProtectionRule
+  , Scope__RefUpdateRule
   , Scope__Repository
   , Scope__GitObject
   )
-import Examples.Github.Scalars (Id)
 import Data.Maybe (Maybe)
+import Examples.Github.Scalars (Id)
 
 type AssociatedPullRequestsInputRowOptional r = ( states :: Optional
                                                             (Array
@@ -53,6 +55,17 @@ associatedPullRequests input = selectionForCompositeField
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+branchProtectionRule :: forall r . SelectionSet
+                                   Scope__BranchProtectionRule
+                                   r -> SelectionSet
+                                        Scope__Ref
+                                        (Maybe
+                                         r)
+branchProtectionRule = selectionForCompositeField
+                       "branchProtectionRule"
+                       []
+                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 id :: SelectionSet Scope__Ref Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
@@ -61,6 +74,17 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
 prefix :: SelectionSet Scope__Ref String
 prefix = selectionForField "prefix" [] graphqlDefaultResponseScalarDecoder
+
+refUpdateRule :: forall r . SelectionSet
+                            Scope__RefUpdateRule
+                            r -> SelectionSet
+                                 Scope__Ref
+                                 (Maybe
+                                  r)
+refUpdateRule = selectionForCompositeField
+                "refUpdateRule"
+                []
+                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 repository :: forall r . SelectionSet
                          Scope__Repository

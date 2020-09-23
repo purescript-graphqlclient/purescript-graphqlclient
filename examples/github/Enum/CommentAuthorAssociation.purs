@@ -13,6 +13,7 @@ import GraphQLClient
 data CommentAuthorAssociation
   = Member
   | Owner
+  | Mannequin
   | Collaborator
   | Contributor
   | FirstTimeContributor
@@ -26,6 +27,7 @@ derive instance ordCommentAuthorAssociation :: Ord CommentAuthorAssociation
 fromToMap :: Array (Tuple String CommentAuthorAssociation)
 fromToMap = [ Tuple "MEMBER" Member
             , Tuple "OWNER" Owner
+            , Tuple "MANNEQUIN" Mannequin
             , Tuple "COLLABORATOR" Collaborator
             , Tuple "CONTRIBUTOR" Contributor
             , Tuple "FIRST_TIME_CONTRIBUTOR" FirstTimeContributor
@@ -45,6 +47,7 @@ instance commentAuthorAssociationToGraphQLArgumentValue :: ToGraphQLArgumentValu
     case _ of
       Member -> ArgumentValueEnum "MEMBER"
       Owner -> ArgumentValueEnum "OWNER"
+      Mannequin -> ArgumentValueEnum "MANNEQUIN"
       Collaborator -> ArgumentValueEnum "COLLABORATOR"
       Contributor -> ArgumentValueEnum "CONTRIBUTOR"
       FirstTimeContributor -> ArgumentValueEnum "FIRST_TIME_CONTRIBUTOR"

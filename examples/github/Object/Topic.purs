@@ -36,6 +36,12 @@ relatedTopics input = selectionForCompositeField
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+stargazerCount :: SelectionSet Scope__Topic Int
+stargazerCount = selectionForField
+                 "stargazerCount"
+                 []
+                 graphqlDefaultResponseScalarDecoder
+
 type StargazersInputRowOptional r = ( after :: Optional String
                                     , before :: Optional String
                                     , first :: Optional Int

@@ -7,7 +7,8 @@ import GraphQLClient
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
-import Examples.Github.Scopes (Scope__Actor, Scope__MarkedAsDuplicateEvent)
+import Examples.Github.Scopes
+  (Scope__Actor, Scope__MarkedAsDuplicateEvent, Scope__IssueOrPullRequest)
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Id)
 
@@ -22,8 +23,36 @@ actor = selectionForCompositeField
         []
         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+canonical :: forall r . SelectionSet
+                        Scope__IssueOrPullRequest
+                        r -> SelectionSet
+                             Scope__MarkedAsDuplicateEvent
+                             (Maybe
+                              r)
+canonical = selectionForCompositeField
+            "canonical"
+            []
+            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 createdAt :: SelectionSet Scope__MarkedAsDuplicateEvent DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 
+duplicate :: forall r . SelectionSet
+                        Scope__IssueOrPullRequest
+                        r -> SelectionSet
+                             Scope__MarkedAsDuplicateEvent
+                             (Maybe
+                              r)
+duplicate = selectionForCompositeField
+            "duplicate"
+            []
+            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 id :: SelectionSet Scope__MarkedAsDuplicateEvent Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+
+isCrossRepository :: SelectionSet Scope__MarkedAsDuplicateEvent Boolean
+isCrossRepository = selectionForField
+                    "isCrossRepository"
+                    []
+                    graphqlDefaultResponseScalarDecoder
