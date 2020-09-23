@@ -34,7 +34,7 @@ type Cache =
   -- | argsWritten = "(yyy: true)"
   -- | ```
   -- |
-  -- | NOTE: we DO NOT KEEP the args after they were converted to the string repesentation
+  -- | NOTE: we DO NOT KEEP the args after they were converted to the string representation
   -- | because I didn't fine a place where to use them
   { argsWritten :: String
 

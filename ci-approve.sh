@@ -11,7 +11,7 @@ function retry()
 
 function check_no_diff()
 {
-  echo 'Confirming that generated code has been commited...'
+  echo 'Confirming that generated code has been committed...'
   changed_files=$(git diff --name-only)
 
   if [[ -n $changed_files ]]; then
