@@ -48,9 +48,5 @@
     "purescript-psa": "^0.7.3",
     "terser": "^5.3.0",
     "ws": "^7.3.1"
-  },
-  "optionalDependencies": {
-    "purescript": "~0.13.8",
-    "spago": "~0.16.0"
   }
 }
