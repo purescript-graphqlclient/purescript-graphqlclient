@@ -87,9 +87,9 @@ printGraphQLError = case _ of
     , "  error = " <> printJsonDecodeError error
     , "  body = " <> ArgonautCore.stringifyWithIndent 2 jsonBody
     ]
-  GraphQLError__User errorsArray possiblyPossiblyParsedData__ParsedData ->
+  GraphQLError__User errorsArray pissiblyParsedData ->
     let errorsArray' = errorsArray <#> unwrap <#> _.message <#> ("  " <> _)
-     in case possiblyPossiblyParsedData__ParsedData of
+     in case pissiblyParsedData of
         PossiblyParsedData__ParsedData _parsed -> intercalate "\n" $ ["Data is parsed, but there are graphql errors:"] <> NonEmptyArray.toArray errorsArray'
         PossiblyParsedData__NoDataKey -> intercalate "\n" $ ["Data is not present because of the graphql errors:"] <> NonEmptyArray.toArray errorsArray'
         PossiblyParsedData__UnparsedData dataDecoderError _json -> (intercalate "\n" $ ["Data cannot be parsed because of the graphql errors:"] <> NonEmptyArray.toArray errorsArray') <> printJsonDecodeError dataDecoderError
@@ -124,15 +124,15 @@ errorsOrBodyDecoder json = do
 tryDecodeGraphQLResponse :: ∀ parsed . (ArgonautCore.Json -> Either JsonDecodeError parsed) -> ArgonautCore.Json -> Either (GraphQLError parsed) parsed
 tryDecodeGraphQLResponse decoderForData jsonBody = graphqlResponseOrError # (\error -> Left $ GraphQLError__UnexpectedPayload error jsonBody) \/ identity
   where
-    graphqlResponseOrError :: JsonDecodeError \/ Either (GraphQLError parsed) parsed
+    graphqlResponseOrError :: JsonDecodeError \/ GraphQLError parsed \/ parsed
     graphqlResponseOrError = do
       errorsOrBodyDecoder jsonBody >>= case _ of
         Right dataJson -> do
           parsed <- decoderForData dataJson
           Right $ Right parsed
         Left { errors, dataJson } -> do
-          (possiblyPossiblyParsedData__ParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # (\error -> Right $ PossiblyParsedData__UnparsedData error dataJson) \/ (Right <<< PossiblyParsedData__ParsedData)
-          Right $ Left $ GraphQLError__User errors possiblyPossiblyParsedData__ParsedData
+          (pissiblyParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # (\error -> Right $ PossiblyParsedData__UnparsedData error dataJson) \/ (Right <<< PossiblyParsedData__ParsedData)
+          Right $ Left $ GraphQLError__User errors pissiblyParsedData
 
 type RequestOptions =
   { headers :: Array Affjax.RequestHeader
