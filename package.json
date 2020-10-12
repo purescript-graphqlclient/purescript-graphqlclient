@@ -45,8 +45,8 @@
   "devDependencies": {
     "apollo-codegen": "^0.20.2",
     "json-diff": "^0.5.4",
-    "purescript-psa": "^0.7.3",
-    "terser": "^5.3.0",
+    "purescript-psa": "^0.8.0",
+    "terser": "^5.3.4",
     "ws": "^7.3.1"
   }
 }
