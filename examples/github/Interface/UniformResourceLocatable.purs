@@ -10,6 +10,7 @@ import GraphQLClient
 import Examples.Github.Scopes
   ( Scope__UniformResourceLocatable
   , Scope__Bot
+  , Scope__CheckRun
   , Scope__ClosedEvent
   , Scope__Commit
   , Scope__ConvertToDraftEvent
@@ -45,6 +46,9 @@ url :: SelectionSet Scope__UniformResourceLocatable Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
 
 type Fragments decodesTo = { onBot :: SelectionSet Scope__Bot decodesTo
+                           , onCheckRun :: SelectionSet
+                                           Scope__CheckRun
+                                           decodesTo
                            , onClosedEvent :: SelectionSet
                                               Scope__ClosedEvent
                                               decodesTo
@@ -103,6 +107,7 @@ fragments :: forall decodesTo . Fragments
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
                        [ buildFragment "Bot" selections.onBot
+                       , buildFragment "CheckRun" selections.onCheckRun
                        , buildFragment "ClosedEvent" selections.onClosedEvent
                        , buildFragment "Commit" selections.onCommit
                        , buildFragment
@@ -144,6 +149,8 @@ fragments selections = exhaustiveFragmentSelection
 maybeFragments :: forall decodesTo . Fragments (Maybe decodesTo)
 maybeFragments = { onBot: pure
                           Nothing
+                 , onCheckRun: pure
+                               Nothing
                  , onClosedEvent: pure
                                   Nothing
                  , onCommit: pure

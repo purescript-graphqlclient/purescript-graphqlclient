@@ -68,6 +68,28 @@ data Scope__CancelEnterpriseAdminInvitationPayload
 
 data Scope__ChangeUserStatusPayload
 
+data Scope__CheckAnnotation
+
+data Scope__CheckAnnotationConnection
+
+data Scope__CheckAnnotationEdge
+
+data Scope__CheckAnnotationPosition
+
+data Scope__CheckAnnotationSpan
+
+data Scope__CheckRun
+
+data Scope__CheckRunConnection
+
+data Scope__CheckRunEdge
+
+data Scope__CheckSuite
+
+data Scope__CheckSuiteConnection
+
+data Scope__CheckSuiteEdge
+
 data Scope__ClearLabelsFromLabelablePayload
 
 data Scope__CloneProjectPayload
@@ -121,6 +143,10 @@ data Scope__ConvertToDraftEvent
 data Scope__ConvertedNoteToIssueEvent
 
 data Scope__CreateBranchProtectionRulePayload
+
+data Scope__CreateCheckRunPayload
+
+data Scope__CreateCheckSuitePayload
 
 data Scope__CreateEnterpriseOrganizationPayload
 
@@ -662,6 +688,8 @@ data Scope__PullRequestTimelineItemsConnection
 
 data Scope__PullRequestTimelineItemsEdge
 
+data Scope__Push
+
 data Scope__PushAllowance
 
 data Scope__PushAllowanceConnection
@@ -807,6 +835,8 @@ data Scope__RepositoryVulnerabilityAlertConnection
 data Scope__RepositoryVulnerabilityAlertEdge
 
 data Scope__RequestReviewsPayload
+
+data Scope__RerequestCheckSuitePayload
 
 data Scope__ResolveReviewThreadPayload
 
@@ -995,6 +1025,10 @@ data Scope__UnresolveReviewThreadPayload
 data Scope__UnsubscribedEvent
 
 data Scope__UpdateBranchProtectionRulePayload
+
+data Scope__UpdateCheckRunPayload
+
+data Scope__UpdateCheckSuitePreferencesPayload
 
 data Scope__UpdateEnterpriseActionExecutionCapabilitySettingPayload
 

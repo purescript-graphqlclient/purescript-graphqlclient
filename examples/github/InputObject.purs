@@ -8,9 +8,15 @@ import Examples.Github.Enum.DiffSide (DiffSide)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.AuditLogOrderField (AuditLogOrderField)
 import Examples.Github.Enum.OrderDirection (OrderDirection)
+import Examples.Github.Enum.CheckAnnotationLevel (CheckAnnotationLevel)
+import Examples.Github.Enum.CheckRunType (CheckRunType)
+import Examples.Github.Enum.CheckStatusState (CheckStatusState)
 import Examples.Github.Enum.RepositoryVisibility (RepositoryVisibility)
 import Examples.Github.Enum.CommitContributionOrderField
   (CommitContributionOrderField)
+import Examples.Github.Enum.RequestableCheckStatusState
+  (RequestableCheckStatusState)
+import Examples.Github.Enum.CheckConclusionState (CheckConclusionState)
 import Examples.Github.Enum.ProjectTemplate (ProjectTemplate)
 import Examples.Github.Enum.TopicSuggestionDeclineReason
   (TopicSuggestionDeclineReason)
@@ -206,6 +212,55 @@ type ChangeUserStatusInput = { emoji :: Optional String
                              , clientMutationId :: Optional String
                              }
 
+-- | original name - CheckAnnotationData
+type CheckAnnotationData = { path :: String
+                           , location :: CheckAnnotationRange
+                           , annotationLevel :: CheckAnnotationLevel
+                           , message :: String
+                           , title :: Optional String
+                           , rawDetails :: Optional String
+                           }
+
+-- | original name - CheckAnnotationRange
+type CheckAnnotationRange = { startLine :: Int
+                            , startColumn :: Optional Int
+                            , endLine :: Int
+                            , endColumn :: Optional Int
+                            }
+
+-- | original name - CheckRunAction
+type CheckRunAction = { label :: String
+                      , description :: String
+                      , identifier :: String
+                      }
+
+-- | original name - CheckRunFilter
+type CheckRunFilter = { checkType :: Optional CheckRunType
+                      , appId :: Optional Int
+                      , checkName :: Optional String
+                      , status :: Optional CheckStatusState
+                      }
+
+-- | original name - CheckRunOutput
+type CheckRunOutput = { title :: String
+                      , summary :: String
+                      , text :: Optional String
+                      , annotations :: Optional (Array CheckAnnotationData)
+                      , images :: Optional (Array CheckRunOutputImage)
+                      }
+
+-- | original name - CheckRunOutputImage
+type CheckRunOutputImage = { alt :: String
+                           , imageUrl :: Uri
+                           , caption :: Optional String
+                           }
+
+-- | original name - CheckSuiteAutoTriggerPreference
+type CheckSuiteAutoTriggerPreference = { appId :: Id, setting :: Boolean }
+
+-- | original name - CheckSuiteFilter
+type CheckSuiteFilter = { appId :: Optional Int, checkName :: Optional String }
+
 -- | original name - ClearLabelsFromLabelableInput
 type ClearLabelsFromLabelableInput = { labelableId :: Id
                                      , clientMutationId :: Optional String
@@ -288,6 +343,27 @@ type CreateBranchProtectionRuleInput = { repositoryId :: Id
                                                                          String)
                                        , clientMutationId :: Optional String
                                        }
+
+-- | original name - CreateCheckRunInput
+type CreateCheckRunInput = { repositoryId :: Id
+                           , name :: String
+                           , headSha :: GitObjectId
+                           , detailsUrl :: Optional Uri
+                           , externalId :: Optional String
+                           , status :: Optional RequestableCheckStatusState
+                           , startedAt :: Optional DateTime
+                           , conclusion :: Optional CheckConclusionState
+                           , completedAt :: Optional DateTime
+                           , output :: Optional CheckRunOutput
+                           , actions :: Optional (Array CheckRunAction)
+                           , clientMutationId :: Optional String
+                           }
+
+-- | original name - CreateCheckSuiteInput
+type CreateCheckSuiteInput = { repositoryId :: Id
+                             , headSha :: GitObjectId
+                             , clientMutationId :: Optional String
+                             }
 
 -- | original name - CreateEnterpriseOrganizationInput
 type CreateEnterpriseOrganizationInput = { enterpriseId :: Id
@@ -717,6 +793,12 @@ type RequestReviewsInput = { pullRequestId :: Id
                            , clientMutationId :: Optional String
                            }
 
+-- | original name - RerequestCheckSuiteInput
+type RerequestCheckSuiteInput = { repositoryId :: Id
+                                , checkSuiteId :: Id
+                                , clientMutationId :: Optional String
+                                }
+
 -- | original name - ResolveReviewThreadInput
 type ResolveReviewThreadInput = { threadId :: Id
                                 , clientMutationId :: Optional String
@@ -873,6 +955,28 @@ type UpdateBranchProtectionRuleInput = { branchProtectionRuleId :: Id
                                                                          String)
                                        , clientMutationId :: Optional String
                                        }
+
+-- | original name - UpdateCheckRunInput
+type UpdateCheckRunInput = { repositoryId :: Id
+                           , checkRunId :: Id
+                           , name :: Optional String
+                           , detailsUrl :: Optional Uri
+                           , externalId :: Optional String
+                           , status :: Optional RequestableCheckStatusState
+                           , startedAt :: Optional DateTime
+                           , conclusion :: Optional CheckConclusionState
+                           , completedAt :: Optional DateTime
+                           , output :: Optional CheckRunOutput
+                           , actions :: Optional (Array CheckRunAction)
+                           , clientMutationId :: Optional String
+                           }
+
+-- | original name - UpdateCheckSuitePreferencesInput
+type UpdateCheckSuitePreferencesInput = { repositoryId :: Id
+                                        , autoTriggerPreferences :: Array
+                                                                    CheckSuiteAutoTriggerPreference
+                                        , clientMutationId :: Optional String
+                                        }
 
 -- | original name - UpdateEnterpriseActionExecutionCapabilitySettingInput
 type UpdateEnterpriseActionExecutionCapabilitySettingInput = { enterpriseId :: Id

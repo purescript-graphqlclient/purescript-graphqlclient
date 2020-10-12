@@ -56,12 +56,6 @@ dueOn = selectionForField "dueOn" [] graphqlDefaultResponseScalarDecoder
 id :: SelectionSet Scope__Milestone Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
-issuePrioritiesDebug :: SelectionSet Scope__Milestone String
-issuePrioritiesDebug = selectionForField
-                       "issuePrioritiesDebug"
-                       []
-                       graphqlDefaultResponseScalarDecoder
-
 type IssuesInputRowOptional r = ( orderBy :: Optional
                                              Examples.Github.InputObject.IssueOrder
                                 , labels :: Optional (Array String)

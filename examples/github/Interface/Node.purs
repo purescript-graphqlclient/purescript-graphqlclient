@@ -20,6 +20,8 @@ import Examples.Github.Scopes
   , Scope__Blob
   , Scope__Bot
   , Scope__BranchProtectionRule
+  , Scope__CheckRun
+  , Scope__CheckSuite
   , Scope__ClosedEvent
   , Scope__CodeOfConduct
   , Scope__CommentDeletedEvent
@@ -119,6 +121,7 @@ import Examples.Github.Scopes
   , Scope__PullRequestReview
   , Scope__PullRequestReviewComment
   , Scope__PullRequestReviewThread
+  , Scope__Push
   , Scope__PushAllowance
   , Scope__Reaction
   , Scope__ReadyForReviewEvent
@@ -225,6 +228,12 @@ type Fragments decodesTo = { onAddedToProjectEvent :: SelectionSet
                            , onBranchProtectionRule :: SelectionSet
                                                        Scope__BranchProtectionRule
                                                        decodesTo
+                           , onCheckRun :: SelectionSet
+                                           Scope__CheckRun
+                                           decodesTo
+                           , onCheckSuite :: SelectionSet
+                                             Scope__CheckSuite
+                                             decodesTo
                            , onClosedEvent :: SelectionSet
                                               Scope__ClosedEvent
                                               decodesTo
@@ -508,6 +517,7 @@ type Fragments decodesTo = { onAddedToProjectEvent :: SelectionSet
                            , onPullRequestReviewThread :: SelectionSet
                                                           Scope__PullRequestReviewThread
                                                           decodesTo
+                           , onPush :: SelectionSet Scope__Push decodesTo
                            , onPushAllowance :: SelectionSet
                                                 Scope__PushAllowance
                                                 decodesTo
@@ -739,6 +749,8 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "BranchProtectionRule"
                          selections.onBranchProtectionRule
+                       , buildFragment "CheckRun" selections.onCheckRun
+                       , buildFragment "CheckSuite" selections.onCheckSuite
                        , buildFragment "ClosedEvent" selections.onClosedEvent
                        , buildFragment
                          "CodeOfConduct"
@@ -984,6 +996,7 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "PullRequestReviewThread"
                          selections.onPullRequestReviewThread
+                       , buildFragment "Push" selections.onPush
                        , buildFragment
                          "PushAllowance"
                          selections.onPushAllowance
@@ -1192,6 +1205,10 @@ maybeFragments = { onAddedToProjectEvent: pure
                           Nothing
                  , onBranchProtectionRule: pure
                                            Nothing
+                 , onCheckRun: pure
+                               Nothing
+                 , onCheckSuite: pure
+                                 Nothing
                  , onClosedEvent: pure
                                   Nothing
                  , onCodeOfConduct: pure
@@ -1390,6 +1407,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                                Nothing
                  , onPullRequestReviewThread: pure
                                               Nothing
+                 , onPush: pure
+                           Nothing
                  , onPushAllowance: pure
                                     Nothing
                  , onReaction: pure

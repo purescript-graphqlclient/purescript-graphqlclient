@@ -141,7 +141,7 @@ type RequestOptions =
   , username :: Maybe String
   , password :: Maybe String
   , withCredentials :: Boolean
-  --, timeout :: Maybe Milliseconds
+  -- | , timeout :: Maybe Milliseconds
   }
 
 defaultRequestOptions :: RequestOptions
@@ -150,7 +150,7 @@ defaultRequestOptions =
   , username: Nothing
   , password: Nothing
   , withCredentials: false
-  --, timeout: Nothing
+  -- | , timeout: Nothing
   }
 
 post :: Affjax.URL -> RequestOptions -> ArgonautCore.Json -> Aff (Either Affjax.Error (Affjax.Response ArgonautCore.Json))

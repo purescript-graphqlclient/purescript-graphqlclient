@@ -2,11 +2,14 @@ module Examples.Github.Union.StatusCheckRollupContext where
 
 import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
-  (Scope__StatusContext, Scope__StatusCheckRollupContext)
+  (Scope__CheckRun, Scope__StatusContext, Scope__StatusCheckRollupContext)
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
-type Fragments decodesTo = { onStatusContext :: SelectionSet
+type Fragments decodesTo = { onCheckRun :: SelectionSet
+                                           Scope__CheckRun
+                                           decodesTo
+                           , onStatusContext :: SelectionSet
                                                 Scope__StatusContext
                                                 decodesTo
                            }
@@ -16,10 +19,11 @@ fragments :: forall decodesTo . Fragments
                                              Scope__StatusCheckRollupContext
                                              decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment
+                       [ buildFragment "CheckRun" selections.onCheckRun
+                       , buildFragment
                          "StatusContext"
                          selections.onStatusContext
                        ]
 
 maybeFragments :: forall decodesTo . Fragments (Maybe decodesTo)
-maybeFragments = { onStatusContext: pure Nothing }
+maybeFragments = { onCheckRun: pure Nothing, onStatusContext: pure Nothing }

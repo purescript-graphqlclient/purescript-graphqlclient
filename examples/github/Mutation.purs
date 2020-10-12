@@ -23,6 +23,8 @@ import Examples.Github.InputObject
   , ClosePullRequestInput
   , ConvertProjectCardNoteToIssueInput
   , CreateBranchProtectionRuleInput
+  , CreateCheckRunInput
+  , CreateCheckSuiteInput
   , CreateEnterpriseOrganizationInput
   , CreateIpAllowListEntryInput
   , CreateIssueInput
@@ -70,6 +72,7 @@ import Examples.Github.InputObject
   , ReopenIssueInput
   , ReopenPullRequestInput
   , RequestReviewsInput
+  , RerequestCheckSuiteInput
   , ResolveReviewThreadInput
   , SetEnterpriseIdentityProviderInput
   , SubmitPullRequestReviewInput
@@ -83,6 +86,8 @@ import Examples.Github.InputObject
   , UnminimizeCommentInput
   , UnresolveReviewThreadInput
   , UpdateBranchProtectionRuleInput
+  , UpdateCheckRunInput
+  , UpdateCheckSuitePreferencesInput
   , UpdateEnterpriseActionExecutionCapabilitySettingInput
   , UpdateEnterpriseAdministratorRoleInput
   , UpdateEnterpriseAllowPrivateRepositoryForkingSettingInput
@@ -148,6 +153,8 @@ import Examples.Github.Scopes
   , Scope__ClosePullRequestPayload
   , Scope__ConvertProjectCardNoteToIssuePayload
   , Scope__CreateBranchProtectionRulePayload
+  , Scope__CreateCheckRunPayload
+  , Scope__CreateCheckSuitePayload
   , Scope__CreateEnterpriseOrganizationPayload
   , Scope__CreateIpAllowListEntryPayload
   , Scope__CreateIssuePayload
@@ -195,6 +202,7 @@ import Examples.Github.Scopes
   , Scope__ReopenIssuePayload
   , Scope__ReopenPullRequestPayload
   , Scope__RequestReviewsPayload
+  , Scope__RerequestCheckSuitePayload
   , Scope__ResolveReviewThreadPayload
   , Scope__SetEnterpriseIdentityProviderPayload
   , Scope__SubmitPullRequestReviewPayload
@@ -208,6 +216,8 @@ import Examples.Github.Scopes
   , Scope__UnminimizeCommentPayload
   , Scope__UnresolveReviewThreadPayload
   , Scope__UpdateBranchProtectionRulePayload
+  , Scope__UpdateCheckRunPayload
+  , Scope__UpdateCheckSuitePreferencesPayload
   , Scope__UpdateEnterpriseActionExecutionCapabilitySettingPayload
   , Scope__UpdateEnterpriseAdministratorRolePayload
   , Scope__UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayload
@@ -659,6 +669,42 @@ createBranchProtectionRule input = selectionForCompositeField
                                    (toGraphQLArguments
                                     input)
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CreateCheckRunInputRowRequired r = ( input :: Examples.Github.InputObject.CreateCheckRunInput
+                                        | r
+                                        )
+
+type CreateCheckRunInput = { | CreateCheckRunInputRowRequired + () }
+
+createCheckRun :: forall r . CreateCheckRunInput -> SelectionSet
+                                                    Scope__CreateCheckRunPayload
+                                                    r -> SelectionSet
+                                                         Scope__RootMutation
+                                                         (Maybe
+                                                          r)
+createCheckRun input = selectionForCompositeField
+                       "createCheckRun"
+                       (toGraphQLArguments
+                        input)
+                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CreateCheckSuiteInputRowRequired r = ( input :: Examples.Github.InputObject.CreateCheckSuiteInput
+                                          | r
+                                          )
+
+type CreateCheckSuiteInput = { | CreateCheckSuiteInputRowRequired + () }
+
+createCheckSuite :: forall r . CreateCheckSuiteInput -> SelectionSet
+                                                        Scope__CreateCheckSuitePayload
+                                                        r -> SelectionSet
+                                                             Scope__RootMutation
+                                                             (Maybe
+                                                              r)
+createCheckSuite input = selectionForCompositeField
+                         "createCheckSuite"
+                         (toGraphQLArguments
+                          input)
+                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateEnterpriseOrganizationInputRowRequired r = ( input :: Examples.Github.InputObject.CreateEnterpriseOrganizationInput
                                                       | r
@@ -1546,6 +1592,24 @@ requestReviews input = selectionForCompositeField
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type RerequestCheckSuiteInputRowRequired r = ( input :: Examples.Github.InputObject.RerequestCheckSuiteInput
+                                             | r
+                                             )
+
+type RerequestCheckSuiteInput = { | RerequestCheckSuiteInputRowRequired + () }
+
+rerequestCheckSuite :: forall r . RerequestCheckSuiteInput -> SelectionSet
+                                                              Scope__RerequestCheckSuitePayload
+                                                              r -> SelectionSet
+                                                                   Scope__RootMutation
+                                                                   (Maybe
+                                                                    r)
+rerequestCheckSuite input = selectionForCompositeField
+                            "rerequestCheckSuite"
+                            (toGraphQLArguments
+                             input)
+                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type ResolveReviewThreadInputRowRequired r = ( input :: Examples.Github.InputObject.ResolveReviewThreadInput
                                              | r
                                              )
@@ -1791,6 +1855,44 @@ updateBranchProtectionRule input = selectionForCompositeField
                                    (toGraphQLArguments
                                     input)
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UpdateCheckRunInputRowRequired r = ( input :: Examples.Github.InputObject.UpdateCheckRunInput
+                                        | r
+                                        )
+
+type UpdateCheckRunInput = { | UpdateCheckRunInputRowRequired + () }
+
+updateCheckRun :: forall r . UpdateCheckRunInput -> SelectionSet
+                                                    Scope__UpdateCheckRunPayload
+                                                    r -> SelectionSet
+                                                         Scope__RootMutation
+                                                         (Maybe
+                                                          r)
+updateCheckRun input = selectionForCompositeField
+                       "updateCheckRun"
+                       (toGraphQLArguments
+                        input)
+                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UpdateCheckSuitePreferencesInputRowRequired r = ( input :: Examples.Github.InputObject.UpdateCheckSuitePreferencesInput
+                                                     | r
+                                                     )
+
+type UpdateCheckSuitePreferencesInput = {
+| UpdateCheckSuitePreferencesInputRowRequired + ()
+}
+
+updateCheckSuitePreferences :: forall r . UpdateCheckSuitePreferencesInput -> SelectionSet
+                                                                              Scope__UpdateCheckSuitePreferencesPayload
+                                                                              r -> SelectionSet
+                                                                                   Scope__RootMutation
+                                                                                   (Maybe
+                                                                                    r)
+updateCheckSuitePreferences input = selectionForCompositeField
+                                    "updateCheckSuitePreferences"
+                                    (toGraphQLArguments
+                                     input)
+                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateEnterpriseActionExecutionCapabilitySettingInputRowRequired r = ( input :: Examples.Github.InputObject.UpdateEnterpriseActionExecutionCapabilitySettingInput
                                                                           | r

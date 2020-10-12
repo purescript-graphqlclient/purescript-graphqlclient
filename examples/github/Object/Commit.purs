@@ -15,6 +15,7 @@ import Examples.Github.Scopes
   , Scope__GitActor
   , Scope__GitActorConnection
   , Scope__Blame
+  , Scope__CheckSuiteConnection
   , Scope__CommitCommentConnection
   , Scope__DeploymentConnection
   , Scope__TreeEntry
@@ -29,7 +30,7 @@ import Examples.Github.Scopes
   , Scope__Tree
   )
 import Examples.Github.InputObject
-  (PullRequestOrder, DeploymentOrder, CommitAuthor) as Examples.Github.InputObject
+  (PullRequestOrder, CheckSuiteFilter, DeploymentOrder, CommitAuthor) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars
@@ -133,6 +134,29 @@ changedFiles = selectionForField
                "changedFiles"
                []
                graphqlDefaultResponseScalarDecoder
+
+type CheckSuitesInputRowOptional r = ( after :: Optional String
+                                     , before :: Optional String
+                                     , first :: Optional Int
+                                     , last :: Optional Int
+                                     , filterBy :: Optional
+                                                   Examples.Github.InputObject.CheckSuiteFilter
+                                     | r
+                                     )
+
+type CheckSuitesInput = { | CheckSuitesInputRowOptional + () }
+
+checkSuites :: forall r . CheckSuitesInput -> SelectionSet
+                                              Scope__CheckSuiteConnection
+                                              r -> SelectionSet
+                                                   Scope__Commit
+                                                   (Maybe
+                                                    r)
+checkSuites input = selectionForCompositeField
+                    "checkSuites"
+                    (toGraphQLArguments
+                     input)
+                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CommentsInputRowOptional r = ( after :: Optional String
                                   , before :: Optional String
