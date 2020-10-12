@@ -203,10 +203,7 @@ graphqlQueryRequest
   -> RequestOptions
   -> SelectionSet Scope__RootQuery a
   -> Aff (Either (GraphQLError a) a)
-graphqlQueryRequest url headers selectionSet@(SelectionSet _fields decoder) = do
-  let query = writeGraphQL selectionSet
-  result <- graphqlRequestImpl url headers query decoder
-  pure $ result
+graphqlQueryRequest url headers selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url headers (writeGraphQL selectionSet) decoder
 
 graphqlMutationRequest
   :: forall a
@@ -214,7 +211,4 @@ graphqlMutationRequest
   -> RequestOptions
   -> SelectionSet Scope__RootMutation a
   -> Aff (Either (GraphQLError a) a)
-graphqlMutationRequest url opts selectionSet@(SelectionSet _fields decoder) = do
-  let query = writeGraphQL selectionSet
-  result <- graphqlRequestImpl url opts query decoder
-  pure $ result
+graphqlMutationRequest url opts selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url opts (writeGraphQL selectionSet) decoder
