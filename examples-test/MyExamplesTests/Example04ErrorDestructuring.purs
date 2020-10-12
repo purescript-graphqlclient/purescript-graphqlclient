@@ -1,6 +1,6 @@
 module MyExamplesTests.Example04ErrorDestructuring where
 
-import GraphQLClient (GraphQLError(..), GraphQLUserErrorDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, graphqlQueryRequest, writeGraphQL)
+import GraphQLClient (GraphQLError(..), GraphQLError__UserDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, graphqlQueryRequest, writeGraphQL)
 import Protolude
 import Data.Array.NonEmpty as NonEmptyArray
 
@@ -28,9 +28,9 @@ spec = Test.Spec.it "Example04ErrorDestructuring" do
   (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
 
   case response of
-       Left (GraphQLUserError detail (ParsedData Nothing)) ->
+       Left (GraphQLError__User detail (PossiblyParsedData__ParsedData Nothing)) ->
          case NonEmptyArray.uncons detail of
-              { head: GraphQLUserErrorDetail { message }, tail: [] } -> message `Test.Spec.shouldEqual` "Artificial error..."
+              { head: GraphQLError__UserDetail { message }, tail: [] } -> message `Test.Spec.shouldEqual` "Artificial error..."
               _ -> Test.Spec.fail "should be only 1"
-       Left _ -> Test.Spec.fail "should be GraphQLUserError"
+       Left _ -> Test.Spec.fail "should be GraphQLError__User"
        Right _ -> Test.Spec.fail "should fail"
