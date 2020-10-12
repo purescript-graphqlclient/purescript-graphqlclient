@@ -19,7 +19,7 @@ import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty (toArray) as NonEmptyArray
 import Data.HTTP.Method (Method(..))
---import Data.Time.Duration (Milliseconds)
+import Data.Time.Duration (Milliseconds)
 import Foreign.Object (Object)
 import Foreign.Object as Foreign.Object
 import GraphQLClient.Implementation (Scope__RootMutation, Scope__RootQuery, SelectionSet(..))
@@ -141,7 +141,7 @@ type RequestOptions =
   , username :: Maybe String
   , password :: Maybe String
   , withCredentials :: Boolean
-  -- | , timeout :: Maybe Milliseconds
+  , timeout :: Maybe Milliseconds
   }
 
 defaultRequestOptions :: RequestOptions
@@ -150,7 +150,7 @@ defaultRequestOptions =
   , username: Nothing
   , password: Nothing
   , withCredentials: false
-  -- | , timeout: Nothing
+  , timeout: Nothing
   }
 
 post :: Affjax.URL -> RequestOptions -> ArgonautCore.Json -> Aff (Either Affjax.Error (Affjax.Response ArgonautCore.Json))
