@@ -28,10 +28,10 @@ purescript-graphql-client-generator --input-url … --output … --api … --cus
 
 - - -
 
-## Requirements on the `$PATH` to build (see `package.json`’s `optionalDependencies`)
+## Requirements on the `$PATH` to build (should be installed globally)
 
-- `purescript`
-- `spago`
+- `purescript`: `~0.13.8`
+- `spago`: `~0.16.0`
 
 ### How to bundle a new build
 
