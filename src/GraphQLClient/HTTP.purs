@@ -88,7 +88,7 @@ printGraphQLError = case _ of
     , "  body = " <> ArgonautCore.stringifyWithIndent 2 jsonBody
     ]
   GraphQLError__User errorsArray pissiblyParsedData ->
-    let errorsArray' = errorsArray <#> unwrap <#> _.message <#> ("  " <> _)
+    let errorsArray' = errorsArray <#> (unwrap >>> _.message >>> ("  " <> _))
      in case pissiblyParsedData of
         PossiblyParsedData__ParsedData _parsed -> intercalate "\n" $ ["Data is parsed, but there are graphql errors:"] <> NonEmptyArray.toArray errorsArray'
         PossiblyParsedData__NoDataKey -> intercalate "\n" $ ["Data is not present because of the graphql errors:"] <> NonEmptyArray.toArray errorsArray'
