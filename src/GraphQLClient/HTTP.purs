@@ -154,11 +154,11 @@ defaultRequestOptions =
   }
 
 post :: Affjax.URL -> RequestOptions -> ArgonautCore.Json -> Aff (Either Affjax.Error (Affjax.Response ArgonautCore.Json))
-post url opts body = Affjax.request request
+post url requestOptions body = Affjax.request request
   where
   request :: Affjax.Request ArgonautCore.Json
   request =
-    Record.merge opts $
+    Record.merge requestOptions $
       (Affjax.defaultRequest
         { method = Left POST
         , url = url
@@ -173,8 +173,8 @@ graphqlRequestImpl
   -> String
   -> (ArgonautCore.Json -> Either JsonDecodeError a)
   -> Aff (Either (GraphQLError a) a)
-graphqlRequestImpl url opts query decoder = Transformers.runExceptT do
-  (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url opts $ ArgonautCodecs.Encode.encodeJson { query }
+graphqlRequestImpl url requestOptions query decoder = Transformers.runExceptT do
+  (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url requestOptions $ ArgonautCodecs.Encode.encodeJson { query }
   jsonBody <- case result of
     Left error -> Transformers.throwError $ GraphQLAffjaxError error
     Right response -> pure response.body
@@ -203,7 +203,7 @@ graphqlQueryRequest
   -> RequestOptions
   -> SelectionSet Scope__RootQuery a
   -> Aff (Either (GraphQLError a) a)
-graphqlQueryRequest url headers selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url headers (writeGraphQL selectionSet) decoder
+graphqlQueryRequest url requestOptions selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url requestOptions (writeGraphQL selectionSet) decoder
 
 graphqlMutationRequest
   :: forall a
@@ -211,4 +211,4 @@ graphqlMutationRequest
   -> RequestOptions
   -> SelectionSet Scope__RootMutation a
   -> Aff (Either (GraphQLError a) a)
-graphqlMutationRequest url opts selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url opts (writeGraphQL selectionSet) decoder
+graphqlMutationRequest url requestOptions selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url requestOptions (writeGraphQL selectionSet) decoder
