@@ -39,14 +39,20 @@ purescript-graphql-client-generator --input-url … --output … --api … --cus
 yarn bundle
 ```
 
+### How to regenerate examples
+
+```sh
+spago install
+spago --config generator-spago.dhall install
+./regenerate-examples.sh
+yarn run examples:test --watch
+git push
+```
+
 ### How to run generator from source
 
 ```sh
 yarn install
-
-# or for nix
-
-yarn install --ignore-optional
 
 # check ./regenerate-examples.sh file
 spago --config generator-spago.dhall run \
