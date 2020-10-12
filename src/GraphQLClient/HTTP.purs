@@ -88,13 +88,11 @@ printGraphQLError = case _ of
     , "  body = " <> ArgonautCore.stringifyWithIndent 2 jsonBody
     ]
   GraphQLError__User errorsArray pissiblyParsedData ->
-    let errorsArray' = errorsArray <#> (unwrap >>> _.message >>> ("  " <> _))
+    let errorsArray' = NonEmptyArray.toArray $ map (unwrap >>> _.message >>> ("  " <> _)) errorsArray
      in case pissiblyParsedData of
-        PossiblyParsedData__ParsedData _parsed -> intercalate "\n" $ ["Data is parsed, but there are graphql errors:"] <> NonEmptyArray.toArray errorsArray'
-        PossiblyParsedData__NoDataKey -> intercalate "\n" $ ["Data is not present because of the graphql errors:"] <> NonEmptyArray.toArray errorsArray'
-        PossiblyParsedData__UnparsedData dataDecoderError _json -> (intercalate "\n" $ ["Data cannot be parsed because of the graphql errors:"] <> NonEmptyArray.toArray errorsArray') <> printJsonDecodeError dataDecoderError
-  where
-  quote x = "\"" <> x <> "\""
+        PossiblyParsedData__ParsedData _parsed -> intercalate "\n" $ ["Data is parsed, but there are graphql errors:"] <> errorsArray'
+        PossiblyParsedData__NoDataKey -> intercalate "\n" $ ["Data is not present because of the graphql errors:"] <> errorsArray'
+        PossiblyParsedData__UnparsedData dataDecoderError _json -> (intercalate "\n" $ ["Data cannot be parsed because of the graphql errors:"] <> errorsArray') <> printJsonDecodeError dataDecoderError
 
 
 errorsOrBodyDecoder :: ArgonautCore.Json -> JsonDecodeError \/ { errors :: NonEmptyArray GraphQLError__UserDetail, dataJson :: ArgonautCore.Json } \/ ArgonautCore.Json
