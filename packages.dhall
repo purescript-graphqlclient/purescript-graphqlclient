@@ -1,8 +1,92 @@
 let upstream =
       https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20201021/packages.dhall sha256:55ebdbda1bd6ede4d5307fbc1ef19988c80271b4225d833c8d6fb9b6fb1aa6d8
 
+let other =
+  { ps-cst =
+    { dependencies =
+      [ "console"
+      , "effect"
+      , "generics-rep"
+      , "psci-support"
+      , "record"
+      , "strings"
+      , "spec"
+      , "node-path"
+      , "node-fs-aff"
+      , "ansi"
+      , "dodo-printer"
+      ]
+    , repo = "https://github.com/purescript-codegen/purescript-ps-cst.git"
+    , version = "master"
+    }
+  , dodo-printer =
+    { dependencies =
+      [ "aff"
+      , "ansi"
+      , "avar"
+      , "console"
+      , "effect"
+      , "foldable-traversable"
+      , "lists"
+      , "maybe"
+      , "minibench"
+      , "node-child-process"
+      , "node-fs-aff"
+      , "node-process"
+      , "psci-support"
+      , "strings"
+      ]
+    , repo = "https://github.com/natefaubion/purescript-dodo-printer.git"
+    , version = "master"
+    }
+  , unordered-collection =
+    { dependencies =
+      [ "enums"
+      , "functions"
+      , "integers"
+      , "lists"
+      , "prelude"
+      , "record"
+      , "tuples"
+      , "typelevel-prelude"
+      ]
+    , repo =
+        "https://github.com/fehrenbach/purescript-unordered-collections.git"
+    , version = "master"
+    }
+  , homogeneous-records =
+    { dependencies =
+      [ "record", "prelude", "typelevel-prelude", "unfoldable", "control" ]
+    , repo = "https://github.com/srghma/purescript-homogeneous-records.git"
+    , version = "master"
+    }
+  , mkdirp-aff =
+    { dependencies =
+      [ "prelude"
+      , "effect"
+      , "node-fs-aff"
+      , "node-fs"
+      , "node-path"
+      , "either"
+      , "exceptions"
+      , "aff"
+      ]
+    , repo = "https://github.com/leighman/purescript-mkdirp-aff.git"
+    , version = "master"
+    }
+  , url-regex-safe =
+    { dependencies =
+      [ "console"
+      , "effect"
+      , "psci-support"
+      , "strings"
+      ]
+    , repo = "https://github.com/srghma/purescript-url-regex-safe.git"
+    , version = "master"
+    }
+  }
+
 in (    upstream
-    //  https://raw.githubusercontent.com/srghma/my-purescript-package-sets/65e3d6267a6038a4905ad5703ef756113ad05a00/packages.dhall sha256:8a417337a6e3c5cee69e56e95c7abb8b47f5e507e377f1cf502c8737cadb8533
-          upstream.(https://raw.githubusercontent.com/srghma/my-purescript-package-sets/65e3d6267a6038a4905ad5703ef756113ad05a00/upstreamTypeChunk.dhall sha256:a123bf398ed3e5092620d356e1fe291dd176e5f520664308f0981d3ed088af09)
+    //  other
    )
   with affjax.version = "v11.0.0"

@@ -1,11 +1,11 @@
 module GraphQLClientGenerator.MakeModule.Object where
 
+
 import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Maybe (fromMaybe)
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import GraphQLClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
-
 import Language.PS.SmartCST (Module(..), ModuleName)
-import Protolude
 
 makeModule
   :: (String -> String)

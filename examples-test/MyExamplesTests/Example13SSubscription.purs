@@ -1,7 +1,11 @@
 module MyExamplesTests.Example13SSubscription where
 
-import Protolude
+import Control.Monad.Error.Class (throwError)
+import Effect.Exception (error)
+import Prelude
 
+import Data.Either (Either, either)
+import Data.Maybe (Maybe(..))
 import MyExamplesTests.Util (inlineAndTrim)
 import Examples.Swapi.Scopes (Scope__ChatMessage)
 
@@ -76,7 +80,7 @@ spec = Test.Spec.it "Example13SSubscription" do
 
   (response :: Either (GraphQLError MutationResponse) MutationResponse) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
 
-  response' <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  response' <- either (throwError <<< error <<< printGraphQLError) pure $ response
 
   response'.character `Test.Spec.shouldEqual` Nothing
 

@@ -1,16 +1,17 @@
 module GraphQLClientGenerator.IntrospectionSchema where
 
-import GraphQLClient.Implementation (Scope__RootQuery, SelectionSet, bindSelectionSet)
-import GraphQLClient.WriteGraphQLHash (Cache)
-
-import GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull (InstorpectionQueryResult__TypeRef, InstorpectionQueryResult__TypeRef_shared, TypeKindWithNull, collectTypeRefInfo)
-import Protolude
+import Prelude
 
 import Data.Argonaut.Decode (JsonDecodeError(..))
+import Data.Either (note)
+import Data.Maybe (Maybe)
+import GraphQLClient.Implementation (Scope__RootQuery, SelectionSet, bindSelectionSet)
+import GraphQLClient.WriteGraphQLHash (Cache)
 import GraphQLClientGenerator.IntrospectionSchema.Fields (__schema, mutationType, mutationType_name, queryType, queryType_name, subscriptionType, subscriptionType_name, types, types_description, types_enumValues, types_enumValues_deprecationReason, types_enumValues_description, types_enumValues_isDeprecated, types_enumValues_name, types_fields, types_fields_args, types_fields_deprecationReason, types_fields_description, types_fields_isDeprecated, types_fields_name, types_fields_type, types_inputFields, types_interfaces, types_kind, types_name, types_possibleTypes)
 import GraphQLClientGenerator.IntrospectionSchema.Fields.InputValue as GraphQLClientGenerator.IntrospectionSchema.Fields.InputValue
 import GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef as GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef
 import GraphQLClientGenerator.IntrospectionSchema.TypeKind (TypeKind)
+import GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull (InstorpectionQueryResult__TypeRef, InstorpectionQueryResult__TypeRef_shared, TypeKindWithNull, collectTypeRefInfo)
 import Unsafe.Coerce (unsafeCoerce)
 
 type InstorpectionQueryResult
@@ -45,8 +46,8 @@ type InstorpectionQueryResult__FullType
     , fields :: Maybe (Array InstorpectionQueryResult__Field)
     , inputFields :: Maybe (Array InstorpectionQueryResult__InputValue)
     , interfaces :: Maybe (Array TypeKindWithNull)
-    , enumValues :: Maybe <<< Array $ InstorpectionQueryResult__EnumValue
-    , possibleTypes :: Maybe <<< Array $ TypeKindWithNull
+    , enumValues :: Maybe (Array InstorpectionQueryResult__EnumValue)
+    , possibleTypes :: Maybe (Array TypeKindWithNull)
     }
 
 type InstorpectionQueryResult__InputValue

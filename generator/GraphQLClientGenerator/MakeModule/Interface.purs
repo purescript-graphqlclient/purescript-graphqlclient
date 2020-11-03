@@ -1,12 +1,12 @@
 module GraphQLClientGenerator.MakeModule.Interface where
 
-import Protolude
+import Prelude
 
 import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Maybe (fromMaybe)
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import GraphQLClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import GraphQLClientGenerator.MakeModule.Lib.Fragments as Fragments
-
 import Language.PS.SmartCST (Module(..), ModuleName)
 
 makeModule

@@ -1,8 +1,10 @@
 module MyExamplesTests.Main where
 
-import Effect.Aff (Milliseconds(..))
-import Protolude
+import Prelude
 
+import Data.Maybe (Maybe(..))
+import Effect (Effect)
+import Effect.Aff (Milliseconds(..), launchAff_)
 import MyExamplesTests.AllTests as MyExamplesTests.AllTests
 import Test.Spec.Reporter as Test.Spec.Reporter
 import Test.Spec.Runner as Test.Spec.Runner

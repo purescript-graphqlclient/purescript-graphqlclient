@@ -88,7 +88,6 @@ import Examples.Github.InputObject
   , UpdateBranchProtectionRuleInput
   , UpdateCheckRunInput
   , UpdateCheckSuitePreferencesInput
-  , UpdateEnterpriseActionExecutionCapabilitySettingInput
   , UpdateEnterpriseAdministratorRoleInput
   , UpdateEnterpriseAllowPrivateRepositoryForkingSettingInput
   , UpdateEnterpriseDefaultRepositoryPermissionSettingInput
@@ -218,7 +217,6 @@ import Examples.Github.Scopes
   , Scope__UpdateBranchProtectionRulePayload
   , Scope__UpdateCheckRunPayload
   , Scope__UpdateCheckSuitePreferencesPayload
-  , Scope__UpdateEnterpriseActionExecutionCapabilitySettingPayload
   , Scope__UpdateEnterpriseAdministratorRolePayload
   , Scope__UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayload
   , Scope__UpdateEnterpriseDefaultRepositoryPermissionSettingPayload
@@ -1893,26 +1891,6 @@ updateCheckSuitePreferences input = selectionForCompositeField
                                     (toGraphQLArguments
                                      input)
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-
-type UpdateEnterpriseActionExecutionCapabilitySettingInputRowRequired r = ( input :: Examples.Github.InputObject.UpdateEnterpriseActionExecutionCapabilitySettingInput
-                                                                          | r
-                                                                          )
-
-type UpdateEnterpriseActionExecutionCapabilitySettingInput = {
-| UpdateEnterpriseActionExecutionCapabilitySettingInputRowRequired + ()
-}
-
-updateEnterpriseActionExecutionCapabilitySetting :: forall r . UpdateEnterpriseActionExecutionCapabilitySettingInput -> SelectionSet
-                                                                                                                        Scope__UpdateEnterpriseActionExecutionCapabilitySettingPayload
-                                                                                                                        r -> SelectionSet
-                                                                                                                             Scope__RootMutation
-                                                                                                                             (Maybe
-                                                                                                                              r)
-updateEnterpriseActionExecutionCapabilitySetting input = selectionForCompositeField
-                                                         "updateEnterpriseActionExecutionCapabilitySetting"
-                                                         (toGraphQLArguments
-                                                          input)
-                                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateEnterpriseAdministratorRoleInputRowRequired r = ( input :: Examples.Github.InputObject.UpdateEnterpriseAdministratorRoleInput
                                                            | r

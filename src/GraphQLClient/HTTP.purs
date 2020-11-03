@@ -1,12 +1,13 @@
 module GraphQLClient.HTTP where
 
 
-import Protolude
+import Prelude
 
 import Affjax (Error, Response, Request, URL, defaultRequest, printError, request) as Affjax
 import Affjax.RequestBody as Affjax.RequestBody
 import Affjax.RequestHeader (RequestHeader) as Affjax
 import Affjax.ResponseFormat as Affjax.ResponseFormat
+import Control.Monad.Except (except)
 import Control.Monad.Except.Trans (runExceptT, throwError) as Transformers
 import Control.Monad.Trans.Class (lift) as Transformers
 import Data.Argonaut.Core (jsonNull)
@@ -16,10 +17,18 @@ import Data.Argonaut.Decode.Decoders (decodeJObject, decodeNonEmptyArray, decode
 import Data.Argonaut.Encode (class EncodeJson)
 import Data.Argonaut.Encode as ArgonautCodecs.Encode
 import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
+import Data.Array (intercalate)
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty (toArray) as NonEmptyArray
+import Data.Bifunctor (lmap)
+import Data.Either (Either(..), either, note)
+import Data.Generic.Rep (class Generic)
 import Data.HTTP.Method (Method(..))
+import Data.Maybe (Maybe(..))
+import Data.Newtype (class Newtype, unwrap)
 import Data.Time.Duration (Milliseconds)
+import Data.Tuple (Tuple(..))
+import Effect.Aff (Aff)
 import Foreign.Object (Object)
 import Foreign.Object as Foreign.Object
 import GraphQLClient.Implementation (Scope__RootMutation, Scope__RootQuery, SelectionSet(..))
@@ -58,7 +67,7 @@ derive newtype instance eqGraphQLError__UserDetail :: Eq GraphQLError__UserDetai
 decodeGraphQLError__UserDetail :: ArgonautCore.Json -> Either JsonDecodeError GraphQLError__UserDetail
 decodeGraphQLError__UserDetail json = lmap (Named "GraphQLError__UserDetail") do
   jsonObject <- Data.Argonaut.Decode.Decoders.decodeJObject json
-  (messageJson /\ otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
+  (Tuple messageJson otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
   (message :: String) <- Data.Argonaut.Decode.Decoders.decodeString messageJson
   pure $ GraphQLError__UserDetail { message, otherDetails }
 
@@ -95,7 +104,7 @@ printGraphQLError = case _ of
         PossiblyParsedData__UnparsedData dataDecoderError _json -> (intercalate "\n" $ ["Data cannot be parsed because of the graphql errors:"] <> errorsArray') <> printJsonDecodeError dataDecoderError
 
 
-errorsOrBodyDecoder :: ArgonautCore.Json -> JsonDecodeError \/ { errors :: NonEmptyArray GraphQLError__UserDetail, dataJson :: ArgonautCore.Json } \/ ArgonautCore.Json
+errorsOrBodyDecoder :: ArgonautCore.Json -> Either JsonDecodeError (Either { errors :: NonEmptyArray GraphQLError__UserDetail, dataJson :: ArgonautCore.Json } ArgonautCore.Json)
 errorsOrBodyDecoder json = do
   (jsonObject :: Object ArgonautCore.Json) <- Data.Argonaut.Decode.Decoders.decodeJObject json
 
@@ -120,16 +129,16 @@ errorsOrBodyDecoder json = do
             pure $ Left { errors: nonEmptyArrayErrors, dataJson }
 
 tryDecodeGraphQLResponse :: ∀ parsed . (ArgonautCore.Json -> Either JsonDecodeError parsed) -> ArgonautCore.Json -> Either (GraphQLError parsed) parsed
-tryDecodeGraphQLResponse decoderForData jsonBody = graphqlResponseOrError # (\error -> Left $ GraphQLError__UnexpectedPayload error jsonBody) \/ identity
+tryDecodeGraphQLResponse decoderForData jsonBody = graphqlResponseOrError # either (\error -> Left $ GraphQLError__UnexpectedPayload error jsonBody) identity
   where
-    graphqlResponseOrError :: JsonDecodeError \/ GraphQLError parsed \/ parsed
+    graphqlResponseOrError :: Either JsonDecodeError (Either (GraphQLError parsed) parsed)
     graphqlResponseOrError = do
       errorsOrBodyDecoder jsonBody >>= case _ of
         Right dataJson -> do
           parsed <- decoderForData dataJson
           Right $ Right parsed
         Left { errors, dataJson } -> do
-          (pissiblyParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # (\error -> Right $ PossiblyParsedData__UnparsedData error dataJson) \/ (Right <<< PossiblyParsedData__ParsedData)
+          (pissiblyParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # either (\error -> Right $ PossiblyParsedData__UnparsedData error dataJson) (Right <<< PossiblyParsedData__ParsedData)
           Right $ Left $ GraphQLError__User errors pissiblyParsedData
 
 type RequestOptions =

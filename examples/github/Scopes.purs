@@ -1030,8 +1030,6 @@ data Scope__UpdateCheckRunPayload
 
 data Scope__UpdateCheckSuitePreferencesPayload
 
-data Scope__UpdateEnterpriseActionExecutionCapabilitySettingPayload
-
 data Scope__UpdateEnterpriseAdministratorRolePayload
 
 data Scope__UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayload

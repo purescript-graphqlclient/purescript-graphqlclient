@@ -1,15 +1,16 @@
 module GraphQLClientGenerator.MakeModule.Lib.DeclarationsForFields where
 
-import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field, InstorpectionQueryResult__InputValue)
-import GraphQLClientGenerator.MakeModule.Lib.Utils (qualifyScope)
-import Language.PS.SmartCST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ModuleName, OpName(..), ProperName(..), Row, SmartQualifiedName(..), Type(..), TypeVarBinding(..), arrayType, emptyRow, maybeType, mkModuleName, (====>>))
-import Protolude
+import Prelude
 
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
+import Data.Maybe (Maybe(..), isJust, maybe)
 import Data.String.Extra as StringsExtra
+import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field, InstorpectionQueryResult__InputValue)
 import GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull(..))
+import GraphQLClientGenerator.MakeModule.Lib.Utils (qualifyScope)
+import Language.PS.SmartCST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ModuleName, OpName(..), ProperName(..), Row, SmartQualifiedName(..), Type(..), TypeVarBinding(..), arrayType, emptyRow, maybeType, mkModuleName, (====>>))
 
 optionalType :: Type -> Type
 optionalType = TypeApp (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName (NonEmpty.cons' "GraphQLClient" [])) $ ProperName "Optional")
@@ -115,7 +116,7 @@ isOptionalInputValue inputValue =
 filterAndNonEmpty
   :: (InstorpectionQueryResult__InputValue -> Boolean)
   -> Array InstorpectionQueryResult__InputValue
-  -> Maybe $ NonEmptyArray InstorpectionQueryResult__InputValue
+  -> Maybe (NonEmptyArray InstorpectionQueryResult__InputValue)
 filterAndNonEmpty pred = NonEmpty.fromFoldable <<< Array.mapMaybe (\el -> if pred el then Just el else Nothing)
 
 toRow

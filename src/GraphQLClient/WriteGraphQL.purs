@@ -1,9 +1,10 @@
 module GraphQLClient.WriteGraphQL where
 
-import Protolude
+import Prelude
 
 import Data.Array as Array
 import Data.String as String
+import Data.Maybe (Maybe(..))
 import GraphQLClient.Implementation (RawField(..), Scope__RootMutation, Scope__RootQuery, Scope__RootSubscription, SelectionSet(..))
 
 class WriteGraphQL a where

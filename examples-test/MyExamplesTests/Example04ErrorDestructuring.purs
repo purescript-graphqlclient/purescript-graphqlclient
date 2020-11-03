@@ -1,13 +1,15 @@
 module MyExamplesTests.Example04ErrorDestructuring where
 
 import GraphQLClient (GraphQLError(..), GraphQLError__UserDetail(..), PossiblyParsedData(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, graphqlQueryRequest, writeGraphQL)
-import Protolude
+import Prelude
 import Data.Array.NonEmpty as NonEmptyArray
 
+import Data.Either (Either(..))
+import Data.Maybe (Maybe(..))
 import Examples.Swapi.Query as Query
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (fail, shouldEqual) as Test.Spec
-import MyExamplesTests.Util
+import MyExamplesTests.Util (inlineAndTrim)
 
 type Response = Maybe String
 

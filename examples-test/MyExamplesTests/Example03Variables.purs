@@ -1,9 +1,13 @@
 module MyExamplesTests.Example03Variables where
 
+import Control.Monad.Error.Class (throwError)
+import Effect.Exception (error)
 import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultRequestOptions, graphqlQueryRequest, printGraphQLError, writeGraphQL)
-import Protolude
+import Prelude
 import Examples.SwapiCustomScalars (Id(..))
 
+import Data.Either (Either, either)
+import Data.Maybe (Maybe(..))
 import Examples.Swapi.Object.Human as Human
 import Examples.Swapi.Scopes (Scope__Human)
 import Examples.Swapi.Query as Query
@@ -40,6 +44,6 @@ spec = Test.Spec.it "Example03Variables" do
 
   (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions (query (Id 1001))
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
 
   response' `Test.Spec.shouldEqual` Just { homePlanet: Just "Tatooine", name: "Darth Vader" }

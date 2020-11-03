@@ -1,16 +1,21 @@
 module MyExamplesTests.Example05InterfacesAndUnions where
 
-import MyExamplesTests.Util (inlineAndTrim)
-import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultRequestOptions, defaultInput, graphqlQueryRequest, printGraphQLError, writeGraphQL)
-import Protolude
+import Data.Either (Either, either)
+import Data.Maybe (Maybe(..))
+import Prelude
 
+import Control.Monad.Error.Class (throwError)
+import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
+import Effect.Exception (error)
+import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
 import Examples.Swapi.Object.Droid as Examples.Swapi.Object.Droid
 import Examples.Swapi.Object.Human as Examples.Swapi.Object.Human
 import Examples.Swapi.Query as Examples.Swapi.Query
-import Examples.Swapi.Union.CharacterUnion as Examples.Swapi.Union.CharacterUnion
-import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
 import Examples.Swapi.Scopes (Scope__Character, Scope__CharacterUnion)
+import Examples.Swapi.Union.CharacterUnion as Examples.Swapi.Union.CharacterUnion
+import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultRequestOptions, defaultInput, graphqlQueryRequest, printGraphQLError, writeGraphQL)
+import MyExamplesTests.Util (inlineAndTrim)
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -134,7 +139,7 @@ spec = Test.Spec.it "Example05InterfacesAndUnions" do
 
   (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
 
   response' `Test.Spec.shouldEqual`
     { heroUnion: HumanDetails (Just "Tatooine")

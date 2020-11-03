@@ -1,6 +1,8 @@
 module MyTests.Main where
 
-import Protolude
+import Prelude
+
+import Effect (Effect)
 
 main :: Effect Unit
 main = pure unit

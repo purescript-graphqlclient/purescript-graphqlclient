@@ -1,22 +1,24 @@
 module GraphQLClient.WriteGraphQLHash where
 
-import Protolude
+import Prelude
 
 import Data.Array as Array
 import Data.Hashable as Hashable
 import Data.Int as Int
+import Data.Maybe (Maybe(..), maybe)
 import Data.String as String
+import Data.Tuple (Tuple(..))
 import GraphQLClient.Argument (Argument(..), ArgumentValue(..), Optional(..))
 
 hashString :: String -> String
 hashString = String.replaceAll (String.Pattern "-") (String.Replacement "") <<< show <<< Hashable.hash
 
-filterAbsent :: Array Argument -> Array (String /\ ArgumentValue)
+filterAbsent :: Array Argument -> Array (Tuple String ArgumentValue)
 filterAbsent = Array.mapMaybe go
   where
   go = case _ of
-    RequiredArgument n v -> Just (n /\ v)
-    OptionalArgument n (Present v) -> Just (n /\ v)
+    RequiredArgument n v -> Just (Tuple n v)
+    OptionalArgument n (Present v) -> Just (Tuple n v)
     OptionalArgument _ Absent -> Nothing
 
 type Cache =
@@ -57,14 +59,14 @@ argsHash args =
 
 -------------------------
 
-writeGraphQLArguments :: Array (String /\ ArgumentValue) -> String
+writeGraphQLArguments :: Array (Tuple String ArgumentValue) -> String
 writeGraphQLArguments [] = ""
 writeGraphQLArguments args =
   let args' = String.joinWith ", " $ writeGraphQLArgumentsNameVal <$> args
    in if String.null args' then "" else "(" <> args' <> ")"
 
-writeGraphQLArgumentsNameVal :: String /\ ArgumentValue -> String
-writeGraphQLArgumentsNameVal (name /\ value) = name <> ": " <> writeGraphQLArgumentsArgumentValue value
+writeGraphQLArgumentsNameVal :: Tuple String ArgumentValue -> String
+writeGraphQLArgumentsNameVal (Tuple name value) = name <> ": " <> writeGraphQLArgumentsArgumentValue value
 
 writeGraphQLArgumentsArgumentValue :: ArgumentValue -> String
 writeGraphQLArgumentsArgumentValue = case _ of

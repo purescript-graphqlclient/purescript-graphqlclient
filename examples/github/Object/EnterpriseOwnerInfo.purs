@@ -9,9 +9,11 @@ import GraphQLClient
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
+import Examples.Github.Enum.EnterpriseAdministratorRole
+  (EnterpriseAdministratorRole)
 import Examples.Github.InputObject
-  ( OrganizationOrder
-  , EnterpriseMemberOrder
+  ( EnterpriseMemberOrder
+  , OrganizationOrder
   , EnterpriseServerInstallationOrder
   , IpAllowListEntryOrder
   , EnterpriseAdministratorInvitationOrder
@@ -19,10 +21,10 @@ import Examples.Github.InputObject
   ) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Examples.Github.Scopes
-  ( Scope__OrganizationConnection
+  ( Scope__EnterpriseAdministratorConnection
   , Scope__EnterpriseOwnerInfo
-  , Scope__EnterpriseAdministratorConnection
   , Scope__UserConnection
+  , Scope__OrganizationConnection
   , Scope__EnterpriseServerInstallationConnection
   , Scope__IpAllowListEntryConnection
   , Scope__EnterpriseOutsideCollaboratorConnection
@@ -32,8 +34,6 @@ import Examples.Github.Scopes
   , Scope__EnterprisePendingMemberInvitationConnection
   , Scope__EnterpriseIdentityProvider
   )
-import Examples.Github.Enum.EnterpriseAdministratorRole
-  (EnterpriseAdministratorRole)
 import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
   (EnterpriseEnabledDisabledSettingValue)
 import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
@@ -54,34 +54,6 @@ import Examples.Github.Enum.IdentityProviderConfigurationState
   (IdentityProviderConfigurationState)
 import Examples.Github.Enum.EnterpriseEnabledSettingValue
   (EnterpriseEnabledSettingValue)
-
-type ActionExecutionCapabilitySettingOrganizationsInputRowOptional r = ( after :: Optional
-                                                                                  String
-                                                                       , before :: Optional
-                                                                                   String
-                                                                       , first :: Optional
-                                                                                  Int
-                                                                       , last :: Optional
-                                                                                 Int
-                                                                       , orderBy :: Optional
-                                                                                    Examples.Github.InputObject.OrganizationOrder
-                                                                       | r
-                                                                       )
-
-type ActionExecutionCapabilitySettingOrganizationsInput = {
-| ActionExecutionCapabilitySettingOrganizationsInputRowOptional + ()
-}
-
-actionExecutionCapabilitySettingOrganizations :: forall r . ActionExecutionCapabilitySettingOrganizationsInput -> SelectionSet
-                                                                                                                  Scope__OrganizationConnection
-                                                                                                                  r -> SelectionSet
-                                                                                                                       Scope__EnterpriseOwnerInfo
-                                                                                                                       r
-actionExecutionCapabilitySettingOrganizations input = selectionForCompositeField
-                                                      "actionExecutionCapabilitySettingOrganizations"
-                                                      (toGraphQLArguments
-                                                       input)
-                                                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AdminsInputRowOptional r = ( query :: Optional String
                                 , role :: Optional EnterpriseAdministratorRole

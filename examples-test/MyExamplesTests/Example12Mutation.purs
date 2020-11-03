@@ -1,10 +1,13 @@
 module MyExamplesTests.Example12Mutation where
 
+import Control.Monad.Error.Class (throwError)
+import Effect.Exception (error)
 import MyExamplesTests.Util (inlineAndTrim)
 
+import Data.Either (Either, either)
 import Examples.Swapi.Mutation as Mutation
 import GraphQLClient (GraphQLError, Scope__RootMutation, SelectionSet, defaultRequestOptions, graphqlMutationRequest, printGraphQLError, writeGraphQL)
-import Protolude
+import Prelude
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -26,4 +29,4 @@ spec = Test.Spec.it "Example12Mutation" do
 
   (response :: Either (GraphQLError Response) Response) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
 
-  void $ (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  void $ either (throwError <<< error <<< printGraphQLError) pure $ response

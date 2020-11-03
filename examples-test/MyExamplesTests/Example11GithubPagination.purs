@@ -1,10 +1,14 @@
 module MyExamplesTests.Example11GithubPagination where
 
+import Control.Monad.Error.Class (throwError)
+import Effect.Exception (error)
 import Examples.Github.Scopes (Scope__PageInfo, Scope__Repository, Scope__SearchResultItem, Scope__SearchResultItemConnection)
 import MyExamplesTests.Util (inlineAndTrim)
 import GraphQLClient (GraphQLError, Optional(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, defaultInput, graphqlQueryRequest, printGraphQLError, writeGraphQL)
-import Protolude
+import Prelude
 
+import Data.Either (Either, either)
+import Data.Maybe (Maybe(..), isJust)
 import Affjax.RequestHeader (RequestHeader(..))
 import Data.Array (length) as Array
 import Examples.Github.Enum.SearchType as Examples.Github.Enum.SearchType
@@ -131,7 +135,7 @@ spec = Test.Spec.it "Example11GithubPagination" do
 
   (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts (query Nothing)
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
 
   Array.length response'.data `Test.Spec.shouldEqual` 10
   isJust response'.paginationData.cursor `Test.Spec.shouldEqual` true

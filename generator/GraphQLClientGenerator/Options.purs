@@ -1,23 +1,27 @@
 module GraphQLClientGenerator.Options where
 
-import Protolude
+import Prelude
+import UrlRegexSafe (defaultUrlRegexSafeOptions, urlRegexSafe)
 
 import Affjax.RequestHeader as Affjax
+import Control.Alt ((<|>))
 import Data.Array (fromFoldable) as Array
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
+import Data.Either (Either(..))
+import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
+import Data.Maybe (Maybe(..))
 import Data.Maybe as Maybe
 import Data.String as String
+import Data.String.Regex (test) as Regex
 import Language.PS.SmartCST (ModuleName, mkModuleName)
 import Node.Path (FilePath)
 import Options.Applicative (Parser, ParserInfo, ReadM, fullDesc, header, help, helper, info, long, many, metavar, option, progDesc, showDefault, strOption, value, (<**>))
 import Options.Applicative.Builder (eitherReader)
-import Protolude.Url (Url)
-import Protolude.Url as Url
 
 data AppOptionsInput
-  = AppOptionsInputSchemaOrJsonUrl Url
+  = AppOptionsInputSchemaOrJsonUrl String
   | AppOptionsInputSchemaPath FilePath
   | AppOptionsInputJsonPath FilePath
 
@@ -40,10 +44,10 @@ requestHeader = eitherReader $ \s -> case String.split (String.Pattern ": ") s o
   [key, val] -> Right $ Affjax.RequestHeader key val
   _ -> Left $ """Can’t parse as request header (there should be only one ": "): """ <> show s
 
-url :: ReadM Url
-url = eitherReader $ \s -> case Url.mkUrl s of
-  Nothing -> Left $ "Can’t parse as Url: " <> show s
-  Just a -> Right a
+url :: ReadM String
+url = eitherReader $ \s -> if Regex.test (urlRegexSafe $ defaultUrlRegexSafeOptions { exact = true, strict = true }) s
+  then Right s
+  else Left $ "Can’t parse as Url: " <> show s
 
 api :: ReadM (NonEmptyArray String)
 api = eitherReader $ \s -> case s # String.split (String.Pattern ".") # NonEmpty.fromArray of

@@ -1,13 +1,16 @@
 module GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull where
 
-import Protolude
+import Prelude
 
 import Data.Generic.Rep (class Generic) as GenericRep
-
-import Type.Row (type (+))
+import Data.Maybe (Maybe(..))
 import GraphQLClientGenerator.IntrospectionSchema.TypeKind (TypeKind(..))
+import Type.Row (type (+))
 
 type InstorpectionQueryResult__TypeRef_shared r = ( kind :: TypeKind, name :: Maybe String | r )
+
+type Apply f a = f a
+infixr 0 type Apply as $
 
 -- this is what we get from introspection query
 -- 7 ofType's

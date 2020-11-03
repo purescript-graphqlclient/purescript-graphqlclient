@@ -1,7 +1,6 @@
 module GraphQLClientGenerator.PsCst where
 
-import Language.PS.SmartCST (Module, ModuleName, mkModuleName, printModule)
-import Protolude
+import Prelude
 
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
@@ -9,8 +8,11 @@ import Data.Array.NonEmpty as NonEmpty
 import Data.Foldable (elem)
 import Data.Map (Map)
 import Data.Map as Map
+import Data.Maybe (Maybe(..), fromMaybe, maybe)
+import Data.Tuple (Tuple(..))
 import Data.String.Extra as StringsExtra
 import Data.String.Utils as String
+import Dodo as Dodo
 import GraphQLClient.Utils (anyPredicate)
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult, InstorpectionQueryResult__Field, InstorpectionQueryResult__FullType)
 import GraphQLClientGenerator.IntrospectionSchema.TypeKind as TypeKind
@@ -24,7 +26,7 @@ import GraphQLClientGenerator.MakeModule.Scalars as MakeModule.Scalars
 import GraphQLClientGenerator.MakeModule.Scopes as MakeModule.Scopes
 import GraphQLClientGenerator.MakeModule.Subscription as MakeModule.Subscription
 import GraphQLClientGenerator.MakeModule.Union as MakeModule.Union
-import Dodo as Dodo
+import Language.PS.SmartCST (Module, ModuleName, mkModuleName, printModule)
 
 printModuleToString :: Module -> String
 printModuleToString = printModule >>> Dodo.print Dodo.plainText Dodo.twoSpaces
@@ -65,7 +67,7 @@ fullTypeToModuleMapItem
   let
     name = StringsExtra.pascalCase fullType.name
     moduleName = mkModuleName $ apiModuleName <> (NonEmpty.cons' submodule [name])
-   in name /\ (printModuleToString $ mkModule moduleName fullType)
+   in Tuple name (printModuleToString $ mkModule moduleName fullType)
 
 builtInScalarNames :: Array String
 builtInScalarNames =

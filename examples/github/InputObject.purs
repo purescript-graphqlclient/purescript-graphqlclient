@@ -77,8 +77,6 @@ import Examples.Github.Enum.TeamDiscussionOrderField (TeamDiscussionOrderField)
 import Examples.Github.Enum.TeamMemberOrderField (TeamMemberOrderField)
 import Examples.Github.Enum.TeamOrderField (TeamOrderField)
 import Examples.Github.Enum.TeamRepositoryOrderField (TeamRepositoryOrderField)
-import Examples.Github.Enum.ActionExecutionCapabilitySetting
-  (ActionExecutionCapabilitySetting)
 import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
   (EnterpriseEnabledDisabledSettingValue)
 import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
@@ -322,6 +320,10 @@ type CreateBranchProtectionRuleInput = { repositoryId :: Id
                                                                          Int
                                        , requiresCommitSignatures :: Optional
                                                                      Boolean
+                                       , requiresLinearHistory :: Optional
+                                                                  Boolean
+                                       , allowsForcePushes :: Optional Boolean
+                                       , allowsDeletions :: Optional Boolean
                                        , isAdminEnforced :: Optional Boolean
                                        , requiresStatusChecks :: Optional
                                                                  Boolean
@@ -934,6 +936,10 @@ type UpdateBranchProtectionRuleInput = { branchProtectionRuleId :: Id
                                                                          Int
                                        , requiresCommitSignatures :: Optional
                                                                      Boolean
+                                       , requiresLinearHistory :: Optional
+                                                                  Boolean
+                                       , allowsForcePushes :: Optional Boolean
+                                       , allowsDeletions :: Optional Boolean
                                        , isAdminEnforced :: Optional Boolean
                                        , requiresStatusChecks :: Optional
                                                                  Boolean
@@ -977,13 +983,6 @@ type UpdateCheckSuitePreferencesInput = { repositoryId :: Id
                                                                     CheckSuiteAutoTriggerPreference
                                         , clientMutationId :: Optional String
                                         }
-
--- | original name - UpdateEnterpriseActionExecutionCapabilitySettingInput
-type UpdateEnterpriseActionExecutionCapabilitySettingInput = { enterpriseId :: Id
-                                                             , capability :: ActionExecutionCapabilitySetting
-                                                             , clientMutationId :: Optional
-                                                                                   String
-                                                             }
 
 -- | original name - UpdateEnterpriseAdministratorRoleInput
 type UpdateEnterpriseAdministratorRoleInput = { enterpriseId :: Id

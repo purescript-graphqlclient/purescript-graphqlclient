@@ -1,9 +1,11 @@
 module GraphQLClientGenerator.GraphQLJs where
 
-import Protolude
+import Data.Either (Either(..))
+import Prelude
 
 import Data.Argonaut.Core as ArgonautCore
 import Data.Function.Uncurried (Fn2, runFn2)
+import Effect.Exception (Error)
 
 foreign import data GraphQLSchema :: Type
 

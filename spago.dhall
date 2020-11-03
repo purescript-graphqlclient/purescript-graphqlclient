@@ -15,7 +15,6 @@
   , "debug"
   , "spec"
   , "variant"
-  , "protolude"
   , "web-socket"
   , "unordered-collection"
   ]

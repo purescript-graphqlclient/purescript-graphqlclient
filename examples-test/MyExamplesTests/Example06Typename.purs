@@ -1,14 +1,18 @@
 module MyExamplesTests.Example06Typename where
 
-import MyExamplesTests.Util (inlineAndTrim)
-import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, printGraphQLError, writeGraphQL)
-import Protolude
+import Data.Either (Either, either)
+import Prelude
 
+import Control.Monad.Error.Class (throwError)
+import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
-import Examples.Swapi.Query as Examples.Swapi.Query
-import Examples.Swapi.Union.CharacterUnion as Examples.Swapi.Union.CharacterUnion
+import Effect.Exception (error)
 import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
+import Examples.Swapi.Query as Examples.Swapi.Query
 import Examples.Swapi.Scopes (Scope__Character, Scope__CharacterUnion)
+import Examples.Swapi.Union.CharacterUnion as Examples.Swapi.Union.CharacterUnion
+import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, printGraphQLError, writeGraphQL)
+import MyExamplesTests.Util (inlineAndTrim)
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -75,7 +79,7 @@ spec = Test.Spec.it "Example06Typename" do
 
   (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
 
   response' `Test.Spec.shouldEqual`
     { heroUnion: Human

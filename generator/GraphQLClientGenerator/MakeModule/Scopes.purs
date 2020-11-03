@@ -4,7 +4,7 @@ import Data.Array.NonEmpty (NonEmptyArray)
 
 import GraphQLClientGenerator.MakeModule.Lib.Utils (declDataWithoutConstructors)
 import Language.PS.SmartCST (Module(..), ModuleName)
-import Protolude
+import Prelude
 
 makeModule :: (String -> String) -> NonEmptyArray String -> Array String -> Array String -> Array String -> ModuleName -> Module
 makeModule

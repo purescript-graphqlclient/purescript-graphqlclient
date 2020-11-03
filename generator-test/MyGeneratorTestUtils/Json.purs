@@ -1,10 +1,11 @@
 module MyGeneratorTestUtils.Json where
 
-import Protolude
+import Prelude
 
 import Ansi.Codes as Ansi.Codes
 import Data.Argonaut.Core (Json)
 import Data.Function.Uncurried (Fn2, runFn2)
+import Effect.Aff (Aff)
 import Test.Spec.Assertions (fail)
 
 foreign import _jsonDiffString :: Fn2 Json Json String

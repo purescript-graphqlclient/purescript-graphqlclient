@@ -1,10 +1,14 @@
 module MyExamplesTests.Example10Github where
 
+import Control.Monad.Error.Class (throwError)
+import Effect.Exception (error)
 import Examples.Github.Scopes (Scope__Release, Scope__ReleaseConnection, Scope__Repository)
 import MyExamplesTests.Util (inlineAndTrim)
 import GraphQLClient (GraphQLError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, nonNullElementsOrFail, nonNullOrFail, printGraphQLError, writeGraphQL)
-import Protolude
+import Prelude
 
+import Data.Either (Either, either)
+import Data.Maybe (Maybe(..), fromMaybe)
 import Affjax.RequestHeader (RequestHeader(..))
 import Examples.Github.Object.Repository as Examples.Github.Object.Repository
 import Examples.Github.Object.Release as Examples.Github.Object.Release
@@ -102,7 +106,7 @@ spec = Test.Spec.it "Example10Github" do
 
   (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts query
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
 
   response' `Test.Spec.shouldEqual`
     { repoInfo:

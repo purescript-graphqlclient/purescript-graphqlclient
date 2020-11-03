@@ -1,18 +1,19 @@
 module GraphQLClientGenerator.MakeModule.Enum where
 
-import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__EnumValue, InstorpectionQueryResult__FullType)
-import GraphQLClientGenerator.MakeModule.Lib.Utils (tupleDecl, tupleExpr)
-import Language.PS.SmartCST (Binder(..), Comments(..), DataCtor(..), DataHead(..), DeclDeriveType(..), Declaration(..), Expr(..), Guarded(..), Ident(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), SmartQualifiedNameConstructor(..), Type(..), arrayType, mkModuleName)
-import Protolude
+import Prelude
 
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
+import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.String.Extra as StringsExtra
+import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__EnumValue, InstorpectionQueryResult__FullType)
+import GraphQLClientGenerator.MakeModule.Lib.Utils (tupleDecl, tupleExpr)
+import Language.PS.SmartCST (Binder(..), Comments(..), DataCtor(..), DataHead(..), DeclDeriveType(..), Declaration(..), Expr(..), Guarded(..), Ident(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), SmartQualifiedNameConstructor(..), Type(..), arrayType, mkModuleName)
 
 makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
 makeModule moduleName fullType =
   let
-    enumValues' :: Maybe $ NonEmptyArray InstorpectionQueryResult__EnumValue
+    enumValues' :: Maybe (NonEmptyArray InstorpectionQueryResult__EnumValue)
     enumValues' = fullType.enumValues <#> NonEmpty.fromFoldable # join
 
     pascalName :: String

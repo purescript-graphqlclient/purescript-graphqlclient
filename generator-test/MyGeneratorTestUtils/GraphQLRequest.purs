@@ -1,10 +1,11 @@
 module MyGeneratorTestUtils.GraphQLRequest where
 
-import Protolude
+import Prelude
 
-import Data.Function.Uncurried (Fn3, runFn3)
-import Effect.Aff.Compat (EffectFnAff, fromEffectFnAff)
 import Data.Argonaut.Core (Json)
+import Data.Function.Uncurried (Fn3, runFn3)
+import Effect.Aff (Aff)
+import Effect.Aff.Compat (EffectFnAff, fromEffectFnAff)
 
 foreign import _request :: forall r . Fn3 String String { | r } (EffectFnAff Json)
 

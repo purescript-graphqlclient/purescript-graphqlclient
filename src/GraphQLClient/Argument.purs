@@ -1,9 +1,10 @@
 module GraphQLClient.Argument where
 
-import Protolude
+import Data.Maybe (Maybe)
+import Prelude
 
 import Data.Array as Array
-import Data.Symbol (class IsSymbol, reflectSymbol)
+import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 import Prim.Row as Row
 import Prim.RowList as RowList
 import Record as Record

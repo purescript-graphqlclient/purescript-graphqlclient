@@ -3,8 +3,8 @@ module GraphQLClientGenerator.IntrospectionSchema.Fields where
 import GraphQLClient.Implementation (Scope__RootQuery, SelectionSet, graphqlDefaultResponseFunctorOrScalarDecoderTransformer, graphqlDefaultResponseScalarDecoder, selectionForCompositeFieldImplementation, selectionForFieldImplementation)
 import GraphQLClient.WriteGraphQLHash (Cache)
 import GraphQLClient.Argument (toGraphQLArguments)
+import Data.Maybe (Maybe)
 
-import Protolude
 
 import GraphQLClientGenerator.IntrospectionSchema.Fields.InputValue as GraphQLClientGenerator.IntrospectionSchema.Fields.InputValue
 import GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef as GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef
@@ -57,7 +57,7 @@ types_name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] g
 types_description :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Types (Maybe String)
 types_description fieldNameFn = selectionForFieldImplementation fieldNameFn "description" [] graphqlDefaultResponseScalarDecoder
 
-types_fields :: ∀ r . (Maybe Cache -> String -> String) -> IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_Fields r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_fields :: ∀ r . (Maybe Cache -> String -> String) -> IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_Fields r -> SelectionSet InstorpectionQueryResult_Types (Maybe (Array r))
 types_fields fieldNameFn inputRecord = selectionForCompositeFieldImplementation fieldNameFn "fields" (toGraphQLArguments inputRecord) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 types_fields_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Fields String
@@ -78,13 +78,13 @@ types_fields_isDeprecated fieldNameFn = selectionForFieldImplementation fieldNam
 types_fields_deprecationReason :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_Fields (Maybe String)
 types_fields_deprecationReason fieldNameFn = selectionForFieldImplementation fieldNameFn "deprecationReason" [] graphqlDefaultResponseScalarDecoder
 
-types_inputFields :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_inputFields :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.InputValue.InstorpectionQueryResult_InputValue r -> SelectionSet InstorpectionQueryResult_Types (Maybe (Array r))
 types_inputFields fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "inputFields" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_interfaces :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe $ Array r)
+types_interfaces :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe (Array r))
 types_interfaces fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "interfaces" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
-types_enumValues :: ∀ r . (Maybe Cache -> String -> String) -> IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_EnumValues r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
+types_enumValues :: ∀ r . (Maybe Cache -> String -> String) -> IsDeprecatedInput -> SelectionSet InstorpectionQueryResult_EnumValues r -> SelectionSet InstorpectionQueryResult_Types (Maybe (Array r))
 types_enumValues fieldNameFn inputRecord = selectionForCompositeFieldImplementation fieldNameFn "enumValues" (toGraphQLArguments inputRecord) graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 types_enumValues_name :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_EnumValues String
@@ -99,5 +99,5 @@ types_enumValues_isDeprecated fieldNameFn = selectionForFieldImplementation fiel
 types_enumValues_deprecationReason :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_EnumValues (Maybe String)
 types_enumValues_deprecationReason fieldNameFn = selectionForFieldImplementation fieldNameFn "deprecationReason" [] graphqlDefaultResponseScalarDecoder
 
-types_possibleTypes :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe <<< Array $ r)
+types_possibleTypes :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_Types (Maybe (Array r))
 types_possibleTypes fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "possibleTypes" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer

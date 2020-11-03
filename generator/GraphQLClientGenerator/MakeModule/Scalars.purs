@@ -1,12 +1,13 @@
 module GraphQLClientGenerator.MakeModule.Scalars where
 
-import Language.PS.SmartCST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), Type(..), mkModuleName, stringType)
+import Prelude
 
 import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty
+import Data.Maybe (Maybe(..))
 import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
-import Protolude
+import Language.PS.SmartCST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), Type(..), mkModuleName, stringType)
 
 makeModule :: ModuleName -> Array InstorpectionQueryResult__FullType -> Module
 makeModule moduleName scalarTypes = Module

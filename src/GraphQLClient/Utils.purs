@@ -1,8 +1,9 @@
 module GraphQLClient.Utils where
 
-import Protolude
+
+import Data.Foldable (class Foldable)
+import Data.List (List(..), (:))
 import Data.List (fromFoldable) as List
-import Data.List ((:))
 
 anyPredicate :: ∀ a f . Foldable f => f (a -> Boolean) -> a -> Boolean
 anyPredicate predicates = go (List.fromFoldable predicates)

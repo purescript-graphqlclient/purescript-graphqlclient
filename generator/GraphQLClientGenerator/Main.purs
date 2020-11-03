@@ -1,15 +1,25 @@
 module GraphQLClientGenerator.Main where
 
-import Protolude
+import Prelude
 
+import Ansi.Codes (Color(..)) as Ansi
+import Ansi.Output (foreground, withGraphics) as Ansi
+import Control.Monad.Error.Class (throwError)
 import Control.Monad.Reader.Trans (ReaderT)
 import Data.Argonaut.Core (Json) as ArgonautCore
 import Data.Argonaut.Decode (JsonDecodeError)
 import Data.Argonaut.Decode as ArgonautDecoders
 import Data.Argonaut.Parser (jsonParser) as ArgonautCore
+import Data.Either (Either, either)
 import Data.Foldable (null)
 import Data.Map (Map)
+import Data.Maybe (Maybe, maybe)
 import Data.TraversableWithIndex (forWithIndex)
+import Effect (Effect)
+import Effect.Aff (Aff, launchAff_)
+import Effect.Class (class MonadEffect, liftEffect)
+import Effect.Class.Console (error, log) as Console
+import Effect.Exception (error)
 import Effect.Exception.Unsafe (unsafeThrow)
 import GraphQLClient as GraphQLClient
 import GraphQLClient.Implementation as GraphQLClient.Implementation
@@ -22,8 +32,8 @@ import Node.FS.Aff as Node.FS.Aff
 import Node.FS.Aff.Mkdirp as Node.FS.Aff.Mkdirp
 import Node.Path (FilePath)
 import Node.Path (concat, resolve) as Node.FS
+import Node.Process (exit) as NodeProcess
 import Options.Applicative (execParser)
-import Protolude.Node (exitWith)
 import Record.Homogeneous (foldMapValuesWithIndexL)
 
 type App a = ReaderT GraphQLClientGenerator.Options.AppOptions Aff a
@@ -40,6 +50,15 @@ introspectionQueryDecoderForExternalJson = GraphQLClient.getSelectionSetDecoder 
 dirIsEmpty :: FilePath -> Aff Boolean
 dirIsEmpty filepath = Node.FS.Aff.readdir filepath <#> null
 
+-- | Exit the script with the given exit code, printing the given message to
+-- | standard output if the exit code is 0, and standard error otherwise.
+exitWith :: ∀ m a. MonadEffect m => Int -> String -> m a
+exitWith code msg = do
+  if code == 0
+    then Console.log $ Ansi.withGraphics (Ansi.foreground Ansi.BrightGreen) msg
+    else Console.error $ Ansi.withGraphics (Ansi.foreground Ansi.BrightRed) msg
+  liftEffect $ NodeProcess.exit code
+
 main :: Effect Unit
 main = do
   (GraphQLClientGenerator.Options.AppOptions appOptions) <- execParser GraphQLClientGenerator.Options.opts
@@ -49,24 +68,23 @@ main = do
       case appOptions.input of
         (GraphQLClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
           let
-            urlString = unwrap url
             opts = GraphQLClient.defaultRequestOptions { headers = appOptions.headers }
 
-          resp <- GraphQLClient.graphqlQueryRequest urlString opts (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery GraphQLClient.Implementation.fieldNameWithHash includeDeprecated)
-            >>= (throwError <<< error <<< GraphQLClient.printGraphQLError) \/ pure
+          resp <- GraphQLClient.graphqlQueryRequest url opts (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery GraphQLClient.Implementation.fieldNameWithHash includeDeprecated)
+            >>= either (throwError <<< error <<< GraphQLClient.printGraphQLError) pure
 
           pure resp
         (GraphQLClientGenerator.Options.AppOptionsInputSchemaPath filepath) -> do
           text <- Node.FS.Aff.readTextFile UTF8 filepath
 
-          json <- GraphQLJs.generateIntrospectionJsonFromSchema text # throwError \/ pure
+          json <- GraphQLJs.generateIntrospectionJsonFromSchema text # either throwError pure
 
-          introspectionQueryDecoderForExternalJson json # (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) \/ pure
+          introspectionQueryDecoderForExternalJson json # either (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) pure
         (GraphQLClientGenerator.Options.AppOptionsInputJsonPath filepath) -> do
           text <- Node.FS.Aff.readTextFile UTF8 filepath
-          json <- ArgonautCore.jsonParser text # (throwError <<< error) \/ pure
+          json <- ArgonautCore.jsonParser text # either (throwError <<< error) pure
 
-          GraphQLClient.tryDecodeGraphQLResponse introspectionQueryDecoderForExternalJson json # (throwError <<< error <<< GraphQLClient.printGraphQLError) \/ pure
+          GraphQLClient.tryDecodeGraphQLResponse introspectionQueryDecoderForExternalJson json # either (throwError <<< error <<< GraphQLClient.printGraphQLError) pure
 
     outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesn’t throw errors
 

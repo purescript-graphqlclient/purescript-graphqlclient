@@ -1,15 +1,18 @@
 module MyExamplesTests.Example02AdoSyntax where
 
-import Protolude
+import Control.Monad.Error.Class (throwError)
+import Effect.Exception (error)
+import Data.Either (Either, either)
+import Prelude
 
+import Examples.Swapi.Interface.Character as Character
+import Examples.Swapi.Query as Query
+import Examples.Swapi.Scopes (Scope__Character)
+import Examples.SwapiCustomScalars (Id(..))
+import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, printGraphQLError, writeGraphQL)
+import MyExamplesTests.Util (inlineAndTrim)
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
-import GraphQLClient (GraphQLError, Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, printGraphQLError, writeGraphQL)
-import Examples.SwapiCustomScalars (Id(..))
-import Examples.Swapi.Query as Query
-import Examples.Swapi.Interface.Character as Character
-import Examples.Swapi.Scopes (Scope__Character)
-import MyExamplesTests.Util (inlineAndTrim)
 
 type Response = CharacterResponse
 
@@ -48,6 +51,6 @@ spec = Test.Spec.it "Example02AdoSyntax" do
 
   (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
 
-  (response' :: Response) <- (throwError <<< error <<< printGraphQLError) \/ pure $ response
+  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
 
   response' `Test.Spec.shouldEqual` { friends: ["Han Solo","Leia Organa","C-3PO","R2-D2"], id: Id 1000, name: "Luke Skywalker" }

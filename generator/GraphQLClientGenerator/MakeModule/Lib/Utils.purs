@@ -1,10 +1,11 @@
 module GraphQLClientGenerator.MakeModule.Lib.Utils where
 
-import Language.PS.SmartCST (SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), ModuleName(..), ProperName(..), ProperNameType_TypeName, SmartQualifiedName(..), Type(..), mkModuleName)
-import Protolude
+import Prelude
 
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NonEmpty
+import Data.Maybe (Maybe(..))
+import Language.PS.SmartCST (SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), ModuleName(..), ProperName(..), ProperNameType_TypeName, SmartQualifiedName(..), Type(..), mkModuleName)
 
 tupleDecl :: Type -> Type -> Type
 tupleDecl x y =
