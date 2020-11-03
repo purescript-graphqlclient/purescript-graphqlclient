@@ -3,12 +3,10 @@ module MyExamplesTests.Example13SSubscription where
 import Control.Monad.Error.Class (throwError)
 import Effect.Exception (error)
 import Prelude
-
 import Data.Either (Either, either)
 import Data.Maybe (Maybe(..))
 import MyExamplesTests.Util (inlineAndTrim)
 import Examples.Swapi.Scopes (Scope__ChatMessage)
-
 import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
 import Examples.Swapi.Object.ChatMessage as Examples.Swapi.Object.ChatMessage
 import Examples.Swapi.Mutation as Mutation
@@ -27,18 +25,20 @@ chatMessage = ado
   in { character, phrase }
 
 -------------------------
-
-type MutationResponse =
-  { character :: Maybe Id
-  , phrase :: Phrase
-  }
+type MutationResponse
+  = { character :: Maybe Id
+    , phrase :: Phrase
+    }
 
 mutation :: SelectionSet Scope__RootMutation MutationResponse
-mutation = Mutation.sendMessage { characterId: Id 1, phrase: Father } chatMessage
-  # GraphQLClient.nonNullOrFail
+mutation =
+  Mutation.sendMessage { characterId: Id 1, phrase: Father } chatMessage
+    # GraphQLClient.nonNullOrFail
 
 expectedMutation :: String
-expectedMutation = inlineAndTrim """
+expectedMutation =
+  inlineAndTrim
+    """
 mutation {
   sendMessage1125234857: sendMessage(characterId: "1", phrase: FATHER) {
     character {
@@ -50,17 +50,18 @@ mutation {
 """
 
 -------------------------
-
-type SubscriptionResponse =
-  { character :: Maybe Id
-  , phrase :: Phrase
-  }
+type SubscriptionResponse
+  = { character :: Maybe Id
+    , phrase :: Phrase
+    }
 
 subscription :: SelectionSet Scope__RootSubscription SubscriptionResponse
 subscription = Subscription.newMessage chatMessage
 
 expectedSubscription :: String
-expectedSubscription = inlineAndTrim """
+expectedSubscription =
+  inlineAndTrim
+    """
 subscription {
   newMessage {
     character {
@@ -72,29 +73,13 @@ subscription {
 """
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Example13SSubscription" do
-  writeGraphQL mutation `Test.Spec.shouldEqual` expectedMutation
-  writeGraphQL subscription `Test.Spec.shouldEqual` expectedSubscription
-
-  ----------------
-
-  (response :: Either (GraphQLError MutationResponse) MutationResponse) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
-
-  response' <- either (throwError <<< error <<< printGraphQLError) pure $ response
-
-  response'.character `Test.Spec.shouldEqual` Nothing
-
-  (response'.phrase == Father) `Test.Spec.shouldEqual` true
-
-  ----------------
-
-  -- | websocket <- liftEffect $ Web.Socket.WebSocket.create "wss://elm-graphql.herokuapp.com/socket" []
-
-  -- | traceM "starting"
-  -- | liftEffect $ Web.Socket.WebSocket.readyState websocket >>= traceM
-
-  -- | void $ forkAff do
-  -- |    delay (Milliseconds 3000.0)
-  -- |    traceM "killing"
-  -- |    liftEffect $ Web.Socket.WebSocket.readyState websocket >>= traceM
-  -- |    liftEffect $ Web.Socket.WebSocket.close websocket
+spec =
+  Test.Spec.it "Example13SSubscription" do
+    writeGraphQL mutation `Test.Spec.shouldEqual` expectedMutation
+    writeGraphQL subscription `Test.Spec.shouldEqual` expectedSubscription
+    ----------------
+    (response :: Either (GraphQLError MutationResponse) MutationResponse) <- graphqlMutationRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions mutation
+    response' <- either (throwError <<< error <<< printGraphQLError) pure $ response
+    response'.character `Test.Spec.shouldEqual` Nothing
+    (response'.phrase == Father) `Test.Spec.shouldEqual` true
+ ---------------- -- | websocket <- liftEffect $ Web.Socket.WebSocket.create "wss://elm-graphql.herokuapp.com/socket" [] -- | traceM "starting" -- | liftEffect $ Web.Socket.WebSocket.readyState websocket >>= traceM -- | void $ forkAff do -- |    delay (Milliseconds 3000.0) -- |    traceM "killing" -- |    liftEffect $ Web.Socket.WebSocket.readyState websocket >>= traceM -- |    liftEffect $ Web.Socket.WebSocket.close websocket

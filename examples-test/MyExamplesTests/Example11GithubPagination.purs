@@ -6,7 +6,6 @@ import Examples.Github.Scopes (Scope__PageInfo, Scope__Repository, Scope__Search
 import MyExamplesTests.Util (inlineAndTrim)
 import GraphQLClient (GraphQLError, Optional(..), Scope__RootQuery, SelectionSet, defaultRequestOptions, defaultInput, graphqlQueryRequest, printGraphQLError, writeGraphQL)
 import Prelude
-
 import Data.Either (Either, either)
 import Data.Maybe (Maybe(..), isJust)
 import Affjax.RequestHeader (RequestHeader(..))
@@ -25,20 +24,21 @@ import Record as Record
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
-type Response = Paginator (Array Repo) String
+type Response
+  = Paginator (Array Repo) String
 
-type Paginator dataType cursorType =
-    { data :: dataType
+type Paginator dataType cursorType
+  = { data :: dataType
     , paginationData :: PaginationData cursorType
     }
 
-type PaginationData cursorType =
-    { cursor :: Maybe cursorType
+type PaginationData cursorType
+  = { cursor :: Maybe cursorType
     , hasNextPage :: Boolean
     }
 
-type Repo =
-    { name :: String
+type Repo
+  = { name :: String
     , description :: Maybe String
     , createdAt :: Examples.Github.Scalars.DateTime
     , updatedAt :: Examples.Github.Scalars.DateTime
@@ -48,15 +48,16 @@ type Repo =
 query :: Maybe String -> SelectionSet Scope__RootQuery Response
 query cursor =
   let
-      args =
-        ( Record.merge
+    args =
+      ( Record.merge
           { query: "language:purescript"
           , "type": Examples.Github.Enum.SearchType.Repository
           , first: Present 10 -- first OR last is required
           }
           (defaultInput :: { | Examples.Github.Query.SearchInputRowOptional () })
-        )
-  in Examples.Github.Query.search args searchSelection
+      )
+  in
+    Examples.Github.Query.search args searchSelection
 
 searchSelection :: SelectionSet Scope__SearchResultItemConnection Response
 searchSelection = ado
@@ -66,11 +67,11 @@ searchSelection = ado
 
 searchResultFieldEdges :: SelectionSet Scope__SearchResultItemConnection (Array Repo)
 searchResultFieldEdges =
-    Examples.Github.Object.SearchResultItemConnection.edges
-        (Examples.Github.Object.SearchResultItemEdge.node searchResultSelection # GraphQLClient.nonNullOrFail)
-        # GraphQLClient.nonNullOrFail
-        # GraphQLClient.nonNullElementsOrFail
-        # GraphQLClient.nonNullElementsOrFail
+  Examples.Github.Object.SearchResultItemConnection.edges
+    (Examples.Github.Object.SearchResultItemEdge.node searchResultSelection # GraphQLClient.nonNullOrFail)
+    # GraphQLClient.nonNullOrFail
+    # GraphQLClient.nonNullElementsOrFail
+    # GraphQLClient.nonNullElementsOrFail
 
 searchPageInfoSelection :: SelectionSet Scope__PageInfo (PaginationData String)
 searchPageInfoSelection = ado
@@ -78,31 +79,33 @@ searchPageInfoSelection = ado
   hasNextPage <- Examples.Github.Object.PageInfo.hasNextPage
   in { cursor, hasNextPage }
 
-
 searchResultFieldNodes :: SelectionSet Scope__SearchResultItemConnection (Array Repo)
 searchResultFieldNodes =
-    Examples.Github.Object.SearchResultItemConnection.nodes searchResultSelection
-        # GraphQLClient.nonNullOrFail
-        # GraphQLClient.nonNullElementsOrFail
-        # GraphQLClient.nonNullElementsOrFail
+  Examples.Github.Object.SearchResultItemConnection.nodes searchResultSelection
+    # GraphQLClient.nonNullOrFail
+    # GraphQLClient.nonNullElementsOrFail
+    # GraphQLClient.nonNullElementsOrFail
 
 searchResultSelection :: SelectionSet Scope__SearchResultItem (Maybe Repo)
 searchResultSelection =
-    Examples.Github.Union.SearchResultItem.fragments
-      (Examples.Github.Union.SearchResultItem.maybeFragments
-      { onRepository = repositorySelection <#> Just }
-      )
+  Examples.Github.Union.SearchResultItem.fragments
+    ( Examples.Github.Union.SearchResultItem.maybeFragments
+        { onRepository = repositorySelection <#> Just }
+    )
+
 repositorySelection :: SelectionSet Scope__Repository Repo
 repositorySelection = ado
-  name        <- Examples.Github.Object.Repository.nameWithOwner
+  name <- Examples.Github.Object.Repository.nameWithOwner
   description <- Examples.Github.Object.Repository.description
-  createdAt   <- Examples.Github.Object.Repository.createdAt
-  updatedAt   <- Examples.Github.Object.Repository.updatedAt
-  stargazers  <- Examples.Github.Object.Repository.stargazers defaultInput Examples.Github.Object.StargazerConnection.totalCount
+  createdAt <- Examples.Github.Object.Repository.createdAt
+  updatedAt <- Examples.Github.Object.Repository.updatedAt
+  stargazers <- Examples.Github.Object.Repository.stargazers defaultInput Examples.Github.Object.StargazerConnection.totalCount
   in { name, description, createdAt, updatedAt, stargazers }
 
 expectedQuery :: String
-expectedQuery = inlineAndTrim """
+expectedQuery =
+  inlineAndTrim
+    """
 query {
   search158737529: search(first: 10, query: "language:purescript", type: REPOSITORY) {
     edges {
@@ -128,15 +131,13 @@ query {
 """
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Example11GithubPagination" do
-  writeGraphQL (query Nothing) `Test.Spec.shouldEqual` expectedQuery
-
-  let opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59" ] }
-
-  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts (query Nothing)
-
-  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
-
-  Array.length response'.data `Test.Spec.shouldEqual` 10
-  isJust response'.paginationData.cursor `Test.Spec.shouldEqual` true
-  response'.paginationData.hasNextPage `Test.Spec.shouldEqual` true
+spec =
+  Test.Spec.it "Example11GithubPagination" do
+    writeGraphQL (query Nothing) `Test.Spec.shouldEqual` expectedQuery
+    let
+      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59" ] }
+    (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts (query Nothing)
+    (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
+    Array.length response'.data `Test.Spec.shouldEqual` 10
+    isJust response'.paginationData.cursor `Test.Spec.shouldEqual` true
+    response'.paginationData.hasNextPage `Test.Spec.shouldEqual` true

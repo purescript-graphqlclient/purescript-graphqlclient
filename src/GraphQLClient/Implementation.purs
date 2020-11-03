@@ -1,7 +1,6 @@
 module GraphQLClient.Implementation where
 
 import Prelude
-
 import Data.Argonaut.Core (Json, fromString)
 import Data.Argonaut.Decode (JsonDecodeError(..))
 import Data.Argonaut.Decode.Decoders as ArgonautDecoders.Decoder
@@ -17,11 +16,12 @@ import GraphQLClient.Argument (Argument)
 import GraphQLClient.WriteGraphQLHash (Cache, argsHash)
 
 data Scope__RootQuery
+
 data Scope__RootMutation
+
 data Scope__RootSubscription
 
 ------------------------------------------------------
-
 class GraphQLDefaultResponseScalarDecoder a where
   graphqlDefaultResponseScalarDecoder :: Json -> Either JsonDecodeError a
 
@@ -41,7 +41,6 @@ instance functorGraphQLDefaultResponseScalarDecoder :: (GraphQLDefaultResponseFu
   graphqlDefaultResponseScalarDecoder = graphqlDefaultResponseFunctorDecoder graphqlDefaultResponseScalarDecoder
 
 ------------------------------------------------------
-
 -- Internal to this lib, you should use GraphQLDefaultResponseFunctorOrScalarDecoderTransformer instead usually
 class GraphQLDefaultResponseFunctorDecoder f where
   graphqlDefaultResponseFunctorDecoder :: ∀ a. (Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError (f a)
@@ -56,7 +55,6 @@ instance listGraphQLDefaultResponseFunctorDecoder :: GraphQLDefaultResponseFunct
   graphqlDefaultResponseFunctorDecoder = ArgonautDecoders.Decoder.decodeList
 
 ------------------------------------------------------
-
 -- To find decoder for nested functors (e.g. `f (g a)`) or non-functor types (e.g. `a`)
 class GraphQLDefaultResponseFunctorOrScalarDecoderTransformer a b | b -> a where
   graphqlDefaultResponseFunctorOrScalarDecoderTransformer :: (Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b
@@ -64,18 +62,16 @@ class GraphQLDefaultResponseFunctorOrScalarDecoderTransformer a b | b -> a where
 -- finds decoders for Array, Maybe, but also allows nested containers (e.g. `Array (Maybe x)`)
 instance traversableDecoderTransformer :: (GraphQLDefaultResponseFunctorOrScalarDecoderTransformer a b, GraphQLDefaultResponseFunctorDecoder f) => GraphQLDefaultResponseFunctorOrScalarDecoderTransformer a (f b) where
   graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder =
-     let
-       (json_to_b :: Json -> Either JsonDecodeError b) = graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder
-       (json_to_fb :: Json -> Either JsonDecodeError (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
-      in json_to_fb
+    let
+      (json_to_b :: Json -> Either JsonDecodeError b) = graphqlDefaultResponseFunctorOrScalarDecoderTransformer childDecoder
 
-else
-
-instance idDecoderTransformer :: GraphQLDefaultResponseFunctorOrScalarDecoderTransformer a a where
+      (json_to_fb :: Json -> Either JsonDecodeError (f b)) = graphqlDefaultResponseFunctorDecoder json_to_b
+    in
+      json_to_fb
+else instance idDecoderTransformer :: GraphQLDefaultResponseFunctorOrScalarDecoderTransformer a a where
   graphqlDefaultResponseFunctorOrScalarDecoderTransformer = identity
 
 ------------------------------------------------------
-
 data RawField
   = Composite
     String -- field name, e.g. `hero {...}`
@@ -89,29 +85,32 @@ data RawField
     String -- field name
     (Maybe Cache)
 
-data SelectionSet parentTypeLock a = SelectionSet (Array RawField) (Json -> Either JsonDecodeError a)
+data SelectionSet parentTypeLock a
+  = SelectionSet (Array RawField) (Json -> Either JsonDecodeError a)
 
 derive instance selectionSetFunctor :: Functor (SelectionSet parentTypeLock)
 
 instance applicativeSelectionSet :: Applicative (SelectionSet parentTypeLock) where
-  pure :: ∀ a parentTypeLock . a -> SelectionSet parentTypeLock a
+  pure :: ∀ a parentTypeLock. a -> SelectionSet parentTypeLock a
   pure a = SelectionSet [] (const $ Right a)
 
 instance applySelectionSet :: Apply (SelectionSet parentTypeLock) where
-  apply :: ∀ a b parentTypeLock . SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
+  apply :: ∀ a b parentTypeLock. SelectionSet parentTypeLock (a -> b) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b
   apply (SelectionSet rawFieldArray f) (SelectionSet rawFieldArrayB g) = SelectionSet (rawFieldArray <> rawFieldArrayB) (\json -> f json <*> g json)
 
 map2 :: forall parentTypeLock a b c. (a -> b -> c) -> SelectionSet parentTypeLock a -> SelectionSet parentTypeLock b -> SelectionSet parentTypeLock c
-map2 f (SelectionSet fieldsA decoderA) (SelectionSet fieldsB decoderB) = SelectionSet (fieldsA <> fieldsB) \json -> ado
-  a <- decoderA json
-  b <- decoderB json
-  in f a b
+map2 f (SelectionSet fieldsA decoderA) (SelectionSet fieldsB decoderB) =
+  SelectionSet (fieldsA <> fieldsB) \json -> ado
+    a <- decoderA json
+    b <- decoderB json
+    in f a b
 
-foldl :: forall a b parentTypeLock . (b -> a -> b) -> b -> Array (SelectionSet parentTypeLock a) -> SelectionSet parentTypeLock b
+foldl :: forall a b parentTypeLock. (b -> a -> b) -> b -> Array (SelectionSet parentTypeLock a) -> SelectionSet parentTypeLock b
 foldl f accum = Array.foldl (map2 f) (pure accum)
--- | foldlSelectionSet f accum selectionSets = SelectionSet (selectionSets <#> \(SelectionSet fields _) -> Array.concat fields) (\json -> ?a)
 
-data FragmentSelectionSet parentTypeLock a = FragmentSelectionSet String (Array RawField) (Json -> Either JsonDecodeError a)
+-- | foldlSelectionSet f accum selectionSets = SelectionSet (selectionSets <#> \(SelectionSet fields _) -> Array.concat fields) (\json -> ?a)
+data FragmentSelectionSet parentTypeLock a
+  = FragmentSelectionSet String (Array RawField) (Json -> Either JsonDecodeError a)
 
 -- | Q: why we need `fieldNameWithHash` and `fieldNameWithoutHash`
 -- |
@@ -169,7 +168,6 @@ data FragmentSelectionSet parentTypeLock a = FragmentSelectionSet String (Array 
 -- | ```
 -- |
 -- | The hash was generated because `selectionForField` arguments array WAS NOT EMPTY!
-
 fieldNameWithHash :: Maybe Cache -> String -> String
 fieldNameWithHash (Just cache) fieldName = fieldName <> cache.hash
 fieldNameWithHash _ fieldName = fieldName
@@ -181,116 +179,120 @@ fieldNameWithoutHash :: Maybe Cache -> String -> String
 fieldNameWithoutHash _ fieldName = fieldName
 
 -- only for internal use
-selectionForFieldImplementation
-  :: forall parentTypeLock a
-   . (Maybe Cache -> String -> String)
-  -> String
-  -> Array Argument
-  -> (Json -> Either JsonDecodeError a)
-  -> SelectionSet parentTypeLock a
+selectionForFieldImplementation ::
+  forall parentTypeLock a.
+  (Maybe Cache -> String -> String) ->
+  String ->
+  Array Argument ->
+  (Json -> Either JsonDecodeError a) ->
+  SelectionSet parentTypeLock a
 selectionForFieldImplementation fieldNameFn fieldName args decoder =
   let
     maybeCache :: Maybe Cache
     maybeCache = argsHash args
-  in SelectionSet [Leaf fieldName maybeCache] (\json -> do
-    object <- ArgonautDecoders.Decoder.decodeJObject json
-    ArgonautDecoders.Decoder.getField decoder object (fieldNameFn maybeCache fieldName)
-  )
+  in
+    SelectionSet [ Leaf fieldName maybeCache ]
+      ( \json -> do
+          object <- ArgonautDecoders.Decoder.decodeJObject json
+          ArgonautDecoders.Decoder.getField decoder object (fieldNameFn maybeCache fieldName)
+      )
 
-selectionForField
-  :: forall parentTypeLock a
-   . String
-  -> Array Argument
-  -> (Json -> Either JsonDecodeError a)
-  -> SelectionSet parentTypeLock a
+selectionForField ::
+  forall parentTypeLock a.
+  String ->
+  Array Argument ->
+  (Json -> Either JsonDecodeError a) ->
+  SelectionSet parentTypeLock a
 selectionForField = selectionForFieldImplementation fieldNameWithHash
 
 -- only for internal use
-selectionForCompositeFieldImplementation
-  :: forall objectTypeLock lockedTo a b
-   . (Maybe Cache -> String -> String)
-  -> String
-  -> Array Argument
-  -> ((Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b)
-  -> SelectionSet objectTypeLock a
-  -> SelectionSet lockedTo b
+selectionForCompositeFieldImplementation ::
+  forall objectTypeLock lockedTo a b.
+  (Maybe Cache -> String -> String) ->
+  String ->
+  Array Argument ->
+  ((Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b) ->
+  SelectionSet objectTypeLock a ->
+  SelectionSet lockedTo b
 selectionForCompositeFieldImplementation fieldNameFn fieldName args jsonDecoderTransformer (SelectionSet fields childDecoder) =
   let
     maybeCache :: Maybe Cache
     maybeCache = argsHash args
-  in SelectionSet
-    [ Composite fieldName fields maybeCache ]
-    (\json -> do
-      object <- ArgonautDecoders.Decoder.decodeJObject json
-      ArgonautDecoders.Decoder.getField (jsonDecoderTransformer childDecoder) object (fieldNameFn maybeCache fieldName)
-    )
+  in
+    SelectionSet
+      [ Composite fieldName fields maybeCache ]
+      ( \json -> do
+          object <- ArgonautDecoders.Decoder.decodeJObject json
+          ArgonautDecoders.Decoder.getField (jsonDecoderTransformer childDecoder) object (fieldNameFn maybeCache fieldName)
+      )
 
-selectionForCompositeField
-  :: forall objectTypeLock lockedTo a b
-   . String
-  -> Array Argument
-  -> ((Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b)
-  -> SelectionSet objectTypeLock a
-  -> SelectionSet lockedTo b
+selectionForCompositeField ::
+  forall objectTypeLock lockedTo a b.
+  String ->
+  Array Argument ->
+  ((Json -> Either JsonDecodeError a) -> Json -> Either JsonDecodeError b) ->
+  SelectionSet objectTypeLock a ->
+  SelectionSet lockedTo b
 selectionForCompositeField = selectionForCompositeFieldImplementation fieldNameWithHash
 
-buildFragment :: forall decodesTo selectionLock fragmentLock . String -> SelectionSet selectionLock decodesTo -> FragmentSelectionSet fragmentLock decodesTo
+buildFragment :: forall decodesTo selectionLock fragmentLock. String -> SelectionSet selectionLock decodesTo -> FragmentSelectionSet fragmentLock decodesTo
 buildFragment fragmentTypeName (SelectionSet fields decoder) = FragmentSelectionSet fragmentTypeName fields decoder
 
-exhaustiveFragmentSelection :: forall typeLock decodesTo . Array (FragmentSelectionSet typeLock decodesTo) -> SelectionSet typeLock decodesTo
+exhaustiveFragmentSelection :: forall typeLock decodesTo. Array (FragmentSelectionSet typeLock decodesTo) -> SelectionSet typeLock decodesTo
 exhaustiveFragmentSelection fragments =
   SelectionSet
     (fragments <#> \(FragmentSelectionSet onType fields _decoder) -> OnSpread onType fields)
-    (\json -> do
-      object <- ArgonautDecoders.Decoder.decodeJObject json
-      __typename <- ArgonautDecoders.Decoder.getField ArgonautDecoders.Decoder.decodeString object "__typename"
-
-      let
-        result :: Maybe (Either JsonDecodeError decodesTo)
-        result = Array.findMap
-          (\(FragmentSelectionSet onType _fields decoder) ->
-            if onType == __typename
-              then Just $ decoder json
-              else Nothing
-          )
-          fragments
-
-      case result of
-           Nothing -> Left $ AtKey "__typename" $ UnexpectedValue $ fromString __typename
-           Just e -> e
+    ( \json -> do
+        object <- ArgonautDecoders.Decoder.decodeJObject json
+        __typename <- ArgonautDecoders.Decoder.getField ArgonautDecoders.Decoder.decodeString object "__typename"
+        let
+          result :: Maybe (Either JsonDecodeError decodesTo)
+          result =
+            Array.findMap
+              ( \(FragmentSelectionSet onType _fields decoder) ->
+                  if onType == __typename then
+                    Just $ decoder json
+                  else
+                    Nothing
+              )
+              fragments
+        case result of
+          Nothing -> Left $ AtKey "__typename" $ UnexpectedValue $ fromString __typename
+          Just e -> e
     )
 
-nonNullOrFail
-  :: forall lockedTo a
-   . SelectionSet lockedTo (Maybe a)
-  -> SelectionSet lockedTo a
+nonNullOrFail ::
+  forall lockedTo a.
+  SelectionSet lockedTo (Maybe a) ->
+  SelectionSet lockedTo a
 nonNullOrFail = bindSelectionSet (note MissingValue)
 
-nonNullElementsOrFail
-  :: forall lockedTo a
-   . SelectionSet lockedTo (Array (Maybe a))
-  -> SelectionSet lockedTo (Array a)
+nonNullElementsOrFail ::
+  forall lockedTo a.
+  SelectionSet lockedTo (Array (Maybe a)) ->
+  SelectionSet lockedTo (Array a)
 nonNullElementsOrFail = bindSelectionSet (sequence >>> note MissingValue)
 
-bindSelectionSet
-  :: forall lockedTo a b
-   . (a -> Either JsonDecodeError b)
-  -> SelectionSet lockedTo a
-  -> SelectionSet lockedTo b
+bindSelectionSet ::
+  forall lockedTo a b.
+  (a -> Either JsonDecodeError b) ->
+  SelectionSet lockedTo a ->
+  SelectionSet lockedTo b
 bindSelectionSet decodeOutput (SelectionSet fields decoder) = SelectionSet fields (\json -> decoder json >>= decodeOutput)
 
-getSelectionSetDecoder :: ∀ lockedTo a . SelectionSet lockedTo a -> Json -> Either JsonDecodeError a
+getSelectionSetDecoder :: ∀ lockedTo a. SelectionSet lockedTo a -> Json -> Either JsonDecodeError a
 getSelectionSetDecoder (SelectionSet fields decoder) = decoder
 
-enumDecoder :: ∀ a . String -> Array (Tuple String a) -> Json -> Either JsonDecodeError a
+enumDecoder :: ∀ a. String -> Array (Tuple String a) -> Json -> Either JsonDecodeError a
 enumDecoder = enumDecoder'
   where
-    enumDecoder' name fromToMap = implementation name (List.fromFoldable fromToMap)
+  enumDecoder' name fromToMap = implementation name (List.fromFoldable fromToMap)
 
-    go Nil parsed = Nothing
-    go ((Tuple str val) : t) parsed = if str == parsed then Just val else go t parsed
+  go Nil parsed = Nothing
+  go ((Tuple str val) : t) parsed = if str == parsed then Just val else go t parsed
 
-    implementation :: String -> List (Tuple String a) -> Json -> Either JsonDecodeError a
-    implementation name fromToMap json = lmap (Named name) do
+  implementation :: String -> List (Tuple String a) -> Json -> Either JsonDecodeError a
+  implementation name fromToMap json =
+    lmap (Named name) do
       string <- ArgonautDecoders.Decoder.decodeString json
       go fromToMap string # note (UnexpectedValue json)

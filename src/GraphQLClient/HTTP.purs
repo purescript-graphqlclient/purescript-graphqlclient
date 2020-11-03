@@ -1,8 +1,6 @@
 module GraphQLClient.HTTP where
 
-
 import Prelude
-
 import Affjax (Error, Response, Request, URL, defaultRequest, printError, request) as Affjax
 import Affjax.RequestBody as Affjax.RequestBody
 import Affjax.RequestHeader (RequestHeader) as Affjax
@@ -50,9 +48,8 @@ import Record as Record
   }
 
 -}
-
-newtype GraphQLError__UserDetail =
-  GraphQLError__UserDetail
+newtype GraphQLError__UserDetail
+  = GraphQLError__UserDetail
   { message :: String
   , otherDetails :: Object ArgonautCore.Json -- other unparsed error data, but without already parsed, e.g. locations or path
   -- , locations :: Maybe (Array { line :: Int, column :: Int })
@@ -61,15 +58,18 @@ newtype GraphQLError__UserDetail =
   }
 
 derive instance newtypeGraphQLError__UserDetail :: Newtype GraphQLError__UserDetail _
+
 derive instance genericGraphQLError__UserDetail :: Generic GraphQLError__UserDetail _
+
 derive newtype instance eqGraphQLError__UserDetail :: Eq GraphQLError__UserDetail
 
 decodeGraphQLError__UserDetail :: ArgonautCore.Json -> Either JsonDecodeError GraphQLError__UserDetail
-decodeGraphQLError__UserDetail json = lmap (Named "GraphQLError__UserDetail") do
-  jsonObject <- Data.Argonaut.Decode.Decoders.decodeJObject json
-  (Tuple messageJson otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
-  (message :: String) <- Data.Argonaut.Decode.Decoders.decodeString messageJson
-  pure $ GraphQLError__UserDetail { message, otherDetails }
+decodeGraphQLError__UserDetail json =
+  lmap (Named "GraphQLError__UserDetail") do
+    jsonObject <- Data.Argonaut.Decode.Decoders.decodeJObject json
+    (Tuple messageJson otherDetails) <- Foreign.Object.pop "message" jsonObject # (note $ AtKey "message" $ MissingValue)
+    (message :: String) <- Data.Argonaut.Decode.Decoders.decodeString messageJson
+    pure $ GraphQLError__UserDetail { message, otherDetails }
 
 instance decodeJsonGraphQLError__UserDetail :: DecodeJson GraphQLError__UserDetail where
   decodeJson = decodeGraphQLError__UserDetail
@@ -84,70 +84,71 @@ data PossiblyParsedData parsed
 
 data GraphQLError parsed
   -- | GraphQLError__BadStatus         Affjax.StatusCode String -- status is not in >=200 && <=299 range
-  = GraphQLError__Affjax       Affjax.Error
+  = GraphQLError__Affjax Affjax.Error
   | GraphQLError__UnexpectedPayload JsonDecodeError ArgonautCore.Json -- json is not decoded at all
-  | GraphQLError__User      (NonEmptyArray GraphQLError__UserDetail) (PossiblyParsedData parsed)
+  | GraphQLError__User (NonEmptyArray GraphQLError__UserDetail) (PossiblyParsedData parsed)
 
-printGraphQLError :: ∀ a . GraphQLError a -> String
+printGraphQLError :: ∀ a. GraphQLError a -> String
 printGraphQLError = case _ of
   GraphQLError__Affjax affjaxError -> Affjax.printError affjaxError
-  GraphQLError__UnexpectedPayload error jsonBody -> intercalate "\n"
-    [ "Unexpected payload:"
-    , "  error = " <> printJsonDecodeError error
-    , "  body = " <> ArgonautCore.stringifyWithIndent 2 jsonBody
-    ]
+  GraphQLError__UnexpectedPayload error jsonBody ->
+    intercalate "\n"
+      [ "Unexpected payload:"
+      , "  error = " <> printJsonDecodeError error
+      , "  body = " <> ArgonautCore.stringifyWithIndent 2 jsonBody
+      ]
   GraphQLError__User errorsArray pissiblyParsedData ->
-    let errorsArray' = NonEmptyArray.toArray $ map (unwrap >>> _.message >>> ("  " <> _)) errorsArray
-     in case pissiblyParsedData of
-        PossiblyParsedData__ParsedData _parsed -> intercalate "\n" $ ["Data is parsed, but there are graphql errors:"] <> errorsArray'
-        PossiblyParsedData__NoDataKey -> intercalate "\n" $ ["Data is not present because of the graphql errors:"] <> errorsArray'
-        PossiblyParsedData__UnparsedData dataDecoderError _json -> (intercalate "\n" $ ["Data cannot be parsed because of the graphql errors:"] <> errorsArray') <> printJsonDecodeError dataDecoderError
-
+    let
+      errorsArray' = NonEmptyArray.toArray $ map (unwrap >>> _.message >>> ("  " <> _)) errorsArray
+    in
+      case pissiblyParsedData of
+        PossiblyParsedData__ParsedData _parsed -> intercalate "\n" $ [ "Data is parsed, but there are graphql errors:" ] <> errorsArray'
+        PossiblyParsedData__NoDataKey -> intercalate "\n" $ [ "Data is not present because of the graphql errors:" ] <> errorsArray'
+        PossiblyParsedData__UnparsedData dataDecoderError _json -> (intercalate "\n" $ [ "Data cannot be parsed because of the graphql errors:" ] <> errorsArray') <> printJsonDecodeError dataDecoderError
 
 errorsOrBodyDecoder :: ArgonautCore.Json -> Either JsonDecodeError (Either { errors :: NonEmptyArray GraphQLError__UserDetail, dataJson :: ArgonautCore.Json } ArgonautCore.Json)
 errorsOrBodyDecoder json = do
   (jsonObject :: Object ArgonautCore.Json) <- Data.Argonaut.Decode.Decoders.decodeJObject json
-
   let
     maybeErrorJson = Foreign.Object.lookup "errors" jsonObject
-    maybeDataJson = Foreign.Object.lookup "data" jsonObject -- http://spec.graphql.org/draft/#sec-Errors
 
+    maybeDataJson = Foreign.Object.lookup "data" jsonObject -- http://spec.graphql.org/draft/#sec-Errors
   case maybeDataJson of
     -- not present -> errors should be NonEmptyArray
-    Nothing ->
-      case maybeErrorJson of
-        Nothing -> Left $ AtKey "errors" MissingValue
-        Just errorsJson -> do
-           (nonEmptyArrayErrors :: NonEmptyArray GraphQLError__UserDetail) <- Data.Argonaut.Decode.Decoders.decodeNonEmptyArray decodeGraphQLError__UserDetail errorsJson
-           pure $ Left { errors: nonEmptyArrayErrors, dataJson: jsonNull }
+    Nothing -> case maybeErrorJson of
+      Nothing -> Left $ AtKey "errors" MissingValue
+      Just errorsJson -> do
+        (nonEmptyArrayErrors :: NonEmptyArray GraphQLError__UserDetail) <- Data.Argonaut.Decode.Decoders.decodeNonEmptyArray decodeGraphQLError__UserDetail errorsJson
+        pure $ Left { errors: nonEmptyArrayErrors, dataJson: jsonNull }
     -- present (including null) -> errors can be present and NonEmptyArray OR no errors
     Just dataJson -> do
-       case maybeErrorJson of
-         Nothing -> pure $ Right dataJson
-         Just errorsJson -> do
-            (nonEmptyArrayErrors :: NonEmptyArray GraphQLError__UserDetail) <- Data.Argonaut.Decode.Decoders.decodeNonEmptyArray decodeGraphQLError__UserDetail errorsJson
-            pure $ Left { errors: nonEmptyArrayErrors, dataJson }
+      case maybeErrorJson of
+        Nothing -> pure $ Right dataJson
+        Just errorsJson -> do
+          (nonEmptyArrayErrors :: NonEmptyArray GraphQLError__UserDetail) <- Data.Argonaut.Decode.Decoders.decodeNonEmptyArray decodeGraphQLError__UserDetail errorsJson
+          pure $ Left { errors: nonEmptyArrayErrors, dataJson }
 
-tryDecodeGraphQLResponse :: ∀ parsed . (ArgonautCore.Json -> Either JsonDecodeError parsed) -> ArgonautCore.Json -> Either (GraphQLError parsed) parsed
+tryDecodeGraphQLResponse :: ∀ parsed. (ArgonautCore.Json -> Either JsonDecodeError parsed) -> ArgonautCore.Json -> Either (GraphQLError parsed) parsed
 tryDecodeGraphQLResponse decoderForData jsonBody = graphqlResponseOrError # either (\error -> Left $ GraphQLError__UnexpectedPayload error jsonBody) identity
   where
-    graphqlResponseOrError :: Either JsonDecodeError (Either (GraphQLError parsed) parsed)
-    graphqlResponseOrError = do
-      errorsOrBodyDecoder jsonBody >>= case _ of
-        Right dataJson -> do
-          parsed <- decoderForData dataJson
-          Right $ Right parsed
-        Left { errors, dataJson } -> do
-          (pissiblyParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # either (\error -> Right $ PossiblyParsedData__UnparsedData error dataJson) (Right <<< PossiblyParsedData__ParsedData)
-          Right $ Left $ GraphQLError__User errors pissiblyParsedData
+  graphqlResponseOrError :: Either JsonDecodeError (Either (GraphQLError parsed) parsed)
+  graphqlResponseOrError = do
+    errorsOrBodyDecoder jsonBody
+      >>= case _ of
+          Right dataJson -> do
+            parsed <- decoderForData dataJson
+            Right $ Right parsed
+          Left { errors, dataJson } -> do
+            (pissiblyParsedData :: PossiblyParsedData parsed) <- decoderForData dataJson # either (\error -> Right $ PossiblyParsedData__UnparsedData error dataJson) (Right <<< PossiblyParsedData__ParsedData)
+            Right $ Left $ GraphQLError__User errors pissiblyParsedData
 
-type RequestOptions =
-  { headers :: Array Affjax.RequestHeader
-  , username :: Maybe String
-  , password :: Maybe String
-  , withCredentials :: Boolean
-  , timeout :: Maybe Milliseconds
-  }
+type RequestOptions
+  = { headers :: Array Affjax.RequestHeader
+    , username :: Maybe String
+    , password :: Maybe String
+    , withCredentials :: Boolean
+    , timeout :: Maybe Milliseconds
+    }
 
 defaultRequestOptions :: RequestOptions
 defaultRequestOptions =
@@ -163,28 +164,31 @@ post url requestOptions body = Affjax.request request
   where
   request :: Affjax.Request ArgonautCore.Json
   request =
-    Record.merge requestOptions $
-      (Affjax.defaultRequest
-        { method = Left POST
-        , url = url
-        , content = Just $ Affjax.RequestBody.json $ ArgonautCodecs.Encode.encodeJson body
-        , responseFormat = Affjax.ResponseFormat.json
-        } :: Affjax.Request ArgonautCore.Json)
+    Record.merge requestOptions
+      $ ( Affjax.defaultRequest
+            { method = Left POST
+            , url = url
+            , content = Just $ Affjax.RequestBody.json $ ArgonautCodecs.Encode.encodeJson body
+            , responseFormat = Affjax.ResponseFormat.json
+            } ::
+            Affjax.Request ArgonautCore.Json
+        )
 
-graphqlRequestImpl
-  :: forall a
-   . Affjax.URL
-  -> RequestOptions
-  -> String
-  -> (ArgonautCore.Json -> Either JsonDecodeError a)
-  -> Aff (Either (GraphQLError a) a)
-graphqlRequestImpl url requestOptions query decoder = Transformers.runExceptT do
-  (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url requestOptions $ ArgonautCodecs.Encode.encodeJson { query }
-  jsonBody <- case result of
-    Left error -> Transformers.throwError $ GraphQLError__Affjax error
-    Right response -> pure response.body
-  -- | traceWithoutInspectM $ "[graphqlRequestImpl] jsonBody " <> ArgonautCore.stringifyWithIndent 2 jsonBody -- TODO: move outside
-  except $ tryDecodeGraphQLResponse decoder jsonBody
+graphqlRequestImpl ::
+  forall a.
+  Affjax.URL ->
+  RequestOptions ->
+  String ->
+  (ArgonautCore.Json -> Either JsonDecodeError a) ->
+  Aff (Either (GraphQLError a) a)
+graphqlRequestImpl url requestOptions query decoder =
+  Transformers.runExceptT do
+    (result :: Either Affjax.Error (Affjax.Response ArgonautCore.Json)) <- Transformers.lift $ post url requestOptions $ ArgonautCodecs.Encode.encodeJson { query }
+    jsonBody <- case result of
+      Left error -> Transformers.throwError $ GraphQLError__Affjax error
+      Right response -> pure response.body
+    -- | traceWithoutInspectM $ "[graphqlRequestImpl] jsonBody " <> ArgonautCore.stringifyWithIndent 2 jsonBody -- TODO: move outside
+    except $ tryDecodeGraphQLResponse decoder jsonBody
 
 -- graphqlRequestImplWithTrace
 --   :: forall a
@@ -201,19 +205,18 @@ graphqlRequestImpl url requestOptions query decoder = Transformers.runExceptT do
 --     Right output -> traceWithoutInspectM $ "[graphqlRequestImplWithTrace] output" <> show output
 --     Left graphqlError -> traceWithoutInspectM $ "[graphqlRequestImplWithTrace] " <> printGraphQLError graphqlError
 --   pure $ result
-
-graphqlQueryRequest
-  :: forall a
-   . Affjax.URL
-  -> RequestOptions
-  -> SelectionSet Scope__RootQuery a
-  -> Aff (Either (GraphQLError a) a)
+graphqlQueryRequest ::
+  forall a.
+  Affjax.URL ->
+  RequestOptions ->
+  SelectionSet Scope__RootQuery a ->
+  Aff (Either (GraphQLError a) a)
 graphqlQueryRequest url requestOptions selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url requestOptions (writeGraphQL selectionSet) decoder
 
-graphqlMutationRequest
-  :: forall a
-   . Affjax.URL
-  -> RequestOptions
-  -> SelectionSet Scope__RootMutation a
-  -> Aff (Either (GraphQLError a) a)
+graphqlMutationRequest ::
+  forall a.
+  Affjax.URL ->
+  RequestOptions ->
+  SelectionSet Scope__RootMutation a ->
+  Aff (Either (GraphQLError a) a)
 graphqlMutationRequest url requestOptions selectionSet@(SelectionSet _fields decoder) = graphqlRequestImpl url requestOptions (writeGraphQL selectionSet) decoder

@@ -1,7 +1,6 @@
 module GraphQLClientGenerator.Main where
 
 import Prelude
-
 import Ansi.Codes (Color(..)) as Ansi
 import Ansi.Output (foreground, withGraphics) as Ansi
 import Control.Monad.Error.Class (throwError)
@@ -36,7 +35,8 @@ import Node.Process (exit) as NodeProcess
 import Options.Applicative (execParser)
 import Record.Homogeneous (foldMapValuesWithIndexL)
 
-type App a = ReaderT GraphQLClientGenerator.Options.AppOptions Aff a
+type App a
+  = ReaderT GraphQLClientGenerator.Options.AppOptions Aff a
 
 includeDeprecated :: Boolean
 includeDeprecated = true
@@ -54,44 +54,36 @@ dirIsEmpty filepath = Node.FS.Aff.readdir filepath <#> null
 -- | standard output if the exit code is 0, and standard error otherwise.
 exitWith :: ∀ m a. MonadEffect m => Int -> String -> m a
 exitWith code msg = do
-  if code == 0
-    then Console.log $ Ansi.withGraphics (Ansi.foreground Ansi.BrightGreen) msg
-    else Console.error $ Ansi.withGraphics (Ansi.foreground Ansi.BrightRed) msg
+  if code == 0 then
+    Console.log $ Ansi.withGraphics (Ansi.foreground Ansi.BrightGreen) msg
+  else
+    Console.error $ Ansi.withGraphics (Ansi.foreground Ansi.BrightRed) msg
   liftEffect $ NodeProcess.exit code
 
 main :: Effect Unit
 main = do
   (GraphQLClientGenerator.Options.AppOptions appOptions) <- execParser GraphQLClientGenerator.Options.opts
-
   launchAff_ do
-    (instorpectionQueryResult :: GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <-
-      case appOptions.input of
-        (GraphQLClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
-          let
-            opts = GraphQLClient.defaultRequestOptions { headers = appOptions.headers }
-
-          resp <- GraphQLClient.graphqlQueryRequest url opts (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery GraphQLClient.Implementation.fieldNameWithHash includeDeprecated)
+    (instorpectionQueryResult :: GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- case appOptions.input of
+      (GraphQLClientGenerator.Options.AppOptionsInputSchemaOrJsonUrl url) -> do
+        let
+          opts = GraphQLClient.defaultRequestOptions { headers = appOptions.headers }
+        resp <-
+          GraphQLClient.graphqlQueryRequest url opts (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery GraphQLClient.Implementation.fieldNameWithHash includeDeprecated)
             >>= either (throwError <<< error <<< GraphQLClient.printGraphQLError) pure
-
-          pure resp
-        (GraphQLClientGenerator.Options.AppOptionsInputSchemaPath filepath) -> do
-          text <- Node.FS.Aff.readTextFile UTF8 filepath
-
-          json <- GraphQLJs.generateIntrospectionJsonFromSchema text # either throwError pure
-
-          introspectionQueryDecoderForExternalJson json # either (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) pure
-        (GraphQLClientGenerator.Options.AppOptionsInputJsonPath filepath) -> do
-          text <- Node.FS.Aff.readTextFile UTF8 filepath
-          json <- ArgonautCore.jsonParser text # either (throwError <<< error) pure
-
-          GraphQLClient.tryDecodeGraphQLResponse introspectionQueryDecoderForExternalJson json # either (throwError <<< error <<< GraphQLClient.printGraphQLError) pure
-
+        pure resp
+      (GraphQLClientGenerator.Options.AppOptionsInputSchemaPath filepath) -> do
+        text <- Node.FS.Aff.readTextFile UTF8 filepath
+        json <- GraphQLJs.generateIntrospectionJsonFromSchema text # either throwError pure
+        introspectionQueryDecoderForExternalJson json # either (throwError <<< error <<< ArgonautDecoders.printJsonDecodeError) pure
+      (GraphQLClientGenerator.Options.AppOptionsInputJsonPath filepath) -> do
+        text <- Node.FS.Aff.readTextFile UTF8 filepath
+        json <- ArgonautCore.jsonParser text # either (throwError <<< error) pure
+        GraphQLClient.tryDecodeGraphQLResponse introspectionQueryDecoderForExternalJson json # either (throwError <<< error <<< GraphQLClient.printGraphQLError) pure
     outputDirAbs <- liftEffect $ Node.FS.resolve [] appOptions.output -- like realpath, but doesn’t throw errors
-
     whenM (Node.FS.Aff.exists outputDirAbs) do
       isEmpty <- dirIsEmpty outputDirAbs
       unless isEmpty (exitWith 1 $ "Output dir " <> (show outputDirAbs) <> " is non empty. Cannot write files to it.")
-
     let
       filesMap = GraphQLClientGenerator.PsCst.mkFilesMap appOptions.customScalarsModule appOptions.api instorpectionQueryResult
 
@@ -102,7 +94,7 @@ main = do
           outputFile = fileName <> ".purs"
 
           outputPath :: FilePath
-          outputPath = Node.FS.concat [outputDir, outputFile]
+          outputPath = Node.FS.concat [ outputDir, outputFile ]
         void $ Node.FS.Aff.Mkdirp.mkdirp outputDir
         Node.FS.Aff.writeTextFile UTF8 outputPath content
         pure unit
@@ -111,7 +103,7 @@ main = do
       printModuleForDirs dirName mapOfFilenameAndContent =
         let
           outputDir :: FilePath
-          outputDir = (Node.FS.concat $ [outputDirAbs, dirName])
+          outputDir = (Node.FS.concat $ [ outputDirAbs, dirName ])
         in
           void (forWithIndex mapOfFilenameAndContent (printModule outputDir))
 
@@ -124,13 +116,13 @@ main = do
           void (printModule outputDir fileName content)
 
       printModuleForMaybeFiles :: String -> Maybe String -> Aff Unit
-      printModuleForMaybeFiles fileName = maybe (pure unit) \content ->
-        let
-          outputDir :: FilePath
-          outputDir = outputDirAbs
-        in
-          void (printModule outputDir fileName content)
-
+      printModuleForMaybeFiles fileName =
+        maybe (pure unit) \content ->
+          let
+            outputDir :: FilePath
+            outputDir = outputDirAbs
+          in
+            void (printModule outputDir fileName content)
     foldMapValuesWithIndexL printModuleForDirs filesMap.dirs
     foldMapValuesWithIndexL printModuleForFiles filesMap.files
     foldMapValuesWithIndexL printModuleForMaybeFiles filesMap.maybeFiles

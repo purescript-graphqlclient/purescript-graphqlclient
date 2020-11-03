@@ -1,7 +1,6 @@
 module MyGeneratorTests.IntrospectionSpec where
 
 import Prelude
-
 import Affjax as Affjax
 import Control.Monad.Error.Class (throwError)
 import Data.Argonaut.Core (Json)
@@ -40,16 +39,18 @@ introspectionQueryDecoderForJsonFromOurLibGeneratedQuery :: Json -> Either JsonD
 introspectionQueryDecoderForJsonFromOurLibGeneratedQuery = GraphQLClient.getSelectionSetDecoder (GraphQLClientGenerator.IntrospectionSchema.introspectionQuery GraphQLClient.Implementation.fieldNameWithHash includeDeprecated)
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.describe "Introspection spec" $ Test.Spec.parallel $ for_ urls (\url -> Test.Spec.it url do
-  (expectedJson :: Json) <- request MyGeneratorTestUtils.IntrospectionQuery.introspectionQuery url { }
-  (expectedParsed :: GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoderForExternalJson expectedJson # either (throwError <<< error <<< printJsonDecodeError) pure
-
-  (actualJson :: Json) <- GraphQLClient.post url GraphQLClient.defaultRequestOptions (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
-    >>= either (throwError <<< error <<< Affjax.printError) (\response -> pure response.body)
-    >>= (GraphQLClient.tryDecodeGraphQLResponse Right >>> pure)
-    >>= either (throwError <<< error <<< GraphQLClient.printGraphQLError) pure
-
-  (actualParsed :: GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoderForJsonFromOurLibGeneratedQuery actualJson # either (throwError <<< error <<< printJsonDecodeError) pure
-
-  actualParsed `shouldEqual` expectedParsed
-)
+spec =
+  Test.Spec.describe "Introspection spec" $ Test.Spec.parallel
+    $ for_ urls
+        ( \url ->
+            Test.Spec.it url do
+              (expectedJson :: Json) <- request MyGeneratorTestUtils.IntrospectionQuery.introspectionQuery url {}
+              (expectedParsed :: GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoderForExternalJson expectedJson # either (throwError <<< error <<< printJsonDecodeError) pure
+              (actualJson :: Json) <-
+                GraphQLClient.post url GraphQLClient.defaultRequestOptions (ArgonautCodecs.Encode.encodeJson { query: introspectionQueryString })
+                  >>= either (throwError <<< error <<< Affjax.printError) (\response -> pure response.body)
+                  >>= (GraphQLClient.tryDecodeGraphQLResponse Right >>> pure)
+                  >>= either (throwError <<< error <<< GraphQLClient.printGraphQLError) pure
+              (actualParsed :: GraphQLClientGenerator.IntrospectionSchema.InstorpectionQueryResult) <- introspectionQueryDecoderForJsonFromOurLibGeneratedQuery actualJson # either (throwError <<< error <<< printJsonDecodeError) pure
+              actualParsed `shouldEqual` expectedParsed
+        )

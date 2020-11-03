@@ -3,7 +3,6 @@ module Examples.SwapiCustomScalars where
 import Data.Newtype (class Newtype)
 import GraphQLClient (class GraphQLDefaultResponseScalarDecoder, class ToGraphQLArgumentValue, ArgumentValue(..))
 import Prelude
-
 import Data.Argonaut.Decode (JsonDecodeError(..))
 import Data.Argonaut.Decode.Decoders (decodeString) as ArgonautDecoders.Decoder
 import Data.Either (note)
@@ -13,9 +12,9 @@ import Data.Int as Int
 -- | Because Id is a string by graphql spec
 -- | But we want it to be Int without changing anything
 -- | So, here is the example
-
 -- | original name - ID
-newtype Id = Id Int
+newtype Id
+  = Id Int
 
 derive newtype instance eqId :: Eq Id
 
@@ -32,7 +31,8 @@ instance toGraphQLArgumentValueId :: ToGraphQLArgumentValue Id where
   toGraphQLArgumentValue (Id i) = i # Int.toStringAs Int.decimal >>> ArgumentValueString
 
 -- | original name - PosixTime
-newtype PosixTime = PosixTime String
+newtype PosixTime
+  = PosixTime String
 
 derive newtype instance eqPosixTime :: Eq PosixTime
 

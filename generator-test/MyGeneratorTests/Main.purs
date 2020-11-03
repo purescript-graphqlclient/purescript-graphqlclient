@@ -1,7 +1,6 @@
 module MyGeneratorTests.Main where
 
 import Prelude
-
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Aff (Milliseconds(..), launchAff_)

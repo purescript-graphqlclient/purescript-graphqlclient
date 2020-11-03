@@ -4,7 +4,6 @@ import Control.Monad.Error.Class (throwError)
 import Effect.Exception (error)
 import Data.Either (Either, either)
 import Prelude
-
 import Examples.Swapi.Interface.Character as Character
 import Examples.Swapi.Query as Query
 import Examples.Swapi.Scopes (Scope__Character)
@@ -14,13 +13,14 @@ import MyExamplesTests.Util (inlineAndTrim)
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
-type Response = CharacterResponse
+type Response
+  = CharacterResponse
 
-type CharacterResponse =
-  { name :: String
-  , id :: Id
-  , friends :: Array String
-  }
+type CharacterResponse
+  = { name :: String
+    , id :: Id
+    , friends :: Array String
+    }
 
 query :: SelectionSet Scope__RootQuery Response
 query = Query.hero defaultInput characterInfoSelection
@@ -33,7 +33,9 @@ characterInfoSelection = ado
   in { name: name', id: id', friends: friends' }
 
 expectedQuery :: String
-expectedQuery = inlineAndTrim """
+expectedQuery =
+  inlineAndTrim
+    """
 query {
   hero {
     name
@@ -46,11 +48,9 @@ query {
 """
 
 spec :: Test.Spec.Spec Unit
-spec = Test.Spec.it "Example02AdoSyntax" do
-  writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
-
-  (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
-
-  (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
-
-  response' `Test.Spec.shouldEqual` { friends: ["Han Solo","Leia Organa","C-3PO","R2-D2"], id: Id 1000, name: "Luke Skywalker" }
+spec =
+  Test.Spec.it "Example02AdoSyntax" do
+    writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
+    (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://elm-graphql.herokuapp.com" defaultRequestOptions query
+    (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
+    response' `Test.Spec.shouldEqual` { friends: [ "Han Solo", "Leia Organa", "C-3PO", "R2-D2" ], id: Id 1000, name: "Luke Skywalker" }

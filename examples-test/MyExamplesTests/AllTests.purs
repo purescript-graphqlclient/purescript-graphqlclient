@@ -16,16 +16,17 @@ import MyExamplesTests.Example12Mutation as MyExamplesTests.Example12Mutation
 import MyExamplesTests.Example13SSubscription as MyExamplesTests.Example13SSubscription
 
 allTests :: Test.Spec.Spec Unit
-allTests = Test.Spec.parallel do
-  MyExamplesTests.Example00SingleFieldQuery.spec
-  MyExamplesTests.Example01BasicQuery.spec
-  MyExamplesTests.Example02AdoSyntax.spec
-  MyExamplesTests.Example03Variables.spec
-  MyExamplesTests.Example04ErrorDestructuring.spec
-  MyExamplesTests.Example05InterfacesAndUnions.spec
-  MyExamplesTests.Example06Typename.spec
-  MyExamplesTests.Example08Foldr.spec
-  MyExamplesTests.Example10Github.spec
-  MyExamplesTests.Example11GithubPagination.spec
-  MyExamplesTests.Example12Mutation.spec
-  MyExamplesTests.Example13SSubscription.spec
+allTests =
+  Test.Spec.parallel do
+    MyExamplesTests.Example00SingleFieldQuery.spec
+    MyExamplesTests.Example01BasicQuery.spec
+    MyExamplesTests.Example02AdoSyntax.spec
+    MyExamplesTests.Example03Variables.spec
+    MyExamplesTests.Example04ErrorDestructuring.spec
+    MyExamplesTests.Example05InterfacesAndUnions.spec
+    MyExamplesTests.Example06Typename.spec
+    MyExamplesTests.Example08Foldr.spec
+    MyExamplesTests.Example10Github.spec
+    MyExamplesTests.Example11GithubPagination.spec
+    MyExamplesTests.Example12Mutation.spec
+    MyExamplesTests.Example13SSubscription.spec

@@ -1,7 +1,6 @@
 module GraphQLClient.GraphQLEnum where
 
 import Prelude
-
 import Control.Alt ((<|>))
 import Data.Argonaut.Core (Json, fromString)
 import Data.Argonaut.Decode as ArgonautCodecs
@@ -42,8 +41,8 @@ instance constructorGenericDecodeGraphQLEnum ::
     else
       Left $ ArgonautCodecs.Named name $ ArgonautCodecs.UnexpectedValue (fromString string)
     where
-      deleteUnderscores :: String -> CaseInsensitiveString
-      deleteUnderscores = replaceAll (Pattern "_") (Replacement "") >>> CaseInsensitiveString
+    deleteUnderscores :: String -> CaseInsensitiveString
+    deleteUnderscores = replaceAll (Pattern "_") (Replacement "") >>> CaseInsensitiveString
 
-      name :: String
-      name = reflectSymbol (SProxy :: SProxy name)
+    name :: String
+    name = reflectSymbol (SProxy :: SProxy name)

@@ -1,7 +1,6 @@
 module GraphQLClient.WriteGraphQL where
 
 import Prelude
-
 import Data.Array as Array
 import Data.String as String
 import Data.Maybe (Maybe(..))
@@ -21,14 +20,12 @@ instance writeGraphSubscription :: WriteGraphQL (SelectionSet Scope__RootSubscri
 
 writeGraphQLRawField :: RawField -> String
 writeGraphQLRawField = case _ of
-  Leaf name cache ->
-    case cache of
-         Nothing -> name
-         Just cache' -> name <> cache'.hash <> ": " <> name <> cache'.argsWritten
-  Composite name subFields cache ->
-    case cache of
-         Nothing -> name <> writeGraphQLArrayRawField subFields
-         Just cache' -> name <> cache'.hash <> ": " <> name <> cache'.argsWritten <> writeGraphQLArrayRawField subFields
+  Leaf name cache -> case cache of
+    Nothing -> name
+    Just cache' -> name <> cache'.hash <> ": " <> name <> cache'.argsWritten
+  Composite name subFields cache -> case cache of
+    Nothing -> name <> writeGraphQLArrayRawField subFields
+    Just cache' -> name <> cache'.hash <> ": " <> name <> cache'.argsWritten <> writeGraphQLArrayRawField subFields
   OnSpread onType [] -> ""
   OnSpread onType subFields -> "...on " <> onType <> writeGraphQLArrayRawField subFields
 
@@ -36,17 +33,18 @@ writeGraphQLArrayRawField :: Array RawField -> String
 writeGraphQLArrayRawField [] = ""
 writeGraphQLArrayRawField fields = " { " <> fields'' <> " }"
   where
-    fields' :: Array RawField
-    fields' = Array.filter (not <<< isEmptyChildren) fields
+  fields' :: Array RawField
+  fields' = Array.filter (not <<< isEmptyChildren) fields
 
-    fields'' :: String
-    fields'' = String.joinWith " " $ __typename <> (writeGraphQLRawField <$> fields')
+  fields'' :: String
+  fields'' = String.joinWith " " $ __typename <> (writeGraphQLRawField <$> fields')
 
-    __typename :: Array String
-    __typename =
-      if isOnSpreadPresent fields
-        then ["__typename"]
-        else []
+  __typename :: Array String
+  __typename =
+    if isOnSpreadPresent fields then
+      [ "__typename" ]
+    else
+      []
 
 isEmptyChildren :: RawField -> Boolean
 isEmptyChildren = case _ of

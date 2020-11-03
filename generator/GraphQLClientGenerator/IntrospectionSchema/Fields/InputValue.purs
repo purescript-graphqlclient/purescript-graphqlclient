@@ -13,7 +13,7 @@ name fieldNameFn = selectionForFieldImplementation fieldNameFn "name" [] graphql
 description :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_InputValue (Maybe String)
 description fieldNameFn = selectionForFieldImplementation fieldNameFn "description" [] graphqlDefaultResponseScalarDecoder
 
-type_ :: ∀ r . (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_InputValue r
+type_ :: ∀ r. (Maybe Cache -> String -> String) -> SelectionSet GraphQLClientGenerator.IntrospectionSchema.Fields.TypeRef.InstorpectionQueryResult_TypeRef r -> SelectionSet InstorpectionQueryResult_InputValue r
 type_ fieldNameFn = selectionForCompositeFieldImplementation fieldNameFn "type" [] graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 defaultValue :: (Maybe Cache -> String -> String) -> SelectionSet InstorpectionQueryResult_InputValue (Maybe String)
