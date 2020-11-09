@@ -1,10 +1,8 @@
 module GraphQLClient.Argument where
 
 import Prelude
-
 import Data.Array as Array
 import Data.Maybe (Maybe)
-import Data.Newtype (class Newtype, unwrap)
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 import Prim.Row as Row
 import Prim.RowList as RowList
@@ -133,11 +131,12 @@ data Optional x
   | Present x -- it's like Maybe, but with DefaultInput class, and only for input of graphql
 
 derive instance eqOptional :: Eq a => Eq (Optional a)
+
 derive instance ordOptional :: Ord a => Ord (Optional a)
 
 instance showMaybe :: Show a => Show (Optional a) where
   show (Present x) = "(Present " <> show x <> ")"
-  show Absent  = "Absent"
+  show Absent = "Absent"
 
 derive instance optionalFunctor :: Functor Optional
 
