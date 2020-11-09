@@ -1,5 +1,8 @@
 module Examples.Github.Enum.CollaboratorAffiliation where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - CollaboratorAffiliation
 data CollaboratorAffiliation = Outside | Direct | All
+
+derive instance genericCollaboratorAffiliation :: Generic CollaboratorAffiliation _
+
+instance showCollaboratorAffiliation :: Show CollaboratorAffiliation where
+  show = genericShow
 
 derive instance eqCollaboratorAffiliation :: Eq CollaboratorAffiliation
 

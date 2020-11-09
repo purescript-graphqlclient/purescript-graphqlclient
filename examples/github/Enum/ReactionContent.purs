@@ -1,5 +1,8 @@
 module Examples.Github.Enum.ReactionContent where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - ReactionContent
 data ReactionContent
   = ThumbsUp | ThumbsDown | Laugh | Hooray | Confused | Heart | Rocket | Eyes
+
+derive instance genericReactionContent :: Generic ReactionContent _
+
+instance showReactionContent :: Show ReactionContent where
+  show = genericShow
 
 derive instance eqReactionContent :: Eq ReactionContent
 

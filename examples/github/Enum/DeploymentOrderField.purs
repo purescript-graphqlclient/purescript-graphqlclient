@@ -1,5 +1,8 @@
 module Examples.Github.Enum.DeploymentOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - DeploymentOrderField
 data DeploymentOrderField = CreatedAt
+
+derive instance genericDeploymentOrderField :: Generic DeploymentOrderField _
+
+instance showDeploymentOrderField :: Show DeploymentOrderField where
+  show = genericShow
 
 derive instance eqDeploymentOrderField :: Eq DeploymentOrderField
 

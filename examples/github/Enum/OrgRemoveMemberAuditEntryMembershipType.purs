@@ -1,5 +1,8 @@
 module Examples.Github.Enum.OrgRemoveMemberAuditEntryMembershipType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,12 @@ import GraphQLClient
 -- | original name - OrgRemoveMemberAuditEntryMembershipType
 data OrgRemoveMemberAuditEntryMembershipType
   = DirectMember | Admin | BillingManager | Unaffiliated | OutsideCollaborator
+
+derive instance genericOrgRemoveMemberAuditEntryMembershipType :: Generic OrgRemoveMemberAuditEntryMembershipType _
+
+instance showOrgRemoveMemberAuditEntryMembershipType :: Show
+                                                        OrgRemoveMemberAuditEntryMembershipType where
+  show = genericShow
 
 derive instance eqOrgRemoveMemberAuditEntryMembershipType :: Eq OrgRemoveMemberAuditEntryMembershipType
 

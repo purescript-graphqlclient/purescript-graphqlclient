@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SamlSignatureAlgorithm where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - SamlSignatureAlgorithm
 data SamlSignatureAlgorithm = RsaSha1 | RsaSha256 | RsaSha384 | RsaSha512
+
+derive instance genericSamlSignatureAlgorithm :: Generic SamlSignatureAlgorithm _
+
+instance showSamlSignatureAlgorithm :: Show SamlSignatureAlgorithm where
+  show = genericShow
 
 derive instance eqSamlSignatureAlgorithm :: Eq SamlSignatureAlgorithm
 

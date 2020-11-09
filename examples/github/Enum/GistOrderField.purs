@@ -1,5 +1,8 @@
 module Examples.Github.Enum.GistOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - GistOrderField
 data GistOrderField = CreatedAt | UpdatedAt | PushedAt
+
+derive instance genericGistOrderField :: Generic GistOrderField _
+
+instance showGistOrderField :: Show GistOrderField where
+  show = genericShow
 
 derive instance eqGistOrderField :: Eq GistOrderField
 

@@ -1,5 +1,8 @@
 module Examples.Github.Enum.TeamMemberRole where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - TeamMemberRole
 data TeamMemberRole = Maintainer | Member
+
+derive instance genericTeamMemberRole :: Generic TeamMemberRole _
+
+instance showTeamMemberRole :: Show TeamMemberRole where
+  show = genericShow
 
 derive instance eqTeamMemberRole :: Eq TeamMemberRole
 

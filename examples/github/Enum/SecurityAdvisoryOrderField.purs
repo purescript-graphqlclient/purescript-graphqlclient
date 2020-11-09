@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SecurityAdvisoryOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - SecurityAdvisoryOrderField
 data SecurityAdvisoryOrderField = PublishedAt | UpdatedAt
+
+derive instance genericSecurityAdvisoryOrderField :: Generic SecurityAdvisoryOrderField _
+
+instance showSecurityAdvisoryOrderField :: Show SecurityAdvisoryOrderField where
+  show = genericShow
 
 derive instance eqSecurityAdvisoryOrderField :: Eq SecurityAdvisoryOrderField
 

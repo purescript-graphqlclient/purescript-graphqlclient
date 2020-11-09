@@ -1,5 +1,8 @@
 module Examples.Github.Enum.OrgRemoveMemberAuditEntryReason where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -16,6 +19,12 @@ data OrgRemoveMemberAuditEntryReason
   | SamlSsoEnforcementRequiresExternalIdentity
   | UserAccountDeleted
   | TwoFactorAccountRecovery
+
+derive instance genericOrgRemoveMemberAuditEntryReason :: Generic OrgRemoveMemberAuditEntryReason _
+
+instance showOrgRemoveMemberAuditEntryReason :: Show
+                                                OrgRemoveMemberAuditEntryReason where
+  show = genericShow
 
 derive instance eqOrgRemoveMemberAuditEntryReason :: Eq OrgRemoveMemberAuditEntryReason
 

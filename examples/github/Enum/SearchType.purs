@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SearchType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - SearchType
 data SearchType = Issue | Repository | User
+
+derive instance genericSearchType :: Generic SearchType _
+
+instance showSearchType :: Show SearchType where
+  show = genericShow
 
 derive instance eqSearchType :: Eq SearchType
 

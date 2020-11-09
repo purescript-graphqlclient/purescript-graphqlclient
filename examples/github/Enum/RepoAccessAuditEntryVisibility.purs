@@ -1,5 +1,8 @@
 module Examples.Github.Enum.RepoAccessAuditEntryVisibility where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,12 @@ import GraphQLClient
 
 -- | original name - RepoAccessAuditEntryVisibility
 data RepoAccessAuditEntryVisibility = Internal | Private | Public
+
+derive instance genericRepoAccessAuditEntryVisibility :: Generic RepoAccessAuditEntryVisibility _
+
+instance showRepoAccessAuditEntryVisibility :: Show
+                                               RepoAccessAuditEntryVisibility where
+  show = genericShow
 
 derive instance eqRepoAccessAuditEntryVisibility :: Eq RepoAccessAuditEntryVisibility
 

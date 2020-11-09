@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SamlDigestAlgorithm where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - SamlDigestAlgorithm
 data SamlDigestAlgorithm = Sha1 | Sha256 | Sha384 | Sha512
+
+derive instance genericSamlDigestAlgorithm :: Generic SamlDigestAlgorithm _
+
+instance showSamlDigestAlgorithm :: Show SamlDigestAlgorithm where
+  show = genericShow
 
 derive instance eqSamlDigestAlgorithm :: Eq SamlDigestAlgorithm
 

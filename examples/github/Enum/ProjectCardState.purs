@@ -1,5 +1,8 @@
 module Examples.Github.Enum.ProjectCardState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - ProjectCardState
 data ProjectCardState = ContentOnly | NoteOnly | Redacted
+
+derive instance genericProjectCardState :: Generic ProjectCardState _
+
+instance showProjectCardState :: Show ProjectCardState where
+  show = genericShow
 
 derive instance eqProjectCardState :: Eq ProjectCardState
 

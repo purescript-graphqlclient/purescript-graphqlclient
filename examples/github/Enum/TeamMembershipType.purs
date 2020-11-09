@@ -1,5 +1,8 @@
 module Examples.Github.Enum.TeamMembershipType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - TeamMembershipType
 data TeamMembershipType = Immediate | ChildTeam | All
+
+derive instance genericTeamMembershipType :: Generic TeamMembershipType _
+
+instance showTeamMembershipType :: Show TeamMembershipType where
+  show = genericShow
 
 derive instance eqTeamMembershipType :: Eq TeamMembershipType
 

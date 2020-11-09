@@ -1,5 +1,8 @@
 module Examples.Github.Enum.DeploymentState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -20,6 +23,11 @@ data DeploymentState
   | Pending
   | Queued
   | InProgress
+
+derive instance genericDeploymentState :: Generic DeploymentState _
+
+instance showDeploymentState :: Show DeploymentState where
+  show = genericShow
 
 derive instance eqDeploymentState :: Eq DeploymentState
 

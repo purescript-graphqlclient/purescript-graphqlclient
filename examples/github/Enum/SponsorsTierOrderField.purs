@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SponsorsTierOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - SponsorsTierOrderField
 data SponsorsTierOrderField = CreatedAt | MonthlyPriceInCents
+
+derive instance genericSponsorsTierOrderField :: Generic SponsorsTierOrderField _
+
+instance showSponsorsTierOrderField :: Show SponsorsTierOrderField where
+  show = genericShow
 
 derive instance eqSponsorsTierOrderField :: Eq SponsorsTierOrderField
 

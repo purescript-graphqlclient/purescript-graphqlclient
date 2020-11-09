@@ -1,5 +1,8 @@
 module Examples.Github.Enum.DefaultRepositoryPermissionField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,12 @@ import GraphQLClient
 
 -- | original name - DefaultRepositoryPermissionField
 data DefaultRepositoryPermissionField = None | Read | Write | Admin
+
+derive instance genericDefaultRepositoryPermissionField :: Generic DefaultRepositoryPermissionField _
+
+instance showDefaultRepositoryPermissionField :: Show
+                                                 DefaultRepositoryPermissionField where
+  show = genericShow
 
 derive instance eqDefaultRepositoryPermissionField :: Eq DefaultRepositoryPermissionField
 

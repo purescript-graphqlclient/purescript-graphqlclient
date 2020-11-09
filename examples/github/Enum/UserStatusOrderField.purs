@@ -1,5 +1,8 @@
 module Examples.Github.Enum.UserStatusOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - UserStatusOrderField
 data UserStatusOrderField = UpdatedAt
+
+derive instance genericUserStatusOrderField :: Generic UserStatusOrderField _
+
+instance showUserStatusOrderField :: Show UserStatusOrderField where
+  show = genericShow
 
 derive instance eqUserStatusOrderField :: Eq UserStatusOrderField
 

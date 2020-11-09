@@ -1,5 +1,8 @@
 module Examples.Github.Enum.PullRequestReviewState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - PullRequestReviewState
 data PullRequestReviewState
   = Pending | Commented | Approved | ChangesRequested | Dismissed
+
+derive instance genericPullRequestReviewState :: Generic PullRequestReviewState _
+
+instance showPullRequestReviewState :: Show PullRequestReviewState where
+  show = genericShow
 
 derive instance eqPullRequestReviewState :: Eq PullRequestReviewState
 

@@ -1,5 +1,8 @@
 module Examples.Github.Enum.RefOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - RefOrderField
 data RefOrderField = TagCommitDate | Alphabetical
+
+derive instance genericRefOrderField :: Generic RefOrderField _
+
+instance showRefOrderField :: Show RefOrderField where
+  show = genericShow
 
 derive instance eqRefOrderField :: Eq RefOrderField
 

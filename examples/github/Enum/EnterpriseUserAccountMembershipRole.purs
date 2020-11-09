@@ -1,5 +1,8 @@
 module Examples.Github.Enum.EnterpriseUserAccountMembershipRole where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,12 @@ import GraphQLClient
 
 -- | original name - EnterpriseUserAccountMembershipRole
 data EnterpriseUserAccountMembershipRole = Member | Owner
+
+derive instance genericEnterpriseUserAccountMembershipRole :: Generic EnterpriseUserAccountMembershipRole _
+
+instance showEnterpriseUserAccountMembershipRole :: Show
+                                                    EnterpriseUserAccountMembershipRole where
+  show = genericShow
 
 derive instance eqEnterpriseUserAccountMembershipRole :: Eq EnterpriseUserAccountMembershipRole
 

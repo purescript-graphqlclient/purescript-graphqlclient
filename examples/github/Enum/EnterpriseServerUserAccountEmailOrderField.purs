@@ -1,5 +1,8 @@
 module Examples.Github.Enum.EnterpriseServerUserAccountEmailOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,12 @@ import GraphQLClient
 
 -- | original name - EnterpriseServerUserAccountEmailOrderField
 data EnterpriseServerUserAccountEmailOrderField = Email
+
+derive instance genericEnterpriseServerUserAccountEmailOrderField :: Generic EnterpriseServerUserAccountEmailOrderField _
+
+instance showEnterpriseServerUserAccountEmailOrderField :: Show
+                                                           EnterpriseServerUserAccountEmailOrderField where
+  show = genericShow
 
 derive instance eqEnterpriseServerUserAccountEmailOrderField :: Eq EnterpriseServerUserAccountEmailOrderField
 

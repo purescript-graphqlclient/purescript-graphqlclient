@@ -1,5 +1,8 @@
 module Examples.Github.Enum.UserBlockDuration where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - UserBlockDuration
 data UserBlockDuration = OneDay | ThreeDays | OneWeek | OneMonth | Permanent
+
+derive instance genericUserBlockDuration :: Generic UserBlockDuration _
+
+instance showUserBlockDuration :: Show UserBlockDuration where
+  show = genericShow
 
 derive instance eqUserBlockDuration :: Eq UserBlockDuration
 

@@ -1,5 +1,8 @@
 module Examples.Github.Enum.LabelOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - LabelOrderField
 data LabelOrderField = Name | CreatedAt
+
+derive instance genericLabelOrderField :: Generic LabelOrderField _
+
+instance showLabelOrderField :: Show LabelOrderField where
+  show = genericShow
 
 derive instance eqLabelOrderField :: Eq LabelOrderField
 

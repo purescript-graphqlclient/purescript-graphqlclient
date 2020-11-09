@@ -1,5 +1,8 @@
 module Examples.Github.Enum.IssueState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - IssueState
 data IssueState = Open | Closed
+
+derive instance genericIssueState :: Generic IssueState _
+
+instance showIssueState :: Show IssueState where
+  show = genericShow
 
 derive instance eqIssueState :: Eq IssueState
 

@@ -1,5 +1,8 @@
 module Examples.Github.Enum.RepositoryContributionType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - RepositoryContributionType
 data RepositoryContributionType
   = Commit | Issue | PullRequest | Repository | PullRequestReview
+
+derive instance genericRepositoryContributionType :: Generic RepositoryContributionType _
+
+instance showRepositoryContributionType :: Show RepositoryContributionType where
+  show = genericShow
 
 derive instance eqRepositoryContributionType :: Eq RepositoryContributionType
 

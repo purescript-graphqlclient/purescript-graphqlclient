@@ -1,5 +1,8 @@
 module Examples.Github.Enum.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,12 @@ import GraphQLClient
 -- | original name - OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
 data OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
   = Read | Write | Admin | None
+
+derive instance genericOrgUpdateDefaultRepositoryPermissionAuditEntryPermission :: Generic OrgUpdateDefaultRepositoryPermissionAuditEntryPermission _
+
+instance showOrgUpdateDefaultRepositoryPermissionAuditEntryPermission :: Show
+                                                                         OrgUpdateDefaultRepositoryPermissionAuditEntryPermission where
+  show = genericShow
 
 derive instance eqOrgUpdateDefaultRepositoryPermissionAuditEntryPermission :: Eq OrgUpdateDefaultRepositoryPermissionAuditEntryPermission
 

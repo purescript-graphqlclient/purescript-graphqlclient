@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SponsorshipPrivacy where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - SponsorshipPrivacy
 data SponsorshipPrivacy = Public | Private
+
+derive instance genericSponsorshipPrivacy :: Generic SponsorshipPrivacy _
+
+instance showSponsorshipPrivacy :: Show SponsorshipPrivacy where
+  show = genericShow
 
 derive instance eqSponsorshipPrivacy :: Eq SponsorshipPrivacy
 

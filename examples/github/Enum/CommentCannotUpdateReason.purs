@@ -1,5 +1,8 @@
 module Examples.Github.Enum.CommentCannotUpdateReason where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -18,6 +21,11 @@ data CommentCannotUpdateReason
   | Maintenance
   | VerifiedEmailRequired
   | Denied
+
+derive instance genericCommentCannotUpdateReason :: Generic CommentCannotUpdateReason _
+
+instance showCommentCannotUpdateReason :: Show CommentCannotUpdateReason where
+  show = genericShow
 
 derive instance eqCommentCannotUpdateReason :: Eq CommentCannotUpdateReason
 

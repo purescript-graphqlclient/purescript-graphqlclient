@@ -1,5 +1,8 @@
 module Examples.Swapi.Enum.Episode where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - Episode
 data Episode = Empire | Jedi | Newhope
+
+derive instance genericEpisode :: Generic Episode _
+
+instance showEpisode :: Show Episode where
+  show = genericShow
 
 derive instance eqEpisode :: Eq Episode
 

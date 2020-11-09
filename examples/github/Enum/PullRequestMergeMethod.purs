@@ -1,5 +1,8 @@
 module Examples.Github.Enum.PullRequestMergeMethod where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - PullRequestMergeMethod
 data PullRequestMergeMethod = Merge | Squash | Rebase
+
+derive instance genericPullRequestMergeMethod :: Generic PullRequestMergeMethod _
+
+instance showPullRequestMergeMethod :: Show PullRequestMergeMethod where
+  show = genericShow
 
 derive instance eqPullRequestMergeMethod :: Eq PullRequestMergeMethod
 

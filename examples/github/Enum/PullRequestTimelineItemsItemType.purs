@@ -1,5 +1,8 @@
 module Examples.Github.Enum.PullRequestTimelineItemsItemType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -62,6 +65,12 @@ data PullRequestTimelineItemsItemType
   | UnmarkedAsDuplicateEvent
   | UnpinnedEvent
   | UnsubscribedEvent
+
+derive instance genericPullRequestTimelineItemsItemType :: Generic PullRequestTimelineItemsItemType _
+
+instance showPullRequestTimelineItemsItemType :: Show
+                                                 PullRequestTimelineItemsItemType where
+  show = genericShow
 
 derive instance eqPullRequestTimelineItemsItemType :: Eq PullRequestTimelineItemsItemType
 

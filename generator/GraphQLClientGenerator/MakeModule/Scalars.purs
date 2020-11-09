@@ -9,6 +9,7 @@ import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import Language.PS.CST.Types.Leafs (DeclDeriveType(..))
 import Language.PS.SmartCST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), Type(..), mkModuleName, stringType)
+import GraphQLClientGenerator.MakeModule.Lib.Utils
 
 makeModule :: ModuleName -> Array InstorpectionQueryResult__FullType -> Module
 makeModule moduleName scalarTypes =
@@ -21,19 +22,6 @@ makeModule moduleName scalarTypes =
               let
                 pascalName :: String
                 pascalName = StringsExtra.pascalCase scalarType.name
-
-                mkDeriveAsNewtype :: String -> ModuleName -> Declaration
-                mkDeriveAsNewtype typeName module_ =
-                  DeclDerive
-                    { comments: Nothing
-                    , deriveType: DeclDeriveType_Newtype
-                    , head:
-                      { instName: Ident $ StringsExtra.camelCase typeName <> pascalName
-                      , instConstraints: []
-                      , instClass: SmartQualifiedName__Simple module_ $ ProperName typeName
-                      , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName
-                      }
-                    }
               in
                 [ DeclNewtype
                     { comments: Just $ OneLineComments [ "original name - " <> scalarType.name ]
@@ -45,21 +33,12 @@ makeModule moduleName scalarTypes =
                         }
                     , type_: stringType
                     }
-                , mkDeriveAsNewtype "Eq" (mkModuleName $ NonEmpty.singleton "Prelude")
-                , mkDeriveAsNewtype "Ord" (mkModuleName $ NonEmpty.singleton "Prelude")
-                , mkDeriveAsNewtype "Show" (mkModuleName $ NonEmpty.singleton "Prelude")
-                , DeclDerive
-                    { comments: Nothing
-                    , deriveType: DeclDeriveType_Ordinary
-                    , head:
-                      { instName: Ident $ "newtype" <> pascalName
-                      , instConstraints: []
-                      , instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" [ "Newtype" ]) $ ProperName "Newtype"
-                      , instTypes: NonEmpty.cons' (TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName) [ TypeWildcard ]
-                      }
-                    }
-                , mkDeriveAsNewtype "GraphQLDefaultResponseScalarDecoder" (mkModuleName $ NonEmpty.singleton "GraphQLClient")
-                , mkDeriveAsNewtype "ToGraphQLArgumentValue" (mkModuleName $ NonEmpty.singleton "GraphQLClient")
+                , mkDeriveNewtypeClass { typeName: pascalName, typeModuleName: moduleName }
+                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Eq", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
+                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Ord", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
+                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Show", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
+                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "GraphQLDefaultResponseScalarDecoder", classModuleName: mkModuleName $ NonEmpty.singleton "GraphQLClient" }
+                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "ToGraphQLArgumentValue", classModuleName: mkModuleName $ NonEmpty.singleton "GraphQLClient" }
                 ]
           )
         # Array.concat

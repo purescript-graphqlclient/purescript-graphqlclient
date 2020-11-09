@@ -1,5 +1,8 @@
 module Examples.Github.Enum.FileViewedState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - FileViewedState
 data FileViewedState = Dismissed | Viewed | Unviewed
+
+derive instance genericFileViewedState :: Generic FileViewedState _
+
+instance showFileViewedState :: Show FileViewedState where
+  show = genericShow
 
 derive instance eqFileViewedState :: Eq FileViewedState
 

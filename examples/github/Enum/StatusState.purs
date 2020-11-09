@@ -1,5 +1,8 @@
 module Examples.Github.Enum.StatusState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - StatusState
 data StatusState = Expected | Error | Failure | Pending | Success
+
+derive instance genericStatusState :: Generic StatusState _
+
+instance showStatusState :: Show StatusState where
+  show = genericShow
 
 derive instance eqStatusState :: Eq StatusState
 

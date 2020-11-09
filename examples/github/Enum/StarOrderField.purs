@@ -1,5 +1,8 @@
 module Examples.Github.Enum.StarOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - StarOrderField
 data StarOrderField = StarredAt
+
+derive instance genericStarOrderField :: Generic StarOrderField _
+
+instance showStarOrderField :: Show StarOrderField where
+  show = genericShow
 
 derive instance eqStarOrderField :: Eq StarOrderField
 

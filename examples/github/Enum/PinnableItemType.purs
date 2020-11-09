@@ -1,5 +1,8 @@
 module Examples.Github.Enum.PinnableItemType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -19,6 +22,11 @@ data PinnableItemType
   | User
   | Organization
   | Team
+
+derive instance genericPinnableItemType :: Generic PinnableItemType _
+
+instance showPinnableItemType :: Show PinnableItemType where
+  show = genericShow
 
 derive instance eqPinnableItemType :: Eq PinnableItemType
 

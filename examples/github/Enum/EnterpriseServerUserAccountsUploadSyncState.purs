@@ -1,5 +1,8 @@
 module Examples.Github.Enum.EnterpriseServerUserAccountsUploadSyncState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,12 @@ import GraphQLClient
 
 -- | original name - EnterpriseServerUserAccountsUploadSyncState
 data EnterpriseServerUserAccountsUploadSyncState = Pending | Success | Failure
+
+derive instance genericEnterpriseServerUserAccountsUploadSyncState :: Generic EnterpriseServerUserAccountsUploadSyncState _
+
+instance showEnterpriseServerUserAccountsUploadSyncState :: Show
+                                                            EnterpriseServerUserAccountsUploadSyncState where
+  show = genericShow
 
 derive instance eqEnterpriseServerUserAccountsUploadSyncState :: Eq EnterpriseServerUserAccountsUploadSyncState
 

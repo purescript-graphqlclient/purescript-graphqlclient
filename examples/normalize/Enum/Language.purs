@@ -1,5 +1,8 @@
 module Examples.Normalize.Enum.Language where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - Language
 data Language = En | Es | No
+
+derive instance genericLanguage :: Generic Language _
+
+instance showLanguage :: Show Language where
+  show = genericShow
 
 derive instance eqLanguage :: Eq Language
 

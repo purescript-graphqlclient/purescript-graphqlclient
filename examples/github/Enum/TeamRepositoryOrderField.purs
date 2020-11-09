@@ -1,5 +1,8 @@
 module Examples.Github.Enum.TeamRepositoryOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - TeamRepositoryOrderField
 data TeamRepositoryOrderField
   = CreatedAt | UpdatedAt | PushedAt | Name | Permission | Stargazers
+
+derive instance genericTeamRepositoryOrderField :: Generic TeamRepositoryOrderField _
+
+instance showTeamRepositoryOrderField :: Show TeamRepositoryOrderField where
+  show = genericShow
 
 derive instance eqTeamRepositoryOrderField :: Eq TeamRepositoryOrderField
 

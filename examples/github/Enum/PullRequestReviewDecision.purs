@@ -1,5 +1,8 @@
 module Examples.Github.Enum.PullRequestReviewDecision where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - PullRequestReviewDecision
 data PullRequestReviewDecision = ChangesRequested | Approved | ReviewRequired
+
+derive instance genericPullRequestReviewDecision :: Generic PullRequestReviewDecision _
+
+instance showPullRequestReviewDecision :: Show PullRequestReviewDecision where
+  show = genericShow
 
 derive instance eqPullRequestReviewDecision :: Eq PullRequestReviewDecision
 

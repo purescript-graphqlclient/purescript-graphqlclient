@@ -1,5 +1,8 @@
 module Examples.Github.Enum.ProjectTemplate where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - ProjectTemplate
 data ProjectTemplate
   = BasicKanban | AutomatedKanbanV2 | AutomatedReviewsKanban | BugTriage
+
+derive instance genericProjectTemplate :: Generic ProjectTemplate _
+
+instance showProjectTemplate :: Show ProjectTemplate where
+  show = genericShow
 
 derive instance eqProjectTemplate :: Eq ProjectTemplate
 

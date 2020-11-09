@@ -1,5 +1,8 @@
 module Examples.Github.Enum.OrganizationMembersCanCreateRepositoriesSettingValue where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,12 @@ import GraphQLClient
 -- | original name - OrganizationMembersCanCreateRepositoriesSettingValue
 data OrganizationMembersCanCreateRepositoriesSettingValue
   = All | Private | Disabled
+
+derive instance genericOrganizationMembersCanCreateRepositoriesSettingValue :: Generic OrganizationMembersCanCreateRepositoriesSettingValue _
+
+instance showOrganizationMembersCanCreateRepositoriesSettingValue :: Show
+                                                                     OrganizationMembersCanCreateRepositoriesSettingValue where
+  show = genericShow
 
 derive instance eqOrganizationMembersCanCreateRepositoriesSettingValue :: Eq OrganizationMembersCanCreateRepositoriesSettingValue
 

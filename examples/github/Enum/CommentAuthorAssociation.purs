@@ -1,5 +1,8 @@
 module Examples.Github.Enum.CommentAuthorAssociation where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -19,6 +22,11 @@ data CommentAuthorAssociation
   | FirstTimeContributor
   | FirstTimer
   | None
+
+derive instance genericCommentAuthorAssociation :: Generic CommentAuthorAssociation _
+
+instance showCommentAuthorAssociation :: Show CommentAuthorAssociation where
+  show = genericShow
 
 derive instance eqCommentAuthorAssociation :: Eq CommentAuthorAssociation
 

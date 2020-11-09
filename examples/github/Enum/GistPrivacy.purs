@@ -1,5 +1,8 @@
 module Examples.Github.Enum.GistPrivacy where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - GistPrivacy
 data GistPrivacy = Public | Secret | All
+
+derive instance genericGistPrivacy :: Generic GistPrivacy _
+
+instance showGistPrivacy :: Show GistPrivacy where
+  show = genericShow
 
 derive instance eqGistPrivacy :: Eq GistPrivacy
 

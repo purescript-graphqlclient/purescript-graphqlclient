@@ -8,7 +8,9 @@ import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
 import GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull)
 import GraphQLClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
-import Language.PS.SmartCST (Comments(..), DataHead(..), Declaration(..), Label(..), Module(..), ModuleName, ProperName(..), Type(..))
+import Language.PS.SmartCST
+import Data.Array.NonEmpty as NonEmpty
+import GraphQLClientGenerator.MakeModule.Lib.Utils
 
 mkRow
   :: forall t.
@@ -37,11 +39,12 @@ makeModule scalarModule apiModuleName moduleName inputObjectTypes =
                 pascalName :: String
                 pascalName = StringsExtra.pascalCase inputObjectType.name
               in
-                [ DeclType
+                [ DeclNewtype
                     { comments: Just $ OneLineComments [ "original name - " <> inputObjectType.name ]
+                    , name: ProperName pascalName
                     , head:
                       DataHead
-                        { dataHdName: ProperName $ pascalName
+                        { dataHdName: ProperName pascalName
                         , dataHdVars: []
                         }
                     , type_:
@@ -50,6 +53,46 @@ makeModule scalarModule apiModuleName moduleName inputObjectTypes =
                         , rowTail: Nothing
                         }
                     }
+                , mkDeriveGenericClass { typeName: pascalName, typeModuleName: moduleName }
+                , mkDeriveNewtypeClass { typeName: pascalName, typeModuleName: moduleName }
+
+                -- | , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Eq", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
+                -- | , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Ord", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
+                -- | , mkShowClass { typeName: pascalName, typeModuleName: moduleName }
+
+                , DeclInstanceChain
+                  { comments: Nothing
+                  , instances: NonEmpty.singleton
+                    { head:
+                      { instName: Ident $ "toGraphQLArgumentValue" <> pascalName
+                      , instConstraints: []
+                      , instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ ProperName "ToGraphQLArgumentValue"
+                      , instTypes: NonEmpty.cons' (TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName) [ ]
+                      }
+                    , body:
+                      [ InstanceBindingName
+                        { name: Ident "toGraphQLArgumentValue"
+                        , binders:
+                          [ BinderConstructor
+                            { name: SmartQualifiedNameConstructor__Ignore (ProperName pascalName)
+                            , args:
+                              [ BinderVar $ Ident "x"
+                              ]
+                            }
+                          ]
+                        , guarded: Unconditional
+                          { expr:
+                              (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "toGraphQLArgumentValue")
+                              `ExprApp`
+                              (ExprVar $ Ident "x")
+                          , whereBindings: []
+                          }
+                        }
+                      ]
+                    }
+                  }
+
+                -- | , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "ToGraphQLArgumentValue", classModuleName: mkModuleName $ NonEmpty.singleton "GraphQLClient" }
                 ]
           )
         # Array.concat

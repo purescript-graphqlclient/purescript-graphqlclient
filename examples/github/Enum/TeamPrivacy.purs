@@ -1,5 +1,8 @@
 module Examples.Github.Enum.TeamPrivacy where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - TeamPrivacy
 data TeamPrivacy = Secret | Visible
+
+derive instance genericTeamPrivacy :: Generic TeamPrivacy _
+
+instance showTeamPrivacy :: Show TeamPrivacy where
+  show = genericShow
 
 derive instance eqTeamPrivacy :: Eq TeamPrivacy
 

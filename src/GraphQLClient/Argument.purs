@@ -1,8 +1,10 @@
 module GraphQLClient.Argument where
 
-import Data.Maybe (Maybe)
 import Prelude
+
 import Data.Array as Array
+import Data.Maybe (Maybe)
+import Data.Newtype (class Newtype, unwrap)
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 import Prim.Row as Row
 import Prim.RowList as RowList
@@ -46,6 +48,9 @@ instance toGraphQLArgumentValueMaybe :: ToGraphQLArgumentValue a => ToGraphQLArg
 
 instance toGraphQLArgumentValueNested :: ToGraphQLArgumentValue a => ToGraphQLArgumentValue (Array a) where
   toGraphQLArgumentValue arguments = ArgumentValueArray (map toGraphQLArgumentValue arguments)
+
+-- | else instance toGraphQLArgumentValueNewtype :: (Newtype a b, ToGraphQLArgumentValue b) => ToGraphQLArgumentValue a where
+-- |   toGraphQLArgumentValue = toGraphQLArgumentValue <<< unwrap
 
 toGraphQLArguments ::
   ∀ row list.
@@ -128,6 +133,11 @@ data Optional x
   | Present x -- it's like Maybe, but with DefaultInput class, and only for input of graphql
 
 derive instance eqOptional :: Eq a => Eq (Optional a)
+derive instance ordOptional :: Ord a => Ord (Optional a)
+
+instance showMaybe :: Show a => Show (Optional a) where
+  show (Present x) = "(Present " <> show x <> ")"
+  show Absent  = "Absent"
 
 derive instance optionalFunctor :: Functor Optional
 

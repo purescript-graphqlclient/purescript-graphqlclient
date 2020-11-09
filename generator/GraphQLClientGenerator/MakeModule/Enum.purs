@@ -6,8 +6,8 @@ import Data.Array.NonEmpty as NonEmpty
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__EnumValue, InstorpectionQueryResult__FullType)
-import GraphQLClientGenerator.MakeModule.Lib.Utils (tupleDecl, tupleExpr)
 import Language.PS.SmartCST (Binder(..), Comments(..), DataCtor(..), DataHead(..), DeclDeriveType(..), Declaration(..), Expr(..), Guarded(..), Ident(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), SmartQualifiedNameConstructor(..), Type(..), arrayType, mkModuleName)
+import GraphQLClientGenerator.MakeModule.Lib.Utils
 
 makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module
 makeModule moduleName fullType =
@@ -17,19 +17,6 @@ makeModule moduleName fullType =
 
     pascalName :: String
     pascalName = StringsExtra.pascalCase fullType.name
-
-    mkDerive :: String -> ModuleName -> Declaration
-    mkDerive typeName module_ =
-      DeclDerive
-        { comments: Nothing
-        , deriveType: DeclDeriveType_Ordinary
-        , head:
-          { instName: Ident $ StringsExtra.camelCase typeName <> pascalName
-          , instConstraints: []
-          , instClass: SmartQualifiedName__Simple module_ $ ProperName typeName
-          , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName
-          }
-        }
   in
     Module
       { moduleName
@@ -47,8 +34,13 @@ makeModule moduleName fullType =
                 # fromMaybe []
                 <#> (\field -> DataCtor { dataCtorName: ProperName $ StringsExtra.pascalCase field.name, dataCtorFields: [] })
             }
-        , mkDerive "Eq" (mkModuleName $ NonEmpty.singleton "Prelude")
-        , mkDerive "Ord" (mkModuleName $ NonEmpty.singleton "Prelude")
+
+        , mkDeriveGenericClass { typeName: pascalName, typeModuleName: moduleName }
+        , mkShowClass { typeName: pascalName, typeModuleName: moduleName }
+
+        , mkDeriveClass { typeName: pascalName, typeModuleName: moduleName, className: "Eq", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
+        , mkDeriveClass { typeName: pascalName, typeModuleName: moduleName, className: "Ord", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
+
         , DeclSignature
             { comments: Nothing
             , ident: Ident "fromToMap"

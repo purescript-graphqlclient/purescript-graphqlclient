@@ -1,5 +1,8 @@
 module Examples.Github.Enum.PullRequestUpdateState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - PullRequestUpdateState
 data PullRequestUpdateState = Open | Closed
+
+derive instance genericPullRequestUpdateState :: Generic PullRequestUpdateState _
+
+instance showPullRequestUpdateState :: Show PullRequestUpdateState where
+  show = genericShow
 
 derive instance eqPullRequestUpdateState :: Eq PullRequestUpdateState
 

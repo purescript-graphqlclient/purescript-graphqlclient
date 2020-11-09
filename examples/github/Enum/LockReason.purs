@@ -1,5 +1,8 @@
 module Examples.Github.Enum.LockReason where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - LockReason
 data LockReason = OffTopic | TooHeated | Resolved | Spam
+
+derive instance genericLockReason :: Generic LockReason _
+
+instance showLockReason :: Show LockReason where
+  show = genericShow
 
 derive instance eqLockReason :: Eq LockReason
 

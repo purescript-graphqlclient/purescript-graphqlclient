@@ -1,5 +1,8 @@
 module Examples.Github.Enum.CheckAnnotationLevel where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - CheckAnnotationLevel
 data CheckAnnotationLevel = Failure | Notice | Warning
+
+derive instance genericCheckAnnotationLevel :: Generic CheckAnnotationLevel _
+
+instance showCheckAnnotationLevel :: Show CheckAnnotationLevel where
+  show = genericShow
 
 derive instance eqCheckAnnotationLevel :: Eq CheckAnnotationLevel
 

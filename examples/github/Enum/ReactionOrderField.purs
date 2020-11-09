@@ -1,5 +1,8 @@
 module Examples.Github.Enum.ReactionOrderField where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - ReactionOrderField
 data ReactionOrderField = CreatedAt
+
+derive instance genericReactionOrderField :: Generic ReactionOrderField _
+
+instance showReactionOrderField :: Show ReactionOrderField where
+  show = genericShow
 
 derive instance eqReactionOrderField :: Eq ReactionOrderField
 

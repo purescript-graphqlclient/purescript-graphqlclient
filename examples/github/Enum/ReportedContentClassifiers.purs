@@ -1,5 +1,8 @@
 module Examples.Github.Enum.ReportedContentClassifiers where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - ReportedContentClassifiers
 data ReportedContentClassifiers
   = Spam | Abuse | OffTopic | Outdated | Duplicate | Resolved
+
+derive instance genericReportedContentClassifiers :: Generic ReportedContentClassifiers _
+
+instance showReportedContentClassifiers :: Show ReportedContentClassifiers where
+  show = genericShow
 
 derive instance eqReportedContentClassifiers :: Eq ReportedContentClassifiers
 

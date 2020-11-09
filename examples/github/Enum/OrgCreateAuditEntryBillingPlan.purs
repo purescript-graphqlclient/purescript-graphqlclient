@@ -1,5 +1,8 @@
 module Examples.Github.Enum.OrgCreateAuditEntryBillingPlan where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,12 @@ import GraphQLClient
 -- | original name - OrgCreateAuditEntryBillingPlan
 data OrgCreateAuditEntryBillingPlan
   = Free | Business | BusinessPlus | Unlimited | TieredPerSeat
+
+derive instance genericOrgCreateAuditEntryBillingPlan :: Generic OrgCreateAuditEntryBillingPlan _
+
+instance showOrgCreateAuditEntryBillingPlan :: Show
+                                               OrgCreateAuditEntryBillingPlan where
+  show = genericShow
 
 derive instance eqOrgCreateAuditEntryBillingPlan :: Eq OrgCreateAuditEntryBillingPlan
 

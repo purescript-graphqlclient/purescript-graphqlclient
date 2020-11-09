@@ -1,5 +1,8 @@
 module Examples.Github.Enum.FundingPlatform where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -21,6 +24,11 @@ data FundingPlatform
   | Issuehunt
   | Otechie
   | Custom
+
+derive instance genericFundingPlatform :: Generic FundingPlatform _
+
+instance showFundingPlatform :: Show FundingPlatform where
+  show = genericShow
 
 derive instance eqFundingPlatform :: Eq FundingPlatform
 

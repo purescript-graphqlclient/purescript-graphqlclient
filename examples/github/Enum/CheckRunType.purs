@@ -1,5 +1,8 @@
 module Examples.Github.Enum.CheckRunType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - CheckRunType
 data CheckRunType = All | Latest
+
+derive instance genericCheckRunType :: Generic CheckRunType _
+
+instance showCheckRunType :: Show CheckRunType where
+  show = genericShow
 
 derive instance eqCheckRunType :: Eq CheckRunType
 

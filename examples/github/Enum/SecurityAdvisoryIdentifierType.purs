@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SecurityAdvisoryIdentifierType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,12 @@ import GraphQLClient
 
 -- | original name - SecurityAdvisoryIdentifierType
 data SecurityAdvisoryIdentifierType = Cve | Ghsa
+
+derive instance genericSecurityAdvisoryIdentifierType :: Generic SecurityAdvisoryIdentifierType _
+
+instance showSecurityAdvisoryIdentifierType :: Show
+                                               SecurityAdvisoryIdentifierType where
+  show = genericShow
 
 derive instance eqSecurityAdvisoryIdentifierType :: Eq SecurityAdvisoryIdentifierType
 

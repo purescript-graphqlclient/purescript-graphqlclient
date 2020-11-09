@@ -1,5 +1,8 @@
 module Examples.Github.Enum.OperationType where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - OperationType
 data OperationType
   = Access | Authentication | Create | Modify | Remove | Restore | Transfer
+
+derive instance genericOperationType :: Generic OperationType _
+
+instance showOperationType :: Show OperationType where
+  show = genericShow
 
 derive instance eqOperationType :: Eq OperationType
 

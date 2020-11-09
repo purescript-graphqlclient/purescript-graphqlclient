@@ -1,5 +1,8 @@
 module Examples.Swapi.Enum.Phrase where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -20,6 +23,11 @@ data Phrase
   | Traitor
   | Trap
   | Try
+
+derive instance genericPhrase :: Generic Phrase _
+
+instance showPhrase :: Show Phrase where
+  show = genericShow
 
 derive instance eqPhrase :: Eq Phrase
 

@@ -1,5 +1,8 @@
 module Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,12 @@ import GraphQLClient
 -- | original name - EnterpriseDefaultRepositoryPermissionSettingValue
 data EnterpriseDefaultRepositoryPermissionSettingValue
   = NoPolicy | Admin | Write | Read | None
+
+derive instance genericEnterpriseDefaultRepositoryPermissionSettingValue :: Generic EnterpriseDefaultRepositoryPermissionSettingValue _
+
+instance showEnterpriseDefaultRepositoryPermissionSettingValue :: Show
+                                                                  EnterpriseDefaultRepositoryPermissionSettingValue where
+  show = genericShow
 
 derive instance eqEnterpriseDefaultRepositoryPermissionSettingValue :: Eq EnterpriseDefaultRepositoryPermissionSettingValue
 

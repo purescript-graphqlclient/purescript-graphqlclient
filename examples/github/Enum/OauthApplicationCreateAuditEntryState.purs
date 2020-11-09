@@ -1,5 +1,8 @@
 module Examples.Github.Enum.OauthApplicationCreateAuditEntryState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,12 @@ import GraphQLClient
 -- | original name - OauthApplicationCreateAuditEntryState
 data OauthApplicationCreateAuditEntryState
   = Active | Suspended | PendingDeletion
+
+derive instance genericOauthApplicationCreateAuditEntryState :: Generic OauthApplicationCreateAuditEntryState _
+
+instance showOauthApplicationCreateAuditEntryState :: Show
+                                                      OauthApplicationCreateAuditEntryState where
+  show = genericShow
 
 derive instance eqOauthApplicationCreateAuditEntryState :: Eq OauthApplicationCreateAuditEntryState
 

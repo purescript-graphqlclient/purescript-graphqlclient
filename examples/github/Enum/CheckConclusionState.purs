@@ -1,5 +1,8 @@
 module Examples.Github.Enum.CheckConclusionState where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -19,6 +22,11 @@ data CheckConclusionState
   | Neutral
   | Skipped
   | Stale
+
+derive instance genericCheckConclusionState :: Generic CheckConclusionState _
+
+instance showCheckConclusionState :: Show CheckConclusionState where
+  show = genericShow
 
 derive instance eqCheckConclusionState :: Eq CheckConclusionState
 

@@ -1,5 +1,8 @@
 module Examples.Github.Enum.SecurityAdvisoryEcosystem where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - SecurityAdvisoryEcosystem
 data SecurityAdvisoryEcosystem = Rubygems | Npm | Pip | Maven | Nuget | Composer
+
+derive instance genericSecurityAdvisoryEcosystem :: Generic SecurityAdvisoryEcosystem _
+
+instance showSecurityAdvisoryEcosystem :: Show SecurityAdvisoryEcosystem where
+  show = genericShow
 
 derive instance eqSecurityAdvisoryEcosystem :: Eq SecurityAdvisoryEcosystem
 

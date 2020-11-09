@@ -1,5 +1,8 @@
 module Examples.Github.Enum.EnterpriseEnabledSettingValue where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -11,6 +14,11 @@ import GraphQLClient
 
 -- | original name - EnterpriseEnabledSettingValue
 data EnterpriseEnabledSettingValue = Enabled | NoPolicy
+
+derive instance genericEnterpriseEnabledSettingValue :: Generic EnterpriseEnabledSettingValue _
+
+instance showEnterpriseEnabledSettingValue :: Show EnterpriseEnabledSettingValue where
+  show = genericShow
 
 derive instance eqEnterpriseEnabledSettingValue :: Eq EnterpriseEnabledSettingValue
 

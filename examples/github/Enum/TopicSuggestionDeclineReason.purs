@@ -1,5 +1,8 @@
 module Examples.Github.Enum.TopicSuggestionDeclineReason where
 
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Generic.Rep.Show (genericShow)
 import Prelude (class Eq, class Ord)
 import Data.Tuple (Tuple(..))
 import GraphQLClient
@@ -12,6 +15,11 @@ import GraphQLClient
 -- | original name - TopicSuggestionDeclineReason
 data TopicSuggestionDeclineReason
   = NotRelevant | TooSpecific | PersonalPreference | TooGeneral
+
+derive instance genericTopicSuggestionDeclineReason :: Generic TopicSuggestionDeclineReason _
+
+instance showTopicSuggestionDeclineReason :: Show TopicSuggestionDeclineReason where
+  show = genericShow
 
 derive instance eqTopicSuggestionDeclineReason :: Eq TopicSuggestionDeclineReason
 
