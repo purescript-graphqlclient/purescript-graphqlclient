@@ -17,7 +17,7 @@ let other =
       , "dodo-printer"
       ]
     , repo = "https://github.com/purescript-codegen/purescript-ps-cst.git"
-    , version = "master"
+    , version = "8321e39"
     }
   , dodo-printer =
     { dependencies =
