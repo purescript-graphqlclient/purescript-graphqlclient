@@ -1,26 +1,38 @@
 module Examples.Github.Object.BranchProtectionRule where
 
 import GraphQLClient
-  ( Optional
-  , SelectionSet
+  ( SelectionSet
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
+  , Optional
   , selectionForCompositeField
   , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
   )
-import Type.Row (type (+))
 import Examples.Github.Scopes
-  ( Scope__BranchProtectionRuleConflictConnection
-  , Scope__BranchProtectionRule
+  ( Scope__BranchProtectionRule
+  , Scope__BranchProtectionRuleConflictConnection
   , Scope__Actor
   , Scope__RefConnection
   , Scope__PushAllowanceConnection
   , Scope__Repository
   , Scope__ReviewDismissalAllowanceConnection
   )
+import Type.Row (type (+))
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Id)
+
+allowsDeletions :: SelectionSet Scope__BranchProtectionRule Boolean
+allowsDeletions = selectionForField
+                  "allowsDeletions"
+                  []
+                  graphqlDefaultResponseScalarDecoder
+
+allowsForcePushes :: SelectionSet Scope__BranchProtectionRule Boolean
+allowsForcePushes = selectionForField
+                    "allowsForcePushes"
+                    []
+                    graphqlDefaultResponseScalarDecoder
 
 type BranchProtectionRuleConflictsInputRowOptional r = ( after :: Optional
                                                                   String
@@ -170,6 +182,12 @@ requiresCommitSignatures = selectionForField
                            "requiresCommitSignatures"
                            []
                            graphqlDefaultResponseScalarDecoder
+
+requiresLinearHistory :: SelectionSet Scope__BranchProtectionRule Boolean
+requiresLinearHistory = selectionForField
+                        "requiresLinearHistory"
+                        []
+                        graphqlDefaultResponseScalarDecoder
 
 requiresStatusChecks :: SelectionSet Scope__BranchProtectionRule Boolean
 requiresStatusChecks = selectionForField
