@@ -37,13 +37,17 @@ retry "yarn run generator:test --no-install"
 
 check_no_diff
 
+echo 'SUCCESS with ./regenerate-examples.sh'
+
 ########
 
 retry "yarn run examples:test --no-install"
 
+echo 'SUCCESS with examples:test'
+
 ########
 
-# or it cannot write if dir exists
+# because it cannot write if dir exists
 rm -fdR examples/swapi
 
 spago --config generator-spago.dhall run --no-install \
@@ -52,9 +56,11 @@ spago --config generator-spago.dhall run --no-install \
 
 check_no_diff
 
+echo 'SUCCESS with --input-schema xxxx.graphql test'
+
 ########
 
-# or it cannot write if dir exists
+# because it cannot write if dir exists
 rm -fdR examples/swapi
 
 spago --config generator-spago.dhall run --no-install \
@@ -62,6 +68,8 @@ spago --config generator-spago.dhall run --no-install \
   --node-args "--input-json ./examples/schema-swapi.json --output examples/swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
 check_no_diff
+
+echo 'SUCCESS with --input-schema xxxx.json test'
 
 ########
 
