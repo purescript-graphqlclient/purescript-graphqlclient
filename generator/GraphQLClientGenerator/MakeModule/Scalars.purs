@@ -1,11 +1,13 @@
 module GraphQLClientGenerator.MakeModule.Scalars where
 
 import Prelude
+
 import Data.Array as Array
 import Data.Array.NonEmpty as NonEmpty
 import Data.Maybe (Maybe(..))
 import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
+import Language.PS.CST.Types.Leafs (DeclDeriveType(..))
 import Language.PS.SmartCST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), Type(..), mkModuleName, stringType)
 
 makeModule :: ModuleName -> Array InstorpectionQueryResult__FullType -> Module
@@ -48,7 +50,7 @@ makeModule moduleName scalarTypes =
                 , mkDeriveAsNewtype "Show" (mkModuleName $ NonEmpty.singleton "Prelude")
                 , DeclDerive
                     { comments: Nothing
-                    , deriveType: DeclDeriveType_Odrinary
+                    , deriveType: DeclDeriveType_Ordinary
                     , head:
                       { instName: Ident $ "newtype" <> pascalName
                       , instConstraints: []

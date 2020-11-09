@@ -22,7 +22,7 @@ makeModule moduleName fullType =
     mkDerive typeName module_ =
       DeclDerive
         { comments: Nothing
-        , deriveType: DeclDeriveType_Odrinary
+        , deriveType: DeclDeriveType_Ordinary
         , head:
           { instName: Ident $ StringsExtra.camelCase typeName <> pascalName
           , instConstraints: []

@@ -10,7 +10,11 @@ import GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWith
 import GraphQLClientGenerator.MakeModule.Lib.DeclarationsForFields as DeclarationsForFields
 import Language.PS.SmartCST (Comments(..), DataHead(..), Declaration(..), Label(..), Module(..), ModuleName, ProperName(..), Type(..))
 
-mkRow :: forall t. { apiModuleName :: NonEmptyArray String, scalarModule :: ModuleName } -> { name :: String, type :: TypeKindWithNull | t } -> { label :: Label, type_ :: Type }
+mkRow
+  :: forall t.
+  { apiModuleName :: NonEmptyArray String, scalarModule :: ModuleName } ->
+  { name :: String, type :: TypeKindWithNull | t } ->
+  { label :: Label, type_ :: Type }
 mkRow context field =
   { label: Label field.name
   , type_: DeclarationsForFields.mkFieldTypeWithoutHoleAndOptionalForTopLevel context field."type"
