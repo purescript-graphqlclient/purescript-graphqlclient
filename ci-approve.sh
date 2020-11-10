@@ -69,7 +69,7 @@ spago --config generator-spago.dhall run --no-install \
 
 check_no_diff
 
-echo 'SUCCESS with --input-schema xxxx.json test'
+echo 'SUCCESS with --input-json xxxx.json test'
 
 ########
 
