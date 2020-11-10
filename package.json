@@ -37,8 +37,8 @@
     "purescript-graphql-client-generator": "bin/purescript-graphql-client-generator"
   },
   "dependencies": {
-    "graphql": "^15.3.0",
-    "graphql-request": "^3.1.0",
+    "graphql": "^15.4.0",
+    "graphql-request": "^3.3.0",
     "url-regex-safe": "^1.0.2",
     "xhr2": "^0.2.0"
   },
@@ -46,7 +46,7 @@
     "apollo-codegen": "^0.20.2",
     "json-diff": "^0.5.4",
     "purescript-psa": "^0.8.0",
-    "terser": "^5.3.4",
-    "ws": "^7.3.1"
+    "terser": "^5.3.8",
+    "ws": "^7.4.0"
   }
 }
