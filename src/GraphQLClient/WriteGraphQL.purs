@@ -30,7 +30,11 @@ writeGraphQLRawField = case _ of
   OnSpread onType subFields -> "...on " <> onType <> writeGraphQLArrayRawField subFields
 
 writeGraphQLArrayRawField :: Array RawField -> String
-writeGraphQLArrayRawField [] = ""
+
+-- from https://github.com/purescript-graphql-client/purescript-graphql-client/issues/25
+-- makes `pure unit :: SelectionSet scope Unit` possible
+-- requests `__typename` because the `{ }` is required and should contain at least one field or it will result in error
+writeGraphQLArrayRawField [] = " { __typename }"
 writeGraphQLArrayRawField fields = " { " <> fields'' <> " }"
   where
   fields' :: Array RawField
