@@ -36,7 +36,7 @@ purescript-graphql-client-generator --input-url … --output … --api … --cus
 ### How to bundle a new build
 
 ```sh
-yarn bundle
+yarn generator:bundle
 ```
 
 ### How to regenerate examples

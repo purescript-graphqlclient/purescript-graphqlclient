@@ -41,6 +41,7 @@ import Examples.Github.Enum.EnterpriseAdministratorRole
   (EnterpriseAdministratorRole)
 import Examples.Github.Enum.IpAllowListEntryOrderField
   (IpAllowListEntryOrderField)
+import Examples.Github.Enum.IssueCommentOrderField (IssueCommentOrderField)
 import Examples.Github.Enum.IssueState (IssueState)
 import Examples.Github.Enum.IssueOrderField (IssueOrderField)
 import Examples.Github.Enum.LabelOrderField (LabelOrderField)
@@ -71,6 +72,10 @@ import Examples.Github.Enum.SecurityVulnerabilityOrderField
   (SecurityVulnerabilityOrderField)
 import Examples.Github.Enum.SamlSignatureAlgorithm (SamlSignatureAlgorithm)
 import Examples.Github.Enum.SamlDigestAlgorithm (SamlDigestAlgorithm)
+import Examples.Github.Enum.RepositoryInteractionLimit
+  (RepositoryInteractionLimit)
+import Examples.Github.Enum.RepositoryInteractionLimitExpiry
+  (RepositoryInteractionLimitExpiry)
 import Examples.Github.Enum.SponsorsTierOrderField (SponsorsTierOrderField)
 import Examples.Github.Enum.SponsorshipOrderField (SponsorshipOrderField)
 import Examples.Github.Enum.StarOrderField (StarOrderField)
@@ -1336,6 +1341,19 @@ instance toGraphQLArgumentValueIpAllowListEntryOrder :: ToGraphQLArgumentValue
                                                         IpAllowListEntryOrder where
   toGraphQLArgumentValue (IpAllowListEntryOrder x) = toGraphQLArgumentValue x
 
+-- | original name - IssueCommentOrder
+newtype IssueCommentOrder = IssueCommentOrder { field :: IssueCommentOrderField
+                                              , direction :: OrderDirection
+                                              }
+
+derive instance genericIssueCommentOrder :: Generic IssueCommentOrder _
+
+derive instance newtypeIssueCommentOrder :: Newtype IssueCommentOrder _
+
+instance toGraphQLArgumentValueIssueCommentOrder :: ToGraphQLArgumentValue
+                                                    IssueCommentOrder where
+  toGraphQLArgumentValue (IssueCommentOrder x) = toGraphQLArgumentValue x
+
 -- | original name - IssueFilters
 newtype IssueFilters = IssueFilters { assignee :: Optional String
                                     , createdBy :: Optional String
@@ -1995,6 +2013,60 @@ instance toGraphQLArgumentValueSetEnterpriseIdentityProviderInput :: ToGraphQLAr
                                                                      SetEnterpriseIdentityProviderInput where
   toGraphQLArgumentValue (SetEnterpriseIdentityProviderInput x) = toGraphQLArgumentValue
                                                                   x
+
+-- | original name - SetOrganizationInteractionLimitInput
+newtype SetOrganizationInteractionLimitInput = SetOrganizationInteractionLimitInput { organizationId :: Id
+                                                                                    , limit :: RepositoryInteractionLimit
+                                                                                    , expiry :: Optional
+                                                                                                RepositoryInteractionLimitExpiry
+                                                                                    , clientMutationId :: Optional
+                                                                                                          String
+                                                                                    }
+
+derive instance genericSetOrganizationInteractionLimitInput :: Generic SetOrganizationInteractionLimitInput _
+
+derive instance newtypeSetOrganizationInteractionLimitInput :: Newtype SetOrganizationInteractionLimitInput _
+
+instance toGraphQLArgumentValueSetOrganizationInteractionLimitInput :: ToGraphQLArgumentValue
+                                                                       SetOrganizationInteractionLimitInput where
+  toGraphQLArgumentValue (SetOrganizationInteractionLimitInput x) = toGraphQLArgumentValue
+                                                                    x
+
+-- | original name - SetRepositoryInteractionLimitInput
+newtype SetRepositoryInteractionLimitInput = SetRepositoryInteractionLimitInput { repositoryId :: Id
+                                                                                , limit :: RepositoryInteractionLimit
+                                                                                , expiry :: Optional
+                                                                                            RepositoryInteractionLimitExpiry
+                                                                                , clientMutationId :: Optional
+                                                                                                      String
+                                                                                }
+
+derive instance genericSetRepositoryInteractionLimitInput :: Generic SetRepositoryInteractionLimitInput _
+
+derive instance newtypeSetRepositoryInteractionLimitInput :: Newtype SetRepositoryInteractionLimitInput _
+
+instance toGraphQLArgumentValueSetRepositoryInteractionLimitInput :: ToGraphQLArgumentValue
+                                                                     SetRepositoryInteractionLimitInput where
+  toGraphQLArgumentValue (SetRepositoryInteractionLimitInput x) = toGraphQLArgumentValue
+                                                                  x
+
+-- | original name - SetUserInteractionLimitInput
+newtype SetUserInteractionLimitInput = SetUserInteractionLimitInput { userId :: Id
+                                                                    , limit :: RepositoryInteractionLimit
+                                                                    , expiry :: Optional
+                                                                                RepositoryInteractionLimitExpiry
+                                                                    , clientMutationId :: Optional
+                                                                                          String
+                                                                    }
+
+derive instance genericSetUserInteractionLimitInput :: Generic SetUserInteractionLimitInput _
+
+derive instance newtypeSetUserInteractionLimitInput :: Newtype SetUserInteractionLimitInput _
+
+instance toGraphQLArgumentValueSetUserInteractionLimitInput :: ToGraphQLArgumentValue
+                                                               SetUserInteractionLimitInput where
+  toGraphQLArgumentValue (SetUserInteractionLimitInput x) = toGraphQLArgumentValue
+                                                            x
 
 -- | original name - SponsorsTierOrder
 newtype SponsorsTierOrder = SponsorsTierOrder { field :: SponsorsTierOrderField

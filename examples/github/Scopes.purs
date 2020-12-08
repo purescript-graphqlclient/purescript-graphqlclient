@@ -812,6 +812,8 @@ data Scope__RepositoryContactLink
 
 data Scope__RepositoryEdge
 
+data Scope__RepositoryInteractionAbility
+
 data Scope__RepositoryInvitation
 
 data Scope__RepositoryInvitationConnection
@@ -893,6 +895,12 @@ data Scope__SecurityVulnerabilityConnection
 data Scope__SecurityVulnerabilityEdge
 
 data Scope__SetEnterpriseIdentityProviderPayload
+
+data Scope__SetOrganizationInteractionLimitPayload
+
+data Scope__SetRepositoryInteractionLimitPayload
+
+data Scope__SetUserInteractionLimitPayload
 
 data Scope__SmimeSignature
 

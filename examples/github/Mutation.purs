@@ -75,6 +75,9 @@ import Examples.Github.InputObject
   , RerequestCheckSuiteInput
   , ResolveReviewThreadInput
   , SetEnterpriseIdentityProviderInput
+  , SetOrganizationInteractionLimitInput
+  , SetRepositoryInteractionLimitInput
+  , SetUserInteractionLimitInput
   , SubmitPullRequestReviewInput
   , TransferIssueInput
   , UnarchiveRepositoryInput
@@ -204,6 +207,9 @@ import Examples.Github.Scopes
   , Scope__RerequestCheckSuitePayload
   , Scope__ResolveReviewThreadPayload
   , Scope__SetEnterpriseIdentityProviderPayload
+  , Scope__SetOrganizationInteractionLimitPayload
+  , Scope__SetRepositoryInteractionLimitPayload
+  , Scope__SetUserInteractionLimitPayload
   , Scope__SubmitPullRequestReviewPayload
   , Scope__TransferIssuePayload
   , Scope__UnarchiveRepositoryPayload
@@ -1645,6 +1651,66 @@ setEnterpriseIdentityProvider input = selectionForCompositeField
                                       (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SetOrganizationInteractionLimitInputRowRequired r = ( input :: Examples.Github.InputObject.SetOrganizationInteractionLimitInput
+                                                         | r
+                                                         )
+
+type SetOrganizationInteractionLimitInput = {
+| SetOrganizationInteractionLimitInputRowRequired + ()
+}
+
+setOrganizationInteractionLimit :: forall r . SetOrganizationInteractionLimitInput -> SelectionSet
+                                                                                      Scope__SetOrganizationInteractionLimitPayload
+                                                                                      r -> SelectionSet
+                                                                                           Scope__RootMutation
+                                                                                           (Maybe
+                                                                                            r)
+setOrganizationInteractionLimit input = selectionForCompositeField
+                                        "setOrganizationInteractionLimit"
+                                        (toGraphQLArguments
+                                         input)
+                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SetRepositoryInteractionLimitInputRowRequired r = ( input :: Examples.Github.InputObject.SetRepositoryInteractionLimitInput
+                                                       | r
+                                                       )
+
+type SetRepositoryInteractionLimitInput = {
+| SetRepositoryInteractionLimitInputRowRequired + ()
+}
+
+setRepositoryInteractionLimit :: forall r . SetRepositoryInteractionLimitInput -> SelectionSet
+                                                                                  Scope__SetRepositoryInteractionLimitPayload
+                                                                                  r -> SelectionSet
+                                                                                       Scope__RootMutation
+                                                                                       (Maybe
+                                                                                        r)
+setRepositoryInteractionLimit input = selectionForCompositeField
+                                      "setRepositoryInteractionLimit"
+                                      (toGraphQLArguments
+                                       input)
+                                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SetUserInteractionLimitInputRowRequired r = ( input :: Examples.Github.InputObject.SetUserInteractionLimitInput
+                                                 | r
+                                                 )
+
+type SetUserInteractionLimitInput = {
+| SetUserInteractionLimitInputRowRequired + ()
+}
+
+setUserInteractionLimit :: forall r . SetUserInteractionLimitInput -> SelectionSet
+                                                                      Scope__SetUserInteractionLimitPayload
+                                                                      r -> SelectionSet
+                                                                           Scope__RootMutation
+                                                                           (Maybe
+                                                                            r)
+setUserInteractionLimit input = selectionForCompositeField
+                                "setUserInteractionLimit"
+                                (toGraphQLArguments
+                                 input)
+                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SubmitPullRequestReviewInputRowRequired r = ( input :: Examples.Github.InputObject.SubmitPullRequestReviewInput
                                                  | r

@@ -23,6 +23,7 @@ data DeploymentState
   | Pending
   | Queued
   | InProgress
+  | Waiting
 
 derive instance genericDeploymentState :: Generic DeploymentState _
 
@@ -43,6 +44,7 @@ fromToMap = [ Tuple "ABANDONED" Abandoned
             , Tuple "PENDING" Pending
             , Tuple "QUEUED" Queued
             , Tuple "IN_PROGRESS" InProgress
+            , Tuple "WAITING" Waiting
             ]
 
 instance deploymentStateGraphQLDefaultResponseScalarDecoder :: GraphQLDefaultResponseScalarDecoder
@@ -62,3 +64,4 @@ instance deploymentStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
       Pending -> ArgumentValueEnum "PENDING"
       Queued -> ArgumentValueEnum "QUEUED"
       InProgress -> ArgumentValueEnum "IN_PROGRESS"
+      Waiting -> ArgumentValueEnum "WAITING"

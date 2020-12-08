@@ -7,9 +7,8 @@ import Data.Array.NonEmpty as NonEmpty
 import Data.Maybe (Maybe(..))
 import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__FullType)
-import Language.PS.CST.Types.Leafs (DeclDeriveType(..))
-import Language.PS.SmartCST (Comments(..), DataHead(..), DeclDeriveType(..), Declaration(..), Ident(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), Type(..), mkModuleName, stringType)
-import GraphQLClientGenerator.MakeModule.Lib.Utils
+import Language.PS.SmartCST (Comments(..), DataHead(..), Declaration(..), Module(..), ModuleName, ProperName(..), mkModuleName, stringType)
+import GraphQLClientGenerator.MakeModule.Lib.Utils (mkDeriveClassAsNewtype, mkDeriveNewtypeClass)
 
 makeModule :: ModuleName -> Array InstorpectionQueryResult__FullType -> Module
 makeModule moduleName scalarTypes =

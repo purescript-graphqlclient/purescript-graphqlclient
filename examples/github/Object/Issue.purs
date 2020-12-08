@@ -30,7 +30,8 @@ import Examples.Github.Enum.LockReason (LockReason)
 import Type.Row (type (+))
 import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (Html, Uri, DateTime, Id)
-import Examples.Github.InputObject (LabelOrder, ReactionOrder) as Examples.Github.InputObject
+import Examples.Github.InputObject
+  (IssueCommentOrder, LabelOrder, ReactionOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.IssueState (IssueState)
@@ -107,7 +108,9 @@ closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
 closedAt :: SelectionSet Scope__Issue (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
-type CommentsInputRowOptional r = ( after :: Optional String
+type CommentsInputRowOptional r = ( orderBy :: Optional
+                                               Examples.Github.InputObject.IssueCommentOrder
+                                  , after :: Optional String
                                   , before :: Optional String
                                   , first :: Optional Int
                                   , last :: Optional Int

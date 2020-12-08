@@ -14,6 +14,7 @@ import Type.Row (type (+))
 import Examples.Github.Scopes
   ( Scope__Organization
   , Scope__OrganizationAuditEntryConnection
+  , Scope__RepositoryInteractionAbility
   , Scope__IpAllowListEntryConnection
   , Scope__ProfileItemShowcase
   , Scope__UserStatusConnection
@@ -125,8 +126,25 @@ descriptionHTML = selectionForField
 email :: SelectionSet Scope__Organization (Maybe String)
 email = selectionForField "email" [] graphqlDefaultResponseScalarDecoder
 
+hasSponsorsListing :: SelectionSet Scope__Organization Boolean
+hasSponsorsListing = selectionForField
+                     "hasSponsorsListing"
+                     []
+                     graphqlDefaultResponseScalarDecoder
+
 id :: SelectionSet Scope__Organization Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+
+interactionAbility :: forall r . SelectionSet
+                                 Scope__RepositoryInteractionAbility
+                                 r -> SelectionSet
+                                      Scope__Organization
+                                      (Maybe
+                                       r)
+interactionAbility = selectionForCompositeField
+                     "interactionAbility"
+                     []
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 ipAllowListEnabledSetting :: SelectionSet
                              Scope__Organization
@@ -157,6 +175,12 @@ ipAllowListEntries input = selectionForCompositeField
                            (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+isSponsoringViewer :: SelectionSet Scope__Organization Boolean
+isSponsoringViewer = selectionForField
+                     "isSponsoringViewer"
+                     []
+                     graphqlDefaultResponseScalarDecoder
 
 isVerified :: SelectionSet Scope__Organization Boolean
 isVerified = selectionForField
@@ -623,11 +647,23 @@ viewerCanCreateTeams = selectionForField
                        []
                        graphqlDefaultResponseScalarDecoder
 
+viewerCanSponsor :: SelectionSet Scope__Organization Boolean
+viewerCanSponsor = selectionForField
+                   "viewerCanSponsor"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
 viewerIsAMember :: SelectionSet Scope__Organization Boolean
 viewerIsAMember = selectionForField
                   "viewerIsAMember"
                   []
                   graphqlDefaultResponseScalarDecoder
+
+viewerIsSponsoring :: SelectionSet Scope__Organization Boolean
+viewerIsSponsoring = selectionForField
+                     "viewerIsSponsoring"
+                     []
+                     graphqlDefaultResponseScalarDecoder
 
 websiteUrl :: SelectionSet Scope__Organization (Maybe Uri)
 websiteUrl = selectionForField

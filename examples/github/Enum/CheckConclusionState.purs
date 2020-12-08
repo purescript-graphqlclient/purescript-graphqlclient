@@ -21,6 +21,7 @@ data CheckConclusionState
   | Success
   | Neutral
   | Skipped
+  | StartupFailure
   | Stale
 
 derive instance genericCheckConclusionState :: Generic CheckConclusionState _
@@ -40,6 +41,7 @@ fromToMap = [ Tuple "ACTION_REQUIRED" ActionRequired
             , Tuple "SUCCESS" Success
             , Tuple "NEUTRAL" Neutral
             , Tuple "SKIPPED" Skipped
+            , Tuple "STARTUP_FAILURE" StartupFailure
             , Tuple "STALE" Stale
             ]
 
@@ -60,4 +62,5 @@ instance checkConclusionStateToGraphQLArgumentValue :: ToGraphQLArgumentValue
       Success -> ArgumentValueEnum "SUCCESS"
       Neutral -> ArgumentValueEnum "NEUTRAL"
       Skipped -> ArgumentValueEnum "SKIPPED"
+      StartupFailure -> ArgumentValueEnum "STARTUP_FAILURE"
       Stale -> ArgumentValueEnum "STALE"

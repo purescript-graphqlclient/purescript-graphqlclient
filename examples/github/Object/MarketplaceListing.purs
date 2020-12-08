@@ -86,6 +86,12 @@ hasTermsOfService = selectionForField
                     []
                     graphqlDefaultResponseScalarDecoder
 
+hasVerifiedOwner :: SelectionSet Scope__MarketplaceListing Boolean
+hasVerifiedOwner = selectionForField
+                   "hasVerifiedOwner"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
 howItWorks :: SelectionSet Scope__MarketplaceListing (Maybe String)
 howItWorks = selectionForField
              "howItWorks"

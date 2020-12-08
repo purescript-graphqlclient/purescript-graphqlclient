@@ -23,6 +23,7 @@ import Examples.Github.Scopes
   , Scope__DeploymentConnection
   , Scope__RepositoryConnection
   , Scope__FundingLink
+  , Scope__RepositoryInteractionAbility
   , Scope__Issue
   , Scope__IssueOrPullRequest
   , Scope__IssueTemplate
@@ -346,6 +347,17 @@ homepageUrl = selectionForField
 
 id :: SelectionSet Scope__Repository Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+
+interactionAbility :: forall r . SelectionSet
+                                 Scope__RepositoryInteractionAbility
+                                 r -> SelectionSet
+                                      Scope__Repository
+                                      (Maybe
+                                       r)
+interactionAbility = selectionForCompositeField
+                     "interactionAbility"
+                     []
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 isArchived :: SelectionSet Scope__Repository Boolean
 isArchived = selectionForField

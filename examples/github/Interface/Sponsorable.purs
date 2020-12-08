@@ -2,6 +2,8 @@ module Examples.Github.Interface.Sponsorable where
 
 import GraphQLClient
   ( SelectionSet
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
@@ -10,8 +12,8 @@ import GraphQLClient
   , buildFragment
   )
 import Examples.Github.Scopes
-  ( Scope__SponsorsListing
-  , Scope__Sponsorable
+  ( Scope__Sponsorable
+  , Scope__SponsorsListing
   , Scope__SponsorshipConnection
   , Scope__Organization
   , Scope__User
@@ -20,6 +22,18 @@ import Data.Maybe (Maybe(..))
 import Examples.Github.InputObject (SponsorshipOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Prelude (pure)
+
+hasSponsorsListing :: SelectionSet Scope__Sponsorable Boolean
+hasSponsorsListing = selectionForField
+                     "hasSponsorsListing"
+                     []
+                     graphqlDefaultResponseScalarDecoder
+
+isSponsoringViewer :: SelectionSet Scope__Sponsorable Boolean
+isSponsoringViewer = selectionForField
+                     "isSponsoringViewer"
+                     []
+                     graphqlDefaultResponseScalarDecoder
 
 sponsorsListing :: forall r . SelectionSet
                               Scope__SponsorsListing
@@ -81,6 +95,18 @@ sponsorshipsAsSponsor input = selectionForCompositeField
                               (toGraphQLArguments
                                input)
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+viewerCanSponsor :: SelectionSet Scope__Sponsorable Boolean
+viewerCanSponsor = selectionForField
+                   "viewerCanSponsor"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
+viewerIsSponsoring :: SelectionSet Scope__Sponsorable Boolean
+viewerIsSponsoring = selectionForField
+                     "viewerIsSponsoring"
+                     []
+                     graphqlDefaultResponseScalarDecoder
 
 type Fragments decodesTo = { onOrganization :: SelectionSet
                                                Scope__Organization

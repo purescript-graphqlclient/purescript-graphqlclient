@@ -21,6 +21,7 @@ import Examples.Github.Scopes
   , Scope__GistCommentConnection
   , Scope__GistConnection
   , Scope__Hovercard
+  , Scope__RepositoryInteractionAbility
   , Scope__IssueCommentConnection
   , Scope__IssueConnection
   , Scope__ProfileItemShowcase
@@ -45,6 +46,7 @@ import Data.Maybe (Maybe)
 import Examples.Github.Enum.GistPrivacy (GistPrivacy)
 import Examples.Github.InputObject
   ( GistOrder
+  , IssueCommentOrder
   , IssueOrder
   , IssueFilters
   , PackageOrder
@@ -254,6 +256,12 @@ gists input = selectionForCompositeField
                input)
               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+hasSponsorsListing :: SelectionSet Scope__User Boolean
+hasSponsorsListing = selectionForField
+                     "hasSponsorsListing"
+                     []
+                     graphqlDefaultResponseScalarDecoder
+
 type HovercardInputRowOptional r = ( primarySubjectId :: Optional Id | r )
 
 type HovercardInput = { | HovercardInputRowOptional + () }
@@ -271,6 +279,17 @@ hovercard input = selectionForCompositeField
 
 id :: SelectionSet Scope__User Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+
+interactionAbility :: forall r . SelectionSet
+                                 Scope__RepositoryInteractionAbility
+                                 r -> SelectionSet
+                                      Scope__User
+                                      (Maybe
+                                       r)
+interactionAbility = selectionForCompositeField
+                     "interactionAbility"
+                     []
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 isBountyHunter :: SelectionSet Scope__User Boolean
 isBountyHunter = selectionForField
@@ -308,10 +327,18 @@ isSiteAdmin = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
+isSponsoringViewer :: SelectionSet Scope__User Boolean
+isSponsoringViewer = selectionForField
+                     "isSponsoringViewer"
+                     []
+                     graphqlDefaultResponseScalarDecoder
+
 isViewer :: SelectionSet Scope__User Boolean
 isViewer = selectionForField "isViewer" [] graphqlDefaultResponseScalarDecoder
 
-type IssueCommentsInputRowOptional r = ( after :: Optional String
+type IssueCommentsInputRowOptional r = ( orderBy :: Optional
+                                                    Examples.Github.InputObject.IssueCommentOrder
+                                       , after :: Optional String
                                        , before :: Optional String
                                        , first :: Optional Int
                                        , last :: Optional Int
@@ -871,11 +898,23 @@ viewerCanFollow = selectionForField
                   []
                   graphqlDefaultResponseScalarDecoder
 
+viewerCanSponsor :: SelectionSet Scope__User Boolean
+viewerCanSponsor = selectionForField
+                   "viewerCanSponsor"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
 viewerIsFollowing :: SelectionSet Scope__User Boolean
 viewerIsFollowing = selectionForField
                     "viewerIsFollowing"
                     []
                     graphqlDefaultResponseScalarDecoder
+
+viewerIsSponsoring :: SelectionSet Scope__User Boolean
+viewerIsSponsoring = selectionForField
+                     "viewerIsSponsoring"
+                     []
+                     graphqlDefaultResponseScalarDecoder
 
 type WatchingInputRowOptional r = ( privacy :: Optional RepositoryPrivacy
                                   , orderBy :: Optional
