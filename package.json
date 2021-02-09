@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "lib:test": "spago test --main MyTests.Main",
+    "lib:test": "spago test --main Dillonkearns.MyTests.Main",
     "lib:build": "spago build",
     "generator:build": "spago --config generator-spago.dhall build",
     "generator:test": "spago --config generator-spago.dhall test --main Dillonkearns.MyGeneratorTests.Main",
