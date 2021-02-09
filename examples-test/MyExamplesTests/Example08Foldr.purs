@@ -64,7 +64,7 @@ spec =
   Test.Spec.it "Example08Foldr" do
     writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
     let
-      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59" ] }
+      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer 6dbebdecd059b288a14574709a4eac4154437aed" ] }
     (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts query
     (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
     response' `Test.Spec.shouldEqual` 0
