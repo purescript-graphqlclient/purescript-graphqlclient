@@ -59,7 +59,7 @@ toGraphQLArguments ::
 toGraphQLArguments rec = toGraphQLArgumentImplementationRecord (RLProxy :: RLProxy list) rec
 
 -------------------------------------------------------
-class ToGraphQLArgumentImplementationRecord (list :: RowList.RowList) (row :: #Type) | list -> row where
+class ToGraphQLArgumentImplementationRecord (list :: RowList.RowList Type) (row :: #Type) | list -> row where
   toGraphQLArgumentImplementationRecord :: forall proxy. proxy list -> Record row -> Array Argument
 
 -- for nested records
@@ -151,7 +151,7 @@ instance recordDefaultInput :: (DefaultInputImplementationRecord row list, RowLi
   defaultInput = defaultInputImplementationRecord (RLProxy :: RLProxy list)
 
 -- Implementation for Record
-class DefaultInputImplementationRecord (row :: #Type) (list :: RowList.RowList) | list -> row where
+class DefaultInputImplementationRecord (row :: #Type) (list :: RowList.RowList Type) | list -> row where
   defaultInputImplementationRecord :: RLProxy list -> Record row
 
 instance defaultInputImplementationRecordNil :: DefaultInputImplementationRecord () RowList.Nil where

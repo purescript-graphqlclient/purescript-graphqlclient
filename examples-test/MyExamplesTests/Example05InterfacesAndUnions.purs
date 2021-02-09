@@ -5,7 +5,7 @@ import Data.Maybe (Maybe(..))
 import Prelude
 import Control.Monad.Error.Class (throwError)
 import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Show.Generic (genericShow)
 import Effect.Exception (error)
 import Examples.Swapi.Interface.Character as Examples.Swapi.Interface.Character
 import Examples.Swapi.Object.Droid as Examples.Swapi.Object.Droid

@@ -2,7 +2,7 @@ module GraphQLClientGenerator.IntrospectionSchema.TypeKind where
 
 import Prelude
 import Data.Generic.Rep (class Generic) as GenericRep
-import Data.Generic.Rep.Show (genericShow) as GenericRep
+import Data.Show.Generic (genericShow) as GenericRep
 import GraphQLClient.GraphQLEnum as GraphQLClient.GraphQLEnum
 import GraphQLClient.Implementation as GraphQLClient.Implementation
 
