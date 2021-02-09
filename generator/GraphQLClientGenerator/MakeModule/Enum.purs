@@ -6,7 +6,7 @@ import Data.Array.NonEmpty as NonEmpty
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__EnumValue, InstorpectionQueryResult__FullType)
-import Language.PS.SmartCST (Binder(..), Comments(..), DataCtor(..), DataHead(..), DeclDeriveType(..), Declaration(..), Expr(..), Guarded(..), Ident(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), SmartQualifiedNameConstructor(..), Type(..), arrayType, mkModuleName)
+import Language.PS.SmartCST (Binder(..), Comments(..), DataCtor(..), DataHead(..), DeclDeriveType(..), Declaration(..), Expr(..), Guarded(..), Ident(..), InstanceBinding(..), Module(..), ModuleName, ProperName(..), SmartQualifiedName(..), SmartQualifiedNameConstructor(..), PSType(..), arrayType, mkModuleName)
 import GraphQLClientGenerator.MakeModule.Lib.Utils
 
 makeModule :: ModuleName -> InstorpectionQueryResult__FullType -> Module

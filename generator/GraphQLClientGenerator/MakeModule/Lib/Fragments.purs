@@ -8,7 +8,7 @@ import Data.Maybe (Maybe(..))
 import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull(..))
 import GraphQLClientGenerator.MakeModule.Lib.Utils (qualifyScope)
-import Language.PS.SmartCST (Binder(..), SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), RecordLabeled(..), SmartQualifiedName(..), Type(..), TypeVarBinding(..), mkModuleName)
+import Language.PS.SmartCST (Binder(..), SmartQualifiedNameConstructor(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ProperName(..), RecordLabeled(..), SmartQualifiedName(..), PSType(..), TypeVarBinding(..), mkModuleName)
 
 nameOfTypeKindWithNull :: TypeKindWithNull -> String
 nameOfTypeKindWithNull = case _ of

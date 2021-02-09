@@ -16,7 +16,7 @@ mkRow
   :: forall t.
   { apiModuleName :: NonEmptyArray String, scalarModule :: ModuleName } ->
   { name :: String, type :: TypeKindWithNull | t } ->
-  { label :: Label, type_ :: Type }
+  { label :: Label, type_ :: PSType }
 mkRow context field =
   { label: Label field.name
   , type_: DeclarationsForFields.mkFieldTypeWithoutHoleAndOptionalForTopLevel context field."type"
