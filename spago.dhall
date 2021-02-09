@@ -2,10 +2,8 @@
 , dependencies =
   [ "affjax"
   , "effect"
-  , "generics-rep"
   , "node-fs-aff"
   , "prelude"
-  , "proxy"
   , "psci-support"
   , "record"
   , "argonaut-core"

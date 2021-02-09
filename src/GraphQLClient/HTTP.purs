@@ -14,7 +14,7 @@ import Data.Argonaut.Decode (class DecodeJson, JsonDecodeError(..), printJsonDec
 import Data.Argonaut.Decode.Decoders (decodeJObject, decodeNonEmptyArray, decodeString) as Data.Argonaut.Decode.Decoders
 import Data.Argonaut.Encode (class EncodeJson)
 import Data.Argonaut.Encode as ArgonautCodecs.Encode
-import Data.Argonaut.Encode.Generic.Rep as ArgonautGeneric
+import Data.Argonaut.Encode.Generic as ArgonautGeneric
 import Data.Array (intercalate)
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty (toArray) as NonEmptyArray
