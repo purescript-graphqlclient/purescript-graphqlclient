@@ -1,0 +1,58 @@
+module Dillonkearns.Examples.Github.Enum.OperationType where
+
+import Data.Generic.Rep (class Generic)
+import Data.Show (class Show)
+import Data.Show.Generic (genericShow)
+import Prelude (class Eq, class Ord)
+import Data.Tuple (Tuple(..))
+import Dillonkearns.GraphQLClient
+  ( class GraphQLDefaultResponseScalarDecoder
+  , enumDecoder
+  , class ToGraphQLArgumentValue
+  , ArgumentValue(..)
+  )
+
+-- | original name - OperationType
+data OperationType
+  = Access
+  | Authentication
+  | Create
+  | Modify
+  | Remove
+  | Restore
+  | Transfer
+
+derive instance genericOperationType :: Generic OperationType _
+
+instance showOperationType :: Show OperationType where
+  show = genericShow
+
+derive instance eqOperationType :: Eq OperationType
+
+derive instance ordOperationType :: Ord OperationType
+
+fromToMap :: Array (Tuple String OperationType)
+fromToMap = [ Tuple "ACCESS" Access
+            , Tuple "AUTHENTICATION" Authentication
+            , Tuple "CREATE" Create
+            , Tuple "MODIFY" Modify
+            , Tuple "REMOVE" Remove
+            , Tuple "RESTORE" Restore
+            , Tuple "TRANSFER" Transfer
+            ]
+
+instance operationTypeGraphQLDefaultResponseScalarDecoder
+  :: GraphQLDefaultResponseScalarDecoder OperationType where
+  graphqlDefaultResponseScalarDecoder = enumDecoder "OperationType" fromToMap
+
+instance operationTypeToGraphQLArgumentValue
+  :: ToGraphQLArgumentValue OperationType where
+  toGraphQLArgumentValue =
+    case _ of
+      Access -> ArgumentValueEnum "ACCESS"
+      Authentication -> ArgumentValueEnum "AUTHENTICATION"
+      Create -> ArgumentValueEnum "CREATE"
+      Modify -> ArgumentValueEnum "MODIFY"
+      Remove -> ArgumentValueEnum "REMOVE"
+      Restore -> ArgumentValueEnum "RESTORE"
+      Transfer -> ArgumentValueEnum "TRANSFER"

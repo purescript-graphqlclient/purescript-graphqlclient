@@ -1,4 +1,4 @@
-# purescript-graphql-client
+# purescript-dillonkearns-graphql-client
 
 ### TODO:
 
@@ -15,15 +15,15 @@
 ### How to install
 
 ```sh
-npm install "git+https://github.com/purescript-graphql-client/purescript-graphql-client#COMMIT_HASH"
+npm install "git+https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client#COMMIT_HASH"
 # or
-yarn add "git+https://github.com/purescript-graphql-client/purescript-graphql-client#COMMIT_HASH"
+yarn add "git+https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client#COMMIT_HASH"
 ```
 
 ### How to run generator
 
 ```sh
-purescript-graphql-client-generator --input-url … --output … --api … --custom-scalars-module …
+purescript-dillonkearns-graphql-client-generator --input-url … --output … --api … --custom-scalars-module …
 ```
 
 - - -
@@ -56,6 +56,6 @@ yarn install
 
 # check ./regenerate-examples.sh file
 spago --config generator-spago.dhall run \
-  --main GraphQLClientGenerator.Main \
+  --main Dillonkearns.GraphQLClientGenerator.Main \
   --node-args "--help"
 ```

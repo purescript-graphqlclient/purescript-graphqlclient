@@ -1,4 +1,4 @@
-{ name = "purescript-graphql-client"
+{ name = "purescript-dillonkearns-graphql-client"
 , dependencies =
   [ "affjax"
   , "effect"
