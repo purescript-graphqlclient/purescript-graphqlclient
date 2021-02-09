@@ -4,7 +4,7 @@ import Prelude
 import Data.Array as Array
 import Data.Maybe (Maybe)
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
-import Prim.Row as Row
+import Prim.Row as Prim.Row
 import Prim.RowList as RowList
 import Record as Record
 import Type.Data.RowList (RLProxy(..))
@@ -59,7 +59,7 @@ toGraphQLArguments ::
 toGraphQLArguments rec = toGraphQLArgumentImplementationRecord (RLProxy :: RLProxy list) rec
 
 -------------------------------------------------------
-class ToGraphQLArgumentImplementationRecord (list :: RowList.RowList Type) (row :: #Type) | list -> row where
+class ToGraphQLArgumentImplementationRecord (list :: RowList.RowList Type) (row :: Row Type) | list -> row where
   toGraphQLArgumentImplementationRecord :: forall proxy. proxy list -> Record row -> Array Argument
 
 -- for nested records
@@ -69,7 +69,7 @@ instance toGraphQLArgumentRecordConsChildRow ::
   ---
   , ToGraphQLArgumentImplementationRecord tail row
   , IsSymbol field
-  , Row.Cons field (Record childRow) rowTail row
+  , Prim.Row.Cons field (Record childRow) rowTail row
   ) =>
   ToGraphQLArgumentImplementationRecord (RowList.Cons field (Record childRow) tail) row where
   toGraphQLArgumentImplementationRecord _proxy record =
@@ -88,7 +88,7 @@ instance toGraphQLArgumentRecordConsOptional ::
   ( ToGraphQLArgumentValue value
   , ToGraphQLArgumentImplementationRecord tail row
   , IsSymbol field
-  , Row.Cons field (Optional value) rowTail row
+  , Prim.Row.Cons field (Optional value) rowTail row
   ) =>
   ToGraphQLArgumentImplementationRecord (RowList.Cons field (Optional value) tail) row where
   toGraphQLArgumentImplementationRecord _proxy record =
@@ -110,7 +110,7 @@ instance toGraphQLArgumentRecordCons ::
   ( ToGraphQLArgumentValue value
   , ToGraphQLArgumentImplementationRecord tail row
   , IsSymbol field
-  , Row.Cons field value rowTail row
+  , Prim.Row.Cons field value rowTail row
   ) =>
   ToGraphQLArgumentImplementationRecord (RowList.Cons field value tail) row where
   toGraphQLArgumentImplementationRecord _proxy record =
@@ -151,7 +151,7 @@ instance recordDefaultInput :: (DefaultInputImplementationRecord row list, RowLi
   defaultInput = defaultInputImplementationRecord (RLProxy :: RLProxy list)
 
 -- Implementation for Record
-class DefaultInputImplementationRecord (row :: #Type) (list :: RowList.RowList Type) | list -> row where
+class DefaultInputImplementationRecord (row :: Row Type) (list :: RowList.RowList Type) | list -> row where
   defaultInputImplementationRecord :: RLProxy list -> Record row
 
 instance defaultInputImplementationRecordNil :: DefaultInputImplementationRecord () RowList.Nil where
@@ -161,8 +161,8 @@ instance defaultInputImplementationRecordCons ::
   ( DefaultInput value
   , DefaultInputImplementationRecord rowTail tail
   , IsSymbol field
-  , Row.Cons field value rowTail row
-  , Row.Lacks field rowTail
+  , Prim.Row.Cons field value rowTail row
+  , Prim.Row.Lacks field rowTail
   ) =>
   DefaultInputImplementationRecord row (RowList.Cons field value tail) where
   defaultInputImplementationRecord _proxy =

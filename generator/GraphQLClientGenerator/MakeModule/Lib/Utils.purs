@@ -9,7 +9,7 @@ import Data.Show.Generic (genericShow)
 import Data.Maybe (Maybe(..))
 import Data.String.Extra as StringsExtra
 
-tupleDecl :: Type -> Type -> Type
+tupleDecl :: PSType -> PSType -> PSType
 tupleDecl x y =
   (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" [ "Tuple" ]) (ProperName "Tuple"))
     `TypeApp`

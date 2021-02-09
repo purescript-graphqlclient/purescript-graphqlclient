@@ -9,12 +9,12 @@ import Data.String.Extra as StringsExtra
 import GraphQLClientGenerator.IntrospectionSchema (InstorpectionQueryResult__Field, InstorpectionQueryResult__InputValue)
 import GraphQLClientGenerator.IntrospectionSchema.TypeKindWithNull (TypeKindWithNull(..))
 import GraphQLClientGenerator.MakeModule.Lib.Utils (qualifyScope)
-import Language.PS.SmartCST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ModuleName, OpName(..), ProperName(..), Row, SmartQualifiedName(..), Type(..), TypeVarBinding(..), arrayType, emptyRow, maybeType, mkModuleName, (====>>))
+import Language.PS.SmartCST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ModuleName, OpName(..), ProperName(..), PSRow, SmartQualifiedName(..), PSType(..), TypeVarBinding(..), arrayType, emptyRow, maybeType, mkModuleName, (====>>))
 
-optionalType :: Type -> Type
+optionalType :: PSType -> PSType
 optionalType = TypeApp (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName (NonEmpty.cons' "GraphQLClient" [])) $ ProperName "Optional")
 
-typeRefTypeScalar :: ModuleName -> String -> Type
+typeRefTypeScalar :: ModuleName -> String -> PSType
 typeRefTypeScalar customOrNotScalarModule name =
   let
     objectName' = graphqlTypeToPurescriptType $ StringsExtra.pascalCase name
@@ -36,7 +36,7 @@ graphqlTypeToPurescriptType = case _ of
   "Float" -> "Number"
   x -> x
 
-typeRefTypeNonScalarObjectFromFileInDir :: NonEmptyArray String -> String -> String -> Type
+typeRefTypeNonScalarObjectFromFileInDir :: NonEmptyArray String -> String -> String -> PSType
 typeRefTypeNonScalarObjectFromFileInDir apiModuleName fromModuleName objectName =
   let
     objectName' = StringsExtra.pascalCase objectName
@@ -45,7 +45,7 @@ typeRefTypeNonScalarObjectFromFileInDir apiModuleName fromModuleName objectName 
   in
     TypeConstructor (SmartQualifiedName__Simple moduleName' (ProperName objectName'))
 
-typeRefTypeNonScalarObjectFromFileInRootDir :: NonEmptyArray String -> String -> String -> Type
+typeRefTypeNonScalarObjectFromFileInRootDir :: NonEmptyArray String -> String -> String -> PSType
 typeRefTypeNonScalarObjectFromFileInRootDir apiModuleName fromModuleName objectName =
   let
     objectName' = StringsExtra.pascalCase objectName
@@ -54,7 +54,7 @@ typeRefTypeNonScalarObjectFromFileInRootDir apiModuleName fromModuleName objectN
   in
     TypeConstructor (SmartQualifiedName__Full moduleName' (ProperName objectName'))
 
-typeRefTypeScopeHole :: Type
+typeRefTypeScopeHole :: PSType
 typeRefTypeScopeHole = TypeVar $ Ident "r"
 
 type Context
@@ -62,7 +62,7 @@ type Context
     , scalarModule :: ModuleName
     }
 
-mkFieldTypeWithoutHoleAndMaybe :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithoutHoleAndMaybe :: Context -> TypeKindWithNull -> PSType
 mkFieldTypeWithoutHoleAndMaybe context = case _ of
   TypeKindWithNull__Null type_ -> maybeType $ mkFieldTypeWithHoleAndMaybe context type_
   TypeKindWithNull__List type_ -> arrayType $ mkFieldTypeWithHoleAndMaybe context type_ -- reset to true again
@@ -73,12 +73,12 @@ mkFieldTypeWithoutHoleAndMaybe context = case _ of
   TypeKindWithNull__Interface name -> typeRefTypeNonScalarObjectFromFileInDir context.apiModuleName "Interface" name
   TypeKindWithNull__Union name -> typeRefTypeNonScalarObjectFromFileInDir context.apiModuleName "Union" name
 
-mkFieldTypeWithoutHoleAndOptionalForTopLevel :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithoutHoleAndOptionalForTopLevel :: Context -> TypeKindWithNull -> PSType
 mkFieldTypeWithoutHoleAndOptionalForTopLevel context = case _ of
   TypeKindWithNull__Null type_ -> optionalType $ mkFieldTypeWithoutHoleAndMaybe context type_
   other -> mkFieldTypeWithoutHoleAndMaybe context other
 
-mkFieldTypeWithHoleAndMaybe :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithHoleAndMaybe :: Context -> TypeKindWithNull -> PSType
 mkFieldTypeWithHoleAndMaybe context = case _ of
   TypeKindWithNull__Null type_ -> maybeType $ mkFieldTypeWithHoleAndMaybe context type_
   TypeKindWithNull__List type_ -> arrayType $ mkFieldTypeWithHoleAndMaybe context type_ -- reset to true again
@@ -89,7 +89,7 @@ mkFieldTypeWithHoleAndMaybe context = case _ of
   TypeKindWithNull__Interface _ -> typeRefTypeScopeHole
   TypeKindWithNull__Union _ -> typeRefTypeScopeHole
 
-mkFieldTypeWithHoleAndOptionalForTopLevel :: Context -> TypeKindWithNull -> Type
+mkFieldTypeWithHoleAndOptionalForTopLevel :: Context -> TypeKindWithNull -> PSType
 mkFieldTypeWithHoleAndOptionalForTopLevel context = case _ of
   TypeKindWithNull__Null type_ -> optionalType $ mkFieldTypeWithHoleAndMaybe context type_
   other -> mkFieldTypeWithHoleAndMaybe context other
@@ -119,18 +119,18 @@ filterAndNonEmpty ::
 filterAndNonEmpty pred = NonEmpty.fromFoldable <<< Array.mapMaybe (\el -> if pred el then Just el else Nothing)
 
 toRow ::
-  (TypeKindWithNull -> Type) ->
+  (TypeKindWithNull -> PSType) ->
   NonEmptyArray InstorpectionQueryResult__InputValue ->
-  Row
+  PSRow
 toRow mkType els =
   { rowLabels: NonEmpty.toArray els <#> \el -> { label: Label el.name, type_: mkType el."type" }
   , rowTail: Just (TypeVar $ Ident "r")
   }
 
-rowPlus :: Type -> Type -> Type
-rowPlus x y = TypeOp x (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Type" [ "Row" ]) $ OpName "+") y
+rowPlus :: PSType -> PSType -> PSType
+rowPlus x y = TypeOp x (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "PSType" [ "PSRow" ]) $ OpName "+") y
 
-toRowType :: String -> Maybe Row -> Array Declaration
+toRowType :: String -> Maybe PSRow -> Array Declaration
 toRowType name =
   maybe
     []
@@ -150,10 +150,10 @@ toRowType name =
 declInput :: Context -> String -> Array InstorpectionQueryResult__InputValue -> Array Declaration
 declInput context parentName args =
   let
-    rowOptional :: Maybe Row
+    rowOptional :: Maybe PSRow
     rowOptional = filterAndNonEmpty isOptionalInputValue args <#> toRow (mkFieldTypeWithHoleAndOptionalForTopLevel context)
 
-    rowRequired :: Maybe Row
+    rowRequired :: Maybe PSRow
     rowRequired = filterAndNonEmpty (not <<< isOptionalInputValue) args <#> toRow (mkFieldTypeWithHoleAndMaybe context)
   in
     (toRowType (parentName <> "InputRowOptional") rowOptional)
@@ -170,16 +170,16 @@ declInput context parentName args =
                 { rowLabels: []
                 , rowTail:
                   let
-                    rowOptional' :: Maybe Type
+                    rowOptional' :: Maybe PSType
                     rowOptional' = map (const (TypeConstructor $ SmartQualifiedName__Ignore $ ProperName $ parentName <> "InputRowOptional")) rowOptional
 
-                    rowRequired' :: Maybe Type
+                    rowRequired' :: Maybe PSType
                     rowRequired' = map (const (TypeConstructor $ SmartQualifiedName__Ignore $ ProperName $ parentName <> "InputRowRequired")) rowRequired
 
-                    rowOptional'' :: Maybe (Type -> Type)
+                    rowOptional'' :: Maybe (PSType -> PSType)
                     rowOptional'' = rowOptional' <#> rowPlus
 
-                    rowRequired'' :: Maybe (Type -> Type)
+                    rowRequired'' :: Maybe (PSType -> PSType)
                     rowRequired'' = rowRequired' <#> rowPlus
                   in
                     case rowOptional'' of
@@ -201,19 +201,19 @@ declarationsForField context nameToScope parentName field =
           , ident: Ident field.name
           , type_:
             let
-              input :: Maybe Type
+              input :: Maybe PSType
               input =
                 if Array.null field.args then
                   Nothing
                 else
                   Just $ TypeConstructor $ SmartQualifiedName__Ignore $ ProperName $ StringsExtra.pascalCase field.name <> "Input"
 
-              maybeWrapInInput :: Type -> Type
+              maybeWrapInInput :: PSType -> PSType
               maybeWrapInInput x = case input of
                 Nothing -> x
                 (Just inputType) -> inputType ====>> x
 
-              inside :: Type
+              inside :: PSType
               inside =
                 (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphQLClient" []) $ ProperName "SelectionSet")
                   `TypeApp`
@@ -224,7 +224,7 @@ declarationsForField context nameToScope parentName field =
               case nameOfTheObjectLikeTypeKind field."type" of
                 Just name ->
                   let
-                    insideDecoderAndResult :: Type
+                    insideDecoderAndResult :: PSType
                     insideDecoderAndResult =
                       ( (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "GraphQLClient" []) $ ProperName "SelectionSet")
                           `TypeApp`
