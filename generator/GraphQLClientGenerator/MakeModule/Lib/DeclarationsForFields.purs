@@ -128,7 +128,7 @@ toRow mkType els =
   }
 
 rowPlus :: PSType -> PSType -> PSType
-rowPlus x y = TypeOp x (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "PSType" [ "PSRow" ]) $ OpName "+") y
+rowPlus x y = TypeOp x (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Type" [ "Row" ]) $ OpName "+") y
 
 toRowType :: String -> Maybe PSRow -> Array Declaration
 toRowType name =

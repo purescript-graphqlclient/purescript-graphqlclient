@@ -11,9 +11,13 @@ spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \
   --node-args "--input-url https://elm-graphql.herokuapp.com/ --output examples/swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
+# KEY CREATED WITH https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql (ONLY public repos)
+#
+# update with
+# sd -s '6dbebdecd059b288a14574709a4eac4154437aed' 'NEWKEY' $(fd --type f . .)
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \
-  --node-args "--input-url https://api.github.com/graphql --header \"Authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59\" --output examples/github --api Examples.Github"
+  --node-args "--input-url https://api.github.com/graphql --header \"Authorization: Bearer 6dbebdecd059b288a14574709a4eac4154437aed\" --output examples/github --api Examples.Github"
 
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \

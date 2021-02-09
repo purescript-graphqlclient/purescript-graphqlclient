@@ -123,7 +123,7 @@ mkShowClass { typeName, typeModuleName } =
           { name: Ident "show"
           , binders: []
           , guarded: Unconditional
-            { expr: ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" [ "Generic", "Rep", "Show" ]) $ Ident "genericShow"
+            { expr: ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Data" [ "Show", "Generic" ]) $ Ident "genericShow"
             , whereBindings: []
             }
           }
