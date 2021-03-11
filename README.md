@@ -56,6 +56,6 @@ yarn install
 
 # check ./regenerate-examples.sh file
 spago --config generator-spago.dhall run \
-  --main Dillonkearns.GraphQLClientGenerator.Main \
+  --main GraphQLClientGenerator.Main \
   --node-args "--help"
 ```
