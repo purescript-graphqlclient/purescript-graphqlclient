@@ -1,16 +1,13 @@
 module GraphQLClient.WriteGraphQLHash where
 
-import Prelude
+import Prelude (map, show, ($), (<$>), (<>))
 import Data.Array as Array
-import Data.Hashable as Hashable
 import Data.Int as Int
 import Data.Maybe (Maybe(..), maybe)
 import Data.String as String
 import Data.Tuple (Tuple(..))
 import GraphQLClient.Argument (Argument(..), ArgumentValue(..), Optional(..))
-
-hashString :: String -> String
-hashString = String.replaceAll (String.Pattern "-") (String.Replacement "") <<< show <<< Hashable.hash
+import GraphQLClient.Cyrb53 (cyrb53)
 
 filterAbsent :: Array Argument -> Array (Tuple String ArgumentValue)
 filterAbsent = Array.mapMaybe go
@@ -51,7 +48,7 @@ argsHash args = case filterAbsent args of
       argsWritten = writeGraphQLArguments args'
 
       hash :: String
-      hash = hashString argsWritten
+      hash = show $ cyrb53 argsWritten
     in
       Just { argsWritten, hash }
 
