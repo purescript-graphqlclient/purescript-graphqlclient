@@ -12,7 +12,7 @@ import GraphQLClientGenerator.MakeModule.Lib.Utils (qualifyScope)
 import Language.PS.SmartCST (Binder(..), DataHead(..), Declaration(..), Expr(..), Guarded(..), Ident(..), Label(..), ModuleName, OpName(..), ProperName(..), PSRow, SmartQualifiedName(..), PSType(..), TypeVarBinding(..), arrayType, emptyRow, maybeType, mkModuleName, (====>>))
 
 optionalType :: PSType -> PSType
-optionalType = TypeApp (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName (NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ])) $ ProperName "Optional")
+optionalType = TypeApp (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName (NonEmpty.singleton "GraphQLClient")) $ ProperName "Optional")
 
 typeRefTypeScalar :: ModuleName -> String -> PSType
 typeRefTypeScalar customOrNotScalarModule name =
@@ -215,7 +215,7 @@ declarationsForField context nameToScope parentName field =
 
               inside :: PSType
               inside =
-                (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ ProperName "SelectionSet")
+                (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ ProperName "SelectionSet")
                   `TypeApp`
                     (TypeConstructor $ qualifyScope context.apiModuleName (nameToScope parentName))
                   `TypeApp`
@@ -226,7 +226,7 @@ declarationsForField context nameToScope parentName field =
                   let
                     insideDecoderAndResult :: PSType
                     insideDecoderAndResult =
-                      ( (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ ProperName "SelectionSet")
+                      ( (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ ProperName "SelectionSet")
                           `TypeApp`
                             (TypeConstructor $ qualifyScope context.apiModuleName (nameToScope name))
                           `TypeApp`
@@ -253,7 +253,7 @@ declarationsForField context nameToScope parentName field =
                   if Array.null field.args then
                     ExprArray []
                   else
-                    (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "toGraphQLArguments")
+                    (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "toGraphQLArguments")
                       `ExprApp`
                         (ExprVar $ Ident "input")
               in
@@ -261,21 +261,21 @@ declarationsForField context nameToScope parentName field =
                   { expr:
                     case nameOfTheObjectLikeTypeKind field."type" of
                       Nothing ->
-                        (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "selectionForField")
+                        (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "selectionForField")
                           `ExprApp`
                             (ExprString field.name)
                           `ExprApp`
                             inputArg
                           `ExprApp`
-                            (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "graphqlDefaultResponseScalarDecoder")
+                            (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "graphqlDefaultResponseScalarDecoder")
                       Just _ ->
-                        (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "selectionForCompositeField")
+                        (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "selectionForCompositeField")
                           `ExprApp`
                             (ExprString field.name)
                           `ExprApp`
                             inputArg
                           `ExprApp`
-                            (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "graphqlDefaultResponseFunctorOrScalarDecoderTransformer")
+                            (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "graphqlDefaultResponseFunctorOrScalarDecoderTransformer")
                   , whereBindings: []
                   }
             }

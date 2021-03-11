@@ -36,8 +36,8 @@ makeModule moduleName scalarTypes =
                 , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Eq", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
                 , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Ord", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
                 , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "Show", classModuleName: mkModuleName $ NonEmpty.singleton "Prelude" }
-                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "GraphQLDefaultResponseScalarDecoder", classModuleName: mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ] }
-                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "ToGraphQLArgumentValue", classModuleName: mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ] }
+                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "GraphQLDefaultResponseScalarDecoder", classModuleName: mkModuleName $ NonEmpty.singleton "GraphQLClient" }
+                , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "ToGraphQLArgumentValue", classModuleName: mkModuleName $ NonEmpty.singleton "GraphQLClient" }
                 ]
           )
         # Array.concat

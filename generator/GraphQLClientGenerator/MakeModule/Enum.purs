@@ -77,7 +77,7 @@ makeModule moduleName fullType =
             , instances:
               NonEmpty.singleton
                 { head:
-                  { instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) (ProperName "GraphQLDefaultResponseScalarDecoder")
+                  { instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") (ProperName "GraphQLDefaultResponseScalarDecoder")
                   , instConstraints: []
                   , instName: Ident (StringsExtra.camelCase fullType.name <> "GraphQLDefaultResponseScalarDecoder")
                   , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Ignore $ ProperName (StringsExtra.pascalCase fullType.name)
@@ -88,7 +88,7 @@ makeModule moduleName fullType =
                       , guarded:
                         Unconditional
                           { expr:
-                            (ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "enumDecoder"))
+                            (ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "enumDecoder"))
                               `ExprApp`
                                 (ExprString (StringsExtra.pascalCase fullType.name))
                               `ExprApp`
@@ -105,7 +105,7 @@ makeModule moduleName fullType =
             , instances:
               NonEmpty.singleton
                 { head:
-                  { instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) (ProperName "ToGraphQLArgumentValue")
+                  { instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") (ProperName "ToGraphQLArgumentValue")
                   , instConstraints: []
                   , instName: Ident (StringsExtra.camelCase fullType.name <> "ToGraphQLArgumentValue")
                   , instTypes: NonEmpty.singleton $ TypeConstructor $ SmartQualifiedName__Ignore $ ProperName (StringsExtra.pascalCase fullType.name)
@@ -135,7 +135,7 @@ makeModule moduleName fullType =
                                           Unconditional
                                             { whereBindings: []
                                             , expr:
-                                              (ExprConstructor $ SmartQualifiedNameConstructor__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) (ProperName "ArgumentValueEnum") (ProperName "ArgumentValue"))
+                                              (ExprConstructor $ SmartQualifiedNameConstructor__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") (ProperName "ArgumentValueEnum") (ProperName "ArgumentValue"))
                                                 `ExprApp`
                                                   (ExprString enumValue.name)
                                             }

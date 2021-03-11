@@ -66,7 +66,7 @@ makeModule scalarModule apiModuleName moduleName inputObjectTypes =
                     { head:
                       { instName: Ident $ "toGraphQLArgumentValue" <> pascalName
                       , instConstraints: []
-                      , instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ ProperName "ToGraphQLArgumentValue"
+                      , instClass: SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ ProperName "ToGraphQLArgumentValue"
                       , instTypes: NonEmpty.cons' (TypeConstructor $ SmartQualifiedName__Simple moduleName $ ProperName pascalName) [ ]
                       }
                     , body:
@@ -82,7 +82,7 @@ makeModule scalarModule apiModuleName moduleName inputObjectTypes =
                           ]
                         , guarded: Unconditional
                           { expr:
-                              (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "toGraphQLArgumentValue")
+                              (ExprIdent $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "toGraphQLArgumentValue")
                               `ExprApp`
                               (ExprVar $ Ident "x")
                           , whereBindings: []
@@ -92,7 +92,7 @@ makeModule scalarModule apiModuleName moduleName inputObjectTypes =
                     }
                   }
 
-                -- | , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "ToGraphQLArgumentValue", classModuleName: mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ] }
+                -- | , mkDeriveClassAsNewtype { typeName: pascalName, typeModuleName: moduleName, className: "ToGraphQLArgumentValue", classModuleName: mkModuleName $ NonEmpty.singleton "GraphQLClient" }
                 ]
           )
         # Array.concat

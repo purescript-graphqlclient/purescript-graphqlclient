@@ -48,11 +48,11 @@ echo 'SUCCESS with examples:test'
 ########
 
 # because it cannot write if dir exists
-rm -fdR examples/Dillonkearns/Examples/Swapi
+rm -fdR examples/Examples/Swapi
 
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \
-  --node-args "--input-schema ./examples/schema-swapi.graphql --output examples/Dillonkearns/Examples/Swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
+  --node-args "--input-schema ./examples/schema-swapi.graphql --output examples/Examples/Swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
 check_no_diff
 
@@ -61,11 +61,11 @@ echo 'SUCCESS with --input-schema xxxx.graphql test'
 ########
 
 # because it cannot write if dir exists
-rm -fdR examples/Dillonkearns/Examples/Swapi
+rm -fdR examples/Examples/Swapi
 
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \
-  --node-args "--input-json ./examples/schema-swapi.json --output examples/Dillonkearns/Examples/Swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
+  --node-args "--input-json ./examples/schema-swapi.json --output examples/Examples/Swapi --api Examples.Swapi --custom-scalars-module Examples.SwapiCustomScalars"
 
 check_no_diff
 

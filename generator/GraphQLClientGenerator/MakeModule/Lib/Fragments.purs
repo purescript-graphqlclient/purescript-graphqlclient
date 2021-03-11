@@ -41,7 +41,7 @@ declarationForPossibleTypes apiModuleName nameToScope parentName typeRefs =
                 <#> \name ->
                     { label: Label $ "on" <> StringsExtra.pascalCase name
                     , type_:
-                      (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) (ProperName "SelectionSet"))
+                      (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") (ProperName "SelectionSet"))
                         `TypeApp`
                           (TypeConstructor $ qualifyScope apiModuleName (nameToScope name))
                         `TypeApp`
@@ -60,7 +60,7 @@ declarationForPossibleTypes apiModuleName nameToScope parentName typeRefs =
                     (TypeVar $ Ident "decodesTo")
               )
                 `TypeArr`
-                  ( (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ ProperName "SelectionSet")
+                  ( (TypeConstructor $ SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ ProperName "SelectionSet")
                       `TypeApp`
                         (TypeConstructor $ qualifyScope apiModuleName (nameToScope parentName))
                       `TypeApp`
@@ -76,12 +76,12 @@ declarationForPossibleTypes apiModuleName nameToScope parentName typeRefs =
           , guarded:
             Unconditional
               { expr:
-                ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "exhaustiveFragmentSelection")
+                ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "exhaustiveFragmentSelection")
                   `ExprApp`
                     ExprArray
                       ( names
                           <#> \name ->
-                              ( ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ Ident "buildFragment")
+                              ( ExprIdent (SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ Ident "buildFragment")
                                   `ExprApp`
                                     ExprString name
                                   `ExprApp`

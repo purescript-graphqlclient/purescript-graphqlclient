@@ -50,7 +50,7 @@ qualifyScope apiModuleName scopeName =
       _ -> false
   in
     if shouldBeImportedFromGraphQLClient then
-      SmartQualifiedName__Simple (mkModuleName $ NonEmpty.cons' "Dillonkearns" [ "GraphQLClient" ]) $ ProperName scopeName
+      SmartQualifiedName__Simple (mkModuleName $ NonEmpty.singleton "GraphQLClient") $ ProperName scopeName
     else
       SmartQualifiedName__Simple (mkModuleName $ apiModuleName <> NonEmpty.singleton "Scopes") $ ProperName scopeName
 
