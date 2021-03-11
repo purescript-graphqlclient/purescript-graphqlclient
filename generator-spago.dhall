@@ -1,4 +1,4 @@
-{ name = "purescript-dillonkearns-graphql-client-generator"
+{ name = "purescript-graphqlclient-generator"
 , dependencies = (./spago.dhall).dependencies #
   [ "console"
   , "mkdirp-aff"

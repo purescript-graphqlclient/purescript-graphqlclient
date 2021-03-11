@@ -142,5 +142,5 @@ opts =
   info (appOptions <**> helper)
     ( fullDesc
         <> progDesc "GraphQL API GraphQLClientGenerator"
-        <> header "purescript-dillonkearns-graphql-client-GraphQLClientGenerator - generates API modules from GraphQL schemas"
+        <> header "purescript-graphqlclient-GraphQLClientGenerator - generates API modules from GraphQL schemas"
     )

@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require("../dist/purescript-dillonkearns-graphql-client-generator.min.js")
+require("../dist/purescript-graphqlclient-generator.min.js")

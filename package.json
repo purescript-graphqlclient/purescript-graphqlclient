@@ -1,5 +1,5 @@
 {
-  "name": "purescript-dillonkearns-graphql-client",
+  "name": "purescript-graphqlclient",
   "version": "1.0.0",
   "description": "GraphQL client library",
   "main": "index.js",
@@ -12,12 +12,12 @@
     "lib:build": "spago build",
     "generator:build": "spago --config generator-spago.dhall build",
     "generator:test": "spago --config generator-spago.dhall test --main MyGeneratorTests.Main",
-    "generator:bundle": "spago --config generator-spago.dhall bundle-app --main \"GraphQLClientGenerator.Main\" --to \"dist/purescript-dillonkearns-graphql-client-generator.js\" && terser --compress --mangle --output \"dist/purescript-dillonkearns-graphql-client-generator.min.js\" -- \"dist/purescript-dillonkearns-graphql-client-generator.js\" && rm \"dist/purescript-dillonkearns-graphql-client-generator.js\"",
+    "generator:bundle": "spago --config generator-spago.dhall bundle-app --main \"GraphQLClientGenerator.Main\" --to \"dist/purescript-graphqlclient-generator.js\" && terser --compress --mangle --output \"dist/purescript-graphqlclient-generator.min.js\" -- \"dist/purescript-graphqlclient-generator.js\" && rm \"dist/purescript-graphqlclient-generator.js\"",
     "examples:test": "spago --config examples-spago.dhall test --main MyExamplesTests.Main"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client.git"
+    "url": "git+https://github.com/purescript-graphqlclient/purescript-graphqlclient.git"
   },
   "keywords": [
     "graphql",
@@ -31,11 +31,11 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client/issues"
+    "url": "https://github.com/purescript-graphqlclient/purescript-graphqlclient/issues"
   },
-  "homepage": "https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client#readme",
+  "homepage": "https://github.com/purescript-graphqlclient/purescript-graphqlclient#readme",
   "bin": {
-    "purescript-dillonkearns-graphql-client-generator": "bin/purescript-dillonkearns-graphql-client-generator"
+    "purescript-graphqlclient-generator": "bin/purescript-graphqlclient-generator"
   },
   "dependencies": {
     "graphql": "^15.5.0",

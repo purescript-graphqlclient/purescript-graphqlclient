@@ -1,4 +1,4 @@
-# purescript-dillonkearns-graphql-client
+# purescript-graphqlclient
 
 ### TODO:
 
@@ -15,15 +15,15 @@
 ### How to install
 
 ```sh
-npm install "git+https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client#COMMIT_HASH"
+npm install "git+https://github.com/purescript-graphqlclient/purescript-graphqlclient#COMMIT_HASH"
 # or
-yarn add "git+https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client#COMMIT_HASH"
+yarn add "git+https://github.com/purescript-graphqlclient/purescript-graphqlclient#COMMIT_HASH"
 ```
 
 ### How to run generator
 
 ```sh
-purescript-dillonkearns-graphql-client-generator --input-url … --output … --api … --custom-scalars-module …
+purescript-graphqlclient-generator --input-url … --output … --api … --custom-scalars-module …
 ```
 
 - - -
