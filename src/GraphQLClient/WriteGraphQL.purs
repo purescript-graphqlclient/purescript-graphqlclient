@@ -31,7 +31,7 @@ writeGraphQLRawField = case _ of
 
 writeGraphQLArrayRawField :: Array RawField -> String
 
--- from https://github.com/purescript-dillonkearns-graphql-client/purescript-dillonkearns-graphql-client/issues/25
+-- from https://github.com/purescript-graphqlclient/purescript-graphqlclient/issues/25
 -- makes `pure unit :: SelectionSet scope Unit` possible
 -- requests `__typename` because the `{ }` is required and should contain at least one field or it will result in error
 writeGraphQLArrayRawField [] = " { __typename }"
