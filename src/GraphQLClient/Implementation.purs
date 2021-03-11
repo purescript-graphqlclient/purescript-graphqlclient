@@ -85,6 +85,7 @@ data RawField
     String -- field name
     (Maybe Cache)
 
+data SelectionSet :: forall k. k -> Type -> Type
 data SelectionSet parentTypeLock a
   = SelectionSet (Array RawField) (Json -> Either JsonDecodeError a)
 
@@ -109,6 +110,7 @@ foldl :: forall a b parentTypeLock. (b -> a -> b) -> b -> Array (SelectionSet pa
 foldl f accum = Array.foldl (map2 f) (pure accum)
 
 -- | foldlSelectionSet f accum selectionSets = SelectionSet (selectionSets <#> \(SelectionSet fields _) -> Array.concat fields) (\json -> ?a)
+data FragmentSelectionSet :: forall k. k -> Type -> Type
 data FragmentSelectionSet parentTypeLock a
   = FragmentSelectionSet String (Array RawField) (Json -> Either JsonDecodeError a)
 
