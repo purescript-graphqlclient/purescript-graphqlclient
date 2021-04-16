@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__AddStarPayload, Scope__Starrable)
+import Examples.Github.Scopes (Scope__AddStarPayload, Scope__Starrable)
 import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__AddStarPayload (Maybe String)

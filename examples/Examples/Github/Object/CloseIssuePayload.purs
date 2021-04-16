@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__CloseIssuePayload, Scope__Issue)
+import Examples.Github.Scopes (Scope__CloseIssuePayload, Scope__Issue)
 import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__CloseIssuePayload (Maybe String)

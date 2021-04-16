@@ -2,8 +2,7 @@ module Examples.Github.Object.RemoveEnterpriseSupportEntitlementPayload where
 
 import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
-import Examples.Github.Scopes
-  (Scope__RemoveEnterpriseSupportEntitlementPayload)
+import Examples.Github.Scopes (Scope__RemoveEnterpriseSupportEntitlementPayload)
 import Data.Maybe (Maybe)
 
 clientMutationId

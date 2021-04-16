@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__IpAllowListEntry, Scope__IpAllowListOwner)
+import Examples.Github.Scopes (Scope__IpAllowListEntry, Scope__IpAllowListOwner)
 import Examples.Github.Scalars (DateTime, Id)
 import Data.Maybe (Maybe)
 

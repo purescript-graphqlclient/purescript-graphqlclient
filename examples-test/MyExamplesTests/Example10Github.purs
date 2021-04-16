@@ -74,16 +74,16 @@ expectedQuery =
   inlineAndTrim
     """
 query {
-  repository789914293: repository(name: "purescript-dom-indexed", owner: "srghma") {
+  repository585355806239197: repository(name: "purescript-dom-indexed", owner: "srghma") {
     createdAt
-    releases861569893: releases(first: 2) {
+    releases3873518373821440: releases(first: 2) {
       totalCount
       nodes {
         name
         url
       }
     }
-    releases1588992762: releases(last: 10) {
+    releases3931642775315639: releases(last: 10) {
       totalCount
       nodes {
         name
@@ -94,7 +94,7 @@ query {
       totalCount
     }
   }
-  topic1926526000: topic(name: "") {
+  topic6959180692994983: topic(name: "") {
     id
   }
 }
@@ -105,7 +105,7 @@ spec =
   Test.Spec.it "Example10Github" do
     writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
     let
-      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer 6dbebdecd059b288a14574709a4eac4154437aed" ] }
+      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer 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" ] }
     (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts query
     (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
     response'

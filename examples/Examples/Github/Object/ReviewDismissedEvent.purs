@@ -16,8 +16,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Id, Uri)
-import Examples.Github.Enum.PullRequestReviewState
-  (PullRequestReviewState)
+import Examples.Github.Enum.PullRequestReviewState (PullRequestReviewState)
 
 actor
   :: forall r

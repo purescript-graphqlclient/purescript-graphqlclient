@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__ReactingUserEdge, Scope__User)
+import Examples.Github.Scopes (Scope__ReactingUserEdge, Scope__User)
 import Examples.Github.Scalars (DateTime)
 
 cursor :: SelectionSet Scope__ReactingUserEdge String

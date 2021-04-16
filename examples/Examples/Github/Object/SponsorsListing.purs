@@ -2,19 +2,28 @@ module Examples.Github.Object.SponsorsListing where
 
 import GraphQLClient
   ( SelectionSet
+  , selectionForCompositeField
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
-  , selectionForCompositeField
   , toGraphQLArguments
-  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  (Scope__SponsorsListing, Scope__SponsorsTierConnection)
+  (Scope__SponsorsGoal, Scope__SponsorsListing, Scope__SponsorsTierConnection)
+import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Html, Id)
 import Examples.Github.InputObject (SponsorsTierOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Data.Maybe (Maybe)
+
+activeGoal
+  :: forall r
+   . SelectionSet Scope__SponsorsGoal r
+  -> SelectionSet Scope__SponsorsListing (Maybe r)
+activeGoal = selectionForCompositeField
+             "activeGoal"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 createdAt :: SelectionSet Scope__SponsorsListing DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
@@ -51,9 +60,7 @@ type TiersInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorsTierOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorsTierOrder
     | r
     )
 

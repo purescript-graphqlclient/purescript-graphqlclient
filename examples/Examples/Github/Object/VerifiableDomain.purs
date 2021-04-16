@@ -9,8 +9,11 @@ import GraphQLClient
   )
 import Examples.Github.Scopes
   (Scope__VerifiableDomain, Scope__VerifiableDomainOwner)
+import Examples.Github.Scalars (DateTime, Uri, Id)
 import Data.Maybe (Maybe)
-import Examples.Github.Scalars (Uri, Id, DateTime)
+
+createdAt :: SelectionSet Scope__VerifiableDomain DateTime
+createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 
 databaseId :: SelectionSet Scope__VerifiableDomain (Maybe Int)
 databaseId = selectionForField
@@ -74,6 +77,9 @@ tokenExpirationTime = selectionForField
                       "tokenExpirationTime"
                       []
                       graphqlDefaultResponseScalarDecoder
+
+updatedAt :: SelectionSet Scope__VerifiableDomain DateTime
+updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
 verificationToken :: SelectionSet Scope__VerifiableDomain (Maybe String)
 verificationToken = selectionForField

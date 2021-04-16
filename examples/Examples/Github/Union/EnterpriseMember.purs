@@ -1,7 +1,6 @@
 module Examples.Github.Union.EnterpriseMember where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__EnterpriseUserAccount, Scope__User, Scope__EnterpriseMember)
 import Data.Maybe (Maybe(..))

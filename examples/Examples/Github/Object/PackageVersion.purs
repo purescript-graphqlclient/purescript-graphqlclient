@@ -22,9 +22,7 @@ import Examples.Github.Scalars (Id)
 import Data.Maybe (Maybe)
 
 type FilesInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.PackageFileOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.PackageFileOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int

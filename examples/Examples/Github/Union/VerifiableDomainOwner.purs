@@ -1,7 +1,6 @@
 module Examples.Github.Union.VerifiableDomainOwner where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Enterprise, Scope__Organization, Scope__VerifiableDomainOwner)
 import Data.Maybe (Maybe(..))

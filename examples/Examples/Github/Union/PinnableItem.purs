@@ -1,7 +1,6 @@
 module Examples.Github.Union.PinnableItem where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Gist, Scope__Repository, Scope__PinnableItem)
 import Data.Maybe (Maybe(..))

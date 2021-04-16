@@ -107,7 +107,7 @@ expectedQuery =
   inlineAndTrim
     """
 query {
-  search158737529: search(first: 10, query: "language:purescript", type: REPOSITORY) {
+  search674867616051567: search(first: 10, query: "language:purescript", type: REPOSITORY) {
     edges {
       node {
         __typename
@@ -135,7 +135,7 @@ spec =
   Test.Spec.it "Example11GithubPagination" do
     writeGraphQL (query Nothing) `Test.Spec.shouldEqual` expectedQuery
     let
-      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer 6dbebdecd059b288a14574709a4eac4154437aed" ] }
+      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer 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" ] }
     (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts (query Nothing)
     (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
     Array.length response'.data `Test.Spec.shouldEqual` 10

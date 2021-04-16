@@ -10,8 +10,7 @@ import GraphQLClient
 import Examples.Github.Scopes
   (Scope__CheckAnnotation, Scope__CheckAnnotationSpan)
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.CheckAnnotationLevel
-  (CheckAnnotationLevel)
+import Examples.Github.Enum.CheckAnnotationLevel (CheckAnnotationLevel)
 import Examples.Github.Scalars (Uri)
 
 annotationLevel

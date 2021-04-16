@@ -1,7 +1,6 @@
 module Examples.Github.Union.IpAllowListOwner where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Enterprise, Scope__Organization, Scope__IpAllowListOwner)
 import Data.Maybe (Maybe(..))

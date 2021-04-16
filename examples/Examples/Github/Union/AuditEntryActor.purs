@@ -1,7 +1,6 @@
 module Examples.Github.Union.AuditEntryActor where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Bot, Scope__Organization, Scope__User, Scope__AuditEntryActor)
 import Data.Maybe (Maybe(..))

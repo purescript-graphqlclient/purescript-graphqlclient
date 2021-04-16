@@ -13,7 +13,7 @@ import GraphQLClient
   )
 
 -- | original name - VerifiableDomainOrderField
-data VerifiableDomainOrderField = Domain
+data VerifiableDomainOrderField = Domain | CreatedAt
 
 derive instance genericVerifiableDomainOrderField
   ::
@@ -27,7 +27,7 @@ derive instance eqVerifiableDomainOrderField :: Eq VerifiableDomainOrderField
 derive instance ordVerifiableDomainOrderField :: Ord VerifiableDomainOrderField
 
 fromToMap :: Array (Tuple String VerifiableDomainOrderField)
-fromToMap = [ Tuple "DOMAIN" Domain ]
+fromToMap = [ Tuple "DOMAIN" Domain, Tuple "CREATED_AT" CreatedAt ]
 
 instance verifiableDomainOrderFieldGraphQLDefaultResponseScalarDecoder
   :: GraphQLDefaultResponseScalarDecoder VerifiableDomainOrderField where
@@ -40,3 +40,4 @@ instance verifiableDomainOrderFieldToGraphQLArgumentValue
   toGraphQLArgumentValue =
     case _ of
       Domain -> ArgumentValueEnum "DOMAIN"
+      CreatedAt -> ArgumentValueEnum "CREATED_AT"

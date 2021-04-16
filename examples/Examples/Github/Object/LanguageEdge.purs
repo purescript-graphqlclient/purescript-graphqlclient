@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__LanguageEdge, Scope__Language)
+import Examples.Github.Scopes (Scope__LanguageEdge, Scope__Language)
 
 cursor :: SelectionSet Scope__LanguageEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder

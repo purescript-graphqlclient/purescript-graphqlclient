@@ -20,8 +20,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Html, DateTime, Id, Uri)
 import Type.Row (type (+))
-import Examples.Github.Enum.ProjectCardArchivedState
-  (ProjectCardArchivedState)
+import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
 import Examples.Github.Enum.ProjectState (ProjectState)
 
 body :: SelectionSet Scope__Project (Maybe String)

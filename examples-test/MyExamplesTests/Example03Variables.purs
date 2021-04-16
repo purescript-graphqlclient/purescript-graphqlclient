@@ -33,7 +33,7 @@ expectedQuery =
   inlineAndTrim
     """
 query {
-  human1563269760: human(id: "1001") {
+  human6079143653279091: human(id: "1001") {
     name
     homePlanet
   }

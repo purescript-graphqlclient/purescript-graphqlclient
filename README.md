@@ -30,13 +30,15 @@ purescript-graphqlclient-generator --input-url … --output … --api … --cust
 
 ## Requirements on the `$PATH` to build (should be installed globally)
 
-- `purescript`: `~0.13.8`
-- `spago`: `~0.16.0`
+- `purescript`: `~0.14.0`
+- `spago`: `~0.20.0`
 
 ### How to bundle a new build
 
 ```sh
 yarn generator:bundle
+# test with
+node bin/purescript-graphqlclient-generator --help
 ```
 
 ### How to regenerate examples

@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__RepositoryTopic, Scope__Topic)
+import Examples.Github.Scopes (Scope__RepositoryTopic, Scope__Topic)
 import Examples.Github.Scalars (Id, Uri)
 
 id :: SelectionSet Scope__RepositoryTopic Id

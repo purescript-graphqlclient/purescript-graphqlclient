@@ -34,31 +34,28 @@ import Examples.Github.Scopes
   , Scope__PullRequestTimelineConnection
   , Scope__PullRequestTimelineItemsConnection
   , Scope__UserContentEditConnection
+  , Scope__PullRequestReview
+  , Scope__ReviewRequest
   )
 import Data.Maybe (Maybe)
 import Examples.Github.Enum.LockReason (LockReason)
 import Type.Row (type (+))
-import Examples.Github.Enum.CommentAuthorAssociation
-  (CommentAuthorAssociation)
-import Examples.Github.Scalars
-  (GitObjectId, Html, Uri, DateTime, Id)
+import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
+import Examples.Github.Scalars (GitObjectId, Html, Uri, DateTime, Id)
 import Examples.Github.InputObject
   (IssueCommentOrder, LabelOrder, ReactionOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.MergeableState (MergeableState)
-import Examples.Github.Enum.ProjectCardArchivedState
-  (ProjectCardArchivedState)
+import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.PullRequestReviewDecision
   (PullRequestReviewDecision)
-import Examples.Github.Enum.PullRequestReviewState
-  (PullRequestReviewState)
+import Examples.Github.Enum.PullRequestReviewState (PullRequestReviewState)
 import Examples.Github.Enum.PullRequestState (PullRequestState)
 import Examples.Github.Enum.PullRequestTimelineItemsItemType
   (PullRequestTimelineItemsItemType)
 import Examples.Github.Enum.CommentCannotUpdateReason
   (CommentCannotUpdateReason)
-import Examples.Github.Enum.PullRequestMergeMethod
-  (PullRequestMergeMethod)
+import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
 
 activeLockReason :: SelectionSet Scope__PullRequest (Maybe LockReason)
@@ -176,9 +173,7 @@ closedAt :: SelectionSet Scope__PullRequest (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
 type CommentsInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.IssueCommentOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.IssueCommentOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -802,6 +797,24 @@ viewerDidAuthor = selectionForField
                   "viewerDidAuthor"
                   []
                   graphqlDefaultResponseScalarDecoder
+
+viewerLatestReview
+  :: forall r
+   . SelectionSet Scope__PullRequestReview r
+  -> SelectionSet Scope__PullRequest (Maybe r)
+viewerLatestReview = selectionForCompositeField
+                     "viewerLatestReview"
+                     []
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+viewerLatestReviewRequest
+  :: forall r
+   . SelectionSet Scope__ReviewRequest r
+  -> SelectionSet Scope__PullRequest (Maybe r)
+viewerLatestReviewRequest = selectionForCompositeField
+                            "viewerLatestReviewRequest"
+                            []
+                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ViewerMergeBodyTextInputRowOptional r
   = ( mergeType :: Optional PullRequestMergeMethod | r )

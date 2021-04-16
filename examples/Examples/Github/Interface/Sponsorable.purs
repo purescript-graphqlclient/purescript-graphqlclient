@@ -71,9 +71,7 @@ type SponsorshipsAsMaintainerInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , includePrivate :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorshipOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
     | r
     )
 
@@ -96,9 +94,7 @@ type SponsorshipsAsSponsorInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorshipOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
     | r
     )
 

@@ -60,6 +60,18 @@ description = selectionForField
 id :: SelectionSet Scope__StatusContext Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
+type IsRequiredInputRowOptional r
+  = ( pullRequestId :: Optional Id, pullRequestNumber :: Optional Int | r )
+
+type IsRequiredInput = { | IsRequiredInputRowOptional + () }
+
+isRequired :: IsRequiredInput -> SelectionSet Scope__StatusContext Boolean
+isRequired input = selectionForField
+                   "isRequired"
+                   (toGraphQLArguments
+                    input)
+                   graphqlDefaultResponseScalarDecoder
+
 state :: SelectionSet Scope__StatusContext StatusState
 state = selectionForField "state" [] graphqlDefaultResponseScalarDecoder
 

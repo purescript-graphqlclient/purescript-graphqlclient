@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__UnknownSignature, Scope__User)
+import Examples.Github.Scopes (Scope__UnknownSignature, Scope__User)
 import Data.Maybe (Maybe)
 import Examples.Github.Enum.GitSignatureState (GitSignatureState)
 

@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__CloneProjectPayload, Scope__Project)
+import Examples.Github.Scopes (Scope__CloneProjectPayload, Scope__Project)
 import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__CloneProjectPayload (Maybe String)

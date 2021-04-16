@@ -9,8 +9,7 @@ import GraphQLClient
   , exhaustiveFragmentSelection
   , buildFragment
   )
-import Examples.Normalize.Scopes
-  (Scope__Character, Scope__Droid, Scope__Human)
+import Examples.Normalize.Scopes (Scope__Character, Scope__Droid, Scope__Human)
 import Examples.Normalize.Enum.Episode (Episode)
 import Examples.Normalize.Scalars (Id)
 import Data.Maybe (Maybe(..))

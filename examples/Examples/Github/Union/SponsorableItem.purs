@@ -1,7 +1,6 @@
 module Examples.Github.Union.SponsorableItem where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Organization, Scope__User, Scope__SponsorableItem)
 import Data.Maybe (Maybe(..))

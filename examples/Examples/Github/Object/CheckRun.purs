@@ -18,8 +18,7 @@ import Examples.Github.Scopes
   )
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Uri, Id)
-import Examples.Github.Enum.CheckConclusionState
-  (CheckConclusionState)
+import Examples.Github.Enum.CheckConclusionState (CheckConclusionState)
 import Examples.Github.Enum.CheckStatusState (CheckStatusState)
 
 type AnnotationsInputRowOptional r
@@ -84,6 +83,18 @@ externalId = selectionForField
 
 id :: SelectionSet Scope__CheckRun Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+
+type IsRequiredInputRowOptional r
+  = ( pullRequestId :: Optional Id, pullRequestNumber :: Optional Int | r )
+
+type IsRequiredInput = { | IsRequiredInputRowOptional + () }
+
+isRequired :: IsRequiredInput -> SelectionSet Scope__CheckRun Boolean
+isRequired input = selectionForField
+                   "isRequired"
+                   (toGraphQLArguments
+                    input)
+                   graphqlDefaultResponseScalarDecoder
 
 name :: SelectionSet Scope__CheckRun String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder

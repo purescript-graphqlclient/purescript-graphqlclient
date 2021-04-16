@@ -11,8 +11,7 @@ import Examples.Github.Scopes
   (Scope__AutoMergeRequest, Scope__Actor, Scope__PullRequest)
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime)
-import Examples.Github.Enum.PullRequestMergeMethod
-  (PullRequestMergeMethod)
+import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
 
 authorEmail :: SelectionSet Scope__AutoMergeRequest (Maybe String)
 authorEmail = selectionForField

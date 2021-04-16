@@ -133,9 +133,7 @@ type DiscussionsInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , isPinned :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.TeamDiscussionOrder
+    , orderBy :: Optional Examples.Github.InputObject.TeamDiscussionOrder
     | r
     )
 
@@ -205,9 +203,7 @@ type MemberStatusesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.UserStatusOrder
+    , orderBy :: Optional Examples.Github.InputObject.UserStatusOrder
     | r
     )
 
@@ -232,9 +228,7 @@ type MembersInputRowOptional r
     , query :: Optional String
     , membership :: Optional TeamMembershipType
     , role :: Optional TeamMemberRole
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.TeamMemberOrder
+    , orderBy :: Optional Examples.Github.InputObject.TeamMemberOrder
     | r
     )
 
@@ -305,9 +299,7 @@ type RepositoriesInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , query :: Optional String
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.TeamRepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.TeamRepositoryOrder
     | r
     )
 

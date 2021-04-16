@@ -1,7 +1,6 @@
 module Examples.Github.Union.RequestedReviewer where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Mannequin, Scope__Team, Scope__User, Scope__RequestedReviewer)
 import Data.Maybe (Maybe(..))

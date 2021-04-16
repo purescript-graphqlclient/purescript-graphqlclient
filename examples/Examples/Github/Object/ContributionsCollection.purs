@@ -144,9 +144,7 @@ type IssueContributionsInputRowOptional r
     , last :: Optional Int
     , excludeFirst :: Optional Boolean
     , excludePopular :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.ContributionOrder
+    , orderBy :: Optional Examples.Github.InputObject.ContributionOrder
     | r
     )
 
@@ -245,9 +243,7 @@ type PullRequestContributionsInputRowOptional r
     , last :: Optional Int
     , excludeFirst :: Optional Boolean
     , excludePopular :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.ContributionOrder
+    , orderBy :: Optional Examples.Github.InputObject.ContributionOrder
     | r
     )
 
@@ -291,9 +287,7 @@ type PullRequestReviewContributionsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.ContributionOrder
+    , orderBy :: Optional Examples.Github.InputObject.ContributionOrder
     | r
     )
 
@@ -334,9 +328,7 @@ type RepositoryContributionsInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , excludeFirst :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.ContributionOrder
+    , orderBy :: Optional Examples.Github.InputObject.ContributionOrder
     | r
     )
 

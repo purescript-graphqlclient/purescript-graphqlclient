@@ -20,8 +20,7 @@ import Examples.Github.Scopes
   , Scope__UserContentEditConnection
   )
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.CommentAuthorAssociation
-  (CommentAuthorAssociation)
+import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (Html, DateTime, Id, Uri)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.InputObject (ReactionOrder) as Examples.Github.InputObject

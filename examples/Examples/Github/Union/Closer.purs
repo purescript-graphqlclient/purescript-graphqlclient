@@ -1,9 +1,7 @@
 module Examples.Github.Union.Closer where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
-import Examples.Github.Scopes
-  (Scope__Commit, Scope__PullRequest, Scope__Closer)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import Examples.Github.Scopes (Scope__Commit, Scope__PullRequest, Scope__Closer)
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 

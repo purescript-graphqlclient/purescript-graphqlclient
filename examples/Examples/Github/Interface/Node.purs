@@ -24,6 +24,7 @@ import Examples.Github.Scopes
   , Scope__Blob
   , Scope__Bot
   , Scope__BranchProtectionRule
+  , Scope__Cwe
   , Scope__CheckRun
   , Scope__CheckSuite
   , Scope__ClosedEvent
@@ -113,6 +114,7 @@ import Examples.Github.Scopes
   , Scope__PackageTag
   , Scope__PackageVersion
   , Scope__PinnedEvent
+  , Scope__PinnedIssue
   , Scope__PrivateRepositoryForkingDisableAuditEntry
   , Scope__PrivateRepositoryForkingEnableAuditEntry
   , Scope__Project
@@ -246,6 +248,7 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__BranchProtectionRule
          decodesTo
+    , onCwe :: SelectionSet Scope__Cwe decodesTo
     , onCheckRun :: SelectionSet Scope__CheckRun decodesTo
     , onCheckSuite :: SelectionSet Scope__CheckSuite decodesTo
     , onClosedEvent :: SelectionSet Scope__ClosedEvent decodesTo
@@ -473,6 +476,7 @@ type Fragments decodesTo
     , onPackageTag :: SelectionSet Scope__PackageTag decodesTo
     , onPackageVersion :: SelectionSet Scope__PackageVersion decodesTo
     , onPinnedEvent :: SelectionSet Scope__PinnedEvent decodesTo
+    , onPinnedIssue :: SelectionSet Scope__PinnedIssue decodesTo
     , onPrivateRepositoryForkingDisableAuditEntry
       :: SelectionSet
          Scope__PrivateRepositoryForkingDisableAuditEntry
@@ -724,6 +728,7 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "BranchProtectionRule"
                          selections.onBranchProtectionRule
+                       , buildFragment "CWE" selections.onCwe
                        , buildFragment "CheckRun" selections.onCheckRun
                        , buildFragment "CheckSuite" selections.onCheckSuite
                        , buildFragment "ClosedEvent" selections.onClosedEvent
@@ -943,6 +948,7 @@ fragments selections = exhaustiveFragmentSelection
                          "PackageVersion"
                          selections.onPackageVersion
                        , buildFragment "PinnedEvent" selections.onPinnedEvent
+                       , buildFragment "PinnedIssue" selections.onPinnedIssue
                        , buildFragment
                          "PrivateRepositoryForkingDisableAuditEntry"
                          selections.onPrivateRepositoryForkingDisableAuditEntry
@@ -1191,6 +1197,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                           Nothing
                  , onBranchProtectionRule: pure
                                            Nothing
+                 , onCwe: pure
+                          Nothing
                  , onCheckRun: pure
                                Nothing
                  , onCheckSuite: pure
@@ -1368,6 +1376,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                  , onPackageVersion: pure
                                      Nothing
                  , onPinnedEvent: pure
+                                  Nothing
+                 , onPinnedIssue: pure
                                   Nothing
                  , onPrivateRepositoryForkingDisableAuditEntry: pure
                                                                 Nothing

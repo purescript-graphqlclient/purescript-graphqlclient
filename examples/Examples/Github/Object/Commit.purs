@@ -51,9 +51,7 @@ type AssociatedPullRequestsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.PullRequestOrder
+    , orderBy :: Optional Examples.Github.InputObject.PullRequestOrder
     | r
     )
 
@@ -139,9 +137,7 @@ type CheckSuitesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , filterBy
-      :: Optional
-         Examples.Github.InputObject.CheckSuiteFilter
+    , filterBy :: Optional Examples.Github.InputObject.CheckSuiteFilter
     | r
     )
 
@@ -214,9 +210,7 @@ deletions = selectionForField "deletions" [] graphqlDefaultResponseScalarDecoder
 
 type DeploymentsInputRowOptional r
   = ( environments :: Optional (Array String)
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.DeploymentOrder
+    , orderBy :: Optional Examples.Github.InputObject.DeploymentOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int

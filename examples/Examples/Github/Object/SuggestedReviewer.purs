@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__SuggestedReviewer, Scope__User)
+import Examples.Github.Scopes (Scope__SuggestedReviewer, Scope__User)
 
 isAuthor :: SelectionSet Scope__SuggestedReviewer Boolean
 isAuthor = selectionForField "isAuthor" [] graphqlDefaultResponseScalarDecoder

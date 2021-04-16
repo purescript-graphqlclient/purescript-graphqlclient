@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
-import Examples.Github.Scopes
-  (Scope__Actor, Scope__CommentDeletedEvent)
+import Examples.Github.Scopes (Scope__Actor, Scope__CommentDeletedEvent)
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Id)
 

@@ -46,8 +46,7 @@ import Examples.Github.InputObject
   ) as Examples.Github.InputObject
 import Examples.Github.Enum.SecurityAdvisoryEcosystem
   (SecurityAdvisoryEcosystem)
-import Examples.Github.Enum.SecurityAdvisorySeverity
-  (SecurityAdvisorySeverity)
+import Examples.Github.Enum.SecurityAdvisorySeverity (SecurityAdvisorySeverity)
 
 type CodeOfConductInputRowRequired r = ( key :: String | r )
 
@@ -388,9 +387,7 @@ search input = selectionForCompositeField
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SecurityAdvisoriesInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.SecurityAdvisoryOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.SecurityAdvisoryOrder
     , identifier
       :: Optional
          Examples.Github.InputObject.SecurityAdvisoryIdentifierFilter
@@ -432,9 +429,7 @@ securityAdvisory input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SecurityVulnerabilitiesInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.SecurityVulnerabilityOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.SecurityVulnerabilityOrder
     , ecosystem :: Optional SecurityAdvisoryEcosystem
     , package :: Optional String
     , severities :: Optional (Array SecurityAdvisorySeverity)
@@ -464,9 +459,7 @@ type SponsorablesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorableOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorableOrder
     , onlyDependencies :: Optional Boolean
     , orgLoginForDependencies :: Optional String
     , dependencyEcosystem :: Optional SecurityAdvisoryEcosystem

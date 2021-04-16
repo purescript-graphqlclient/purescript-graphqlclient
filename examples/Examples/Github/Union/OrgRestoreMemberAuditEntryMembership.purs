@@ -1,7 +1,6 @@
 module Examples.Github.Union.OrgRestoreMemberAuditEntryMembership where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__OrgRestoreMemberMembershipOrganizationAuditEntryData
   , Scope__OrgRestoreMemberMembershipRepositoryAuditEntryData

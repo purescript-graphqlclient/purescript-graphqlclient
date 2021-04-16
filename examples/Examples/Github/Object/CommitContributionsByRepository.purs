@@ -23,9 +23,7 @@ type ContributionsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.CommitContributionOrder
+    , orderBy :: Optional Examples.Github.InputObject.CommitContributionOrder
     | r
     )
 

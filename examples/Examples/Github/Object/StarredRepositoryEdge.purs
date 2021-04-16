@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__StarredRepositoryEdge, Scope__Repository)
+import Examples.Github.Scopes (Scope__StarredRepositoryEdge, Scope__Repository)
 import Examples.Github.Scalars (DateTime)
 
 cursor :: SelectionSet Scope__StarredRepositoryEdge String

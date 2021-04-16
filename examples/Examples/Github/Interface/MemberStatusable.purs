@@ -25,9 +25,7 @@ type MemberStatusesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.UserStatusOrder
+    , orderBy :: Optional Examples.Github.InputObject.UserStatusOrder
     | r
     )
 

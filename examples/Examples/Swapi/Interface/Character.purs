@@ -9,8 +9,7 @@ import GraphQLClient
   , exhaustiveFragmentSelection
   , buildFragment
   )
-import Examples.Swapi.Scopes
-  (Scope__Character, Scope__Droid, Scope__Human)
+import Examples.Swapi.Scopes (Scope__Character, Scope__Droid, Scope__Human)
 import Examples.Swapi.Enum.Episode (Episode)
 import Examples.SwapiCustomScalars (Id)
 import Data.Maybe (Maybe(..))

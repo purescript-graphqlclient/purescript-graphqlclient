@@ -1,7 +1,6 @@
 module Examples.Normalize.Union.ConflictingTypesUnion where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Normalize.Scopes
   ( Scope__Cat
   , Scope__Dog

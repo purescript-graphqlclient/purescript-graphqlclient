@@ -1,7 +1,6 @@
 module Examples.Normalize.Union.CharacterUnion where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Normalize.Scopes
   (Scope__Droid, Scope__Human, Scope__CharacterUnion)
 import Data.Maybe (Maybe(..))

@@ -15,12 +15,10 @@ import Examples.Github.Scopes
   , Scope__ExternalIdentityConnection
   )
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.SamlDigestAlgorithm
-  (SamlDigestAlgorithm)
+import Examples.Github.Enum.SamlDigestAlgorithm (SamlDigestAlgorithm)
 import Type.Row (type (+))
 import Examples.Github.Scalars (Id, X509Certificate, Uri)
-import Examples.Github.Enum.SamlSignatureAlgorithm
-  (SamlSignatureAlgorithm)
+import Examples.Github.Enum.SamlSignatureAlgorithm (SamlSignatureAlgorithm)
 
 digestMethod
   :: SelectionSet

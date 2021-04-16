@@ -15,8 +15,7 @@ import Examples.Github.Scopes
   , Scope__EnterpriseServerInstallation
   )
 import Examples.Github.Scalars (DateTime, Id)
-import Examples.Github.InputObject
-  (EnterpriseServerUserAccountEmailOrder) as Examples.Github.InputObject
+import Examples.Github.InputObject (EnterpriseServerUserAccountEmailOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Data.Maybe (Maybe)
 

@@ -38,6 +38,7 @@ import Examples.Github.Scopes
   , Scope__GitObject
   , Scope__RepositoryOwner
   , Scope__PackageConnection
+  , Scope__PinnedIssueConnection
   , Scope__Language
   , Scope__Project
   , Scope__ProjectConnection
@@ -51,8 +52,7 @@ import Examples.Github.Scopes
   , Scope__RepositoryVulnerabilityAlertConnection
   )
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.CollaboratorAffiliation
-  (CollaboratorAffiliation)
+import Examples.Github.Enum.CollaboratorAffiliation (CollaboratorAffiliation)
 import Examples.Github.Scalars
   (DateTime, Html, Uri, Id, GitObjectId, GitSshRemote)
 import Examples.Github.InputObject
@@ -70,20 +70,16 @@ import Examples.Github.InputObject
   , StarOrder
   ) as Examples.Github.InputObject
 import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
-import Examples.Github.Enum.RepositoryAffiliation
-  (RepositoryAffiliation)
+import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 import Examples.Github.Enum.IssueState (IssueState)
-import Examples.Github.Enum.RepositoryLockReason
-  (RepositoryLockReason)
+import Examples.Github.Enum.RepositoryLockReason (RepositoryLockReason)
 import Examples.Github.Enum.MilestoneState (MilestoneState)
 import Examples.Github.Enum.PackageType (PackageType)
 import Examples.Github.Enum.ProjectState (ProjectState)
 import Examples.Github.Enum.PullRequestState (PullRequestState)
 import Examples.Github.Enum.OrderDirection (OrderDirection)
-import Examples.Github.Enum.PullRequestMergeMethod
-  (PullRequestMergeMethod)
-import Examples.Github.Enum.RepositoryPermission
-  (RepositoryPermission)
+import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
+import Examples.Github.Enum.RepositoryPermission (RepositoryPermission)
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
 
 type AssignableUsersInputRowOptional r
@@ -239,9 +235,7 @@ deployKeys input = selectionForCompositeField
 
 type DeploymentsInputRowOptional r
   = ( environments :: Optional (Array String)
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.DeploymentOrder
+    , orderBy :: Optional Examples.Github.InputObject.DeploymentOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -282,9 +276,7 @@ forkCount = selectionForField "forkCount" [] graphqlDefaultResponseScalarDecoder
 
 type ForksInputRowOptional r
   = ( privacy :: Optional RepositoryPrivacy
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
     , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , isLocked :: Optional Boolean
@@ -607,9 +599,7 @@ type MilestonesInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , states :: Optional (Array MilestoneState)
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.MilestoneOrder
+    , orderBy :: Optional Examples.Github.InputObject.MilestoneOrder
     , query :: Optional String
     | r
     )
@@ -703,6 +693,27 @@ parent = selectionForCompositeField
          "parent"
          []
          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type PinnedIssuesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type PinnedIssuesInput = { | PinnedIssuesInputRowOptional + () }
+
+pinnedIssues
+  :: forall r
+   . PinnedIssuesInput
+  -> SelectionSet Scope__PinnedIssueConnection r
+  -> SelectionSet Scope__Repository (Maybe r)
+pinnedIssues input = selectionForCompositeField
+                     "pinnedIssues"
+                     (toGraphQLArguments
+                      input)
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 primaryLanguage
   :: forall r

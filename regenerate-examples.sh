@@ -14,10 +14,10 @@ spago --config generator-spago.dhall run --no-install \
 # KEY CREATED WITH https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql (ONLY public repos)
 #
 # update with
-# sd -s '6dbebdecd059b288a14574709a4eac4154437aed' 'NEWKEY' $(fd --type f . .)
+# sd -s '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' 'NEWKEY' $(fd --type f . .)
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \
-  --node-args "--input-url https://api.github.com/graphql --header \"Authorization: Bearer 6dbebdecd059b288a14574709a4eac4154437aed\" --output examples/Examples/Github --api Examples.Github"
+  --node-args "--input-url https://api.github.com/graphql --header \"Authorization: Bearer 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\" --output examples/Examples/Github --api Examples.Github"
 
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \

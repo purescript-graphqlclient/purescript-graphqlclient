@@ -1,7 +1,6 @@
 module Examples.Github.Union.ReviewDismissalAllowanceActor where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Team, Scope__User, Scope__ReviewDismissalAllowanceActor)
 import Data.Maybe (Maybe(..))

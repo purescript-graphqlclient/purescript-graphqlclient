@@ -1,7 +1,6 @@
 module Examples.Github.Union.PushAllowanceActor where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__App, Scope__Team, Scope__User, Scope__PushAllowanceActor)
 import Data.Maybe (Maybe(..))

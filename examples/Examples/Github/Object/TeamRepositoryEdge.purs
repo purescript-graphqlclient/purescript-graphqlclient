@@ -7,10 +7,8 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__TeamRepositoryEdge, Scope__Repository)
-import Examples.Github.Enum.RepositoryPermission
-  (RepositoryPermission)
+import Examples.Github.Scopes (Scope__TeamRepositoryEdge, Scope__Repository)
+import Examples.Github.Enum.RepositoryPermission (RepositoryPermission)
 
 cursor :: SelectionSet Scope__TeamRepositoryEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder

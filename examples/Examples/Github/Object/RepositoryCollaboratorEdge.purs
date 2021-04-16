@@ -9,8 +9,7 @@ import GraphQLClient
   )
 import Examples.Github.Scopes
   (Scope__RepositoryCollaboratorEdge, Scope__User, Scope__PermissionSource)
-import Examples.Github.Enum.RepositoryPermission
-  (RepositoryPermission)
+import Examples.Github.Enum.RepositoryPermission (RepositoryPermission)
 import Data.Maybe (Maybe)
 
 cursor :: SelectionSet Scope__RepositoryCollaboratorEdge String

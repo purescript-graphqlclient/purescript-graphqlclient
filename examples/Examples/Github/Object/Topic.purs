@@ -9,8 +9,7 @@ import GraphQLClient
   , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__Topic, Scope__StargazerConnection)
+import Examples.Github.Scopes (Scope__Topic, Scope__StargazerConnection)
 import Examples.Github.Scalars (Id)
 import Type.Row (type (+))
 import Examples.Github.InputObject (StarOrder) as Examples.Github.InputObject

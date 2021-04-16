@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__MergeBranchPayload, Scope__Commit)
+import Examples.Github.Scopes (Scope__MergeBranchPayload, Scope__Commit)
 import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__MergeBranchPayload (Maybe String)

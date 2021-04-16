@@ -19,8 +19,7 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (DateTime, Html, Uri)
 import Data.Maybe (Maybe(..))
-import Examples.Github.Enum.RepositoryLockReason
-  (RepositoryLockReason)
+import Examples.Github.Enum.RepositoryLockReason (RepositoryLockReason)
 import Type.Row (type (+))
 import Prelude (pure)
 

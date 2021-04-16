@@ -54,8 +54,7 @@ import Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue
   (EnterpriseMembersCanMakePurchasesSettingValue)
 import Examples.Github.Enum.NotificationRestrictionSettingValue
   (NotificationRestrictionSettingValue)
-import Examples.Github.Enum.RepositoryVisibility
-  (RepositoryVisibility)
+import Examples.Github.Enum.RepositoryVisibility (RepositoryVisibility)
 import Examples.Github.Enum.IdentityProviderConfigurationState
   (IdentityProviderConfigurationState)
 import Examples.Github.Enum.EnterpriseEnabledSettingValue
@@ -64,9 +63,7 @@ import Examples.Github.Enum.EnterpriseEnabledSettingValue
 type AdminsInputRowOptional r
   = ( query :: Optional String
     , role :: Optional EnterpriseAdministratorRole
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.EnterpriseMemberOrder
+    , orderBy :: Optional Examples.Github.InputObject.EnterpriseMemberOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -132,9 +129,7 @@ type AllowPrivateRepositoryForkingSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -172,9 +167,7 @@ type DefaultRepositoryPermissionSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -204,9 +197,7 @@ type DomainsInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , isVerified :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.VerifiableDomainOrder
+    , orderBy :: Optional Examples.Github.InputObject.VerifiableDomainOrder
     | r
     )
 
@@ -263,9 +254,7 @@ type IpAllowListEntriesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.IpAllowListEntryOrder
+    , orderBy :: Optional Examples.Github.InputObject.IpAllowListEntryOrder
     | r
     )
 
@@ -314,9 +303,7 @@ type MembersCanChangeRepositoryVisibilitySettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -381,9 +368,7 @@ type MembersCanCreateRepositoriesSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -421,9 +406,7 @@ type MembersCanDeleteIssuesSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -461,9 +444,7 @@ type MembersCanDeleteRepositoriesSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -501,9 +482,7 @@ type MembersCanInviteCollaboratorsSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -550,9 +529,7 @@ type MembersCanUpdateProtectedBranchesSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -590,9 +567,7 @@ type MembersCanViewDependencyInsightsSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -639,9 +614,7 @@ type OrganizationProjectsSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -668,9 +641,7 @@ organizationProjectsSettingOrganizations input = selectionForCompositeField
 type OutsideCollaboratorsInputRowOptional r
   = ( login :: Optional String
     , query :: Optional String
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.EnterpriseMemberOrder
+    , orderBy :: Optional Examples.Github.InputObject.EnterpriseMemberOrder
     , visibility :: Optional RepositoryVisibility
     , after :: Optional String
     , before :: Optional String
@@ -721,9 +692,7 @@ pendingAdminInvitations input = selectionForCompositeField
 
 type PendingCollaboratorInvitationsInputRowOptional r
   = ( query :: Optional String
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryInvitationOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryInvitationOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -747,9 +716,7 @@ pendingCollaboratorInvitations input = selectionForCompositeField
 
 type PendingCollaboratorsInputRowOptional r
   = ( query :: Optional String
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryInvitationOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryInvitationOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -807,9 +774,7 @@ type RepositoryProjectsSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -847,9 +812,7 @@ type SamlIdentityProviderSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -874,9 +837,7 @@ samlIdentityProviderSettingOrganizations input = selectionForCompositeField
                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SupportEntitlementsInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.EnterpriseMemberOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.EnterpriseMemberOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -911,9 +872,7 @@ type TeamDiscussionsSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 
@@ -951,9 +910,7 @@ type TwoFactorRequiredSettingOrganizationsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     | r
     )
 

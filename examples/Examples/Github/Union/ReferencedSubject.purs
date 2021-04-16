@@ -1,7 +1,6 @@
 module Examples.Github.Union.ReferencedSubject where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__Issue, Scope__PullRequest, Scope__ReferencedSubject)
 import Data.Maybe (Maybe(..))

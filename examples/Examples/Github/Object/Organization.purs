@@ -54,8 +54,7 @@ import Examples.Github.Enum.NotificationRestrictionSettingValue
 import Examples.Github.Enum.PackageType (PackageType)
 import Examples.Github.Enum.ProjectState (ProjectState)
 import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
-import Examples.Github.Enum.RepositoryAffiliation
-  (RepositoryAffiliation)
+import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 import Examples.Github.Enum.TeamPrivacy (TeamPrivacy)
 import Examples.Github.Enum.TeamRole (TeamRole)
 
@@ -134,9 +133,7 @@ type DomainsInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , isVerified :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.VerifiableDomainOrder
+    , orderBy :: Optional Examples.Github.InputObject.VerifiableDomainOrder
     | r
     )
 
@@ -188,9 +185,7 @@ type IpAllowListEntriesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.IpAllowListEntryOrder
+    , orderBy :: Optional Examples.Github.InputObject.IpAllowListEntryOrder
     | r
     )
 
@@ -250,9 +245,7 @@ type MemberStatusesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.UserStatusOrder
+    , orderBy :: Optional Examples.Github.InputObject.UserStatusOrder
     | r
     )
 
@@ -469,9 +462,7 @@ projectsUrl = selectionForField
 
 type RepositoriesInputRowOptional r
   = ( privacy :: Optional RepositoryPrivacy
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
     , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , isLocked :: Optional Boolean
@@ -559,9 +550,7 @@ type SponsorshipsAsMaintainerInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , includePrivate :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorshipOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
     | r
     )
 
@@ -584,9 +573,7 @@ type SponsorshipsAsSponsorInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorshipOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
     | r
     )
 

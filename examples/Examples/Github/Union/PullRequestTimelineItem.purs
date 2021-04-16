@@ -1,7 +1,6 @@
 module Examples.Github.Union.PullRequestTimelineItem where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__AssignedEvent
   , Scope__BaseRefDeletedEvent

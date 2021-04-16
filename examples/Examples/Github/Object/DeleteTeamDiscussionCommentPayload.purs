@@ -2,8 +2,7 @@ module Examples.Github.Object.DeleteTeamDiscussionCommentPayload where
 
 import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
-import Examples.Github.Scopes
-  (Scope__DeleteTeamDiscussionCommentPayload)
+import Examples.Github.Scopes (Scope__DeleteTeamDiscussionCommentPayload)
 import Data.Maybe (Maybe)
 
 clientMutationId

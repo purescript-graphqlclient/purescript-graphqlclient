@@ -1,7 +1,6 @@
 module Examples.Github.Union.StatusCheckRollupContext where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   (Scope__CheckRun, Scope__StatusContext, Scope__StatusCheckRollupContext)
 import Data.Maybe (Maybe(..))

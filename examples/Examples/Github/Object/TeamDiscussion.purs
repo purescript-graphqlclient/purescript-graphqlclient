@@ -19,11 +19,9 @@ import Examples.Github.Scopes
   , Scope__UserContentEditConnection
   )
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.CommentAuthorAssociation
-  (CommentAuthorAssociation)
+import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (Html, Uri, DateTime, Id)
-import Examples.Github.InputObject
-  (TeamDiscussionCommentOrder, ReactionOrder) as Examples.Github.InputObject
+import Examples.Github.InputObject (TeamDiscussionCommentOrder, ReactionOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.CommentCannotUpdateReason
@@ -65,9 +63,7 @@ type CommentsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.TeamDiscussionCommentOrder
+    , orderBy :: Optional Examples.Github.InputObject.TeamDiscussionCommentOrder
     , fromComment :: Optional Int
     | r
     )

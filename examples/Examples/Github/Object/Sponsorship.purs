@@ -24,6 +24,12 @@ createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 id :: SelectionSet Scope__Sponsorship Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
+isOneTimePayment :: SelectionSet Scope__Sponsorship Boolean
+isOneTimePayment = selectionForField
+                   "isOneTimePayment"
+                   []
+                   graphqlDefaultResponseScalarDecoder
+
 maintainer
   :: forall r
    . SelectionSet Scope__User r
@@ -74,3 +80,9 @@ tier = selectionForCompositeField
        "tier"
        []
        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+tierSelectedAt :: SelectionSet Scope__Sponsorship (Maybe DateTime)
+tierSelectedAt = selectionForField
+                 "tierSelectedAt"
+                 []
+                 graphqlDefaultResponseScalarDecoder

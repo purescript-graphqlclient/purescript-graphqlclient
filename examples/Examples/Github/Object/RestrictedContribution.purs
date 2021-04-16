@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__RestrictedContribution, Scope__User)
+import Examples.Github.Scopes (Scope__RestrictedContribution, Scope__User)
 import Examples.Github.Scalars (DateTime, Uri)
 
 isRestricted :: SelectionSet Scope__RestrictedContribution Boolean

@@ -5,32 +5,26 @@ import GraphQLClient
   (Optional, class ToGraphQLArgumentValue, toGraphQLArgumentValue)
 import Data.Generic.Rep (class Generic)
 import Data.Newtype (class Newtype)
-import Examples.Github.Enum.PullRequestReviewEvent
-  (PullRequestReviewEvent)
+import Examples.Github.Enum.PullRequestReviewEvent (PullRequestReviewEvent)
 import Data.Maybe (Maybe)
 import Examples.Github.Enum.DiffSide (DiffSide)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.AuditLogOrderField (AuditLogOrderField)
 import Examples.Github.Enum.OrderDirection (OrderDirection)
-import Examples.Github.Enum.CheckAnnotationLevel
-  (CheckAnnotationLevel)
+import Examples.Github.Enum.CheckAnnotationLevel (CheckAnnotationLevel)
 import Examples.Github.Enum.CheckRunType (CheckRunType)
 import Examples.Github.Enum.CheckStatusState (CheckStatusState)
-import Examples.Github.Enum.RepositoryVisibility
-  (RepositoryVisibility)
+import Examples.Github.Enum.RepositoryVisibility (RepositoryVisibility)
 import Examples.Github.Enum.CommitContributionOrderField
   (CommitContributionOrderField)
 import Examples.Github.Enum.RequestableCheckStatusState
   (RequestableCheckStatusState)
-import Examples.Github.Enum.CheckConclusionState
-  (CheckConclusionState)
+import Examples.Github.Enum.CheckConclusionState (CheckConclusionState)
 import Examples.Github.Enum.ProjectTemplate (ProjectTemplate)
 import Examples.Github.Enum.TopicSuggestionDeclineReason
   (TopicSuggestionDeclineReason)
-import Examples.Github.Enum.DeploymentOrderField
-  (DeploymentOrderField)
-import Examples.Github.Enum.PullRequestMergeMethod
-  (PullRequestMergeMethod)
+import Examples.Github.Enum.DeploymentOrderField (DeploymentOrderField)
+import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
 import Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField
   (EnterpriseAdministratorInvitationOrderField)
 import Examples.Github.Enum.EnterpriseMemberOrderField
@@ -48,66 +42,50 @@ import Examples.Github.Enum.EnterpriseAdministratorRole
   (EnterpriseAdministratorRole)
 import Examples.Github.Enum.IpAllowListEntryOrderField
   (IpAllowListEntryOrderField)
-import Examples.Github.Enum.IssueCommentOrderField
-  (IssueCommentOrderField)
+import Examples.Github.Enum.IssueCommentOrderField (IssueCommentOrderField)
 import Examples.Github.Enum.IssueState (IssueState)
 import Examples.Github.Enum.IssueOrderField (IssueOrderField)
 import Examples.Github.Enum.LabelOrderField (LabelOrderField)
 import Examples.Github.Enum.LanguageOrderField (LanguageOrderField)
 import Examples.Github.Enum.LockReason (LockReason)
-import Examples.Github.Enum.MilestoneOrderField
-  (MilestoneOrderField)
+import Examples.Github.Enum.MilestoneOrderField (MilestoneOrderField)
 import Examples.Github.Enum.ReportedContentClassifiers
   (ReportedContentClassifiers)
-import Examples.Github.Enum.OrganizationOrderField
-  (OrganizationOrderField)
-import Examples.Github.Enum.PackageFileOrderField
-  (PackageFileOrderField)
+import Examples.Github.Enum.OrganizationOrderField (OrganizationOrderField)
+import Examples.Github.Enum.PackageFileOrderField (PackageFileOrderField)
 import Examples.Github.Enum.PackageOrderField (PackageOrderField)
-import Examples.Github.Enum.PackageVersionOrderField
-  (PackageVersionOrderField)
+import Examples.Github.Enum.PackageVersionOrderField (PackageVersionOrderField)
 import Examples.Github.Enum.ProjectOrderField (ProjectOrderField)
-import Examples.Github.Enum.PullRequestOrderField
-  (PullRequestOrderField)
+import Examples.Github.Enum.PullRequestOrderField (PullRequestOrderField)
 import Examples.Github.Enum.ReactionOrderField (ReactionOrderField)
 import Examples.Github.Enum.RefOrderField (RefOrderField)
 import Examples.Github.Enum.ReleaseOrderField (ReleaseOrderField)
 import Examples.Github.Enum.RepositoryInvitationOrderField
   (RepositoryInvitationOrderField)
-import Examples.Github.Enum.RepositoryOrderField
-  (RepositoryOrderField)
-import Examples.Github.Enum.SavedReplyOrderField
-  (SavedReplyOrderField)
+import Examples.Github.Enum.RepositoryOrderField (RepositoryOrderField)
+import Examples.Github.Enum.SavedReplyOrderField (SavedReplyOrderField)
 import Examples.Github.Enum.SecurityAdvisoryIdentifierType
   (SecurityAdvisoryIdentifierType)
 import Examples.Github.Enum.SecurityAdvisoryOrderField
   (SecurityAdvisoryOrderField)
 import Examples.Github.Enum.SecurityVulnerabilityOrderField
   (SecurityVulnerabilityOrderField)
-import Examples.Github.Enum.SamlSignatureAlgorithm
-  (SamlSignatureAlgorithm)
-import Examples.Github.Enum.SamlDigestAlgorithm
-  (SamlDigestAlgorithm)
+import Examples.Github.Enum.SamlSignatureAlgorithm (SamlSignatureAlgorithm)
+import Examples.Github.Enum.SamlDigestAlgorithm (SamlDigestAlgorithm)
 import Examples.Github.Enum.RepositoryInteractionLimit
   (RepositoryInteractionLimit)
 import Examples.Github.Enum.RepositoryInteractionLimitExpiry
   (RepositoryInteractionLimitExpiry)
-import Examples.Github.Enum.SponsorableOrderField
-  (SponsorableOrderField)
-import Examples.Github.Enum.SponsorsTierOrderField
-  (SponsorsTierOrderField)
-import Examples.Github.Enum.SponsorshipOrderField
-  (SponsorshipOrderField)
+import Examples.Github.Enum.SponsorableOrderField (SponsorableOrderField)
+import Examples.Github.Enum.SponsorsTierOrderField (SponsorsTierOrderField)
+import Examples.Github.Enum.SponsorshipOrderField (SponsorshipOrderField)
 import Examples.Github.Enum.StarOrderField (StarOrderField)
 import Examples.Github.Enum.TeamDiscussionCommentOrderField
   (TeamDiscussionCommentOrderField)
-import Examples.Github.Enum.TeamDiscussionOrderField
-  (TeamDiscussionOrderField)
-import Examples.Github.Enum.TeamMemberOrderField
-  (TeamMemberOrderField)
+import Examples.Github.Enum.TeamDiscussionOrderField (TeamDiscussionOrderField)
+import Examples.Github.Enum.TeamMemberOrderField (TeamMemberOrderField)
 import Examples.Github.Enum.TeamOrderField (TeamOrderField)
-import Examples.Github.Enum.TeamRepositoryOrderField
-  (TeamRepositoryOrderField)
+import Examples.Github.Enum.TeamRepositoryOrderField (TeamRepositoryOrderField)
 import Examples.Github.Enum.EnterpriseEnabledDisabledSettingValue
   (EnterpriseEnabledDisabledSettingValue)
 import Examples.Github.Enum.EnterpriseDefaultRepositoryPermissionSettingValue
@@ -123,11 +101,9 @@ import Examples.Github.Enum.IpAllowListEnabledSettingValue
 import Examples.Github.Enum.NotificationRestrictionSettingValue
   (NotificationRestrictionSettingValue)
 import Examples.Github.Enum.ProjectState (ProjectState)
-import Examples.Github.Enum.PullRequestUpdateState
-  (PullRequestUpdateState)
+import Examples.Github.Enum.PullRequestUpdateState (PullRequestUpdateState)
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
-import Examples.Github.Enum.UserStatusOrderField
-  (UserStatusOrderField)
+import Examples.Github.Enum.UserStatusOrderField (UserStatusOrderField)
 import Examples.Github.Enum.VerifiableDomainOrderField
   (VerifiableDomainOrderField)
 
@@ -392,6 +368,24 @@ derive instance newtypeAddVerifiableDomainInput
 instance toGraphQLArgumentValueAddVerifiableDomainInput
   :: ToGraphQLArgumentValue AddVerifiableDomainInput where
   toGraphQLArgumentValue (AddVerifiableDomainInput x) = toGraphQLArgumentValue x
+
+-- | original name - ApproveVerifiableDomainInput
+newtype ApproveVerifiableDomainInput
+  = ApproveVerifiableDomainInput
+    { id :: Id, clientMutationId :: Optional String }
+
+derive instance genericApproveVerifiableDomainInput
+  ::
+  Generic ApproveVerifiableDomainInput _
+
+derive instance newtypeApproveVerifiableDomainInput
+  ::
+  Newtype ApproveVerifiableDomainInput _
+
+instance toGraphQLArgumentValueApproveVerifiableDomainInput
+  :: ToGraphQLArgumentValue ApproveVerifiableDomainInput where
+  toGraphQLArgumentValue (ApproveVerifiableDomainInput x) = toGraphQLArgumentValue
+                                                            x
 
 -- | original name - ArchiveRepositoryInput
 newtype ArchiveRepositoryInput
@@ -1843,6 +1837,18 @@ instance toGraphQLArgumentValuePackageVersionOrder
   :: ToGraphQLArgumentValue PackageVersionOrder where
   toGraphQLArgumentValue (PackageVersionOrder x) = toGraphQLArgumentValue x
 
+-- | original name - PinIssueInput
+newtype PinIssueInput
+  = PinIssueInput { issueId :: Id, clientMutationId :: Optional String }
+
+derive instance genericPinIssueInput :: Generic PinIssueInput _
+
+derive instance newtypePinIssueInput :: Newtype PinIssueInput _
+
+instance toGraphQLArgumentValuePinIssueInput
+  :: ToGraphQLArgumentValue PinIssueInput where
+  toGraphQLArgumentValue (PinIssueInput x) = toGraphQLArgumentValue x
+
 -- | original name - ProjectOrder
 newtype ProjectOrder
   = ProjectOrder { field :: ProjectOrderField, direction :: OrderDirection }
@@ -2641,6 +2647,18 @@ derive instance newtypeUnminimizeCommentInput
 instance toGraphQLArgumentValueUnminimizeCommentInput
   :: ToGraphQLArgumentValue UnminimizeCommentInput where
   toGraphQLArgumentValue (UnminimizeCommentInput x) = toGraphQLArgumentValue x
+
+-- | original name - UnpinIssueInput
+newtype UnpinIssueInput
+  = UnpinIssueInput { issueId :: Id, clientMutationId :: Optional String }
+
+derive instance genericUnpinIssueInput :: Generic UnpinIssueInput _
+
+derive instance newtypeUnpinIssueInput :: Newtype UnpinIssueInput _
+
+instance toGraphQLArgumentValueUnpinIssueInput
+  :: ToGraphQLArgumentValue UnpinIssueInput where
+  toGraphQLArgumentValue (UnpinIssueInput x) = toGraphQLArgumentValue x
 
 -- | original name - UnresolveReviewThreadInput
 newtype UnresolveReviewThreadInput

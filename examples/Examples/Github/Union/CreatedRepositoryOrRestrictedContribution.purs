@@ -1,7 +1,6 @@
 module Examples.Github.Union.CreatedRepositoryOrRestrictedContribution where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__CreatedRepositoryContribution
   , Scope__RestrictedContribution

@@ -21,6 +21,15 @@ adminInfo = selectionForCompositeField
             []
             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+closestLesserValueTier
+  :: forall r
+   . SelectionSet Scope__SponsorsTier r
+  -> SelectionSet Scope__SponsorsTier (Maybe r)
+closestLesserValueTier = selectionForCompositeField
+                         "closestLesserValueTier"
+                         []
+                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 createdAt :: SelectionSet Scope__SponsorsTier DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
 
@@ -38,6 +47,15 @@ descriptionHTML = selectionForField
 
 id :: SelectionSet Scope__SponsorsTier Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+
+isCustomAmount :: SelectionSet Scope__SponsorsTier Boolean
+isCustomAmount = selectionForField
+                 "isCustomAmount"
+                 []
+                 graphqlDefaultResponseScalarDecoder
+
+isOneTime :: SelectionSet Scope__SponsorsTier Boolean
+isOneTime = selectionForField "isOneTime" [] graphqlDefaultResponseScalarDecoder
 
 monthlyPriceInCents :: SelectionSet Scope__SponsorsTier Int
 monthlyPriceInCents = selectionForField

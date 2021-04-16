@@ -62,8 +62,7 @@ import Examples.Github.Enum.PackageType (PackageType)
 import Examples.Github.Enum.ProjectState (ProjectState)
 import Examples.Github.Enum.PullRequestState (PullRequestState)
 import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
-import Examples.Github.Enum.RepositoryAffiliation
-  (RepositoryAffiliation)
+import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 import Examples.Github.Enum.RepositoryContributionType
   (RepositoryContributionType)
 
@@ -317,6 +316,12 @@ isEmployee = selectionForField
              []
              graphqlDefaultResponseScalarDecoder
 
+isGitHubStar :: SelectionSet Scope__User Boolean
+isGitHubStar = selectionForField
+               "isGitHubStar"
+               []
+               graphqlDefaultResponseScalarDecoder
+
 isHireable :: SelectionSet Scope__User Boolean
 isHireable = selectionForField
              "isHireable"
@@ -350,9 +355,7 @@ isViewer :: SelectionSet Scope__User Boolean
 isViewer = selectionForField "isViewer" [] graphqlDefaultResponseScalarDecoder
 
 type IssueCommentsInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.IssueCommentOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.IssueCommentOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -642,9 +645,7 @@ pullRequests input = selectionForCompositeField
 
 type RepositoriesInputRowOptional r
   = ( privacy :: Optional RepositoryPrivacy
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
     , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , isLocked :: Optional Boolean
@@ -671,9 +672,7 @@ repositories input = selectionForCompositeField
 
 type RepositoriesContributedToInputRowOptional r
   = ( privacy :: Optional RepositoryPrivacy
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
     , isLocked :: Optional Boolean
     , includeUserRepositories :: Optional Boolean
     , contributionTypes :: Optional (Array (Maybe RepositoryContributionType))
@@ -724,9 +723,7 @@ type SavedRepliesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SavedReplyOrder
+    , orderBy :: Optional Examples.Github.InputObject.SavedReplyOrder
     | r
     )
 
@@ -767,9 +764,7 @@ type SponsorshipsAsMaintainerInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , includePrivate :: Optional Boolean
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorshipOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
     | r
     )
 
@@ -792,9 +787,7 @@ type SponsorshipsAsSponsorInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.SponsorshipOrder
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipOrder
     | r
     )
 
@@ -920,9 +913,7 @@ viewerIsSponsoring = selectionForField
 
 type WatchingInputRowOptional r
   = ( privacy :: Optional RepositoryPrivacy
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
     , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , isLocked :: Optional Boolean

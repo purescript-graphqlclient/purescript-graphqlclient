@@ -2,8 +2,7 @@ module Examples.Github.Object.DeleteBranchProtectionRulePayload where
 
 import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
-import Examples.Github.Scopes
-  (Scope__DeleteBranchProtectionRulePayload)
+import Examples.Github.Scopes (Scope__DeleteBranchProtectionRulePayload)
 import Data.Maybe (Maybe)
 
 clientMutationId

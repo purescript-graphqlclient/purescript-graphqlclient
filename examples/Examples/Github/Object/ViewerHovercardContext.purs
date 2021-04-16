@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__ViewerHovercardContext, Scope__User)
+import Examples.Github.Scopes (Scope__ViewerHovercardContext, Scope__User)
 
 message :: SelectionSet Scope__ViewerHovercardContext String
 message = selectionForField "message" [] graphqlDefaultResponseScalarDecoder

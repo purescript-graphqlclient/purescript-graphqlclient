@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__ReleaseAsset, Scope__Release, Scope__User)
+import Examples.Github.Scopes (Scope__ReleaseAsset, Scope__Release, Scope__User)
 import Examples.Github.Scalars (DateTime, Uri, Id)
 import Data.Maybe (Maybe)
 

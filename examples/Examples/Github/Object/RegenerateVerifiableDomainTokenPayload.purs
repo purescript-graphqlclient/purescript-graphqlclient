@@ -2,8 +2,7 @@ module Examples.Github.Object.RegenerateVerifiableDomainTokenPayload where
 
 import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
-import Examples.Github.Scopes
-  (Scope__RegenerateVerifiableDomainTokenPayload)
+import Examples.Github.Scopes (Scope__RegenerateVerifiableDomainTokenPayload)
 import Data.Maybe (Maybe)
 
 clientMutationId

@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__PinnableItemEdge, Scope__PinnableItem)
+import Examples.Github.Scopes (Scope__PinnableItemEdge, Scope__PinnableItem)
 import Data.Maybe (Maybe)
 
 cursor :: SelectionSet Scope__PinnableItemEdge String

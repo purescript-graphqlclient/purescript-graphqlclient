@@ -40,7 +40,7 @@ expectedMutation =
   inlineAndTrim
     """
 mutation {
-  sendMessage1125234857: sendMessage(characterId: "1", phrase: FATHER) {
+  sendMessage2354134296062157: sendMessage(characterId: "1", phrase: FATHER) {
     character {
       id
     }

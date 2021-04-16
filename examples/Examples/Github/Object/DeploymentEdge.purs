@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__DeploymentEdge, Scope__Deployment)
+import Examples.Github.Scopes (Scope__DeploymentEdge, Scope__Deployment)
 import Data.Maybe (Maybe)
 
 cursor :: SelectionSet Scope__DeploymentEdge String

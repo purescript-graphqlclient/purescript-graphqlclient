@@ -11,8 +11,7 @@ import Examples.Github.Scopes
   (Scope__RepositoryInvitation, Scope__User, Scope__RepositoryInfo)
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Id, Uri)
-import Examples.Github.Enum.RepositoryPermission
-  (RepositoryPermission)
+import Examples.Github.Enum.RepositoryPermission (RepositoryPermission)
 
 email :: SelectionSet Scope__RepositoryInvitation (Maybe String)
 email = selectionForField "email" [] graphqlDefaultResponseScalarDecoder

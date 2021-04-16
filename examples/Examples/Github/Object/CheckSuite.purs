@@ -22,8 +22,7 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.InputObject (CheckRunFilter, IssueOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
-import Examples.Github.Enum.CheckConclusionState
-  (CheckConclusionState)
+import Examples.Github.Enum.CheckConclusionState (CheckConclusionState)
 import Examples.Github.Scalars (DateTime, Id, Uri)
 import Examples.Github.Enum.PullRequestState (PullRequestState)
 import Examples.Github.Enum.CheckStatusState (CheckStatusState)
@@ -51,9 +50,7 @@ type CheckRunsInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , filterBy
-      :: Optional
-         Examples.Github.InputObject.CheckRunFilter
+    , filterBy :: Optional Examples.Github.InputObject.CheckRunFilter
     | r
     )
 

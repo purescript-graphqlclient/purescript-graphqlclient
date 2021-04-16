@@ -10,7 +10,13 @@ import GraphQLClient
   , toGraphQLArguments
   )
 import Examples.Github.Scopes
-  (Scope__User, Scope__Release, Scope__ReleaseAssetConnection, Scope__Ref)
+  ( Scope__User
+  , Scope__Release
+  , Scope__ReleaseAssetConnection
+  , Scope__Repository
+  , Scope__Ref
+  , Scope__Commit
+  )
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Html, Id, Uri)
 import Type.Row (type (+))
@@ -85,6 +91,15 @@ releaseAssets input = selectionForCompositeField
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+repository
+  :: forall r
+   . SelectionSet Scope__Repository r
+  -> SelectionSet Scope__Release r
+repository = selectionForCompositeField
+             "repository"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 resourcePath :: SelectionSet Scope__Release Uri
 resourcePath = selectionForField
                "resourcePath"
@@ -112,6 +127,15 @@ tag = selectionForCompositeField
       "tag"
       []
       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+tagCommit
+  :: forall r
+   . SelectionSet Scope__Commit r
+  -> SelectionSet Scope__Release (Maybe r)
+tagCommit = selectionForCompositeField
+            "tagCommit"
+            []
+            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 tagName :: SelectionSet Scope__Release String
 tagName = selectionForField "tagName" [] graphqlDefaultResponseScalarDecoder

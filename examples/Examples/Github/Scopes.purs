@@ -34,6 +34,8 @@ data Scope__AddedToProjectEvent
 
 data Scope__App
 
+data Scope__ApproveVerifiableDomainPayload
+
 data Scope__ArchiveRepositoryPayload
 
 data Scope__AssignedEvent
@@ -211,6 +213,14 @@ data Scope__CreatedRepositoryContributionConnection
 data Scope__CreatedRepositoryContributionEdge
 
 data Scope__CrossReferencedEvent
+
+data Scope__Cvss
+
+data Scope__Cwe
+
+data Scope__CweConnection
+
+data Scope__CweEdge
 
 data Scope__DeclineTopicSuggestionPayload
 
@@ -618,11 +628,19 @@ data Scope__PageInfo
 
 data Scope__PermissionSource
 
+data Scope__PinIssuePayload
+
 data Scope__PinnableItemConnection
 
 data Scope__PinnableItemEdge
 
 data Scope__PinnedEvent
+
+data Scope__PinnedIssue
+
+data Scope__PinnedIssueConnection
+
+data Scope__PinnedIssueEdge
 
 data Scope__PrivateRepositoryForkingDisableAuditEntry
 
@@ -932,6 +950,8 @@ data Scope__SponsorableItemConnection
 
 data Scope__SponsorableItemEdge
 
+data Scope__SponsorsGoal
+
 data Scope__SponsorsListing
 
 data Scope__SponsorsTier
@@ -1053,6 +1073,8 @@ data Scope__UnmarkIssueAsDuplicatePayload
 data Scope__UnmarkedAsDuplicateEvent
 
 data Scope__UnminimizeCommentPayload
+
+data Scope__UnpinIssuePayload
 
 data Scope__UnpinnedEvent
 
@@ -1215,6 +1237,8 @@ data Scope__RepositoryInfo
 data Scope__RepositoryNode
 
 data Scope__RepositoryOwner
+
+data Scope__RequirableByPullRequest
 
 data Scope__Sponsorable
 

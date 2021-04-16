@@ -2,8 +2,7 @@ module Examples.Github.Object.UpdateEnterpriseAdministratorRolePayload where
 
 import GraphQLClient
   (SelectionSet, selectionForField, graphqlDefaultResponseScalarDecoder)
-import Examples.Github.Scopes
-  (Scope__UpdateEnterpriseAdministratorRolePayload)
+import Examples.Github.Scopes (Scope__UpdateEnterpriseAdministratorRolePayload)
 import Data.Maybe (Maybe)
 
 clientMutationId

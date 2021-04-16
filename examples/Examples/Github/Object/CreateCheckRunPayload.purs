@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   )
-import Examples.Github.Scopes
-  (Scope__CheckRun, Scope__CreateCheckRunPayload)
+import Examples.Github.Scopes (Scope__CheckRun, Scope__CreateCheckRunPayload)
 import Data.Maybe (Maybe)
 
 checkRun

@@ -35,6 +35,12 @@ requiredStatusCheckContexts = selectionForField
                               []
                               graphqlDefaultResponseScalarDecoder
 
+requiresCodeOwnerReviews :: SelectionSet Scope__RefUpdateRule Boolean
+requiresCodeOwnerReviews = selectionForField
+                           "requiresCodeOwnerReviews"
+                           []
+                           graphqlDefaultResponseScalarDecoder
+
 requiresLinearHistory :: SelectionSet Scope__RefUpdateRule Boolean
 requiresLinearHistory = selectionForField
                         "requiresLinearHistory"
@@ -46,6 +52,12 @@ requiresSignatures = selectionForField
                      "requiresSignatures"
                      []
                      graphqlDefaultResponseScalarDecoder
+
+viewerAllowedToDismissReviews :: SelectionSet Scope__RefUpdateRule Boolean
+viewerAllowedToDismissReviews = selectionForField
+                                "viewerAllowedToDismissReviews"
+                                []
+                                graphqlDefaultResponseScalarDecoder
 
 viewerCanPush :: SelectionSet Scope__RefUpdateRule Boolean
 viewerCanPush = selectionForField

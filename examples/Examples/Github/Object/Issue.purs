@@ -28,13 +28,11 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.Enum.LockReason (LockReason)
 import Type.Row (type (+))
-import Examples.Github.Enum.CommentAuthorAssociation
-  (CommentAuthorAssociation)
+import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (Html, Uri, DateTime, Id)
 import Examples.Github.InputObject
   (IssueCommentOrder, LabelOrder, ReactionOrder) as Examples.Github.InputObject
-import Examples.Github.Enum.ProjectCardArchivedState
-  (ProjectCardArchivedState)
+import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.IssueState (IssueState)
 import Examples.Github.Enum.IssueTimelineItemsItemType
@@ -110,9 +108,7 @@ closedAt :: SelectionSet Scope__Issue (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
 
 type CommentsInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.IssueCommentOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.IssueCommentOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
@@ -181,6 +177,9 @@ includesCreatedEdit = selectionForField
                       "includesCreatedEdit"
                       []
                       graphqlDefaultResponseScalarDecoder
+
+isPinned :: SelectionSet Scope__Issue (Maybe Boolean)
+isPinned = selectionForField "isPinned" [] graphqlDefaultResponseScalarDecoder
 
 isReadByViewer :: SelectionSet Scope__Issue (Maybe Boolean)
 isReadByViewer = selectionForField

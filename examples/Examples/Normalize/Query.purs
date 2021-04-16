@@ -134,9 +134,7 @@ recursiveInput input = selectionForField
                        graphqlDefaultResponseScalarDecoder
 
 type TypeInputRowOptional r
-  = ( input :: Optional Examples.Normalize.InputObject.ReservedWord
-    | r
-    )
+  = ( input :: Optional Examples.Normalize.InputObject.ReservedWord | r )
 
 type TypeInput = { | TypeInputRowOptional + () }
 

@@ -16,8 +16,7 @@ import Examples.Github.Scopes
   , Scope__UserContentEditConnection
   )
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.CommentAuthorAssociation
-  (CommentAuthorAssociation)
+import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (Html, DateTime, Id)
 import Type.Row (type (+))
 import Examples.Github.Enum.CommentCannotUpdateReason

@@ -23,8 +23,7 @@ import Examples.Github.Scalars (Uri, Id)
 import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
 import Examples.Github.InputObject (RepositoryOrder) as Examples.Github.InputObject
 import Data.Maybe (Maybe(..))
-import Examples.Github.Enum.RepositoryAffiliation
-  (RepositoryAffiliation)
+import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 import Prelude (pure)
 
 type AvatarUrlInputRowOptional r = ( size :: Optional Int | r )
@@ -46,9 +45,7 @@ login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
 
 type RepositoriesInputRowOptional r
   = ( privacy :: Optional RepositoryPrivacy
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
     , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
     , isLocked :: Optional Boolean

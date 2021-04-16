@@ -33,7 +33,7 @@ import Node.Path (FilePath)
 import Node.Path (concat, resolve) as Node.FS
 import Node.Process (exit) as NodeProcess
 import Options.Applicative (execParser)
-import Record.Homogeneous (foldMapValuesWithIndexL)
+import Record.ExtraSrghma (foldMapValuesWithIndexL)
 
 type App a
   = ReaderT GraphQLClientGenerator.Options.AppOptions Aff a

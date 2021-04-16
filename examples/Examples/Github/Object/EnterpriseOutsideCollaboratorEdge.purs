@@ -41,9 +41,7 @@ type RepositoriesInputRowOptional r
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.RepositoryOrder
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
     | r
     )
 

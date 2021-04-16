@@ -11,8 +11,7 @@ import Examples.Github.Scopes
   (Scope__DeploymentStatus, Scope__Actor, Scope__Deployment)
 import Examples.Github.Scalars (DateTime, Uri, Id)
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.DeploymentStatusState
-  (DeploymentStatusState)
+import Examples.Github.Enum.DeploymentStatusState (DeploymentStatusState)
 
 createdAt :: SelectionSet Scope__DeploymentStatus DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

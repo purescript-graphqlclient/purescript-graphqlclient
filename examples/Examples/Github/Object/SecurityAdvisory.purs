@@ -2,27 +2,58 @@ module Examples.Github.Object.SecurityAdvisory where
 
 import GraphQLClient
   ( SelectionSet
-  , selectionForField
-  , graphqlDefaultResponseScalarDecoder
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
   , toGraphQLArguments
+  , selectionForField
+  , graphqlDefaultResponseScalarDecoder
   )
 import Examples.Github.Scopes
-  ( Scope__SecurityAdvisory
+  ( Scope__Cvss
+  , Scope__SecurityAdvisory
+  , Scope__CweConnection
   , Scope__SecurityAdvisoryIdentifier
   , Scope__SecurityAdvisoryReference
   , Scope__SecurityVulnerabilityConnection
   )
+import Type.Row (type (+))
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (Id, Uri, DateTime)
-import Examples.Github.Enum.SecurityAdvisorySeverity
-  (SecurityAdvisorySeverity)
+import Examples.Github.Enum.SecurityAdvisorySeverity (SecurityAdvisorySeverity)
 import Examples.Github.InputObject (SecurityVulnerabilityOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.SecurityAdvisoryEcosystem
   (SecurityAdvisoryEcosystem)
-import Type.Row (type (+))
+
+cvss
+  :: forall r
+   . SelectionSet Scope__Cvss r
+  -> SelectionSet Scope__SecurityAdvisory r
+cvss = selectionForCompositeField
+       "cvss"
+       []
+       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CwesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type CwesInput = { | CwesInputRowOptional + () }
+
+cwes
+  :: forall r
+   . CwesInput
+  -> SelectionSet Scope__CweConnection r
+  -> SelectionSet Scope__SecurityAdvisory r
+cwes input = selectionForCompositeField
+             "cwes"
+             (toGraphQLArguments
+              input)
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 databaseId :: SelectionSet Scope__SecurityAdvisory (Maybe Int)
 databaseId = selectionForField
@@ -88,9 +119,7 @@ updatedAt :: SelectionSet Scope__SecurityAdvisory DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
 type VulnerabilitiesInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.SecurityVulnerabilityOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.SecurityVulnerabilityOrder
     , ecosystem :: Optional SecurityAdvisoryEcosystem
     , package :: Optional String
     , severities :: Optional (Array SecurityAdvisorySeverity)

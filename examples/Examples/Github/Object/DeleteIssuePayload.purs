@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__DeleteIssuePayload, Scope__Repository)
+import Examples.Github.Scopes (Scope__DeleteIssuePayload, Scope__Repository)
 import Data.Maybe (Maybe)
 
 clientMutationId :: SelectionSet Scope__DeleteIssuePayload (Maybe String)

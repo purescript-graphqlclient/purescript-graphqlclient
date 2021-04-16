@@ -7,11 +7,9 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__OrganizationMemberEdge, Scope__User)
+import Examples.Github.Scopes (Scope__OrganizationMemberEdge, Scope__User)
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.OrganizationMemberRole
-  (OrganizationMemberRole)
+import Examples.Github.Enum.OrganizationMemberRole (OrganizationMemberRole)
 
 cursor :: SelectionSet Scope__OrganizationMemberEdge String
 cursor = selectionForField "cursor" [] graphqlDefaultResponseScalarDecoder

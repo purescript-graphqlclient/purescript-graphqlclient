@@ -1,14 +1,25 @@
 { name = "purescript-graphqlclient-generator"
 , dependencies = (./spago.dhall).dependencies #
-  [ "console"
-  , "mkdirp-aff"
+  [ "node-fs-aff"
+  , "spec"
+  , "console"
+  , "open-mkdirp-aff"
   , "ansi"
   , "optparse"
   , "ps-cst"
-  , "homogeneous-records"
+  , "record-extra-srghma"
   , "strings-extra"
   , "stringutils"
   , "url-regex-safe"
+  , "dodo-printer"
+  , "exceptions"
+  , "functions"
+  , "node-buffer"
+  , "node-path"
+  , "node-process"
+  , "ordered-collections"
+  , "typelevel-prelude"
+  , "unsafe-coerce"
   ]
 , packages = (./spago.dhall).packages
 , sources = (./spago.dhall).sources # [ "generator/**/*.purs", "generator-test/**/*.purs" ]

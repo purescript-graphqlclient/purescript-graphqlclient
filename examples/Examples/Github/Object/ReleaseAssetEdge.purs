@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__ReleaseAssetEdge, Scope__ReleaseAsset)
+import Examples.Github.Scopes (Scope__ReleaseAssetEdge, Scope__ReleaseAsset)
 import Data.Maybe (Maybe)
 
 cursor :: SelectionSet Scope__ReleaseAssetEdge String

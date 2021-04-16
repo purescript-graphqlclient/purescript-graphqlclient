@@ -1,9 +1,7 @@
 module Examples.Github.Union.Sponsor where
 
-import GraphQLClient
-  (SelectionSet, exhaustiveFragmentSelection, buildFragment)
-import Examples.Github.Scopes
-  (Scope__Organization, Scope__User, Scope__Sponsor)
+import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
+import Examples.Github.Scopes (Scope__Organization, Scope__User, Scope__Sponsor)
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 

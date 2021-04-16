@@ -7,8 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes
-  (Scope__TextMatch, Scope__TextMatchHighlight)
+import Examples.Github.Scopes (Scope__TextMatch, Scope__TextMatchHighlight)
 
 fragment :: SelectionSet Scope__TextMatch String
 fragment = selectionForField "fragment" [] graphqlDefaultResponseScalarDecoder

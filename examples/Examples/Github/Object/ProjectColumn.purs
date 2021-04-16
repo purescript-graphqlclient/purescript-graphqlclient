@@ -10,14 +10,12 @@ import GraphQLClient
   , graphqlDefaultResponseScalarDecoder
   )
 import Data.Maybe (Maybe)
-import Examples.Github.Enum.ProjectCardArchivedState
-  (ProjectCardArchivedState)
+import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
 import Type.Row (type (+))
 import Examples.Github.Scopes
   (Scope__ProjectCardConnection, Scope__ProjectColumn, Scope__Project)
 import Examples.Github.Scalars (DateTime, Id, Uri)
-import Examples.Github.Enum.ProjectColumnPurpose
-  (ProjectColumnPurpose)
+import Examples.Github.Enum.ProjectColumnPurpose (ProjectColumnPurpose)
 
 type CardsInputRowOptional r
   = ( after :: Optional String

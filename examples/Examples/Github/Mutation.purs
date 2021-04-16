@@ -15,6 +15,7 @@ import Examples.Github.InputObject
   , AddReactionInput
   , AddStarInput
   , AddVerifiableDomainInput
+  , ApproveVerifiableDomainInput
   , ArchiveRepositoryInput
   , CancelEnterpriseAdminInvitationInput
   , ChangeUserStatusInput
@@ -65,6 +66,7 @@ import Examples.Github.InputObject
   , MinimizeCommentInput
   , MoveProjectCardInput
   , MoveProjectColumnInput
+  , PinIssueInput
   , RegenerateEnterpriseIdentityProviderRecoveryCodesInput
   , RegenerateVerifiableDomainTokenInput
   , RemoveAssigneesFromAssignableInput
@@ -94,6 +96,7 @@ import Examples.Github.InputObject
   , UnmarkFileAsViewedInput
   , UnmarkIssueAsDuplicateInput
   , UnminimizeCommentInput
+  , UnpinIssueInput
   , UnresolveReviewThreadInput
   , UpdateBranchProtectionRuleInput
   , UpdateCheckRunInput
@@ -156,6 +159,7 @@ import Examples.Github.Scopes
   , Scope__AddReactionPayload
   , Scope__AddStarPayload
   , Scope__AddVerifiableDomainPayload
+  , Scope__ApproveVerifiableDomainPayload
   , Scope__ArchiveRepositoryPayload
   , Scope__CancelEnterpriseAdminInvitationPayload
   , Scope__ChangeUserStatusPayload
@@ -206,6 +210,7 @@ import Examples.Github.Scopes
   , Scope__MinimizeCommentPayload
   , Scope__MoveProjectCardPayload
   , Scope__MoveProjectColumnPayload
+  , Scope__PinIssuePayload
   , Scope__RegenerateEnterpriseIdentityProviderRecoveryCodesPayload
   , Scope__RegenerateVerifiableDomainTokenPayload
   , Scope__RemoveAssigneesFromAssignablePayload
@@ -235,6 +240,7 @@ import Examples.Github.Scopes
   , Scope__UnmarkFileAsViewedPayload
   , Scope__UnmarkIssueAsDuplicatePayload
   , Scope__UnminimizeCommentPayload
+  , Scope__UnpinIssuePayload
   , Scope__UnresolveReviewThreadPayload
   , Scope__UpdateBranchProtectionRulePayload
   , Scope__UpdateCheckRunPayload
@@ -297,10 +303,7 @@ acceptEnterpriseAdministratorInvitation input = selectionForCompositeField
                                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AcceptTopicSuggestionInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.AcceptTopicSuggestionInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AcceptTopicSuggestionInput | r )
 
 type AcceptTopicSuggestionInput
   = { | AcceptTopicSuggestionInputRowRequired + () }
@@ -317,10 +320,7 @@ acceptTopicSuggestion input = selectionForCompositeField
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddAssigneesToAssignableInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.AddAssigneesToAssignableInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AddAssigneesToAssignableInput | r )
 
 type AddAssigneesToAssignableInput
   = { | AddAssigneesToAssignableInputRowRequired + () }
@@ -353,8 +353,7 @@ addComment input = selectionForCompositeField
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddEnterpriseSupportEntitlementInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.AddEnterpriseSupportEntitlementInput
+  = ( input :: Examples.Github.InputObject.AddEnterpriseSupportEntitlementInput
     | r
     )
 
@@ -373,10 +372,7 @@ addEnterpriseSupportEntitlement input = selectionForCompositeField
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddLabelsToLabelableInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.AddLabelsToLabelableInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AddLabelsToLabelableInput | r )
 
 type AddLabelsToLabelableInput = { | AddLabelsToLabelableInputRowRequired + () }
 
@@ -392,9 +388,7 @@ addLabelsToLabelable input = selectionForCompositeField
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddProjectCardInputRowRequired r
-  = ( input :: Examples.Github.InputObject.AddProjectCardInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AddProjectCardInput | r )
 
 type AddProjectCardInput = { | AddProjectCardInputRowRequired + () }
 
@@ -410,9 +404,7 @@ addProjectCard input = selectionForCompositeField
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddProjectColumnInputRowRequired r
-  = ( input :: Examples.Github.InputObject.AddProjectColumnInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AddProjectColumnInput | r )
 
 type AddProjectColumnInput = { | AddProjectColumnInputRowRequired + () }
 
@@ -428,10 +420,7 @@ addProjectColumn input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddPullRequestReviewInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.AddPullRequestReviewInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AddPullRequestReviewInput | r )
 
 type AddPullRequestReviewInput = { | AddPullRequestReviewInputRowRequired + () }
 
@@ -447,8 +436,7 @@ addPullRequestReview input = selectionForCompositeField
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddPullRequestReviewCommentInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.AddPullRequestReviewCommentInput
+  = ( input :: Examples.Github.InputObject.AddPullRequestReviewCommentInput
     | r
     )
 
@@ -467,10 +455,7 @@ addPullRequestReviewComment input = selectionForCompositeField
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddPullRequestReviewThreadInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.AddPullRequestReviewThreadInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AddPullRequestReviewThreadInput | r )
 
 type AddPullRequestReviewThreadInput
   = { | AddPullRequestReviewThreadInputRowRequired + () }
@@ -519,9 +504,7 @@ addStar input = selectionForCompositeField
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddVerifiableDomainInputRowRequired r
-  = ( input :: Examples.Github.InputObject.AddVerifiableDomainInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.AddVerifiableDomainInput | r )
 
 type AddVerifiableDomainInput = { | AddVerifiableDomainInputRowRequired + () }
 
@@ -536,10 +519,25 @@ addVerifiableDomain input = selectionForCompositeField
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type ApproveVerifiableDomainInputRowRequired r
+  = ( input :: Examples.Github.InputObject.ApproveVerifiableDomainInput | r )
+
+type ApproveVerifiableDomainInput
+  = { | ApproveVerifiableDomainInputRowRequired + () }
+
+approveVerifiableDomain
+  :: forall r
+   . ApproveVerifiableDomainInput
+  -> SelectionSet Scope__ApproveVerifiableDomainPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+approveVerifiableDomain input = selectionForCompositeField
+                                "approveVerifiableDomain"
+                                (toGraphQLArguments
+                                 input)
+                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type ArchiveRepositoryInputRowRequired r
-  = ( input :: Examples.Github.InputObject.ArchiveRepositoryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.ArchiveRepositoryInput | r )
 
 type ArchiveRepositoryInput = { | ArchiveRepositoryInputRowRequired + () }
 
@@ -555,8 +553,7 @@ archiveRepository input = selectionForCompositeField
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CancelEnterpriseAdminInvitationInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.CancelEnterpriseAdminInvitationInput
+  = ( input :: Examples.Github.InputObject.CancelEnterpriseAdminInvitationInput
     | r
     )
 
@@ -575,9 +572,7 @@ cancelEnterpriseAdminInvitation input = selectionForCompositeField
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ChangeUserStatusInputRowRequired r
-  = ( input :: Examples.Github.InputObject.ChangeUserStatusInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.ChangeUserStatusInput | r )
 
 type ChangeUserStatusInput = { | ChangeUserStatusInputRowRequired + () }
 
@@ -593,10 +588,7 @@ changeUserStatus input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ClearLabelsFromLabelableInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.ClearLabelsFromLabelableInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.ClearLabelsFromLabelableInput | r )
 
 type ClearLabelsFromLabelableInput
   = { | ClearLabelsFromLabelableInputRowRequired + () }
@@ -629,10 +621,7 @@ cloneProject input = selectionForCompositeField
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CloneTemplateRepositoryInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.CloneTemplateRepositoryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CloneTemplateRepositoryInput | r )
 
 type CloneTemplateRepositoryInput
   = { | CloneTemplateRepositoryInputRowRequired + () }
@@ -665,9 +654,7 @@ closeIssue input = selectionForCompositeField
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ClosePullRequestInputRowRequired r
-  = ( input :: Examples.Github.InputObject.ClosePullRequestInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.ClosePullRequestInput | r )
 
 type ClosePullRequestInput = { | ClosePullRequestInputRowRequired + () }
 
@@ -683,8 +670,7 @@ closePullRequest input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ConvertProjectCardNoteToIssueInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.ConvertProjectCardNoteToIssueInput
+  = ( input :: Examples.Github.InputObject.ConvertProjectCardNoteToIssueInput
     | r
     )
 
@@ -703,10 +689,7 @@ convertProjectCardNoteToIssue input = selectionForCompositeField
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateBranchProtectionRuleInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.CreateBranchProtectionRuleInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CreateBranchProtectionRuleInput | r )
 
 type CreateBranchProtectionRuleInput
   = { | CreateBranchProtectionRuleInputRowRequired + () }
@@ -723,9 +706,7 @@ createBranchProtectionRule input = selectionForCompositeField
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateCheckRunInputRowRequired r
-  = ( input :: Examples.Github.InputObject.CreateCheckRunInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CreateCheckRunInput | r )
 
 type CreateCheckRunInput = { | CreateCheckRunInputRowRequired + () }
 
@@ -741,9 +722,7 @@ createCheckRun input = selectionForCompositeField
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateCheckSuiteInputRowRequired r
-  = ( input :: Examples.Github.InputObject.CreateCheckSuiteInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CreateCheckSuiteInput | r )
 
 type CreateCheckSuiteInput = { | CreateCheckSuiteInputRowRequired + () }
 
@@ -759,8 +738,7 @@ createCheckSuite input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateEnterpriseOrganizationInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.CreateEnterpriseOrganizationInput
+  = ( input :: Examples.Github.InputObject.CreateEnterpriseOrganizationInput
     | r
     )
 
@@ -779,10 +757,7 @@ createEnterpriseOrganization input = selectionForCompositeField
                                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateIpAllowListEntryInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.CreateIpAllowListEntryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CreateIpAllowListEntryInput | r )
 
 type CreateIpAllowListEntryInput
   = { | CreateIpAllowListEntryInputRowRequired + () }
@@ -831,9 +806,7 @@ createProject input = selectionForCompositeField
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreatePullRequestInputRowRequired r
-  = ( input :: Examples.Github.InputObject.CreatePullRequestInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CreatePullRequestInput | r )
 
 type CreatePullRequestInput = { | CreatePullRequestInputRowRequired + () }
 
@@ -865,9 +838,7 @@ createRef input = selectionForCompositeField
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateRepositoryInputRowRequired r
-  = ( input :: Examples.Github.InputObject.CreateRepositoryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CreateRepositoryInput | r )
 
 type CreateRepositoryInput = { | CreateRepositoryInputRowRequired + () }
 
@@ -883,10 +854,7 @@ createRepository input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateTeamDiscussionInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.CreateTeamDiscussionInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.CreateTeamDiscussionInput | r )
 
 type CreateTeamDiscussionInput = { | CreateTeamDiscussionInputRowRequired + () }
 
@@ -902,8 +870,7 @@ createTeamDiscussion input = selectionForCompositeField
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateTeamDiscussionCommentInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.CreateTeamDiscussionCommentInput
+  = ( input :: Examples.Github.InputObject.CreateTeamDiscussionCommentInput
     | r
     )
 
@@ -922,10 +889,7 @@ createTeamDiscussionComment input = selectionForCompositeField
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeclineTopicSuggestionInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeclineTopicSuggestionInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeclineTopicSuggestionInput | r )
 
 type DeclineTopicSuggestionInput
   = { | DeclineTopicSuggestionInputRowRequired + () }
@@ -942,10 +906,7 @@ declineTopicSuggestion input = selectionForCompositeField
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteBranchProtectionRuleInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeleteBranchProtectionRuleInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteBranchProtectionRuleInput | r )
 
 type DeleteBranchProtectionRuleInput
   = { | DeleteBranchProtectionRuleInputRowRequired + () }
@@ -962,9 +923,7 @@ deleteBranchProtectionRule input = selectionForCompositeField
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteDeploymentInputRowRequired r
-  = ( input :: Examples.Github.InputObject.DeleteDeploymentInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteDeploymentInput | r )
 
 type DeleteDeploymentInput = { | DeleteDeploymentInputRowRequired + () }
 
@@ -980,10 +939,7 @@ deleteDeployment input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteIpAllowListEntryInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeleteIpAllowListEntryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteIpAllowListEntryInput | r )
 
 type DeleteIpAllowListEntryInput
   = { | DeleteIpAllowListEntryInputRowRequired + () }
@@ -1016,9 +972,7 @@ deleteIssue input = selectionForCompositeField
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteIssueCommentInputRowRequired r
-  = ( input :: Examples.Github.InputObject.DeleteIssueCommentInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteIssueCommentInput | r )
 
 type DeleteIssueCommentInput = { | DeleteIssueCommentInputRowRequired + () }
 
@@ -1050,9 +1004,7 @@ deleteProject input = selectionForCompositeField
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteProjectCardInputRowRequired r
-  = ( input :: Examples.Github.InputObject.DeleteProjectCardInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteProjectCardInput | r )
 
 type DeleteProjectCardInput = { | DeleteProjectCardInputRowRequired + () }
 
@@ -1068,9 +1020,7 @@ deleteProjectCard input = selectionForCompositeField
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteProjectColumnInputRowRequired r
-  = ( input :: Examples.Github.InputObject.DeleteProjectColumnInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteProjectColumnInput | r )
 
 type DeleteProjectColumnInput = { | DeleteProjectColumnInputRowRequired + () }
 
@@ -1086,10 +1036,7 @@ deleteProjectColumn input = selectionForCompositeField
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeletePullRequestReviewInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeletePullRequestReviewInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeletePullRequestReviewInput | r )
 
 type DeletePullRequestReviewInput
   = { | DeletePullRequestReviewInputRowRequired + () }
@@ -1106,8 +1053,7 @@ deletePullRequestReview input = selectionForCompositeField
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeletePullRequestReviewCommentInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeletePullRequestReviewCommentInput
+  = ( input :: Examples.Github.InputObject.DeletePullRequestReviewCommentInput
     | r
     )
 
@@ -1142,10 +1088,7 @@ deleteRef input = selectionForCompositeField
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteTeamDiscussionInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeleteTeamDiscussionInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteTeamDiscussionInput | r )
 
 type DeleteTeamDiscussionInput = { | DeleteTeamDiscussionInputRowRequired + () }
 
@@ -1161,8 +1104,7 @@ deleteTeamDiscussion input = selectionForCompositeField
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteTeamDiscussionCommentInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeleteTeamDiscussionCommentInput
+  = ( input :: Examples.Github.InputObject.DeleteTeamDiscussionCommentInput
     | r
     )
 
@@ -1181,10 +1123,7 @@ deleteTeamDiscussionComment input = selectionForCompositeField
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteVerifiableDomainInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DeleteVerifiableDomainInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DeleteVerifiableDomainInput | r )
 
 type DeleteVerifiableDomainInput
   = { | DeleteVerifiableDomainInputRowRequired + () }
@@ -1201,8 +1140,7 @@ deleteVerifiableDomain input = selectionForCompositeField
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DisablePullRequestAutoMergeInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DisablePullRequestAutoMergeInput
+  = ( input :: Examples.Github.InputObject.DisablePullRequestAutoMergeInput
     | r
     )
 
@@ -1221,10 +1159,7 @@ disablePullRequestAutoMerge input = selectionForCompositeField
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DismissPullRequestReviewInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.DismissPullRequestReviewInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.DismissPullRequestReviewInput | r )
 
 type DismissPullRequestReviewInput
   = { | DismissPullRequestReviewInputRowRequired + () }
@@ -1241,10 +1176,7 @@ dismissPullRequestReview input = selectionForCompositeField
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type EnablePullRequestAutoMergeInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.EnablePullRequestAutoMergeInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.EnablePullRequestAutoMergeInput | r )
 
 type EnablePullRequestAutoMergeInput
   = { | EnablePullRequestAutoMergeInputRowRequired + () }
@@ -1277,10 +1209,7 @@ followUser input = selectionForCompositeField
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type InviteEnterpriseAdminInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.InviteEnterpriseAdminInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.InviteEnterpriseAdminInput | r )
 
 type InviteEnterpriseAdminInput
   = { | InviteEnterpriseAdminInputRowRequired + () }
@@ -1297,10 +1226,7 @@ inviteEnterpriseAdmin input = selectionForCompositeField
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type LinkRepositoryToProjectInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.LinkRepositoryToProjectInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.LinkRepositoryToProjectInput | r )
 
 type LinkRepositoryToProjectInput
   = { | LinkRepositoryToProjectInputRowRequired + () }
@@ -1333,9 +1259,7 @@ lockLockable input = selectionForCompositeField
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type MarkFileAsViewedInputRowRequired r
-  = ( input :: Examples.Github.InputObject.MarkFileAsViewedInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.MarkFileAsViewedInput | r )
 
 type MarkFileAsViewedInput = { | MarkFileAsViewedInputRowRequired + () }
 
@@ -1351,8 +1275,7 @@ markFileAsViewed input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type MarkPullRequestReadyForReviewInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.MarkPullRequestReadyForReviewInput
+  = ( input :: Examples.Github.InputObject.MarkPullRequestReadyForReviewInput
     | r
     )
 
@@ -1387,9 +1310,7 @@ mergeBranch input = selectionForCompositeField
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type MergePullRequestInputRowRequired r
-  = ( input :: Examples.Github.InputObject.MergePullRequestInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.MergePullRequestInput | r )
 
 type MergePullRequestInput = { | MergePullRequestInputRowRequired + () }
 
@@ -1405,9 +1326,7 @@ mergePullRequest input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type MinimizeCommentInputRowRequired r
-  = ( input :: Examples.Github.InputObject.MinimizeCommentInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.MinimizeCommentInput | r )
 
 type MinimizeCommentInput = { | MinimizeCommentInputRowRequired + () }
 
@@ -1423,9 +1342,7 @@ minimizeComment input = selectionForCompositeField
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type MoveProjectCardInputRowRequired r
-  = ( input :: Examples.Github.InputObject.MoveProjectCardInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.MoveProjectCardInput | r )
 
 type MoveProjectCardInput = { | MoveProjectCardInputRowRequired + () }
 
@@ -1441,9 +1358,7 @@ moveProjectCard input = selectionForCompositeField
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type MoveProjectColumnInputRowRequired r
-  = ( input :: Examples.Github.InputObject.MoveProjectColumnInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.MoveProjectColumnInput | r )
 
 type MoveProjectColumnInput = { | MoveProjectColumnInputRowRequired + () }
 
@@ -1457,6 +1372,22 @@ moveProjectColumn input = selectionForCompositeField
                           (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type PinIssueInputRowRequired r
+  = ( input :: Examples.Github.InputObject.PinIssueInput | r )
+
+type PinIssueInput = { | PinIssueInputRowRequired + () }
+
+pinIssue
+  :: forall r
+   . PinIssueInput
+  -> SelectionSet Scope__PinIssuePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+pinIssue input = selectionForCompositeField
+                 "pinIssue"
+                 (toGraphQLArguments
+                  input)
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RegenerateEnterpriseIdentityProviderRecoveryCodesInputRowRequired r
   = ( input
@@ -1481,8 +1412,7 @@ regenerateEnterpriseIdentityProviderRecoveryCodes input = selectionForCompositeF
                                                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RegenerateVerifiableDomainTokenInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.RegenerateVerifiableDomainTokenInput
+  = ( input :: Examples.Github.InputObject.RegenerateVerifiableDomainTokenInput
     | r
     )
 
@@ -1501,8 +1431,7 @@ regenerateVerifiableDomainToken input = selectionForCompositeField
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RemoveAssigneesFromAssignableInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.RemoveAssigneesFromAssignableInput
+  = ( input :: Examples.Github.InputObject.RemoveAssigneesFromAssignableInput
     | r
     )
 
@@ -1521,10 +1450,7 @@ removeAssigneesFromAssignable input = selectionForCompositeField
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RemoveEnterpriseAdminInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.RemoveEnterpriseAdminInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.RemoveEnterpriseAdminInput | r )
 
 type RemoveEnterpriseAdminInput
   = { | RemoveEnterpriseAdminInputRowRequired + () }
@@ -1541,8 +1467,7 @@ removeEnterpriseAdmin input = selectionForCompositeField
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RemoveEnterpriseIdentityProviderInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.RemoveEnterpriseIdentityProviderInput
+  = ( input :: Examples.Github.InputObject.RemoveEnterpriseIdentityProviderInput
     | r
     )
 
@@ -1561,8 +1486,7 @@ removeEnterpriseIdentityProvider input = selectionForCompositeField
                                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RemoveEnterpriseOrganizationInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.RemoveEnterpriseOrganizationInput
+  = ( input :: Examples.Github.InputObject.RemoveEnterpriseOrganizationInput
     | r
     )
 
@@ -1601,10 +1525,7 @@ removeEnterpriseSupportEntitlement input = selectionForCompositeField
                                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RemoveLabelsFromLabelableInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.RemoveLabelsFromLabelableInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.RemoveLabelsFromLabelableInput | r )
 
 type RemoveLabelsFromLabelableInput
   = { | RemoveLabelsFromLabelableInputRowRequired + () }
@@ -1621,10 +1542,7 @@ removeLabelsFromLabelable input = selectionForCompositeField
                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RemoveOutsideCollaboratorInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.RemoveOutsideCollaboratorInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.RemoveOutsideCollaboratorInput | r )
 
 type RemoveOutsideCollaboratorInput
   = { | RemoveOutsideCollaboratorInputRowRequired + () }
@@ -1641,9 +1559,7 @@ removeOutsideCollaborator input = selectionForCompositeField
                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RemoveReactionInputRowRequired r
-  = ( input :: Examples.Github.InputObject.RemoveReactionInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.RemoveReactionInput | r )
 
 type RemoveReactionInput = { | RemoveReactionInputRowRequired + () }
 
@@ -1691,9 +1607,7 @@ reopenIssue input = selectionForCompositeField
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReopenPullRequestInputRowRequired r
-  = ( input :: Examples.Github.InputObject.ReopenPullRequestInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.ReopenPullRequestInput | r )
 
 type ReopenPullRequestInput = { | ReopenPullRequestInputRowRequired + () }
 
@@ -1709,9 +1623,7 @@ reopenPullRequest input = selectionForCompositeField
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RequestReviewsInputRowRequired r
-  = ( input :: Examples.Github.InputObject.RequestReviewsInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.RequestReviewsInput | r )
 
 type RequestReviewsInput = { | RequestReviewsInputRowRequired + () }
 
@@ -1727,9 +1639,7 @@ requestReviews input = selectionForCompositeField
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type RerequestCheckSuiteInputRowRequired r
-  = ( input :: Examples.Github.InputObject.RerequestCheckSuiteInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.RerequestCheckSuiteInput | r )
 
 type RerequestCheckSuiteInput = { | RerequestCheckSuiteInputRowRequired + () }
 
@@ -1745,9 +1655,7 @@ rerequestCheckSuite input = selectionForCompositeField
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ResolveReviewThreadInputRowRequired r
-  = ( input :: Examples.Github.InputObject.ResolveReviewThreadInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.ResolveReviewThreadInput | r )
 
 type ResolveReviewThreadInput = { | ResolveReviewThreadInputRowRequired + () }
 
@@ -1763,8 +1671,7 @@ resolveReviewThread input = selectionForCompositeField
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SetEnterpriseIdentityProviderInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.SetEnterpriseIdentityProviderInput
+  = ( input :: Examples.Github.InputObject.SetEnterpriseIdentityProviderInput
     | r
     )
 
@@ -1783,8 +1690,7 @@ setEnterpriseIdentityProvider input = selectionForCompositeField
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SetOrganizationInteractionLimitInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.SetOrganizationInteractionLimitInput
+  = ( input :: Examples.Github.InputObject.SetOrganizationInteractionLimitInput
     | r
     )
 
@@ -1803,8 +1709,7 @@ setOrganizationInteractionLimit input = selectionForCompositeField
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SetRepositoryInteractionLimitInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.SetRepositoryInteractionLimitInput
+  = ( input :: Examples.Github.InputObject.SetRepositoryInteractionLimitInput
     | r
     )
 
@@ -1823,10 +1728,7 @@ setRepositoryInteractionLimit input = selectionForCompositeField
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SetUserInteractionLimitInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.SetUserInteractionLimitInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.SetUserInteractionLimitInput | r )
 
 type SetUserInteractionLimitInput
   = { | SetUserInteractionLimitInputRowRequired + () }
@@ -1843,10 +1745,7 @@ setUserInteractionLimit input = selectionForCompositeField
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SubmitPullRequestReviewInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.SubmitPullRequestReviewInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.SubmitPullRequestReviewInput | r )
 
 type SubmitPullRequestReviewInput
   = { | SubmitPullRequestReviewInputRowRequired + () }
@@ -1879,9 +1778,7 @@ transferIssue input = selectionForCompositeField
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnarchiveRepositoryInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UnarchiveRepositoryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UnarchiveRepositoryInput | r )
 
 type UnarchiveRepositoryInput = { | UnarchiveRepositoryInputRowRequired + () }
 
@@ -1913,8 +1810,7 @@ unfollowUser input = selectionForCompositeField
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnlinkRepositoryFromProjectInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UnlinkRepositoryFromProjectInput
+  = ( input :: Examples.Github.InputObject.UnlinkRepositoryFromProjectInput
     | r
     )
 
@@ -1933,9 +1829,7 @@ unlinkRepositoryFromProject input = selectionForCompositeField
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnlockLockableInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UnlockLockableInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UnlockLockableInput | r )
 
 type UnlockLockableInput = { | UnlockLockableInputRowRequired + () }
 
@@ -1951,9 +1845,7 @@ unlockLockable input = selectionForCompositeField
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnmarkFileAsViewedInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UnmarkFileAsViewedInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UnmarkFileAsViewedInput | r )
 
 type UnmarkFileAsViewedInput = { | UnmarkFileAsViewedInputRowRequired + () }
 
@@ -1969,10 +1861,7 @@ unmarkFileAsViewed input = selectionForCompositeField
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnmarkIssueAsDuplicateInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UnmarkIssueAsDuplicateInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UnmarkIssueAsDuplicateInput | r )
 
 type UnmarkIssueAsDuplicateInput
   = { | UnmarkIssueAsDuplicateInputRowRequired + () }
@@ -1989,9 +1878,7 @@ unmarkIssueAsDuplicate input = selectionForCompositeField
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnminimizeCommentInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UnminimizeCommentInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UnminimizeCommentInput | r )
 
 type UnminimizeCommentInput = { | UnminimizeCommentInputRowRequired + () }
 
@@ -2006,11 +1893,24 @@ unminimizeComment input = selectionForCompositeField
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type UnpinIssueInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UnpinIssueInput | r )
+
+type UnpinIssueInput = { | UnpinIssueInputRowRequired + () }
+
+unpinIssue
+  :: forall r
+   . UnpinIssueInput
+  -> SelectionSet Scope__UnpinIssuePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+unpinIssue input = selectionForCompositeField
+                   "unpinIssue"
+                   (toGraphQLArguments
+                    input)
+                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type UnresolveReviewThreadInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UnresolveReviewThreadInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UnresolveReviewThreadInput | r )
 
 type UnresolveReviewThreadInput
   = { | UnresolveReviewThreadInputRowRequired + () }
@@ -2027,10 +1927,7 @@ unresolveReviewThread input = selectionForCompositeField
                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateBranchProtectionRuleInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdateBranchProtectionRuleInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateBranchProtectionRuleInput | r )
 
 type UpdateBranchProtectionRuleInput
   = { | UpdateBranchProtectionRuleInputRowRequired + () }
@@ -2047,9 +1944,7 @@ updateBranchProtectionRule input = selectionForCompositeField
                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateCheckRunInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UpdateCheckRunInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateCheckRunInput | r )
 
 type UpdateCheckRunInput = { | UpdateCheckRunInputRowRequired + () }
 
@@ -2065,8 +1960,7 @@ updateCheckRun input = selectionForCompositeField
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateCheckSuitePreferencesInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdateCheckSuitePreferencesInput
+  = ( input :: Examples.Github.InputObject.UpdateCheckSuitePreferencesInput
     | r
     )
 
@@ -2354,10 +2248,7 @@ updateEnterpriseOrganizationProjectsSetting input = selectionForCompositeField
                                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateEnterpriseProfileInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdateEnterpriseProfileInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateEnterpriseProfileInput | r )
 
 type UpdateEnterpriseProfileInput
   = { | UpdateEnterpriseProfileInputRowRequired + () }
@@ -2438,8 +2329,7 @@ updateEnterpriseTwoFactorAuthenticationRequiredSetting input = selectionForCompo
                                                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateIpAllowListEnabledSettingInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdateIpAllowListEnabledSettingInput
+  = ( input :: Examples.Github.InputObject.UpdateIpAllowListEnabledSettingInput
     | r
     )
 
@@ -2458,10 +2348,7 @@ updateIpAllowListEnabledSetting input = selectionForCompositeField
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateIpAllowListEntryInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdateIpAllowListEntryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateIpAllowListEntryInput | r )
 
 type UpdateIpAllowListEntryInput
   = { | UpdateIpAllowListEntryInputRowRequired + () }
@@ -2494,9 +2381,7 @@ updateIssue input = selectionForCompositeField
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateIssueCommentInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UpdateIssueCommentInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateIssueCommentInput | r )
 
 type UpdateIssueCommentInput = { | UpdateIssueCommentInputRowRequired + () }
 
@@ -2548,9 +2433,7 @@ updateProject input = selectionForCompositeField
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateProjectCardInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UpdateProjectCardInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateProjectCardInput | r )
 
 type UpdateProjectCardInput = { | UpdateProjectCardInputRowRequired + () }
 
@@ -2566,9 +2449,7 @@ updateProjectCard input = selectionForCompositeField
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateProjectColumnInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UpdateProjectColumnInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateProjectColumnInput | r )
 
 type UpdateProjectColumnInput = { | UpdateProjectColumnInputRowRequired + () }
 
@@ -2584,9 +2465,7 @@ updateProjectColumn input = selectionForCompositeField
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdatePullRequestInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UpdatePullRequestInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdatePullRequestInput | r )
 
 type UpdatePullRequestInput = { | UpdatePullRequestInputRowRequired + () }
 
@@ -2602,10 +2481,7 @@ updatePullRequest input = selectionForCompositeField
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdatePullRequestReviewInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdatePullRequestReviewInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdatePullRequestReviewInput | r )
 
 type UpdatePullRequestReviewInput
   = { | UpdatePullRequestReviewInputRowRequired + () }
@@ -2622,8 +2498,7 @@ updatePullRequestReview input = selectionForCompositeField
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdatePullRequestReviewCommentInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdatePullRequestReviewCommentInput
+  = ( input :: Examples.Github.InputObject.UpdatePullRequestReviewCommentInput
     | r
     )
 
@@ -2658,9 +2533,7 @@ updateRef input = selectionForCompositeField
                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateRepositoryInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UpdateRepositoryInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateRepositoryInput | r )
 
 type UpdateRepositoryInput = { | UpdateRepositoryInputRowRequired + () }
 
@@ -2676,9 +2549,7 @@ updateRepository input = selectionForCompositeField
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateSubscriptionInputRowRequired r
-  = ( input :: Examples.Github.InputObject.UpdateSubscriptionInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateSubscriptionInput | r )
 
 type UpdateSubscriptionInput = { | UpdateSubscriptionInputRowRequired + () }
 
@@ -2694,10 +2565,7 @@ updateSubscription input = selectionForCompositeField
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateTeamDiscussionInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdateTeamDiscussionInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.UpdateTeamDiscussionInput | r )
 
 type UpdateTeamDiscussionInput = { | UpdateTeamDiscussionInputRowRequired + () }
 
@@ -2713,8 +2581,7 @@ updateTeamDiscussion input = selectionForCompositeField
                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateTeamDiscussionCommentInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.UpdateTeamDiscussionCommentInput
+  = ( input :: Examples.Github.InputObject.UpdateTeamDiscussionCommentInput
     | r
     )
 
@@ -2749,10 +2616,7 @@ updateTopics input = selectionForCompositeField
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type VerifyVerifiableDomainInputRowRequired r
-  = ( input
-      :: Examples.Github.InputObject.VerifyVerifiableDomainInput
-    | r
-    )
+  = ( input :: Examples.Github.InputObject.VerifyVerifiableDomainInput | r )
 
 type VerifyVerifiableDomainInput
   = { | VerifyVerifiableDomainInputRowRequired + () }

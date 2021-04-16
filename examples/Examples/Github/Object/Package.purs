@@ -77,9 +77,7 @@ version input = selectionForCompositeField
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type VersionsInputRowOptional r
-  = ( orderBy
-      :: Optional
-         Examples.Github.InputObject.PackageVersionOrder
+  = ( orderBy :: Optional Examples.Github.InputObject.PackageVersionOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int

@@ -20,12 +20,10 @@ import Examples.Github.Scopes
   )
 import Examples.Github.Scalars (Uri, DateTime, Html, Id)
 import Data.Maybe (Maybe)
-import Examples.Github.InputObject
-  (EnterpriseMemberOrder, OrganizationOrder) as Examples.Github.InputObject
+import Examples.Github.InputObject (EnterpriseMemberOrder, OrganizationOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.EnterpriseUserAccountMembershipRole
   (EnterpriseUserAccountMembershipRole)
-import Examples.Github.Enum.EnterpriseUserDeployment
-  (EnterpriseUserDeployment)
+import Examples.Github.Enum.EnterpriseUserDeployment (EnterpriseUserDeployment)
 
 type AvatarUrlInputRowOptional r = ( size :: Optional Int | r )
 
@@ -77,9 +75,7 @@ location = selectionForField "location" [] graphqlDefaultResponseScalarDecoder
 type MembersInputRowOptional r
   = ( organizationLogins :: Optional (Array String)
     , query :: Optional String
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.EnterpriseMemberOrder
+    , orderBy :: Optional Examples.Github.InputObject.EnterpriseMemberOrder
     , role :: Optional EnterpriseUserAccountMembershipRole
     , deployment :: Optional EnterpriseUserDeployment
     , after :: Optional String
@@ -107,9 +103,7 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
 type OrganizationsInputRowOptional r
   = ( query :: Optional String
-    , orderBy
-      :: Optional
-         Examples.Github.InputObject.OrganizationOrder
+    , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
