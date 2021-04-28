@@ -23,4 +23,6 @@
   ]
 , packages = (./spago.dhall).packages
 , sources = (./spago.dhall).sources # [ "generator/**/*.purs", "generator-test/**/*.purs" ]
+, license = "Apache-2.0"
+, repository = "https://github.com/purescript-graphqlclient/purescript-graphqlclient"
 }
