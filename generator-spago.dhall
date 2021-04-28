@@ -1,4 +1,4 @@
-{ name = "purescript-graphqlclient-generator"
+{ name = "graphqlclient-generator"
 , dependencies = (./spago.dhall).dependencies #
   [ "node-fs-aff"
   , "spec"
