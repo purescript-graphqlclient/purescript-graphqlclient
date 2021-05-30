@@ -47,6 +47,6 @@
     "apollo-codegen": "^0.20.2",
     "json-diff": "^0.5.4",
     "terser": "^5.6.0-beta",
-    "ws": "^7.4.3"
+    "ws": "^7.4.6"
   }
 }
