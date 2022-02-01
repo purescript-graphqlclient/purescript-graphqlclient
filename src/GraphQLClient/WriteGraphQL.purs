@@ -26,7 +26,7 @@ writeGraphQLRawField = case _ of
   Composite name subFields cache -> case cache of
     Nothing -> name <> writeGraphQLArrayRawField subFields
     Just cache' -> name <> cache'.hash <> ": " <> name <> cache'.argsWritten <> writeGraphQLArrayRawField subFields
-  OnSpread onType [] -> ""
+  OnSpread _onType [] -> ""
   OnSpread onType subFields -> "...on " <> onType <> writeGraphQLArrayRawField subFields
 
 writeGraphQLArrayRawField :: Array RawField -> String

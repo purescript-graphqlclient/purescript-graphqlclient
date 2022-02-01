@@ -283,14 +283,14 @@ bindSelectionSet ::
 bindSelectionSet decodeOutput (SelectionSet fields decoder) = SelectionSet fields (\json -> decoder json >>= decodeOutput)
 
 getSelectionSetDecoder :: ∀ lockedTo a. SelectionSet lockedTo a -> Json -> Either JsonDecodeError a
-getSelectionSetDecoder (SelectionSet fields decoder) = decoder
+getSelectionSetDecoder (SelectionSet _fields decoder) = decoder
 
 enumDecoder :: ∀ a. String -> Array (Tuple String a) -> Json -> Either JsonDecodeError a
 enumDecoder = enumDecoder'
   where
   enumDecoder' name fromToMap = implementation name (List.fromFoldable fromToMap)
 
-  go Nil parsed = Nothing
+  go Nil _parsed = Nothing
   go ((Tuple str val) : t) parsed = if str == parsed then Just val else go t parsed
 
   implementation :: String -> List (Tuple String a) -> Json -> Either JsonDecodeError a
