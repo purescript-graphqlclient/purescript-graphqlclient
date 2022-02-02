@@ -18,8 +18,8 @@
         "purescript-affjax": "^v12.0.0",
         "purescript-argonaut-codecs": "^v8.1.0",
         "purescript-argonaut-core": "^v6.0.0",
-        "purescript-argonaut-generic": "^v7.0.0",
-        "purescript-arrays": "^v6.0.0",
+        "purescript-argonaut-generic": "^v7.0.1",
+        "purescript-arrays": "^v6.0.1",
         "purescript-bifunctors": "^v5.0.0",
         "purescript-control": "^v5.0.0",
         "purescript-datetime": "^v5.0.2",
@@ -32,11 +32,11 @@
         "purescript-lists": "^v6.0.1",
         "purescript-maybe": "^v5.0.0",
         "purescript-newtype": "^v4.0.0",
-        "purescript-prelude": "^v5.0.0",
+        "purescript-prelude": "^v5.0.1",
         "purescript-psci-support": "^v5.0.0",
         "purescript-record": "^v3.0.0",
         "purescript-strings": "^v5.0.0",
-        "purescript-transformers": "^v5.0.0",
-        "purescript-tuples": "^v6.0.0"
+        "purescript-transformers": "^v5.2.0",
+        "purescript-tuples": "^v6.0.1"
     }
 }
