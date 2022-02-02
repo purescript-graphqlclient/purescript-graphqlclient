@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: '16'
       - uses: purescript-contrib/setup-purescript@main
+        with:
           purescript: latest
           spago: latest
 
