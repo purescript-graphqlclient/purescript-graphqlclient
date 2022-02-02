@@ -44,6 +44,7 @@ jobs:
 
       - name: Run tests
         env:
+          # b.c. IF (private) token will appear on github (become public), github will deactivate it
           MY_GITHUB_GRAPHQL_ENDPOINT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./ci-approve.sh

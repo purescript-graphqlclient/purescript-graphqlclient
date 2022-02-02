@@ -15,7 +15,7 @@ in upstream
       , "strings"
       , "tuples"
       ]
-    , repo = "https://github.com/srghma/purescript-boxes"
+    , repo = "https://github.com/cdepillabout/purescript-boxes.git"
     , version = "master"
     }
   with envparse =
@@ -35,6 +35,6 @@ in upstream
       , "boxes"
       , "ansi"
       ]
-    , repo = "https://github.com/srghma/purescript-envparse"
+    , repo = "https://github.com/srghma/purescript-envparse.git"
     , version = "master"
     }
