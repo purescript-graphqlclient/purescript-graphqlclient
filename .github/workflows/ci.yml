@@ -13,11 +13,11 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: v16.0.0
       - uses: purescript-contrib/setup-purescript@main
         with:
-          purescript: latest
-          spago: latest
+          purescript: 0.14.5
+          spago: 0.20.3
 
       - name: Cache PureScript dependencies
         uses: actions/cache@v2
