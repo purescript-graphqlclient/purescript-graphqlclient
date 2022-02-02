@@ -13,7 +13,7 @@ spago --config generator-spago.dhall run --no-install \
 
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \
-  --node-args "--input-url https://api.github.com/graphql --header \"Authorization: Bearer ${MY_GITHUB_GRAPHQL_ENDPOINT_TOKEN}\" --output examples/Examples/Github --api Examples.Github"
+  --node-args "--input-url https://api.github.com/graphql --header \"Authorization: Bearer $MY_GITHUB_GRAPHQL_ENDPOINT_TOKEN\" --output examples/Examples/Github --api Examples.Github"
 
 spago --config generator-spago.dhall run --no-install \
   --main GraphQLClientGenerator.Main \

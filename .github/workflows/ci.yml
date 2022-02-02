@@ -5,6 +5,9 @@ on:
     branches: [ master ]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,4 +43,7 @@ jobs:
           spago --config generator-spago.dhall build --no-install
 
       - name: Run tests
-        run: ./ci-approve.sh
+        env:
+          MY_GITHUB_GRAPHQL_ENDPOINT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ./ci-approve.sh
