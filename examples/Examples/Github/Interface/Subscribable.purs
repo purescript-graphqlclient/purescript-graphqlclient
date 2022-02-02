@@ -10,6 +10,7 @@ import GraphQLClient
 import Examples.Github.Scopes
   ( Scope__Subscribable
   , Scope__Commit
+  , Scope__Discussion
   , Scope__Issue
   , Scope__PullRequest
   , Scope__Repository
@@ -38,6 +39,7 @@ viewerSubscription = selectionForField
 
 type Fragments decodesTo
   = { onCommit :: SelectionSet Scope__Commit decodesTo
+    , onDiscussion :: SelectionSet Scope__Discussion decodesTo
     , onIssue :: SelectionSet Scope__Issue decodesTo
     , onPullRequest :: SelectionSet Scope__PullRequest decodesTo
     , onRepository :: SelectionSet Scope__Repository decodesTo
@@ -51,6 +53,7 @@ fragments
   -> SelectionSet Scope__Subscribable decodesTo
 fragments selections = exhaustiveFragmentSelection
                        [ buildFragment "Commit" selections.onCommit
+                       , buildFragment "Discussion" selections.onDiscussion
                        , buildFragment "Issue" selections.onIssue
                        , buildFragment "PullRequest" selections.onPullRequest
                        , buildFragment "Repository" selections.onRepository
@@ -63,6 +66,8 @@ fragments selections = exhaustiveFragmentSelection
 maybeFragments :: forall decodesTo. Fragments (Maybe decodesTo)
 maybeFragments = { onCommit: pure
                              Nothing
+                 , onDiscussion: pure
+                                 Nothing
                  , onIssue: pure
                             Nothing
                  , onPullRequest: pure

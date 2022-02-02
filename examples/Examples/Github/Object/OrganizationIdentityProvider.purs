@@ -25,7 +25,10 @@ digestMethod = selectionForField
                graphqlDefaultResponseScalarDecoder
 
 type ExternalIdentitiesInputRowOptional r
-  = ( after :: Optional String
+  = ( membersOnly :: Optional Boolean
+    , login :: Optional String
+    , userName :: Optional String
+    , after :: Optional String
     , before :: Optional String
     , first :: Optional Int
     , last :: Optional Int

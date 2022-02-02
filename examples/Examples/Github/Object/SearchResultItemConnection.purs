@@ -18,6 +18,12 @@ import Data.Maybe (Maybe)
 codeCount :: SelectionSet Scope__SearchResultItemConnection Int
 codeCount = selectionForField "codeCount" [] graphqlDefaultResponseScalarDecoder
 
+discussionCount :: SelectionSet Scope__SearchResultItemConnection Int
+discussionCount = selectionForField
+                  "discussionCount"
+                  []
+                  graphqlDefaultResponseScalarDecoder
+
 edges
   :: forall r
    . SelectionSet Scope__SearchResultItemEdge r

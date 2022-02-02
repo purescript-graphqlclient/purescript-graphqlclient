@@ -16,6 +16,8 @@ import Examples.Github.Scopes
   , Scope__Comment
   , Scope__UserContentEditConnection
   , Scope__CommitComment
+  , Scope__Discussion
+  , Scope__DiscussionComment
   , Scope__GistComment
   , Scope__Issue
   , Scope__IssueComment
@@ -126,6 +128,8 @@ viewerDidAuthor = selectionForField
 
 type Fragments decodesTo
   = { onCommitComment :: SelectionSet Scope__CommitComment decodesTo
+    , onDiscussion :: SelectionSet Scope__Discussion decodesTo
+    , onDiscussionComment :: SelectionSet Scope__DiscussionComment decodesTo
     , onGistComment :: SelectionSet Scope__GistComment decodesTo
     , onIssue :: SelectionSet Scope__Issue decodesTo
     , onIssueComment :: SelectionSet Scope__IssueComment decodesTo
@@ -150,6 +154,10 @@ fragments selections = exhaustiveFragmentSelection
                        [ buildFragment
                          "CommitComment"
                          selections.onCommitComment
+                       , buildFragment "Discussion" selections.onDiscussion
+                       , buildFragment
+                         "DiscussionComment"
+                         selections.onDiscussionComment
                        , buildFragment "GistComment" selections.onGistComment
                        , buildFragment "Issue" selections.onIssue
                        , buildFragment "IssueComment" selections.onIssueComment
@@ -171,6 +179,10 @@ fragments selections = exhaustiveFragmentSelection
 maybeFragments :: forall decodesTo. Fragments (Maybe decodesTo)
 maybeFragments = { onCommitComment: pure
                                     Nothing
+                 , onDiscussion: pure
+                                 Nothing
+                 , onDiscussionComment: pure
+                                        Nothing
                  , onGistComment: pure
                                   Nothing
                  , onIssue: pure

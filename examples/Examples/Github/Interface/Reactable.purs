@@ -16,11 +16,14 @@ import Examples.Github.Scopes
   , Scope__ReactionGroup
   , Scope__ReactionConnection
   , Scope__CommitComment
+  , Scope__Discussion
+  , Scope__DiscussionComment
   , Scope__Issue
   , Scope__IssueComment
   , Scope__PullRequest
   , Scope__PullRequestReview
   , Scope__PullRequestReviewComment
+  , Scope__Release
   , Scope__TeamDiscussion
   , Scope__TeamDiscussionComment
   )
@@ -80,6 +83,8 @@ viewerCanReact = selectionForField
 
 type Fragments decodesTo
   = { onCommitComment :: SelectionSet Scope__CommitComment decodesTo
+    , onDiscussion :: SelectionSet Scope__Discussion decodesTo
+    , onDiscussionComment :: SelectionSet Scope__DiscussionComment decodesTo
     , onIssue :: SelectionSet Scope__Issue decodesTo
     , onIssueComment :: SelectionSet Scope__IssueComment decodesTo
     , onPullRequest :: SelectionSet Scope__PullRequest decodesTo
@@ -88,6 +93,7 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__PullRequestReviewComment
          decodesTo
+    , onRelease :: SelectionSet Scope__Release decodesTo
     , onTeamDiscussion :: SelectionSet Scope__TeamDiscussion decodesTo
     , onTeamDiscussionComment
       :: SelectionSet
@@ -103,6 +109,10 @@ fragments selections = exhaustiveFragmentSelection
                        [ buildFragment
                          "CommitComment"
                          selections.onCommitComment
+                       , buildFragment "Discussion" selections.onDiscussion
+                       , buildFragment
+                         "DiscussionComment"
+                         selections.onDiscussionComment
                        , buildFragment "Issue" selections.onIssue
                        , buildFragment "IssueComment" selections.onIssueComment
                        , buildFragment "PullRequest" selections.onPullRequest
@@ -112,6 +122,7 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "PullRequestReviewComment"
                          selections.onPullRequestReviewComment
+                       , buildFragment "Release" selections.onRelease
                        , buildFragment
                          "TeamDiscussion"
                          selections.onTeamDiscussion
@@ -123,6 +134,10 @@ fragments selections = exhaustiveFragmentSelection
 maybeFragments :: forall decodesTo. Fragments (Maybe decodesTo)
 maybeFragments = { onCommitComment: pure
                                     Nothing
+                 , onDiscussion: pure
+                                 Nothing
+                 , onDiscussionComment: pure
+                                        Nothing
                  , onIssue: pure
                             Nothing
                  , onIssueComment: pure
@@ -133,6 +148,8 @@ maybeFragments = { onCommitComment: pure
                                         Nothing
                  , onPullRequestReviewComment: pure
                                                Nothing
+                 , onRelease: pure
+                              Nothing
                  , onTeamDiscussion: pure
                                      Nothing
                  , onTeamDiscussionComment: pure

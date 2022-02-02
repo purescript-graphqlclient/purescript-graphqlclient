@@ -13,10 +13,10 @@ import MyExamplesTests.Example08Foldr as MyExamplesTests.Example08Foldr
 import MyExamplesTests.Example10Github as MyExamplesTests.Example10Github
 import MyExamplesTests.Example11GithubPagination as MyExamplesTests.Example11GithubPagination
 import MyExamplesTests.Example12Mutation as MyExamplesTests.Example12Mutation
-import MyExamplesTests.Example13SSubscription as MyExamplesTests.Example13SSubscription
+import MyExamplesTests.Example13Subscription as MyExamplesTests.Example13Subscription
 
-allTests :: Test.Spec.Spec Unit
-allTests =
+allTests :: String -> Test.Spec.Spec Unit
+allTests githubGraphqlEndpointToken =
   Test.Spec.parallel do
     MyExamplesTests.Example00SingleFieldQuery.spec
     MyExamplesTests.Example01BasicQuery.spec
@@ -25,8 +25,8 @@ allTests =
     MyExamplesTests.Example04ErrorDestructuring.spec
     MyExamplesTests.Example05InterfacesAndUnions.spec
     MyExamplesTests.Example06Typename.spec
-    MyExamplesTests.Example08Foldr.spec
-    MyExamplesTests.Example10Github.spec
-    MyExamplesTests.Example11GithubPagination.spec
+    MyExamplesTests.Example08Foldr.spec githubGraphqlEndpointToken
+    MyExamplesTests.Example10Github.spec githubGraphqlEndpointToken
+    MyExamplesTests.Example11GithubPagination.spec githubGraphqlEndpointToken
     MyExamplesTests.Example12Mutation.spec
-    MyExamplesTests.Example13SSubscription.spec
+    MyExamplesTests.Example13Subscription.spec

@@ -21,6 +21,7 @@ import Examples.Github.Scalars (DateTime, Html, Uri)
 import Data.Maybe (Maybe(..))
 import Examples.Github.Enum.RepositoryLockReason (RepositoryLockReason)
 import Type.Row (type (+))
+import Examples.Github.Enum.RepositoryVisibility (RepositoryVisibility)
 import Prelude (pure)
 
 createdAt :: SelectionSet Scope__RepositoryInfo DateTime
@@ -170,6 +171,12 @@ usesCustomOpenGraphImage = selectionForField
                            "usesCustomOpenGraphImage"
                            []
                            graphqlDefaultResponseScalarDecoder
+
+visibility :: SelectionSet Scope__RepositoryInfo RepositoryVisibility
+visibility = selectionForField
+             "visibility"
+             []
+             graphqlDefaultResponseScalarDecoder
 
 type Fragments decodesTo
   = { onRepository :: SelectionSet Scope__Repository decodesTo }

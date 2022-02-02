@@ -4,13 +4,17 @@ import GraphQLClient
   ( SelectionSet
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
-  , selectionForCompositeField
-  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   , Optional
+  , selectionForCompositeField
   , toGraphQLArguments
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  (Scope__ReactionGroup, Scope__Reactable, Scope__ReactingUserConnection)
+  ( Scope__ReactionGroup
+  , Scope__ReactorConnection
+  , Scope__Reactable
+  , Scope__ReactingUserConnection
+  )
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime)
@@ -21,6 +25,27 @@ content = selectionForField "content" [] graphqlDefaultResponseScalarDecoder
 
 createdAt :: SelectionSet Scope__ReactionGroup (Maybe DateTime)
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
+
+type ReactorsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type ReactorsInput = { | ReactorsInputRowOptional + () }
+
+reactors
+  :: forall r
+   . ReactorsInput
+  -> SelectionSet Scope__ReactorConnection r
+  -> SelectionSet Scope__ReactionGroup r
+reactors input = selectionForCompositeField
+                 "reactors"
+                 (toGraphQLArguments
+                  input)
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 subject
   :: forall r

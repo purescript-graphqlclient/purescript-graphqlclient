@@ -21,6 +21,11 @@ import Examples.Github.Scopes
   , Scope__Ref
   , Scope__DeployKeyConnection
   , Scope__DeploymentConnection
+  , Scope__Discussion
+  , Scope__DiscussionCategoryConnection
+  , Scope__DiscussionConnection
+  , Scope__Environment
+  , Scope__EnvironmentConnection
   , Scope__RepositoryConnection
   , Scope__FundingLink
   , Scope__RepositoryInteractionAbility
@@ -38,11 +43,13 @@ import Examples.Github.Scopes
   , Scope__GitObject
   , Scope__RepositoryOwner
   , Scope__PackageConnection
+  , Scope__PinnedDiscussionConnection
   , Scope__PinnedIssueConnection
   , Scope__Language
   , Scope__Project
   , Scope__ProjectConnection
   , Scope__PullRequest
+  , Scope__PullRequestTemplate
   , Scope__PullRequestConnection
   , Scope__RefConnection
   , Scope__ReleaseConnection
@@ -54,9 +61,10 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.Enum.CollaboratorAffiliation (CollaboratorAffiliation)
 import Examples.Github.Scalars
-  (DateTime, Html, Uri, Id, GitObjectId, GitSshRemote)
+  (DateTime, Html, Id, Uri, GitObjectId, GitSshRemote)
 import Examples.Github.InputObject
   ( DeploymentOrder
+  , DiscussionOrder
   , RepositoryOrder
   , IssueOrder
   , IssueFilters
@@ -81,6 +89,7 @@ import Examples.Github.Enum.OrderDirection (OrderDirection)
 import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
 import Examples.Github.Enum.RepositoryPermission (RepositoryPermission)
 import Examples.Github.Enum.SubscriptionState (SubscriptionState)
+import Examples.Github.Enum.RepositoryVisibility (RepositoryVisibility)
 
 type AssignableUsersInputRowOptional r
   = ( query :: Optional String
@@ -103,6 +112,12 @@ assignableUsers input = selectionForCompositeField
                         (toGraphQLArguments
                          input)
                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+autoMergeAllowed :: SelectionSet Scope__Repository Boolean
+autoMergeAllowed = selectionForField
+                   "autoMergeAllowed"
+                   []
+                   graphqlDefaultResponseScalarDecoder
 
 type BranchProtectionRulesInputRowOptional r
   = ( after :: Optional String
@@ -268,11 +283,113 @@ descriptionHTML = selectionForField
                   []
                   graphqlDefaultResponseScalarDecoder
 
+type DiscussionInputRowRequired r = ( number :: Int | r )
+
+type DiscussionInput = { | DiscussionInputRowRequired + () }
+
+discussion
+  :: forall r
+   . DiscussionInput
+  -> SelectionSet Scope__Discussion r
+  -> SelectionSet Scope__Repository (Maybe r)
+discussion input = selectionForCompositeField
+                   "discussion"
+                   (toGraphQLArguments
+                    input)
+                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type DiscussionCategoriesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , filterByAssignable :: Optional Boolean
+    | r
+    )
+
+type DiscussionCategoriesInput = { | DiscussionCategoriesInputRowOptional + () }
+
+discussionCategories
+  :: forall r
+   . DiscussionCategoriesInput
+  -> SelectionSet Scope__DiscussionCategoryConnection r
+  -> SelectionSet Scope__Repository r
+discussionCategories input = selectionForCompositeField
+                             "discussionCategories"
+                             (toGraphQLArguments
+                              input)
+                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type DiscussionsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , categoryId :: Optional Id
+    , orderBy :: Optional Examples.Github.InputObject.DiscussionOrder
+    | r
+    )
+
+type DiscussionsInput = { | DiscussionsInputRowOptional + () }
+
+discussions
+  :: forall r
+   . DiscussionsInput
+  -> SelectionSet Scope__DiscussionConnection r
+  -> SelectionSet Scope__Repository r
+discussions input = selectionForCompositeField
+                    "discussions"
+                    (toGraphQLArguments
+                     input)
+                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 diskUsage :: SelectionSet Scope__Repository (Maybe Int)
 diskUsage = selectionForField "diskUsage" [] graphqlDefaultResponseScalarDecoder
 
+type EnvironmentInputRowRequired r = ( name :: String | r )
+
+type EnvironmentInput = { | EnvironmentInputRowRequired + () }
+
+environment
+  :: forall r
+   . EnvironmentInput
+  -> SelectionSet Scope__Environment r
+  -> SelectionSet Scope__Repository (Maybe r)
+environment input = selectionForCompositeField
+                    "environment"
+                    (toGraphQLArguments
+                     input)
+                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type EnvironmentsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type EnvironmentsInput = { | EnvironmentsInputRowOptional + () }
+
+environments
+  :: forall r
+   . EnvironmentsInput
+  -> SelectionSet Scope__EnvironmentConnection r
+  -> SelectionSet Scope__Repository r
+environments input = selectionForCompositeField
+                     "environments"
+                     (toGraphQLArguments
+                      input)
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 forkCount :: SelectionSet Scope__Repository Int
 forkCount = selectionForField "forkCount" [] graphqlDefaultResponseScalarDecoder
+
+forkingAllowed :: SelectionSet Scope__Repository Boolean
+forkingAllowed = selectionForField
+                 "forkingAllowed"
+                 []
+                 graphqlDefaultResponseScalarDecoder
 
 type ForksInputRowOptional r
   = ( privacy :: Optional RepositoryPrivacy
@@ -694,6 +811,27 @@ parent = selectionForCompositeField
          []
          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type PinnedDiscussionsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type PinnedDiscussionsInput = { | PinnedDiscussionsInputRowOptional + () }
+
+pinnedDiscussions
+  :: forall r
+   . PinnedDiscussionsInput
+  -> SelectionSet Scope__PinnedDiscussionConnection r
+  -> SelectionSet Scope__Repository r
+pinnedDiscussions input = selectionForCompositeField
+                          "pinnedDiscussions"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type PinnedIssuesInputRowOptional r
   = ( after :: Optional String
     , before :: Optional String
@@ -789,6 +927,15 @@ pullRequest input = selectionForCompositeField
                     (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+pullRequestTemplates
+  :: forall r
+   . SelectionSet Scope__PullRequestTemplate r
+  -> SelectionSet Scope__Repository (Maybe (Array r))
+pullRequestTemplates = selectionForCompositeField
+                       "pullRequestTemplates"
+                       []
+                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type PullRequestsInputRowOptional r
   = ( states :: Optional (Array PullRequestState)
@@ -1099,6 +1246,12 @@ viewerSubscription = selectionForField
                      "viewerSubscription"
                      []
                      graphqlDefaultResponseScalarDecoder
+
+visibility :: SelectionSet Scope__Repository RepositoryVisibility
+visibility = selectionForField
+             "visibility"
+             []
+             graphqlDefaultResponseScalarDecoder
 
 type VulnerabilityAlertsInputRowOptional r
   = ( after :: Optional String

@@ -5,6 +5,25 @@ import Prelude (class Eq, class Ord, class Show)
 import GraphQLClient
   (class GraphQLDefaultResponseScalarDecoder, class ToGraphQLArgumentValue)
 
+-- | original name - Base64String
+newtype Base64String = Base64String String
+
+derive instance newtypeBase64String :: Newtype Base64String _
+
+derive newtype instance eqBase64String :: Eq Base64String
+
+derive newtype instance ordBase64String :: Ord Base64String
+
+derive newtype instance showBase64String :: Show Base64String
+
+derive newtype instance graphQlDefaultResponseScalarDecoderBase64String
+  ::
+  GraphQLDefaultResponseScalarDecoder Base64String
+
+derive newtype instance toGraphQlArgumentValueBase64String
+  ::
+  ToGraphQLArgumentValue Base64String
+
 -- | original name - Date
 newtype Date = Date String
 

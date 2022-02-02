@@ -9,10 +9,14 @@ import GraphQLClient
   , toGraphQLArguments
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes (Scope__Topic, Scope__StargazerConnection)
+import Examples.Github.Scopes
+  (Scope__Topic, Scope__RepositoryConnection, Scope__StargazerConnection)
 import Examples.Github.Scalars (Id)
 import Type.Row (type (+))
-import Examples.Github.InputObject (StarOrder) as Examples.Github.InputObject
+import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
+import Examples.Github.InputObject (RepositoryOrder, StarOrder) as Examples.Github.InputObject
+import Data.Maybe (Maybe)
+import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 
 id :: SelectionSet Scope__Topic Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
@@ -34,6 +38,33 @@ relatedTopics input = selectionForCompositeField
                       (toGraphQLArguments
                        input)
                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type RepositoriesInputRowOptional r
+  = ( privacy :: Optional RepositoryPrivacy
+    , orderBy :: Optional Examples.Github.InputObject.RepositoryOrder
+    , affiliations :: Optional (Array (Maybe RepositoryAffiliation))
+    , ownerAffiliations :: Optional (Array (Maybe RepositoryAffiliation))
+    , isLocked :: Optional Boolean
+    , after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , sponsorableOnly :: Optional Boolean
+    | r
+    )
+
+type RepositoriesInput = { | RepositoriesInputRowOptional + () }
+
+repositories
+  :: forall r
+   . RepositoriesInput
+  -> SelectionSet Scope__RepositoryConnection r
+  -> SelectionSet Scope__Topic r
+repositories input = selectionForCompositeField
+                     "repositories"
+                     (toGraphQLArguments
+                      input)
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 stargazerCount :: SelectionSet Scope__Topic Int
 stargazerCount = selectionForField

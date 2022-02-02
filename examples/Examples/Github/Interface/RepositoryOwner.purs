@@ -70,9 +70,12 @@ repositories input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type RepositoryInputRowOptional r = ( followRenames :: Optional Boolean | r )
+
 type RepositoryInputRowRequired r = ( name :: String | r )
 
-type RepositoryInput = { | RepositoryInputRowRequired + () }
+type RepositoryInput
+  = { | RepositoryInputRowOptional + RepositoryInputRowRequired + () }
 
 repository
   :: forall r

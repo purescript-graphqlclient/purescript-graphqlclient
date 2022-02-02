@@ -14,7 +14,10 @@ import Examples.Github.Scopes
   ( Scope__CheckAnnotationConnection
   , Scope__CheckRun
   , Scope__CheckSuite
+  , Scope__Deployment
+  , Scope__DeploymentRequest
   , Scope__Repository
+  , Scope__CheckStepConnection
   )
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Uri, Id)
@@ -69,6 +72,15 @@ databaseId = selectionForField
              []
              graphqlDefaultResponseScalarDecoder
 
+deployment
+  :: forall r
+   . SelectionSet Scope__Deployment r
+  -> SelectionSet Scope__CheckRun (Maybe r)
+deployment = selectionForCompositeField
+             "deployment"
+             []
+             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 detailsUrl :: SelectionSet Scope__CheckRun (Maybe Uri)
 detailsUrl = selectionForField
              "detailsUrl"
@@ -99,6 +111,15 @@ isRequired input = selectionForField
 name :: SelectionSet Scope__CheckRun String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
+pendingDeploymentRequest
+  :: forall r
+   . SelectionSet Scope__DeploymentRequest r
+  -> SelectionSet Scope__CheckRun (Maybe r)
+pendingDeploymentRequest = selectionForCompositeField
+                           "pendingDeploymentRequest"
+                           []
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 permalink :: SelectionSet Scope__CheckRun Uri
 permalink = selectionForField "permalink" [] graphqlDefaultResponseScalarDecoder
 
@@ -122,6 +143,28 @@ startedAt = selectionForField "startedAt" [] graphqlDefaultResponseScalarDecoder
 
 status :: SelectionSet Scope__CheckRun CheckStatusState
 status = selectionForField "status" [] graphqlDefaultResponseScalarDecoder
+
+type StepsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , number :: Optional Int
+    | r
+    )
+
+type StepsInput = { | StepsInputRowOptional + () }
+
+steps
+  :: forall r
+   . StepsInput
+  -> SelectionSet Scope__CheckStepConnection r
+  -> SelectionSet Scope__CheckRun (Maybe r)
+steps input = selectionForCompositeField
+              "steps"
+              (toGraphQLArguments
+               input)
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 summary :: SelectionSet Scope__CheckRun (Maybe String)
 summary = selectionForField "summary" [] graphqlDefaultResponseScalarDecoder

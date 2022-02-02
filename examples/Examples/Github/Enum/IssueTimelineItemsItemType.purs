@@ -22,6 +22,7 @@ data IssueTimelineItemsItemType
   | CommentDeletedEvent
   | ConnectedEvent
   | ConvertedNoteToIssueEvent
+  | ConvertedToDiscussionEvent
   | DemilestonedEvent
   | DisconnectedEvent
   | LabeledEvent
@@ -65,6 +66,7 @@ fromToMap = [ Tuple "ISSUE_COMMENT" IssueComment
             , Tuple "COMMENT_DELETED_EVENT" CommentDeletedEvent
             , Tuple "CONNECTED_EVENT" ConnectedEvent
             , Tuple "CONVERTED_NOTE_TO_ISSUE_EVENT" ConvertedNoteToIssueEvent
+            , Tuple "CONVERTED_TO_DISCUSSION_EVENT" ConvertedToDiscussionEvent
             , Tuple "DEMILESTONED_EVENT" DemilestonedEvent
             , Tuple "DISCONNECTED_EVENT" DisconnectedEvent
             , Tuple "LABELED_EVENT" LabeledEvent
@@ -108,6 +110,8 @@ instance issueTimelineItemsItemTypeToGraphQLArgumentValue
       ConnectedEvent -> ArgumentValueEnum "CONNECTED_EVENT"
       ConvertedNoteToIssueEvent -> ArgumentValueEnum
                                    "CONVERTED_NOTE_TO_ISSUE_EVENT"
+      ConvertedToDiscussionEvent -> ArgumentValueEnum
+                                    "CONVERTED_TO_DISCUSSION_EVENT"
       DemilestonedEvent -> ArgumentValueEnum "DEMILESTONED_EVENT"
       DisconnectedEvent -> ArgumentValueEnum "DISCONNECTED_EVENT"
       LabeledEvent -> ArgumentValueEnum "LABELED_EVENT"

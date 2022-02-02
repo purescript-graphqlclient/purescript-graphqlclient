@@ -45,6 +45,12 @@ hasFoundVerificationToken = selectionForField
 id :: SelectionSet Scope__VerifiableDomain Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
+isApproved :: SelectionSet Scope__VerifiableDomain Boolean
+isApproved = selectionForField
+             "isApproved"
+             []
+             graphqlDefaultResponseScalarDecoder
+
 isRequiredForPolicyEnforcement :: SelectionSet Scope__VerifiableDomain Boolean
 isRequiredForPolicyEnforcement = selectionForField
                                  "isRequiredForPolicyEnforcement"

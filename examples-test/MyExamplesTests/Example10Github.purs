@@ -1,21 +1,23 @@
 module MyExamplesTests.Example10Github where
 
-import Control.Monad.Error.Class (throwError)
-import Effect.Exception (error)
-import Examples.Github.Scopes (Scope__Release, Scope__ReleaseConnection, Scope__Repository)
-import MyExamplesTests.Util (inlineAndTrim)
-import GraphQLClient (GraphQLError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, nonNullElementsOrFail, nonNullOrFail, printGraphQLError, writeGraphQL)
 import Prelude
+
+import Affjax.RequestHeader (RequestHeader(..))
+import Control.Monad.Error.Class (throwError)
 import Data.Either (Either, either)
 import Data.Maybe (Maybe(..), fromMaybe)
-import Affjax.RequestHeader (RequestHeader(..))
-import Examples.Github.Object.Repository as Examples.Github.Object.Repository
+import Effect.Exception (error)
 import Examples.Github.Object.Release as Examples.Github.Object.Release
+import Examples.Github.Object.ReleaseConnection as Examples.Github.Object.ReleaseConnection
+import Examples.Github.Object.Repository as Examples.Github.Object.Repository
 import Examples.Github.Object.StargazerConnection as Examples.Github.Object.StargazerConnection
 import Examples.Github.Object.Topic as Examples.Github.Object.Topic
-import Examples.Github.Object.ReleaseConnection as Examples.Github.Object.ReleaseConnection
 import Examples.Github.Query as Examples.Github.Query
 import Examples.Github.Scalars as Examples.Github.Scalars
+import Examples.Github.Scopes (Scope__Release, Scope__ReleaseConnection, Scope__Repository)
+import GraphQLClient (GraphQLError, Optional(..), Scope__RootQuery, SelectionSet, defaultInput, defaultRequestOptions, graphqlQueryRequest, nonNullElementsOrFail, nonNullOrFail, printGraphQLError, writeGraphQL)
+import MyExamplesTests.Util (inlineAndTrim)
+import Record (merge) as Record
 import Test.Spec (Spec, it) as Test.Spec
 import Test.Spec.Assertions (shouldEqual) as Test.Spec
 
@@ -46,7 +48,16 @@ query =
   { repoInfo: _
   , topicId: _
   }
-    <$> (Examples.Github.Query.repository { owner: "srghma", name: "purescript-dom-indexed" } repo # nonNullOrFail)
+    <$> (Examples.Github.Query.repository
+        ( Record.merge
+            { owner: "srghma"
+            , name: "purescript-dom-indexed"
+            }
+            (defaultInput :: { | Examples.Github.Query.RepositoryInputRowOptional () })
+        )
+        repo
+        # nonNullOrFail
+        )
     <*> Examples.Github.Query.topic { name: "" } Examples.Github.Object.Topic.id
 
 repo :: SelectionSet Scope__Repository RepositoryInfo
@@ -100,12 +111,12 @@ query {
 }
 """
 
-spec :: Test.Spec.Spec Unit
-spec =
+spec :: String -> Test.Spec.Spec Unit
+spec githubGraphqlEndpointToken =
   Test.Spec.it "Example10Github" do
     writeGraphQL query `Test.Spec.shouldEqual` expectedQuery
     let
-      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer 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" ] }
+      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" ("Bearer " <> githubGraphqlEndpointToken) ] }
     (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts query
     (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
     response'

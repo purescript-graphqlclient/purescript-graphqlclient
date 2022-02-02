@@ -1,23 +1,29 @@
 module Examples.Github.Mutation where
 
 import Examples.Github.InputObject
-  ( AcceptEnterpriseAdministratorInvitationInput
+  ( AbortQueuedMigrationsInput
+  , AcceptEnterpriseAdministratorInvitationInput
   , AcceptTopicSuggestionInput
   , AddAssigneesToAssignableInput
   , AddCommentInput
+  , AddDiscussionCommentInput
   , AddEnterpriseSupportEntitlementInput
   , AddLabelsToLabelableInput
   , AddProjectCardInput
   , AddProjectColumnInput
+  , AddProjectNextItemInput
   , AddPullRequestReviewInput
   , AddPullRequestReviewCommentInput
   , AddPullRequestReviewThreadInput
   , AddReactionInput
   , AddStarInput
+  , AddUpvoteInput
   , AddVerifiableDomainInput
+  , ApproveDeploymentsInput
   , ApproveVerifiableDomainInput
   , ArchiveRepositoryInput
   , CancelEnterpriseAdminInvitationInput
+  , CancelSponsorshipInput
   , ChangeUserStatusInput
   , ClearLabelsFromLabelableInput
   , CloneProjectInput
@@ -25,27 +31,37 @@ import Examples.Github.InputObject
   , CloseIssueInput
   , ClosePullRequestInput
   , ConvertProjectCardNoteToIssueInput
+  , ConvertPullRequestToDraftInput
   , CreateBranchProtectionRuleInput
   , CreateCheckRunInput
   , CreateCheckSuiteInput
+  , CreateCommitOnBranchInput
+  , CreateDiscussionInput
   , CreateEnterpriseOrganizationInput
+  , CreateEnvironmentInput
   , CreateIpAllowListEntryInput
   , CreateIssueInput
+  , CreateMigrationSourceInput
   , CreateProjectInput
   , CreatePullRequestInput
   , CreateRefInput
   , CreateRepositoryInput
+  , CreateSponsorshipInput
   , CreateTeamDiscussionInput
   , CreateTeamDiscussionCommentInput
   , DeclineTopicSuggestionInput
   , DeleteBranchProtectionRuleInput
   , DeleteDeploymentInput
+  , DeleteDiscussionInput
+  , DeleteDiscussionCommentInput
+  , DeleteEnvironmentInput
   , DeleteIpAllowListEntryInput
   , DeleteIssueInput
   , DeleteIssueCommentInput
   , DeleteProjectInput
   , DeleteProjectCardInput
   , DeleteProjectColumnInput
+  , DeleteProjectNextItemInput
   , DeletePullRequestReviewInput
   , DeletePullRequestReviewCommentInput
   , DeleteRefInput
@@ -54,11 +70,15 @@ import Examples.Github.InputObject
   , DeleteVerifiableDomainInput
   , DisablePullRequestAutoMergeInput
   , DismissPullRequestReviewInput
+  , DismissRepositoryVulnerabilityAlertInput
   , EnablePullRequestAutoMergeInput
   , FollowUserInput
+  , GrantEnterpriseOrganizationsMigratorRoleInput
+  , GrantMigratorRoleInput
   , InviteEnterpriseAdminInput
   , LinkRepositoryToProjectInput
   , LockLockableInput
+  , MarkDiscussionCommentAsAnswerInput
   , MarkFileAsViewedInput
   , MarkPullRequestReadyForReviewInput
   , MergeBranchInput
@@ -69,6 +89,7 @@ import Examples.Github.InputObject
   , PinIssueInput
   , RegenerateEnterpriseIdentityProviderRecoveryCodesInput
   , RegenerateVerifiableDomainTokenInput
+  , RejectDeploymentsInput
   , RemoveAssigneesFromAssignableInput
   , RemoveEnterpriseAdminInput
   , RemoveEnterpriseIdentityProviderInput
@@ -78,21 +99,26 @@ import Examples.Github.InputObject
   , RemoveOutsideCollaboratorInput
   , RemoveReactionInput
   , RemoveStarInput
+  , RemoveUpvoteInput
   , ReopenIssueInput
   , ReopenPullRequestInput
   , RequestReviewsInput
   , RerequestCheckSuiteInput
   , ResolveReviewThreadInput
+  , RevokeEnterpriseOrganizationsMigratorRoleInput
+  , RevokeMigratorRoleInput
   , SetEnterpriseIdentityProviderInput
   , SetOrganizationInteractionLimitInput
   , SetRepositoryInteractionLimitInput
   , SetUserInteractionLimitInput
+  , StartRepositoryMigrationInput
   , SubmitPullRequestReviewInput
   , TransferIssueInput
   , UnarchiveRepositoryInput
   , UnfollowUserInput
   , UnlinkRepositoryFromProjectInput
   , UnlockLockableInput
+  , UnmarkDiscussionCommentAsAnswerInput
   , UnmarkFileAsViewedInput
   , UnmarkIssueAsDuplicateInput
   , UnminimizeCommentInput
@@ -101,6 +127,8 @@ import Examples.Github.InputObject
   , UpdateBranchProtectionRuleInput
   , UpdateCheckRunInput
   , UpdateCheckSuitePreferencesInput
+  , UpdateDiscussionInput
+  , UpdateDiscussionCommentInput
   , UpdateEnterpriseAdministratorRoleInput
   , UpdateEnterpriseAllowPrivateRepositoryForkingSettingInput
   , UpdateEnterpriseDefaultRepositoryPermissionSettingInput
@@ -113,23 +141,30 @@ import Examples.Github.InputObject
   , UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingInput
   , UpdateEnterpriseMembersCanViewDependencyInsightsSettingInput
   , UpdateEnterpriseOrganizationProjectsSettingInput
+  , UpdateEnterpriseOwnerOrganizationRoleInput
   , UpdateEnterpriseProfileInput
   , UpdateEnterpriseRepositoryProjectsSettingInput
   , UpdateEnterpriseTeamDiscussionsSettingInput
   , UpdateEnterpriseTwoFactorAuthenticationRequiredSettingInput
+  , UpdateEnvironmentInput
   , UpdateIpAllowListEnabledSettingInput
   , UpdateIpAllowListEntryInput
+  , UpdateIpAllowListForInstalledAppsEnabledSettingInput
   , UpdateIssueInput
   , UpdateIssueCommentInput
   , UpdateNotificationRestrictionSettingInput
+  , UpdateOrganizationAllowPrivateRepositoryForkingSettingInput
   , UpdateProjectInput
   , UpdateProjectCardInput
   , UpdateProjectColumnInput
+  , UpdateProjectNextItemFieldInput
   , UpdatePullRequestInput
+  , UpdatePullRequestBranchInput
   , UpdatePullRequestReviewInput
   , UpdatePullRequestReviewCommentInput
   , UpdateRefInput
   , UpdateRepositoryInput
+  , UpdateSponsorshipPreferencesInput
   , UpdateSubscriptionInput
   , UpdateTeamDiscussionInput
   , UpdateTeamDiscussionCommentInput
@@ -145,23 +180,29 @@ import GraphQLClient
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Examples.Github.Scopes
-  ( Scope__AcceptEnterpriseAdministratorInvitationPayload
+  ( Scope__AbortQueuedMigrationsPayload
+  , Scope__AcceptEnterpriseAdministratorInvitationPayload
   , Scope__AcceptTopicSuggestionPayload
   , Scope__AddAssigneesToAssignablePayload
   , Scope__AddCommentPayload
+  , Scope__AddDiscussionCommentPayload
   , Scope__AddEnterpriseSupportEntitlementPayload
   , Scope__AddLabelsToLabelablePayload
   , Scope__AddProjectCardPayload
   , Scope__AddProjectColumnPayload
+  , Scope__AddProjectNextItemPayload
   , Scope__AddPullRequestReviewPayload
   , Scope__AddPullRequestReviewCommentPayload
   , Scope__AddPullRequestReviewThreadPayload
   , Scope__AddReactionPayload
   , Scope__AddStarPayload
+  , Scope__AddUpvotePayload
   , Scope__AddVerifiableDomainPayload
+  , Scope__ApproveDeploymentsPayload
   , Scope__ApproveVerifiableDomainPayload
   , Scope__ArchiveRepositoryPayload
   , Scope__CancelEnterpriseAdminInvitationPayload
+  , Scope__CancelSponsorshipPayload
   , Scope__ChangeUserStatusPayload
   , Scope__ClearLabelsFromLabelablePayload
   , Scope__CloneProjectPayload
@@ -169,27 +210,37 @@ import Examples.Github.Scopes
   , Scope__CloseIssuePayload
   , Scope__ClosePullRequestPayload
   , Scope__ConvertProjectCardNoteToIssuePayload
+  , Scope__ConvertPullRequestToDraftPayload
   , Scope__CreateBranchProtectionRulePayload
   , Scope__CreateCheckRunPayload
   , Scope__CreateCheckSuitePayload
+  , Scope__CreateCommitOnBranchPayload
+  , Scope__CreateDiscussionPayload
   , Scope__CreateEnterpriseOrganizationPayload
+  , Scope__CreateEnvironmentPayload
   , Scope__CreateIpAllowListEntryPayload
   , Scope__CreateIssuePayload
+  , Scope__CreateMigrationSourcePayload
   , Scope__CreateProjectPayload
   , Scope__CreatePullRequestPayload
   , Scope__CreateRefPayload
   , Scope__CreateRepositoryPayload
+  , Scope__CreateSponsorshipPayload
   , Scope__CreateTeamDiscussionPayload
   , Scope__CreateTeamDiscussionCommentPayload
   , Scope__DeclineTopicSuggestionPayload
   , Scope__DeleteBranchProtectionRulePayload
   , Scope__DeleteDeploymentPayload
+  , Scope__DeleteDiscussionPayload
+  , Scope__DeleteDiscussionCommentPayload
+  , Scope__DeleteEnvironmentPayload
   , Scope__DeleteIpAllowListEntryPayload
   , Scope__DeleteIssuePayload
   , Scope__DeleteIssueCommentPayload
   , Scope__DeleteProjectPayload
   , Scope__DeleteProjectCardPayload
   , Scope__DeleteProjectColumnPayload
+  , Scope__DeleteProjectNextItemPayload
   , Scope__DeletePullRequestReviewPayload
   , Scope__DeletePullRequestReviewCommentPayload
   , Scope__DeleteRefPayload
@@ -198,11 +249,15 @@ import Examples.Github.Scopes
   , Scope__DeleteVerifiableDomainPayload
   , Scope__DisablePullRequestAutoMergePayload
   , Scope__DismissPullRequestReviewPayload
+  , Scope__DismissRepositoryVulnerabilityAlertPayload
   , Scope__EnablePullRequestAutoMergePayload
   , Scope__FollowUserPayload
+  , Scope__GrantEnterpriseOrganizationsMigratorRolePayload
+  , Scope__GrantMigratorRolePayload
   , Scope__InviteEnterpriseAdminPayload
   , Scope__LinkRepositoryToProjectPayload
   , Scope__LockLockablePayload
+  , Scope__MarkDiscussionCommentAsAnswerPayload
   , Scope__MarkFileAsViewedPayload
   , Scope__MarkPullRequestReadyForReviewPayload
   , Scope__MergeBranchPayload
@@ -213,6 +268,7 @@ import Examples.Github.Scopes
   , Scope__PinIssuePayload
   , Scope__RegenerateEnterpriseIdentityProviderRecoveryCodesPayload
   , Scope__RegenerateVerifiableDomainTokenPayload
+  , Scope__RejectDeploymentsPayload
   , Scope__RemoveAssigneesFromAssignablePayload
   , Scope__RemoveEnterpriseAdminPayload
   , Scope__RemoveEnterpriseIdentityProviderPayload
@@ -222,21 +278,26 @@ import Examples.Github.Scopes
   , Scope__RemoveOutsideCollaboratorPayload
   , Scope__RemoveReactionPayload
   , Scope__RemoveStarPayload
+  , Scope__RemoveUpvotePayload
   , Scope__ReopenIssuePayload
   , Scope__ReopenPullRequestPayload
   , Scope__RequestReviewsPayload
   , Scope__RerequestCheckSuitePayload
   , Scope__ResolveReviewThreadPayload
+  , Scope__RevokeEnterpriseOrganizationsMigratorRolePayload
+  , Scope__RevokeMigratorRolePayload
   , Scope__SetEnterpriseIdentityProviderPayload
   , Scope__SetOrganizationInteractionLimitPayload
   , Scope__SetRepositoryInteractionLimitPayload
   , Scope__SetUserInteractionLimitPayload
+  , Scope__StartRepositoryMigrationPayload
   , Scope__SubmitPullRequestReviewPayload
   , Scope__TransferIssuePayload
   , Scope__UnarchiveRepositoryPayload
   , Scope__UnfollowUserPayload
   , Scope__UnlinkRepositoryFromProjectPayload
   , Scope__UnlockLockablePayload
+  , Scope__UnmarkDiscussionCommentAsAnswerPayload
   , Scope__UnmarkFileAsViewedPayload
   , Scope__UnmarkIssueAsDuplicatePayload
   , Scope__UnminimizeCommentPayload
@@ -245,6 +306,8 @@ import Examples.Github.Scopes
   , Scope__UpdateBranchProtectionRulePayload
   , Scope__UpdateCheckRunPayload
   , Scope__UpdateCheckSuitePreferencesPayload
+  , Scope__UpdateDiscussionPayload
+  , Scope__UpdateDiscussionCommentPayload
   , Scope__UpdateEnterpriseAdministratorRolePayload
   , Scope__UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayload
   , Scope__UpdateEnterpriseDefaultRepositoryPermissionSettingPayload
@@ -257,23 +320,30 @@ import Examples.Github.Scopes
   , Scope__UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingPayload
   , Scope__UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayload
   , Scope__UpdateEnterpriseOrganizationProjectsSettingPayload
+  , Scope__UpdateEnterpriseOwnerOrganizationRolePayload
   , Scope__UpdateEnterpriseProfilePayload
   , Scope__UpdateEnterpriseRepositoryProjectsSettingPayload
   , Scope__UpdateEnterpriseTeamDiscussionsSettingPayload
   , Scope__UpdateEnterpriseTwoFactorAuthenticationRequiredSettingPayload
+  , Scope__UpdateEnvironmentPayload
   , Scope__UpdateIpAllowListEnabledSettingPayload
   , Scope__UpdateIpAllowListEntryPayload
+  , Scope__UpdateIpAllowListForInstalledAppsEnabledSettingPayload
   , Scope__UpdateIssuePayload
   , Scope__UpdateIssueCommentPayload
   , Scope__UpdateNotificationRestrictionSettingPayload
+  , Scope__UpdateOrganizationAllowPrivateRepositoryForkingSettingPayload
   , Scope__UpdateProjectPayload
   , Scope__UpdateProjectCardPayload
   , Scope__UpdateProjectColumnPayload
+  , Scope__UpdateProjectNextItemFieldPayload
   , Scope__UpdatePullRequestPayload
+  , Scope__UpdatePullRequestBranchPayload
   , Scope__UpdatePullRequestReviewPayload
   , Scope__UpdatePullRequestReviewCommentPayload
   , Scope__UpdateRefPayload
   , Scope__UpdateRepositoryPayload
+  , Scope__UpdateSponsorshipPreferencesPayload
   , Scope__UpdateSubscriptionPayload
   , Scope__UpdateTeamDiscussionPayload
   , Scope__UpdateTeamDiscussionCommentPayload
@@ -281,6 +351,23 @@ import Examples.Github.Scopes
   , Scope__VerifyVerifiableDomainPayload
   )
 import Data.Maybe (Maybe)
+
+type AbortQueuedMigrationsInputRowRequired r
+  = ( input :: Examples.Github.InputObject.AbortQueuedMigrationsInput | r )
+
+type AbortQueuedMigrationsInput
+  = { | AbortQueuedMigrationsInputRowRequired + () }
+
+abortQueuedMigrations
+  :: forall r
+   . AbortQueuedMigrationsInput
+  -> SelectionSet Scope__AbortQueuedMigrationsPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+abortQueuedMigrations input = selectionForCompositeField
+                              "abortQueuedMigrations"
+                              (toGraphQLArguments
+                               input)
+                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AcceptEnterpriseAdministratorInvitationInputRowRequired r
   = ( input
@@ -352,6 +439,22 @@ addComment input = selectionForCompositeField
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type AddDiscussionCommentInputRowRequired r
+  = ( input :: Examples.Github.InputObject.AddDiscussionCommentInput | r )
+
+type AddDiscussionCommentInput = { | AddDiscussionCommentInputRowRequired + () }
+
+addDiscussionComment
+  :: forall r
+   . AddDiscussionCommentInput
+  -> SelectionSet Scope__AddDiscussionCommentPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+addDiscussionComment input = selectionForCompositeField
+                             "addDiscussionComment"
+                             (toGraphQLArguments
+                              input)
+                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type AddEnterpriseSupportEntitlementInputRowRequired r
   = ( input :: Examples.Github.InputObject.AddEnterpriseSupportEntitlementInput
     | r
@@ -418,6 +521,22 @@ addProjectColumn input = selectionForCompositeField
                          (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type AddProjectNextItemInputRowRequired r
+  = ( input :: Examples.Github.InputObject.AddProjectNextItemInput | r )
+
+type AddProjectNextItemInput = { | AddProjectNextItemInputRowRequired + () }
+
+addProjectNextItem
+  :: forall r
+   . AddProjectNextItemInput
+  -> SelectionSet Scope__AddProjectNextItemPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+addProjectNextItem input = selectionForCompositeField
+                           "addProjectNextItem"
+                           (toGraphQLArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type AddPullRequestReviewInputRowRequired r
   = ( input :: Examples.Github.InputObject.AddPullRequestReviewInput | r )
@@ -503,6 +622,22 @@ addStar input = selectionForCompositeField
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type AddUpvoteInputRowRequired r
+  = ( input :: Examples.Github.InputObject.AddUpvoteInput | r )
+
+type AddUpvoteInput = { | AddUpvoteInputRowRequired + () }
+
+addUpvote
+  :: forall r
+   . AddUpvoteInput
+  -> SelectionSet Scope__AddUpvotePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+addUpvote input = selectionForCompositeField
+                  "addUpvote"
+                  (toGraphQLArguments
+                   input)
+                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type AddVerifiableDomainInputRowRequired r
   = ( input :: Examples.Github.InputObject.AddVerifiableDomainInput | r )
 
@@ -518,6 +653,22 @@ addVerifiableDomain input = selectionForCompositeField
                             (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type ApproveDeploymentsInputRowRequired r
+  = ( input :: Examples.Github.InputObject.ApproveDeploymentsInput | r )
+
+type ApproveDeploymentsInput = { | ApproveDeploymentsInputRowRequired + () }
+
+approveDeployments
+  :: forall r
+   . ApproveDeploymentsInput
+  -> SelectionSet Scope__ApproveDeploymentsPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+approveDeployments input = selectionForCompositeField
+                           "approveDeployments"
+                           (toGraphQLArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ApproveVerifiableDomainInputRowRequired r
   = ( input :: Examples.Github.InputObject.ApproveVerifiableDomainInput | r )
@@ -570,6 +721,22 @@ cancelEnterpriseAdminInvitation input = selectionForCompositeField
                                         (toGraphQLArguments
                                          input)
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CancelSponsorshipInputRowRequired r
+  = ( input :: Examples.Github.InputObject.CancelSponsorshipInput | r )
+
+type CancelSponsorshipInput = { | CancelSponsorshipInputRowRequired + () }
+
+cancelSponsorship
+  :: forall r
+   . CancelSponsorshipInput
+  -> SelectionSet Scope__CancelSponsorshipPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+cancelSponsorship input = selectionForCompositeField
+                          "cancelSponsorship"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ChangeUserStatusInputRowRequired r
   = ( input :: Examples.Github.InputObject.ChangeUserStatusInput | r )
@@ -688,6 +855,23 @@ convertProjectCardNoteToIssue input = selectionForCompositeField
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type ConvertPullRequestToDraftInputRowRequired r
+  = ( input :: Examples.Github.InputObject.ConvertPullRequestToDraftInput | r )
+
+type ConvertPullRequestToDraftInput
+  = { | ConvertPullRequestToDraftInputRowRequired + () }
+
+convertPullRequestToDraft
+  :: forall r
+   . ConvertPullRequestToDraftInput
+  -> SelectionSet Scope__ConvertPullRequestToDraftPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+convertPullRequestToDraft input = selectionForCompositeField
+                                  "convertPullRequestToDraft"
+                                  (toGraphQLArguments
+                                   input)
+                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type CreateBranchProtectionRuleInputRowRequired r
   = ( input :: Examples.Github.InputObject.CreateBranchProtectionRuleInput | r )
 
@@ -737,6 +921,38 @@ createCheckSuite input = selectionForCompositeField
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type CreateCommitOnBranchInputRowRequired r
+  = ( input :: Examples.Github.InputObject.CreateCommitOnBranchInput | r )
+
+type CreateCommitOnBranchInput = { | CreateCommitOnBranchInputRowRequired + () }
+
+createCommitOnBranch
+  :: forall r
+   . CreateCommitOnBranchInput
+  -> SelectionSet Scope__CreateCommitOnBranchPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+createCommitOnBranch input = selectionForCompositeField
+                             "createCommitOnBranch"
+                             (toGraphQLArguments
+                              input)
+                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CreateDiscussionInputRowRequired r
+  = ( input :: Examples.Github.InputObject.CreateDiscussionInput | r )
+
+type CreateDiscussionInput = { | CreateDiscussionInputRowRequired + () }
+
+createDiscussion
+  :: forall r
+   . CreateDiscussionInput
+  -> SelectionSet Scope__CreateDiscussionPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+createDiscussion input = selectionForCompositeField
+                         "createDiscussion"
+                         (toGraphQLArguments
+                          input)
+                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type CreateEnterpriseOrganizationInputRowRequired r
   = ( input :: Examples.Github.InputObject.CreateEnterpriseOrganizationInput
     | r
@@ -755,6 +971,22 @@ createEnterpriseOrganization input = selectionForCompositeField
                                      (toGraphQLArguments
                                       input)
                                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CreateEnvironmentInputRowRequired r
+  = ( input :: Examples.Github.InputObject.CreateEnvironmentInput | r )
+
+type CreateEnvironmentInput = { | CreateEnvironmentInputRowRequired + () }
+
+createEnvironment
+  :: forall r
+   . CreateEnvironmentInput
+  -> SelectionSet Scope__CreateEnvironmentPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+createEnvironment input = selectionForCompositeField
+                          "createEnvironment"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateIpAllowListEntryInputRowRequired r
   = ( input :: Examples.Github.InputObject.CreateIpAllowListEntryInput | r )
@@ -788,6 +1020,23 @@ createIssue input = selectionForCompositeField
                     (toGraphQLArguments
                      input)
                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CreateMigrationSourceInputRowRequired r
+  = ( input :: Examples.Github.InputObject.CreateMigrationSourceInput | r )
+
+type CreateMigrationSourceInput
+  = { | CreateMigrationSourceInputRowRequired + () }
+
+createMigrationSource
+  :: forall r
+   . CreateMigrationSourceInput
+  -> SelectionSet Scope__CreateMigrationSourcePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+createMigrationSource input = selectionForCompositeField
+                              "createMigrationSource"
+                              (toGraphQLArguments
+                               input)
+                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateProjectInputRowRequired r
   = ( input :: Examples.Github.InputObject.CreateProjectInput | r )
@@ -852,6 +1101,22 @@ createRepository input = selectionForCompositeField
                          (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type CreateSponsorshipInputRowRequired r
+  = ( input :: Examples.Github.InputObject.CreateSponsorshipInput | r )
+
+type CreateSponsorshipInput = { | CreateSponsorshipInputRowRequired + () }
+
+createSponsorship
+  :: forall r
+   . CreateSponsorshipInput
+  -> SelectionSet Scope__CreateSponsorshipPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+createSponsorship input = selectionForCompositeField
+                          "createSponsorship"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CreateTeamDiscussionInputRowRequired r
   = ( input :: Examples.Github.InputObject.CreateTeamDiscussionInput | r )
@@ -937,6 +1202,55 @@ deleteDeployment input = selectionForCompositeField
                          (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type DeleteDiscussionInputRowRequired r
+  = ( input :: Examples.Github.InputObject.DeleteDiscussionInput | r )
+
+type DeleteDiscussionInput = { | DeleteDiscussionInputRowRequired + () }
+
+deleteDiscussion
+  :: forall r
+   . DeleteDiscussionInput
+  -> SelectionSet Scope__DeleteDiscussionPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+deleteDiscussion input = selectionForCompositeField
+                         "deleteDiscussion"
+                         (toGraphQLArguments
+                          input)
+                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type DeleteDiscussionCommentInputRowRequired r
+  = ( input :: Examples.Github.InputObject.DeleteDiscussionCommentInput | r )
+
+type DeleteDiscussionCommentInput
+  = { | DeleteDiscussionCommentInputRowRequired + () }
+
+deleteDiscussionComment
+  :: forall r
+   . DeleteDiscussionCommentInput
+  -> SelectionSet Scope__DeleteDiscussionCommentPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+deleteDiscussionComment input = selectionForCompositeField
+                                "deleteDiscussionComment"
+                                (toGraphQLArguments
+                                 input)
+                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type DeleteEnvironmentInputRowRequired r
+  = ( input :: Examples.Github.InputObject.DeleteEnvironmentInput | r )
+
+type DeleteEnvironmentInput = { | DeleteEnvironmentInputRowRequired + () }
+
+deleteEnvironment
+  :: forall r
+   . DeleteEnvironmentInput
+  -> SelectionSet Scope__DeleteEnvironmentPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+deleteEnvironment input = selectionForCompositeField
+                          "deleteEnvironment"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeleteIpAllowListEntryInputRowRequired r
   = ( input :: Examples.Github.InputObject.DeleteIpAllowListEntryInput | r )
@@ -1034,6 +1348,23 @@ deleteProjectColumn input = selectionForCompositeField
                             (toGraphQLArguments
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type DeleteProjectNextItemInputRowRequired r
+  = ( input :: Examples.Github.InputObject.DeleteProjectNextItemInput | r )
+
+type DeleteProjectNextItemInput
+  = { | DeleteProjectNextItemInputRowRequired + () }
+
+deleteProjectNextItem
+  :: forall r
+   . DeleteProjectNextItemInput
+  -> SelectionSet Scope__DeleteProjectNextItemPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+deleteProjectNextItem input = selectionForCompositeField
+                              "deleteProjectNextItem"
+                              (toGraphQLArguments
+                               input)
+                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type DeletePullRequestReviewInputRowRequired r
   = ( input :: Examples.Github.InputObject.DeletePullRequestReviewInput | r )
@@ -1175,6 +1506,26 @@ dismissPullRequestReview input = selectionForCompositeField
                                   input)
                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type DismissRepositoryVulnerabilityAlertInputRowRequired r
+  = ( input
+      :: Examples.Github.InputObject.DismissRepositoryVulnerabilityAlertInput
+    | r
+    )
+
+type DismissRepositoryVulnerabilityAlertInput
+  = { | DismissRepositoryVulnerabilityAlertInputRowRequired + () }
+
+dismissRepositoryVulnerabilityAlert
+  :: forall r
+   . DismissRepositoryVulnerabilityAlertInput
+  -> SelectionSet Scope__DismissRepositoryVulnerabilityAlertPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+dismissRepositoryVulnerabilityAlert input = selectionForCompositeField
+                                            "dismissRepositoryVulnerabilityAlert"
+                                            (toGraphQLArguments
+                                             input)
+                                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type EnablePullRequestAutoMergeInputRowRequired r
   = ( input :: Examples.Github.InputObject.EnablePullRequestAutoMergeInput | r )
 
@@ -1207,6 +1558,42 @@ followUser input = selectionForCompositeField
                    (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type GrantEnterpriseOrganizationsMigratorRoleInputRowRequired r
+  = ( input
+      :: Examples.Github.InputObject.GrantEnterpriseOrganizationsMigratorRoleInput
+    | r
+    )
+
+type GrantEnterpriseOrganizationsMigratorRoleInput
+  = { | GrantEnterpriseOrganizationsMigratorRoleInputRowRequired + () }
+
+grantEnterpriseOrganizationsMigratorRole
+  :: forall r
+   . GrantEnterpriseOrganizationsMigratorRoleInput
+  -> SelectionSet Scope__GrantEnterpriseOrganizationsMigratorRolePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+grantEnterpriseOrganizationsMigratorRole input = selectionForCompositeField
+                                                 "grantEnterpriseOrganizationsMigratorRole"
+                                                 (toGraphQLArguments
+                                                  input)
+                                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type GrantMigratorRoleInputRowRequired r
+  = ( input :: Examples.Github.InputObject.GrantMigratorRoleInput | r )
+
+type GrantMigratorRoleInput = { | GrantMigratorRoleInputRowRequired + () }
+
+grantMigratorRole
+  :: forall r
+   . GrantMigratorRoleInput
+  -> SelectionSet Scope__GrantMigratorRolePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+grantMigratorRole input = selectionForCompositeField
+                          "grantMigratorRole"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type InviteEnterpriseAdminInputRowRequired r
   = ( input :: Examples.Github.InputObject.InviteEnterpriseAdminInput | r )
@@ -1257,6 +1644,25 @@ lockLockable input = selectionForCompositeField
                      (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type MarkDiscussionCommentAsAnswerInputRowRequired r
+  = ( input :: Examples.Github.InputObject.MarkDiscussionCommentAsAnswerInput
+    | r
+    )
+
+type MarkDiscussionCommentAsAnswerInput
+  = { | MarkDiscussionCommentAsAnswerInputRowRequired + () }
+
+markDiscussionCommentAsAnswer
+  :: forall r
+   . MarkDiscussionCommentAsAnswerInput
+  -> SelectionSet Scope__MarkDiscussionCommentAsAnswerPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+markDiscussionCommentAsAnswer input = selectionForCompositeField
+                                      "markDiscussionCommentAsAnswer"
+                                      (toGraphQLArguments
+                                       input)
+                                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type MarkFileAsViewedInputRowRequired r
   = ( input :: Examples.Github.InputObject.MarkFileAsViewedInput | r )
@@ -1430,6 +1836,22 @@ regenerateVerifiableDomainToken input = selectionForCompositeField
                                          input)
                                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type RejectDeploymentsInputRowRequired r
+  = ( input :: Examples.Github.InputObject.RejectDeploymentsInput | r )
+
+type RejectDeploymentsInput = { | RejectDeploymentsInputRowRequired + () }
+
+rejectDeployments
+  :: forall r
+   . RejectDeploymentsInput
+  -> SelectionSet Scope__RejectDeploymentsPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+rejectDeployments input = selectionForCompositeField
+                          "rejectDeployments"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type RemoveAssigneesFromAssignableInputRowRequired r
   = ( input :: Examples.Github.InputObject.RemoveAssigneesFromAssignableInput
     | r
@@ -1590,6 +2012,22 @@ removeStar input = selectionForCompositeField
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type RemoveUpvoteInputRowRequired r
+  = ( input :: Examples.Github.InputObject.RemoveUpvoteInput | r )
+
+type RemoveUpvoteInput = { | RemoveUpvoteInputRowRequired + () }
+
+removeUpvote
+  :: forall r
+   . RemoveUpvoteInput
+  -> SelectionSet Scope__RemoveUpvotePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+removeUpvote input = selectionForCompositeField
+                     "removeUpvote"
+                     (toGraphQLArguments
+                      input)
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type ReopenIssueInputRowRequired r
   = ( input :: Examples.Github.InputObject.ReopenIssueInput | r )
 
@@ -1670,6 +2108,42 @@ resolveReviewThread input = selectionForCompositeField
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type RevokeEnterpriseOrganizationsMigratorRoleInputRowRequired r
+  = ( input
+      :: Examples.Github.InputObject.RevokeEnterpriseOrganizationsMigratorRoleInput
+    | r
+    )
+
+type RevokeEnterpriseOrganizationsMigratorRoleInput
+  = { | RevokeEnterpriseOrganizationsMigratorRoleInputRowRequired + () }
+
+revokeEnterpriseOrganizationsMigratorRole
+  :: forall r
+   . RevokeEnterpriseOrganizationsMigratorRoleInput
+  -> SelectionSet Scope__RevokeEnterpriseOrganizationsMigratorRolePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+revokeEnterpriseOrganizationsMigratorRole input = selectionForCompositeField
+                                                  "revokeEnterpriseOrganizationsMigratorRole"
+                                                  (toGraphQLArguments
+                                                   input)
+                                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type RevokeMigratorRoleInputRowRequired r
+  = ( input :: Examples.Github.InputObject.RevokeMigratorRoleInput | r )
+
+type RevokeMigratorRoleInput = { | RevokeMigratorRoleInputRowRequired + () }
+
+revokeMigratorRole
+  :: forall r
+   . RevokeMigratorRoleInput
+  -> SelectionSet Scope__RevokeMigratorRolePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+revokeMigratorRole input = selectionForCompositeField
+                           "revokeMigratorRole"
+                           (toGraphQLArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type SetEnterpriseIdentityProviderInputRowRequired r
   = ( input :: Examples.Github.InputObject.SetEnterpriseIdentityProviderInput
     | r
@@ -1743,6 +2217,23 @@ setUserInteractionLimit input = selectionForCompositeField
                                 (toGraphQLArguments
                                  input)
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type StartRepositoryMigrationInputRowRequired r
+  = ( input :: Examples.Github.InputObject.StartRepositoryMigrationInput | r )
+
+type StartRepositoryMigrationInput
+  = { | StartRepositoryMigrationInputRowRequired + () }
+
+startRepositoryMigration
+  :: forall r
+   . StartRepositoryMigrationInput
+  -> SelectionSet Scope__StartRepositoryMigrationPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+startRepositoryMigration input = selectionForCompositeField
+                                 "startRepositoryMigration"
+                                 (toGraphQLArguments
+                                  input)
+                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SubmitPullRequestReviewInputRowRequired r
   = ( input :: Examples.Github.InputObject.SubmitPullRequestReviewInput | r )
@@ -1843,6 +2334,25 @@ unlockLockable input = selectionForCompositeField
                        (toGraphQLArguments
                         input)
                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UnmarkDiscussionCommentAsAnswerInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UnmarkDiscussionCommentAsAnswerInput
+    | r
+    )
+
+type UnmarkDiscussionCommentAsAnswerInput
+  = { | UnmarkDiscussionCommentAsAnswerInputRowRequired + () }
+
+unmarkDiscussionCommentAsAnswer
+  :: forall r
+   . UnmarkDiscussionCommentAsAnswerInput
+  -> SelectionSet Scope__UnmarkDiscussionCommentAsAnswerPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+unmarkDiscussionCommentAsAnswer input = selectionForCompositeField
+                                        "unmarkDiscussionCommentAsAnswer"
+                                        (toGraphQLArguments
+                                         input)
+                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UnmarkFileAsViewedInputRowRequired r
   = ( input :: Examples.Github.InputObject.UnmarkFileAsViewedInput | r )
@@ -1977,6 +2487,39 @@ updateCheckSuitePreferences input = selectionForCompositeField
                                     (toGraphQLArguments
                                      input)
                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UpdateDiscussionInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UpdateDiscussionInput | r )
+
+type UpdateDiscussionInput = { | UpdateDiscussionInputRowRequired + () }
+
+updateDiscussion
+  :: forall r
+   . UpdateDiscussionInput
+  -> SelectionSet Scope__UpdateDiscussionPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateDiscussion input = selectionForCompositeField
+                         "updateDiscussion"
+                         (toGraphQLArguments
+                          input)
+                         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UpdateDiscussionCommentInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UpdateDiscussionCommentInput | r )
+
+type UpdateDiscussionCommentInput
+  = { | UpdateDiscussionCommentInputRowRequired + () }
+
+updateDiscussionComment
+  :: forall r
+   . UpdateDiscussionCommentInput
+  -> SelectionSet Scope__UpdateDiscussionCommentPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateDiscussionComment input = selectionForCompositeField
+                                "updateDiscussionComment"
+                                (toGraphQLArguments
+                                 input)
+                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateEnterpriseAdministratorRoleInputRowRequired r
   = ( input
@@ -2247,6 +2790,26 @@ updateEnterpriseOrganizationProjectsSetting input = selectionForCompositeField
                                                      input)
                                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type UpdateEnterpriseOwnerOrganizationRoleInputRowRequired r
+  = ( input
+      :: Examples.Github.InputObject.UpdateEnterpriseOwnerOrganizationRoleInput
+    | r
+    )
+
+type UpdateEnterpriseOwnerOrganizationRoleInput
+  = { | UpdateEnterpriseOwnerOrganizationRoleInputRowRequired + () }
+
+updateEnterpriseOwnerOrganizationRole
+  :: forall r
+   . UpdateEnterpriseOwnerOrganizationRoleInput
+  -> SelectionSet Scope__UpdateEnterpriseOwnerOrganizationRolePayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateEnterpriseOwnerOrganizationRole input = selectionForCompositeField
+                                              "updateEnterpriseOwnerOrganizationRole"
+                                              (toGraphQLArguments
+                                               input)
+                                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type UpdateEnterpriseProfileInputRowRequired r
   = ( input :: Examples.Github.InputObject.UpdateEnterpriseProfileInput | r )
 
@@ -2328,6 +2891,22 @@ updateEnterpriseTwoFactorAuthenticationRequiredSetting input = selectionForCompo
                                                                 input)
                                                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type UpdateEnvironmentInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UpdateEnvironmentInput | r )
+
+type UpdateEnvironmentInput = { | UpdateEnvironmentInputRowRequired + () }
+
+updateEnvironment
+  :: forall r
+   . UpdateEnvironmentInput
+  -> SelectionSet Scope__UpdateEnvironmentPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateEnvironment input = selectionForCompositeField
+                          "updateEnvironment"
+                          (toGraphQLArguments
+                           input)
+                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type UpdateIpAllowListEnabledSettingInputRowRequired r
   = ( input :: Examples.Github.InputObject.UpdateIpAllowListEnabledSettingInput
     | r
@@ -2363,6 +2942,28 @@ updateIpAllowListEntry input = selectionForCompositeField
                                (toGraphQLArguments
                                 input)
                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UpdateIpAllowListForInstalledAppsEnabledSettingInputRowRequired r
+  = ( input
+      :: Examples.Github.InputObject.UpdateIpAllowListForInstalledAppsEnabledSettingInput
+    | r
+    )
+
+type UpdateIpAllowListForInstalledAppsEnabledSettingInput
+  = { | UpdateIpAllowListForInstalledAppsEnabledSettingInputRowRequired + () }
+
+updateIpAllowListForInstalledAppsEnabledSetting
+  :: forall r
+   . UpdateIpAllowListForInstalledAppsEnabledSettingInput
+  -> SelectionSet
+        Scope__UpdateIpAllowListForInstalledAppsEnabledSettingPayload
+        r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateIpAllowListForInstalledAppsEnabledSetting input = selectionForCompositeField
+                                                        "updateIpAllowListForInstalledAppsEnabledSetting"
+                                                        (toGraphQLArguments
+                                                         input)
+                                                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateIssueInputRowRequired r
   = ( input :: Examples.Github.InputObject.UpdateIssueInput | r )
@@ -2416,6 +3017,30 @@ updateNotificationRestrictionSetting input = selectionForCompositeField
                                               input)
                                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type UpdateOrganizationAllowPrivateRepositoryForkingSettingInputRowRequired r
+  = ( input
+      :: Examples.Github.InputObject.UpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+    | r
+    )
+
+type UpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+  = { | UpdateOrganizationAllowPrivateRepositoryForkingSettingInputRowRequired
+      + ()
+    }
+
+updateOrganizationAllowPrivateRepositoryForkingSetting
+  :: forall r
+   . UpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+  -> SelectionSet
+        Scope__UpdateOrganizationAllowPrivateRepositoryForkingSettingPayload
+        r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateOrganizationAllowPrivateRepositoryForkingSetting input = selectionForCompositeField
+                                                               "updateOrganizationAllowPrivateRepositoryForkingSetting"
+                                                               (toGraphQLArguments
+                                                                input)
+                                                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type UpdateProjectInputRowRequired r
   = ( input :: Examples.Github.InputObject.UpdateProjectInput | r )
 
@@ -2464,6 +3089,23 @@ updateProjectColumn input = selectionForCompositeField
                              input)
                             graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type UpdateProjectNextItemFieldInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UpdateProjectNextItemFieldInput | r )
+
+type UpdateProjectNextItemFieldInput
+  = { | UpdateProjectNextItemFieldInputRowRequired + () }
+
+updateProjectNextItemField
+  :: forall r
+   . UpdateProjectNextItemFieldInput
+  -> SelectionSet Scope__UpdateProjectNextItemFieldPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateProjectNextItemField input = selectionForCompositeField
+                                   "updateProjectNextItemField"
+                                   (toGraphQLArguments
+                                    input)
+                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type UpdatePullRequestInputRowRequired r
   = ( input :: Examples.Github.InputObject.UpdatePullRequestInput | r )
 
@@ -2479,6 +3121,23 @@ updatePullRequest input = selectionForCompositeField
                           (toGraphQLArguments
                            input)
                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UpdatePullRequestBranchInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UpdatePullRequestBranchInput | r )
+
+type UpdatePullRequestBranchInput
+  = { | UpdatePullRequestBranchInputRowRequired + () }
+
+updatePullRequestBranch
+  :: forall r
+   . UpdatePullRequestBranchInput
+  -> SelectionSet Scope__UpdatePullRequestBranchPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updatePullRequestBranch input = selectionForCompositeField
+                                "updatePullRequestBranch"
+                                (toGraphQLArguments
+                                 input)
+                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdatePullRequestReviewInputRowRequired r
   = ( input :: Examples.Github.InputObject.UpdatePullRequestReviewInput | r )
@@ -2547,6 +3206,25 @@ updateRepository input = selectionForCompositeField
                          (toGraphQLArguments
                           input)
                          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type UpdateSponsorshipPreferencesInputRowRequired r
+  = ( input :: Examples.Github.InputObject.UpdateSponsorshipPreferencesInput
+    | r
+    )
+
+type UpdateSponsorshipPreferencesInput
+  = { | UpdateSponsorshipPreferencesInputRowRequired + () }
+
+updateSponsorshipPreferences
+  :: forall r
+   . UpdateSponsorshipPreferencesInput
+  -> SelectionSet Scope__UpdateSponsorshipPreferencesPayload r
+  -> SelectionSet Scope__RootMutation (Maybe r)
+updateSponsorshipPreferences input = selectionForCompositeField
+                                     "updateSponsorshipPreferences"
+                                     (toGraphQLArguments
+                                      input)
+                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type UpdateSubscriptionInputRowRequired r
   = ( input :: Examples.Github.InputObject.UpdateSubscriptionInput | r )

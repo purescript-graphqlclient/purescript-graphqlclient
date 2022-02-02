@@ -40,7 +40,7 @@ declDataWithoutConstructors name =
 appendToModule :: ModuleName -> Array String -> ModuleName
 appendToModule (ModuleName xs) = ModuleName <<< NonEmpty.appendArray xs <<< map ProperName
 
-qualifyScope :: NonEmptyArray String -> String -> SmartQualifiedName (ProperName ProperNameType_TypeName)
+qualifyScope :: NonEmptyArray String -> String -> SmartQualifiedName (ProperName ProperNameType_TypeConstructor)
 qualifyScope apiModuleName scopeName =
   let
     shouldBeImportedFromGraphQLClient = case scopeName of

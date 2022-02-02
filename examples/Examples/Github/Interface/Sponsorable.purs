@@ -5,24 +5,40 @@ import GraphQLClient
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , toGraphQLArguments
+  , Optional
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-  , Optional
   , exhaustiveFragmentSelection
   , buildFragment
   )
 import Examples.Github.Scopes
   ( Scope__Sponsorable
+  , Scope__SponsorConnection
+  , Scope__SponsorsActivityConnection
   , Scope__SponsorsListing
   , Scope__Sponsorship
+  , Scope__SponsorshipNewsletterConnection
   , Scope__SponsorshipConnection
   , Scope__Organization
   , Scope__User
   )
 import Type.Row (type (+))
+import Examples.Github.InputObject
+  ( SponsorOrder
+  , SponsorsActivityOrder
+  , SponsorshipNewsletterOrder
+  , SponsorshipOrder
+  ) as Examples.Github.InputObject
+import Examples.Github.Scalars (Id)
+import Examples.Github.Enum.SponsorsActivityPeriod (SponsorsActivityPeriod)
 import Data.Maybe (Maybe(..))
-import Examples.Github.InputObject (SponsorshipOrder) as Examples.Github.InputObject
 import Prelude (pure)
+
+estimatedNextSponsorsPayoutInCents :: SelectionSet Scope__Sponsorable Int
+estimatedNextSponsorsPayoutInCents = selectionForField
+                                     "estimatedNextSponsorsPayoutInCents"
+                                     []
+                                     graphqlDefaultResponseScalarDecoder
 
 hasSponsorsListing :: SelectionSet Scope__Sponsorable Boolean
 hasSponsorsListing = selectionForField
@@ -47,6 +63,80 @@ isSponsoringViewer = selectionForField
                      []
                      graphqlDefaultResponseScalarDecoder
 
+monthlyEstimatedSponsorsIncomeInCents :: SelectionSet Scope__Sponsorable Int
+monthlyEstimatedSponsorsIncomeInCents = selectionForField
+                                        "monthlyEstimatedSponsorsIncomeInCents"
+                                        []
+                                        graphqlDefaultResponseScalarDecoder
+
+type SponsoringInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , orderBy :: Optional Examples.Github.InputObject.SponsorOrder
+    | r
+    )
+
+type SponsoringInput = { | SponsoringInputRowOptional + () }
+
+sponsoring
+  :: forall r
+   . SponsoringInput
+  -> SelectionSet Scope__SponsorConnection r
+  -> SelectionSet Scope__Sponsorable r
+sponsoring input = selectionForCompositeField
+                   "sponsoring"
+                   (toGraphQLArguments
+                    input)
+                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SponsorsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , tierId :: Optional Id
+    , orderBy :: Optional Examples.Github.InputObject.SponsorOrder
+    | r
+    )
+
+type SponsorsInput = { | SponsorsInputRowOptional + () }
+
+sponsors
+  :: forall r
+   . SponsorsInput
+  -> SelectionSet Scope__SponsorConnection r
+  -> SelectionSet Scope__Sponsorable r
+sponsors input = selectionForCompositeField
+                 "sponsors"
+                 (toGraphQLArguments
+                  input)
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SponsorsActivitiesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , period :: Optional SponsorsActivityPeriod
+    , orderBy :: Optional Examples.Github.InputObject.SponsorsActivityOrder
+    | r
+    )
+
+type SponsorsActivitiesInput = { | SponsorsActivitiesInputRowOptional + () }
+
+sponsorsActivities
+  :: forall r
+   . SponsorsActivitiesInput
+  -> SelectionSet Scope__SponsorsActivityConnection r
+  -> SelectionSet Scope__Sponsorable r
+sponsorsActivities input = selectionForCompositeField
+                           "sponsorsActivities"
+                           (toGraphQLArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 sponsorsListing
   :: forall r
    . SelectionSet Scope__SponsorsListing r
@@ -64,6 +154,38 @@ sponsorshipForViewerAsSponsor = selectionForCompositeField
                                 "sponsorshipForViewerAsSponsor"
                                 []
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+sponsorshipForViewerAsSponsorable
+  :: forall r
+   . SelectionSet Scope__Sponsorship r
+  -> SelectionSet Scope__Sponsorable (Maybe r)
+sponsorshipForViewerAsSponsorable = selectionForCompositeField
+                                    "sponsorshipForViewerAsSponsorable"
+                                    []
+                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SponsorshipNewslettersInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipNewsletterOrder
+    | r
+    )
+
+type SponsorshipNewslettersInput
+  = { | SponsorshipNewslettersInputRowOptional + () }
+
+sponsorshipNewsletters
+  :: forall r
+   . SponsorshipNewslettersInput
+  -> SelectionSet Scope__SponsorshipNewsletterConnection r
+  -> SelectionSet Scope__Sponsorable r
+sponsorshipNewsletters input = selectionForCompositeField
+                               "sponsorshipNewsletters"
+                               (toGraphQLArguments
+                                input)
+                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SponsorshipsAsMaintainerInputRowOptional r
   = ( after :: Optional String

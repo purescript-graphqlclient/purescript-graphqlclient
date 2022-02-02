@@ -41,6 +41,12 @@ requiresCodeOwnerReviews = selectionForField
                            []
                            graphqlDefaultResponseScalarDecoder
 
+requiresConversationResolution :: SelectionSet Scope__RefUpdateRule Boolean
+requiresConversationResolution = selectionForField
+                                 "requiresConversationResolution"
+                                 []
+                                 graphqlDefaultResponseScalarDecoder
+
 requiresLinearHistory :: SelectionSet Scope__RefUpdateRule Boolean
 requiresLinearHistory = selectionForField
                         "requiresLinearHistory"

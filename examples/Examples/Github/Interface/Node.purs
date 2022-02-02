@@ -24,6 +24,8 @@ import Examples.Github.Scopes
   , Scope__Blob
   , Scope__Bot
   , Scope__BranchProtectionRule
+  , Scope__BypassForcePushAllowance
+  , Scope__BypassPullRequestAllowance
   , Scope__Cwe
   , Scope__CheckRun
   , Scope__CheckSuite
@@ -36,14 +38,19 @@ import Examples.Github.Scopes
   , Scope__ConnectedEvent
   , Scope__ConvertToDraftEvent
   , Scope__ConvertedNoteToIssueEvent
+  , Scope__ConvertedToDiscussionEvent
   , Scope__CrossReferencedEvent
   , Scope__DemilestonedEvent
   , Scope__DeployKey
   , Scope__DeployedEvent
   , Scope__Deployment
   , Scope__DeploymentEnvironmentChangedEvent
+  , Scope__DeploymentReview
   , Scope__DeploymentStatus
   , Scope__DisconnectedEvent
+  , Scope__Discussion
+  , Scope__DiscussionCategory
+  , Scope__DiscussionComment
   , Scope__Enterprise
   , Scope__EnterpriseAdministratorInvitation
   , Scope__EnterpriseIdentityProvider
@@ -53,12 +60,14 @@ import Examples.Github.Scopes
   , Scope__EnterpriseServerUserAccountEmail
   , Scope__EnterpriseServerUserAccountsUpload
   , Scope__EnterpriseUserAccount
+  , Scope__Environment
   , Scope__ExternalIdentity
   , Scope__Gist
   , Scope__GistComment
   , Scope__HeadRefDeletedEvent
   , Scope__HeadRefForcePushedEvent
   , Scope__HeadRefRestoredEvent
+  , Scope__Import
   , Scope__IpAllowListEntry
   , Scope__Issue
   , Scope__IssueComment
@@ -76,9 +85,11 @@ import Examples.Github.Scopes
   , Scope__MembersCanDeleteReposEnableAuditEntry
   , Scope__MentionedEvent
   , Scope__MergedEvent
+  , Scope__MigrationSource
   , Scope__Milestone
   , Scope__MilestonedEvent
   , Scope__MovedColumnsInProjectEvent
+  , Scope__OidcProvider
   , Scope__OauthApplicationCreateAuditEntry
   , Scope__OrgAddBillingManagerAuditEntry
   , Scope__OrgAddMemberAuditEntry
@@ -113,6 +124,7 @@ import Examples.Github.Scopes
   , Scope__PackageFile
   , Scope__PackageTag
   , Scope__PackageVersion
+  , Scope__PinnedDiscussion
   , Scope__PinnedEvent
   , Scope__PinnedIssue
   , Scope__PrivateRepositoryForkingDisableAuditEntry
@@ -120,6 +132,9 @@ import Examples.Github.Scopes
   , Scope__Project
   , Scope__ProjectCard
   , Scope__ProjectColumn
+  , Scope__ProjectNext
+  , Scope__ProjectNextItem
+  , Scope__ProjectNextItemFieldValue
   , Scope__PublicKey
   , Scope__PullRequest
   , Scope__PullRequestCommit
@@ -159,6 +174,7 @@ import Examples.Github.Scopes
   , Scope__RepoRemoveTopicAuditEntry
   , Scope__Repository
   , Scope__RepositoryInvitation
+  , Scope__RepositoryMigration
   , Scope__RepositoryTopic
   , Scope__RepositoryVisibilityChangeDisableAuditEntry
   , Scope__RepositoryVisibilityChangeEnableAuditEntry
@@ -170,9 +186,11 @@ import Examples.Github.Scopes
   , Scope__ReviewRequestedEvent
   , Scope__SavedReply
   , Scope__SecurityAdvisory
+  , Scope__SponsorsActivity
   , Scope__SponsorsListing
   , Scope__SponsorsTier
   , Scope__Sponsorship
+  , Scope__SponsorshipNewsletter
   , Scope__Status
   , Scope__StatusCheckRollup
   , Scope__StatusContext
@@ -200,6 +218,8 @@ import Examples.Github.Scopes
   , Scope__UserContentEdit
   , Scope__UserStatus
   , Scope__VerifiableDomain
+  , Scope__Workflow
+  , Scope__WorkflowRun
   )
 import Examples.Github.Scalars (Id)
 import Data.Maybe (Maybe(..))
@@ -248,6 +268,14 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__BranchProtectionRule
          decodesTo
+    , onBypassForcePushAllowance
+      :: SelectionSet
+         Scope__BypassForcePushAllowance
+         decodesTo
+    , onBypassPullRequestAllowance
+      :: SelectionSet
+         Scope__BypassPullRequestAllowance
+         decodesTo
     , onCwe :: SelectionSet Scope__Cwe decodesTo
     , onCheckRun :: SelectionSet Scope__CheckRun decodesTo
     , onCheckSuite :: SelectionSet Scope__CheckSuite decodesTo
@@ -263,6 +291,10 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__ConvertedNoteToIssueEvent
          decodesTo
+    , onConvertedToDiscussionEvent
+      :: SelectionSet
+         Scope__ConvertedToDiscussionEvent
+         decodesTo
     , onCrossReferencedEvent
       :: SelectionSet
          Scope__CrossReferencedEvent
@@ -275,8 +307,12 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__DeploymentEnvironmentChangedEvent
          decodesTo
+    , onDeploymentReview :: SelectionSet Scope__DeploymentReview decodesTo
     , onDeploymentStatus :: SelectionSet Scope__DeploymentStatus decodesTo
     , onDisconnectedEvent :: SelectionSet Scope__DisconnectedEvent decodesTo
+    , onDiscussion :: SelectionSet Scope__Discussion decodesTo
+    , onDiscussionCategory :: SelectionSet Scope__DiscussionCategory decodesTo
+    , onDiscussionComment :: SelectionSet Scope__DiscussionComment decodesTo
     , onEnterprise :: SelectionSet Scope__Enterprise decodesTo
     , onEnterpriseAdministratorInvitation
       :: SelectionSet
@@ -310,6 +346,7 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__EnterpriseUserAccount
          decodesTo
+    , onEnvironment :: SelectionSet Scope__Environment decodesTo
     , onExternalIdentity :: SelectionSet Scope__ExternalIdentity decodesTo
     , onGist :: SelectionSet Scope__Gist decodesTo
     , onGistComment :: SelectionSet Scope__GistComment decodesTo
@@ -322,6 +359,7 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__HeadRefRestoredEvent
          decodesTo
+    , onImport :: SelectionSet Scope__Import decodesTo
     , onIpAllowListEntry :: SelectionSet Scope__IpAllowListEntry decodesTo
     , onIssue :: SelectionSet Scope__Issue decodesTo
     , onIssueComment :: SelectionSet Scope__IssueComment decodesTo
@@ -351,12 +389,14 @@ type Fragments decodesTo
          decodesTo
     , onMentionedEvent :: SelectionSet Scope__MentionedEvent decodesTo
     , onMergedEvent :: SelectionSet Scope__MergedEvent decodesTo
+    , onMigrationSource :: SelectionSet Scope__MigrationSource decodesTo
     , onMilestone :: SelectionSet Scope__Milestone decodesTo
     , onMilestonedEvent :: SelectionSet Scope__MilestonedEvent decodesTo
     , onMovedColumnsInProjectEvent
       :: SelectionSet
          Scope__MovedColumnsInProjectEvent
          decodesTo
+    , onOidcProvider :: SelectionSet Scope__OidcProvider decodesTo
     , onOauthApplicationCreateAuditEntry
       :: SelectionSet
          Scope__OauthApplicationCreateAuditEntry
@@ -475,6 +515,7 @@ type Fragments decodesTo
     , onPackageFile :: SelectionSet Scope__PackageFile decodesTo
     , onPackageTag :: SelectionSet Scope__PackageTag decodesTo
     , onPackageVersion :: SelectionSet Scope__PackageVersion decodesTo
+    , onPinnedDiscussion :: SelectionSet Scope__PinnedDiscussion decodesTo
     , onPinnedEvent :: SelectionSet Scope__PinnedEvent decodesTo
     , onPinnedIssue :: SelectionSet Scope__PinnedIssue decodesTo
     , onPrivateRepositoryForkingDisableAuditEntry
@@ -488,6 +529,12 @@ type Fragments decodesTo
     , onProject :: SelectionSet Scope__Project decodesTo
     , onProjectCard :: SelectionSet Scope__ProjectCard decodesTo
     , onProjectColumn :: SelectionSet Scope__ProjectColumn decodesTo
+    , onProjectNext :: SelectionSet Scope__ProjectNext decodesTo
+    , onProjectNextItem :: SelectionSet Scope__ProjectNextItem decodesTo
+    , onProjectNextItemFieldValue
+      :: SelectionSet
+         Scope__ProjectNextItemFieldValue
+         decodesTo
     , onPublicKey :: SelectionSet Scope__PublicKey decodesTo
     , onPullRequest :: SelectionSet Scope__PullRequest decodesTo
     , onPullRequestCommit :: SelectionSet Scope__PullRequestCommit decodesTo
@@ -599,6 +646,7 @@ type Fragments decodesTo
       :: SelectionSet
          Scope__RepositoryInvitation
          decodesTo
+    , onRepositoryMigration :: SelectionSet Scope__RepositoryMigration decodesTo
     , onRepositoryTopic :: SelectionSet Scope__RepositoryTopic decodesTo
     , onRepositoryVisibilityChangeDisableAuditEntry
       :: SelectionSet
@@ -631,9 +679,14 @@ type Fragments decodesTo
          decodesTo
     , onSavedReply :: SelectionSet Scope__SavedReply decodesTo
     , onSecurityAdvisory :: SelectionSet Scope__SecurityAdvisory decodesTo
+    , onSponsorsActivity :: SelectionSet Scope__SponsorsActivity decodesTo
     , onSponsorsListing :: SelectionSet Scope__SponsorsListing decodesTo
     , onSponsorsTier :: SelectionSet Scope__SponsorsTier decodesTo
     , onSponsorship :: SelectionSet Scope__Sponsorship decodesTo
+    , onSponsorshipNewsletter
+      :: SelectionSet
+         Scope__SponsorshipNewsletter
+         decodesTo
     , onStatus :: SelectionSet Scope__Status decodesTo
     , onStatusCheckRollup :: SelectionSet Scope__StatusCheckRollup decodesTo
     , onStatusContext :: SelectionSet Scope__StatusContext decodesTo
@@ -682,6 +735,8 @@ type Fragments decodesTo
     , onUserContentEdit :: SelectionSet Scope__UserContentEdit decodesTo
     , onUserStatus :: SelectionSet Scope__UserStatus decodesTo
     , onVerifiableDomain :: SelectionSet Scope__VerifiableDomain decodesTo
+    , onWorkflow :: SelectionSet Scope__Workflow decodesTo
+    , onWorkflowRun :: SelectionSet Scope__WorkflowRun decodesTo
     }
 
 fragments
@@ -728,6 +783,12 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "BranchProtectionRule"
                          selections.onBranchProtectionRule
+                       , buildFragment
+                         "BypassForcePushAllowance"
+                         selections.onBypassForcePushAllowance
+                       , buildFragment
+                         "BypassPullRequestAllowance"
+                         selections.onBypassPullRequestAllowance
                        , buildFragment "CWE" selections.onCwe
                        , buildFragment "CheckRun" selections.onCheckRun
                        , buildFragment "CheckSuite" selections.onCheckSuite
@@ -755,6 +816,9 @@ fragments selections = exhaustiveFragmentSelection
                          "ConvertedNoteToIssueEvent"
                          selections.onConvertedNoteToIssueEvent
                        , buildFragment
+                         "ConvertedToDiscussionEvent"
+                         selections.onConvertedToDiscussionEvent
+                       , buildFragment
                          "CrossReferencedEvent"
                          selections.onCrossReferencedEvent
                        , buildFragment
@@ -769,11 +833,21 @@ fragments selections = exhaustiveFragmentSelection
                          "DeploymentEnvironmentChangedEvent"
                          selections.onDeploymentEnvironmentChangedEvent
                        , buildFragment
+                         "DeploymentReview"
+                         selections.onDeploymentReview
+                       , buildFragment
                          "DeploymentStatus"
                          selections.onDeploymentStatus
                        , buildFragment
                          "DisconnectedEvent"
                          selections.onDisconnectedEvent
+                       , buildFragment "Discussion" selections.onDiscussion
+                       , buildFragment
+                         "DiscussionCategory"
+                         selections.onDiscussionCategory
+                       , buildFragment
+                         "DiscussionComment"
+                         selections.onDiscussionComment
                        , buildFragment "Enterprise" selections.onEnterprise
                        , buildFragment
                          "EnterpriseAdministratorInvitation"
@@ -799,6 +873,7 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "EnterpriseUserAccount"
                          selections.onEnterpriseUserAccount
+                       , buildFragment "Environment" selections.onEnvironment
                        , buildFragment
                          "ExternalIdentity"
                          selections.onExternalIdentity
@@ -813,6 +888,7 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "HeadRefRestoredEvent"
                          selections.onHeadRefRestoredEvent
+                       , buildFragment "Import" selections.onImport
                        , buildFragment
                          "IpAllowListEntry"
                          selections.onIpAllowListEntry
@@ -846,6 +922,9 @@ fragments selections = exhaustiveFragmentSelection
                          "MentionedEvent"
                          selections.onMentionedEvent
                        , buildFragment "MergedEvent" selections.onMergedEvent
+                       , buildFragment
+                         "MigrationSource"
+                         selections.onMigrationSource
                        , buildFragment "Milestone" selections.onMilestone
                        , buildFragment
                          "MilestonedEvent"
@@ -853,6 +932,7 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "MovedColumnsInProjectEvent"
                          selections.onMovedColumnsInProjectEvent
+                       , buildFragment "OIDCProvider" selections.onOidcProvider
                        , buildFragment
                          "OauthApplicationCreateAuditEntry"
                          selections.onOauthApplicationCreateAuditEntry
@@ -947,6 +1027,9 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "PackageVersion"
                          selections.onPackageVersion
+                       , buildFragment
+                         "PinnedDiscussion"
+                         selections.onPinnedDiscussion
                        , buildFragment "PinnedEvent" selections.onPinnedEvent
                        , buildFragment "PinnedIssue" selections.onPinnedIssue
                        , buildFragment
@@ -960,6 +1043,13 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "ProjectColumn"
                          selections.onProjectColumn
+                       , buildFragment "ProjectNext" selections.onProjectNext
+                       , buildFragment
+                         "ProjectNextItem"
+                         selections.onProjectNextItem
+                       , buildFragment
+                         "ProjectNextItemFieldValue"
+                         selections.onProjectNextItemFieldValue
                        , buildFragment "PublicKey" selections.onPublicKey
                        , buildFragment "PullRequest" selections.onPullRequest
                        , buildFragment
@@ -1062,6 +1152,9 @@ fragments selections = exhaustiveFragmentSelection
                          "RepositoryInvitation"
                          selections.onRepositoryInvitation
                        , buildFragment
+                         "RepositoryMigration"
+                         selections.onRepositoryMigration
+                       , buildFragment
                          "RepositoryTopic"
                          selections.onRepositoryTopic
                        , buildFragment
@@ -1093,10 +1186,16 @@ fragments selections = exhaustiveFragmentSelection
                          "SecurityAdvisory"
                          selections.onSecurityAdvisory
                        , buildFragment
+                         "SponsorsActivity"
+                         selections.onSponsorsActivity
+                       , buildFragment
                          "SponsorsListing"
                          selections.onSponsorsListing
                        , buildFragment "SponsorsTier" selections.onSponsorsTier
                        , buildFragment "Sponsorship" selections.onSponsorship
+                       , buildFragment
+                         "SponsorshipNewsletter"
+                         selections.onSponsorshipNewsletter
                        , buildFragment "Status" selections.onStatus
                        , buildFragment
                          "StatusCheckRollup"
@@ -1164,6 +1263,8 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "VerifiableDomain"
                          selections.onVerifiableDomain
+                       , buildFragment "Workflow" selections.onWorkflow
+                       , buildFragment "WorkflowRun" selections.onWorkflowRun
                        ]
 
 maybeFragments :: forall decodesTo. Fragments (Maybe decodesTo)
@@ -1197,6 +1298,10 @@ maybeFragments = { onAddedToProjectEvent: pure
                           Nothing
                  , onBranchProtectionRule: pure
                                            Nothing
+                 , onBypassForcePushAllowance: pure
+                                               Nothing
+                 , onBypassPullRequestAllowance: pure
+                                                 Nothing
                  , onCwe: pure
                           Nothing
                  , onCheckRun: pure
@@ -1221,6 +1326,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                           Nothing
                  , onConvertedNoteToIssueEvent: pure
                                                 Nothing
+                 , onConvertedToDiscussionEvent: pure
+                                                 Nothing
                  , onCrossReferencedEvent: pure
                                            Nothing
                  , onDemilestonedEvent: pure
@@ -1233,9 +1340,17 @@ maybeFragments = { onAddedToProjectEvent: pure
                                  Nothing
                  , onDeploymentEnvironmentChangedEvent: pure
                                                         Nothing
+                 , onDeploymentReview: pure
+                                       Nothing
                  , onDeploymentStatus: pure
                                        Nothing
                  , onDisconnectedEvent: pure
+                                        Nothing
+                 , onDiscussion: pure
+                                 Nothing
+                 , onDiscussionCategory: pure
+                                         Nothing
+                 , onDiscussionComment: pure
                                         Nothing
                  , onEnterprise: pure
                                  Nothing
@@ -1255,6 +1370,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                                          Nothing
                  , onEnterpriseUserAccount: pure
                                             Nothing
+                 , onEnvironment: pure
+                                  Nothing
                  , onExternalIdentity: pure
                                        Nothing
                  , onGist: pure
@@ -1267,6 +1384,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                               Nothing
                  , onHeadRefRestoredEvent: pure
                                            Nothing
+                 , onImport: pure
+                             Nothing
                  , onIpAllowListEntry: pure
                                        Nothing
                  , onIssue: pure
@@ -1301,12 +1420,16 @@ maybeFragments = { onAddedToProjectEvent: pure
                                      Nothing
                  , onMergedEvent: pure
                                   Nothing
+                 , onMigrationSource: pure
+                                      Nothing
                  , onMilestone: pure
                                 Nothing
                  , onMilestonedEvent: pure
                                       Nothing
                  , onMovedColumnsInProjectEvent: pure
                                                  Nothing
+                 , onOidcProvider: pure
+                                   Nothing
                  , onOauthApplicationCreateAuditEntry: pure
                                                        Nothing
                  , onOrgAddBillingManagerAuditEntry: pure
@@ -1375,6 +1498,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                  Nothing
                  , onPackageVersion: pure
                                      Nothing
+                 , onPinnedDiscussion: pure
+                                       Nothing
                  , onPinnedEvent: pure
                                   Nothing
                  , onPinnedIssue: pure
@@ -1389,6 +1514,12 @@ maybeFragments = { onAddedToProjectEvent: pure
                                   Nothing
                  , onProjectColumn: pure
                                     Nothing
+                 , onProjectNext: pure
+                                  Nothing
+                 , onProjectNextItem: pure
+                                      Nothing
+                 , onProjectNextItemFieldValue: pure
+                                                Nothing
                  , onPublicKey: pure
                                 Nothing
                  , onPullRequest: pure
@@ -1467,6 +1598,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                  Nothing
                  , onRepositoryInvitation: pure
                                            Nothing
+                 , onRepositoryMigration: pure
+                                          Nothing
                  , onRepositoryTopic: pure
                                       Nothing
                  , onRepositoryVisibilityChangeDisableAuditEntry: pure
@@ -1489,12 +1622,16 @@ maybeFragments = { onAddedToProjectEvent: pure
                                  Nothing
                  , onSecurityAdvisory: pure
                                        Nothing
+                 , onSponsorsActivity: pure
+                                       Nothing
                  , onSponsorsListing: pure
                                       Nothing
                  , onSponsorsTier: pure
                                    Nothing
                  , onSponsorship: pure
                                   Nothing
+                 , onSponsorshipNewsletter: pure
+                                            Nothing
                  , onStatus: pure
                              Nothing
                  , onStatusCheckRollup: pure
@@ -1549,4 +1686,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                  Nothing
                  , onVerifiableDomain: pure
                                        Nothing
+                 , onWorkflow: pure
+                               Nothing
+                 , onWorkflowRun: pure
+                                  Nothing
                  }

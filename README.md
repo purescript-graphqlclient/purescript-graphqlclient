@@ -46,6 +46,15 @@ node bin/purescript-graphqlclient-generator --help
 ```sh
 spago install
 spago --config generator-spago.dhall install
+spago --config examples-spago.dhall install
+
+# How to create "Personal access tokens"
+# 1. (optional) check https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql
+# 2. go to https://github.com/settings/tokens
+# 3. create with only "public repos" permissions and name "ps-graphqlclient"
+
+export MY_GITHUB_GRAPHQL_ENDPOINT_TOKEN=xxxx
+
 ./regenerate-examples.sh
 yarn run examples:test --watch
 git push
@@ -60,4 +69,14 @@ yarn install
 spago --config generator-spago.dhall run \
   --main GraphQLClientGenerator.Main \
   --node-args "--help"
+```
+
+### How to run tests locally
+
+```sh
+yarn install
+spago install
+spago --config generator-spago.dhall install
+spago --config examples-spago.dhall install
+./ci-approve.sh
 ```

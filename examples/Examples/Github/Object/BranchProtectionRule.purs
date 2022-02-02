@@ -12,10 +12,13 @@ import GraphQLClient
 import Examples.Github.Scopes
   ( Scope__BranchProtectionRule
   , Scope__BranchProtectionRuleConflictConnection
+  , Scope__BypassForcePushAllowanceConnection
+  , Scope__BypassPullRequestAllowanceConnection
   , Scope__Actor
   , Scope__RefConnection
   , Scope__PushAllowanceConnection
   , Scope__Repository
+  , Scope__RequiredStatusCheckDescription
   , Scope__ReviewDismissalAllowanceConnection
   )
 import Type.Row (type (+))
@@ -55,6 +58,50 @@ branchProtectionRuleConflicts input = selectionForCompositeField
                                       (toGraphQLArguments
                                        input)
                                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type BypassForcePushAllowancesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type BypassForcePushAllowancesInput
+  = { | BypassForcePushAllowancesInputRowOptional + () }
+
+bypassForcePushAllowances
+  :: forall r
+   . BypassForcePushAllowancesInput
+  -> SelectionSet Scope__BypassForcePushAllowanceConnection r
+  -> SelectionSet Scope__BranchProtectionRule r
+bypassForcePushAllowances input = selectionForCompositeField
+                                  "bypassForcePushAllowances"
+                                  (toGraphQLArguments
+                                   input)
+                                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type BypassPullRequestAllowancesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type BypassPullRequestAllowancesInput
+  = { | BypassPullRequestAllowancesInputRowOptional + () }
+
+bypassPullRequestAllowances
+  :: forall r
+   . BypassPullRequestAllowancesInput
+  -> SelectionSet Scope__BypassPullRequestAllowanceConnection r
+  -> SelectionSet Scope__BranchProtectionRule r
+bypassPullRequestAllowances input = selectionForCompositeField
+                                    "bypassPullRequestAllowances"
+                                    (toGraphQLArguments
+                                     input)
+                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 creator
   :: forall r
@@ -159,6 +206,15 @@ requiredStatusCheckContexts = selectionForField
                               []
                               graphqlDefaultResponseScalarDecoder
 
+requiredStatusChecks
+  :: forall r
+   . SelectionSet Scope__RequiredStatusCheckDescription r
+  -> SelectionSet Scope__BranchProtectionRule (Maybe (Array r))
+requiredStatusChecks = selectionForCompositeField
+                       "requiredStatusChecks"
+                       []
+                       graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 requiresApprovingReviews :: SelectionSet Scope__BranchProtectionRule Boolean
 requiresApprovingReviews = selectionForField
                            "requiresApprovingReviews"
@@ -176,6 +232,15 @@ requiresCommitSignatures = selectionForField
                            "requiresCommitSignatures"
                            []
                            graphqlDefaultResponseScalarDecoder
+
+requiresConversationResolution
+  :: SelectionSet
+     Scope__BranchProtectionRule
+     Boolean
+requiresConversationResolution = selectionForField
+                                 "requiresConversationResolution"
+                                 []
+                                 graphqlDefaultResponseScalarDecoder
 
 requiresLinearHistory :: SelectionSet Scope__BranchProtectionRule Boolean
 requiresLinearHistory = selectionForField

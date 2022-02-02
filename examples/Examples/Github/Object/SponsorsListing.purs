@@ -10,9 +10,13 @@ import GraphQLClient
   , toGraphQLArguments
   )
 import Examples.Github.Scopes
-  (Scope__SponsorsGoal, Scope__SponsorsListing, Scope__SponsorsTierConnection)
+  ( Scope__SponsorsGoal
+  , Scope__SponsorsListing
+  , Scope__Sponsorable
+  , Scope__SponsorsTierConnection
+  )
 import Data.Maybe (Maybe)
-import Examples.Github.Scalars (DateTime, Html, Id)
+import Examples.Github.Scalars (DateTime, Html, Id, Date)
 import Examples.Github.InputObject (SponsorsTierOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 
@@ -43,8 +47,17 @@ fullDescriptionHTML = selectionForField
 id :: SelectionSet Scope__SponsorsListing Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
 
+isPublic :: SelectionSet Scope__SponsorsListing Boolean
+isPublic = selectionForField "isPublic" [] graphqlDefaultResponseScalarDecoder
+
 name :: SelectionSet Scope__SponsorsListing String
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
+
+nextPayoutDate :: SelectionSet Scope__SponsorsListing (Maybe Date)
+nextPayoutDate = selectionForField
+                 "nextPayoutDate"
+                 []
+                 graphqlDefaultResponseScalarDecoder
 
 shortDescription :: SelectionSet Scope__SponsorsListing String
 shortDescription = selectionForField
@@ -54,6 +67,15 @@ shortDescription = selectionForField
 
 slug :: SelectionSet Scope__SponsorsListing String
 slug = selectionForField "slug" [] graphqlDefaultResponseScalarDecoder
+
+sponsorable
+  :: forall r
+   . SelectionSet Scope__Sponsorable r
+  -> SelectionSet Scope__SponsorsListing r
+sponsorable = selectionForCompositeField
+              "sponsorable"
+              []
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type TiersInputRowOptional r
   = ( after :: Optional String

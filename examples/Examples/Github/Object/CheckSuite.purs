@@ -15,9 +15,11 @@ import Examples.Github.Scopes
   , Scope__Ref
   , Scope__CheckRunConnection
   , Scope__Commit
+  , Scope__User
   , Scope__PullRequestConnection
   , Scope__Push
   , Scope__Repository
+  , Scope__WorkflowRun
   )
 import Data.Maybe (Maybe)
 import Examples.Github.InputObject (CheckRunFilter, IssueOrder) as Examples.Github.InputObject
@@ -84,6 +86,15 @@ conclusion = selectionForField
 
 createdAt :: SelectionSet Scope__CheckSuite DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
+
+creator
+  :: forall r
+   . SelectionSet Scope__User r
+  -> SelectionSet Scope__CheckSuite (Maybe r)
+creator = selectionForCompositeField
+          "creator"
+          []
+          graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 databaseId :: SelectionSet Scope__CheckSuite (Maybe Int)
 databaseId = selectionForField
@@ -152,3 +163,12 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
 url :: SelectionSet Scope__CheckSuite Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
+
+workflowRun
+  :: forall r
+   . SelectionSet Scope__WorkflowRun r
+  -> SelectionSet Scope__CheckSuite (Maybe r)
+workflowRun = selectionForCompositeField
+              "workflowRun"
+              []
+              graphqlDefaultResponseFunctorOrScalarDecoderTransformer

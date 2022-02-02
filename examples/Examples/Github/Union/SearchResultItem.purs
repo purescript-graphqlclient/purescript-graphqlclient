@@ -3,6 +3,7 @@ module Examples.Github.Union.SearchResultItem where
 import GraphQLClient (SelectionSet, exhaustiveFragmentSelection, buildFragment)
 import Examples.Github.Scopes
   ( Scope__App
+  , Scope__Discussion
   , Scope__Issue
   , Scope__MarketplaceListing
   , Scope__Organization
@@ -16,6 +17,7 @@ import Prelude (pure)
 
 type Fragments decodesTo
   = { onApp :: SelectionSet Scope__App decodesTo
+    , onDiscussion :: SelectionSet Scope__Discussion decodesTo
     , onIssue :: SelectionSet Scope__Issue decodesTo
     , onMarketplaceListing :: SelectionSet Scope__MarketplaceListing decodesTo
     , onOrganization :: SelectionSet Scope__Organization decodesTo
@@ -30,6 +32,7 @@ fragments
   -> SelectionSet Scope__SearchResultItem decodesTo
 fragments selections = exhaustiveFragmentSelection
                        [ buildFragment "App" selections.onApp
+                       , buildFragment "Discussion" selections.onDiscussion
                        , buildFragment "Issue" selections.onIssue
                        , buildFragment
                          "MarketplaceListing"
@@ -43,6 +46,8 @@ fragments selections = exhaustiveFragmentSelection
 maybeFragments :: forall decodesTo. Fragments (Maybe decodesTo)
 maybeFragments = { onApp: pure
                           Nothing
+                 , onDiscussion: pure
+                                 Nothing
                  , onIssue: pure
                             Nothing
                  , onMarketplaceListing: pure

@@ -238,7 +238,7 @@ selectionForCompositeField ::
 selectionForCompositeField = selectionForCompositeFieldImplementation fieldNameWithHash
 
 buildFragment :: forall decodesTo selectionLock fragmentLock. String -> SelectionSet selectionLock decodesTo -> FragmentSelectionSet fragmentLock decodesTo
-buildFragment fragmentTypeName (SelectionSet fields decoder) = FragmentSelectionSet fragmentTypeName fields decoder
+buildFragment fragmentTypeConstructor (SelectionSet fields decoder) = FragmentSelectionSet fragmentTypeConstructor fields decoder
 
 exhaustiveFragmentSelection :: forall typeLock decodesTo. Array (FragmentSelectionSet typeLock decodesTo) -> SelectionSet typeLock decodesTo
 exhaustiveFragmentSelection fragments =

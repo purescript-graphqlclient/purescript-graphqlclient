@@ -18,6 +18,8 @@ import Examples.Github.Scopes
   , Scope__LabelConnection
   , Scope__Milestone
   , Scope__ProjectCardConnection
+  , Scope__ProjectNext
+  , Scope__ProjectNextConnection
   , Scope__ReactionGroup
   , Scope__ReactionConnection
   , Scope__Repository
@@ -33,6 +35,7 @@ import Examples.Github.Scalars (Html, Uri, DateTime, Id)
 import Examples.Github.InputObject
   (IssueCommentOrder, LabelOrder, ReactionOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
+import Examples.Github.Enum.ProjectNextOrderField (ProjectNextOrderField)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.IssueState (IssueState)
 import Examples.Github.Enum.IssueTimelineItemsItemType
@@ -273,6 +276,44 @@ projectCards input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type ProjectNextInputRowRequired r = ( number :: Int | r )
+
+type ProjectNextInput = { | ProjectNextInputRowRequired + () }
+
+projectNext
+  :: forall r
+   . ProjectNextInput
+  -> SelectionSet Scope__ProjectNext r
+  -> SelectionSet Scope__Issue (Maybe r)
+projectNext input = selectionForCompositeField
+                    "projectNext"
+                    (toGraphQLArguments
+                     input)
+                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type ProjectsNextInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , query :: Optional String
+    , sortBy :: Optional ProjectNextOrderField
+    | r
+    )
+
+type ProjectsNextInput = { | ProjectsNextInputRowOptional + () }
+
+projectsNext
+  :: forall r
+   . ProjectsNextInput
+  -> SelectionSet Scope__ProjectNextConnection r
+  -> SelectionSet Scope__Issue r
+projectsNext input = selectionForCompositeField
+                     "projectsNext"
+                     (toGraphQLArguments
+                      input)
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 publishedAt :: SelectionSet Scope__Issue (Maybe DateTime)
 publishedAt = selectionForField
               "publishedAt"
@@ -377,6 +418,9 @@ timelineItems input = selectionForCompositeField
 
 title :: SelectionSet Scope__Issue String
 title = selectionForField "title" [] graphqlDefaultResponseScalarDecoder
+
+titleHTML :: SelectionSet Scope__Issue String
+titleHTML = selectionForField "titleHTML" [] graphqlDefaultResponseScalarDecoder
 
 updatedAt :: SelectionSet Scope__Issue DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder

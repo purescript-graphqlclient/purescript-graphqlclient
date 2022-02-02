@@ -13,7 +13,7 @@ import GraphQLClient
   )
 
 -- | original name - SearchType
-data SearchType = Issue | Repository | User
+data SearchType = Issue | Repository | User | Discussion
 
 derive instance genericSearchType :: Generic SearchType _
 
@@ -28,6 +28,7 @@ fromToMap :: Array (Tuple String SearchType)
 fromToMap = [ Tuple "ISSUE" Issue
             , Tuple "REPOSITORY" Repository
             , Tuple "USER" User
+            , Tuple "DISCUSSION" Discussion
             ]
 
 instance searchTypeGraphQLDefaultResponseScalarDecoder
@@ -41,3 +42,4 @@ instance searchTypeToGraphQLArgumentValue
       Issue -> ArgumentValueEnum "ISSUE"
       Repository -> ArgumentValueEnum "REPOSITORY"
       User -> ArgumentValueEnum "USER"
+      Discussion -> ArgumentValueEnum "DISCUSSION"

@@ -12,6 +12,9 @@ import GraphQLClient
 import Examples.Github.Scopes
   ( Scope__User
   , Scope__Release
+  , Scope__UserConnection
+  , Scope__ReactionGroup
+  , Scope__ReactionConnection
   , Scope__ReleaseAssetConnection
   , Scope__Repository
   , Scope__Ref
@@ -20,6 +23,8 @@ import Examples.Github.Scopes
 import Data.Maybe (Maybe)
 import Examples.Github.Scalars (DateTime, Html, Id, Uri)
 import Type.Row (type (+))
+import Examples.Github.Enum.ReactionContent (ReactionContent)
+import Examples.Github.InputObject (ReactionOrder) as Examples.Github.InputObject
 
 author
   :: forall r
@@ -32,6 +37,12 @@ author = selectionForCompositeField
 
 createdAt :: SelectionSet Scope__Release DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
+
+databaseId :: SelectionSet Scope__Release (Maybe Int)
+databaseId = selectionForField
+             "databaseId"
+             []
+             graphqlDefaultResponseScalarDecoder
 
 description :: SelectionSet Scope__Release (Maybe String)
 description = selectionForField
@@ -60,6 +71,27 @@ isPrerelease = selectionForField
                []
                graphqlDefaultResponseScalarDecoder
 
+type MentionsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    | r
+    )
+
+type MentionsInput = { | MentionsInputRowOptional + () }
+
+mentions
+  :: forall r
+   . MentionsInput
+  -> SelectionSet Scope__UserConnection r
+  -> SelectionSet Scope__Release (Maybe r)
+mentions input = selectionForCompositeField
+                 "mentions"
+                 (toGraphQLArguments
+                  input)
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 name :: SelectionSet Scope__Release (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
@@ -68,6 +100,38 @@ publishedAt = selectionForField
               "publishedAt"
               []
               graphqlDefaultResponseScalarDecoder
+
+reactionGroups
+  :: forall r
+   . SelectionSet Scope__ReactionGroup r
+  -> SelectionSet Scope__Release (Maybe (Array r))
+reactionGroups = selectionForCompositeField
+                 "reactionGroups"
+                 []
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type ReactionsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , content :: Optional ReactionContent
+    , orderBy :: Optional Examples.Github.InputObject.ReactionOrder
+    | r
+    )
+
+type ReactionsInput = { | ReactionsInputRowOptional + () }
+
+reactions
+  :: forall r
+   . ReactionsInput
+  -> SelectionSet Scope__ReactionConnection r
+  -> SelectionSet Scope__Release r
+reactions input = selectionForCompositeField
+                  "reactions"
+                  (toGraphQLArguments
+                   input)
+                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type ReleaseAssetsInputRowOptional r
   = ( after :: Optional String
@@ -145,3 +209,9 @@ updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder
 
 url :: SelectionSet Scope__Release Uri
 url = selectionForField "url" [] graphqlDefaultResponseScalarDecoder
+
+viewerCanReact :: SelectionSet Scope__Release Boolean
+viewerCanReact = selectionForField
+                 "viewerCanReact"
+                 []
+                 graphqlDefaultResponseScalarDecoder

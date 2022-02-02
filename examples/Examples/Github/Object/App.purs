@@ -5,11 +5,14 @@ import GraphQLClient
   , selectionForField
   , graphqlDefaultResponseScalarDecoder
   , Optional
+  , selectionForCompositeField
   , toGraphQLArguments
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes (Scope__App)
+import Examples.Github.Scopes (Scope__App, Scope__IpAllowListEntryConnection)
 import Examples.Github.Scalars (DateTime, Id, Uri)
 import Data.Maybe (Maybe)
+import Examples.Github.InputObject (IpAllowListEntryOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 
 createdAt :: SelectionSet Scope__App DateTime
@@ -29,6 +32,28 @@ description = selectionForField
 
 id :: SelectionSet Scope__App Id
 id = selectionForField "id" [] graphqlDefaultResponseScalarDecoder
+
+type IpAllowListEntriesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , orderBy :: Optional Examples.Github.InputObject.IpAllowListEntryOrder
+    | r
+    )
+
+type IpAllowListEntriesInput = { | IpAllowListEntriesInputRowOptional + () }
+
+ipAllowListEntries
+  :: forall r
+   . IpAllowListEntriesInput
+  -> SelectionSet Scope__IpAllowListEntryConnection r
+  -> SelectionSet Scope__App r
+ipAllowListEntries input = selectionForCompositeField
+                           "ipAllowListEntries"
+                           (toGraphQLArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 logoBackgroundColor :: SelectionSet Scope__App String
 logoBackgroundColor = selectionForField

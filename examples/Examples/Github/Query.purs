@@ -29,7 +29,6 @@ import Examples.Github.Scopes
   , Scope__SecurityAdvisory
   , Scope__SecurityVulnerabilityConnection
   , Scope__SponsorableItemConnection
-  , Scope__SponsorsListing
   , Scope__Topic
   , Scope__User
   )
@@ -318,9 +317,12 @@ relay = selectionForCompositeField
         []
         graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type RepositoryInputRowOptional r = ( followRenames :: Optional Boolean | r )
+
 type RepositoryInputRowRequired r = ( owner :: String, name :: String | r )
 
-type RepositoryInput = { | RepositoryInputRowRequired + () }
+type RepositoryInput
+  = { | RepositoryInputRowOptional + RepositoryInputRowRequired + () }
 
 repository
   :: forall r
@@ -478,21 +480,6 @@ sponsorables input = selectionForCompositeField
                      (toGraphQLArguments
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
-
-type SponsorsListingInputRowRequired r = ( slug :: String | r )
-
-type SponsorsListingInput = { | SponsorsListingInputRowRequired + () }
-
-sponsorsListing
-  :: forall r
-   . SponsorsListingInput
-  -> SelectionSet Scope__SponsorsListing r
-  -> SelectionSet Scope__RootQuery (Maybe r)
-sponsorsListing input = selectionForCompositeField
-                        "sponsorsListing"
-                        (toGraphQLArguments
-                         input)
-                        graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type TopicInputRowRequired r = ( name :: String | r )
 

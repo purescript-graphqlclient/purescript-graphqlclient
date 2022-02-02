@@ -6,9 +6,11 @@ import GraphQLClient
   , selectionForField
   , toGraphQLArguments
   , graphqlDefaultResponseScalarDecoder
+  , selectionForCompositeField
+  , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
 import Type.Row (type (+))
-import Examples.Github.Scopes (Scope__Mannequin)
+import Examples.Github.Scopes (Scope__Mannequin, Scope__User)
 import Examples.Github.Scalars (Uri, DateTime, Id)
 import Data.Maybe (Maybe)
 
@@ -22,6 +24,15 @@ avatarUrl input = selectionForField
                   (toGraphQLArguments
                    input)
                   graphqlDefaultResponseScalarDecoder
+
+claimant
+  :: forall r
+   . SelectionSet Scope__User r
+  -> SelectionSet Scope__Mannequin (Maybe r)
+claimant = selectionForCompositeField
+           "claimant"
+           []
+           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 createdAt :: SelectionSet Scope__Mannequin DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder

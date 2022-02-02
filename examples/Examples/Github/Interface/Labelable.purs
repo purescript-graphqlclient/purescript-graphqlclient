@@ -12,7 +12,12 @@ import GraphQLClient
 import Examples.Github.InputObject (LabelOrder) as Examples.Github.InputObject
 import Type.Row (type (+))
 import Examples.Github.Scopes
-  (Scope__LabelConnection, Scope__Labelable, Scope__Issue, Scope__PullRequest)
+  ( Scope__LabelConnection
+  , Scope__Labelable
+  , Scope__Discussion
+  , Scope__Issue
+  , Scope__PullRequest
+  )
 import Data.Maybe (Maybe(..))
 import Prelude (pure)
 
@@ -39,7 +44,8 @@ labels input = selectionForCompositeField
                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type Fragments decodesTo
-  = { onIssue :: SelectionSet Scope__Issue decodesTo
+  = { onDiscussion :: SelectionSet Scope__Discussion decodesTo
+    , onIssue :: SelectionSet Scope__Issue decodesTo
     , onPullRequest :: SelectionSet Scope__PullRequest decodesTo
     }
 
@@ -48,9 +54,16 @@ fragments
    . Fragments decodesTo
   -> SelectionSet Scope__Labelable decodesTo
 fragments selections = exhaustiveFragmentSelection
-                       [ buildFragment "Issue" selections.onIssue
+                       [ buildFragment "Discussion" selections.onDiscussion
+                       , buildFragment "Issue" selections.onIssue
                        , buildFragment "PullRequest" selections.onPullRequest
                        ]
 
 maybeFragments :: forall decodesTo. Fragments (Maybe decodesTo)
-maybeFragments = { onIssue: pure Nothing, onPullRequest: pure Nothing }
+maybeFragments = { onDiscussion: pure
+                                 Nothing
+                 , onIssue: pure
+                            Nothing
+                 , onPullRequest: pure
+                                  Nothing
+                 }

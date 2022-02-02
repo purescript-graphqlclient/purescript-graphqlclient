@@ -29,6 +29,7 @@ import Examples.Github.Scopes
   , Scope__VerifiableDomainConnection
   , Scope__EnterpriseServerInstallationConnection
   , Scope__IpAllowListEntryConnection
+  , Scope__OidcProvider
   , Scope__EnterpriseOutsideCollaboratorConnection
   , Scope__EnterpriseAdministratorInvitationConnection
   , Scope__RepositoryInvitationConnection
@@ -45,6 +46,8 @@ import Examples.Github.Enum.DefaultRepositoryPermissionField
   (DefaultRepositoryPermissionField)
 import Examples.Github.Enum.IpAllowListEnabledSettingValue
   (IpAllowListEnabledSettingValue)
+import Examples.Github.Enum.IpAllowListForInstalledAppsEnabledSettingValue
+  (IpAllowListForInstalledAppsEnabledSettingValue)
 import Data.Maybe (Maybe)
 import Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue
   (EnterpriseMembersCanCreateRepositoriesSettingValue)
@@ -197,6 +200,7 @@ type DomainsInputRowOptional r
     , first :: Optional Int
     , last :: Optional Int
     , isVerified :: Optional Boolean
+    , isApproved :: Optional Boolean
     , orderBy :: Optional Examples.Github.InputObject.VerifiableDomainOrder
     | r
     )
@@ -270,6 +274,15 @@ ipAllowListEntries input = selectionForCompositeField
                            (toGraphQLArguments
                             input)
                            graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+ipAllowListForInstalledAppsEnabledSetting
+  :: SelectionSet
+     Scope__EnterpriseOwnerInfo
+     IpAllowListForInstalledAppsEnabledSettingValue
+ipAllowListForInstalledAppsEnabledSetting = selectionForField
+                                            "ipAllowListForInstalledAppsEnabledSetting"
+                                            []
+                                            graphqlDefaultResponseScalarDecoder
 
 isUpdatingDefaultRepositoryPermission
   :: SelectionSet
@@ -599,6 +612,15 @@ notificationDeliveryRestrictionEnabledSetting = selectionForField
                                                 "notificationDeliveryRestrictionEnabledSetting"
                                                 []
                                                 graphqlDefaultResponseScalarDecoder
+
+oidcProvider
+  :: forall r
+   . SelectionSet Scope__OidcProvider r
+  -> SelectionSet Scope__EnterpriseOwnerInfo (Maybe r)
+oidcProvider = selectionForCompositeField
+               "oidcProvider"
+               []
+               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 organizationProjectsSetting
   :: SelectionSet

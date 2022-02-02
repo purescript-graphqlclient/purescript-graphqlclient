@@ -39,6 +39,8 @@ data PullRequestTimelineItemsItemType
   | ReviewRequestRemovedEvent
   | ReadyForReviewEvent
   | ConvertToDraftEvent
+  | AddedToMergeQueueEvent
+  | RemovedFromMergeQueueEvent
   | IssueComment
   | CrossReferencedEvent
   | AddedToProjectEvent
@@ -47,6 +49,7 @@ data PullRequestTimelineItemsItemType
   | CommentDeletedEvent
   | ConnectedEvent
   | ConvertedNoteToIssueEvent
+  | ConvertedToDiscussionEvent
   | DemilestonedEvent
   | DisconnectedEvent
   | LabeledEvent
@@ -120,6 +123,8 @@ fromToMap = [ Tuple "PULL_REQUEST_COMMIT" PullRequestCommit
             , Tuple "REVIEW_REQUEST_REMOVED_EVENT" ReviewRequestRemovedEvent
             , Tuple "READY_FOR_REVIEW_EVENT" ReadyForReviewEvent
             , Tuple "CONVERT_TO_DRAFT_EVENT" ConvertToDraftEvent
+            , Tuple "ADDED_TO_MERGE_QUEUE_EVENT" AddedToMergeQueueEvent
+            , Tuple "REMOVED_FROM_MERGE_QUEUE_EVENT" RemovedFromMergeQueueEvent
             , Tuple "ISSUE_COMMENT" IssueComment
             , Tuple "CROSS_REFERENCED_EVENT" CrossReferencedEvent
             , Tuple "ADDED_TO_PROJECT_EVENT" AddedToProjectEvent
@@ -128,6 +133,7 @@ fromToMap = [ Tuple "PULL_REQUEST_COMMIT" PullRequestCommit
             , Tuple "COMMENT_DELETED_EVENT" CommentDeletedEvent
             , Tuple "CONNECTED_EVENT" ConnectedEvent
             , Tuple "CONVERTED_NOTE_TO_ISSUE_EVENT" ConvertedNoteToIssueEvent
+            , Tuple "CONVERTED_TO_DISCUSSION_EVENT" ConvertedToDiscussionEvent
             , Tuple "DEMILESTONED_EVENT" DemilestonedEvent
             , Tuple "DISCONNECTED_EVENT" DisconnectedEvent
             , Tuple "LABELED_EVENT" LabeledEvent
@@ -193,6 +199,9 @@ instance pullRequestTimelineItemsItemTypeToGraphQLArgumentValue
                                    "REVIEW_REQUEST_REMOVED_EVENT"
       ReadyForReviewEvent -> ArgumentValueEnum "READY_FOR_REVIEW_EVENT"
       ConvertToDraftEvent -> ArgumentValueEnum "CONVERT_TO_DRAFT_EVENT"
+      AddedToMergeQueueEvent -> ArgumentValueEnum "ADDED_TO_MERGE_QUEUE_EVENT"
+      RemovedFromMergeQueueEvent -> ArgumentValueEnum
+                                    "REMOVED_FROM_MERGE_QUEUE_EVENT"
       IssueComment -> ArgumentValueEnum "ISSUE_COMMENT"
       CrossReferencedEvent -> ArgumentValueEnum "CROSS_REFERENCED_EVENT"
       AddedToProjectEvent -> ArgumentValueEnum "ADDED_TO_PROJECT_EVENT"
@@ -202,6 +211,8 @@ instance pullRequestTimelineItemsItemTypeToGraphQLArgumentValue
       ConnectedEvent -> ArgumentValueEnum "CONNECTED_EVENT"
       ConvertedNoteToIssueEvent -> ArgumentValueEnum
                                    "CONVERTED_NOTE_TO_ISSUE_EVENT"
+      ConvertedToDiscussionEvent -> ArgumentValueEnum
+                                    "CONVERTED_TO_DISCUSSION_EVENT"
       DemilestonedEvent -> ArgumentValueEnum "DEMILESTONED_EVENT"
       DisconnectedEvent -> ArgumentValueEnum "DISCONNECTED_EVENT"
       LabeledEvent -> ArgumentValueEnum "LABELED_EVENT"

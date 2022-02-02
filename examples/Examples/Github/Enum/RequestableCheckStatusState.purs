@@ -13,7 +13,12 @@ import GraphQLClient
   )
 
 -- | original name - RequestableCheckStatusState
-data RequestableCheckStatusState = Queued | InProgress | Completed | Waiting
+data RequestableCheckStatusState
+  = Queued
+  | InProgress
+  | Completed
+  | Waiting
+  | Pending
 
 derive instance genericRequestableCheckStatusState
   ::
@@ -34,6 +39,7 @@ fromToMap = [ Tuple "QUEUED" Queued
             , Tuple "IN_PROGRESS" InProgress
             , Tuple "COMPLETED" Completed
             , Tuple "WAITING" Waiting
+            , Tuple "PENDING" Pending
             ]
 
 instance requestableCheckStatusStateGraphQLDefaultResponseScalarDecoder
@@ -50,3 +56,4 @@ instance requestableCheckStatusStateToGraphQLArgumentValue
       InProgress -> ArgumentValueEnum "IN_PROGRESS"
       Completed -> ArgumentValueEnum "COMPLETED"
       Waiting -> ArgumentValueEnum "WAITING"
+      Pending -> ArgumentValueEnum "PENDING"

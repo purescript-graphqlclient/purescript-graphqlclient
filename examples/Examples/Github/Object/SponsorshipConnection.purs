@@ -47,3 +47,21 @@ totalCount = selectionForField
              "totalCount"
              []
              graphqlDefaultResponseScalarDecoder
+
+totalRecurringMonthlyPriceInCents
+  :: SelectionSet
+     Scope__SponsorshipConnection
+     Int
+totalRecurringMonthlyPriceInCents = selectionForField
+                                    "totalRecurringMonthlyPriceInCents"
+                                    []
+                                    graphqlDefaultResponseScalarDecoder
+
+totalRecurringMonthlyPriceInDollars
+  :: SelectionSet
+     Scope__SponsorshipConnection
+     Int
+totalRecurringMonthlyPriceInDollars = selectionForField
+                                      "totalRecurringMonthlyPriceInDollars"
+                                      []
+                                      graphqlDefaultResponseScalarDecoder

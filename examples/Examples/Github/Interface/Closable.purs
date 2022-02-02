@@ -12,6 +12,7 @@ import Examples.Github.Scopes
   , Scope__Issue
   , Scope__Milestone
   , Scope__Project
+  , Scope__ProjectNext
   , Scope__PullRequest
   )
 import Data.Maybe (Maybe(..))
@@ -28,6 +29,7 @@ type Fragments decodesTo
   = { onIssue :: SelectionSet Scope__Issue decodesTo
     , onMilestone :: SelectionSet Scope__Milestone decodesTo
     , onProject :: SelectionSet Scope__Project decodesTo
+    , onProjectNext :: SelectionSet Scope__ProjectNext decodesTo
     , onPullRequest :: SelectionSet Scope__PullRequest decodesTo
     }
 
@@ -39,6 +41,7 @@ fragments selections = exhaustiveFragmentSelection
                        [ buildFragment "Issue" selections.onIssue
                        , buildFragment "Milestone" selections.onMilestone
                        , buildFragment "Project" selections.onProject
+                       , buildFragment "ProjectNext" selections.onProjectNext
                        , buildFragment "PullRequest" selections.onPullRequest
                        ]
 
@@ -49,6 +52,8 @@ maybeFragments = { onIssue: pure
                                 Nothing
                  , onProject: pure
                               Nothing
+                 , onProjectNext: pure
+                                  Nothing
                  , onPullRequest: pure
                                   Nothing
                  }

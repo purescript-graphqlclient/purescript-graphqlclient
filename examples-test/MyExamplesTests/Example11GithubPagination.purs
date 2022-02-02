@@ -130,12 +130,12 @@ query {
 }
 """
 
-spec :: Test.Spec.Spec Unit
-spec =
+spec :: String -> Test.Spec.Spec Unit
+spec githubGraphqlEndpointToken =
   Test.Spec.it "Example11GithubPagination" do
     writeGraphQL (query Nothing) `Test.Spec.shouldEqual` expectedQuery
     let
-      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" "Bearer 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" ] }
+      opts = defaultRequestOptions { headers = [ RequestHeader "authorization" ("Bearer " <> githubGraphqlEndpointToken) ] }
     (response :: Either (GraphQLError Response) Response) <- graphqlQueryRequest "https://api.github.com/graphql" opts (query Nothing)
     (response' :: Response) <- either (throwError <<< error <<< printGraphQLError) pure $ response
     Array.length response'.data `Test.Spec.shouldEqual` 10

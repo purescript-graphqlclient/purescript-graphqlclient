@@ -1,5 +1,7 @@
 module Examples.Github.Scopes where
 
+data Scope__AbortQueuedMigrationsPayload
+
 data Scope__AcceptEnterpriseAdministratorInvitationPayload
 
 data Scope__AcceptTopicSuggestionPayload
@@ -10,6 +12,8 @@ data Scope__AddAssigneesToAssignablePayload
 
 data Scope__AddCommentPayload
 
+data Scope__AddDiscussionCommentPayload
+
 data Scope__AddEnterpriseSupportEntitlementPayload
 
 data Scope__AddLabelsToLabelablePayload
@@ -17,6 +21,8 @@ data Scope__AddLabelsToLabelablePayload
 data Scope__AddProjectCardPayload
 
 data Scope__AddProjectColumnPayload
+
+data Scope__AddProjectNextItemPayload
 
 data Scope__AddPullRequestReviewCommentPayload
 
@@ -28,11 +34,15 @@ data Scope__AddReactionPayload
 
 data Scope__AddStarPayload
 
+data Scope__AddUpvotePayload
+
 data Scope__AddVerifiableDomainPayload
 
 data Scope__AddedToProjectEvent
 
 data Scope__App
+
+data Scope__ApproveDeploymentsPayload
 
 data Scope__ApproveVerifiableDomainPayload
 
@@ -80,7 +90,21 @@ data Scope__BranchProtectionRuleConnection
 
 data Scope__BranchProtectionRuleEdge
 
+data Scope__BypassForcePushAllowance
+
+data Scope__BypassForcePushAllowanceConnection
+
+data Scope__BypassForcePushAllowanceEdge
+
+data Scope__BypassPullRequestAllowance
+
+data Scope__BypassPullRequestAllowanceConnection
+
+data Scope__BypassPullRequestAllowanceEdge
+
 data Scope__CancelEnterpriseAdminInvitationPayload
+
+data Scope__CancelSponsorshipPayload
 
 data Scope__ChangeUserStatusPayload
 
@@ -99,6 +123,12 @@ data Scope__CheckRun
 data Scope__CheckRunConnection
 
 data Scope__CheckRunEdge
+
+data Scope__CheckStep
+
+data Scope__CheckStepConnection
+
+data Scope__CheckStepEdge
 
 data Scope__CheckSuite
 
@@ -154,9 +184,13 @@ data Scope__ContributionsCollection
 
 data Scope__ConvertProjectCardNoteToIssuePayload
 
+data Scope__ConvertPullRequestToDraftPayload
+
 data Scope__ConvertToDraftEvent
 
 data Scope__ConvertedNoteToIssueEvent
+
+data Scope__ConvertedToDiscussionEvent
 
 data Scope__CreateBranchProtectionRulePayload
 
@@ -164,11 +198,19 @@ data Scope__CreateCheckRunPayload
 
 data Scope__CreateCheckSuitePayload
 
+data Scope__CreateCommitOnBranchPayload
+
+data Scope__CreateDiscussionPayload
+
 data Scope__CreateEnterpriseOrganizationPayload
+
+data Scope__CreateEnvironmentPayload
 
 data Scope__CreateIpAllowListEntryPayload
 
 data Scope__CreateIssuePayload
+
+data Scope__CreateMigrationSourcePayload
 
 data Scope__CreateProjectPayload
 
@@ -177,6 +219,8 @@ data Scope__CreatePullRequestPayload
 data Scope__CreateRefPayload
 
 data Scope__CreateRepositoryPayload
+
+data Scope__CreateSponsorshipPayload
 
 data Scope__CreateTeamDiscussionCommentPayload
 
@@ -228,6 +272,12 @@ data Scope__DeleteBranchProtectionRulePayload
 
 data Scope__DeleteDeploymentPayload
 
+data Scope__DeleteDiscussionCommentPayload
+
+data Scope__DeleteDiscussionPayload
+
+data Scope__DeleteEnvironmentPayload
+
 data Scope__DeleteIpAllowListEntryPayload
 
 data Scope__DeleteIssueCommentPayload
@@ -237,6 +287,8 @@ data Scope__DeleteIssuePayload
 data Scope__DeleteProjectCardPayload
 
 data Scope__DeleteProjectColumnPayload
+
+data Scope__DeleteProjectNextItemPayload
 
 data Scope__DeleteProjectPayload
 
@@ -270,6 +322,28 @@ data Scope__DeploymentEdge
 
 data Scope__DeploymentEnvironmentChangedEvent
 
+data Scope__DeploymentProtectionRule
+
+data Scope__DeploymentProtectionRuleConnection
+
+data Scope__DeploymentProtectionRuleEdge
+
+data Scope__DeploymentRequest
+
+data Scope__DeploymentRequestConnection
+
+data Scope__DeploymentRequestEdge
+
+data Scope__DeploymentReview
+
+data Scope__DeploymentReviewConnection
+
+data Scope__DeploymentReviewEdge
+
+data Scope__DeploymentReviewerConnection
+
+data Scope__DeploymentReviewerEdge
+
 data Scope__DeploymentStatus
 
 data Scope__DeploymentStatusConnection
@@ -280,7 +354,27 @@ data Scope__DisablePullRequestAutoMergePayload
 
 data Scope__DisconnectedEvent
 
+data Scope__Discussion
+
+data Scope__DiscussionCategory
+
+data Scope__DiscussionCategoryConnection
+
+data Scope__DiscussionCategoryEdge
+
+data Scope__DiscussionComment
+
+data Scope__DiscussionCommentConnection
+
+data Scope__DiscussionCommentEdge
+
+data Scope__DiscussionConnection
+
+data Scope__DiscussionEdge
+
 data Scope__DismissPullRequestReviewPayload
+
+data Scope__DismissRepositoryVulnerabilityAlertPayload
 
 data Scope__EnablePullRequestAutoMergePayload
 
@@ -358,6 +452,12 @@ data Scope__EnterpriseUserAccountConnection
 
 data Scope__EnterpriseUserAccountEdge
 
+data Scope__Environment
+
+data Scope__EnvironmentConnection
+
+data Scope__EnvironmentEdge
+
 data Scope__ExternalIdentity
 
 data Scope__ExternalIdentityConnection
@@ -402,6 +502,10 @@ data Scope__GitHubMetadata
 
 data Scope__GpgSignature
 
+data Scope__GrantEnterpriseOrganizationsMigratorRolePayload
+
+data Scope__GrantMigratorRolePayload
+
 data Scope__HeadRefDeletedEvent
 
 data Scope__HeadRefForcePushedEvent
@@ -409,6 +513,8 @@ data Scope__HeadRefForcePushedEvent
 data Scope__HeadRefRestoredEvent
 
 data Scope__Hovercard
+
+data Scope__Import
 
 data Scope__InviteEnterpriseAdminPayload
 
@@ -470,6 +576,8 @@ data Scope__LockedEvent
 
 data Scope__Mannequin
 
+data Scope__MarkDiscussionCommentAsAnswerPayload
+
 data Scope__MarkFileAsViewedPayload
 
 data Scope__MarkPullRequestReadyForReviewPayload
@@ -498,6 +606,8 @@ data Scope__MergePullRequestPayload
 
 data Scope__MergedEvent
 
+data Scope__MigrationSource
+
 data Scope__Milestone
 
 data Scope__MilestoneConnection
@@ -515,6 +625,8 @@ data Scope__MoveProjectColumnPayload
 data Scope__MovedColumnsInProjectEvent
 
 data Scope__OauthApplicationCreateAuditEntry
+
+data Scope__OidcProvider
 
 data Scope__OrgAddBillingManagerAuditEntry
 
@@ -584,6 +696,10 @@ data Scope__OrganizationConnection
 
 data Scope__OrganizationEdge
 
+data Scope__OrganizationEnterpriseOwnerConnection
+
+data Scope__OrganizationEnterpriseOwnerEdge
+
 data Scope__OrganizationIdentityProvider
 
 data Scope__OrganizationInvitation
@@ -634,6 +750,12 @@ data Scope__PinnableItemConnection
 
 data Scope__PinnableItemEdge
 
+data Scope__PinnedDiscussion
+
+data Scope__PinnedDiscussionConnection
+
+data Scope__PinnedDiscussionEdge
+
 data Scope__PinnedEvent
 
 data Scope__PinnedIssue
@@ -665,6 +787,30 @@ data Scope__ProjectColumnEdge
 data Scope__ProjectConnection
 
 data Scope__ProjectEdge
+
+data Scope__ProjectNext
+
+data Scope__ProjectNextConnection
+
+data Scope__ProjectNextEdge
+
+data Scope__ProjectNextField
+
+data Scope__ProjectNextFieldConnection
+
+data Scope__ProjectNextFieldEdge
+
+data Scope__ProjectNextItem
+
+data Scope__ProjectNextItemConnection
+
+data Scope__ProjectNextItemEdge
+
+data Scope__ProjectNextItemFieldValue
+
+data Scope__ProjectNextItemFieldValueConnection
+
+data Scope__ProjectNextItemFieldValueEdge
 
 data Scope__ProjectProgress
 
@@ -718,6 +864,8 @@ data Scope__PullRequestReviewThreadEdge
 
 data Scope__PullRequestRevisionMarker
 
+data Scope__PullRequestTemplate
+
 data Scope__PullRequestTimelineConnection
 
 data Scope__PullRequestTimelineItemEdge
@@ -748,6 +896,10 @@ data Scope__ReactionEdge
 
 data Scope__ReactionGroup
 
+data Scope__ReactorConnection
+
+data Scope__ReactorEdge
+
 data Scope__ReadyForReviewEvent
 
 data Scope__Ref
@@ -763,6 +915,8 @@ data Scope__ReferencedEvent
 data Scope__RegenerateEnterpriseIdentityProviderRecoveryCodesPayload
 
 data Scope__RegenerateVerifiableDomainTokenPayload
+
+data Scope__RejectDeploymentsPayload
 
 data Scope__Release
 
@@ -793,6 +947,8 @@ data Scope__RemoveOutsideCollaboratorPayload
 data Scope__RemoveReactionPayload
 
 data Scope__RemoveStarPayload
+
+data Scope__RemoveUpvotePayload
 
 data Scope__RemovedFromProjectEvent
 
@@ -862,6 +1018,12 @@ data Scope__RepositoryInvitationConnection
 
 data Scope__RepositoryInvitationEdge
 
+data Scope__RepositoryMigration
+
+data Scope__RepositoryMigrationConnection
+
+data Scope__RepositoryMigrationEdge
+
 data Scope__RepositoryTopic
 
 data Scope__RepositoryTopicConnection
@@ -879,6 +1041,8 @@ data Scope__RepositoryVulnerabilityAlertConnection
 data Scope__RepositoryVulnerabilityAlertEdge
 
 data Scope__RequestReviewsPayload
+
+data Scope__RequiredStatusCheckDescription
 
 data Scope__RerequestCheckSuitePayload
 
@@ -905,6 +1069,10 @@ data Scope__ReviewRequestRemovedEvent
 data Scope__ReviewRequestedEvent
 
 data Scope__ReviewStatusHovercardContext
+
+data Scope__RevokeEnterpriseOrganizationsMigratorRolePayload
+
+data Scope__RevokeMigratorRolePayload
 
 data Scope__SavedReply
 
@@ -946,9 +1114,19 @@ data Scope__SetUserInteractionLimitPayload
 
 data Scope__SmimeSignature
 
+data Scope__SponsorConnection
+
+data Scope__SponsorEdge
+
 data Scope__SponsorableItemConnection
 
 data Scope__SponsorableItemEdge
+
+data Scope__SponsorsActivity
+
+data Scope__SponsorsActivityConnection
+
+data Scope__SponsorsActivityEdge
 
 data Scope__SponsorsGoal
 
@@ -968,6 +1146,12 @@ data Scope__SponsorshipConnection
 
 data Scope__SponsorshipEdge
 
+data Scope__SponsorshipNewsletter
+
+data Scope__SponsorshipNewsletterConnection
+
+data Scope__SponsorshipNewsletterEdge
+
 data Scope__StargazerConnection
 
 data Scope__StargazerEdge
@@ -975,6 +1159,8 @@ data Scope__StargazerEdge
 data Scope__StarredRepositoryConnection
 
 data Scope__StarredRepositoryEdge
+
+data Scope__StartRepositoryMigrationPayload
 
 data Scope__Status
 
@@ -1066,6 +1252,8 @@ data Scope__UnlockLockablePayload
 
 data Scope__UnlockedEvent
 
+data Scope__UnmarkDiscussionCommentAsAnswerPayload
+
 data Scope__UnmarkFileAsViewedPayload
 
 data Scope__UnmarkIssueAsDuplicatePayload
@@ -1087,6 +1275,10 @@ data Scope__UpdateBranchProtectionRulePayload
 data Scope__UpdateCheckRunPayload
 
 data Scope__UpdateCheckSuitePreferencesPayload
+
+data Scope__UpdateDiscussionCommentPayload
+
+data Scope__UpdateDiscussionPayload
 
 data Scope__UpdateEnterpriseAdministratorRolePayload
 
@@ -1112,6 +1304,8 @@ data Scope__UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayload
 
 data Scope__UpdateEnterpriseOrganizationProjectsSettingPayload
 
+data Scope__UpdateEnterpriseOwnerOrganizationRolePayload
+
 data Scope__UpdateEnterpriseProfilePayload
 
 data Scope__UpdateEnterpriseRepositoryProjectsSettingPayload
@@ -1120,9 +1314,13 @@ data Scope__UpdateEnterpriseTeamDiscussionsSettingPayload
 
 data Scope__UpdateEnterpriseTwoFactorAuthenticationRequiredSettingPayload
 
+data Scope__UpdateEnvironmentPayload
+
 data Scope__UpdateIpAllowListEnabledSettingPayload
 
 data Scope__UpdateIpAllowListEntryPayload
+
+data Scope__UpdateIpAllowListForInstalledAppsEnabledSettingPayload
 
 data Scope__UpdateIssueCommentPayload
 
@@ -1130,11 +1328,17 @@ data Scope__UpdateIssuePayload
 
 data Scope__UpdateNotificationRestrictionSettingPayload
 
+data Scope__UpdateOrganizationAllowPrivateRepositoryForkingSettingPayload
+
 data Scope__UpdateProjectCardPayload
 
 data Scope__UpdateProjectColumnPayload
 
+data Scope__UpdateProjectNextItemFieldPayload
+
 data Scope__UpdateProjectPayload
+
+data Scope__UpdatePullRequestBranchPayload
 
 data Scope__UpdatePullRequestPayload
 
@@ -1145,6 +1349,8 @@ data Scope__UpdatePullRequestReviewPayload
 data Scope__UpdateRefPayload
 
 data Scope__UpdateRepositoryPayload
+
+data Scope__UpdateSponsorshipPreferencesPayload
 
 data Scope__UpdateSubscriptionPayload
 
@@ -1186,6 +1392,10 @@ data Scope__VerifyVerifiableDomainPayload
 
 data Scope__ViewerHovercardContext
 
+data Scope__Workflow
+
+data Scope__WorkflowRun
+
 data Scope__Actor
 
 data Scope__Assignable
@@ -1214,6 +1424,8 @@ data Scope__Lockable
 
 data Scope__MemberStatusable
 
+data Scope__Migration
+
 data Scope__Minimizable
 
 data Scope__Node
@@ -1226,11 +1438,17 @@ data Scope__PackageOwner
 
 data Scope__ProfileOwner
 
+data Scope__ProjectNextOwner
+
 data Scope__ProjectOwner
 
 data Scope__Reactable
 
 data Scope__RepositoryAuditEntryData
+
+data Scope__RepositoryDiscussionAuthor
+
+data Scope__RepositoryDiscussionCommentAuthor
 
 data Scope__RepositoryInfo
 
@@ -1256,9 +1474,13 @@ data Scope__Updatable
 
 data Scope__UpdatableComment
 
+data Scope__Votable
+
 data Scope__Assignee
 
 data Scope__AuditEntryActor
+
+data Scope__BranchActorAllowanceActor
 
 data Scope__Closer
 
@@ -1267,6 +1489,8 @@ data Scope__CreatedIssueOrRestrictedContribution
 data Scope__CreatedPullRequestOrRestrictedContribution
 
 data Scope__CreatedRepositoryOrRestrictedContribution
+
+data Scope__DeploymentReviewer
 
 data Scope__EnterpriseMember
 
@@ -1290,11 +1514,15 @@ data Scope__PinnableItem
 
 data Scope__ProjectCardItem
 
+data Scope__ProjectNextItemContent
+
 data Scope__PullRequestTimelineItem
 
 data Scope__PullRequestTimelineItems
 
 data Scope__PushAllowanceActor
+
+data Scope__Reactor
 
 data Scope__ReferencedSubject
 

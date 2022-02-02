@@ -10,6 +10,7 @@ import GraphQLClient
 import Examples.Github.Scopes
   ( Scope__Minimizable
   , Scope__CommitComment
+  , Scope__DiscussionComment
   , Scope__GistComment
   , Scope__IssueComment
   , Scope__PullRequestReviewComment
@@ -37,6 +38,7 @@ viewerCanMinimize = selectionForField
 
 type Fragments decodesTo
   = { onCommitComment :: SelectionSet Scope__CommitComment decodesTo
+    , onDiscussionComment :: SelectionSet Scope__DiscussionComment decodesTo
     , onGistComment :: SelectionSet Scope__GistComment decodesTo
     , onIssueComment :: SelectionSet Scope__IssueComment decodesTo
     , onPullRequestReviewComment
@@ -53,6 +55,9 @@ fragments selections = exhaustiveFragmentSelection
                        [ buildFragment
                          "CommitComment"
                          selections.onCommitComment
+                       , buildFragment
+                         "DiscussionComment"
+                         selections.onDiscussionComment
                        , buildFragment "GistComment" selections.onGistComment
                        , buildFragment "IssueComment" selections.onIssueComment
                        , buildFragment
@@ -63,6 +68,8 @@ fragments selections = exhaustiveFragmentSelection
 maybeFragments :: forall decodesTo. Fragments (Maybe decodesTo)
 maybeFragments = { onCommitComment: pure
                                     Nothing
+                 , onDiscussionComment: pure
+                                        Nothing
                  , onGistComment: pure
                                   Nothing
                  , onIssueComment: pure

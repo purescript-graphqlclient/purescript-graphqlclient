@@ -23,6 +23,7 @@ data FundingPlatform
   | Liberapay
   | Issuehunt
   | Otechie
+  | LfxCrowdfunding
   | Custom
 
 derive instance genericFundingPlatform :: Generic FundingPlatform _
@@ -44,6 +45,7 @@ fromToMap = [ Tuple "GITHUB" Github
             , Tuple "LIBERAPAY" Liberapay
             , Tuple "ISSUEHUNT" Issuehunt
             , Tuple "OTECHIE" Otechie
+            , Tuple "LFX_CROWDFUNDING" LfxCrowdfunding
             , Tuple "CUSTOM" Custom
             ]
 
@@ -64,4 +66,5 @@ instance fundingPlatformToGraphQLArgumentValue
       Liberapay -> ArgumentValueEnum "LIBERAPAY"
       Issuehunt -> ArgumentValueEnum "ISSUEHUNT"
       Otechie -> ArgumentValueEnum "OTECHIE"
+      LfxCrowdfunding -> ArgumentValueEnum "LFX_CROWDFUNDING"
       Custom -> ArgumentValueEnum "CUSTOM"

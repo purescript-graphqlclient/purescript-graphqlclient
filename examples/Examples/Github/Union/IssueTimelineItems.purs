@@ -8,6 +8,7 @@ import Examples.Github.Scopes
   , Scope__CommentDeletedEvent
   , Scope__ConnectedEvent
   , Scope__ConvertedNoteToIssueEvent
+  , Scope__ConvertedToDiscussionEvent
   , Scope__CrossReferencedEvent
   , Scope__DemilestonedEvent
   , Scope__DisconnectedEvent
@@ -46,6 +47,10 @@ type Fragments decodesTo
     , onConvertedNoteToIssueEvent
       :: SelectionSet
          Scope__ConvertedNoteToIssueEvent
+         decodesTo
+    , onConvertedToDiscussionEvent
+      :: SelectionSet
+         Scope__ConvertedToDiscussionEvent
          decodesTo
     , onCrossReferencedEvent
       :: SelectionSet
@@ -109,6 +114,9 @@ fragments selections = exhaustiveFragmentSelection
                        , buildFragment
                          "ConvertedNoteToIssueEvent"
                          selections.onConvertedNoteToIssueEvent
+                       , buildFragment
+                         "ConvertedToDiscussionEvent"
+                         selections.onConvertedToDiscussionEvent
                        , buildFragment
                          "CrossReferencedEvent"
                          selections.onCrossReferencedEvent
@@ -188,6 +196,8 @@ maybeFragments = { onAddedToProjectEvent: pure
                                      Nothing
                  , onConvertedNoteToIssueEvent: pure
                                                 Nothing
+                 , onConvertedToDiscussionEvent: pure
+                                                 Nothing
                  , onCrossReferencedEvent: pure
                                            Nothing
                  , onDemilestonedEvent: pure

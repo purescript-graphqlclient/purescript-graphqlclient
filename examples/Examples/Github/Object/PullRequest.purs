@@ -16,6 +16,7 @@ import Examples.Github.Scopes
   , Scope__AutoMergeRequest
   , Scope__Ref
   , Scope__Repository
+  , Scope__IssueConnection
   , Scope__IssueCommentConnection
   , Scope__PullRequestCommitConnection
   , Scope__PullRequestChangedFileConnection
@@ -26,6 +27,8 @@ import Examples.Github.Scopes
   , Scope__Commit
   , Scope__Milestone
   , Scope__ProjectCardConnection
+  , Scope__ProjectNext
+  , Scope__ProjectNextConnection
   , Scope__ReactionGroup
   , Scope__ReactionConnection
   , Scope__ReviewRequestConnection
@@ -43,9 +46,10 @@ import Type.Row (type (+))
 import Examples.Github.Enum.CommentAuthorAssociation (CommentAuthorAssociation)
 import Examples.Github.Scalars (GitObjectId, Html, Uri, DateTime, Id)
 import Examples.Github.InputObject
-  (IssueCommentOrder, LabelOrder, ReactionOrder) as Examples.Github.InputObject
+  (IssueOrder, IssueCommentOrder, LabelOrder, ReactionOrder) as Examples.Github.InputObject
 import Examples.Github.Enum.MergeableState (MergeableState)
 import Examples.Github.Enum.ProjectCardArchivedState (ProjectCardArchivedState)
+import Examples.Github.Enum.ProjectNextOrderField (ProjectNextOrderField)
 import Examples.Github.Enum.ReactionContent (ReactionContent)
 import Examples.Github.Enum.PullRequestReviewDecision
   (PullRequestReviewDecision)
@@ -171,6 +175,29 @@ closed = selectionForField "closed" [] graphqlDefaultResponseScalarDecoder
 
 closedAt :: SelectionSet Scope__PullRequest (Maybe DateTime)
 closedAt = selectionForField "closedAt" [] graphqlDefaultResponseScalarDecoder
+
+type ClosingIssuesReferencesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , orderBy :: Optional Examples.Github.InputObject.IssueOrder
+    | r
+    )
+
+type ClosingIssuesReferencesInput
+  = { | ClosingIssuesReferencesInputRowOptional + () }
+
+closingIssuesReferences
+  :: forall r
+   . ClosingIssuesReferencesInput
+  -> SelectionSet Scope__IssueConnection r
+  -> SelectionSet Scope__PullRequest (Maybe r)
+closingIssuesReferences input = selectionForCompositeField
+                                "closingIssuesReferences"
+                                (toGraphQLArguments
+                                 input)
+                                graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type CommentsInputRowOptional r
   = ( orderBy :: Optional Examples.Github.InputObject.IssueCommentOrder
@@ -517,6 +544,44 @@ projectCards input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type ProjectNextInputRowRequired r = ( number :: Int | r )
+
+type ProjectNextInput = { | ProjectNextInputRowRequired + () }
+
+projectNext
+  :: forall r
+   . ProjectNextInput
+  -> SelectionSet Scope__ProjectNext r
+  -> SelectionSet Scope__PullRequest (Maybe r)
+projectNext input = selectionForCompositeField
+                    "projectNext"
+                    (toGraphQLArguments
+                     input)
+                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type ProjectsNextInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , query :: Optional String
+    , sortBy :: Optional ProjectNextOrderField
+    | r
+    )
+
+type ProjectsNextInput = { | ProjectsNextInputRowOptional + () }
+
+projectsNext
+  :: forall r
+   . ProjectsNextInput
+  -> SelectionSet Scope__ProjectNextConnection r
+  -> SelectionSet Scope__PullRequest r
+projectsNext input = selectionForCompositeField
+                     "projectsNext"
+                     (toGraphQLArguments
+                      input)
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 publishedAt :: SelectionSet Scope__PullRequest (Maybe DateTime)
 publishedAt = selectionForField
               "publishedAt"
@@ -713,6 +778,9 @@ timelineItems input = selectionForCompositeField
 
 title :: SelectionSet Scope__PullRequest String
 title = selectionForField "title" [] graphqlDefaultResponseScalarDecoder
+
+titleHTML :: SelectionSet Scope__PullRequest Html
+titleHTML = selectionForField "titleHTML" [] graphqlDefaultResponseScalarDecoder
 
 updatedAt :: SelectionSet Scope__PullRequest DateTime
 updatedAt = selectionForField "updatedAt" [] graphqlDefaultResponseScalarDecoder

@@ -1,4 +1,4 @@
-module MyExamplesTests.Example13SSubscription where
+module MyExamplesTests.Example13Subscription where
 
 import Control.Monad.Error.Class (throwError)
 import Effect.Exception (error)

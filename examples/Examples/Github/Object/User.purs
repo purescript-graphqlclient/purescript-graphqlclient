@@ -30,14 +30,21 @@ import Examples.Github.Scopes
   , Scope__PackageConnection
   , Scope__PinnableItemConnection
   , Scope__Project
+  , Scope__ProjectNext
   , Scope__ProjectConnection
+  , Scope__ProjectNextConnection
   , Scope__PublicKeyConnection
   , Scope__PullRequestConnection
   , Scope__RepositoryConnection
   , Scope__Repository
+  , Scope__DiscussionCommentConnection
+  , Scope__DiscussionConnection
   , Scope__SavedReplyConnection
+  , Scope__SponsorConnection
+  , Scope__SponsorsActivityConnection
   , Scope__SponsorsListing
   , Scope__Sponsorship
+  , Scope__SponsorshipNewsletterConnection
   , Scope__SponsorshipConnection
   , Scope__StarredRepositoryConnection
   , Scope__UserStatus
@@ -53,18 +60,24 @@ import Examples.Github.InputObject
   , PackageOrder
   , ProjectOrder
   , RepositoryOrder
+  , DiscussionOrder
   , SavedReplyOrder
+  , SponsorOrder
+  , SponsorsActivityOrder
+  , SponsorshipNewsletterOrder
   , SponsorshipOrder
   , StarOrder
   ) as Examples.Github.InputObject
 import Examples.Github.Enum.IssueState (IssueState)
 import Examples.Github.Enum.PackageType (PackageType)
 import Examples.Github.Enum.ProjectState (ProjectState)
+import Examples.Github.Enum.ProjectNextOrderField (ProjectNextOrderField)
 import Examples.Github.Enum.PullRequestState (PullRequestState)
 import Examples.Github.Enum.RepositoryPrivacy (RepositoryPrivacy)
 import Examples.Github.Enum.RepositoryAffiliation (RepositoryAffiliation)
 import Examples.Github.Enum.RepositoryContributionType
   (RepositoryContributionType)
+import Examples.Github.Enum.SponsorsActivityPeriod (SponsorsActivityPeriod)
 
 type AnyPinnableItemsInputRowOptional r
   = ( "type" :: Optional PinnableItemType | r )
@@ -94,6 +107,23 @@ bio = selectionForField "bio" [] graphqlDefaultResponseScalarDecoder
 
 bioHTML :: SelectionSet Scope__User Html
 bioHTML = selectionForField "bioHTML" [] graphqlDefaultResponseScalarDecoder
+
+type CanReceiveOrganizationEmailsWhenNotificationsRestrictedInputRowRequired r
+  = ( login :: String | r )
+
+type CanReceiveOrganizationEmailsWhenNotificationsRestrictedInput
+  = { | CanReceiveOrganizationEmailsWhenNotificationsRestrictedInputRowRequired
+      + ()
+    }
+
+canReceiveOrganizationEmailsWhenNotificationsRestricted
+  :: CanReceiveOrganizationEmailsWhenNotificationsRestrictedInput
+  -> SelectionSet Scope__User Boolean
+canReceiveOrganizationEmailsWhenNotificationsRestricted input = selectionForField
+                                                                "canReceiveOrganizationEmailsWhenNotificationsRestricted"
+                                                                (toGraphQLArguments
+                                                                 input)
+                                                                graphqlDefaultResponseScalarDecoder
 
 type CommitCommentsInputRowOptional r
   = ( after :: Optional String
@@ -157,6 +187,12 @@ databaseId = selectionForField
 
 email :: SelectionSet Scope__User String
 email = selectionForField "email" [] graphqlDefaultResponseScalarDecoder
+
+estimatedNextSponsorsPayoutInCents :: SelectionSet Scope__User Int
+estimatedNextSponsorsPayoutInCents = selectionForField
+                                     "estimatedNextSponsorsPayoutInCents"
+                                     []
+                                     graphqlDefaultResponseScalarDecoder
 
 type FollowersInputRowOptional r
   = ( after :: Optional String
@@ -316,6 +352,12 @@ isEmployee = selectionForField
              []
              graphqlDefaultResponseScalarDecoder
 
+isFollowingViewer :: SelectionSet Scope__User Boolean
+isFollowingViewer = selectionForField
+                    "isFollowingViewer"
+                    []
+                    graphqlDefaultResponseScalarDecoder
+
 isGitHubStar :: SelectionSet Scope__User Boolean
 isGitHubStar = selectionForField
                "isGitHubStar"
@@ -415,6 +457,12 @@ location = selectionForField "location" [] graphqlDefaultResponseScalarDecoder
 
 login :: SelectionSet Scope__User String
 login = selectionForField "login" [] graphqlDefaultResponseScalarDecoder
+
+monthlyEstimatedSponsorsIncomeInCents :: SelectionSet Scope__User Int
+monthlyEstimatedSponsorsIncomeInCents = selectionForField
+                                        "monthlyEstimatedSponsorsIncomeInCents"
+                                        []
+                                        graphqlDefaultResponseScalarDecoder
 
 name :: SelectionSet Scope__User (Maybe String)
 name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
@@ -560,6 +608,21 @@ project input = selectionForCompositeField
                  input)
                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type ProjectNextInputRowRequired r = ( number :: Int | r )
+
+type ProjectNextInput = { | ProjectNextInputRowRequired + () }
+
+projectNext
+  :: forall r
+   . ProjectNextInput
+  -> SelectionSet Scope__ProjectNext r
+  -> SelectionSet Scope__User (Maybe r)
+projectNext input = selectionForCompositeField
+                    "projectNext"
+                    (toGraphQLArguments
+                     input)
+                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 type ProjectsInputRowOptional r
   = ( orderBy :: Optional Examples.Github.InputObject.ProjectOrder
     , search :: Optional String
@@ -583,6 +646,29 @@ projects input = selectionForCompositeField
                  (toGraphQLArguments
                   input)
                  graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type ProjectsNextInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , query :: Optional String
+    , sortBy :: Optional ProjectNextOrderField
+    | r
+    )
+
+type ProjectsNextInput = { | ProjectsNextInputRowOptional + () }
+
+projectsNext
+  :: forall r
+   . ProjectsNextInput
+  -> SelectionSet Scope__ProjectNextConnection r
+  -> SelectionSet Scope__User r
+projectsNext input = selectionForCompositeField
+                     "projectsNext"
+                     (toGraphQLArguments
+                      input)
+                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 projectsResourcePath :: SelectionSet Scope__User Uri
 projectsResourcePath = selectionForField
@@ -697,9 +783,12 @@ repositoriesContributedTo input = selectionForCompositeField
                                    input)
                                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type RepositoryInputRowOptional r = ( followRenames :: Optional Boolean | r )
+
 type RepositoryInputRowRequired r = ( name :: String | r )
 
-type RepositoryInput = { | RepositoryInputRowRequired + () }
+type RepositoryInput
+  = { | RepositoryInputRowOptional + RepositoryInputRowRequired + () }
 
 repository
   :: forall r
@@ -711,6 +800,55 @@ repository input = selectionForCompositeField
                    (toGraphQLArguments
                     input)
                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type RepositoryDiscussionCommentsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , repositoryId :: Optional Id
+    , onlyAnswers :: Optional Boolean
+    | r
+    )
+
+type RepositoryDiscussionCommentsInput
+  = { | RepositoryDiscussionCommentsInputRowOptional + () }
+
+repositoryDiscussionComments
+  :: forall r
+   . RepositoryDiscussionCommentsInput
+  -> SelectionSet Scope__DiscussionCommentConnection r
+  -> SelectionSet Scope__User r
+repositoryDiscussionComments input = selectionForCompositeField
+                                     "repositoryDiscussionComments"
+                                     (toGraphQLArguments
+                                      input)
+                                     graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type RepositoryDiscussionsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , orderBy :: Optional Examples.Github.InputObject.DiscussionOrder
+    , repositoryId :: Optional Id
+    , answered :: Optional Boolean
+    | r
+    )
+
+type RepositoryDiscussionsInput
+  = { | RepositoryDiscussionsInputRowOptional + () }
+
+repositoryDiscussions
+  :: forall r
+   . RepositoryDiscussionsInput
+  -> SelectionSet Scope__DiscussionConnection r
+  -> SelectionSet Scope__User r
+repositoryDiscussions input = selectionForCompositeField
+                              "repositoryDiscussions"
+                              (toGraphQLArguments
+                               input)
+                              graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 resourcePath :: SelectionSet Scope__User Uri
 resourcePath = selectionForField
@@ -740,6 +878,74 @@ savedReplies input = selectionForCompositeField
                       input)
                      graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
+type SponsoringInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , orderBy :: Optional Examples.Github.InputObject.SponsorOrder
+    | r
+    )
+
+type SponsoringInput = { | SponsoringInputRowOptional + () }
+
+sponsoring
+  :: forall r
+   . SponsoringInput
+  -> SelectionSet Scope__SponsorConnection r
+  -> SelectionSet Scope__User r
+sponsoring input = selectionForCompositeField
+                   "sponsoring"
+                   (toGraphQLArguments
+                    input)
+                   graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SponsorsInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , tierId :: Optional Id
+    , orderBy :: Optional Examples.Github.InputObject.SponsorOrder
+    | r
+    )
+
+type SponsorsInput = { | SponsorsInputRowOptional + () }
+
+sponsors
+  :: forall r
+   . SponsorsInput
+  -> SelectionSet Scope__SponsorConnection r
+  -> SelectionSet Scope__User r
+sponsors input = selectionForCompositeField
+                 "sponsors"
+                 (toGraphQLArguments
+                  input)
+                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SponsorsActivitiesInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , period :: Optional SponsorsActivityPeriod
+    , orderBy :: Optional Examples.Github.InputObject.SponsorsActivityOrder
+    | r
+    )
+
+type SponsorsActivitiesInput = { | SponsorsActivitiesInputRowOptional + () }
+
+sponsorsActivities
+  :: forall r
+   . SponsorsActivitiesInput
+  -> SelectionSet Scope__SponsorsActivityConnection r
+  -> SelectionSet Scope__User r
+sponsorsActivities input = selectionForCompositeField
+                           "sponsorsActivities"
+                           (toGraphQLArguments
+                            input)
+                           graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
 sponsorsListing
   :: forall r
    . SelectionSet Scope__SponsorsListing r
@@ -757,6 +963,38 @@ sponsorshipForViewerAsSponsor = selectionForCompositeField
                                 "sponsorshipForViewerAsSponsor"
                                 []
                                 graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+sponsorshipForViewerAsSponsorable
+  :: forall r
+   . SelectionSet Scope__Sponsorship r
+  -> SelectionSet Scope__User (Maybe r)
+sponsorshipForViewerAsSponsorable = selectionForCompositeField
+                                    "sponsorshipForViewerAsSponsorable"
+                                    []
+                                    graphqlDefaultResponseFunctorOrScalarDecoderTransformer
+
+type SponsorshipNewslettersInputRowOptional r
+  = ( after :: Optional String
+    , before :: Optional String
+    , first :: Optional Int
+    , last :: Optional Int
+    , orderBy :: Optional Examples.Github.InputObject.SponsorshipNewsletterOrder
+    | r
+    )
+
+type SponsorshipNewslettersInput
+  = { | SponsorshipNewslettersInputRowOptional + () }
+
+sponsorshipNewsletters
+  :: forall r
+   . SponsorshipNewslettersInput
+  -> SelectionSet Scope__SponsorshipNewsletterConnection r
+  -> SelectionSet Scope__User r
+sponsorshipNewsletters input = selectionForCompositeField
+                               "sponsorshipNewsletters"
+                               (toGraphQLArguments
+                                input)
+                               graphqlDefaultResponseFunctorOrScalarDecoderTransformer
 
 type SponsorshipsAsMaintainerInputRowOptional r
   = ( after :: Optional String

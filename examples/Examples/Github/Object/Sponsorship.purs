@@ -15,8 +15,8 @@ import Examples.Github.Scopes
   , Scope__SponsorsTier
   )
 import Examples.Github.Scalars (DateTime, Id)
-import Examples.Github.Enum.SponsorshipPrivacy (SponsorshipPrivacy)
 import Data.Maybe (Maybe)
+import Examples.Github.Enum.SponsorshipPrivacy (SponsorshipPrivacy)
 
 createdAt :: SelectionSet Scope__Sponsorship DateTime
 createdAt = selectionForField "createdAt" [] graphqlDefaultResponseScalarDecoder
@@ -29,6 +29,12 @@ isOneTimePayment = selectionForField
                    "isOneTimePayment"
                    []
                    graphqlDefaultResponseScalarDecoder
+
+isSponsorOptedIntoEmail :: SelectionSet Scope__Sponsorship (Maybe Boolean)
+isSponsorOptedIntoEmail = selectionForField
+                          "isSponsorOptedIntoEmail"
+                          []
+                          graphqlDefaultResponseScalarDecoder
 
 maintainer
   :: forall r

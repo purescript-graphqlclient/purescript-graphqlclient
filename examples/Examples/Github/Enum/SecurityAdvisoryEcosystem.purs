@@ -13,7 +13,15 @@ import GraphQLClient
   )
 
 -- | original name - SecurityAdvisoryEcosystem
-data SecurityAdvisoryEcosystem = Rubygems | Npm | Pip | Maven | Nuget | Composer
+data SecurityAdvisoryEcosystem
+  = Composer
+  | Go
+  | Maven
+  | Npm
+  | Nuget
+  | Pip
+  | Rubygems
+  | Rust
 
 derive instance genericSecurityAdvisoryEcosystem
   ::
@@ -27,12 +35,14 @@ derive instance eqSecurityAdvisoryEcosystem :: Eq SecurityAdvisoryEcosystem
 derive instance ordSecurityAdvisoryEcosystem :: Ord SecurityAdvisoryEcosystem
 
 fromToMap :: Array (Tuple String SecurityAdvisoryEcosystem)
-fromToMap = [ Tuple "RUBYGEMS" Rubygems
-            , Tuple "NPM" Npm
-            , Tuple "PIP" Pip
+fromToMap = [ Tuple "COMPOSER" Composer
+            , Tuple "GO" Go
             , Tuple "MAVEN" Maven
+            , Tuple "NPM" Npm
             , Tuple "NUGET" Nuget
-            , Tuple "COMPOSER" Composer
+            , Tuple "PIP" Pip
+            , Tuple "RUBYGEMS" Rubygems
+            , Tuple "RUST" Rust
             ]
 
 instance securityAdvisoryEcosystemGraphQLDefaultResponseScalarDecoder
@@ -45,9 +55,11 @@ instance securityAdvisoryEcosystemToGraphQLArgumentValue
   :: ToGraphQLArgumentValue SecurityAdvisoryEcosystem where
   toGraphQLArgumentValue =
     case _ of
-      Rubygems -> ArgumentValueEnum "RUBYGEMS"
-      Npm -> ArgumentValueEnum "NPM"
-      Pip -> ArgumentValueEnum "PIP"
-      Maven -> ArgumentValueEnum "MAVEN"
-      Nuget -> ArgumentValueEnum "NUGET"
       Composer -> ArgumentValueEnum "COMPOSER"
+      Go -> ArgumentValueEnum "GO"
+      Maven -> ArgumentValueEnum "MAVEN"
+      Npm -> ArgumentValueEnum "NPM"
+      Nuget -> ArgumentValueEnum "NUGET"
+      Pip -> ArgumentValueEnum "PIP"
+      Rubygems -> ArgumentValueEnum "RUBYGEMS"
+      Rust -> ArgumentValueEnum "RUST"

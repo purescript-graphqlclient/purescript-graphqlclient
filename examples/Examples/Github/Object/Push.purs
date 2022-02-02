@@ -7,7 +7,7 @@ import GraphQLClient
   , selectionForCompositeField
   , graphqlDefaultResponseFunctorOrScalarDecoderTransformer
   )
-import Examples.Github.Scopes (Scope__Push, Scope__User, Scope__Repository)
+import Examples.Github.Scopes (Scope__Push, Scope__Actor, Scope__Repository)
 import Examples.Github.Scalars (Id, GitObjectId, Uri)
 import Data.Maybe (Maybe)
 
@@ -26,7 +26,7 @@ previousSha = selectionForField
               []
               graphqlDefaultResponseScalarDecoder
 
-pusher :: forall r. SelectionSet Scope__User r -> SelectionSet Scope__Push r
+pusher :: forall r. SelectionSet Scope__Actor r -> SelectionSet Scope__Push r
 pusher = selectionForCompositeField
          "pusher"
          []

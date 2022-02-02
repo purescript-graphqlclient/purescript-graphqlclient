@@ -16,6 +16,7 @@ import GraphQLClient
 data OrganizationMembersCanCreateRepositoriesSettingValue
   = All
   | Private
+  | Internal
   | Disabled
 
 derive instance genericOrganizationMembersCanCreateRepositoriesSettingValue
@@ -39,6 +40,7 @@ fromToMap
      (Tuple String OrganizationMembersCanCreateRepositoriesSettingValue)
 fromToMap = [ Tuple "ALL" All
             , Tuple "PRIVATE" Private
+            , Tuple "INTERNAL" Internal
             , Tuple "DISABLED" Disabled
             ]
 
@@ -56,4 +58,5 @@ instance organizationMembersCanCreateRepositoriesSettingValueToGraphQLArgumentVa
     case _ of
       All -> ArgumentValueEnum "ALL"
       Private -> ArgumentValueEnum "PRIVATE"
+      Internal -> ArgumentValueEnum "INTERNAL"
       Disabled -> ArgumentValueEnum "DISABLED"

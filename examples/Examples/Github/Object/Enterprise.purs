@@ -24,6 +24,7 @@ import Examples.Github.InputObject (EnterpriseMemberOrder, OrganizationOrder) as
 import Examples.Github.Enum.EnterpriseUserAccountMembershipRole
   (EnterpriseUserAccountMembershipRole)
 import Examples.Github.Enum.EnterpriseUserDeployment (EnterpriseUserDeployment)
+import Examples.Github.Enum.RoleInOrganization (RoleInOrganization)
 
 type AvatarUrlInputRowOptional r = ( size :: Optional Int | r )
 
@@ -103,6 +104,7 @@ name = selectionForField "name" [] graphqlDefaultResponseScalarDecoder
 
 type OrganizationsInputRowOptional r
   = ( query :: Optional String
+    , viewerOrganizationRole :: Optional RoleInOrganization
     , orderBy :: Optional Examples.Github.InputObject.OrganizationOrder
     , after :: Optional String
     , before :: Optional String

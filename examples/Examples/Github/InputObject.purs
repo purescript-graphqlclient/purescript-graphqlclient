@@ -1,6 +1,6 @@
 module Examples.Github.InputObject where
 
-import Examples.Github.Scalars (Id, GitObjectId, Uri, DateTime)
+import Examples.Github.Scalars (Id, GitObjectId, Uri, DateTime, Base64String)
 import GraphQLClient
   (Optional, class ToGraphQLArgumentValue, toGraphQLArgumentValue)
 import Data.Generic.Rep (class Generic)
@@ -20,10 +20,14 @@ import Examples.Github.Enum.CommitContributionOrderField
 import Examples.Github.Enum.RequestableCheckStatusState
   (RequestableCheckStatusState)
 import Examples.Github.Enum.CheckConclusionState (CheckConclusionState)
+import Examples.Github.Enum.MigrationSourceType (MigrationSourceType)
 import Examples.Github.Enum.ProjectTemplate (ProjectTemplate)
+import Examples.Github.Enum.SponsorshipPrivacy (SponsorshipPrivacy)
 import Examples.Github.Enum.TopicSuggestionDeclineReason
   (TopicSuggestionDeclineReason)
 import Examples.Github.Enum.DeploymentOrderField (DeploymentOrderField)
+import Examples.Github.Enum.DiscussionOrderField (DiscussionOrderField)
+import Examples.Github.Enum.DismissReason (DismissReason)
 import Examples.Github.Enum.PullRequestMergeMethod (PullRequestMergeMethod)
 import Examples.Github.Enum.EnterpriseAdministratorInvitationOrderField
   (EnterpriseAdministratorInvitationOrderField)
@@ -38,6 +42,7 @@ import Examples.Github.Enum.EnterpriseServerUserAccountOrderField
 import Examples.Github.Enum.EnterpriseServerUserAccountsUploadOrderField
   (EnterpriseServerUserAccountsUploadOrderField)
 import Examples.Github.Enum.GistOrderField (GistOrderField)
+import Examples.Github.Enum.ActorType (ActorType)
 import Examples.Github.Enum.EnterpriseAdministratorRole
   (EnterpriseAdministratorRole)
 import Examples.Github.Enum.IpAllowListEntryOrderField
@@ -51,6 +56,8 @@ import Examples.Github.Enum.LockReason (LockReason)
 import Examples.Github.Enum.MilestoneOrderField (MilestoneOrderField)
 import Examples.Github.Enum.ReportedContentClassifiers
   (ReportedContentClassifiers)
+import Examples.Github.Enum.OrgEnterpriseOwnerOrderField
+  (OrgEnterpriseOwnerOrderField)
 import Examples.Github.Enum.OrganizationOrderField (OrganizationOrderField)
 import Examples.Github.Enum.PackageFileOrderField (PackageFileOrderField)
 import Examples.Github.Enum.PackageOrderField (PackageOrderField)
@@ -62,6 +69,10 @@ import Examples.Github.Enum.RefOrderField (RefOrderField)
 import Examples.Github.Enum.ReleaseOrderField (ReleaseOrderField)
 import Examples.Github.Enum.RepositoryInvitationOrderField
   (RepositoryInvitationOrderField)
+import Examples.Github.Enum.RepositoryMigrationOrderField
+  (RepositoryMigrationOrderField)
+import Examples.Github.Enum.RepositoryMigrationOrderDirection
+  (RepositoryMigrationOrderDirection)
 import Examples.Github.Enum.RepositoryOrderField (RepositoryOrderField)
 import Examples.Github.Enum.SavedReplyOrderField (SavedReplyOrderField)
 import Examples.Github.Enum.SecurityAdvisoryIdentifierType
@@ -76,8 +87,13 @@ import Examples.Github.Enum.RepositoryInteractionLimit
   (RepositoryInteractionLimit)
 import Examples.Github.Enum.RepositoryInteractionLimitExpiry
   (RepositoryInteractionLimitExpiry)
+import Examples.Github.Enum.SponsorOrderField (SponsorOrderField)
 import Examples.Github.Enum.SponsorableOrderField (SponsorableOrderField)
+import Examples.Github.Enum.SponsorsActivityOrderField
+  (SponsorsActivityOrderField)
 import Examples.Github.Enum.SponsorsTierOrderField (SponsorsTierOrderField)
+import Examples.Github.Enum.SponsorshipNewsletterOrderField
+  (SponsorshipNewsletterOrderField)
 import Examples.Github.Enum.SponsorshipOrderField (SponsorshipOrderField)
 import Examples.Github.Enum.StarOrderField (StarOrderField)
 import Examples.Github.Enum.TeamDiscussionCommentOrderField
@@ -94,10 +110,13 @@ import Examples.Github.Enum.EnterpriseMembersCanCreateRepositoriesSettingValue
   (EnterpriseMembersCanCreateRepositoriesSettingValue)
 import Examples.Github.Enum.EnterpriseMembersCanMakePurchasesSettingValue
   (EnterpriseMembersCanMakePurchasesSettingValue)
+import Examples.Github.Enum.RoleInOrganization (RoleInOrganization)
 import Examples.Github.Enum.EnterpriseEnabledSettingValue
   (EnterpriseEnabledSettingValue)
 import Examples.Github.Enum.IpAllowListEnabledSettingValue
   (IpAllowListEnabledSettingValue)
+import Examples.Github.Enum.IpAllowListForInstalledAppsEnabledSettingValue
+  (IpAllowListForInstalledAppsEnabledSettingValue)
 import Examples.Github.Enum.NotificationRestrictionSettingValue
   (NotificationRestrictionSettingValue)
 import Examples.Github.Enum.ProjectState (ProjectState)
@@ -106,6 +125,24 @@ import Examples.Github.Enum.SubscriptionState (SubscriptionState)
 import Examples.Github.Enum.UserStatusOrderField (UserStatusOrderField)
 import Examples.Github.Enum.VerifiableDomainOrderField
   (VerifiableDomainOrderField)
+
+-- | original name - AbortQueuedMigrationsInput
+newtype AbortQueuedMigrationsInput
+  = AbortQueuedMigrationsInput
+    { ownerId :: Id, clientMutationId :: Optional String }
+
+derive instance genericAbortQueuedMigrationsInput
+  ::
+  Generic AbortQueuedMigrationsInput _
+
+derive instance newtypeAbortQueuedMigrationsInput
+  ::
+  Newtype AbortQueuedMigrationsInput _
+
+instance toGraphQLArgumentValueAbortQueuedMigrationsInput
+  :: ToGraphQLArgumentValue AbortQueuedMigrationsInput where
+  toGraphQLArgumentValue (AbortQueuedMigrationsInput x) = toGraphQLArgumentValue
+                                                          x
 
 -- | original name - AcceptEnterpriseAdministratorInvitationInput
 newtype AcceptEnterpriseAdministratorInvitationInput
@@ -177,6 +214,28 @@ instance toGraphQLArgumentValueAddCommentInput
   :: ToGraphQLArgumentValue AddCommentInput where
   toGraphQLArgumentValue (AddCommentInput x) = toGraphQLArgumentValue x
 
+-- | original name - AddDiscussionCommentInput
+newtype AddDiscussionCommentInput
+  = AddDiscussionCommentInput
+    { discussionId :: Id
+    , replyToId :: Optional Id
+    , body :: String
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericAddDiscussionCommentInput
+  ::
+  Generic AddDiscussionCommentInput _
+
+derive instance newtypeAddDiscussionCommentInput
+  ::
+  Newtype AddDiscussionCommentInput _
+
+instance toGraphQLArgumentValueAddDiscussionCommentInput
+  :: ToGraphQLArgumentValue AddDiscussionCommentInput where
+  toGraphQLArgumentValue (AddDiscussionCommentInput x) = toGraphQLArgumentValue
+                                                         x
+
 -- | original name - AddEnterpriseSupportEntitlementInput
 newtype AddEnterpriseSupportEntitlementInput
   = AddEnterpriseSupportEntitlementInput
@@ -245,6 +304,23 @@ derive instance newtypeAddProjectColumnInput :: Newtype AddProjectColumnInput _
 instance toGraphQLArgumentValueAddProjectColumnInput
   :: ToGraphQLArgumentValue AddProjectColumnInput where
   toGraphQLArgumentValue (AddProjectColumnInput x) = toGraphQLArgumentValue x
+
+-- | original name - AddProjectNextItemInput
+newtype AddProjectNextItemInput
+  = AddProjectNextItemInput
+    { projectId :: Id, contentId :: Id, clientMutationId :: Optional String }
+
+derive instance genericAddProjectNextItemInput
+  ::
+  Generic AddProjectNextItemInput _
+
+derive instance newtypeAddProjectNextItemInput
+  ::
+  Newtype AddProjectNextItemInput _
+
+instance toGraphQLArgumentValueAddProjectNextItemInput
+  :: ToGraphQLArgumentValue AddProjectNextItemInput where
+  toGraphQLArgumentValue (AddProjectNextItemInput x) = toGraphQLArgumentValue x
 
 -- | original name - AddPullRequestReviewCommentInput
 newtype AddPullRequestReviewCommentInput
@@ -352,6 +428,18 @@ instance toGraphQLArgumentValueAddStarInput
   :: ToGraphQLArgumentValue AddStarInput where
   toGraphQLArgumentValue (AddStarInput x) = toGraphQLArgumentValue x
 
+-- | original name - AddUpvoteInput
+newtype AddUpvoteInput
+  = AddUpvoteInput { subjectId :: Id, clientMutationId :: Optional String }
+
+derive instance genericAddUpvoteInput :: Generic AddUpvoteInput _
+
+derive instance newtypeAddUpvoteInput :: Newtype AddUpvoteInput _
+
+instance toGraphQLArgumentValueAddUpvoteInput
+  :: ToGraphQLArgumentValue AddUpvoteInput where
+  toGraphQLArgumentValue (AddUpvoteInput x) = toGraphQLArgumentValue x
+
 -- | original name - AddVerifiableDomainInput
 newtype AddVerifiableDomainInput
   = AddVerifiableDomainInput
@@ -368,6 +456,27 @@ derive instance newtypeAddVerifiableDomainInput
 instance toGraphQLArgumentValueAddVerifiableDomainInput
   :: ToGraphQLArgumentValue AddVerifiableDomainInput where
   toGraphQLArgumentValue (AddVerifiableDomainInput x) = toGraphQLArgumentValue x
+
+-- | original name - ApproveDeploymentsInput
+newtype ApproveDeploymentsInput
+  = ApproveDeploymentsInput
+    { workflowRunId :: Id
+    , environmentIds :: Array Id
+    , comment :: Optional String
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericApproveDeploymentsInput
+  ::
+  Generic ApproveDeploymentsInput _
+
+derive instance newtypeApproveDeploymentsInput
+  ::
+  Newtype ApproveDeploymentsInput _
+
+instance toGraphQLArgumentValueApproveDeploymentsInput
+  :: ToGraphQLArgumentValue ApproveDeploymentsInput where
+  toGraphQLArgumentValue (ApproveDeploymentsInput x) = toGraphQLArgumentValue x
 
 -- | original name - ApproveVerifiableDomainInput
 newtype ApproveVerifiableDomainInput
@@ -436,6 +545,28 @@ instance toGraphQLArgumentValueCancelEnterpriseAdminInvitationInput
   :: ToGraphQLArgumentValue CancelEnterpriseAdminInvitationInput where
   toGraphQLArgumentValue (CancelEnterpriseAdminInvitationInput x) = toGraphQLArgumentValue
                                                                     x
+
+-- | original name - CancelSponsorshipInput
+newtype CancelSponsorshipInput
+  = CancelSponsorshipInput
+    { sponsorId :: Optional Id
+    , sponsorLogin :: Optional String
+    , sponsorableId :: Optional Id
+    , sponsorableLogin :: Optional String
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericCancelSponsorshipInput
+  ::
+  Generic CancelSponsorshipInput _
+
+derive instance newtypeCancelSponsorshipInput
+  ::
+  Newtype CancelSponsorshipInput _
+
+instance toGraphQLArgumentValueCancelSponsorshipInput
+  :: ToGraphQLArgumentValue CancelSponsorshipInput where
+  toGraphQLArgumentValue (CancelSponsorshipInput x) = toGraphQLArgumentValue x
 
 -- | original name - ChangeUserStatusInput
 newtype ChangeUserStatusInput
@@ -699,6 +830,34 @@ instance toGraphQLArgumentValueCommitContributionOrder
   :: ToGraphQLArgumentValue CommitContributionOrder where
   toGraphQLArgumentValue (CommitContributionOrder x) = toGraphQLArgumentValue x
 
+-- | original name - CommitMessage
+newtype CommitMessage
+  = CommitMessage { headline :: String, body :: Optional String }
+
+derive instance genericCommitMessage :: Generic CommitMessage _
+
+derive instance newtypeCommitMessage :: Newtype CommitMessage _
+
+instance toGraphQLArgumentValueCommitMessage
+  :: ToGraphQLArgumentValue CommitMessage where
+  toGraphQLArgumentValue (CommitMessage x) = toGraphQLArgumentValue x
+
+-- | original name - CommittableBranch
+newtype CommittableBranch
+  = CommittableBranch
+    { id :: Optional Id
+    , repositoryNameWithOwner :: Optional String
+    , branchName :: Optional String
+    }
+
+derive instance genericCommittableBranch :: Generic CommittableBranch _
+
+derive instance newtypeCommittableBranch :: Newtype CommittableBranch _
+
+instance toGraphQLArgumentValueCommittableBranch
+  :: ToGraphQLArgumentValue CommittableBranch where
+  toGraphQLArgumentValue (CommittableBranch x) = toGraphQLArgumentValue x
+
 -- | original name - ContributionOrder
 newtype ContributionOrder = ContributionOrder { direction :: OrderDirection }
 
@@ -733,6 +892,24 @@ instance toGraphQLArgumentValueConvertProjectCardNoteToIssueInput
   toGraphQLArgumentValue (ConvertProjectCardNoteToIssueInput x) = toGraphQLArgumentValue
                                                                   x
 
+-- | original name - ConvertPullRequestToDraftInput
+newtype ConvertPullRequestToDraftInput
+  = ConvertPullRequestToDraftInput
+    { pullRequestId :: Id, clientMutationId :: Optional String }
+
+derive instance genericConvertPullRequestToDraftInput
+  ::
+  Generic ConvertPullRequestToDraftInput _
+
+derive instance newtypeConvertPullRequestToDraftInput
+  ::
+  Newtype ConvertPullRequestToDraftInput _
+
+instance toGraphQLArgumentValueConvertPullRequestToDraftInput
+  :: ToGraphQLArgumentValue ConvertPullRequestToDraftInput where
+  toGraphQLArgumentValue (ConvertPullRequestToDraftInput x) = toGraphQLArgumentValue
+                                                              x
+
 -- | original name - CreateBranchProtectionRuleInput
 newtype CreateBranchProtectionRuleInput
   = CreateBranchProtectionRuleInput
@@ -751,9 +928,13 @@ newtype CreateBranchProtectionRuleInput
     , dismissesStaleReviews :: Optional Boolean
     , restrictsReviewDismissals :: Optional Boolean
     , reviewDismissalActorIds :: Optional (Array Id)
+    , bypassPullRequestActorIds :: Optional (Array Id)
+    , bypassForcePushActorIds :: Optional (Array Id)
     , restrictsPushes :: Optional Boolean
     , pushActorIds :: Optional (Array Id)
     , requiredStatusCheckContexts :: Optional (Array String)
+    , requiredStatusChecks :: Optional (Array RequiredStatusCheckInput)
+    , requiresConversationResolution :: Optional Boolean
     , clientMutationId :: Optional String
     }
 
@@ -811,6 +992,47 @@ instance toGraphQLArgumentValueCreateCheckSuiteInput
   :: ToGraphQLArgumentValue CreateCheckSuiteInput where
   toGraphQLArgumentValue (CreateCheckSuiteInput x) = toGraphQLArgumentValue x
 
+-- | original name - CreateCommitOnBranchInput
+newtype CreateCommitOnBranchInput
+  = CreateCommitOnBranchInput
+    { branch :: CommittableBranch
+    , fileChanges :: Optional FileChanges
+    , message :: CommitMessage
+    , expectedHeadOid :: GitObjectId
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericCreateCommitOnBranchInput
+  ::
+  Generic CreateCommitOnBranchInput _
+
+derive instance newtypeCreateCommitOnBranchInput
+  ::
+  Newtype CreateCommitOnBranchInput _
+
+instance toGraphQLArgumentValueCreateCommitOnBranchInput
+  :: ToGraphQLArgumentValue CreateCommitOnBranchInput where
+  toGraphQLArgumentValue (CreateCommitOnBranchInput x) = toGraphQLArgumentValue
+                                                         x
+
+-- | original name - CreateDiscussionInput
+newtype CreateDiscussionInput
+  = CreateDiscussionInput
+    { repositoryId :: Id
+    , title :: String
+    , body :: String
+    , categoryId :: Id
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericCreateDiscussionInput :: Generic CreateDiscussionInput _
+
+derive instance newtypeCreateDiscussionInput :: Newtype CreateDiscussionInput _
+
+instance toGraphQLArgumentValueCreateDiscussionInput
+  :: ToGraphQLArgumentValue CreateDiscussionInput where
+  toGraphQLArgumentValue (CreateDiscussionInput x) = toGraphQLArgumentValue x
+
 -- | original name - CreateEnterpriseOrganizationInput
 newtype CreateEnterpriseOrganizationInput
   = CreateEnterpriseOrganizationInput
@@ -834,6 +1056,23 @@ instance toGraphQLArgumentValueCreateEnterpriseOrganizationInput
   :: ToGraphQLArgumentValue CreateEnterpriseOrganizationInput where
   toGraphQLArgumentValue (CreateEnterpriseOrganizationInput x) = toGraphQLArgumentValue
                                                                  x
+
+-- | original name - CreateEnvironmentInput
+newtype CreateEnvironmentInput
+  = CreateEnvironmentInput
+    { repositoryId :: Id, name :: String, clientMutationId :: Optional String }
+
+derive instance genericCreateEnvironmentInput
+  ::
+  Generic CreateEnvironmentInput _
+
+derive instance newtypeCreateEnvironmentInput
+  ::
+  Newtype CreateEnvironmentInput _
+
+instance toGraphQLArgumentValueCreateEnvironmentInput
+  :: ToGraphQLArgumentValue CreateEnvironmentInput where
+  toGraphQLArgumentValue (CreateEnvironmentInput x) = toGraphQLArgumentValue x
 
 -- | original name - CreateIpAllowListEntryInput
 newtype CreateIpAllowListEntryInput
@@ -879,6 +1118,31 @@ derive instance newtypeCreateIssueInput :: Newtype CreateIssueInput _
 instance toGraphQLArgumentValueCreateIssueInput
   :: ToGraphQLArgumentValue CreateIssueInput where
   toGraphQLArgumentValue (CreateIssueInput x) = toGraphQLArgumentValue x
+
+-- | original name - CreateMigrationSourceInput
+newtype CreateMigrationSourceInput
+  = CreateMigrationSourceInput
+    { name :: String
+    , url :: String
+    , accessToken :: String
+    , "type" :: MigrationSourceType
+    , ownerId :: Id
+    , githubPat :: Optional String
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericCreateMigrationSourceInput
+  ::
+  Generic CreateMigrationSourceInput _
+
+derive instance newtypeCreateMigrationSourceInput
+  ::
+  Newtype CreateMigrationSourceInput _
+
+instance toGraphQLArgumentValueCreateMigrationSourceInput
+  :: ToGraphQLArgumentValue CreateMigrationSourceInput where
+  toGraphQLArgumentValue (CreateMigrationSourceInput x) = toGraphQLArgumentValue
+                                                          x
 
 -- | original name - CreateProjectInput
 newtype CreateProjectInput
@@ -963,6 +1227,33 @@ derive instance newtypeCreateRepositoryInput :: Newtype CreateRepositoryInput _
 instance toGraphQLArgumentValueCreateRepositoryInput
   :: ToGraphQLArgumentValue CreateRepositoryInput where
   toGraphQLArgumentValue (CreateRepositoryInput x) = toGraphQLArgumentValue x
+
+-- | original name - CreateSponsorshipInput
+newtype CreateSponsorshipInput
+  = CreateSponsorshipInput
+    { sponsorId :: Optional Id
+    , sponsorLogin :: Optional String
+    , sponsorableId :: Optional Id
+    , sponsorableLogin :: Optional String
+    , tierId :: Optional Id
+    , amount :: Optional Int
+    , isRecurring :: Optional Boolean
+    , receiveEmails :: Optional Boolean
+    , privacyLevel :: Optional SponsorshipPrivacy
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericCreateSponsorshipInput
+  ::
+  Generic CreateSponsorshipInput _
+
+derive instance newtypeCreateSponsorshipInput
+  ::
+  Newtype CreateSponsorshipInput _
+
+instance toGraphQLArgumentValueCreateSponsorshipInput
+  :: ToGraphQLArgumentValue CreateSponsorshipInput where
+  toGraphQLArgumentValue (CreateSponsorshipInput x) = toGraphQLArgumentValue x
 
 -- | original name - CreateTeamDiscussionCommentInput
 newtype CreateTeamDiscussionCommentInput
@@ -1057,6 +1348,52 @@ instance toGraphQLArgumentValueDeleteDeploymentInput
   :: ToGraphQLArgumentValue DeleteDeploymentInput where
   toGraphQLArgumentValue (DeleteDeploymentInput x) = toGraphQLArgumentValue x
 
+-- | original name - DeleteDiscussionCommentInput
+newtype DeleteDiscussionCommentInput
+  = DeleteDiscussionCommentInput
+    { id :: Id, clientMutationId :: Optional String }
+
+derive instance genericDeleteDiscussionCommentInput
+  ::
+  Generic DeleteDiscussionCommentInput _
+
+derive instance newtypeDeleteDiscussionCommentInput
+  ::
+  Newtype DeleteDiscussionCommentInput _
+
+instance toGraphQLArgumentValueDeleteDiscussionCommentInput
+  :: ToGraphQLArgumentValue DeleteDiscussionCommentInput where
+  toGraphQLArgumentValue (DeleteDiscussionCommentInput x) = toGraphQLArgumentValue
+                                                            x
+
+-- | original name - DeleteDiscussionInput
+newtype DeleteDiscussionInput
+  = DeleteDiscussionInput { id :: Id, clientMutationId :: Optional String }
+
+derive instance genericDeleteDiscussionInput :: Generic DeleteDiscussionInput _
+
+derive instance newtypeDeleteDiscussionInput :: Newtype DeleteDiscussionInput _
+
+instance toGraphQLArgumentValueDeleteDiscussionInput
+  :: ToGraphQLArgumentValue DeleteDiscussionInput where
+  toGraphQLArgumentValue (DeleteDiscussionInput x) = toGraphQLArgumentValue x
+
+-- | original name - DeleteEnvironmentInput
+newtype DeleteEnvironmentInput
+  = DeleteEnvironmentInput { id :: Id, clientMutationId :: Optional String }
+
+derive instance genericDeleteEnvironmentInput
+  ::
+  Generic DeleteEnvironmentInput _
+
+derive instance newtypeDeleteEnvironmentInput
+  ::
+  Newtype DeleteEnvironmentInput _
+
+instance toGraphQLArgumentValueDeleteEnvironmentInput
+  :: ToGraphQLArgumentValue DeleteEnvironmentInput where
+  toGraphQLArgumentValue (DeleteEnvironmentInput x) = toGraphQLArgumentValue x
+
 -- | original name - DeleteIpAllowListEntryInput
 newtype DeleteIpAllowListEntryInput
   = DeleteIpAllowListEntryInput
@@ -1147,6 +1484,24 @@ derive instance newtypeDeleteProjectInput :: Newtype DeleteProjectInput _
 instance toGraphQLArgumentValueDeleteProjectInput
   :: ToGraphQLArgumentValue DeleteProjectInput where
   toGraphQLArgumentValue (DeleteProjectInput x) = toGraphQLArgumentValue x
+
+-- | original name - DeleteProjectNextItemInput
+newtype DeleteProjectNextItemInput
+  = DeleteProjectNextItemInput
+    { projectId :: Id, itemId :: Id, clientMutationId :: Optional String }
+
+derive instance genericDeleteProjectNextItemInput
+  ::
+  Generic DeleteProjectNextItemInput _
+
+derive instance newtypeDeleteProjectNextItemInput
+  ::
+  Newtype DeleteProjectNextItemInput _
+
+instance toGraphQLArgumentValueDeleteProjectNextItemInput
+  :: ToGraphQLArgumentValue DeleteProjectNextItemInput where
+  toGraphQLArgumentValue (DeleteProjectNextItemInput x) = toGraphQLArgumentValue
+                                                          x
 
 -- | original name - DeletePullRequestReviewCommentInput
 newtype DeletePullRequestReviewCommentInput
@@ -1280,6 +1635,19 @@ instance toGraphQLArgumentValueDisablePullRequestAutoMergeInput
   toGraphQLArgumentValue (DisablePullRequestAutoMergeInput x) = toGraphQLArgumentValue
                                                                 x
 
+-- | original name - DiscussionOrder
+newtype DiscussionOrder
+  = DiscussionOrder
+    { field :: DiscussionOrderField, direction :: OrderDirection }
+
+derive instance genericDiscussionOrder :: Generic DiscussionOrder _
+
+derive instance newtypeDiscussionOrder :: Newtype DiscussionOrder _
+
+instance toGraphQLArgumentValueDiscussionOrder
+  :: ToGraphQLArgumentValue DiscussionOrder where
+  toGraphQLArgumentValue (DiscussionOrder x) = toGraphQLArgumentValue x
+
 -- | original name - DismissPullRequestReviewInput
 newtype DismissPullRequestReviewInput
   = DismissPullRequestReviewInput
@@ -1300,6 +1668,27 @@ instance toGraphQLArgumentValueDismissPullRequestReviewInput
   :: ToGraphQLArgumentValue DismissPullRequestReviewInput where
   toGraphQLArgumentValue (DismissPullRequestReviewInput x) = toGraphQLArgumentValue
                                                              x
+
+-- | original name - DismissRepositoryVulnerabilityAlertInput
+newtype DismissRepositoryVulnerabilityAlertInput
+  = DismissRepositoryVulnerabilityAlertInput
+    { repositoryVulnerabilityAlertId :: Id
+    , dismissReason :: DismissReason
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericDismissRepositoryVulnerabilityAlertInput
+  ::
+  Generic DismissRepositoryVulnerabilityAlertInput _
+
+derive instance newtypeDismissRepositoryVulnerabilityAlertInput
+  ::
+  Newtype DismissRepositoryVulnerabilityAlertInput _
+
+instance toGraphQLArgumentValueDismissRepositoryVulnerabilityAlertInput
+  :: ToGraphQLArgumentValue DismissRepositoryVulnerabilityAlertInput where
+  toGraphQLArgumentValue (DismissRepositoryVulnerabilityAlertInput x) = toGraphQLArgumentValue
+                                                                        x
 
 -- | original name - DraftPullRequestReviewComment
 newtype DraftPullRequestReviewComment
@@ -1480,6 +1869,43 @@ instance toGraphQLArgumentValueEnterpriseServerUserAccountsUploadOrder
   toGraphQLArgumentValue (EnterpriseServerUserAccountsUploadOrder x) = toGraphQLArgumentValue
                                                                        x
 
+-- | original name - FileAddition
+newtype FileAddition = FileAddition { path :: String, contents :: Base64String }
+
+derive instance genericFileAddition :: Generic FileAddition _
+
+derive instance newtypeFileAddition :: Newtype FileAddition _
+
+instance toGraphQLArgumentValueFileAddition
+  :: ToGraphQLArgumentValue FileAddition where
+  toGraphQLArgumentValue (FileAddition x) = toGraphQLArgumentValue x
+
+-- | original name - FileChanges
+newtype FileChanges
+  = FileChanges
+    { deletions :: Optional (Array FileDeletion)
+    , additions :: Optional (Array FileAddition)
+    }
+
+derive instance genericFileChanges :: Generic FileChanges _
+
+derive instance newtypeFileChanges :: Newtype FileChanges _
+
+instance toGraphQLArgumentValueFileChanges
+  :: ToGraphQLArgumentValue FileChanges where
+  toGraphQLArgumentValue (FileChanges x) = toGraphQLArgumentValue x
+
+-- | original name - FileDeletion
+newtype FileDeletion = FileDeletion { path :: String }
+
+derive instance genericFileDeletion :: Generic FileDeletion _
+
+derive instance newtypeFileDeletion :: Newtype FileDeletion _
+
+instance toGraphQLArgumentValueFileDeletion
+  :: ToGraphQLArgumentValue FileDeletion where
+  toGraphQLArgumentValue (FileDeletion x) = toGraphQLArgumentValue x
+
 -- | original name - FollowUserInput
 newtype FollowUserInput
   = FollowUserInput { userId :: Id, clientMutationId :: Optional String }
@@ -1503,6 +1929,45 @@ derive instance newtypeGistOrder :: Newtype GistOrder _
 instance toGraphQLArgumentValueGistOrder
   :: ToGraphQLArgumentValue GistOrder where
   toGraphQLArgumentValue (GistOrder x) = toGraphQLArgumentValue x
+
+-- | original name - GrantEnterpriseOrganizationsMigratorRoleInput
+newtype GrantEnterpriseOrganizationsMigratorRoleInput
+  = GrantEnterpriseOrganizationsMigratorRoleInput
+    { enterpriseId :: Id, login :: String, clientMutationId :: Optional String }
+
+derive instance genericGrantEnterpriseOrganizationsMigratorRoleInput
+  ::
+  Generic GrantEnterpriseOrganizationsMigratorRoleInput _
+
+derive instance newtypeGrantEnterpriseOrganizationsMigratorRoleInput
+  ::
+  Newtype GrantEnterpriseOrganizationsMigratorRoleInput _
+
+instance toGraphQLArgumentValueGrantEnterpriseOrganizationsMigratorRoleInput
+  :: ToGraphQLArgumentValue GrantEnterpriseOrganizationsMigratorRoleInput where
+  toGraphQLArgumentValue (GrantEnterpriseOrganizationsMigratorRoleInput x) = toGraphQLArgumentValue
+                                                                             x
+
+-- | original name - GrantMigratorRoleInput
+newtype GrantMigratorRoleInput
+  = GrantMigratorRoleInput
+    { organizationId :: Id
+    , actor :: String
+    , actorType :: ActorType
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericGrantMigratorRoleInput
+  ::
+  Generic GrantMigratorRoleInput _
+
+derive instance newtypeGrantMigratorRoleInput
+  ::
+  Newtype GrantMigratorRoleInput _
+
+instance toGraphQLArgumentValueGrantMigratorRoleInput
+  :: ToGraphQLArgumentValue GrantMigratorRoleInput where
+  toGraphQLArgumentValue (GrantMigratorRoleInput x) = toGraphQLArgumentValue x
 
 -- | original name - InviteEnterpriseAdminInput
 newtype InviteEnterpriseAdminInput
@@ -1644,6 +2109,24 @@ instance toGraphQLArgumentValueLockLockableInput
   :: ToGraphQLArgumentValue LockLockableInput where
   toGraphQLArgumentValue (LockLockableInput x) = toGraphQLArgumentValue x
 
+-- | original name - MarkDiscussionCommentAsAnswerInput
+newtype MarkDiscussionCommentAsAnswerInput
+  = MarkDiscussionCommentAsAnswerInput
+    { id :: Id, clientMutationId :: Optional String }
+
+derive instance genericMarkDiscussionCommentAsAnswerInput
+  ::
+  Generic MarkDiscussionCommentAsAnswerInput _
+
+derive instance newtypeMarkDiscussionCommentAsAnswerInput
+  ::
+  Newtype MarkDiscussionCommentAsAnswerInput _
+
+instance toGraphQLArgumentValueMarkDiscussionCommentAsAnswerInput
+  :: ToGraphQLArgumentValue MarkDiscussionCommentAsAnswerInput where
+  toGraphQLArgumentValue (MarkDiscussionCommentAsAnswerInput x) = toGraphQLArgumentValue
+                                                                  x
+
 -- | original name - MarkFileAsViewedInput
 newtype MarkFileAsViewedInput
   = MarkFileAsViewedInput
@@ -1778,6 +2261,23 @@ derive instance newtypeMoveProjectColumnInput
 instance toGraphQLArgumentValueMoveProjectColumnInput
   :: ToGraphQLArgumentValue MoveProjectColumnInput where
   toGraphQLArgumentValue (MoveProjectColumnInput x) = toGraphQLArgumentValue x
+
+-- | original name - OrgEnterpriseOwnerOrder
+newtype OrgEnterpriseOwnerOrder
+  = OrgEnterpriseOwnerOrder
+    { field :: OrgEnterpriseOwnerOrderField, direction :: OrderDirection }
+
+derive instance genericOrgEnterpriseOwnerOrder
+  ::
+  Generic OrgEnterpriseOwnerOrder _
+
+derive instance newtypeOrgEnterpriseOwnerOrder
+  ::
+  Newtype OrgEnterpriseOwnerOrder _
+
+instance toGraphQLArgumentValueOrgEnterpriseOwnerOrder
+  :: ToGraphQLArgumentValue OrgEnterpriseOwnerOrder where
+  toGraphQLArgumentValue (OrgEnterpriseOwnerOrder x) = toGraphQLArgumentValue x
 
 -- | original name - OrganizationOrder
 newtype OrganizationOrder
@@ -1933,6 +2433,27 @@ instance toGraphQLArgumentValueRegenerateVerifiableDomainTokenInput
   :: ToGraphQLArgumentValue RegenerateVerifiableDomainTokenInput where
   toGraphQLArgumentValue (RegenerateVerifiableDomainTokenInput x) = toGraphQLArgumentValue
                                                                     x
+
+-- | original name - RejectDeploymentsInput
+newtype RejectDeploymentsInput
+  = RejectDeploymentsInput
+    { workflowRunId :: Id
+    , environmentIds :: Array Id
+    , comment :: Optional String
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericRejectDeploymentsInput
+  ::
+  Generic RejectDeploymentsInput _
+
+derive instance newtypeRejectDeploymentsInput
+  ::
+  Newtype RejectDeploymentsInput _
+
+instance toGraphQLArgumentValueRejectDeploymentsInput
+  :: ToGraphQLArgumentValue RejectDeploymentsInput where
+  toGraphQLArgumentValue (RejectDeploymentsInput x) = toGraphQLArgumentValue x
 
 -- | original name - ReleaseOrder
 newtype ReleaseOrder
@@ -2109,6 +2630,18 @@ instance toGraphQLArgumentValueRemoveStarInput
   :: ToGraphQLArgumentValue RemoveStarInput where
   toGraphQLArgumentValue (RemoveStarInput x) = toGraphQLArgumentValue x
 
+-- | original name - RemoveUpvoteInput
+newtype RemoveUpvoteInput
+  = RemoveUpvoteInput { subjectId :: Id, clientMutationId :: Optional String }
+
+derive instance genericRemoveUpvoteInput :: Generic RemoveUpvoteInput _
+
+derive instance newtypeRemoveUpvoteInput :: Newtype RemoveUpvoteInput _
+
+instance toGraphQLArgumentValueRemoveUpvoteInput
+  :: ToGraphQLArgumentValue RemoveUpvoteInput where
+  toGraphQLArgumentValue (RemoveUpvoteInput x) = toGraphQLArgumentValue x
+
 -- | original name - ReopenIssueInput
 newtype ReopenIssueInput
   = ReopenIssueInput { issueId :: Id, clientMutationId :: Optional String }
@@ -2156,6 +2689,25 @@ instance toGraphQLArgumentValueRepositoryInvitationOrder
   toGraphQLArgumentValue (RepositoryInvitationOrder x) = toGraphQLArgumentValue
                                                          x
 
+-- | original name - RepositoryMigrationOrder
+newtype RepositoryMigrationOrder
+  = RepositoryMigrationOrder
+    { field :: RepositoryMigrationOrderField
+    , direction :: RepositoryMigrationOrderDirection
+    }
+
+derive instance genericRepositoryMigrationOrder
+  ::
+  Generic RepositoryMigrationOrder _
+
+derive instance newtypeRepositoryMigrationOrder
+  ::
+  Newtype RepositoryMigrationOrder _
+
+instance toGraphQLArgumentValueRepositoryMigrationOrder
+  :: ToGraphQLArgumentValue RepositoryMigrationOrder where
+  toGraphQLArgumentValue (RepositoryMigrationOrder x) = toGraphQLArgumentValue x
+
 -- | original name - RepositoryOrder
 newtype RepositoryOrder
   = RepositoryOrder
@@ -2186,6 +2738,22 @@ derive instance newtypeRequestReviewsInput :: Newtype RequestReviewsInput _
 instance toGraphQLArgumentValueRequestReviewsInput
   :: ToGraphQLArgumentValue RequestReviewsInput where
   toGraphQLArgumentValue (RequestReviewsInput x) = toGraphQLArgumentValue x
+
+-- | original name - RequiredStatusCheckInput
+newtype RequiredStatusCheckInput
+  = RequiredStatusCheckInput { context :: String, appId :: Optional Id }
+
+derive instance genericRequiredStatusCheckInput
+  ::
+  Generic RequiredStatusCheckInput _
+
+derive instance newtypeRequiredStatusCheckInput
+  ::
+  Newtype RequiredStatusCheckInput _
+
+instance toGraphQLArgumentValueRequiredStatusCheckInput
+  :: ToGraphQLArgumentValue RequiredStatusCheckInput where
+  toGraphQLArgumentValue (RequiredStatusCheckInput x) = toGraphQLArgumentValue x
 
 -- | original name - RerequestCheckSuiteInput
 newtype RerequestCheckSuiteInput
@@ -2223,6 +2791,45 @@ derive instance newtypeResolveReviewThreadInput
 instance toGraphQLArgumentValueResolveReviewThreadInput
   :: ToGraphQLArgumentValue ResolveReviewThreadInput where
   toGraphQLArgumentValue (ResolveReviewThreadInput x) = toGraphQLArgumentValue x
+
+-- | original name - RevokeEnterpriseOrganizationsMigratorRoleInput
+newtype RevokeEnterpriseOrganizationsMigratorRoleInput
+  = RevokeEnterpriseOrganizationsMigratorRoleInput
+    { enterpriseId :: Id, login :: String, clientMutationId :: Optional String }
+
+derive instance genericRevokeEnterpriseOrganizationsMigratorRoleInput
+  ::
+  Generic RevokeEnterpriseOrganizationsMigratorRoleInput _
+
+derive instance newtypeRevokeEnterpriseOrganizationsMigratorRoleInput
+  ::
+  Newtype RevokeEnterpriseOrganizationsMigratorRoleInput _
+
+instance toGraphQLArgumentValueRevokeEnterpriseOrganizationsMigratorRoleInput
+  :: ToGraphQLArgumentValue RevokeEnterpriseOrganizationsMigratorRoleInput where
+  toGraphQLArgumentValue (RevokeEnterpriseOrganizationsMigratorRoleInput x) = toGraphQLArgumentValue
+                                                                              x
+
+-- | original name - RevokeMigratorRoleInput
+newtype RevokeMigratorRoleInput
+  = RevokeMigratorRoleInput
+    { organizationId :: Id
+    , actor :: String
+    , actorType :: ActorType
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericRevokeMigratorRoleInput
+  ::
+  Generic RevokeMigratorRoleInput _
+
+derive instance newtypeRevokeMigratorRoleInput
+  ::
+  Newtype RevokeMigratorRoleInput _
+
+instance toGraphQLArgumentValueRevokeMigratorRoleInput
+  :: ToGraphQLArgumentValue RevokeMigratorRoleInput where
+  toGraphQLArgumentValue (RevokeMigratorRoleInput x) = toGraphQLArgumentValue x
 
 -- | original name - SavedReplyOrder
 newtype SavedReplyOrder
@@ -2377,6 +2984,18 @@ instance toGraphQLArgumentValueSetUserInteractionLimitInput
   toGraphQLArgumentValue (SetUserInteractionLimitInput x) = toGraphQLArgumentValue
                                                             x
 
+-- | original name - SponsorOrder
+newtype SponsorOrder
+  = SponsorOrder { field :: SponsorOrderField, direction :: OrderDirection }
+
+derive instance genericSponsorOrder :: Generic SponsorOrder _
+
+derive instance newtypeSponsorOrder :: Newtype SponsorOrder _
+
+instance toGraphQLArgumentValueSponsorOrder
+  :: ToGraphQLArgumentValue SponsorOrder where
+  toGraphQLArgumentValue (SponsorOrder x) = toGraphQLArgumentValue x
+
 -- | original name - SponsorableOrder
 newtype SponsorableOrder
   = SponsorableOrder
@@ -2390,6 +3009,19 @@ instance toGraphQLArgumentValueSponsorableOrder
   :: ToGraphQLArgumentValue SponsorableOrder where
   toGraphQLArgumentValue (SponsorableOrder x) = toGraphQLArgumentValue x
 
+-- | original name - SponsorsActivityOrder
+newtype SponsorsActivityOrder
+  = SponsorsActivityOrder
+    { field :: SponsorsActivityOrderField, direction :: OrderDirection }
+
+derive instance genericSponsorsActivityOrder :: Generic SponsorsActivityOrder _
+
+derive instance newtypeSponsorsActivityOrder :: Newtype SponsorsActivityOrder _
+
+instance toGraphQLArgumentValueSponsorsActivityOrder
+  :: ToGraphQLArgumentValue SponsorsActivityOrder where
+  toGraphQLArgumentValue (SponsorsActivityOrder x) = toGraphQLArgumentValue x
+
 -- | original name - SponsorsTierOrder
 newtype SponsorsTierOrder
   = SponsorsTierOrder
@@ -2402,6 +3034,24 @@ derive instance newtypeSponsorsTierOrder :: Newtype SponsorsTierOrder _
 instance toGraphQLArgumentValueSponsorsTierOrder
   :: ToGraphQLArgumentValue SponsorsTierOrder where
   toGraphQLArgumentValue (SponsorsTierOrder x) = toGraphQLArgumentValue x
+
+-- | original name - SponsorshipNewsletterOrder
+newtype SponsorshipNewsletterOrder
+  = SponsorshipNewsletterOrder
+    { field :: SponsorshipNewsletterOrderField, direction :: OrderDirection }
+
+derive instance genericSponsorshipNewsletterOrder
+  ::
+  Generic SponsorshipNewsletterOrder _
+
+derive instance newtypeSponsorshipNewsletterOrder
+  ::
+  Newtype SponsorshipNewsletterOrder _
+
+instance toGraphQLArgumentValueSponsorshipNewsletterOrder
+  :: ToGraphQLArgumentValue SponsorshipNewsletterOrder where
+  toGraphQLArgumentValue (SponsorshipNewsletterOrder x) = toGraphQLArgumentValue
+                                                          x
 
 -- | original name - SponsorshipOrder
 newtype SponsorshipOrder
@@ -2427,6 +3077,30 @@ derive instance newtypeStarOrder :: Newtype StarOrder _
 instance toGraphQLArgumentValueStarOrder
   :: ToGraphQLArgumentValue StarOrder where
   toGraphQLArgumentValue (StarOrder x) = toGraphQLArgumentValue x
+
+-- | original name - StartRepositoryMigrationInput
+newtype StartRepositoryMigrationInput
+  = StartRepositoryMigrationInput
+    { sourceId :: Id
+    , ownerId :: Id
+    , sourceRepositoryUrl :: Uri
+    , repositoryName :: String
+    , continueOnError :: Optional Boolean
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericStartRepositoryMigrationInput
+  ::
+  Generic StartRepositoryMigrationInput _
+
+derive instance newtypeStartRepositoryMigrationInput
+  ::
+  Newtype StartRepositoryMigrationInput _
+
+instance toGraphQLArgumentValueStartRepositoryMigrationInput
+  :: ToGraphQLArgumentValue StartRepositoryMigrationInput where
+  toGraphQLArgumentValue (StartRepositoryMigrationInput x) = toGraphQLArgumentValue
+                                                             x
 
 -- | original name - SubmitPullRequestReviewInput
 newtype SubmitPullRequestReviewInput
@@ -2593,6 +3267,24 @@ instance toGraphQLArgumentValueUnlockLockableInput
   :: ToGraphQLArgumentValue UnlockLockableInput where
   toGraphQLArgumentValue (UnlockLockableInput x) = toGraphQLArgumentValue x
 
+-- | original name - UnmarkDiscussionCommentAsAnswerInput
+newtype UnmarkDiscussionCommentAsAnswerInput
+  = UnmarkDiscussionCommentAsAnswerInput
+    { id :: Id, clientMutationId :: Optional String }
+
+derive instance genericUnmarkDiscussionCommentAsAnswerInput
+  ::
+  Generic UnmarkDiscussionCommentAsAnswerInput _
+
+derive instance newtypeUnmarkDiscussionCommentAsAnswerInput
+  ::
+  Newtype UnmarkDiscussionCommentAsAnswerInput _
+
+instance toGraphQLArgumentValueUnmarkDiscussionCommentAsAnswerInput
+  :: ToGraphQLArgumentValue UnmarkDiscussionCommentAsAnswerInput where
+  toGraphQLArgumentValue (UnmarkDiscussionCommentAsAnswerInput x) = toGraphQLArgumentValue
+                                                                    x
+
 -- | original name - UnmarkFileAsViewedInput
 newtype UnmarkFileAsViewedInput
   = UnmarkFileAsViewedInput
@@ -2696,9 +3388,13 @@ newtype UpdateBranchProtectionRuleInput
     , dismissesStaleReviews :: Optional Boolean
     , restrictsReviewDismissals :: Optional Boolean
     , reviewDismissalActorIds :: Optional (Array Id)
+    , bypassPullRequestActorIds :: Optional (Array Id)
+    , bypassForcePushActorIds :: Optional (Array Id)
     , restrictsPushes :: Optional Boolean
     , pushActorIds :: Optional (Array Id)
     , requiredStatusCheckContexts :: Optional (Array String)
+    , requiredStatusChecks :: Optional (Array RequiredStatusCheckInput)
+    , requiresConversationResolution :: Optional Boolean
     , clientMutationId :: Optional String
     }
 
@@ -2760,6 +3456,42 @@ instance toGraphQLArgumentValueUpdateCheckSuitePreferencesInput
   :: ToGraphQLArgumentValue UpdateCheckSuitePreferencesInput where
   toGraphQLArgumentValue (UpdateCheckSuitePreferencesInput x) = toGraphQLArgumentValue
                                                                 x
+
+-- | original name - UpdateDiscussionCommentInput
+newtype UpdateDiscussionCommentInput
+  = UpdateDiscussionCommentInput
+    { commentId :: Id, body :: String, clientMutationId :: Optional String }
+
+derive instance genericUpdateDiscussionCommentInput
+  ::
+  Generic UpdateDiscussionCommentInput _
+
+derive instance newtypeUpdateDiscussionCommentInput
+  ::
+  Newtype UpdateDiscussionCommentInput _
+
+instance toGraphQLArgumentValueUpdateDiscussionCommentInput
+  :: ToGraphQLArgumentValue UpdateDiscussionCommentInput where
+  toGraphQLArgumentValue (UpdateDiscussionCommentInput x) = toGraphQLArgumentValue
+                                                            x
+
+-- | original name - UpdateDiscussionInput
+newtype UpdateDiscussionInput
+  = UpdateDiscussionInput
+    { discussionId :: Id
+    , title :: Optional String
+    , body :: Optional String
+    , categoryId :: Optional Id
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdateDiscussionInput :: Generic UpdateDiscussionInput _
+
+derive instance newtypeUpdateDiscussionInput :: Newtype UpdateDiscussionInput _
+
+instance toGraphQLArgumentValueUpdateDiscussionInput
+  :: ToGraphQLArgumentValue UpdateDiscussionInput where
+  toGraphQLArgumentValue (UpdateDiscussionInput x) = toGraphQLArgumentValue x
 
 -- | original name - UpdateEnterpriseAdministratorRoleInput
 newtype UpdateEnterpriseAdministratorRoleInput
@@ -3031,6 +3763,28 @@ instance toGraphQLArgumentValueUpdateEnterpriseOrganizationProjectsSettingInput
   toGraphQLArgumentValue (UpdateEnterpriseOrganizationProjectsSettingInput x) = toGraphQLArgumentValue
                                                                                 x
 
+-- | original name - UpdateEnterpriseOwnerOrganizationRoleInput
+newtype UpdateEnterpriseOwnerOrganizationRoleInput
+  = UpdateEnterpriseOwnerOrganizationRoleInput
+    { enterpriseId :: Id
+    , organizationId :: Id
+    , organizationRole :: RoleInOrganization
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdateEnterpriseOwnerOrganizationRoleInput
+  ::
+  Generic UpdateEnterpriseOwnerOrganizationRoleInput _
+
+derive instance newtypeUpdateEnterpriseOwnerOrganizationRoleInput
+  ::
+  Newtype UpdateEnterpriseOwnerOrganizationRoleInput _
+
+instance toGraphQLArgumentValueUpdateEnterpriseOwnerOrganizationRoleInput
+  :: ToGraphQLArgumentValue UpdateEnterpriseOwnerOrganizationRoleInput where
+  toGraphQLArgumentValue (UpdateEnterpriseOwnerOrganizationRoleInput x) = toGraphQLArgumentValue
+                                                                          x
+
 -- | original name - UpdateEnterpriseProfileInput
 newtype UpdateEnterpriseProfileInput
   = UpdateEnterpriseProfileInput
@@ -3119,6 +3873,27 @@ instance toGraphQLArgumentValueUpdateEnterpriseTwoFactorAuthenticationRequiredSe
   toGraphQLArgumentValue (UpdateEnterpriseTwoFactorAuthenticationRequiredSettingInput x) = toGraphQLArgumentValue
                                                                                            x
 
+-- | original name - UpdateEnvironmentInput
+newtype UpdateEnvironmentInput
+  = UpdateEnvironmentInput
+    { environmentId :: Id
+    , waitTimer :: Optional Int
+    , reviewers :: Optional (Array Id)
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdateEnvironmentInput
+  ::
+  Generic UpdateEnvironmentInput _
+
+derive instance newtypeUpdateEnvironmentInput
+  ::
+  Newtype UpdateEnvironmentInput _
+
+instance toGraphQLArgumentValueUpdateEnvironmentInput
+  :: ToGraphQLArgumentValue UpdateEnvironmentInput where
+  toGraphQLArgumentValue (UpdateEnvironmentInput x) = toGraphQLArgumentValue x
+
 -- | original name - UpdateIpAllowListEnabledSettingInput
 newtype UpdateIpAllowListEnabledSettingInput
   = UpdateIpAllowListEnabledSettingInput
@@ -3162,6 +3937,28 @@ instance toGraphQLArgumentValueUpdateIpAllowListEntryInput
   :: ToGraphQLArgumentValue UpdateIpAllowListEntryInput where
   toGraphQLArgumentValue (UpdateIpAllowListEntryInput x) = toGraphQLArgumentValue
                                                            x
+
+-- | original name - UpdateIpAllowListForInstalledAppsEnabledSettingInput
+newtype UpdateIpAllowListForInstalledAppsEnabledSettingInput
+  = UpdateIpAllowListForInstalledAppsEnabledSettingInput
+    { ownerId :: Id
+    , settingValue :: IpAllowListForInstalledAppsEnabledSettingValue
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdateIpAllowListForInstalledAppsEnabledSettingInput
+  ::
+  Generic UpdateIpAllowListForInstalledAppsEnabledSettingInput _
+
+derive instance newtypeUpdateIpAllowListForInstalledAppsEnabledSettingInput
+  ::
+  Newtype UpdateIpAllowListForInstalledAppsEnabledSettingInput _
+
+instance toGraphQLArgumentValueUpdateIpAllowListForInstalledAppsEnabledSettingInput
+  :: ToGraphQLArgumentValue
+     UpdateIpAllowListForInstalledAppsEnabledSettingInput where
+  toGraphQLArgumentValue (UpdateIpAllowListForInstalledAppsEnabledSettingInput x) = toGraphQLArgumentValue
+                                                                                    x
 
 -- | original name - UpdateIssueCommentInput
 newtype UpdateIssueCommentInput
@@ -3223,6 +4020,28 @@ instance toGraphQLArgumentValueUpdateNotificationRestrictionSettingInput
   toGraphQLArgumentValue (UpdateNotificationRestrictionSettingInput x) = toGraphQLArgumentValue
                                                                          x
 
+-- | original name - UpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+newtype UpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+  = UpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+    { organizationId :: Id
+    , forkingEnabled :: Boolean
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+  ::
+  Generic UpdateOrganizationAllowPrivateRepositoryForkingSettingInput _
+
+derive instance newtypeUpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+  ::
+  Newtype UpdateOrganizationAllowPrivateRepositoryForkingSettingInput _
+
+instance toGraphQLArgumentValueUpdateOrganizationAllowPrivateRepositoryForkingSettingInput
+  :: ToGraphQLArgumentValue
+     UpdateOrganizationAllowPrivateRepositoryForkingSettingInput where
+  toGraphQLArgumentValue (UpdateOrganizationAllowPrivateRepositoryForkingSettingInput x) = toGraphQLArgumentValue
+                                                                                           x
+
 -- | original name - UpdateProjectCardInput
 newtype UpdateProjectCardInput
   = UpdateProjectCardInput
@@ -3282,6 +4101,50 @@ derive instance newtypeUpdateProjectInput :: Newtype UpdateProjectInput _
 instance toGraphQLArgumentValueUpdateProjectInput
   :: ToGraphQLArgumentValue UpdateProjectInput where
   toGraphQLArgumentValue (UpdateProjectInput x) = toGraphQLArgumentValue x
+
+-- | original name - UpdateProjectNextItemFieldInput
+newtype UpdateProjectNextItemFieldInput
+  = UpdateProjectNextItemFieldInput
+    { projectId :: Id
+    , itemId :: Id
+    , fieldId :: Id
+    , value :: String
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdateProjectNextItemFieldInput
+  ::
+  Generic UpdateProjectNextItemFieldInput _
+
+derive instance newtypeUpdateProjectNextItemFieldInput
+  ::
+  Newtype UpdateProjectNextItemFieldInput _
+
+instance toGraphQLArgumentValueUpdateProjectNextItemFieldInput
+  :: ToGraphQLArgumentValue UpdateProjectNextItemFieldInput where
+  toGraphQLArgumentValue (UpdateProjectNextItemFieldInput x) = toGraphQLArgumentValue
+                                                               x
+
+-- | original name - UpdatePullRequestBranchInput
+newtype UpdatePullRequestBranchInput
+  = UpdatePullRequestBranchInput
+    { pullRequestId :: Id
+    , expectedHeadOid :: Optional GitObjectId
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdatePullRequestBranchInput
+  ::
+  Generic UpdatePullRequestBranchInput _
+
+derive instance newtypeUpdatePullRequestBranchInput
+  ::
+  Newtype UpdatePullRequestBranchInput _
+
+instance toGraphQLArgumentValueUpdatePullRequestBranchInput
+  :: ToGraphQLArgumentValue UpdatePullRequestBranchInput where
+  toGraphQLArgumentValue (UpdatePullRequestBranchInput x) = toGraphQLArgumentValue
+                                                            x
 
 -- | original name - UpdatePullRequestInput
 newtype UpdatePullRequestInput
@@ -3391,6 +4254,31 @@ derive instance newtypeUpdateRepositoryInput :: Newtype UpdateRepositoryInput _
 instance toGraphQLArgumentValueUpdateRepositoryInput
   :: ToGraphQLArgumentValue UpdateRepositoryInput where
   toGraphQLArgumentValue (UpdateRepositoryInput x) = toGraphQLArgumentValue x
+
+-- | original name - UpdateSponsorshipPreferencesInput
+newtype UpdateSponsorshipPreferencesInput
+  = UpdateSponsorshipPreferencesInput
+    { sponsorId :: Optional Id
+    , sponsorLogin :: Optional String
+    , sponsorableId :: Optional Id
+    , sponsorableLogin :: Optional String
+    , receiveEmails :: Optional Boolean
+    , privacyLevel :: Optional SponsorshipPrivacy
+    , clientMutationId :: Optional String
+    }
+
+derive instance genericUpdateSponsorshipPreferencesInput
+  ::
+  Generic UpdateSponsorshipPreferencesInput _
+
+derive instance newtypeUpdateSponsorshipPreferencesInput
+  ::
+  Newtype UpdateSponsorshipPreferencesInput _
+
+instance toGraphQLArgumentValueUpdateSponsorshipPreferencesInput
+  :: ToGraphQLArgumentValue UpdateSponsorshipPreferencesInput where
+  toGraphQLArgumentValue (UpdateSponsorshipPreferencesInput x) = toGraphQLArgumentValue
+                                                                 x
 
 -- | original name - UpdateSubscriptionInput
 newtype UpdateSubscriptionInput
